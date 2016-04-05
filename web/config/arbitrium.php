@@ -1,0 +1,9 @@
+<?php
+
+return [
+    'max_login_attempts'    => 3,
+    'min_admin_count'       => 3,
+    'default_timezone'      => 'Asia/Singapore',
+
+    'subscription_email_reminder' => 5, // in days
+];
