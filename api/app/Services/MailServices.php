@@ -160,14 +160,14 @@ class MailServices extends NrbServices
         try
         {
             $mail_id = generate_token();
-            $a_send_to = ['gem-bounced@nerubia.com'];
-            $a_send_to_name = ['Test Send Grid'];
-            // $a_to_email = explode(',', $data['to_email_address']);
-            // foreach($a_to_email as $email)
-            // {
-            //     $a_send_to[] = $email;
-            //     $a_send_to_name[] = $data['to_name'];
-            // }
+            $a_send_to = [];
+            $a_send_to_name = [];
+            $a_to_email = explode(',', $data['to_email_address']);
+            foreach($a_to_email as $email)
+            {
+                $a_send_to[] = $email;
+                $a_send_to_name[] = $data['to_name'];
+            }
 
             $sendgrid = new SendGrid(env('SENDGRID_APIKEY'));
             $email    = new SendGrid\Email();
