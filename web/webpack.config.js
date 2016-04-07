@@ -1,31 +1,24 @@
-var path = require('path')
-var webpack = require('webpack')
+'use strict';
+
+let path = require('path');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './index'
-  ],
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
-  },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-  module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: [ 'babel' ],
-      exclude: /node_modules/,
-      include: __dirname
-    }, {
-      test: /(\.css|\.scss)$/,
-      loader: 'style!css!sass'
-    }]
-  }
+    entry: path.resolve(__dirname + '/src/index.js'),
+    output: {
+        path: path.resolve(__dirname + '/dist/js'),
+        filename: 'main.js',
+        devtoolLineToLine: true
+    },
+    module: {
+        loaders: [
+            {
+                test: /src\/.+.js?$/,
+                exclude: /node_modules/,
+                loader: 'babel'
+            }, {
+              test: /(\.css|\.scss)$/,
+              loader: 'style!css!sass'
+            }
+        ]
+    }
 }
