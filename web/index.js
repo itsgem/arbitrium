@@ -34,8 +34,13 @@ function requireAuth(nextState, replace) {
   }
 }
 
-function requireAnonymous(x) {
-  console.log('requireAuth: ', x);
+function requireAnonymous(nextState, replace) {
+  if (localStorage.getItem('token')) {
+    replace({
+      pathname: '/client/',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
 }
 
 render(

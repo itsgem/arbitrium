@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
 class Login extends Component {
   
   render() {
-    const { errorMessage, isValid } = this.props
+    const { errorMessage, isValid, isFetching } = this.props
 
     return (
       <form className="mdl-shadow--2dp" onSubmit={(event) => this.handleSubmit(event)}>
@@ -22,8 +23,12 @@ class Login extends Component {
           <label className="mdl-textfield__label" htmlFor="password">Password</label>
         </div>
 
-        <button disabled={!isValid} onClick={(event) => this.handleClick(event)} id="login_button" className="auth-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-          Login
+        <button disabled={!isValid || isFetching} onClick={(event) => this.handleClick(event)} id="login_button" className="auth-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+          {isFetching && <div className="bubblingG">
+            <span id="bubblingG_1"></span>
+            <span id="bubblingG_2"></span>
+            <span id="bubblingG_3"></span>
+          </div>} {!isFetching && <span>Login</span>}
         </button>
       </form>
     )
@@ -57,13 +62,23 @@ Login.propTypes = {
   isValid: PropTypes.bool
 }
 
+function redirectToDashboard() {
+  location.href = '/client';
+}
 
 function mapStateToProps(state) {
-  const { authFormValidity } = state.default
+  const { auth, authFormValidity } = state.default
   const { isValid } = authFormValidity
+  const { isFetching } = auth
+
+  if (auth.isAuthenticated)
+  {
+    redirectToDashboard();
+  }
 
   return {
-    isValid
+    isValid,
+    isFetching
   }
 }
 export default connect(mapStateToProps)(Login)

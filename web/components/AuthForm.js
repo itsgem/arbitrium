@@ -21,6 +21,7 @@ export default class AuthForm extends Component {
            errorMessage={errorMessage}
            onLoginInputChange={ (creds) => dispatch(onLoginInputChange(creds)) }
            onLoginClick={ creds => dispatch(loginUser(creds)) }
+           isAuthenticated={isAuthenticated}
           />
         }
         <div className="signup-links">
