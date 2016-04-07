@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { logoutUser } from '../actions'
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import Logout from '../components/Logout';
 import Navbar from '../components/Navbar';
 import Drawer from '../components/Drawer';
+import { logoutUser } from '../actions';
 
 class DashboardPage extends Component {
   componentDidMount() {
@@ -13,7 +14,7 @@ class DashboardPage extends Component {
   }
 
   handleLogout() {
-    console.log('test');
+
   }
 
   render() {
@@ -26,13 +27,15 @@ class DashboardPage extends Component {
     }
     return (
       <div id="App" className={css}>
-        <Navbar dispatch={dispatch}
-         onLogoutClick={() => (this.handleLogout)}
-        />
+        <Navbar dispatch={dispatch}/>
         <Drawer dispatch={dispatch}/>
 
         <main className="mdl-layout__content">
-        test
+          <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--6-col"><h1>Arbitrium</h1></div>
+            <div className="mdl-cell mdl-cell--2-col">CS 2</div>
+            <div className="mdl-cell mdl-cell--4-col">CS 4</div>
+          </div>
         </main>
       </div>
     )

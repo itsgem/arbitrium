@@ -1,14 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import Logout from './Logout'
+import { logoutUser } from '../actions'
 
 export default class Navbar extends Component {
-  handleLogout() {
-    console.log('handle logout')
-    this.props.onLogoutClick();
-  }
-  
   render() {
-    const { onLogoutClick } = this.props
+    const { dispatch } = this.props
     
     return (
       <header className="irx-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
@@ -19,7 +15,8 @@ export default class Navbar extends Component {
             <nav className="irx-navigation mdl-navigation">
               <a className="mdl-navigation__link" href="">Business</a>
               <Logout appendClass="mdl-navigation__link"
-               onLogoutClick={() => this.handleLogout} />
+               parent="Navbar"
+               onLogoutClick={() => dispatch(logoutUser()) } />
             </nav>
           </div>
         </div>
@@ -30,5 +27,5 @@ export default class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  onLogoutClick: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired
 }

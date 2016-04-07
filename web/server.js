@@ -10,6 +10,10 @@ var compiler = webpack(config)
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
 
+app.get("/material.js", function(req, res) {
+  res.sendFile(__dirname + '/material.js')
+})
+
 app.get("/client", function(req, res) {
   res.sendFile(__dirname + '/index.html')
 })

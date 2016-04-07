@@ -28,12 +28,12 @@ function auth(state = {
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: false,
+        isAuthenticated: true,
         errorMessage: action.message
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetching: false,
         isAuthenticated: false
       })
     default:

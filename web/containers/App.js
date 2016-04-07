@@ -42,7 +42,6 @@ function mapStateToProps(state) {
 
   const { auth } = state.default
   const { isAuthenticated, errorMessage } = auth
-  console.log(isAuthenticated);
   
   return {
     isAuthenticated,

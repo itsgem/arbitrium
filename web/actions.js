@@ -167,10 +167,10 @@ export function onSignupInputChange(creds) {
 
 // Logs the user out
 export function logoutUser() {
-  console.log('logoug')
   return dispatch => {
     dispatch(requestLogout())
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+    localStorage.removeItem('persistence');
     dispatch(receiveLogout())
   }
 }

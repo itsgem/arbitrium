@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react'
 import Logout from './Logout'
 import { logoutUser } from '../actions'
@@ -31,7 +30,7 @@ export default class Drawer extends Component {
             <a className="mdl-navigation__link" href=""><i className="ion ion-alert-circled" role="presentation"></i> Spam</a>
             <a className="mdl-navigation__link" href=""><i className="ion ion-card" role="presentation"></i> Purchases</a>
             <a className="mdl-navigation__link" href=""><i className="ion ion-ios-people" role="presentation"></i> Social</a>
-            <Logout appendClass="mdl-navigation__link" icon="ion ion-log-out" onLogoutClick={() => dispatch(logoutUser())} />
+            <Logout parent="Drawer" appendClass="mdl-navigation__link" icon="ion ion-log-out" onLogoutClick={() => dispatch(logoutUser())} />
             <div className="mdl-layout-spacer"></div>
             <a className="mdl-navigation__link" href=""><span>Help</span></a>
           </nav>
