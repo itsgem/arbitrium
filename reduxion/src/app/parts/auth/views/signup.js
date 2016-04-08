@@ -1,6 +1,5 @@
 import React from 'react';
 import DocTitle from 'components/docTitle';
-import MediaSigninButtons from '../components/mediaSigninButtons';
 import LocalSignupForm from '../components/localSignupForm';
 
 export default React.createClass( {
@@ -12,7 +11,7 @@ export default React.createClass( {
     render() {
 
         return (
-            <div id="signup">
+            <div id="signup" className="auth-view">
                 <DocTitle
                     title="Register"
                 />
@@ -31,21 +30,16 @@ export default React.createClass( {
     },
     renderRegisterForm(){
         return (
-            <div className="paper text-center login-view">
-                <h2>Register An Account</h2>
+            <div className="signup-view">
+                <div className="callout">
+                    <h2>Register An Account</h2>
 
-                <p >Create a free account</p>
-
-                <div className="row">
-                    <div>
-                        <LocalSignupForm signup={this.props.signup}/>
-
-                        <div className="strike"><span className="or"></span></div>
-                        <div>
-                            <MediaSigninButtons />
-                        </div>
-                    </div>
+                    <p>Create a free account</p>
                 </div>
+        
+                <LocalSignupForm signup={this.props.signup}/>
+
+                <div className="strike"><span className="or"></span></div>
             </div>
         );
     }

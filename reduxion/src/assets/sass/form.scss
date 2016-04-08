@@ -11,11 +11,30 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+.alert {
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 14px;
+  margin-bottom: 12px;
+  padding: 16px;
+
+  &.alert-danger {
+    background: rgba(255, 79, 34, 0.57);
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    color: #FFE0E0;
+  }
+}
+
 .mdl-textfield__label, .mdl-textfield__input {
   font-family: $font-family;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 1px;
+
+  &.is-invalid {
+    color: #f90;
+  }
 }
 
 .mdl-textfield--floating-label {
@@ -26,8 +45,25 @@ input:-webkit-autofill:active {
   }
 }
 
+small.mdl-textfield__error {
+  font-size: 9.5px;
+}
+
 div#application {
-  div#login {
+  div.auth-view {
+    h2, p {
+      color: #fff;
+      font-weight: 300;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    h2 {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
     form {
       background: #fff;
       border-radius: 3px;
@@ -35,6 +71,10 @@ div#application {
       margin: auto;
       padding: 16px;
       width: 280px;
+
+      h2, p {
+        color: #555;
+      }
 
       .mdl-button {
         font-family: $font-family;
@@ -46,6 +86,14 @@ div#application {
         min-width: 200px;
       }
     }
+
+    .callout {
+      margin-bottom: 16px;
+      h2 {
+        margin: 0 0 6px;
+      }
+    }
+
     .signup-links {
       margin: 11px auto;
       width: 312px;
@@ -57,11 +105,8 @@ div#application {
 
     .auth-button {
       border-radius: 2px;
+      margin-top: 12px;
       width: 100%;
-
-      + .auth-button {
-        margin-top: 12px;
-      }
 
       &:not(:disabled) {
         @include cyan-button;

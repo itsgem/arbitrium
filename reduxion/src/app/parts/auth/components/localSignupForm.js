@@ -8,16 +8,21 @@ import Debug from 'debug';
 
 let debug = new Debug("components:signup");
 
-export default React.createClass( {
-    propTypes:{
-        signup: React.PropTypes.func.isRequired
-    },
-    getInitialState() {
-        return {
+class LocalSignupForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
             errors: {},
             errorServer:null
         };
-    },
+    }
+
+    componentDidMount() {
+        if ( typeof(window.componentHandler) != 'undefined' )
+        {
+            setTimeout(() => {window.componentHandler.upgradeDom()},10);
+        }
+    }
 
     renderError() {
         let error = this.state.errorServer;
@@ -30,7 +35,8 @@ export default React.createClass( {
                 <div>Status Code: {error.status}</div>
             </div>
         );
-    },
+    }
+
     render() {
         return (
             <div className="local-signup-form">
@@ -38,33 +44,41 @@ export default React.createClass( {
                 <LocalAuthenticationForm
                     buttonCaption={this.props.buttonCaption || 'Create an account' }
                     errors={ this.state.errors }
-                    onButtonClick={this.signup}
+                    onButtonClick={(payload) => {this.signup(payload)}}
                     />
 
             </div>
         );
-    },
+    }
 
     signup( payload ) {
         this.setState( {
             errors: {},
             errorServer: null
         } );
-
+        window.componentHandler.upgradeDom();
         return validateSignup.call( this, payload )
             .with( this )
             .then( signupLocal )
             .catch( setErrors );
     }
 
-} );
+}
 
+//////////////////////
+
+LocalSignupForm.propTypes = {
+    signup: React.PropTypes.func.isRequired
+};
+
+LocalSignupForm.defaultProps = {
+    onLoggedIn: () => {}
+};
 
 //////////////////////
 
 function validateSignup( payload ) {
     let rules = new Checkit( {
-        username: [ 'required', 'alphaDash', 'minLength:3', 'maxLength:64'],
         password: [ 'required', 'alphaDash', 'minLength:6', 'maxLength:64' ],
         email: [ 'required', 'email', 'minLength:6', 'maxLength:64' ]
     } );
@@ -81,3 +95,5 @@ function setErrors( e ) {
     debug("setErrors", e);
     this.setState(createError(e));
 }
+
+export default LocalSignupForm;

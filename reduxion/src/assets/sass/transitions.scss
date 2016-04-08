@@ -52,3 +52,39 @@ $very-fast-transition-speed: 0.1s;
     }
 
 }
+
+
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }  
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }  
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};      
+}
+.animate {
+    @include keyframes(slide-down) {
+      0% { max-height: 1px; opacity: 0; }
+      90% { max-height: 200px; opacity: 1; }
+    }
+    &.bounceIn {
+        @include animation('slide-down 0.2s 0.3');
+    }
+}

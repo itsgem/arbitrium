@@ -19,7 +19,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div id='login'>
+            <div id='login' className="auth-view">
                 <DocTitle
                     title="Login"
                 />

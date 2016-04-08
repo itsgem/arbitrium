@@ -33,17 +33,7 @@ class LocalAuthenticationForm extends React.Component {
                             {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
                         </div>
                     }
-                    { !this.props.hideUsername &&
-                        <div className={this.formClassNames('username')}>
-                            <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                ref="username"
-                                />
-                            <label className="mdl-textfield__label" htmlFor="username">{tr.t('username')}</label>
-                            {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
-                        </div>
-                    }
+
                     <div className={this.formClassNames('password')}>
                         <input
                             className="mdl-textfield__input"
@@ -67,7 +57,7 @@ class LocalAuthenticationForm extends React.Component {
 
     formClassNames( field ) {
         return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
-            'has-error': this.props.errors[ field ],
+            'is-invalid is-dirty': this.props.errors[ field ],
             'has-success': this.state[ field ] && !(this.props.errors[ field ])
         } );
     }
@@ -79,19 +69,11 @@ class LocalAuthenticationForm extends React.Component {
             loading: true,
         } );
         let {email, username, password} = this.refs;
+
         this.props.onButtonClick( {
-            username: username ? username.getValue() : undefined,
             password: password.value,
-            email: email ? email.value : undefined
-        } )
-        .finally(() => {
-            // Deprecated?
-            // if(this.isMounted()){
-            //     this.setState( {
-            //         loading: false
-            //     } );
-            // }
-        });
+            email: email.value
+        } );
     }
 
 }
