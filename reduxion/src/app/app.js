@@ -9,7 +9,6 @@ import ReactDOM from 'react-dom';
 import {IntlProvider} from 'react-intl';
 
 import Debug from 'debug';
-import 'utils/ga';
 
 import i18n from 'utils/i18n';
 import rootView from './redux/rootView';
