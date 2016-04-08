@@ -8,7 +8,7 @@ var webpackDevConfig = {
         debug: true,
         entry: {
             app: [
-                'webpack-dev-server/client?http://localhost:8080',
+                'webpack-dev-server/client?http://localhost:9991',
                 'webpack/hot/only-dev-server',
                 './src/app/app.js'
             ]
@@ -22,7 +22,7 @@ var webpackDevConfig = {
                 API_URL: JSON.stringify( 'http://m3.dev.api.idearobin.com/1.0/' )
             }
         } ),
-        new OpenBrowserPlugin({ url: 'http://localhost:8080' })
+        new OpenBrowserPlugin({ url: 'http://localhost:9991' })
     ],
 
     loaders: [
