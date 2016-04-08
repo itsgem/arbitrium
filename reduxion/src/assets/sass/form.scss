@@ -11,6 +11,12 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+@mixin error-container {
+  background: rgba(255, 79, 34, 0.57);
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  color: #FFE0E0;
+}
+
 .alert {
   border-radius: 4px;
   font-size: 11px;
@@ -20,9 +26,7 @@ input:-webkit-autofill:active {
   padding: 16px;
 
   &.alert-danger {
-    background: rgba(255, 79, 34, 0.57);
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
-    color: #FFE0E0;
+    @include error-container;
   }
 }
 
@@ -104,13 +108,23 @@ div#application {
     }
 
     .auth-button {
+      box-sizing: border-box;
       border-radius: 2px;
       margin-top: 12px;
       width: 100%;
 
       &:not(:disabled) {
-        @include cyan-button;
+        &.primary {
+          @include cyan-button;
+        }
+        &.secondary {
+          @include purple-button;
+        }
       }
+    }
+
+    .error-snack {
+      @include error-container;
     }
 
     #facebook_button {

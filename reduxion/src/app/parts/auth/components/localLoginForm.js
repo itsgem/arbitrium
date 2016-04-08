@@ -29,14 +29,14 @@ class LocalLoginForm extends React.Component {
         return (
             <div className="local-login-form">
                 <Alert error={this.state.errorServer}/>
-                <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar">
+                <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
                     <div className="mdl-snackbar__text"></div>
                     <button type="button" className="mdl-snackbar__action"></button>
                 </div>
                 <LocalAuthenticationForm
                     buttonCaption={tr.t('login') }
                     errors={ this.state.errors }
-                    onButtonClick={this.login}
+                    onButtonClick={ (payload) => { this.login(payload) } }
                     login={ this.props.login }
                     />
             </div>
@@ -62,7 +62,7 @@ class LocalLoginForm extends React.Component {
             let notification = document.querySelector('.mdl-snackbar');
             notification.MaterialSnackbar.showSnackbar(
                 {
-                    message: '<strong>Username</strong> and <strong>Password</strong> do not match'
+                    message: 'No matching credentials. Please check your e-mail and password.'
                 }
             );
             this.setState( {

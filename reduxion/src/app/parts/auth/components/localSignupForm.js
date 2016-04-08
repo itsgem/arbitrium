@@ -42,6 +42,7 @@ class LocalSignupForm extends React.Component {
             <div className="local-signup-form">
                 { this.renderError()}
                 <LocalAuthenticationForm
+                    showLogin={true}
                     buttonCaption={this.props.buttonCaption || 'Create an account' }
                     errors={ this.state.errors }
                     onButtonClick={(payload) => {this.signup(payload)}}

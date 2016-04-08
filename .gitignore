@@ -6,3 +6,4 @@ vendor/
 example.config.js
 *.sublime-workspace
 web/dist/js/main.js
+*.log

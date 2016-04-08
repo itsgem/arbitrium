@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router';
+import tr from 'i18next';
 import DocTitle from 'components/docTitle';
 import LocalSignupForm from '../components/localSignupForm';
 
@@ -36,10 +38,18 @@ export default React.createClass( {
 
                     <p>Create a free account</p>
                 </div>
-        
+
                 <LocalSignupForm signup={this.props.signup}/>
 
                 <div className="strike"><span className="or"></span></div>
+
+                <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
+                    <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
+                        <Link
+                            to="/login"
+                        >{tr.t('login')}</Link>
+                    </div>
+                </div>
             </div>
         );
     }

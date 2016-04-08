@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import tr from 'i18next';
@@ -9,7 +10,6 @@ class LocalAuthenticationForm extends React.Component {
         super(props);
 
         this.state = {
-            username: null,
             password: null,
             email: null,
             loading:false
@@ -46,10 +46,17 @@ class LocalAuthenticationForm extends React.Component {
                     </div>
 
                     <button
-                        className='auth-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
+                        className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
                         id='btn-login'
                         type='button'
                         onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
+
+                    { this.props.showLogin &&
+                        <Link
+                        className='auth-button secondary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
+                        id='btn-signup'
+                        to="/login">{ tr.t('login') }</Link>
+                    }
                 </form>
             </div>
         );
@@ -68,7 +75,7 @@ class LocalAuthenticationForm extends React.Component {
         this.setState( {
             loading: true,
         } );
-        let {email, username, password} = this.refs;
+        let {email, password} = this.refs;
 
         this.props.onButtonClick( {
             password: password.value,
