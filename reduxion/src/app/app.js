@@ -13,9 +13,6 @@ import Debug from 'debug';
 import i18n from 'utils/i18n';
 import rootView from './redux/rootView';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 Debug.enable("*,-engine*,-sockjs-client*,-socket*");
 
 let debug = new Debug("app");

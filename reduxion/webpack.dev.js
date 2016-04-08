@@ -1,3 +1,4 @@
+require('dotenv').config();
 var path = require( 'path' );
 var webpack = require( 'webpack' );
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
@@ -19,7 +20,7 @@ var webpackDevConfig = {
         new webpack.DefinePlugin( {
             'process.env': {
                 NODE_ENV: JSON.stringify( 'development' ),
-                API_URL: JSON.stringify( 'http://m3.dev.api.idearobin.com/1.0/' )
+                API_URL: JSON.stringify( process.env.API_URL )
             }
         } ),
         new OpenBrowserPlugin({ url: 'http://localhost:9991' })

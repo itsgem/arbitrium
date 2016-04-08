@@ -1,3 +1,4 @@
+require('dotenv').config();
 var path = require( 'path' );
 var webpack = require( 'webpack' );
 var CompressionPlugin = require('compression-webpack-plugin');
@@ -21,7 +22,8 @@ var webpackProdConfig = {
         new CleanPlugin(['./build']),
         new webpack.DefinePlugin( {
             'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production'),
+                API_URL: JSON.stringify( process.env.API_URL )
             }
         } ),
         new purify({
