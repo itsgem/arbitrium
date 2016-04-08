@@ -9,8 +9,8 @@ use App\Models\Logs\EmailLog;
 use App\Models\ResetToken;
 use App\Models\SystemSetting;
 use App\Nrb\NrbServices;
+use App\Services\Mail\Mailer;
 use Log;
-use SendGrid;
 use View;
 
 class MailServices extends NrbServices
@@ -132,53 +132,17 @@ class MailServices extends NrbServices
     // Mail WebHook Listener
     public function statusUpdate($request)
     {
-        $events = json_decode($request, true);
-        Log::info('Mail web hook called');
-        Log::info($events);
-        foreach($events as $event)
-        {
-            $mail_id = get_val($event, 'ArbitriumMailID');
-            // $send_grid_msg_id = get_val($event, 'sg_message_id');
-            $email_log = EmailLog::mailId($mail_id)->first();
-            if ($email_log)
-            {
-                $event = get_val($event, 'event');
-                $reason = '';
-                if (!in_array($event, ['Processed', 'Delivered', 'Open', 'Click']))
-                {
-                    $reason = $event;
-                    $event  = EmailLog::REJECTED;
-                }
-                $email_log->update(['email_status' => $event, 'email_reject_reason' => $reason]);
-            }
-        }
+        $mailer = Mailer::newInstance();
+        $mailer->webhookHandler($request);
         return $this->respondWithSuccess($request->all());
     }
 
     private function send($data, $async = false)
     {
-        try
+        $mailer = Mailer::newInstance();
+        $mailer->send($data, $async);
+        if (isset($mailer->mail_id))
         {
-            $mail_id = generate_token();
-            $a_send_to = [];
-            $a_send_to_name = [];
-            $a_to_email = explode(',', $data['to_email_address']);
-            foreach($a_to_email as $email)
-            {
-                $a_send_to[] = $email;
-                $a_send_to_name[] = $data['to_name'];
-            }
-
-            $sendgrid = new SendGrid(env('SENDGRID_APIKEY'));
-            $email    = new SendGrid\Email();
-            $email->addTo($a_send_to, $a_send_to_name)
-                    ->setFrom($data['from_email_address'])
-                    ->setSubject($data['subject'])
-                    ->setReplyTo($data['from_email_address'])
-                    ->addUniqueArg("ArbitriumMailID", $mail_id)
-                    ->setHtml($data['content']);
-            $a_response = $sendgrid->send($email);
-
             EmailLog::create([
                 'sent_at'               => current_datetime(),
                 'sender_type'           => $data['sender_type'],
@@ -190,21 +154,11 @@ class MailServices extends NrbServices
                 'from_email_address'    => $data['from_email_address'],
                 'notes'                 => $data['notes'],
                 'attachment'            => $data['attachment'],
-                'email_status'          => 'Processed',
-                'email_reject_reason'   => $data['email_reject_reason'],
                 'content'               => $data['content'],
-                'mail_id'               => $mail_id,
+                'mail_id'               => $mailer->mail_id,
+                'email_status'          => $mailer->email_status,
+                'email_reject_reason'   => $mailer->email_reject_reason,
             ]);
-
-        }
-        catch(\SendGrid\Exception $e)
-        {
-            // Mail errors are thrown as exceptions
-            Log::error('A sendgrid error occurred: ' . get_class($e) . ' - ' . $e->getCode());
-            foreach($e->getErrors() as $er) 
-            {
-                Log::error($er);
-            }
         }
     }
 

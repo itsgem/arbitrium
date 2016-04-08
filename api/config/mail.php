@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'no-reply@arbitrium.com', 'name' => null],
+    'from' => ['address' => 'no-reply@arbitriumgroup.com', 'name' => null],
 
     /*
     |--------------------------------------------------------------------------
