@@ -13,7 +13,6 @@ export default {
     signupLocal(payload) {
         return post('auth/register', {
             params: {
-                username: payload.username,
                 password: payload.password,
                 email: payload.email
             }
@@ -22,7 +21,7 @@ export default {
     loginLocal(payload) {
         return post('login', {
             params: {
-                username: payload.email,
+                email: payload.email,
                 password: payload.password
             }
         });
