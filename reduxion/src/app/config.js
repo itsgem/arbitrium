@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as ENV from '../../.env';
 
 /* global process */
 let env = process.env;
@@ -22,8 +23,8 @@ let config = {
     },
 
     production: {
-        env: "production"
-
+        env: "production",
+        apiUrl: ENV.API_URL
     }
 };
 
