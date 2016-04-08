@@ -11,6 +11,7 @@
         "maknz/slack": "^1.7",
         "barryvdh/laravel-dompdf": "0.6.*",
         "barryvdh/laravel-cors": "0.7.x",
+        "mandrill/mandrill": "1.0.*",
         "sendgrid/sendgrid": "~4.0"
     },
     "require-dev": {
