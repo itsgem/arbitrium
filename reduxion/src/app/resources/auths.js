@@ -19,7 +19,7 @@ export default {
         });
     },
     loginLocal(payload) {
-        return post('login', {
+        return post('auth/login', {
             params: {
                 email: payload.email,
                 password: payload.password

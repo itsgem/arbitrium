@@ -11,6 +11,6 @@ if (!window.location.origin) {
 
 export default function( url ) {
     var fullUrl = config.apiUrl +  url;
-debug('request sent to', fullUrl);
+	debug('Request sent to', config.apiUrl);
     return fullUrl;
 }
