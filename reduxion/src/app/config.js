@@ -1,7 +1,5 @@
 import _ from 'lodash';
 
-require('dotenv').config();
-
 /* global process */
 let env = process.env;
 
@@ -11,16 +9,14 @@ let config = {
         title: 'Reduxion',
         description: 'Reduxion is a redux boilerplate written in es6/es7',
         apiUrl: env.API_URL,
-        analytics: {
-            google: ""
-        },
         socialAuth: {
             facebook: true
         }
     },
 
     development: {
-        env: "development"
+        env: "development",
+        apiUrl: env.API_URL
     },
 
     production: {
