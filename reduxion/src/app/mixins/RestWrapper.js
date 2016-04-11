@@ -1,4 +1,4 @@
-import _ from 'lodash';
+Wimport _ from 'lodash';
 import React from 'react';
 import Spinner from 'components/spinner';
 import Debug from 'debug';

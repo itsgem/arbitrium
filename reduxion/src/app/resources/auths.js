@@ -19,10 +19,11 @@ export default {
         });
     },
     loginLocal(payload) {
-        return post('login', {
+        return post('api/v1/auth/login', {
             params: {
-                email: payload.email,
-                password: payload.password
+                login: payload.email,
+                password: payload.password,
+                user_type:"2"
             }
         });
     },
