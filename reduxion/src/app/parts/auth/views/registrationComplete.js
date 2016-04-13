@@ -44,7 +44,7 @@ export default React.createClass( {
     renderError(){
         let {error} = this.props;
         if (!error) return;
-        if (error.data && error.data.name === 'NoSuchCode') {
+        if ( error.data.message || error.data.errors.token) {
             return (
                 <div className="alert alert-warning text-center animate bounceIn" role="alert">
                     The email verification code is no longer valid.

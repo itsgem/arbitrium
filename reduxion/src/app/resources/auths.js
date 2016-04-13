@@ -1,6 +1,9 @@
 import {
     post,
-    get
+    get,
+    put,
+    del,
+    patch
 } from 'utils/http';
 
 export default {
@@ -30,9 +33,10 @@ export default {
         return post('logout');
     },
     verifyEmailCode(code) {
-        return post('auth/verify_email_code/', {
+        return patch('user/register/verify', {
             params: {
-                code: code
+                token: code,
+                callback_url: 'http://arbitrium.local/login'
             }
         });
     },
