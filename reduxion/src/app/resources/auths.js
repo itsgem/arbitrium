@@ -1,6 +1,9 @@
 import {
     post,
-    get
+    get,
+    put,
+    del,
+    patch
 } from 'utils/http';
 
 export default {
@@ -11,10 +14,29 @@ export default {
         return get('auth/' + provider);
     },
     signupLocal(payload) {
-        return post('auth/register', {
+        return post('user/client/register', {
             params: {
-                password: payload.password,
-                email: payload.email
+            company_name: payload.company_name,
+            street_1: payload.street_1,
+            street_2: payload.street_2,
+            city: payload.city,
+            state: payload.state,
+            zip: payload.zip,
+            rep_first_name: payload.rep_first_name,
+            rep_last_name: payload.rep_last_name,
+            gender: payload.gender,
+            rep_email_address: payload.rep_email_address,
+            rep_mobile_code: payload.rep_mobile_code,
+            rep_mobile_number: payload.rep_mobile_number,
+            rep_phone_code: payload.rep_phone_code,
+            rep_position: payload.rep_position,
+            rep_department: payload.rep_department,
+            username: payload.username,
+            password: payload.password,
+            password_confirmation: payload.password_confirmation,
+            email_address: payload.email_address,
+            username: payload.username,
+            callback_url: "http://test.com/"
             }
         });
     },
@@ -28,6 +50,9 @@ export default {
     },
     logout() {
         return post('logout');
+    },
+    listCountries() {
+        return get('list/countries');
     },
     verifyEmailCode(code) {
         return post('auth/verify_email_code/', {

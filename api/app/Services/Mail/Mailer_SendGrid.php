@@ -3,6 +3,7 @@
 namespace App\Services\Mail;
 
 use App\Models\Logs\EmailLog;
+use Log;
 use SendGrid;
 use SendGrid\Email;
 use SendGrid\Exception;

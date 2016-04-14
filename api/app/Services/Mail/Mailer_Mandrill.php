@@ -3,6 +3,7 @@
 namespace App\Services\Mail;
 
 use App\Models\Logs\EmailLog;
+use Log;
 use Mandrill;
 use Mandrill_Error;
 

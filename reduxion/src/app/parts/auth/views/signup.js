@@ -7,11 +7,12 @@ import LocalSignupForm from '../components/localSignupForm';
 export default React.createClass( {
     propTypes:{
         registerCompleted: React.PropTypes.bool.isRequired,
-        signup: React.PropTypes.func.isRequired
+        signup: React.PropTypes.func.isRequired,
+        country: React.PropTypes.func.isRequired
+
     },
 
     render() {
-
         return (
             <div id="signup" className="auth-view">
                 <DocTitle
@@ -33,13 +34,7 @@ export default React.createClass( {
     renderRegisterForm(){
         return (
             <div className="signup-view">
-                <div className="callout">
-                    <h2>Register An Account</h2>
-
-                    <p>Create a free account</p>
-                </div>
-
-                <LocalSignupForm signup={this.props.signup}/>
+                <LocalSignupForm signup={this.props.signup} country={this.props.country}/>
 
                 <div className="strike"><span className="or"></span></div>
 
