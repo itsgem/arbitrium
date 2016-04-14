@@ -3,6 +3,7 @@
 namespace App\Services\Mail;
 
 use App\Models\Logs\EmailLog;
+use Log;
 use Mandrill;
 use Mandrill_Error;
 
@@ -41,6 +42,7 @@ class Mailer_Mandrill extends Mailer
         }
         catch(Mandrill_Error $e)
         {
+            $this->mail_id = NULL;
             // Mandrill errors are thrown as exceptions
             Log::error('A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage());
         }

@@ -3,6 +3,7 @@
 namespace App\Services\Mail;
 
 use App\Models\Logs\EmailLog;
+use Log;
 use SendGrid;
 use SendGrid\Email;
 use SendGrid\Exception;
@@ -37,6 +38,7 @@ class Mailer_SendGrid extends Mailer
         }
         catch(Exception $e)
         {
+            $this->mail_id = NULL;
             // Mail errors are thrown as exceptions
             Log::error('A sendgrid error occurred: ' . get_class($e) . ' - ' . $e->getCode());
             foreach($e->getErrors() as $er)
