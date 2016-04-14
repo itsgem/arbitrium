@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { signup } from '../reducers/signup'
+import { country } from '../reducers/country'
 import SignupView from '../views/signup';
 
 const mapStateToProps = (state) => {
@@ -7,6 +8,7 @@ const mapStateToProps = (state) => {
     registerCompleted: state.get('signup').get('registerCompleted')
   };
 }
+
 export default connect(mapStateToProps, {
-  signup
+  signup, country
 })(SignupView)

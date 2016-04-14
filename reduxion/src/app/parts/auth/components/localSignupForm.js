@@ -1,7 +1,7 @@
 import React from 'react';
 import Checkit from 'checkit';
 
-import LocalAuthenticationForm from '../components/localAuthenticationForm';
+import LocalAuthenticationFormSignup from '../components/localAuthenticationFormSignup';
 import {createError} from 'utils/error';
 
 import Debug from 'debug';
@@ -13,26 +13,34 @@ class LocalSignupForm extends React.Component {
         super(props);
         this.state = {
             errors: {},
-            errorServer:null
+            errorServer:null,
+            country: null
         };
     }
 
-    componentDidMount() {
-        if ( typeof(window.componentHandler) != 'undefined' )
-        {
-            setTimeout(() => {window.componentHandler.upgradeDom()},10);
-        }
+    // componentDidMount() {
+    //     if ( typeof(window.componentHandler) != 'undefined' )
+    //     {
+    //         setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    //     }
+    // }
+
+    componentWillMount() {
+        //this.setState({country: this.props.country.call();
+        console.log('test', country.call(this).then(country));
     }
 
     renderError() {
         let error = this.state.errorServer;
         if(!error) return;
-
+        let arr = Object.keys(error.response).map(function (key) {return error.response[key]});
         return (
             <div className="alert alert-danger text-center animate bounceIn" role="alert">
-                <div>An error occured: {error.name}</div>
-                <div>{error.message}</div>
-                <div>Status Code: {error.status}</div>
+                {
+                    arr.map(function(msg) {
+                        return <div>{msg}</div>;
+                    })
+                }
             </div>
         );
     }
@@ -41,7 +49,7 @@ class LocalSignupForm extends React.Component {
         return (
             <div className="local-signup-form">
                 { this.renderError()}
-                <LocalAuthenticationForm
+                <LocalAuthenticationFormSignup
                     showLogin={true}
                     buttonCaption={this.props.buttonCaption || 'Create an account' }
                     errors={ this.state.errors }
@@ -69,7 +77,8 @@ class LocalSignupForm extends React.Component {
 //////////////////////
 
 LocalSignupForm.propTypes = {
-    signup: React.PropTypes.func.isRequired
+    signup: React.PropTypes.func.isRequired,
+    country: React.PropTypes.func.isRequired
 };
 
 LocalSignupForm.defaultProps = {
@@ -78,10 +87,31 @@ LocalSignupForm.defaultProps = {
 
 //////////////////////
 
+function country(){
+    return this.props.country();
+}
+
 function validateSignup( payload ) {
     let rules = new Checkit( {
-        password: [ 'required', 'alphaDash', 'minLength:6', 'maxLength:64' ],
-        email: [ 'required', 'email', 'minLength:6', 'maxLength:64' ]
+        // company_name: { rule: 'required'},
+        // street_1: [],
+        // street_2: [],
+        // city: [],
+        // state: [],
+        // zip: [],
+        // rep_first_name: { rule: 'required', label: 'first name' },
+        // rep_last_name: { rule: 'required', label: 'last name' },
+        // gender: [],
+        // rep_email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+        // rep_mobile_code: [],
+        // rep_mobile_number: [],
+        // rep_phone_code: [],
+        // rep_position: { rule: 'required', label: 'position' },
+        // rep_department: { rule: 'required', label: 'department' },
+        // password_confirmation: {rule: 'required', label: 'confirm password'},
+        // password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
+        // email_address:  ['required', 'email', 'minLength:6', 'maxLength:64' ],
+        username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
     } );
 
     return rules.run( payload );
