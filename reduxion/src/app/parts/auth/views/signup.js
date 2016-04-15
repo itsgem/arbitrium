@@ -8,8 +8,12 @@ export default React.createClass( {
     propTypes:{
         registerCompleted: React.PropTypes.bool.isRequired,
         signup: React.PropTypes.func.isRequired,
+        countryList: React.PropTypes.object,
         country: React.PropTypes.func.isRequired
 
+    },
+    componentDidMount(){
+        this.props.country();
     },
 
     render() {
@@ -32,9 +36,10 @@ export default React.createClass( {
         );
     },
     renderRegisterForm(){
+        let countryList = this.props.countryList;
         return (
             <div className="signup-view">
-                <LocalSignupForm signup={this.props.signup} country={this.props.country}/>
+                <LocalSignupForm signup={this.props.signup} country={countryList}/>
 
                 <div className="strike"><span className="or"></span></div>
 

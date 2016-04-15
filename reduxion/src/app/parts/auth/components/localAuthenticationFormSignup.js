@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import tr from 'i18next';
+import Country from '../components/country';
 
 class LocalAuthenticationFormSignup extends React.Component {
 
@@ -106,18 +107,10 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--3-col">
-                                <div className="mdl-select mdl-js-select mdl-select--floating-label">
-                                    <select className="mdl-select__input" id="country" name="country">
-                                        <option value=""></option>
-                                        <option value="option1">option 1</option>
-                                        <option value="option2">option 2</option>
-                                        <option value="option3">option 3</option>
-                                        <option value="option4">option 4</option>
-                                        <option value="option5">option 5</option>
-                                    </select>
-                                    <label className="mdl-textfield__label" htmlFor="country">{tr.t('Country')}</label>
-                                    {errors.country && <small className="mdl-textfield__error shown">{errors.country[0]}</small>}
-                                </div>
+                                <Country
+                                    country = { this.props.country }
+                                    errors = { errors }
+                                />
                             </div>
                         </div>
                     </div>
@@ -149,7 +142,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('gender')}>
+                                <div className={this.formClassNames('gender')}>
                                         <select
                                             className="mdl-select__input"
                                             type="gender"
@@ -324,18 +317,6 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
                         </div>
                     </div>
-                    {/*<button
-                        className='md-raised md-primary md-hue-1 full-width margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope md-formal-blue-theme md-ink-ripple'
-                        id='btn-login'
-                        type='button'
-                        onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
-
-                    { this.props.showLogin &&
-                        <Link
-                        className='auth-button secondary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
-                        id='btn-signup'
-                        to="/login">{ tr.t('login') }</Link>
-                    } */}
                 </form>
             </div>
         );

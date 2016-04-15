@@ -13,21 +13,15 @@ class LocalSignupForm extends React.Component {
         super(props);
         this.state = {
             errors: {},
-            errorServer:null,
-            country: null
+            errorServer:null
         };
     }
 
-    // componentDidMount() {
-    //     if ( typeof(window.componentHandler) != 'undefined' )
-    //     {
-    //         setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    //     }
-    // }
-
-    componentWillMount() {
-        //this.setState({country: this.props.country.call();
-        console.log('test', country.call(this).then(country));
+    componentDidMount() {
+        if ( typeof(window.componentHandler) != 'undefined' )
+        {
+            setTimeout(() => {window.componentHandler.upgradeDom()},10);
+        }
     }
 
     renderError() {
@@ -51,6 +45,7 @@ class LocalSignupForm extends React.Component {
                 { this.renderError()}
                 <LocalAuthenticationFormSignup
                     showLogin={true}
+                    country= {this.props.country}
                     buttonCaption={this.props.buttonCaption || 'Create an account' }
                     errors={ this.state.errors }
                     onButtonClick={(payload) => {this.signup(payload)}}
@@ -77,8 +72,7 @@ class LocalSignupForm extends React.Component {
 //////////////////////
 
 LocalSignupForm.propTypes = {
-    signup: React.PropTypes.func.isRequired,
-    country: React.PropTypes.func.isRequired
+    signup: React.PropTypes.func.isRequired
 };
 
 LocalSignupForm.defaultProps = {
@@ -87,31 +81,29 @@ LocalSignupForm.defaultProps = {
 
 //////////////////////
 
-function country(){
-    return this.props.country();
-}
-
 function validateSignup( payload ) {
     let rules = new Checkit( {
-        // company_name: { rule: 'required'},
-        // street_1: [],
-        // street_2: [],
-        // city: [],
-        // state: [],
-        // zip: [],
-        // rep_first_name: { rule: 'required', label: 'first name' },
-        // rep_last_name: { rule: 'required', label: 'last name' },
-        // gender: [],
-        // rep_email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
-        // rep_mobile_code: [],
-        // rep_mobile_number: [],
-        // rep_phone_code: [],
-        // rep_position: { rule: 'required', label: 'position' },
-        // rep_department: { rule: 'required', label: 'department' },
-        // password_confirmation: {rule: 'required', label: 'confirm password'},
-        // password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-        // email_address:  ['required', 'email', 'minLength:6', 'maxLength:64' ],
+        company_name: { rule: 'required'},
+        street_1: [],
+        street_2: [],
+        city: [],
+        state: [],
+        zip: [],
+        rep_first_name: { rule: 'required', label: 'first name' },
+        rep_last_name: { rule: 'required', label: 'last name' },
+        gender: [],
+        rep_email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+        rep_mobile_code: [],
+        rep_mobile_number: [],
+        rep_phone_code: [],
+        rep_position: { rule: 'required', label: 'position' },
+        rep_department: { rule: 'required', label: 'department' },
+        password_confirmation: {rule: 'required', label: 'confirm password'},
+        password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
+        email_address:  ['required', 'email', 'minLength:6', 'maxLength:64' ],
         username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+        password: [ 'required', 'alphaDash', 'minLength:6', 'maxLength:64' ],
+        email: [ 'required', 'email', 'minLength:6', 'maxLength:64' ]
     } );
 
     return rules.run( payload );
