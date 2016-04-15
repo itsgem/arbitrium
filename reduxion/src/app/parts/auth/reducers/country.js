@@ -18,9 +18,9 @@ export const country = createActionAsync('COUNTRY', auth.listCountries);
 
 
 const initialState = Immutable.fromJS({
-  country: false
+  countryList: {}
 });
 
 export default createReducer({
-  [country.ok]: (state) => state.merge({country: true})
+  [country.ok]: (state, payload) => state.merge({countryList: payload})
 }, initialState);

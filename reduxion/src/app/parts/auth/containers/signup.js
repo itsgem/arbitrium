@@ -5,7 +5,8 @@ import SignupView from '../views/signup';
 
 const mapStateToProps = (state) => {
   return {
-    registerCompleted: state.get('signup').get('registerCompleted')
+    registerCompleted: state.get('signup').get('registerCompleted'),
+    countryList: state.get('country').get('countryList')
   };
 }
 
