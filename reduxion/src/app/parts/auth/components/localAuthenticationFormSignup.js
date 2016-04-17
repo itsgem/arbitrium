@@ -2,14 +2,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
-import tr from 'i18next';
 import Country from '../components/country';
 
 class LocalAuthenticationFormSignup extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             password: null,
             email: null,
@@ -35,37 +33,37 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('company_name')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="company_name"
+                                        type="text"
                                         id='company_name'
                                         ref="company_name"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="company_name">{tr.t('Company name *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
                                     {errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
                                 </div>
                             </div>
 
                             <div className="mdl-cell mdl-cell--6-col">
-                                <div className={this.formClassNames('street_1')}>
+                                <div className={this.formClassNames('street_address_1')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="street_1"
-                                        id='street_1'
-                                        ref="street_1"
+                                        type="text"
+                                        id='street_address_1'
+                                        ref="street_address_1"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="street_1">{tr.t('Street Address 1')}</label>
-                                    {errors.street_1 && <small className="mdl-textfield__error shown">{errors.street_1[0]}</small>}
+                                    <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1</label>
+                                    {errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--6-col">
-                                <div className={this.formClassNames('street_2')}>
+                                <div className={this.formClassNames('street_address_2')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="street_2"
-                                        id='street_2'
-                                        ref="street_2"
+                                        type="text"
+                                        id='street_address_2'
+                                        ref="street_address_2"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="street_2">{tr.t('Street Address 2')}</label>
-                                    {errors.street_2 && <small className="mdl-textfield__error shown">{errors.street_2[0]}</small>}
+                                    <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
+                                    {errors.street_address_2 && <small className="mdl-textfield__error shown">{errors.street_address_2[0]}</small>}
                                 </div>
                             </div>
 
@@ -73,11 +71,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('city')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="city"
+                                        type="text"
                                         id='city'
                                         ref="city"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="city">{tr.t('City')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="city">City</label>
                                     {errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
                                 </div>
                             </div>
@@ -86,30 +84,29 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('state')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="state"
+                                        type="text"
                                         id='state'
                                         ref="state"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="state">{tr.t('State / Province')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="state">State / Province</label>
                                     {errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--3-col">
-                                <div className={this.formClassNames('zip')}>
+                                <div className={this.formClassNames('postal_code')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="zip"
-                                        id='zip'
-                                        ref="zip"
+                                        type="text"
+                                        id='postal_code'
+                                        ref="postal_code"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="zip">{tr.t('Postal code')}</label>
-                                    {errors.zip && <small className="mdl-textfield__error shown">{errors.zip[0]}</small>}
+                                    <label className="mdl-textfield__label" htmlFor="postal_code">Postal code</label>
+                                    {errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--3-col">
                                 <Country
                                     country = { this.props.country }
-                                    errors = { errors }
                                 />
                             </div>
                         </div>
@@ -121,11 +118,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_first_name')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_first_name"
+                                        type="text"
                                         id='rep_first_name'
                                         ref="rep_first_name"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('First name *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
                                     {errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
                                 </div>
                             </div>
@@ -133,27 +130,26 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_first_name')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_last_name"
+                                        type="text"
                                         id='rep_last_name'
                                         ref="rep_last_name"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('Last name *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
                                     {errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--3-col">
-                                <div className={this.formClassNames('gender')}>
+                                <div className={this.formClassNames('rep_gender')}>
                                         <select
                                             className="mdl-select__input"
-                                            type="gender"
-                                            id='gender'
-                                            ref="gender" >
+                                            id='rep_gender'
+                                            ref="rep_gender" >
                                             <option value=""></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
-                                        <label className="mdl-textfield__label" htmlFor="gender">{tr.t('Gender')}</label>
-                                        {errors.gender && <small className="mdl-textfield__error shown">{errors.gender[0]}</small>}
+                                        <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+                                        {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
                                 </div>
                             </div>
 
@@ -161,11 +157,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_email_address')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_email_address"
+                                        type="text"
                                         id='rep_email_address'
                                         ref="rep_email_address"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_email_address">{tr.t('E-mail *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
                                     {errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
                                 </div>
                             </div>
@@ -174,11 +170,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_mobile_code')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_mobile_code"
+                                        type="text"
                                         id='rep_mobile_code'
                                         ref="rep_mobile_code"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_mobile_code">{tr.t('Code')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Code</label>
                                     {errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
                                 </div>
                             </div>
@@ -186,11 +182,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_mobile_number')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_mobile_number"
+                                        type="text"
                                         id='rep_mobile_number'
                                         ref="rep_mobile_number"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_mobile_number">{tr.t('Mobile no.')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.</label>
                                     {errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
                                 </div>
                             </div>
@@ -199,11 +195,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_phone_code')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_phone_code"
+                                        type="text"
                                         id='rep_phone_code'
                                         ref="rep_phone_code"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_phone_code">{tr.t('Code')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_phone_code">Code</label>
                                     {errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
                                 </div>
                             </div>
@@ -211,11 +207,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_phone_number')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_phone_number"
+                                        type="text"
                                         id='rep_phone_number'
                                         ref="rep_phone_number"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_phone_number">{tr.t('Phone no.')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
                                     {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
                                 </div>
                             </div>
@@ -224,11 +220,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_position')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_position"
+                                        type="text"
                                         id='rep_position'
                                         ref="rep_position"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_position">{tr.t('Position *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_position">Position *</label>
                                     {errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
                                 </div>
                             </div>
@@ -237,11 +233,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('rep_department')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="rep_department"
+                                        type="text"
                                         id='rep_department'
                                         ref="rep_department"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="rep_department">{tr.t('Department *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="rep_department">Department *</label>
                                     {errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
                                 </div>
                             </div>
@@ -254,11 +250,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('email_address')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="email_address"
+                                        type="email"
                                         id='email_address'
                                         ref="email_address"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('E-mail *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="email_address">E-mail *</label>
                                     {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                                 </div>
                             </div>
@@ -266,11 +262,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('username')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="username"
+                                        type="text"
                                         id='username'
                                         ref="username"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="username">{tr.t('Username *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="username">Username *</label>
                                     {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
                                 </div>
                             </div>
@@ -282,7 +278,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                                         ref="password"
                                         type='password'
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="password">password</label>
                                     {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                                 </div>
                             </div>
@@ -290,11 +286,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <div className={this.formClassNames('password_confirmation')}>
                                     <input
                                         className="mdl-textfield__input"
-                                        type="password_confirmation"
+                                        type="password"
                                         id='password_confirmation'
                                         ref="password_confirmation"
                                         />
-                                    <label className="mdl-textfield__label" htmlFor="password_confirmation">{tr.t('Confirm password *')}</label>
+                                    <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password *</label>
                                     {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                                 </div>
                             </div>
@@ -335,24 +331,26 @@ class LocalAuthenticationFormSignup extends React.Component {
         this.setState( {
             loading: true,
         } );
-        let {email_address, password, username, company_name, street_1, street_2, city, state, zip,
-            rep_first_name, rep_last_name, gender, rep_email_address, rep_mobile_code,
-            rep_mobile_number, rep_phone_code, rep_position, rep_department, password_confirmation} = this.refs;
+        let {email_address, password, username, company_name, street_address_1, street_address_2, city, state, postal_code,
+            rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
+            rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department, password_confirmation} = this.refs;
 
         this.props.onButtonClick( {
             company_name: company_name.value,
-            street_1: street_1.value,
-            street_2: street_2.value,
+            street_address_1: street_address_1.value,
+            street_address_2: street_address_2.value,
             city: city.value,
             state: state.value,
-            zip: zip.value,
+            postal_code: postal_code.value,
+            country_id: country_id.value,
             rep_first_name: rep_first_name.value,
             rep_last_name: rep_last_name.value,
-            gender: gender.value,
+            rep_gender: rep_gender.value,
             rep_email_address: rep_email_address.value,
             rep_mobile_code: rep_mobile_code.value,
             rep_mobile_number: rep_mobile_number.value,
             rep_phone_code: rep_phone_code.value,
+            rep_phone_number: rep_phone_number.value,
             rep_position: rep_position.value,
             rep_department: rep_department.value,
             password_confirmation: password_confirmation.value,

@@ -17,18 +17,20 @@ export default {
         return post('user/client/register', {
             params: {
             company_name: payload.company_name,
-            street_1: payload.street_1,
-            street_2: payload.street_2,
+            street_address_1: payload.street_address_1,
+            street_address_2: payload.street_address_2,
             city: payload.city,
             state: payload.state,
-            zip: payload.zip,
+            postal_code: payload.postal_code,
+            country_id: payload.country_id,
             rep_first_name: payload.rep_first_name,
             rep_last_name: payload.rep_last_name,
-            gender: payload.gender,
+            rep_gender: payload.rep_gender,
             rep_email_address: payload.rep_email_address,
             rep_mobile_code: payload.rep_mobile_code,
             rep_mobile_number: payload.rep_mobile_number,
             rep_phone_code: payload.rep_phone_code,
+            rep_phone_number: payload.rep_phone_number,
             rep_position: payload.rep_position,
             rep_department: payload.rep_department,
             username: payload.username,
@@ -36,7 +38,7 @@ export default {
             password_confirmation: payload.password_confirmation,
             email_address: payload.email_address,
             username: payload.username,
-            callback_url: "http://test.com/"
+            callback_url: "http://localhost:9991/verifyEmail/"
             }
         });
     },
