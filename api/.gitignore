@@ -4,3 +4,4 @@ Homestead.yaml
 .env
 composer.lock
 storage/temp/
+storage/docs/

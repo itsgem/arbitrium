@@ -149,7 +149,8 @@ return [
          */
         'Barryvdh\DomPDF\ServiceProvider',  // PDF Lib
         'Maknz\Slack\SlackServiceProvider', // Slack webhook
-        'Barryvdh\Cors\ServiceProvider'
+        'Barryvdh\Cors\ServiceProvider',
+        'Jlapp\Swaggervel\SwaggervelServiceProvider' // API Documentation
 
     ],
 
