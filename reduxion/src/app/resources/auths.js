@@ -52,7 +52,7 @@ export default {
         });
     },
     clientProfile(id) {
-        return post('admin/client/{id}/approve');
+        return get('admin/client/' + id);
     },
     clientApprove(id) {
         return post('admin/client/{id}/approve');

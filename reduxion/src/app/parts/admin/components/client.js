@@ -8,13 +8,12 @@ class Client extends React.Component {
 	constructor(props) {
         super(props);
         this.state = {
-            password: null,
-            email: null,
-            loading:false
+            errors: null
         }
     }
     render() {
-    	let {errors} = this.props;
+        let {errors} = this.props;
+        let clientInfo = this.props.clientInfo;
         return (
             <div id="client" className="inner_content">
                 <form className="mdl-shadow--2dp" action={ this.login }>

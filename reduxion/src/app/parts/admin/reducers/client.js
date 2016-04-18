@@ -5,18 +5,15 @@ import { createActionAsync} from 'redux-act-async';
 import auth from 'resources/auths';
 console.log('aaa', auth);
 
-export const clientProfile = createActionAsync('CLIENTADMIN', auth.clientProfile);
-export const country = createActionAsync('COUNTRY', auth.listCountries);
+export const clientProfile = createActionAsync('CLIENTPROFILE', auth.clientProfile);
 export const clientApprove = createActionAsync('CLIENTAPPROVE', auth.clientApprove);
 
 const initialState = Immutable.fromJS({
-  clientProfile: {},
-  countryList: {},
-  clientApprove: {}
+  clientProfileSuccess: {},
+  clientApproveSuccess: {}
 });
 
 export default createReducer({
-  [clientProfile.ok]: (state, payload) => state.merge({clientProfile: payload}),
-  [country.ok]: (state, payload) => state.merge({countryList: payload}),
-  [clientApprove.ok]: (state, payload) => state.merge({clientApprove: payload})
+  [clientProfile.ok]: (state, payload) => state.merge({clientProfileSuccess: state.concat(payload)}),
+  [clientApprove.ok]: (state, payload) => state.merge({clientApproveSuccess: payload})
 }, initialState);

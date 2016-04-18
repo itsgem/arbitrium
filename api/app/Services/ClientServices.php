@@ -130,7 +130,7 @@ class ClientServices extends NrbServices
 
         $client = $client->findOrFail($id);
         $this->addResponseData($client);
-        return $this->respondWithSuccess(['can_delete' => $client->canDelete()]);
+        return $this->respondWithSuccess($client);
     }
 
     // Admin\ClientsController::store
