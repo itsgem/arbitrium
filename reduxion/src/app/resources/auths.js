@@ -62,7 +62,7 @@ export default {
         return patch('user/register/verify', {
             params: {
                 token: code,
-                callback_url: 'http://arbitrium.local/login'
+                callback_url: 'http://localhost:9991/login'
             }
         });
     },
