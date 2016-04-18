@@ -50,5 +50,11 @@ export default {
                 password
             }
         });
+    },
+    clientProfile(id) {
+        return post('admin/client/{id}/approve');
+    },
+    clientApprove(id) {
+        return post('admin/client/{id}/approve');
     }
 };

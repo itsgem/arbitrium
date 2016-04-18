@@ -5,9 +5,12 @@ import signup from '../parts/auth/reducers/signup'
 import profile from '../parts/profile/reducers/profile'
 import router from '../parts/core/reducers/routerRedux'
 
+import clientadmin from '../parts/admin/reducers/client'
+
 export default combineReducers({
   auth,
   signup,
   profile,
-  router
+  router,
+  clientadmin
 })
