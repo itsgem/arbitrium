@@ -16,7 +16,8 @@ export default React.createClass( {
 
     componentDidMount(){
         debug("componentDidMount", this.props.params);
-        this.props.verifyEmailCode(this.props.params.code);
+        let code = window.location.search.split('?token=')[1];
+        this.props.verifyEmailCode(code);
     },
 
     componentWillReceiveProps(nextProps) {
