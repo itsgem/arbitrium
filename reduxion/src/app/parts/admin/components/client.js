@@ -1,12 +1,9 @@
 import React from 'react';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
-
 
 class Client extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-        errors: {},
         errorServer:null
     };
   }
@@ -25,7 +22,6 @@ class Client extends React.Component {
       );
     }
   }
-
   renderError() {
     let error = this.state.errorServer;
     if(!error) return;
@@ -41,23 +37,20 @@ class Client extends React.Component {
   renderClient() {
     let {errors} = this.props;
     let client = this.props.client;
-    //let status = this.props.client.clientInfo.approval_status == 'Pending'  && ((!client.clientDisapproveSuccess  || !client.clientApproveSuccess) == true)? true : false;
-    let status = (this.props.client.clientInfo.approval_status == 'Pending'  && !client.clientDisapproveSuccess  && !client.clientApproveSuccess) ? true : false;
-    console.log('0-----', status);
-    console.log('1-----', client.clientDisapproveSuccess);
-    console.log('2-----', client.clientApproveSuccess);
+    console.log('test',client);
+    let status = client.clientInfo.approval_status == 'Pending' ? true : false;
     return (
       <div>
           <span>Approval Status: </span><span>{client.clientInfo.approval_status}</span>
           { status &&
           <button
-              id='btn-login'
+              id='btnClientApproval'
               type='button'
               onClick={(e) => this.changeApprovalStatus(e)}>Approve</button>
           }
           { status &&
           <button
-              id='btn-login'
+              id='btnClientDisapproval'
               type='button'
               onClick={(e) => this.clientDisapproveStatus(e)}>Disapprove</button>
           }
@@ -67,11 +60,12 @@ class Client extends React.Component {
   changeApprovalStatus (e) {
     e.preventDefault();
     this.props.client.clientApprove(this.props.client.clientInfo.id);
+    this.props.client.clientfunc(this.props.client.clientInfo.id);
   }
   clientDisapproveStatus (e) {
     e.preventDefault();
     this.props.client.clientDisapprove(this.props.client.clientInfo.id);
-    
+    this.props.client.clientfunc(this.props.client.clientInfo.id);
   }
 }
 

@@ -1,12 +1,8 @@
 import React from 'react';
-import DocTitle from 'components/docTitle';
 import Client from '../components/client';
 
 export default React.createClass( {
-  contextTypes: {
-      router: React.PropTypes.object.isRequired
-  },
-  componentWillMount(){
+  componentDidMount(){
     let id = this.props.params.id;
     this.props.clientProfile(id);
   },
@@ -16,8 +12,6 @@ export default React.createClass( {
       clientInfo: this.props.clientProfileSuccess.get('data'),
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
-      clientDisapproveSuccess: this.props.clientDisapproveSuccess,
-      clientApproveSuccess: this.props.clientApproveSuccess
     };
     return (
         <div className="content box_admin">
