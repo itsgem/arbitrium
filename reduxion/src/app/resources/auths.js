@@ -57,9 +57,10 @@ export default {
         return get('list/countries');
     },
     verifyEmailCode(code) {
-        return post('auth/verify_email_code/', {
+        return patch('user/register/verify', {
             params: {
-                code: code
+                token: code,
+                callback_url: 'http://localhost:9991/login'
             }
         });
     },
