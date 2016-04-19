@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router';
-import tr from 'i18next';
 import DocTitle from 'components/docTitle';
 import LocalSignupForm from '../components/localSignupForm';
 
 export default React.createClass( {
     propTypes:{
         registerCompleted: React.PropTypes.bool.isRequired,
-        signup: React.PropTypes.func.isRequired
+        signup: React.PropTypes.func.isRequired,
+        countryList: React.PropTypes.object,
+    },
+    componentDidMount(){
+        this.props.country();
     },
 
     render() {
-
         return (
             <div id="signup" className="auth-view">
                 <DocTitle
@@ -31,25 +32,11 @@ export default React.createClass( {
         );
     },
     renderRegisterForm(){
+        let countryList = this.props.countryList;
         return (
             <div className="signup-view">
-                <div className="callout">
-                    <h2>Register An Account</h2>
-
-                    <p>Create a free account</p>
-                </div>
-
-                <LocalSignupForm signup={this.props.signup}/>
-
-                <div className="strike"><span className="or"></span></div>
-
-                <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
-                    <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-                        <Link
-                            to="/login"
-                        >{tr.t('login')}</Link>
-                    </div>
-                </div>
+                <LocalSignupForm signup={this.props.signup} signupError={this.props.signupError} country={countryList}/>
+                <div className="mdl-grid mdl-grid--no-spacing" id="other-links"></div>
             </div>
         );
     }
