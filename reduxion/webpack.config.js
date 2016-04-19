@@ -28,7 +28,7 @@ module.exports = function ( options ) {
             stats: 'errors-only',
             progress: true,
             host: '0.0.0.0',
-            port: 9991
+            port: 9000
         },
         entry: {
             vendor: _.reject(_.keys(pkg.dependencies), function(v) {
