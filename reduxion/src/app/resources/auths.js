@@ -43,8 +43,8 @@ export default {
         });
     },
     loginLocal(payload) {
-        return post('api/v1/auth/login', {
 
+        return post('api/v1/auth/login', {
             params: {
                 login: payload.email,
                 password: payload.password,
