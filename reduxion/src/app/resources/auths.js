@@ -1,6 +1,7 @@
 import {
     post,
-    get
+    get,
+    patch
 } from 'utils/http';
 
 export default {
@@ -55,6 +56,17 @@ export default {
         return get('admin/client/' + id);
     },
     clientApprove(id) {
-        return post('admin/client/{id}/approve');
+        return patch('admin/client/' + id + '/approve', {
+            params: {
+                'callback_url': 'http://localhost:9991/'
+            }
+        });
+    },
+    clientDisapprove(id) {
+        return patch('admin/client/' + id + '/disapprove', {
+            params: {
+                'callback_url': 'http://localhost:9991/'
+            }
+        });
     }
 };
