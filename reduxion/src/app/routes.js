@@ -25,7 +25,7 @@ export default () => (
         <Route component={Logout} path="logout"/>
         <Route component={Forgot} path="forgot"/>
 
-        <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/:code"/>
+        <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
         <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
 
         <Route path="admin" component={Authenticated}>

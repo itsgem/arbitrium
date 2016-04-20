@@ -12,7 +12,8 @@
         "barryvdh/laravel-dompdf": "0.6.*",
         "barryvdh/laravel-cors": "0.7.x",
         "mandrill/mandrill": "1.0.*",
-        "sendgrid/sendgrid": "~4.0"
+        "sendgrid/sendgrid": "~4.0",
+        "jlapp/swaggervel": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -46,6 +47,7 @@
             "php artisan optimize"
         ],
         "pre-update-cmd": [
+            "php artisan clear-compiled"
         ],
         "post-update-cmd": [
             "php artisan optimize"

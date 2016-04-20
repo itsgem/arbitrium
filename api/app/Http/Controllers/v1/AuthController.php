@@ -25,6 +25,51 @@ class AuthController extends ApiController
         ];
     }
 
+    /**
+     * Login
+     *
+     * @SWG\Post(
+     *     path="/auth/login",
+     *     tags={"Authentication"},
+     *     summary="Login",
+     *     description="Authenticates guest user by logging in, either as client or admin.",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", type="object", description="Token authentication", required={"token", "lifetime", "username"},
+     *                 @SWG\Property(property="token", type="string", description="Token authentication", default="f2c3e7769b74f865bd9059f190df8cccb1d055d589e5bf8b76217322da630f24"),
+     *                 @SWG\Property(property="lifetime", type="integer", format="int64", description="Token lifetime", default="20"),
+     *                 @SWG\Property(property="timezone", type="string", description="User's Timezone", default="Asia/Singapore"),
+     *                 @SWG\Property(property="username", type="string", description="Username of authenticated user", default="user_client_1"),
+     *             ),
+     *         )
+     *     ),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Login details",
+     *         required=true,
+     *         type="object",
+     *         @SWG\Schema(title="data", type="object",
+     *             @SWG\Property(property="login", type="string", description="Email address or username", default="user_client_1"),
+     *             @SWG\Property(property="password", type="string", description="Password", default="1234Password!@#$"),
+     *             @SWG\Property(property="user_type", type="integer", format="int64", description="[1 => admin, 2 => client]", default="2"),
+     *         )
+     *     )
+     * )
+     *
+     * @param LoginRequest $request
+     *
+     * @return mixed
+     */
     public function login(LoginRequest $request)
     {
         $user = User::usernameOrEmail($request->get('login'))->userType($request->get('user_type'))->active()->first();
