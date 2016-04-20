@@ -6,9 +6,13 @@ export default React.createClass( {
     let id = this.props.params.id;
     this.props.clientProfile(id);
   },
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.loading && (nextProps.clientDisapproveSuccess || nextProps.clientApproveSuccess)) {
+      nextProps.clientProfile(nextProps.params.id);
+    }
+  },
   render() {
     let client = {
-      clientfunc: this.props.clientProfile,
       clientInfo: this.props.clientProfileSuccess.get('data'),
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,

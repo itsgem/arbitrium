@@ -37,7 +37,6 @@ class Client extends React.Component {
   renderClient() {
     let {errors} = this.props;
     let client = this.props.client;
-    console.log('test',client);
     let status = client.clientInfo.approval_status == 'Pending' ? true : false;
     return (
       <div>
@@ -60,12 +59,10 @@ class Client extends React.Component {
   changeApprovalStatus (e) {
     e.preventDefault();
     this.props.client.clientApprove(this.props.client.clientInfo.id);
-    this.props.client.clientfunc(this.props.client.clientInfo.id);
   }
   clientDisapproveStatus (e) {
     e.preventDefault();
     this.props.client.clientDisapprove(this.props.client.clientInfo.id);
-    this.props.client.clientfunc(this.props.client.clientInfo.id);
   }
 }
 

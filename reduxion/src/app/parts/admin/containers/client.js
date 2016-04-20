@@ -6,7 +6,8 @@ const mapStateToProps = (state) => {
   return {
     clientProfileSuccess: state.get('clientadmin').get('clientProfileSuccess'),
     clientApproveSuccess: state.get('clientadmin').get('clientApproveSuccess'),
-    clientDisapproveSuccess: state.get('clientadmin').get('clientDisapproveSuccess')
+    clientDisapproveSuccess: state.get('clientadmin').get('clientDisapproveSuccess'),
+    loading: state.get('clientadmin').get('loading')
   };
 }
 

@@ -36,7 +36,6 @@ function ajax( url, method, options, params ) {
         url: baseUrl(url),
         params: params,
         data: data,
-        async: false,
         withCredentials: true,
         headers: {'Content-Type': 'application/json'},
         paramsSerializer: function(params) {
