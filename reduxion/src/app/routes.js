@@ -13,6 +13,7 @@ import RegistrationComplete from 'parts/auth/containers/registrationComplete';
 import ResetPassword from 'parts/auth/views/resetPassword';
 
 import MyProfile from 'parts/profile/containers/myProfile';
+import ClientProfile from 'parts/profile/containers/clientProfile';
 
 import UsersView from 'parts/admin/usersView';
 
@@ -32,11 +33,9 @@ export default () => (
             <Route component={UsersView} path="users"/>
         </Route>
 
-        <Route path="/app" component={Authenticated}>
-            <IndexRoute component={MyProfile}/>
-            <Route name="account" path="my">
-                <Route component={MyProfile} path="profile"/>
-            </Route>
+        <Route path="/client" component={Authenticated}>
+            <IndexRoute component={ClientProfile}/>
+            <Route component={ClientProfile} path="profile"/>
         </Route>
     </Route>
 );

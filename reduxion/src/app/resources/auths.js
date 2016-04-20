@@ -7,6 +7,13 @@ import {
 } from 'utils/http';
 
 export default {
+    getClientProfile() {
+        return get('client/profile', {
+            params: {
+                'with-user': 1
+            }
+        });
+    },
     getCurrentUser() {
         return get('me');
     },
