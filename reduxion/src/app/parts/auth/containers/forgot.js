@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
-import { requestPasswordReset } from '../reducers/auth'
+import { passwordReset } from '../reducers/auth'
 import ForgotView from '../views/forgot';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+	forgotPassword: state.get('auth').get('forgotPassword'),
+	error: state.get('auth').get('error')
+});
 
 export default connect(mapStateToProps, {
-  requestPasswordReset
+  passwordReset
 })(ForgotView)
