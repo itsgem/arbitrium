@@ -27,6 +27,7 @@ export default createReducer({
     forgotPassword: true
   }),
   [passwordReset.error]: (state, payload) => state.merge({
-    error: state.concat(payload)
+    error: state.concat(payload),
+    forgotPassword:false
   })
 }, initialState);

@@ -30,32 +30,47 @@ export default React.createClass( {
   },
 
   onChangeEmail(e) {
+    let error ={};
+    this.setState({errors:error ,step: 'SendPasswordResetEmail'});
     let email = e.target.value;
     this.setState({ email:email });
   },
   renderError() {
-      let error = this.props.error.get('status') ? true : false;
+      let error =this.props.error.get('status') ? true : false;
       if(!error) return;
-      //let arr = Object.keys(error.response).map(function (key) {return error.response[key]});
-      //let results = error.response;
-      return (
+
+      /*return (
          <div className="alert alert-danger text-center animate bounceIn" role="alert">
-              {this.props.error.get('data').message}
+            {this.props.error.get('data').message}
         </div>
-      );
+      );*/
+  },
+
+  componentDidMount() {
+    if ( typeof(window.componentHandler) != 'undefined' )
+    {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.error && nextProps.error.size > 0){
+      this.setState({ step: 'SendPasswordResetEmail' })
+    if(nextProps.forgotPassword)
+      this.setState({step: 'checkEmail', error:{}});
+    }
+
   },
 
   render() {
 
-    console.log('sss', this)
-
     return (
       <div id="forgot" className="auth-view">
         <div className="container mdl-shadow--2dp" title="Forgot password">
+          { this.renderError()}
           <div className="bar">
             <span className="bar-title">Forgot Password</span>
             <DocTitle title="Forgot password"/>
-            { this.renderError()}
             </div>
             <fieldset>
               <div className="background">
@@ -78,6 +93,7 @@ export default React.createClass( {
       return;
     }
 
+    let errors = this.state.errors;
     return (
       <div className="login-view">
          <legend className="forgot-legend">Password Reset</legend>
@@ -90,6 +106,7 @@ export default React.createClass( {
                value={this.state.email} onChange={this.onChangeEmail}
               />
               <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
+              {errors.email && <small className="mdl-textfield__error shown">{errors.email}</small>}
             </div>
             <div className="spacer">
               <button type="button"
@@ -104,7 +121,7 @@ export default React.createClass( {
     );
   },
   renderCheckEmail() {
-    if ( this.state.step !=  ) {
+    if ( this.state.step != 'checkEmail' ) {
       return;
     }
     return (
@@ -132,27 +149,23 @@ export default React.createClass( {
   },
 
   requestReset() {
-    let payload ={}
     this.resetErrors();
     this.setState( {
         errors: {},
         errorServer: null
     } );
-    this.props.passwordReset( this.email());
-    // return this.validateEmail.call( this, payload )
-    //   .with( this )
-    //   .then( this.requestReset )
-    //   .catch( this.errors );
+
+     window.componentHandler.upgradeDom();
+     return this.validateEmail.call(this.email())
+       .with( this )
+       .then( this.requestService(this.email()))
+       .catch( this.errors );
   },
   validateEmail(payload) {
     let rules = new Checkit( {
         email: { rule: 'required'},
     } );
     return rules.run( payload );
-  },
-
-  requestReset() {
-    return this.props.passwordReset( this.email() );
   },
 
   errors( e ) {
@@ -172,13 +185,18 @@ export default React.createClass( {
 
   resetErrors() {
     this.setState({
-        errors: {}
+        errors: {},
     });
+  },
+
+  requestService(email){
+    return this.props.passwordReset(email);
   },
 
   formClassNames( field ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
+      'is-invalid is-dirty': this.state.errors[ field ],
       'has-error': this.state.errors[ field ]
     });
-  }
+  },
 });
