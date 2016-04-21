@@ -6,10 +6,13 @@ import profile from '../parts/profile/reducers/profile'
 import router from '../parts/core/reducers/routerRedux'
 import country from '../parts/auth/reducers/country'
 
+import clientadmin from '../parts/admin/reducers/client'
+
 export default combineReducers({
   auth,
   signup,
   profile,
   router,
+  clientadmin,
   country
 })

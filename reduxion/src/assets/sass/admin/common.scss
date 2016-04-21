@@ -1,0 +1,29 @@
+.inner_content {
+    width: 85%;
+    margin: 50px auto;
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,255,255);
+}
+.box_admin .inner_content {
+    color: #5C809E;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0;
+}
+.layout-padding {
+    padding: 20px;
+}
+body {
+    background: #e9eaed;
+}
+.box_admin .inner_content legend {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #5C809E;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0;
+    width: 100%;
+}
+.mdl-layout__content {
+    width: 100%;
+}
