@@ -48,6 +48,8 @@ class ClientProfile extends React.Component {
             });
         }
         if (nextProps.errors) {
+            console.log('=== nextProps.errors ===');
+            console.log(nextProps.errors);
             this.setState({
                 errors: nextProps.errors
             });
@@ -667,7 +669,7 @@ class ClientProfile extends React.Component {
         window.componentHandler.upgradeDom();
         return this.validateAvailableUsername.call(this, payload)
             .with(this)
-            .then(this.props.getAvailableUsername(payload))
+            .then(this.getAvailableUsername)
             .catch(this.setErrors);
     }
 
@@ -787,6 +789,12 @@ class ClientProfile extends React.Component {
         return rules.run(payload);
     }
 
+    getAvailableUsername(payload) {
+        console.log('=== getAvailableUsername(payload) ===');
+        console.log(payload);
+        return this.props.getAvailableUsername(payload);
+    }
+
     updateClientProfile(payload) {
         console.log('=== updateClientProfile(payload) ===');
         console.log(payload);
@@ -803,7 +811,7 @@ class ClientProfile extends React.Component {
 ClientProfile.mixins = [LinkedStateMixin];
 
 ClientProfile.defaultProps = {
-    errors: []
+    //errors: []
 };
 
 export default ClientProfile;

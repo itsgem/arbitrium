@@ -26,9 +26,10 @@ export default createReducer({
     errors: state.concat(payload)
   }),
   [getAvailableUsername.ok]: (state, payload) => state.merge({
-    user: state.concat(payload)
+    isUsernameAvailable: true
   }),
   [getAvailableUsername.error]: (state, payload) => state.merge({
+    isUsernameAvailable: false,
     errors: state.concat(payload)
   })
 }, initialState);
