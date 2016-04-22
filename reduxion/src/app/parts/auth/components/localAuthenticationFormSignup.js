@@ -105,9 +105,11 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--3-col">
-                                <Country
-                                    country = { this.props.country }
-                                />
+                                <div className={this.formClassNames('country_id', errors)}>
+                                    <Country
+                                        country = { this.props.country }
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,7 +129,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 </div>
                             </div>
                             <div className="mdl-cell mdl-cell--4-col">
-                                <div className={this.formClassNames('rep_first_name')}>
+                                <div className={this.formClassNames('rep_last_name')}>
                                     <input
                                         className="mdl-textfield__input"
                                         type="text"
@@ -152,7 +154,6 @@ class LocalAuthenticationFormSignup extends React.Component {
                                         {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
                                 </div>
                             </div>
-
                             <div className="mdl-cell mdl-cell--4-col">
                                 <div className={this.formClassNames('rep_email_address')}>
                                     <input
@@ -165,7 +166,6 @@ class LocalAuthenticationFormSignup extends React.Component {
                                     {errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
                                 </div>
                             </div>
-
                             <div className="mdl-cell mdl-cell--1-col">
                                 <div className={this.formClassNames('rep_mobile_code')}>
                                     <input
