@@ -1,0 +1,74 @@
+
+#profile-bgcover {
+	background: teal;
+	height: 300px;
+	margin: 0;
+	position: relative;
+	width: 100%;
+}
+
+.profile__content {
+	bottom: 0;
+	color: #fff;
+	padding: 0 0 20px 20px;
+	position: absolute;
+	width: 100%;
+
+	.box {
+		align-items: center;
+	}
+
+	.box-photo {
+		margin-right: 30px;
+
+		img {
+			@include border-radius(100%);
+		}
+	}
+
+	.box-details {
+		.mdl-typography--headline {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.box-right {
+	text-align: right;
+}
+
+.page-content {
+
+}
+
+.pagination {
+	background: #0e3192;
+	padding: 20px 0;
+
+	.item-to-show {
+		.mdl-button.mdl-button--blue {
+			background: #0e3192 !important;
+			color: #fff;
+		}
+
+		.mdl-button--fab.mdl-button--accent {
+			background: #ff6600;
+			color: #fff;
+		}
+		.mdl-button--active,
+		.mdl-button.mdl-button--fab.mdl-button--active {
+			background: #ff944d;
+			color: #fff;
+		}
+	}
+
+	.arbitrium-pagination.mdl-button--mini-fab {
+		font-size: 11px;
+		margin: 0 3px;
+	}
+}
+
+
+
+
+

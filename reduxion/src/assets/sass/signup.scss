@@ -17,11 +17,6 @@ button, select, html, textarea, input {
     font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
 }
 
-p {
-    font-size: 1.5rem;
-    margin: 1.6rem 0;
-}
-
 .margin-bottom-10 {
     margin-bottom: 10px!important;
 }
@@ -211,11 +206,11 @@ p {
   -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-block;
-  max-width: 0.1px; 
+  max-width: 0.1px;
 }
 
 .mdl-select.is-focused .mdl-select__expandable-holder, .mdl-select.is-dirty .mdl-select__expandable-holder {
-  max-width: 600px; 
+  max-width: 600px;
 }
 
 .mdl-select__expandable-holder .mdl-select__label:after {
@@ -223,7 +218,7 @@ p {
 }
 
 
-div#application{
+div#application {
   @media (min-width: 1200px) {
     #signup {
       .signup-view {
@@ -279,7 +274,7 @@ div#application{
     }
 
     main {
-      width: 100%;
+      // width: 100%;
     }
     .login-view {
       width: 312px;
