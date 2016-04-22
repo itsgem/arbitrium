@@ -3,21 +3,61 @@
   margin-right: auto;
   position: relative;
   max-width: 312px;
-}
 
-.forgot-step-two {
-  font-size: 13px;
-  font-weight: 700;
-  padding: 20px;
-}
+  .background {
+    background-color: #fff;
 
-.step-two-content {
-  height:auto;
-}
+    .forgot-legend {
+      color: #555;
+      display: block;
+      font-size: 13px;
+      padding: 20px 20px 0px 20px;
+    }
 
-.forgot-text {
-  color: #000;
-  font-size: 13px;
+    .forgot-step-two {
+      color: #555;
+      display: block;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 18px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .step-two-content {
+      height:auto;
+      overflow: auto;
+      padding: 16px;
+    }
+  }
+
+  .forgot-text {
+    color: #555;
+    display: block;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 18px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .bar {
+    background: #336;
+    box-sizing: border-box;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    height: auto;
+    padding: 20px;
+    width: 100%;
+
+    .bar-title {
+      color: #eceff1;
+      font-size: 20px;
+      font-weight: 700;
+      height: 26px;
+      padding-top: 2px;
+    }
+  }
 }
 
 .forgot-footer {
@@ -26,21 +66,4 @@
   margin-right:auto;
 }
 
-.bar {
-  background: #336;
-  box-sizing: border-box;
-  border-radius: 5px 5px 0 0;
-  color: white;
-  height: auto;
-  padding: 20px;
-  width: 100%;
 
-  .bar-title {
-    color: #eceff1;
-    font-size: 20px;
-    font-weight: 700;
-    height: 26px;
-    padding-top: 2px;
-  }
-}
-    

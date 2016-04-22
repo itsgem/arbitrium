@@ -4,7 +4,8 @@ import LoginView from '../views/login';
 
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.get('auth').get('authenticated')
+    authenticated: state.get('auth').get('authenticated'),
+    user: state.get('auth').get('user')
   };
 }
 

@@ -8,7 +8,7 @@ export default class {
 
     execute() {
         let rules = new Checkit( {
-            email: [ 'email' ]
+            email: [ 'required', 'email' ]
         } );
 
         return rules.run( this.email );

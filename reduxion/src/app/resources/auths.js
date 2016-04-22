@@ -53,7 +53,7 @@ export default {
       });
   },
   logout() {
-      return post('logout');
+      return delete('auth/logout');
   },
   listCountries() {
       return get('list/countries');
@@ -66,10 +66,10 @@ export default {
           }
       });
   },
-  requestPasswordReset(email) {
+  requestPasswordReset(payload) {
       return get('password/forgot', {
           params: {
-              login: email,
+              login: payload.email,
               user_type: 2,
               callback_url: 'http://localhost:9991/login'
           }
