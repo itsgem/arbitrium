@@ -1,13 +1,9 @@
 import React from 'react';
-import _ from 'lodash';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import DocTitle from 'components/docTitle';
 import tr from 'i18next';
 import { Link } from 'react-router';
-
-import ValidateEmail from 'services/validateEmail';
-import ValidateRequiredField from 'services/validateRequiredField';
 import Checkit from 'checkit';
 
 import {createError} from 'utils/error';
@@ -17,9 +13,10 @@ export default React.createClass( {
   mixins: [
     LinkedStateMixin,
   ],
-  propTypes:{
-      passwordReset: React.PropTypes.func.isRequired
+  defaultProps: {
+    errors:[]
   },
+
   getInitialState() {
     return {
       step: 'SendPasswordResetEmail',
@@ -54,16 +51,18 @@ export default React.createClass( {
   },
 
   componentWillReceiveProps(nextProps) {
+    console.log("rrr",nextProps)
     if(nextProps.error && nextProps.error.size > 0){
       this.setState({ step: 'SendPasswordResetEmail' })
-    if(nextProps.forgotPassword)
-      this.setState({step: 'checkEmail', error:{}});
+    }
+    if(nextProps.forgotPassword){
+      console.log('xxxx',nextProps)
+      this.setState({step: 'checkEmail', errors:{}})
     }
 
   },
 
   render() {
-
     return (
       <div id="forgot" className="auth-view">
         <div className="container mdl-shadow--2dp" title="Forgot password">
@@ -102,16 +101,14 @@ export default React.createClass( {
             <span className="forgot-text"><strong>Enter the email address used when you registered with username and password. </strong></span>
             <span className="forgot-text">You'll be sent a reset code to change your password.</span>
             <div className={ this.formClassNames('email') }>
-              <input className="mdl-textfield__input" type="email" id='email'ref="email"
-               value={this.state.email} onChange={this.onChangeEmail}
-              />
+              <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
               <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email}</small>}
             </div>
             <div className="spacer">
               <button type="button"
               className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
-              onClick={this.requestReset}>
+              onClick={(e)=>this.requestReset(e)}>
                 Send Reset Email
               </button>
             </div>
@@ -148,17 +145,20 @@ export default React.createClass( {
     }
   },
 
-  requestReset() {
-    this.resetErrors();
+  requestReset(e) {
+    e.preventDefault();
     this.setState( {
         errors: {},
         errorServer: null
     } );
+    let payload ={
+      email: this.refs.email.value
+    }
 
      window.componentHandler.upgradeDom();
-     return this.validateEmail.call(this.email())
+     return this.validateEmail.call(this, payload)
        .with( this )
-       .then( this.requestService(this.email()))
+       .then(this.requestService)
        .catch( this.errors );
   },
   validateEmail(payload) {
@@ -170,23 +170,6 @@ export default React.createClass( {
 
   errors( e ) {
     this.setState(createError(e));
-  },
-  email() {
-    return this.state.email;
-  },
-
-  code() {
-    return _.trim( this.state.code );
-  },
-
-  password() {
-    return _.trim( this.state.password );
-  },
-
-  resetErrors() {
-    this.setState({
-        errors: {},
-    });
   },
 
   requestService(email){

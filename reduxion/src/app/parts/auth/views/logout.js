@@ -6,6 +6,13 @@ export default React.createClass( {
     componentDidMount () {
         this.props.logout();
     },
+    componentWillReceiveProps(nextProps) {
+        console.log('rrrr',nextProps);
+        if(!nextProps.authenticated){
+            localStorage.clear();
+        }
+    },
+
 
     render() {
         return (

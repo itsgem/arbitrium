@@ -36,12 +36,15 @@ function ajax( url, method, options, params ) {
         url: baseUrl(url),
         params: params,
         data: data,
-        //withCredentials: true,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Token':`${localStorage.getItem('token')}`
+        },
         paramsSerializer: function(params) {
             return Qs.stringify(params, {arrayFormat: 'brackets'});
         }
     }).then(res => {
         return res.data;
     });
+
 }
