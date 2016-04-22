@@ -1,48 +1,40 @@
-$font-path: "http://assets.idearobin.com/fonts" !default;
-$font-family: "Montserrat";
+// $font-path: "http://assets.idearobin.com/fonts" !default;
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+$font-family: 'Roboto Condensed', sans-serif;
 
-@font-face {
- font-family: $font-family;
- src:url("#{$font-path}/montserrat-regular-webfont.eot");
- src:url("#{$font-path}/montserrat-regular-webfont.eot#iefix") format("embedded-opentype"),
-  url("#{$font-path}/montserrat-regular-webfont.ttf") format("truetype"),
-  url("#{$font-path}/montserrat-regular-webfont.woff") format("woff");
- font-weight: normal;
- font-style: normal;
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+h1 {
+  font-size: 3.400rem;
+  font-weight: $base-font-weight;
+  line-height: 4rem;
+}
+h2 {
+  font-size: 2.400rem;
+  font-weight: $base-font-weight;
+  line-height: 3.2rem;
+}
+h3 {
+  font-size: 2.000rem;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+h4 {
+  font-size: 1.600rem;
+  font-weight: $base-font-weight;
+  letter-spacing: 0.010em;
+  line-height: 2.4rem;
+}
+p {
+  font-weight: $base-font-weight;
+  letter-spacing: 0.010em;
+  margin: 0 0 1em;
 }
 
-@font-face {
- font-family: $font-family;
- src:url("#{$font-path}/montserrat-semibold-webfont.eot");
- src:url("#{$font-path}/montserrat-semibold-webfont.eot#iefix") format("embedded-opentype"),
-  url("#{$font-path}/montserrat-semibold-webfont.ttf") format("truetype"),
-  url("#{$font-path}/montserrat-semibold-webfont.woff") format("woff");
- font-weight: 500;
-}
-
-@font-face {
- font-family: $font-family;
- src:url("#{$font-path}/montserrat-bold-webfont.eot");
- src:url("#{$font-path}/montserrat-bold-webfont.eot#iefix") format("embedded-opentype"),
-  url("#{$font-path}/montserrat-bold-webfont.ttf") format("truetype"),
-  url("#{$font-path}/montserrat-bold-webfont.woff") format("woff");
- font-weight: 700;
-}
-
-@font-face {
- font-family: $font-family;
- src:url("#{$font-path}/montserrat-extrabold-webfont.eot");
- src:url("#{$font-path}/montserrat-extrabold-webfont.eot#iefix") format("embedded-opentype"),
-  url("#{$font-path}/montserrat-extrabold-webfont.ttf") format("truetype"),
-  url("#{$font-path}/montserrat-extrabold-webfont.woff") format("woff");
- font-weight: 800;
-}
-
-@font-face {
- font-family: $font-family;
- src:url("#{$font-path}/montserrat-light-webfont.eot");
- src:url("#{$font-path}/montserrat-light-webfont.eot#iefix") format("embedded-opentype"),
-  url("#{$font-path}/montserrat-light-webfont.ttf") format("truetype"),
-  url("#{$font-path}/montserrat-light-webfont.woff") format("woff");
- font-weight: 200;
+label {
+  text-transform: uppercase;
+  font-weight: $md-font-weight;
 }

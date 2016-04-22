@@ -1,8 +1,10 @@
 @import './reset';
+@import './variables';
 
 @import './vendor/ionicons';
 @import './vendor/mdl-overrides';
 
+@import './drawer';
 @import './utils';
 @import './typography';
 @import './mixins';
@@ -14,3 +16,4 @@
 
 // views
 @import './views/application';
+@import './views/client-profile';
