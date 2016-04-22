@@ -7,13 +7,7 @@ import {
 } from 'utils/http';
 
 export default {
-    getClientProfile() {
-        return get('client/profile', {
-            params: {
-                'with-user': 1
-            }
-        });
-    },
+    // User
     getCurrentUser() {
         return get('me');
     },
@@ -87,5 +81,24 @@ export default {
                 password
             }
         });
-    }
+    },
+    getAvailableUsername(payload) {
+        return get('user/available', {
+            params: payload
+        });
+    },
+
+    // User - Client
+    getClientProfile() {
+        return get('client/profile', {
+            params: {
+                'with-user': 1
+            }
+        });
+    },
+    updateClientProfile(payload) {
+        return put('client/profile', {
+            params: payload
+        });
+    },
 };

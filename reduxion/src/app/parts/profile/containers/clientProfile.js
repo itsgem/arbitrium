@@ -1,15 +1,20 @@
 import { connect } from 'react-redux';
-import { clientProfile } from '../reducers/clientProfile'
+import { clientProfile, updateClientProfile, getAvailableUsername } from '../reducers/clientProfile'
 import { country } from '../../auth/reducers/country'
-import ClientViewEdit from '../views/clientProfile';
+import ClientProfile from '../views/clientProfile';
 
 const mapStateToProps = (state) => {
     return {
         user: state.get('clientProfile').get('user'),
-        countryList: state.get('country').get('countryList')
+        countryList: state.get('country').get('countryList'),
+        message: state.get('clientProfile').get('message'),
+        errors: state.get('clientProfile').get('errors'),
     };
 }
 
 export default connect(mapStateToProps, {
-    clientProfile, country
-})(ClientViewEdit)
+    country,
+    clientProfile,
+    updateClientProfile,
+    getAvailableUsername
+})(ClientProfile)

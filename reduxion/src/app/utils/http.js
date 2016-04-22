@@ -39,7 +39,7 @@ function ajax( url, method, options, params ) {
         //withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
-            'X-Token': '9077e870fba1fd6373d9e746b4b3c23efaea08802c0f4b3170d993a24831f534'
+            'X-Token': '6a85c387782b6e35bd2cb0bfd4f6ffc8d83150ce802cf1fc8996592404bce49c'
         },
         paramsSerializer: function(params) {
             return Qs.stringify(params, {arrayFormat: 'brackets'});

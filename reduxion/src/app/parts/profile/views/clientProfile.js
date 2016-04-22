@@ -1,8 +1,13 @@
 import React from 'react';
-import Country from '../../auth/components/country';
 import ClientProfile from '../components/clientProfile';
 
 export default React.createClass({
+    //propTypes:{
+    //    updateClientProfile: React.PropTypes.func.isRequired,
+    //    getAvailableUsername: React.PropTypes.func.isRequired,
+    //    countryList: React.PropTypes.object,
+    //},
+
     componentDidMount () {
         this.props.clientProfile();
         this.props.country();
@@ -10,6 +15,11 @@ export default React.createClass({
 
     render () {
         let user = this.props.user.get('data');
+        let countryList = this.props.countryList;
+
+        let message = this.props.message;
+        let errors = this.props.errors.get('data');
+
         return (
             <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
                 <header className="mdl-layout__header">
@@ -35,9 +45,20 @@ export default React.createClass({
                 </div>
                 <main className="mdl-layout__content">
                     <div className="page-content">
-                        <ClientProfile user={user} />
+                        <ClientProfile
+                            user={user}
+                            country={countryList}
+                            updateClientProfile={this.props.updateClientProfile}
+                            getAvailableUsername={this.props.getAvailableUsername}
+                            responseMessage={message}
+                            responseError={errors}
+                            />
                     </div>
                 </main>
+                <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar">
+                    <div className="mdl-snackbar__text"></div>
+                    <button type="button" className="mdl-snackbar__action"></button>
+                </div>
             </div>
         );
     }
