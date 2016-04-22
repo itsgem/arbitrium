@@ -38,7 +38,7 @@ export default {
           password_confirmation: payload.password_confirmation,
           email_address: payload.email_address,
           username: payload.username,
-          callback_url: "http://localhost:9991/verifyEmail/"
+          callback_url: window.location.origin + "/verifyEmail/"
           }
       });
   },
@@ -62,7 +62,7 @@ export default {
       return patch('user/register/verify', {
           params: {
               token: code,
-              callback_url: 'http://localhost:9991/login'
+              callback_url: window.location.origin
           }
       });
   },
@@ -96,8 +96,42 @@ export default {
   clientDisapprove(id) {
       return patch('admin/client/' + id + '/disapprove', {
           params: {
-              callback_url: 'http://localhost:9991/'
+              callback_url: window.location.origin
           }
       });
+  },
+  validateUsername(payload) {
+    return get('user/available', {
+      params: payload
+    });
+  },
+  adminClientRegister(payload) {
+    return post('admin/client/', {
+      params: {
+        company_name: payload.company_name,
+        street_address_1: payload.street_address_1,
+        street_address_2: payload.street_address_2,
+        city: payload.city,
+        state: payload.state,
+        postal_code: payload.postal_code,
+        country_id: payload.country_id,
+        rep_first_name: payload.rep_first_name,
+        rep_last_name: payload.rep_last_name,
+        rep_gender: payload.rep_gender,
+        rep_email_address: payload.rep_email_address,
+        rep_mobile_code: payload.rep_mobile_code,
+        rep_mobile_number: payload.rep_mobile_number,
+        rep_phone_code: payload.rep_phone_code,
+        rep_phone_number: payload.rep_phone_number,
+        rep_position: payload.rep_position,
+        rep_department: payload.rep_department,
+        username: payload.username,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation,
+        email_address: payload.email_address,
+        username: payload.username,
+        callback_url: window.location.origin + "/fotgot/"
+      }
+    });
   }
 };

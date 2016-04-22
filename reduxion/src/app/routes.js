@@ -15,7 +15,8 @@ import ResetPassword from 'parts/auth/views/resetPassword';
 import MyProfile from 'parts/profile/containers/myProfile';
 
 import UsersView from 'parts/admin/usersView';
-import adminClientView from 'parts/admin/containers/client';
+import AdminClientView from 'parts/admin/containers/client';
+import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
 export default () => (
     <Route component={Application} name="home" path="/">
@@ -31,7 +32,8 @@ export default () => (
         <Route path="admin" component={Authenticated}>
             <IndexRoute component={UsersView}/>
             <Route component={UsersView} path="users"/>
-            <Route component={adminClientView} path="client/:id"/>
+            <Route component={AdminClientAdd} path="client/new"/>
+            <Route component={AdminClientView} path="client/:id"/>
         </Route>
 
         <Route path="/app" component={Authenticated}>
