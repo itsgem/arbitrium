@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import Checkit from 'checkit';
-import Country from '../../auth/components/country';
+import Country from '../../../auth/components/country';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 

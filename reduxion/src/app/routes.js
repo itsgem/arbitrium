@@ -13,7 +13,7 @@ import RegistrationComplete from 'parts/auth/containers/registrationComplete';
 import ResetPassword from 'parts/auth/views/resetPassword';
 
 import MyProfile from 'parts/profile/containers/myProfile';
-import ClientProfile from 'parts/profile/containers/clientProfile';
+import ClientProfile from 'parts/client/profile/containers/clientProfile';
 
 import UsersView from 'parts/admin/usersView';
 

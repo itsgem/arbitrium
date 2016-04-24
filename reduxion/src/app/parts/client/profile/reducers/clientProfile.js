@@ -23,7 +23,7 @@ export default createReducer({
     success: state.concat(payload)
   }),
   [updateClientProfile.error]: (state, payload) => state.merge({
-    errors: state.concat(payload),
+    errors: state.concat(payload)
   }),
   [getAvailableUsername.ok]: (state, payload) => state.merge({
     isUsernameAvailable: true
