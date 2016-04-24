@@ -10,7 +10,8 @@ export const getAvailableUsername = createActionAsync('GET_AVAILABLE_USERNAME', 
 
 const initialState = Immutable.fromJS({
   user: {},
-  message: {},
+  isUsernameAvailable: null,
+  success: {},
   errors: {}
 });
 
@@ -19,11 +20,10 @@ export default createReducer({
     user: state.concat(payload)
   }),
   [updateClientProfile.ok]: (state, payload) => state.merge({
-    errors: {},
-    message: state.concat(payload)
+    success: state.concat(payload)
   }),
   [updateClientProfile.error]: (state, payload) => state.merge({
-    errors: state.concat(payload)
+    errors: state.concat(payload),
   }),
   [getAvailableUsername.ok]: (state, payload) => state.merge({
     isUsernameAvailable: true

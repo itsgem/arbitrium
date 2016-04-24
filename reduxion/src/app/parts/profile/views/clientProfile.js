@@ -2,12 +2,6 @@ import React from 'react';
 import ClientProfile from '../components/clientProfile';
 
 export default React.createClass({
-    //propTypes:{
-    //    updateClientProfile: React.PropTypes.func.isRequired,
-    //    getAvailableUsername: React.PropTypes.func.isRequired,
-    //    countryList: React.PropTypes.object,
-    //},
-
     componentDidMount () {
         this.props.clientProfile();
         this.props.country();
@@ -17,7 +11,8 @@ export default React.createClass({
         let user = this.props.user.get('data');
         let countryList = this.props.countryList;
 
-        let message = this.props.message;
+        let isUsernameAvailable = this.props.isUsernameAvailable;
+        let success = this.props.success;
         let errors = this.props.errors.get('data');
 
         return (
@@ -50,8 +45,9 @@ export default React.createClass({
                             country={countryList}
                             updateClientProfile={this.props.updateClientProfile}
                             getAvailableUsername={this.props.getAvailableUsername}
-                            responseMessage={message}
+                            responseSuccess={success}
                             responseError={errors}
+                            isUsernameAvailable={isUsernameAvailable}
                             />
                     </div>
                 </main>

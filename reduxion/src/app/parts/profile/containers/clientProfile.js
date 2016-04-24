@@ -5,9 +5,10 @@ import ClientProfile from '../views/clientProfile';
 
 const mapStateToProps = (state) => {
     return {
-        user: state.get('clientProfile').get('user'),
         countryList: state.get('country').get('countryList'),
-        message: state.get('clientProfile').get('message'),
+        user: state.get('clientProfile').get('user'),
+        isUsernameAvailable: state.get('clientProfile').get('isUsernameAvailable'),
+        success: state.get('clientProfile').get('success'),
         errors: state.get('clientProfile').get('errors'),
     };
 }

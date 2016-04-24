@@ -13,11 +13,12 @@ class ClientProfile extends React.Component {
 
         super(props);
         this.state = {
-            message: {},
+            success: {},
             errors: {},
             errorServer: null,
             loading: false,
-            isUsernameAvailable: null
+            isUsernameAvailable: null,
+            isAvailableUsernameButtonDisabled: false
         };
     }
 
@@ -31,22 +32,23 @@ class ClientProfile extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log('=== componentWillReceiveProps(nextProps) ===');
         console.log(nextProps);
-        console.log(this.state);
 
         if (nextProps.user) {
+            console.log('=== nextProps.user ===');
+            console.log(nextProps.user);
             this.setState({
                 client: nextProps.user
             });
         }
-        if (nextProps.responseMessage) {
+
+        if (nextProps.responseSuccess) {
+            console.log('=== nextProps.responseSuccess ===');
+            console.log(nextProps.responseSuccess);
             this.setState({
-                message: {
-                    success: nextProps.responseMessage.get('success'),
-                    message: nextProps.responseMessage.get('message'),
-                    data: nextProps.responseMessage.get('data'),
-                }
+                success: nextProps.responseSuccess
             });
         }
+
         if (nextProps.errors) {
             console.log('=== nextProps.errors ===');
             console.log(nextProps.errors);
@@ -54,26 +56,24 @@ class ClientProfile extends React.Component {
                 errors: nextProps.errors
             });
         }
+
+        if (nextProps.isUsernameAvailable) {
+            console.log('=== nextProps.isUsernameAvailable ===');
+            console.log(nextProps.isUsernameAvailable);
+            this.setState({
+                isUsernameAvailable: nextProps.isUsernameAvailable
+            });
+        }
     }
 
     render() {
         console.log('=== render() ===');
 
-        console.log('=== components\clientProfile props ===');
+        console.log('=== components clientProfile props ===');
         console.log(this.props);
 
         console.log('=== state ===');
         console.log(this.state);
-
-        if (this.props.responseMessage) {
-            console.log('=== this.props.responseMessage ===');
-            console.log(this.props.responseMessage);
-        }
-
-        if (this.props.responseError) {
-            console.log('=== this.props.responseError ===');
-            console.log(this.props.responseError);
-        }
 
         // ============================================================
 
@@ -82,12 +82,14 @@ class ClientProfile extends React.Component {
         }
 
         let client = this.state.client;
-        //let errors = (this.state.errors) ? this.state.errors : null;
+        let dataOriginal = this.state.original;
 
         let {errors, errorServer} = this.state ? this.state :'';
         if (errorServer) {
             errors = Object.assign({}, errorServer.response);
         }
+
+        let isAvailableUsernameButtonDisabled = this.state.isAvailableUsernameButtonDisabled;
 
         return (
             <div className="mdl-grid">
@@ -127,10 +129,11 @@ class ClientProfile extends React.Component {
                                         type="button"
                                         className="mdl-button mdl-js-button mdl-button--raised"
                                         onClick={this.onClickGetAvailableUsername.bind(this)}
+                                        disabled={isAvailableUsernameButtonDisabled}
                                         >
                                         Check availability
                                     </button>
-                                    { this.isUsernameAvailable }
+                                    <i className="material-icons">{ this.isUsernameAvailable() }</i>
                                 </div>
                             </div>
                             <div className="mdl-grid">
@@ -181,7 +184,7 @@ class ClientProfile extends React.Component {
                                             value={client.street_address_1}
                                             onChange={this.onChangeFields.bind(this)}
                                             />
-                                        <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1</label>
+                                        <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1 *</label>
                                         {errors && errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
                                     </div>
                                 </div>
@@ -209,7 +212,7 @@ class ClientProfile extends React.Component {
                                             value={client.city}
                                             onChange={this.onChangeFields.bind(this)}
                                             />
-                                        <label className="mdl-textfield__label" htmlFor="city">City</label>
+                                        <label className="mdl-textfield__label" htmlFor="city">City *</label>
                                         {errors && errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
                                     </div>
                                 </div>
@@ -311,7 +314,7 @@ class ClientProfile extends React.Component {
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
-                                        <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+                                        <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
                                         {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
                                     </div>
                                 </div>
@@ -576,6 +579,7 @@ class ClientProfile extends React.Component {
         );
     }
 
+    // --- Render
     renderCountry() {
         if (!this.props.country) return;
 
@@ -600,24 +604,28 @@ class ClientProfile extends React.Component {
     }
 
     renderSuccess() {
-        let response = this.state.message;
-        if(!response && response.success != 'undefined') return;
+        let success = this.state.success;
+        if(!success || (!success.get('success') && (success.get('success') == 'undefined' || success.get('success') == null))) return;
 
-        console.log('=== response ===');
-        console.log(response);
+        let response = {
+            success: (success.get('success')) ? success.get('success') : false,
+            statusClassName: (success.get('success')) ? 'success' : 'danger',
+            message: (success.get('message')) ? success.get('message') : {},
+            data: (success.get('data')) ? success.get('data') : {}
+        };
+
+        let notificationClass = 'bs-callout bs-callout-' + response.statusClassName + ' text-center animate bounceIn';
 
         return (
-            <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
+            <div className={notificationClass} role="alert">
                 {response.message}
             </div>
         );
     }
 
+    // --- Render (Partials)
+
     formClassNames( field, errors ) {
-        //return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
-        //    'is-invalid is-dirty': this.state.errors[ field ],
-        //    'has-success': this.state.client[ field ] && !(this.state.errors[ field ])
-        //} );
         return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
             'is-invalid is-dirty': errors[ field ],
             'has-success': errors && !(errors[ field ])
@@ -626,15 +634,41 @@ class ClientProfile extends React.Component {
 
     isUsernameAvailable() {
         let indicator = '';
-        if (this.state.isUsernameAvailable != null){
-            if (this.state.isUsernameAvailable) {
-                indicator = 'OK';
+        if (this.props.isUsernameAvailable != null){
+            if (this.props.isUsernameAvailable) {
+                indicator = 'done';
             } else {
-                indicator = 'UNAVAILABLE';
+                indicator = 'clear';
             }
+        } else {
+            indicator = '';
         }
         return indicator;
     }
+
+    isAvailableUsernameButtonDisabled() {
+        let client = this.state.client;
+        if (!client) return;
+
+        //let isAvailableUsernameButtonDisabled = (client.user && (client.user.username == this.state.original.user.username || !client.user.username)) ? true : false;
+        //this.setState({isAvailableUsernameButtonDisabled: isAvailableUsernameButtonDisabled});
+    }
+
+    // --- Actions
+
+    getAvailableUsername(payload) {
+        console.log('=== getAvailableUsername(payload) ===');
+        console.log(payload);
+        return this.props.getAvailableUsername(payload);
+    }
+
+    updateClientProfile(payload) {
+        console.log('=== updateClientProfile(payload) ===');
+        console.log(payload);
+        return this.props.updateClientProfile(payload);
+    }
+
+    // --- Events
 
     onChangeFields(e) {
         let client = this.state.client;
@@ -646,20 +680,20 @@ class ClientProfile extends React.Component {
         }
 
         this.setState({client: client});
+
+        this.isAvailableUsernameButtonDisabled();
     }
 
     onClickGetAvailableUsername(e) {
         e.preventDefault();
         console.log('=== onClickGetAvailableUsername ===');
 
-        //let isUsernameAvailable = this.props.getAvailableUsername(this.state.client.user.username);
-        //console.log('=== isUsernameAvailable ===');
-        //console.log(isUsernameAvailable);
-        //
-        //isUsernameAvailable.then(function(result){
-        //    console.log('isUsernameAvailable result: ', result);
-        //    this.setState({isUsernameAvailable: result});
-        //});
+        this.setState({
+            success: null,
+            errors: {},
+            errorServer: null,
+            isAvailableUsernameButtonDisabled: false
+        });
 
         let {username} = this.refs;
         let payload = {
@@ -677,26 +711,21 @@ class ClientProfile extends React.Component {
         e.preventDefault();
 
         this.setState({
+            success: null,
             errors: {},
             errorServer: null,
-            loading: true
+            isUsernameAvailable: null
         });
 
         console.log('=== onSubmitProfile ===');
         console.log('=== this.state.client ===');
         console.log(this.state.client);
 
-        //let client = this.state.client;
-        //client.username = client.user.username;
-        //client.items_per_page = client.user.items_per_page;
-        //client.timezone = client.user.timezone;
-
-        //console.log('=== this.state.client (restructured to payload) ===');
-        //console.log(client);
-
         let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code,
             rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
-            rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department} = this.refs;
+            rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department,
+            alt_first_name, alt_last_name, alt_email_address, alt_gender, alt_mobile_code,
+            alt_mobile_number, alt_phone_code, alt_phone_number, alt_position, alt_department} = this.refs;
 
         let payload = {
             company_name: company_name.value,
@@ -716,6 +745,16 @@ class ClientProfile extends React.Component {
             rep_phone_number: rep_phone_number.value,
             rep_position: rep_position.value,
             rep_department: rep_department.value,
+            alt_first_name: alt_first_name.value,
+            alt_last_name: alt_last_name.value,
+            alt_email_address: alt_email_address.value,
+            alt_gender: alt_gender.value,
+            alt_mobile_code: alt_mobile_code.value,
+            alt_mobile_number: alt_mobile_number.value,
+            alt_phone_code: alt_phone_code.value,
+            alt_phone_number: alt_phone_number.value,
+            alt_position: alt_position.value,
+            alt_department: alt_department.value,
             email_address: email_address.value,
             username: username.value
         };
@@ -726,6 +765,8 @@ class ClientProfile extends React.Component {
             .then(this.updateClientProfile)
             .catch(this.setErrors);
     }
+
+    // --- Validations
 
     validateUpdateClientProfile(payload) {
         let rules = new Checkit({
@@ -743,10 +784,10 @@ class ClientProfile extends React.Component {
                 { rule: 'email', label: 'email' }
             ],
             rep_gender:        [{ rule: 'required', label: 'gender'}],
-            rep_mobile_code:   [{ rule: 'number', label: 'mobile code'}],
-            rep_mobile_number: [{ rule: 'number', label: 'mobile number'}],
-            rep_phone_code:    [{ rule: 'number', label: 'phone code'}],
-            rep_phone_number:  [{ rule: 'number', label: 'phone number'}],
+            rep_mobile_code:   [{ rule: 'numeric', label: 'mobile code'}],
+            rep_mobile_number: [{ rule: 'numeric', label: 'mobile number'}],
+            rep_phone_code:    [{ rule: 'numeric', label: 'phone code'}],
+            rep_phone_number:  [{ rule: 'numeric', label: 'phone number'}],
             rep_position:      [
                 { rule: 'required', label: 'position' },
                 { rule: 'max:100', label: 'position' }
@@ -759,10 +800,10 @@ class ClientProfile extends React.Component {
             alt_last_name:     [],
             alt_email_address: [{ rule: 'email', label: 'email'}],
             alt_gender:        [],
-            alt_mobile_code:   [{ rule: 'number', label: 'mobile code'}],
-            alt_mobile_number: [{ rule: 'number', label: 'mobile number'}],
-            alt_phone_code:    [{ rule: 'number', label: 'phone code'}],
-            alt_phone_number:  [{ rule: 'number', label: 'phone number'}],
+            alt_mobile_code:   [{ rule: 'numeric', label: 'mobile code'}],
+            alt_mobile_number: [{ rule: 'numeric', label: 'mobile number'}],
+            alt_phone_code:    [{ rule: 'numeric', label: 'phone code'}],
+            alt_phone_number:  [{ rule: 'numeric', label: 'phone number'}],
             alt_position:      [{ rule: 'max:100', label: 'position'}],
             alt_department:    [{ rule: 'max:100', label: 'department'}],
             username:          [
@@ -789,18 +830,6 @@ class ClientProfile extends React.Component {
         return rules.run(payload);
     }
 
-    getAvailableUsername(payload) {
-        console.log('=== getAvailableUsername(payload) ===');
-        console.log(payload);
-        return this.props.getAvailableUsername(payload);
-    }
-
-    updateClientProfile(payload) {
-        console.log('=== updateClientProfile(payload) ===');
-        console.log(payload);
-        return this.props.updateClientProfile(payload);
-    }
-
     setErrors(e) {
         console.log('=== createError(e) ===');
         console.log(e);
@@ -811,7 +840,7 @@ class ClientProfile extends React.Component {
 ClientProfile.mixins = [LinkedStateMixin];
 
 ClientProfile.defaultProps = {
-    //errors: []
+    errors: []
 };
 
 export default ClientProfile;
