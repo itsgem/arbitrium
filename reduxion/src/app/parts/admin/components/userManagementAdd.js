@@ -108,7 +108,6 @@ class UserManagementAdd extends React.Component {
             <legend>PERSONAL INFORMATION</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-            
               <div className={this.formClassNames('first_name', errors)}>
                 <input
                   className="mdl-textfield__input"

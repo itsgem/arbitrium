@@ -20,17 +20,38 @@ class UserManagementAdd extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
+  userDisplay (key, data) {
+    return (
+       <tr key={key} className="bg-dark">
+          <td className="mdl-data-table__cell--non-numeric">{data.get('id')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('username')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('email_address')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('name')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('login_attempts')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('locked_at')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
+          <td className="mdl-data-table__cell--non-numeric">
+            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+              <i className="material-icons">open_in_new</i>
+            </button>
+            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete">
+              <i className="material-icons">delete</i>
+            </button>
+          </td>
+        </tr>
+    )
+  }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
     }
+    let counter = false;
+    let users = {};
     if (this.props.adminList.size) {
+      counter = true;
       let adminList =  this.props.adminList;
-
-      console.log('test', adminList);
-      return console.log('aaa', adminList.data);
-      //adminList.map(data => { return console.log('aaa', data); });
+      users = adminList.get('data').toArray();
     }
     return (
       <div className="filter-search">
@@ -63,50 +84,21 @@ class UserManagementAdd extends React.Component {
             <thead>
               <tr>
                 <th className="mdl-data-table__cell--non-numeric">ID</th>
-                <th className="mdl-data-table__cell--non-numeric">Company Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
+                <th className="mdl-data-table__cell--non-numeric">Username</th>
                 <th className="mdl-data-table__cell--non-numeric">Email Address</th>
-                <th className="mdl-data-table__cell--non-numeric">Telephone No.</th>
-                <th className="mdl-data-table__cell--non-numeric">Mobile No.</th>
-                <th className="mdl-data-table__cell--non-numeric">Status</th>
+                <th className="mdl-data-table__cell--non-numeric">Name</th>
+                <th className="mdl-data-table__cell--non-numeric">Login attempts</th>
+                <th className="mdl-data-table__cell--non-numeric">Locked At</th>
+                <th className="mdl-data-table__cell--non-numeric">Role</th>
                 <th className="mdl-data-table__cell--non-numeric">Action</th>
               </tr>
             </thead>
             <tbody>
-            <tr className="bg-dark">
-              <td className="mdl-data-table__cell--non-numeric">1</td>
-              <td className="mdl-data-table__cell--non-numeric">Nerubia Inc</td>
-              <td className="mdl-data-table__cell--non-numeric">Rep Last Name, Rep First Name</td>
-              <td className="mdl-data-table__cell--non-numeric">client@isurvey.com</td>
-              <td className="mdl-data-table__cell--non-numeric">456 78901</td>
-              <td className="mdl-data-table__cell--non-numeric">80 45678</td>
-              <td className="mdl-data-table__cell--non-numeric">Approved</td>
-              <td className="mdl-data-table__cell--non-numeric">
-                <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
-                  <i className="material-icons">open_in_new</i>
-                </button>
-                <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete">
-                  <i className="material-icons">delete</i>
-                </button>
-              </td>
-            </tr>
-            <tr className="bg-light">
-              <td className="mdl-data-table__cell--non-numeric">3</td>
-              <td className="mdl-data-table__cell--non-numeric">Nerubia Inc</td>
-              <td className="mdl-data-table__cell--non-numeric">Echiverri, Gerard Rey</td>
-              <td className="mdl-data-table__cell--non-numeric">info@idearobin.com</td>
-              <td className="mdl-data-table__cell--non-numeric">63 3223127</td>
-              <td className="mdl-data-table__cell--non-numeric">63 9989678</td>
-              <td className="mdl-data-table__cell--non-numeric">Approved</td>
-              <td className="mdl-data-table__cell--non-numeric">
-                <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
-                  <i className="material-icons">open_in_new</i>
-                </button>
-                <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete">
-                  <i className="material-icons">delete</i>
-                </button>
-              </td>
-            </tr>
+              {counter && users.map(item =>
+                {
+                  {return this.userDisplay(item.get('user').get('id'), item.get('user'))}
+                }
+              )}
             </tbody>
           </table>
           {/* <!-- Pagination -->*/}

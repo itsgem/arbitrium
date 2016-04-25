@@ -1,5 +1,4 @@
 import React from 'react';
-import DocTitle from 'components/docTitle';
 
 export default React.createClass( {
   render() {
