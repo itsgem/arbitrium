@@ -17,7 +17,6 @@ button, select, html, textarea, input {
     font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
 }
 
-
 .margin-bottom-10 {
     margin-bottom: 10px!important;
 }
@@ -219,7 +218,7 @@ button, select, html, textarea, input {
 }
 
 
-div#application{
+div#application {
   @media (min-width: 1200px) {
     #signup {
       .signup-view {
@@ -275,7 +274,7 @@ div#application{
     }
 
     main {
-     // width: 100%;
+      /*width: 100%;*/
     }
     .login-view {
       width: 312px;

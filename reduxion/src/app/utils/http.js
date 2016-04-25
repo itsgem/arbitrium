@@ -40,11 +40,10 @@ function ajax( url, method, options, params ) {
             'Content-Type': 'application/json',
             'X-Token':`${localStorage.getItem('token')}`
         },
-     paramsSerializer: function(params) {
+        paramsSerializer: function(params) {
             return Qs.stringify(params, {arrayFormat: 'brackets'});
         }
     }).then(res => {
         return res.data;
     });
-
 }

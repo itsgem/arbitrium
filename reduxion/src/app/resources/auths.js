@@ -133,5 +133,24 @@ export default {
         callback_url: window.location.origin + "/fotgot/"
       }
     });
+  },
+
+  // User - Client
+  getAvailableUsername(payload) {
+    return get('user/available', {
+      params: payload
+    });
+  },
+  getClientProfile() {
+    return get('client/profile', {
+      params: {
+        'with-user': 1
+      }
+    });
+  },
+  updateClientProfile(payload) {
+    return put('client/profile', {
+      params: payload
+    });
   }
 };
