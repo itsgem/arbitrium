@@ -35,7 +35,7 @@ export default React.createClass({
                             <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
                                 <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile">Profile</Link>
                                 <Link className="mdl-navigation__link mdl-layout__tab is-active" to="/i/client/profile/change_password">Password</Link>
-                                <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile/change_email.js"></Link>
+                                <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile/change_email">Email Address</Link>
                                 <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile"></Link>
                             </div>
                         </header>

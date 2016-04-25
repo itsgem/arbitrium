@@ -5,6 +5,7 @@ import signup from '../parts/auth/reducers/signup'
 import profile from '../parts/profile/reducers/profile'
 import clientProfile from '../client/profile/reducers/profile'
 import clientChangePassword from '../client/profile/reducers/changePassword'
+import clientChangeEmail from '../client/profile/reducers/changeEmail'
 import router from '../parts/core/reducers/routerRedux'
 import country from '../parts/auth/reducers/country'
 
@@ -16,6 +17,7 @@ export default combineReducers({
   profile,
   clientProfile,
   clientChangePassword,
+  clientChangeEmail,
   router,
   clientadmin,
   country
