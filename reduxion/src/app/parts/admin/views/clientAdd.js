@@ -17,6 +17,10 @@ export default React.createClass( {
         <DocTitle
           title="Client Add"
         />
+      <div className="client-tab">
+        <a href="#" className="mdl-layout__tab">Client List</a>
+        <a href="#" className="mdl-layout__tab is-active">Add New Client<i className="material-icons add">add</i></a>
+      </div>
         <ClientAdd
           clientRegister={this.props.clientRegister}
           validateUsername={this.props.validateUsername}
