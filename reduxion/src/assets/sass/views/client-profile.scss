@@ -33,6 +33,12 @@ div#application{
   margin-top: -5px;
 }
 
+.mdl-layout__content.mdl-layout__content_my_profile .mdl-layout__tab-panel {
+  display: none;
+  padding: 15px;
+  background: #fff;
+}
+
 #profile-bgcover {
 	background: teal;
 	height: 300px;

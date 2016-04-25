@@ -92,490 +92,484 @@ class ClientProfile extends React.Component {
         let isAvailableUsernameButtonDisabled = this.state.isAvailableUsernameButtonDisabled;
 
         return (
-            <div className="mdl-grid">
-                <div className="mdl-cell mdl-cell--12-col mdl-cell--6-col mdl-cell--8-col-tablet graybox">
-                    Cover Photo
-                </div>
+            <section className="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+                <div className="mdl-grid mdl-grid--no-spacing">
+                    <div className="mdl-cell mdl-cell--12-col">
+                        { this.renderSuccess() }
+                        { this.renderError() }
 
-                <div className="mdl-cell mdl-cell--12-col mdl-cell--6-col mdl-cell--8-col-tablet graybox">
-                    Tabs
-                </div>
-
-                <div className="mdl-cell mdl-cell--12-col mdl-cell--6-col mdl-cell--8-col-tablet graybox">
-                    { this.renderSuccess() }
-                    { this.renderError() }
-
-                    <form onSubmit={ this.onSubmitProfile.bind(this) }>
-                        <legend>Login Information</legend>
-                        <div className="">
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('username', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="username"
-                                            ref="username"
-                                            data-client="user"
-                                            value={(client.user) ? client.user.username : ''}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="username">Username *</label>
-                                        {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
+                        <form onSubmit={ this.onSubmitProfile.bind(this) }>
+                            <legend>Login Information</legend>
+                            <div className="">
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('username', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="username"
+                                                ref="username"
+                                                data-client="user"
+                                                value={(client.user) ? client.user.username : ''}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="username">Username *</label>
+                                            {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <button
-                                        type="button"
-                                        className="mdl-button mdl-js-button mdl-button--raised"
-                                        onClick={this.onClickGetAvailableUsername.bind(this)}
-                                        disabled={isAvailableUsernameButtonDisabled}
-                                        >
-                                        Check availability
-                                    </button>
-                                    <i className="material-icons">{ this.isUsernameAvailable() }</i>
-                                </div>
-                            </div>
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('email_address', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="email_address"
-                                            ref="email_address"
-                                            data-client="user"
-                                            value={(client.user) ? client.user.email_address : ''}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="email_address">E-mail *</label>
-                                        {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <legend>General Information</legend>
-                        <div className="">
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--6-col">
-                                    <div className={this.formClassNames('company_name', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="company_name"
-                                            ref="company_name"
-                                            value={client.company_name}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
-                                        {errors && errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('street_address_1', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="street_address_1"
-                                            ref="street_address_1"
-                                            value={client.street_address_1}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1 *</label>
-                                        {errors && errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('street_address_2', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="street_address_2"
-                                            ref="street_address_2"
-                                            value={client.street_address_2}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
-                                        {errors && errors.street_address_2 && <small className="mdl-textfield__error shown">{errors.street_address_2[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('city', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="city"
-                                            ref="city"
-                                            value={client.city}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="city">City *</label>
-                                        {errors && errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('state', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="state"
-                                            ref="state"
-                                            value={client.state}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="state">State / Province</label>
-                                        {errors && errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('postal_code', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="postal_code"
-                                            ref="postal_code"
-                                            value={client.postal_code}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
-                                        {errors && errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('country_id', errors)}>
-                                        { this.renderCountry() }
-                                        {errors && errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <legend>Company Representative</legend>
-                        <div className="">
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('rep_first_name', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_first_name"
-                                            ref="rep_first_name"
-                                            value={client.rep_first_name}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
-                                        {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('rep_last_name', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_last_name"
-                                            ref="rep_last_name"
-                                            value={client.rep_last_name}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
-                                        {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('rep_email_address', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_email_address"
-                                            ref="rep_email_address"
-                                            value={client.rep_email_address}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
-                                        {errors && errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
-                                    </div>
-                                </div>
-
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('rep_gender', errors)}>
-                                        <select
-                                            className="mdl-select__input"
-                                            id="rep_gender"
-                                            ref="rep_gender"
-                                            value={client.rep_gender}
-                                            onChange={this.onChangeFields.bind(this)}
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <button
+                                            type="button"
+                                            className="mdl-button mdl-js-button mdl-button--raised"
+                                            onClick={this.onClickGetAvailableUsername.bind(this)}
+                                            disabled={isAvailableUsernameButtonDisabled}
                                             >
-                                            <option value=""></option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
-                                        {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                                            Check availability
+                                        </button>
+                                        <i className="material-icons">{ this.isUsernameAvailable() }</i>
+                                    </div>
+                                </div>
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('email_address', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="email_address"
+                                                ref="email_address"
+                                                data-client="user"
+                                                value={(client.user) ? client.user.email_address : ''}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="email_address">E-mail *</label>
+                                            {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--1-col">
-                                    <div className={this.formClassNames('rep_mobile_code', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_mobile_code"
-                                            ref="rep_mobile_code"
-                                            value={client.rep_mobile_code}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Code</label>
-                                        {errors && errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--2-col">
-                                    <div className={this.formClassNames('rep_mobile_number', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_mobile_number"
-                                            ref="rep_mobile_number"
-                                            value={client.rep_mobile_number}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.</label>
-                                        {errors && errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--1-col">
-                                    <div className={this.formClassNames('rep_phone_code', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_phone_code"
-                                            ref="rep_phone_code"
-                                            value={client.rep_phone_code}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_phone_code">Code</label>
-                                        {errors && errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--2-col">
-                                    <div className={this.formClassNames('rep_phone_number', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_phone_number"
-                                            ref="rep_phone_number"
-                                            value={client.rep_phone_number}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
-                                        {errors && errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('rep_position', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_position"
-                                            ref="rep_position"
-                                            value={client.rep_position}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_position">Position *</label>
-                                        {errors && errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
-                                    </div>
-                                </div>
 
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('rep_department', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="rep_department"
-                                            ref="rep_department"
-                                            value={client.rep_department}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="rep_department">Department *</label>
-                                        {errors && errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
+                            <legend>General Information</legend>
+                            <div className="">
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--6-col">
+                                        <div className={this.formClassNames('company_name', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="company_name"
+                                                ref="company_name"
+                                                value={client.company_name}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
+                                            {errors && errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('street_address_1', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="street_address_1"
+                                                ref="street_address_1"
+                                                value={client.street_address_1}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1 *</label>
+                                            {errors && errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('street_address_2', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="street_address_2"
+                                                ref="street_address_2"
+                                                value={client.street_address_2}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
+                                            {errors && errors.street_address_2 && <small className="mdl-textfield__error shown">{errors.street_address_2[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('city', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="city"
+                                                ref="city"
+                                                value={client.city}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="city">City *</label>
+                                            {errors && errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('state', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="state"
+                                                ref="state"
+                                                value={client.state}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="state">State / Province</label>
+                                            {errors && errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('postal_code', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="postal_code"
+                                                ref="postal_code"
+                                                value={client.postal_code}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
+                                            {errors && errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('country_id', errors)}>
+                                            { this.renderCountry() }
+                                            {errors && errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <legend>Company Alternative</legend>
-                        <div className="">
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('alt_first_name', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_first_name"
-                                            ref="alt_first_name"
-                                            value={client.alt_first_name}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
-                                        {errors && errors.alt_first_name && <small className="mdl-textfield__error shown">{errors.alt_first_name[0]}</small>}
+                            <legend>Company Representative</legend>
+                            <div className="">
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('rep_first_name', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_first_name"
+                                                ref="rep_first_name"
+                                                value={client.rep_first_name}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
+                                            {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('alt_last_name', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_last_name"
-                                            ref="alt_last_name"
-                                            value={client.alt_last_name}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
-                                        {errors && errors.alt_last_name && <small className="mdl-textfield__error shown">{errors.alt_last_name[0]}</small>}
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('rep_last_name', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_last_name"
+                                                ref="rep_last_name"
+                                                value={client.rep_last_name}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
+                                            {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('alt_email_address', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_email_address"
-                                            ref="alt_email_address"
-                                            value={client.alt_email_address}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail</label>
-                                        {errors && errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('rep_email_address', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_email_address"
+                                                ref="rep_email_address"
+                                                value={client.rep_email_address}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
+                                            {errors && errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('alt_gender', errors)}>
-                                        <select
-                                            className="mdl-select__input"
-                                            id="alt_gender"
-                                            ref="alt_gender"
-                                            value={client.alt_gender}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            >
-                                            <option value=""></option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('rep_gender', errors)}>
+                                            <select
+                                                className="mdl-select__input"
+                                                id="rep_gender"
+                                                ref="rep_gender"
+                                                value={client.rep_gender}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                >
+                                                <option value=""></option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                            <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
+                                            {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--1-col">
+                                        <div className={this.formClassNames('rep_mobile_code', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_mobile_code"
+                                                ref="rep_mobile_code"
+                                                value={client.rep_mobile_code}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Code</label>
+                                            {errors && errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--2-col">
+                                        <div className={this.formClassNames('rep_mobile_number', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_mobile_number"
+                                                ref="rep_mobile_number"
+                                                value={client.rep_mobile_number}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.</label>
+                                            {errors && errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--1-col">
+                                        <div className={this.formClassNames('rep_phone_code', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_phone_code"
+                                                ref="rep_phone_code"
+                                                value={client.rep_phone_code}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_phone_code">Code</label>
+                                            {errors && errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--2-col">
+                                        <div className={this.formClassNames('rep_phone_number', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_phone_number"
+                                                ref="rep_phone_number"
+                                                value={client.rep_phone_number}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
+                                            {errors && errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('rep_position', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_position"
+                                                ref="rep_position"
+                                                value={client.rep_position}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_position">Position *</label>
+                                            {errors && errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
+                                        </div>
+                                    </div>
+
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('rep_department', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="rep_department"
+                                                ref="rep_department"
+                                                value={client.rep_department}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="rep_department">Department *</label>
+                                            {errors && errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="mdl-grid">
-                                <div className="mdl-cell mdl-cell--1-col">
-                                    <div className={this.formClassNames('alt_mobile_code', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_mobile_code"
-                                            ref="alt_mobile_code"
-                                            value={client.alt_mobile_code}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Code</label>
-                                        {errors && errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--2-col">
-                                    <div className={this.formClassNames('alt_mobile_number', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_mobile_number"
-                                            ref="alt_mobile_number"
-                                            value={client.alt_mobile_number}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
-                                        {errors && errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--1-col">
-                                    <div className={this.formClassNames('alt_phone_code', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_phone_code"
-                                            ref="alt_phone_code"
-                                            value={client.alt_phone_code}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_phone_code">Code</label>
-                                        {errors && errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--2-col">
-                                    <div className={this.formClassNames('alt_phone_number', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_phone_number"
-                                            ref="alt_phone_number"
-                                            value={client.alt_phone_number}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone no.</label>
-                                        {errors && errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
-                                    </div>
-                                </div>
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('alt_position', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_position"
-                                            ref="alt_position"
-                                            value={client.alt_position}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
-                                        {errors && errors.alt_position && <small className="mdl-textfield__error shown">{errors.alt_position[0]}</small>}
-                                    </div>
-                                </div>
 
-                                <div className="mdl-cell mdl-cell--3-col">
-                                    <div className={this.formClassNames('alt_department', errors)}>
-                                        <input
-                                            className="mdl-textfield__input"
-                                            type="text"
-                                            id="alt_department"
-                                            ref="alt_department"
-                                            value={client.alt_department}
-                                            onChange={this.onChangeFields.bind(this)}
-                                            />
-                                        <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
-                                        {errors && errors.alt_department && <small className="mdl-textfield__error shown">{errors.alt_department[0]}</small>}
+                            <legend>Company Alternative</legend>
+                            <div className="">
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('alt_first_name', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_first_name"
+                                                ref="alt_first_name"
+                                                value={client.alt_first_name}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
+                                            {errors && errors.alt_first_name && <small className="mdl-textfield__error shown">{errors.alt_first_name[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('alt_last_name', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_last_name"
+                                                ref="alt_last_name"
+                                                value={client.alt_last_name}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
+                                            {errors && errors.alt_last_name && <small className="mdl-textfield__error shown">{errors.alt_last_name[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('alt_email_address', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_email_address"
+                                                ref="alt_email_address"
+                                                value={client.alt_email_address}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail</label>
+                                            {errors && errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
+                                        </div>
+                                    </div>
+
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('alt_gender', errors)}>
+                                            <select
+                                                className="mdl-select__input"
+                                                id="alt_gender"
+                                                ref="alt_gender"
+                                                value={client.alt_gender}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                >
+                                                <option value=""></option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                            <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mdl-grid">
+                                    <div className="mdl-cell mdl-cell--1-col">
+                                        <div className={this.formClassNames('alt_mobile_code', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_mobile_code"
+                                                ref="alt_mobile_code"
+                                                value={client.alt_mobile_code}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Code</label>
+                                            {errors && errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--2-col">
+                                        <div className={this.formClassNames('alt_mobile_number', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_mobile_number"
+                                                ref="alt_mobile_number"
+                                                value={client.alt_mobile_number}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
+                                            {errors && errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--1-col">
+                                        <div className={this.formClassNames('alt_phone_code', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_phone_code"
+                                                ref="alt_phone_code"
+                                                value={client.alt_phone_code}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_phone_code">Code</label>
+                                            {errors && errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--2-col">
+                                        <div className={this.formClassNames('alt_phone_number', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_phone_number"
+                                                ref="alt_phone_number"
+                                                value={client.alt_phone_number}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone no.</label>
+                                            {errors && errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
+                                        </div>
+                                    </div>
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('alt_position', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_position"
+                                                ref="alt_position"
+                                                value={client.alt_position}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
+                                            {errors && errors.alt_position && <small className="mdl-textfield__error shown">{errors.alt_position[0]}</small>}
+                                        </div>
+                                    </div>
+
+                                    <div className="mdl-cell mdl-cell--3-col">
+                                        <div className={this.formClassNames('alt_department', errors)}>
+                                            <input
+                                                className="mdl-textfield__input"
+                                                type="text"
+                                                id="alt_department"
+                                                ref="alt_department"
+                                                value={client.alt_department}
+                                                onChange={this.onChangeFields.bind(this)}
+                                                />
+                                            <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
+                                            {errors && errors.alt_department && <small className="mdl-textfield__error shown">{errors.alt_department[0]}</small>}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <button
-                            className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                            type="submit"
-                            >
-                            Save
-                        </button>
+                            <button
+                                className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                                type="submit"
+                                >
+                                Save
+                            </button>
 
-                        <button
-                            className="mdl-button mdl-js-button mdl-button--raised"
-                            type="button"
-                            >
-                            Cancel
-                        </button>
-                    </form>
+                            <button
+                                className="mdl-button mdl-js-button mdl-button--raised"
+                                type="button"
+                                >
+                                Cancel
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </section>
         );
     }
 
