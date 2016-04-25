@@ -152,5 +152,10 @@ export default {
     return put('client/profile', {
       params: payload
     });
+  },
+  updateClientPassword(payload) {
+    return put('user/password/change', {
+      params: payload
+    });
   }
 };
