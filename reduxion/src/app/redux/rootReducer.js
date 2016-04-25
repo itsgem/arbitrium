@@ -8,6 +8,8 @@ import router from '../parts/core/reducers/routerRedux'
 import country from '../parts/auth/reducers/country'
 
 import clientadmin from '../parts/admin/reducers/client'
+import adminUserManagement from '../parts/admin/reducers/userManagement'
+import validateUsername from '../parts/admin/reducers/validateUsername'
 
 export default combineReducers({
   auth,
@@ -16,5 +18,7 @@ export default combineReducers({
   clientProfile,
   router,
   clientadmin,
-  country
+  country,
+  adminUserManagement,
+  validateUsername
 })

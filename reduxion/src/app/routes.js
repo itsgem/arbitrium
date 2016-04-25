@@ -21,6 +21,8 @@ import ClientProfile from 'client/profile/containers/profile';
 import UsersView from 'parts/admin/usersView';
 import AdminClientView from 'parts/admin/containers/client';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
+import AdminUserManagementList from 'parts/admin/containers/userManagementList';
+import AdminUserManagementAdd from 'parts/admin/containers/userManagementAdd';
 
 export default () => (
     <Route component={Application} name="home" path="/">
@@ -42,6 +44,10 @@ export default () => (
                 <Route component={UsersView} path="users"/>
                 <Route component={AdminClientAdd} path="client/new"/>
                 <Route component={AdminClientView} path="client/:id"/>
+                <Route path="account">
+                  <IndexRoute component={AdminUserManagementList}/>
+                  <Route component={AdminUserManagementAdd} path="new"/>
+                </Route>
             </Route>
 
             <Route path="app" component={Authenticated}>
