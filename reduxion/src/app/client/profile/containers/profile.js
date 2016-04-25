@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { clientProfile, updateClientProfile, getAvailableUsername } from '../reducers/clientProfile'
-import { country } from '../../../auth/reducers/country'
-import ClientProfile from '../views/clientProfile';
+import { clientProfile, updateClientProfile, getAvailableUsername } from '../reducers/profile';
+import { country } from '../../../parts/auth/reducers/country';
+import ClientProfile from '../views/profile';
 
 const mapStateToProps = (state) => {
     return {
