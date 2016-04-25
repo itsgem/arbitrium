@@ -108,7 +108,7 @@ button, select, html, textarea, input {
 }
 
 .mdl-select.is-focused .mdl-select__input { outline: none; }
-.mdl-select.is-invalid .mdl-select__input { 
+.mdl-select.is-invalid .mdl-select__input {
   border-color: rgb(222, 50, 38);
   box-shadow: none;
 }
@@ -130,7 +130,7 @@ button, select, html, textarea, input {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  text-align: left; 
+  text-align: left;
 }
 
 .mdl-select.is-dirty .mdl-select__label { visibility: hidden; }
@@ -178,11 +178,11 @@ button, select, html, textarea, input {
 .mdl-select.is-focused .mdl-select__label:after {
   left: 0;
   visibility: visible;
-  width: 100%; 
+  width: 100%;
 }
 
 .mdl-select.is-invalid .mdl-select__label:after {
-  background-color: rgb(222, 50, 38); 
+  background-color: rgb(222, 50, 38);
 }
 
 .mdl-select__error {
@@ -274,7 +274,7 @@ div#application {
     }
 
     main {
-      // width: 100%;
+      /*width: 100%;*/
     }
     .login-view {
       width: 312px;
@@ -313,6 +313,6 @@ div#application {
       box-sizing: border-box;
     }
   }
-  
+
 
 }

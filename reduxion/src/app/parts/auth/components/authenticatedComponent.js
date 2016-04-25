@@ -14,9 +14,10 @@ export default React.createClass({
         let nextPath = this.props.location.pathname;
         if (!this.props.authenticated) {
             debug('is not authenticated');
-            this.context.router.push(`/login?nextPath=${nextPath}`);
+            this.context.router.push(`/coffee/login?nextPath=${nextPath}`);
         } else {
             debug('is authenticated');
+            this.context.router.push(`coffee/`);
         }
     },
     componentDidUpdate: function () {

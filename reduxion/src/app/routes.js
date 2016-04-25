@@ -2,11 +2,13 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
 import Application from 'parts/core/containers/application';
-import MainLanding from 'parts/core/views/mainLanding';
+import AdminLanding from 'parts/core/views/adminLanding';
+import ClientLanding from 'parts/core/views/clientLanding';
 
 import Authenticated from 'parts/auth/containers/authenticatedComponent';
 import Login from 'parts/auth/containers/login';
-import Logout from 'parts/auth/containers/logout';
+import AdminLogout from 'parts/auth/containers/adminLogout';
+import ClientLogout from 'parts/auth/containers/clientLogout';
 import Signup from 'parts/auth/containers/signup';
 import Forgot from 'parts/auth/containers/forgot';
 import RegistrationComplete from 'parts/auth/containers/registrationComplete';
@@ -21,25 +23,47 @@ import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
 export default () => (
     <Route component={Application} name="home" path="/">
-        <IndexRoute component={MainLanding}/>
-        <Route component={Login} path="login"/>
-        <Route component={Signup} path="signup"/>
-        <Route component={Logout} path="logout"/>
-        <Route component={Forgot} path="forgot"/>
 
-        <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
-        <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
+        {/*admin page*/}
 
-        <Route path="admin" component={Authenticated}>
-            <IndexRoute component={UsersView}/>
-            <Route component={UsersView} path="users"/>
-            <Route component={AdminClientAdd} path="client/new"/>
-            <Route component={AdminClientView} path="client/:id"/>
+        <Route component={Application} name="home" path="coffee">
+            <IndexRoute component={AdminLanding}/>
+            <Route component={Login} path="login"/>
+            <Route component={Signup} path="signup"/>
+            <Route component={AdminLogout} path="logout"/>
+            <Route component={Forgot} path="forgot"/>
+
+            <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
+            <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
+
+            <Route path="admin" component={Authenticated}>
+                <IndexRoute component={UsersView}/>
+                <Route component={UsersView} path="users"/>
+                <Route component={AdminClientAdd} path="client/new"/>
+                <Route component={AdminClientView} path="client/:id"/>
+            </Route>
+
+            <Route path="app" component={Authenticated}>
+                <IndexRoute component={MyProfile}/>
+                <Route name="account" path="my">
+                    <Route component={MyProfile} path="profile"/>
+                </Route>
+            </Route>
         </Route>
 
-        <Route path="/client" component={Authenticated}>
-            <IndexRoute component={ClientProfile}/>
-            <Route component={ClientProfile} path="profile"/>
+        {/*client page*/}
+
+        <Route component={Application} name="home" path="i">
+            <IndexRoute component={ClientLanding}/>
+            <Route component={Login} path="login"/>
+            <Route component={Signup} path="signup"/>
+            <Route component={ClientLogout} path="logout"/>
+            <Route component={Forgot} path="forgot"/>
+
+            <Route path="/client" component={Authenticated}>
+                <IndexRoute component={ClientProfile}/>
+                <Route component={ClientProfile} path="profile"/>
+            </Route>
         </Route>
     </Route>
 );

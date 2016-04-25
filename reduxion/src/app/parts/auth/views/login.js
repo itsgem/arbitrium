@@ -10,7 +10,7 @@ let debug = new Debug("views:login");
 class Login extends React.Component {
     componentWillReceiveProps(nextProps){
         debug("componentWillReceiveProps", nextProps);
-        let path = nextProps.location.query.nextPath || '/app';
+        let path = nextProps.location.query.nextPath || '/coffee';
         debug("componentWillReceiveProps next path: ", path);
         if (nextProps.authenticated) {
           let token = nextProps.user.get('data').get('token');
@@ -37,13 +37,13 @@ class Login extends React.Component {
                     <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
                         <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
                             <Link
-                                to="/forgot"
+                                to="/coffee/forgot"
                             >{tr.t('forgotPassword')}</Link>
                         </div>
 
                         <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
                             <Link
-                                to="/signup"
+                                to="/coffee/signup"
                             >{tr.t('sign_up')}</Link>
                         </div>
                     </div>
