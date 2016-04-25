@@ -60,7 +60,7 @@ export default () => (
             <Route component={ClientLogout} path="logout"/>
             <Route component={Forgot} path="forgot"/>
 
-            <Route path="/client" component={Authenticated}>
+            <Route path="client" component={Authenticated}>
                 <IndexRoute component={ClientProfile}/>
                 <Route component={ClientProfile} path="profile"/>
             </Route>
