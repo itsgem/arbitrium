@@ -78,7 +78,10 @@ div#application{
 }
 
 .page-content {
-
+	.client-tab-header {
+		height: 48px;
+		min-height: 0;
+	}
 }
 
 .pagination {
