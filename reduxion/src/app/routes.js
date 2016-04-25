@@ -18,6 +18,7 @@ import MyProfile from 'parts/profile/containers/myProfile';
 
 import ClientProfile from 'client/profile/containers/profile';
 import ClientChangePassword from 'client/profile/containers/changePassword';
+import ClientChangeEmail from 'client/profile/containers/changeEmail';
 
 import UsersView from 'parts/admin/usersView';
 import AdminClientView from 'parts/admin/containers/client';
@@ -66,6 +67,7 @@ export default () => (
                 <IndexRoute component={ClientProfile}/>
                 <Route component={ClientProfile} path="profile"/>
                 <Route component={ClientChangePassword} path="profile/change_password"/>
+                <Route component={ClientChangeEmail} path="profile/change_email"/>
             </Route>
         </Route>
     </Route>

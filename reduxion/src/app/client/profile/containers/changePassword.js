@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { updateClientPassword } from '../reducers/changePassword';
-import { country } from '../../../parts/auth/reducers/country';
 import ClientChangePassword from '../views/changePassword';
 
 const mapStateToProps = (state) => {

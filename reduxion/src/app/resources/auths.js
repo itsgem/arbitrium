@@ -157,5 +157,10 @@ export default {
     return put('user/password/change', {
       params: payload
     });
+  },
+  updateClientEmail(payload) {
+    return get('user/email/change', {
+      params: payload
+    });
   }
 };
