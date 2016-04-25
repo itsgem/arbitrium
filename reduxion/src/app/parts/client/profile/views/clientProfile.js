@@ -26,8 +26,8 @@ export default React.createClass({
                             </button>
                             <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo_menu-lower-right">
                                 <li className="mdl-menu__item"><i className="material-icons mdl-list__item-icon">settings</i> Settings</li>
-                                <li className="mdl-menu__item"><i className="material-icons mdl-list__item-icon">person</i> Profile</li>
-                                <li className="mdl-menu__item"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</li>
+                                <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i/client/profile"><i className="material-icons mdl-list__item-icon">person</i> Profile</Link></li>
+                                <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</Link></li>
                             </ul>
                         </div>
                     </div>
