@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import config from 'config';
 import Debug from 'debug';
+import { Link } from 'react-router';
 let debug = new Debug("component:navbar");
 
 class Navbar extends React.Component {
@@ -36,7 +37,7 @@ class Navbar extends React.Component {
                     <div className="irx-navigation-container">
                         <nav className="irx-navigation mdl-navigation">
                             <a className="mdl-navigation__link" href="">Business</a>
-                            <a className="mdl-navigation__link" href="">Logout</a>
+                            <Link className="mdl-navigation__link" to ="/logout">Logout</Link>
                         </nav>
                     </div>
                 </div>

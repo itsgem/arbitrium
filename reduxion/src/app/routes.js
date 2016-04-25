@@ -16,6 +16,8 @@ import MyProfile from 'parts/profile/containers/myProfile';
 import ClientProfile from 'parts/client/profile/containers/clientProfile';
 
 import UsersView from 'parts/admin/usersView';
+import AdminClientView from 'parts/admin/containers/client';
+import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
 export default () => (
     <Route component={Application} name="home" path="/">
@@ -28,9 +30,11 @@ export default () => (
         <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
         <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
 
-        <Route path="/admin" component={Authenticated}>
+        <Route path="admin" component={Authenticated}>
             <IndexRoute component={UsersView}/>
             <Route component={UsersView} path="users"/>
+            <Route component={AdminClientAdd} path="client/new"/>
+            <Route component={AdminClientView} path="client/:id"/>
         </Route>
 
         <Route path="/client" component={Authenticated}>

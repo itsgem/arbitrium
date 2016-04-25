@@ -13,7 +13,15 @@ class Login extends React.Component {
         let path = nextProps.location.query.nextPath || '/app';
         debug("componentWillReceiveProps next path: ", path);
         if (nextProps.authenticated) {
-            this.context.router.push(path);
+          let token = nextProps.user.get('data').get('token');
+          let lifetime = nextProps.user.get('data').get('lifetime');
+          let user =  nextProps.user.get('data').get('username');
+          let date = new Date();
+          let expired = date.setMinutes(date.getMinutes()+parseInt(lifetime));
+          localStorage.setItem('token', token);
+          localStorage.setItem('expired', expired);
+          localStorage.setItem('user', user);
+          this.context.router.push(path);
         }
     }
 
@@ -56,7 +64,8 @@ Login.contextTypes = {
 
 Login.propTypes = {
     authenticated: React.PropTypes.bool.isRequired,
-    login: React.PropTypes.func.isRequired
+    login: React.PropTypes.func.isRequired,
+    user: React.PropTypes.object
 }
 
 export default Login;

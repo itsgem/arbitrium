@@ -36,10 +36,9 @@ function ajax( url, method, options, params ) {
         url: baseUrl(url),
         params: params,
         data: data,
-        //withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
-            'X-Token': 'cdd618c578cc3fc2b31302473c0767b682a03a8bd7f57dbc408701cf66e433c6'
+            'X-Token':`${localStorage.getItem('token')}`
         },
         paramsSerializer: function(params) {
             return Qs.stringify(params, {arrayFormat: 'brackets'});
