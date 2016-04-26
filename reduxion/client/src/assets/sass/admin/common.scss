@@ -1,0 +1,299 @@
+html {
+    font-size: 87.5%;
+}
+html body {
+    font-size: 14px;
+    font-size: 1rem;
+    line-height: 1;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.body-bg {
+    background: #e9eaed;
+}
+.body-bg .header-bg {
+    background: #0e3192;
+    min-height: 48px;
+}
+.body-bg .header-bg .header-container {
+    height: 48px;
+    max-width: 1200px;
+    padding: 0px;
+}
+.body-bg .header-bg .header-container .main-header {
+    background: none;
+    height: 48px;
+    padding: 0px;
+}
+.body-bg .header-bg .header-container .main-header .logo img {
+    height: 40px;
+}
+.body-bg .header-bg .header-container .main-header .nav {
+    background: none;
+    float: right;
+    width: 1030px;
+}
+.body-bg .header-bg .header-container .main-header .nav .tab {
+    border-bottom: none;
+    float: right;
+}
+.body-bg .header-bg .header-container .main-header .nav .tab a {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0px 18px;
+}
+.body-bg .header-bg .header-container .main-header .nav .tab a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+.body-bg .header-bg .header-container .main-header .nav .tab .is-active {
+    color: #fff;
+}
+.body-bg .header-bg .header-container .main-header .nav .tab .is-active:after {
+    background: #ff6600;
+}
+.body-bg .header-bg .header-container .main-header .nav .tab .icon-profile {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.body-bg .client-list {
+    padding: 50px 0px 0px 0px;
+    width: 1200px;
+}
+.body-bg .client-list .client-tab {
+    background: #0e3192;
+    height: 48px;
+    padding: 0px;
+    width: 1200px;
+}
+.body-bg .client-list .client-tab a {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0px 18px;
+}
+.body-bg .client-list .client-tab a i.add {
+    padding-left: 6px;
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+}
+.body-bg .client-list .client-tab a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+.body-bg .client-list .client-tab .is-active:after {
+    background: #ff6600 !important;
+}
+.body-bg .client-list .filter-search, .admin form {
+    background: #fff;
+    height: auto;
+    min-height: 130px;
+    width: 1200px;
+}
+.body-bg .client-list .filter-search p {
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 20px 0px 0px 20px;
+    margin: 0px;
+}
+.body-bg .client-list .filter-search form {
+    margin-bottom: 0px;
+}
+.body-bg .client-list .filter-search .filter-search-bar {
+    list-style: none;
+    padding: 0px 12px 0px 12px;
+}
+.body-bg .client-list .filter-search .filter-search-bar .search-cta {
+    text-align: right;
+}
+.body-bg .client-list .filter-search .filter-search-bar .search-cta .mdl-button--accent {
+    background: #ff6600;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-right: 16px;
+}
+.body-bg .client-list .filter-search .filter-search-bar .search-cta .mdl-button--raised {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.body-bg .client-list .table-client-list {
+    width: 100%;
+}
+.body-bg .client-list .table-client-list thead tr {
+    background: #e3ecf5;
+}
+.body-bg .client-list .table-client-list thead tr th {
+    font-size: 1.142857143rem;
+    font-weight: 700;
+}
+.body-bg .client-list .table-client-list tbody tr.bg-dark {
+    background: #f5fafe;
+}
+.body-bg .client-list .table-client-list tbody tr.bg-dark td {
+    border: 0px;
+}
+.body-bg .client-list .table-client-list tbody tr.bg-light {
+    background: #fbfeff;
+}
+.body-bg .client-list .table-client-list tbody tr.bg-light td {
+    border: 0px;
+}
+.body-bg .client-list .table-client-list tbody tr td .btn-view-edit {
+    background: #ff6600;
+    margin-right: 6px;
+}
+.body-bg .client-list .table-client-list tbody tr td .btn-delete {
+    background: #ff4a4a;
+}
+.body-bg .client-list .pagination {
+    align-items: center;
+    background: #0e3192;
+    height: 90px;
+    padding: 0px;
+    text-align: center;
+}
+.body-bg .client-list .pagination .btn-paginate-active {
+    background: #fff;
+    color: #ff6600;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 4px;
+}
+.body-bg .client-list .pagination .btn-paginate-normal {
+    background: #ff6600;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 4px;
+}
+.body-bg .client-list .pagination .btn-paginate-disabled {
+    background: #0d2c81;
+    cursor: not-allowed;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 4px;
+}
+.body-bg .client-list .pagination .btn-paginate-blue {
+    background: #0e3192;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 4px;
+}
+.body-bg .client-list .pagination .btn-paginate-items-per-page {
+    background: #ff6600;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    float: right;
+    margin-right: 10px;
+}
+/*# sourceMappingURL=adminClient.css.map */
+
+
+.inner_content {
+    width: 85%;
+    margin: 50px auto;
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,255,255);
+}
+.box_admin .inner_content {
+    color: #5C809E;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0;
+}
+.layout-padding {
+    padding: 20px;
+}
+body {
+    background: #e9eaed;
+}
+.box_admin .inner_content legend {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #5C809E;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0;
+    width: 100%;
+}
+.mdl-layout__content {
+    width: 100%;
+}
+div#application #client_add form {
+  width: auto;
+}
+div#application #client_add .mdl-layout__content, legend {
+  width: 100%;
+}
+
+.to_left {
+  float: left;
+}
+
+.box_mobile {
+  margin-left: 0;
+  margin-right: 16px;
+}
+
+.pd-10 {
+  padding: 0 10px;
+}
+
+#client_add #btn-cancel, #client_add #btn-save{
+  min-width: 88px;
+}
+#client_add #btn-save, #client_add #check_availability {
+  background-color: rgb(255,110,64)
+}
+
+div.required {
+    color: #aaa;
+    text-align: right;
+    font-size: 11px;
+    padding: 5px;
+}
+
+div.required:before {
+    color: #EF5350;
+    content: "*";
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
+    vertical-align: top;
+    font-size: 10px;
+    margin-right: 3px;
+}
+
+#client_add #check_availability {
+  color: #fff;
+  font-size: 14px;
+  font: 11px BlinkMacSystemFont;
+  padding: 4px 15px;
+  min-height: 18px;
+  position: relative;
+  top: 30px;
+}
+
+#client_add #btn-cancel:active {
+  background-color: rgba(0,0,0,.12);
+}
+
+#client_add #btn-cancel {
+  background-color: #fff;
+  color: rgba(0,0,0,0.87);
+}
+
+.md-button.md-raised:not([disabled]) {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+@media (min-width: 1200px) {
+  div#application #client_add .mdl-cell--full-col {
+      width: 100%;
+  }
+}
