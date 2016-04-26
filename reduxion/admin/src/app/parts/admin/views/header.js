@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'components/docTitle';
+import { Link } from 'react-router';
 
 export default React.createClass( {
   render() {
@@ -25,7 +26,7 @@ export default React.createClass( {
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
                     <li className="mdl-menu__item">Settings</li>
-                    <li className="mdl-menu__item">Logout</li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout">Logout</Link></li>
                   </ul>
                 </div>
               </div>

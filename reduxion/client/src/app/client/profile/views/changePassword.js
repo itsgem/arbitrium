@@ -13,9 +13,6 @@ export default React.createClass({
         let success = this.props.success;
 
         return (
-            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-                <ClientHeader />
-                <ClientSidebar />
                 <main className="mdl-layout__content mdl-layout__content_my_profile">
                     <div className="page-content">
                         <div id="profile-bgcover" className="mdl-grid mdl-grid--no-spacing mdl-cell mdl-cell--12-col">
@@ -45,11 +42,6 @@ export default React.createClass({
                             />
                     </div>
                 </main>
-                <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar">
-                    <div className="mdl-snackbar__text"></div>
-                    <button type="button" className="mdl-snackbar__action"></button>
-                </div>
-            </div>
         );
     }
 });

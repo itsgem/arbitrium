@@ -10,7 +10,7 @@ let debug = new Debug("views:login");
 class Login extends React.Component {
     componentWillReceiveProps(nextProps){
         debug("componentWillReceiveProps", nextProps);
-        let path = nextProps.location.query.nextPath || '/coffee';
+        let path = nextProps.location.query.nextPath || '/i';
         debug("componentWillReceiveProps next path: ", path);
         if (nextProps.authenticated) {
           let token = nextProps.user.get('data').get('token');
