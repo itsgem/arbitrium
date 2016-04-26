@@ -48,7 +48,7 @@ export default {
           params: {
               login: payload.email,
               password: payload.password,
-              user_type:"1"
+              user_type:"2"
           }
       });
   },
