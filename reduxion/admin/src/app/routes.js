@@ -15,24 +15,34 @@ import UsersView from 'parts/admin/usersView';
 import AdminClientProfile from 'parts/admin/containers/clientProfile';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
+function requireAuth(nextState, replace, cb) {
+  if (!localStorage.getItem('token')) {
+    replace({
+      pathname: '/coffee/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+  return cb();
+}
+
 export default () => (
-    <Route component={Application} name="home" path="/">
-        <Route component={Application} name="home" path="coffee">
-            <IndexRoute component={Dashboard}/>
-            <Route component={Login} path="login"/>
-            <Route component={Signup} path="signup"/>
-            <Route component={Logout} path="logout"/>
-            <Route component={Forgot} path="forgot"/>
+  <Route component={Application} name="home" path="/">
+    <Route component={Application} name="home" path="coffee">
+      <IndexRoute component={Dashboard}/>
+      <Route component={Login} path="login"/>
+      <Route component={Signup} path="signup"/>
+      <Route component={Logout} path="logout" onEnter={requireAuth}/>
+      <Route component={Forgot} path="forgot"/>
 
-            <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
-            <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
+      <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
+      <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
 
-            <Route path="admin" component={Authenticated}>
-                <IndexRoute component={UsersView}/>
-                <Route component={UsersView} path="users"/>
-                <Route component={AdminClientAdd} path="client/new"/>
-                <Route component={AdminClientProfile} path="client/:id"/>
-            </Route>
-        </Route>
+      <Route path="admin" component={Authenticated}>
+        <IndexRoute component={UsersView} onEnter={requireAuth}/>
+        <Route component={UsersView} path="users" onEnter={requireAuth}/>
+        <Route component={AdminClientAdd} path="client/new" onEnter={requireAuth}/>
+        <Route component={AdminClientView} path="client/:id" onEnter={requireAuth}/>
+      </Route>
     </Route>
+  </Route>
 );
