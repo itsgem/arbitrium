@@ -10,8 +10,6 @@ import Login from 'parts/auth/containers/login';
 import ClientLogout from 'parts/auth/containers/clientLogout';
 import Signup from 'parts/auth/containers/signup';
 import Forgot from 'parts/auth/containers/forgot';
-import RegistrationComplete from 'parts/auth/containers/registrationComplete';
-import ResetPassword from 'parts/auth/views/resetPassword';
 
 import ClientProfile from 'client/profile/containers/profile';
 import ClientChangePassword from 'client/profile/containers/changePassword';

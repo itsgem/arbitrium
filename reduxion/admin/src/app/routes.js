@@ -12,7 +12,7 @@ import RegistrationComplete from 'parts/auth/containers/registrationComplete';
 import ResetPassword from 'parts/auth/views/resetPassword';
 
 import UsersView from 'parts/admin/usersView';
-import AdminClientView from 'parts/admin/containers/client';
+import AdminClientProfile from 'parts/admin/containers/clientProfile';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
 function requireAuth(nextState, replace, cb) {

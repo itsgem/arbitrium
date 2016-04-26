@@ -90,7 +90,7 @@ class ClientChangePassword extends React.Component {
                                         <div className={this.formClassNames('current_password', errors)}>
                                             <input
                                                 className="mdl-textfield__input"
-                                                type="text"
+                                                type="password"
                                                 id="current_password"
                                                 ref="current_password"
                                                 />
@@ -104,7 +104,7 @@ class ClientChangePassword extends React.Component {
                                         <div className={this.formClassNames('password', errors)}>
                                             <input
                                                 className="mdl-textfield__input"
-                                                type="text"
+                                                type="password"
                                                 id="password"
                                                 ref="password"
                                                 />
@@ -118,7 +118,7 @@ class ClientChangePassword extends React.Component {
                                         <div className={this.formClassNames('password_confirmation', errors)}>
                                             <input
                                                 className="mdl-textfield__input"
-                                                type="text"
+                                                type="password"
                                                 id="password_confirmation"
                                                 ref="password_confirmation"
                                                 />
