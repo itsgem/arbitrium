@@ -80,7 +80,7 @@ export default React.createClass( {
         </div>
         <div className="mdl-grid mdl-grid--no-spacing forgot-footer" id="other-links">
           <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-            <Link to="/coffee/login"> Back to Login </Link>
+            <Link to="/i/login"> Back to Login </Link>
           </div>
         </div>
       </div>

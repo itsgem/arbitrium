@@ -302,7 +302,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                                 <Link
                                     className='margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 link ng-scope'
                                     id='btn-signup'
-                                    to="/coffee/login">Already have an account? Login here.</Link>
+                                    to="/i/login">Already have an account? Login here.</Link>
                             </p>
                         </div>
                         <div className="flex-order-gt-md-2 flex-gt-md-25">
