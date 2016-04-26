@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
-import { adminUserManagementList, listRoleAdmin } from '../reducers/userManagement'
-import { validateUsername } from '../reducers/validateUsername'
+import { adminUserManagementList, deleteAdminAccount} from '../reducers/userManagement'
 import ViewUserManagementList from '../views/userManagementList';
 
 const mapStateToProps = (state) => {
   return {
     adminList: state.get('adminUserManagement').get('adminList'),
+    adminDelete: state.get('adminUserManagement').get('adminDelete'),
     role: state.get('adminUserManagement').get('role')
   };
 }
 
 export default connect(mapStateToProps, {
-  adminUserManagementList, validateUsername, listRoleAdmin
+  adminUserManagementList, deleteAdminAccount
 })(ViewUserManagementList)

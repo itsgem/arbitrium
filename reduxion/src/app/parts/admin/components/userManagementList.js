@@ -7,7 +7,7 @@ import {createError} from 'utils/error';
 import Alert from 'components/alert';
 import tr from 'i18next';
 
-class UserManagementAdd extends React.Component {
+class UserManagementList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,59 +20,122 @@ class UserManagementAdd extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-  userDisplay (key, data) {
+  userDisplay (id, key, data, alter) {
     return (
-       <tr key={key} className="bg-dark">
+       <tr key={key} className={alter ? "bg-dark" : "bg-light"}>
           <td className="mdl-data-table__cell--non-numeric">{data.get('id')}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('username')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.get('username')}<br /> {data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.get('email_address')}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.get('name')}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('login_attempts')}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('locked_at')}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
+          <td className="mdl-data-table__cell--non-numeric">Failed login attempts: {data.get('login_attempts')}</td>
           <td className="mdl-data-table__cell--non-numeric">
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+            <button
+              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
               <i className="material-icons">open_in_new</i>
             </button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete">
+            <button
+                className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
+                onClick={(e) => this.deleteItem(e, id)}>
               <i className="material-icons">delete</i>
             </button>
           </td>
         </tr>
     )
   }
+
+  pagination (key, currentPage) {
+    let className = "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-" + (key == currentPage ? 'active' : 'normal');
+    return (
+        <button key={key} className={className} onClick={(e) => this.page(e, key)}>{key}</button>
+      );
+  }
+  prevPage (key, prev) {
+    return (
+      <div key={key} style={{display: "inline"}}>
+        {prev &&
+        <button
+          className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
+          onClick={(e) => this.page(e, 1)}>FIRST</button>
+        }
+        {!prev &&
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
+        }
+        {prev &&
+          <button
+            className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
+            onClick={(e) => this.page(e, prev)}>
+            <i className="material-icons">keyboard_arrow_left</i>
+          </button>
+        }
+        {!prev &&
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">
+            <i className="material-icons">keyboard_arrow_left</i>
+          </button>
+        }
+      </div>
+    );
+  }
+  nextPage (key, next, last) {
+    return (
+      <div key={key} style={{display: "inline"}}>
+      {next &&
+        <button
+          className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
+          onClick={(e) => this.page(e, next)}>
+          <i className="material-icons">keyboard_arrow_right</i>
+        </button>
+      }
+      {!next &&
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">
+          <i className="material-icons">keyboard_arrow_right</i>
+        </button>
+      }
+      {next &&
+        <button
+          className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
+          onClick={(e) => this.page(e, last)}>LAST</button>
+      }
+      {!next &&
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">LAST</button>
+      }
+      </div>
+    );
+  }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
+      alert(errorServer.data.message);
     }
     let counter = false;
+    let alter = false;
+    let pagination = [];
     let users = {};
+    let adminList = {last_page: 1};
     if (this.props.adminList.size) {
+      let i=0;
       counter = true;
-      let adminList =  this.props.adminList;
+      adminList = this.props.adminList;
       users = adminList.get('data').toArray();
+      pagination[i] = this.prevPage(i, (adminList.get('current_page') > 1 ? (adminList.get('current_page') - 1): false));
+      for (i = 1; i <= adminList.get('last_page'); i++) {
+        pagination[i] = this.pagination(i, adminList.get('current_page'));
+      }
+      pagination[i+1] = this.nextPage(i+1, (adminList.get('current_page') == adminList.get('last_page') ? false : (adminList.get('current_page') + 1 )), adminList.get('last_page') );
     }
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
           <div className="mdl-grid filter-search-bar">
-            <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input font-input" type="text" id="company"/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Company...</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div className="mdl-cell mdl-cell--4-col">
+              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="email-address"/>
-                <label className="mdl-textfield__label" htmlFor="sample2">Email Address...</label>
+                <label className="mdl-textfield__label">Email Address</label>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--2-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="status"/>
-                <label className="mdl-textfield__label" htmlFor="sample3">Status...</label>
+            <div className="mdl-cell mdl-cell--4-col">
+              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input className="mdl-textfield__input" type="text" id="name"/>
+                <label className="mdl-textfield__label">Name</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col search-cta">
@@ -87,91 +150,53 @@ class UserManagementAdd extends React.Component {
                 <th className="mdl-data-table__cell--non-numeric">Username</th>
                 <th className="mdl-data-table__cell--non-numeric">Email Address</th>
                 <th className="mdl-data-table__cell--non-numeric">Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Login attempts</th>
-                <th className="mdl-data-table__cell--non-numeric">Locked At</th>
-                <th className="mdl-data-table__cell--non-numeric">Role</th>
-                <th className="mdl-data-table__cell--non-numeric">Action</th>
+                <th className="mdl-data-table__cell--non-numeric">Stats</th>
+                <th className="mdl-data-table__cell--non-numeric">View / Edit</th>
               </tr>
             </thead>
             <tbody>
               {counter && users.map(item =>
                 {
-                  {return this.userDisplay(item.get('user').get('id'), item.get('user'))}
+                  alter = alter ? false : true;
+                  {return this.userDisplay(item.get('id'), item.get('user').get('id'), item.get('user'), alter)}
                 }
               )}
             </tbody>
           </table>
           {/* <!-- Pagination -->*/}
         <div className="mdl-grid pagination">
-          <div className="mdl-cell mdl-cell--3-col">
-
-          </div>
+          <div className="mdl-cell mdl-cell--3-col"></div>
           <div className="mdl-cell mdl-cell--6-col">
-            <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
-            <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">
-              <i className="material-icons">keyboard_arrow_left</i>
-            </button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-active">1</button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">2</button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">3</button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">4</button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">5</button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue">
-              <i className="material-icons">keyboard_arrow_right</i>
-            </button>
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue">LAST</button>
+            {counter && pagination}
           </div>
           <div className="mdl-cell mdl-cell--3-col">
-            <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page">10</button>
+            <button
+              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page"
+              onClick={(e) => this.page(e, adminList.get('last_page'))}>{counter && adminList.get('last_page')}</button>
           </div>
         </div>
       </div>
     );
   }
-  formClassNames( field, errors = null ) {
-    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
-      'is-invalid is-dirty': errors[ field ],
-      'has-success': errors && !(errors[ field ])
-    } );
+  page(e, id) {
+    e.preventDefault();
+    let payload = {page: id};
+    this.props.adminUserManagementList(payload);
   }
-  register ( e ) {
+  deleteItem (e, id) {
     e.preventDefault();
     this.setState( {
       loading: true,
       errors: {},
       errorServer: null
     } );
-    let {username, email_address, password, rep_last_name, password_confirmation, first_name, last_name, role_id} = this.refs;
-
     let payload = {
-      username: username.value,
-      email_address: email_address.value,
-      password: password.value,
-      password_confirmation: password_confirmation.value,
-      first_name: first_name.value,
-      last_name: last_name.value,
-      role_id: role_id.value
+      id: id
     };
     window.componentHandler.upgradeDom();
-    return validateRegister.call( this, payload )
+    return validateDelete.call( this, payload )
       .with( this )
-      .then( registerAdmin )
-      .catch( setErrors );
-  }
-  checkUsername( e ) {
-    e.preventDefault();
-    this.setState( {
-      loading: true,
-      errors: {},
-      errorServer: null
-    } );
-    let payload = {
-      username: this.refs.username.value
-    }
-    window.componentHandler.upgradeDom();
-    return validateUsername.call( this, payload )
-      .with( this )
-      .then( getUsername )
+      .then( deletefunc )
       .catch( setErrors );
   }
 
@@ -183,38 +208,23 @@ function mapObject(object, callback) {
     });
 }
 
-function validateRegister ( payload) {
+function validateDelete (payload) {
   let rules = new Checkit( {
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
-    email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
-    password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-    password_confirmation: {rule: 'required', label: 'confirm password'},
-    first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'fast name' },
-    role_id: { rule: 'required', label: 'role' }
+    id: []
     } );
     return rules.run( payload );
 }
-function registerAdmin (payload) {
-  return this.props.adminUserManagementAdd(payload);
-}
 
-function validateUsername( payload ) {
-  let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
-  } );
-  return rules.run( payload );
-}
-function getUsername (payload) {
-  return this.props.validateUsername(payload);
+function deletefunc (payload) {
+  return this.props.deleteAdminAccount(payload);
 }
 
 function setErrors( e ) {
   this.setState(createError(e));
 }
 
-UserManagementAdd.mixins = [LinkedStateMixin];
-UserManagementAdd.defaultProps = {
+UserManagementList.mixins = [LinkedStateMixin];
+UserManagementList.defaultProps = {
     errors: []
 };
-export default UserManagementAdd;
+export default UserManagementList;

@@ -19,7 +19,9 @@ export default React.createClass( {
           <a href="/coffee/admin/account/new" className="mdl-layout__tab">Add New Admin<i className="material-icons add">add</i></a>
         </div>
         <UserManagementList
+          deleteAdminAccount={this.props.deleteAdminAccount}
           adminList={this.props.adminList}
+          adminUserManagementList={this.props.adminUserManagementList}
           />
       </div>
     );

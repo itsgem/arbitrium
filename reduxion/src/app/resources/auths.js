@@ -152,8 +152,8 @@ export default {
       params: payload
     });
   },
-  adminUserManagementList() {
-    return get('admin');
+  adminUserManagementList(payload = {page: 1}) {
+    return get('admin', {params: payload});
   },
   adminUserManagementAdd(payload) {
     return post('admin', {
@@ -170,5 +170,8 @@ export default {
   },
   listRoleAdmin(){
     return get('list/role/admin');
+  },
+  deleteAdminAccount(payload){
+    return del('admin/' + payload.id);
   }
 };
