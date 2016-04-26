@@ -21,21 +21,34 @@ import UsersView from 'parts/admin/usersView';
 import AdminClientView from 'parts/admin/containers/client';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
-export default () => (
-    <Route component={Application} name="home" path="/">
-        <Route component={Application} name="home" path="i">
-            <IndexRoute component={Dashboard}/>
-            <Route component={Login} path="login"/>
-            <Route component={Signup} path="signup"/>
-            <Route component={ClientLogout} path="logout"/>
-            <Route component={Forgot} path="forgot"/>
+import NoMatch from './components/noMatch';
 
-            <Route path="client" component={Authenticated}>
-                <IndexRoute component={ClientProfile}/>
-                <Route component={ClientProfile} path="profile"/>
-                <Route component={ClientChangePassword} path="profile/change_password"/>
-                <Route component={ClientChangeEmail} path="profile/change_email"/>
-            </Route>
-        </Route>
+function requireAuth(nextState, replace, cb) {
+  if (!localStorage.getItem('token')) {
+    replace({
+      pathname: '/i/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+  return cb();
+}
+
+export default () => (
+  <Route component={Application} name="home" path="/">
+    <Route component={Application} name="home" path="i">
+      <IndexRoute component={Dashboard}/>
+      <Route component={Login} path="login"/>
+      <Route component={Signup} path="signup"/>
+      <Route component={ClientLogout} path="logout"/>
+      <Route component={Forgot} path="forgot"/>
+
+      <Route path="client" component={Authenticated} onEnter={requireAuth}>
+        <IndexRoute component={ClientProfile} onEnter={requireAuth} />
+        <Route component={ClientProfile} path="profile" onEnter={requireAuth} />
+        <Route component={ClientChangePassword} path="profile/change_password" onEnter={requireAuth} />
+        <Route component={ClientChangeEmail} path="profile/change_email" onEnter={requireAuth} />
+      </Route>
+      <Route path="*" components={NoMatch} />
     </Route>
+  </Route>
 );
