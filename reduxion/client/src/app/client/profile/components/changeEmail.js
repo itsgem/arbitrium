@@ -98,7 +98,7 @@ class ClientProfile extends React.Component {
                                                 value={client.user.email_address}
                                                 readOnly={true}
                                                 />
-                                            <label className="mdl-textfield__label" htmlFor="email_address">Company name *</label>
+                                            <label className="mdl-textfield__label" htmlFor="email_address">Email Address *</label>
                                             {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@ class ClientProfile extends React.Component {
                                                 value={client.new_email_address}
                                                 onChange={this.onChangeFields.bind(this)}
                                                 />
-                                            <label className="mdl-textfield__label" htmlFor="new_email_address">Company name *</label>
+                                            <label className="mdl-textfield__label" htmlFor="new_email_address">New Email Address *</label>
                                             {errors && errors.new_email_address && <small className="mdl-textfield__error shown">{errors.new_email_address[0]}</small>}
                                         </div>
                                     </div>
@@ -228,7 +228,7 @@ class ClientProfile extends React.Component {
 
         let payload = {
             new_email_address: new_email_address.value,
-            callback_url: 'http://localhost:9991/i/client/profile'
+            callback_url: window.location.origin + '/i/client/profile'
         };
 
         window.componentHandler.upgradeDom();
