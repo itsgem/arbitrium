@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class ClientLanding extends React.Component{
+class Dashboard extends React.Component{
   constructor(props) {
       super(props);
       this.props = props;
@@ -10,6 +10,12 @@ class ClientLanding extends React.Component{
   componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
+
+  componentWillMount() {
+    if (!localStorage.getItem('token')){
+      this.context.router.push(`/i/login`);
     }
   }
 
@@ -52,4 +58,4 @@ class ClientLanding extends React.Component{
   }
 }
 
-export default ClientLanding;
+export default Dashboard;

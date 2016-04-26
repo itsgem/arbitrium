@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class AdminLanding extends React.Component{
+class Dashboard extends React.Component{
   constructor(props, context) {
       super(props);
       this.props = props;
@@ -331,9 +331,9 @@ class AdminLanding extends React.Component{
   }
 }
 
-AdminLanding.contextTypes = {
+Dashboard.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
 
-export default AdminLanding;
+export default Dashboard;

@@ -2,7 +2,7 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
 import Application from 'parts/core/containers/application';
-import ClientLanding from 'parts/core/views/clientLanding';
+import Dashboard from 'parts/core/views/dashboard';
 
 import Authenticated from 'parts/auth/containers/authenticatedComponent';
 import Login from 'parts/auth/containers/login';
@@ -24,7 +24,7 @@ import AdminClientAdd from 'parts/admin/containers/clientAdd';
 export default () => (
     <Route component={Application} name="home" path="/">
         <Route component={Application} name="home" path="i">
-            <IndexRoute component={ClientLanding}/>
+            <IndexRoute component={Dashboard}/>
             <Route component={Login} path="login"/>
             <Route component={Signup} path="signup"/>
             <Route component={ClientLogout} path="logout"/>
