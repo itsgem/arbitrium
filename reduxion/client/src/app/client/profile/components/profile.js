@@ -806,7 +806,7 @@ class ClientProfile extends React.Component {
                 { rule: 'max:32', label: 'username' }
             ],
             items_per_page:    [{ rule: 'integer', label: 'items per page'}],
-            timezone:          [],
+            timezone:          []
         });
 
         return rules.run(payload);

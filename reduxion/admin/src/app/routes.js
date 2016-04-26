@@ -12,7 +12,7 @@ import RegistrationComplete from 'parts/auth/containers/registrationComplete';
 import ResetPassword from 'parts/auth/views/resetPassword';
 
 import UsersView from 'parts/admin/usersView';
-import AdminClientView from 'parts/admin/containers/client';
+import AdminClientProfile from 'parts/admin/containers/clientProfile';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
 
 export default () => (
@@ -31,7 +31,7 @@ export default () => (
                 <IndexRoute component={UsersView}/>
                 <Route component={UsersView} path="users"/>
                 <Route component={AdminClientAdd} path="client/new"/>
-                <Route component={AdminClientView} path="client/:id"/>
+                <Route component={AdminClientProfile} path="client/:id"/>
             </Route>
         </Route>
     </Route>

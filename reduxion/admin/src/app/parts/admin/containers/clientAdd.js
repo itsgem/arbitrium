@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { clientRegister, validateUsername } from '../reducers/client'
+import { clientRegister, validateUsername } from '../reducers/clientProfile'
 import { country } from '../../auth/reducers/country'
 import ClientAddView from '../views/clientAdd';
 
