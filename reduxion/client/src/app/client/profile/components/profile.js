@@ -8,9 +8,6 @@ import {createError} from 'utils/error';
 class ClientProfile extends React.Component {
 
     constructor(props) {
-        console.log('=== constructor(props) ===');
-        console.log(props);
-
         super(props);
         this.state = {
             success: {},
@@ -30,36 +27,25 @@ class ClientProfile extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('=== componentWillReceiveProps(nextProps) ===');
-        console.log(nextProps);
-
         if (nextProps.user) {
-            console.log('=== nextProps.user ===');
-            console.log(nextProps.user);
             this.setState({
                 client: nextProps.user
             });
         }
 
         if (nextProps.responseSuccess) {
-            console.log('=== nextProps.responseSuccess ===');
-            console.log(nextProps.responseSuccess);
             this.setState({
                 success: nextProps.responseSuccess
             });
         }
 
         if (nextProps.errors) {
-            console.log('=== nextProps.errors ===');
-            console.log(nextProps.errors);
             this.setState({
                 errors: nextProps.errors
             });
         }
 
         if (nextProps.isUsernameAvailable) {
-            console.log('=== nextProps.isUsernameAvailable ===');
-            console.log(nextProps.isUsernameAvailable);
             this.setState({
                 isUsernameAvailable: nextProps.isUsernameAvailable
             });
@@ -67,22 +53,11 @@ class ClientProfile extends React.Component {
     }
 
     render() {
-        console.log('=== render() ===');
-
-        console.log('=== components clientProfile props ===');
-        console.log(this.props);
-
-        console.log('=== state ===');
-        console.log(this.state);
-
-        // ============================================================
-
         if (!this.props.user || !this.state.client) {
             return (<div className="mdl-grid"></div>);
         }
 
         let client = this.state.client;
-        let dataOriginal = this.state.original;
 
         let {errors, errorServer} = this.state ? this.state :'';
         if (errorServer) {
@@ -651,14 +626,10 @@ class ClientProfile extends React.Component {
     // --- Actions
 
     getAvailableUsername(payload) {
-        console.log('=== getAvailableUsername(payload) ===');
-        console.log(payload);
         return this.props.getAvailableUsername(payload);
     }
 
     updateClientProfile(payload) {
-        console.log('=== updateClientProfile(payload) ===');
-        console.log(payload);
         return this.props.updateClientProfile(payload);
     }
 
@@ -680,7 +651,6 @@ class ClientProfile extends React.Component {
 
     onClickGetAvailableUsername(e) {
         e.preventDefault();
-        console.log('=== onClickGetAvailableUsername ===');
 
         this.setState({
             success: null,
@@ -711,9 +681,6 @@ class ClientProfile extends React.Component {
             isUsernameAvailable: null
         });
 
-        console.log('=== onSubmitProfile ===');
-        console.log('=== this.state.client ===');
-        console.log(this.state.client);
 
         let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code,
             rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
@@ -825,8 +792,6 @@ class ClientProfile extends React.Component {
     }
 
     setErrors(e) {
-        console.log('=== createError(e) ===');
-        console.log(e);
         this.setState(createError(e));
     }
 }

@@ -14,7 +14,8 @@ class ClientProfile extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      client:null
+      client: null,
+      updateCompleted: false
     };
   }
   componentDidMount() {
@@ -24,16 +25,18 @@ class ClientProfile extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.client.clientInfo) {
-      console.log('=== nextProps.client.clientInfo ===');
-      console.log(nextProps.client.clientInfo);
       this.setState({
         client: nextProps.client.clientInfo
       });
     }
 
+    if (nextProps.client.updateCompleted) {
+      this.setState({
+        updateCompleted: nextProps.client.updateCompleted
+      });
+    }
+
     if (nextProps.errors) {
-      console.log('=== nextProps.errors ===');
-      console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
       });
@@ -80,12 +83,10 @@ class ClientProfile extends React.Component {
     let client = this.state.client;
     let status = client.approval_status == 'Pending' ? true : false;
 
-    console.log('=== client ===');
-    console.log(client);
-
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <div className="required">Required fields</div>
+        { this.renderSuccess() }
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--6-col">
             <legend>USER ACCOUNT DETAILS</legend>
@@ -537,6 +538,17 @@ class ClientProfile extends React.Component {
 
     return (
       <Country country={this.props.countryList} selected={country} />
+    );
+  }
+
+  renderSuccess() {
+    let success = this.state.updateCompleted;
+    if(!success) return;
+
+    return (
+      <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
+        Successfully updated profile.
+      </div>
     );
   }
 

@@ -18,6 +18,7 @@ export default React.createClass( {
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
       clientUpdateProfile: this.props.clientUpdateProfile,
+      updateCompleted: this.props.updateCompleted,
       validateUsername: this.props.validateUsername
     };
     let countryList = this.props.countryList;
