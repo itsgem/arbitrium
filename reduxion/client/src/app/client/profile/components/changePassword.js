@@ -215,7 +215,10 @@ class ClientChangePassword extends React.Component {
       let rules = new Checkit({
         current_password:      [{ rule: 'required', label: 'current password'}],
         password:              [{ rule: 'required', label: 'password'}],
-        password_confirmation: [{ rule: 'required', label: 'password confirmation'}]
+        password_confirmation: [
+          { rule: 'required', label: 'password confirmation'},
+          { rule: 'matchesField:password', label: 'password confirmation'}
+        ]
       });
 
       return rules.run(payload);
