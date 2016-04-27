@@ -22,6 +22,7 @@ export default React.createClass( {
       step: 'SendPasswordResetEmail',
       errors: {},
       email:'',
+      callbackUrl: null,
       errorServer:null,
     };
   },
@@ -36,11 +37,11 @@ export default React.createClass( {
       let error =this.props.error.get('status') ? true : false;
       if(!error) return;
 
-      /*return (
+      return (
          <div className="alert alert-danger text-center animate bounceIn" role="alert">
             {this.props.error.get('data').message}
         </div>
-      );*/
+      );
   },
 
   componentDidMount() {
@@ -51,16 +52,19 @@ export default React.createClass( {
   },
 
   componentWillReceiveProps(nextProps) {
-    console.log("rrr",nextProps)
     if(nextProps.error && nextProps.error.size > 0){
       this.setState({ step: 'SendPasswordResetEmail' })
     }
     if(nextProps.forgotPassword){
-      console.log('xxxx',nextProps)
       this.setState({step: 'checkEmail', errors:{}})
     }
 
   },
+  componentWillMount() {
+    let url = window.location.origin +'/'+ this.props.routes[1].path+'/resetPassword';
+    this.setState({callbackUrl: url});
+  },
+
 
   render() {
     return (
@@ -148,11 +152,12 @@ export default React.createClass( {
   requestReset(e) {
     e.preventDefault();
     this.setState( {
-        errors: {},
-        errorServer: null
+      errors: {},
+      errorServer: null
     } );
     let payload ={
-      email: this.refs.email.value
+      email: this.refs.email.value,
+      callbackUrl: this.state.callbackUrl
     }
 
      window.componentHandler.upgradeDom();
@@ -163,8 +168,9 @@ export default React.createClass( {
   },
   validateEmail(payload) {
     let rules = new Checkit( {
-        email: { rule: 'required'},
-    } );
+      email: [{rule: 'required', label: 'new password'}],
+      callbackUrl: [],
+    });
     return rules.run( payload );
   },
 

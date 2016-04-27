@@ -70,7 +70,17 @@ export default {
       params: {
         login: payload.email,
         user_type: 2,
-        callback_url: 'http://localhost:9991/login'
+        callback_url: payload.callbackUrl
+      }
+    });
+  },
+
+  requestConfirmPasswordReset(payload) {
+    return patch('password/reset', {
+      params: {
+        token: payload.token,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
       }
     });
   },
@@ -92,7 +102,7 @@ export default {
   clientApprove(id) {
     return patch('admin/client/' + id + '/approve', {
       params: {
-        callback_url: 'http://localhost:9991/'
+        callback_url: window.location.origin
       }
     });
   },

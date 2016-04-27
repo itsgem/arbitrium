@@ -10,6 +10,10 @@ import {createError} from 'utils/error';
 
 export default React.createClass( {
 
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   mixins: [
     LinkedStateMixin,
   ],
@@ -19,22 +23,27 @@ export default React.createClass( {
 
   getInitialState() {
     return {
-      errors: {},
-      password:'',
-      password_confirmation:'',
-      errorServer:null,
+      token: null,
+      password: null,
+      password_confirmation: null,
+      errorServer: null,
+      errors: {}
     };
   },
 
   renderError() {
-      let error =this.props.error.get('status') ? true : false;
-      if(!error) return;
+    let error = this.state.errorServer;
+    if(!error) return;
 
-      /*return (
-         <div className="alert alert-danger text-center animate bounceIn" role="alert">
-            {this.props.error.get('data').message}
-        </div>
-      );*/
+    let results = error.response;
+
+    return (
+      <div className="bs-callout bs-callout-danger text-center animate bounceIn" role="alert">
+        {mapObject(results, function (key, value) {
+          return <div key={key}>{value}</div>;
+        })}
+      </div>
+    );
   },
 
   componentDidMount() {
@@ -45,22 +54,29 @@ export default React.createClass( {
   },
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.error && nextProps.error.size > 0){
-      this.setState({ step: 'SendPasswordResetEmail' })
+    if(nextProps.isConfirmPasswordReset){
+     this.context.router.push('/coffee/login');
     }
-    if(nextProps.forgotPassword){
-      this.setState({step: 'checkEmail', errors:{}})
-    }
+  },
 
+  componentWillMount(){
+    let token = this.props.location.query.token;
+    this.setState({token:token});
   },
 
   render() {
+
+    let {errors, errorServer} = this.state ? this.state :'';
+    if (errorServer) {
+      errors = Object.assign({}, errorServer.response);
+    }
+
     return (
       <div id="forgot" className="auth-view">
         <div className="container mdl-shadow--2dp" title="Forgot password">
           { this.renderError()}
           <div className="bar">
-            <span className="bar-title">Confirm</span>
+            <span className="bar-title">Confirm Reset Password</span>
             <DocTitle title="Confirm"/>
             </div>
             <fieldset>
@@ -68,15 +84,15 @@ export default React.createClass( {
                 <div className="login-view">
                   <div className="local-login-form">
                     <form>
-                      <div className={ this.formClassNames('password') }>
+                      <div className={ this.formClassNames('password',errors) }>
                         <input className="mdl-textfield__input" type="password" id='password'ref="password"/>
                         <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
-                        {errors.password && <small className="mdl-textfield__error shown">{errors.password}</small>}
+                        {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                       </div>
-                      <div className={ this.formClassNames('password_confirmation') }>
+                      <div className={ this.formClassNames('password_confirmation',errors) }>
                         <input className="mdl-textfield__input" type="password" id='passwordConfirmation'ref="passwordConfirmation"/>
                         <label className="mdl-textfield__label" htmlFor="email">{tr.t('password_confirmation')}</label>
-                        {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation}</small>}
+                        {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                       </div>
                       <div className="spacer">
                         <button type="button"
@@ -115,20 +131,27 @@ export default React.createClass( {
         errorServer: null
     } );
     let payload ={
-      password: this.refs.password.value
-      password_confirmation: this.refs.passwordConfirmation.value
+      token: this.state.token,
+      password: this.refs.password.value,
+      password_confirmation: this.refs.passwordConfirmation.value,
     }
 
      window.componentHandler.upgradeDom();
      return this.validateConfirmPassword.call(this, payload)
-       .with( this )
-       .then(this.requestService)
-       .catch( this.errors );
+     .with( this )
+     .then(this.requestService)
+     .catch( this.errors );
   },
   validateConfirmPassword(payload) {
     let rules = new Checkit( {
-      password: [{ rule: 'required', label: 'new password'}],
-      password_confirmation: [{ rule: 'required', label: 'confirm new password'},{rule:'matchesField:password', label:'confirm new password'}],
+      token:[],
+      password: [
+        { rule: 'required', label: 'new password'},
+        { rule: 'alphaDash', label: 'new password'},
+        { rule: 'minLength:8', label: 'new password'},
+        { rule: 'maxLength:64', label: 'new password'}
+      ],
+      password_confirmation: [{ rule: 'required', label: 'confirm new password'},{rule:'matchesField:password', label:'confirm new password'}]
     });
     return rules.run( payload );
   },
@@ -141,10 +164,10 @@ export default React.createClass( {
     return this.props.confirmPasswordReset(payload);
   },
 
-  formClassNames( field ) {
+  formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
-      'is-invalid is-dirty': this.state.errors[ field ],
-      'has-error': this.state.errors[ field ]
+      'is-invalid is-dirty': errors[ field ],
+      'has-error': errors[ field ]
     });
   },
 });
