@@ -23,6 +23,7 @@ import AdminClientView from 'parts/admin/containers/client';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
 import AdminUserManagementList from 'parts/admin/containers/userManagementList';
 import AdminUserManagementAdd from 'parts/admin/containers/userManagementAdd';
+import AdminUserManagementEdit from 'parts/admin/containers/userManagementEdit';
 
 export default () => (
     <Route component={Application} name="home" path="/">
@@ -47,6 +48,7 @@ export default () => (
                 <Route path="account">
                   <IndexRoute component={AdminUserManagementList}/>
                   <Route component={AdminUserManagementAdd} path="new"/>
+                  <Route component={AdminUserManagementEdit} path=":id"/>
                 </Route>
             </Route>
 

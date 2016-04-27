@@ -23,16 +23,15 @@ class UserManagementList extends React.Component {
   userDisplay (id, key, data, alter) {
     return (
        <tr key={key} className={alter ? "bg-dark" : "bg-light"}>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('id')}</td>
+          <td className="mdl-data-table__cell--non-numeric">{id}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.get('username')}<br /> {data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.get('email_address')}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.get('name')}</td>
           <td className="mdl-data-table__cell--non-numeric">Failed login attempts: {data.get('login_attempts')}</td>
           <td className="mdl-data-table__cell--non-numeric">
-            <button
-              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
-              <i className="material-icons">open_in_new</i>
-            </button>
+            <Link
+            className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
+            to={"/coffee/admin/account/" + id}><i className="material-icons">open_in_new</i></Link>
             <button
                 className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
                 onClick={(e) => this.deleteItem(e, id)}>
@@ -120,7 +119,7 @@ class UserManagementList extends React.Component {
       for (i = 1; i <= adminList.get('last_page'); i++) {
         pagination[i] = this.pagination(i, adminList.get('current_page'));
       }
-      pagination[i+1] = this.nextPage(i+1, (adminList.get('current_page') == adminList.get('last_page') ? false : (adminList.get('current_page') + 1 )), adminList.get('last_page') );
+      pagination[i+1] = this.nextPage(i+1, ((adminList.get('current_page') == adminList.get('last_page'))|| adminList.get('last_page') == 0 ? false : (adminList.get('current_page') + 1 )), adminList.get('last_page') );
     }
     return (
       <div className="filter-search">
@@ -128,19 +127,23 @@ class UserManagementList extends React.Component {
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="email-address"/>
+                <input className="mdl-textfield__input" type="text" id="email-address" ref="email_address" />
                 <label className="mdl-textfield__label">Email Address</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="name"/>
+                <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
                 <label className="mdl-textfield__label">Name</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col search-cta">
-              <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i className="material-icons">search</i>Search</button>
-              <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i className="material-icons">clear</i>Clear</button>
+              <button
+                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+              <button
+                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
             </div>
           </div>
           <table className="mdl-data-table mdl-js-data-table table-client-list">
@@ -178,9 +181,27 @@ class UserManagementList extends React.Component {
       </div>
     );
   }
+  clearSearch(e) {
+    e.preventDefault();
+    this.refs.email_address.value = "";
+    this.refs.name.value = "";
+    this.searchList(e);
+  }
+  searchList(e) {
+    e.preventDefault();
+    let payload = {
+      email_address: this.refs.email_address.value,
+      name: this.refs.name.value
+    };
+    this.props.adminUserManagementList(payload);
+  }
   page(e, id) {
     e.preventDefault();
-    let payload = {page: id};
+    let payload = {
+      page: id,
+      email_address: this.refs.email_address.value,
+      name: this.refs.name.value
+    };
     this.props.adminUserManagementList(payload);
   }
   deleteItem (e, id) {

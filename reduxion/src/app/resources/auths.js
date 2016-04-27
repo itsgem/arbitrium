@@ -152,6 +152,7 @@ export default {
       params: payload
     });
   },
+  // Admin - User Management
   adminUserManagementList(payload = {page: 1}) {
     return get('admin', {params: payload});
   },
@@ -168,6 +169,27 @@ export default {
       }
     });
   },
+  adminUserManagementEdit(payload) {
+    return put('admin/' + payload.id, {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
+  getAdminInfo(id) {
+    return get('admin/' + id, {
+      params: {
+        'with-user': 1
+      }
+    });
+  },
+
   listRoleAdmin(){
     return get('list/role/admin');
   },
