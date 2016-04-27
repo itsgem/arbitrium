@@ -9,6 +9,8 @@ export const clientApprove = createActionAsync('CLIENTAPPROVE', auth.clientAppro
 export const clientDisapprove = createActionAsync('CLIENTDISAPPROVE', auth.clientDisapprove);
 
 export const validateUsername = createActionAsync('VALIDATE_USERNAME', auth.validateUsername);
+export const clientAdd = createActionAsync('CLIENT_ADD', auth.adminClientAdd);
+export const clientRegister = createActionAsync('CLIENT_REGISTER', auth.adminClientRegister);
 export const clientUpdateProfile = createActionAsync('CLIENT_UPDATE', auth.adminClientUpdate);
 
 const initialState = Immutable.fromJS({
@@ -17,6 +19,7 @@ const initialState = Immutable.fromJS({
   clientDisapproveSuccess: false,
   loading: false,
   registerCompleted: false,
+  updateCompleted: false,
   validateCompleted: {}
 });
 
@@ -42,5 +45,6 @@ export default createReducer({
     clientDisapproveSuccess: false,
     loading: true}),
   [validateUsername.ok]: (state, payload) => state.merge({validateCompleted: state.concat(payload)}),
-  [clientUpdateProfile.ok]: (state) => state.merge({registerCompleted: true})
+  [clientRegister.ok]: (state) => state.merge({registerCompleted: true}),
+  [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true})
 }, initialState);
