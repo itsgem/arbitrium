@@ -2,10 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import cx from 'classnames';
 import {createError} from 'utils/error';
-import Alert from 'components/alert';
-import tr from 'i18next';
 
 class UserManagementList extends React.Component {
   constructor(props) {
@@ -20,21 +17,23 @@ class UserManagementList extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-  userDisplay (id, key, data, alter) {
+  userDisplay (data, alter) {
     return (
-       <tr key={key} className={alter ? "bg-dark" : "bg-light"}>
-          <td className="mdl-data-table__cell--non-numeric">{id}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('company_name')}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('email_address')}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.get('name')}</td>
-          <td className="mdl-data-table__cell--non-numeric">Failed login attempts: {data.get('login_attempts')}</td>
+       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+          <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.company_name}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_last_name}, {data.rep_first_name} </td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_email_address}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_phone_code} {data.rep_phone_number}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_mobile_code} {data.rep_mobile_number}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.approval_status}</td>
           <td className="mdl-data-table__cell--non-numeric">
             <Link
             className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-            to={"/coffee/account/" + id}><i className="material-icons">open_in_new</i></Link>
+            to={"/coffee/client/" + data.id}><i className="material-icons">open_in_new</i></Link>
             <button
                 className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-                onClick={(e) => this.deleteItem(e, id)}>
+                onClick={(e) => this.deleteItem(e, data.id)}>
               <i className="material-icons">delete</i>
             </button>
           </td>
@@ -107,8 +106,6 @@ class UserManagementList extends React.Component {
     let users = {};
     let clientList = {last_page: 1};
     if (this.props.clientList.size) {
-      console.log('test', this.props);
-      console.log('test', this.props.clientList.get('data'));
       let i=0;
       counter = true;
       clientList = this.props.clientList;
@@ -158,12 +155,9 @@ class UserManagementList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {counter && users.map(item =>
-                {
-                  alter = alter ? false : true;
-                  {return this.userDisplay(item.get('id'), item.get('user').get('id'), item.get('user'), alter)}
-                }
-              )}
+              {counter && users.map(item => {
+                alter = alter ? false : true;
+                return this.userDisplay(item, alter); }) }
             </tbody>
           </table>
           {/* <!-- Pagination -->*/}
@@ -193,7 +187,7 @@ class UserManagementList extends React.Component {
       email_address: this.refs.email_address.value,
       name: this.refs.name.value
     };
-    this.props.adminUserManagementList(payload);
+    this.props.adminClientList(payload);
   }
   page(e, id) {
     e.preventDefault();
@@ -202,7 +196,7 @@ class UserManagementList extends React.Component {
       email_address: this.refs.email_address.value,
       name: this.refs.name.value
     };
-    this.props.adminUserManagementList(payload);
+    this.props.adminClientList(payload);
   }
   deleteItem (e, id) {
     e.preventDefault();
@@ -237,7 +231,7 @@ function validateDelete (payload) {
 }
 
 function deletefunc (payload) {
-  return this.props.deleteAdminAccount(payload);
+  return this.props.adminclientDelete(payload);
 }
 
 function setErrors( e ) {

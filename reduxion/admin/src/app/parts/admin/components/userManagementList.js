@@ -4,8 +4,6 @@ import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import Alert from 'components/alert';
-import tr from 'i18next';
 
 class UserManagementList extends React.Component {
   constructor(props) {

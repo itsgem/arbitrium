@@ -12,12 +12,14 @@ export const validateUsername = createActionAsync('VALIDATE_USERNAME', auth.vali
 export const clientAdd = createActionAsync('CLIENT_ADD', auth.adminClientAdd);
 export const clientRegister = createActionAsync('CLIENT_REGISTER', auth.adminClientRegister);
 export const clientUpdateProfile = createActionAsync('CLIENT_UPDATE', auth.adminClientUpdate);
+export const adminClientDelete = createActionAsync('CLIENT_DELETE', auth.adminClientDelete);
 export const adminClientList = createActionAsync('CLIENT_LIST', auth.clientList);
 
 const initialState = Immutable.fromJS({
   clientProfileSuccess: {},
   clientApproveSuccess: false,
   clientDisapproveSuccess: false,
+  clientDeleteSuccess: false,
   loading: false,
   registerCompleted: false,
   updateCompleted: false,
@@ -49,5 +51,6 @@ export default createReducer({
   [validateUsername.ok]: (state, payload) => state.merge({validateCompleted: state.concat(payload)}),
   [clientRegister.ok]: (state) => state.merge({registerCompleted: true}),
   [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
-  [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload)})
+  [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload)}),
+  [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true})
 }, initialState);

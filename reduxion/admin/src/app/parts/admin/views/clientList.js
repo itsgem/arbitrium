@@ -11,7 +11,6 @@ export default React.createClass( {
    this.props.adminClientList();
   },
   render() {
-    console.log('test', this);
     return (
       <div id="client_add">
         <DocTitle
@@ -21,10 +20,12 @@ export default React.createClass( {
           <label className="mdl-layout__tab is-active">Client List</label>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/account/new">Add New Client<i className="material-icons add">add</i></Link>
+              to="/coffee/client/new">Add New Client<i className="material-icons add">add</i></Link>
         </div>
         <ClientList
           clientList={this.props.clientList}
+          adminClientList={this.props.adminClientList}
+          adminclientDelete={this.props.adminclientDelete}
         />
       </div>
     );

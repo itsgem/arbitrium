@@ -11,5 +11,5 @@ const initialState = Immutable.fromJS({
 });
 
 export default createReducer({
-  [validateUsername.ok]: (state, payload) => state.merge({validateCompleted: false}),
+  [validateUsername.ok]: (state) => state.merge({validateCompleted: false}),
 }, initialState);

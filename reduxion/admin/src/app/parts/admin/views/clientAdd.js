@@ -1,6 +1,8 @@
 import React from 'react';
 import DocTitle from 'components/docTitle';
 import ClientAdd from '../components/clientAdd';
+import { Link } from 'react-router';
+
 export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
@@ -18,8 +20,10 @@ export default React.createClass( {
           title="Client Add"
         />
       <div className="client-tab">
-        <a href="#" className="mdl-layout__tab">Client List</a>
-        <a href="#" className="mdl-layout__tab is-active">Add New Client<i className="material-icons add">add</i></a>
+        <Link
+          className="mdl-layout__tab"
+          to="/coffee/client/">Client List</Link>
+        <a className="mdl-layout__tab is-active">Add New Client<i className="material-icons add">add</i></a>
       </div>
         <ClientAdd
           clientRegister={this.props.clientRegister}

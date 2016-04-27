@@ -27,5 +27,5 @@ export default createReducer({
   [listRoleAdmin.ok]: (state, payload) => state.merge({role: payload}),
   [deleteAdminAccount.ok]: (state, payload) => state.merge({adminDelete: payload}),
   [getAdminInfo.ok]: (state, payload) => state.merge({adminInfo: payload}),
-  [adminUserManagementEdit.ok]: (state, payload) => state.merge({adminEdit: true})
+  [adminUserManagementEdit.ok]: (state) => state.merge({adminEdit: true})
 }, initialState);

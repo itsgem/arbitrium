@@ -82,8 +82,10 @@ export default {
       }
     });
   },
-  clientList() {
-    return get('admin/client/');
+  clientList(payload = {page: 1}) {
+    return get('admin/client/',{
+      params: payload
+    });
   },
   clientProfile(id) {
     return get('admin/client/' + id, {
@@ -91,6 +93,9 @@ export default {
         'with-user': 1
       }
     });
+  },
+  clientDelete(id) {
+    return get('admin/client/' + id);
   },
   clientApprove(id) {
     return patch('admin/client/' + id + '/approve', {

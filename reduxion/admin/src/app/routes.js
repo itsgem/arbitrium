@@ -6,9 +6,7 @@ import Application from 'parts/admin/containers/application';
 import Dashboard from 'parts/admin/views/dashboard';
 import Login from 'parts/auth/containers/login';
 import Logout from 'parts/auth/containers/adminLogout';
-import Signup from 'parts/auth/containers/signup';
 import Forgot from 'parts/auth/containers/forgot';
-import RegistrationComplete from 'parts/auth/containers/registrationComplete';
 import ResetPassword from 'parts/auth/views/resetPassword';
 
 import AdminClientList from 'parts/admin/containers/clientList';
@@ -36,15 +34,14 @@ export default () => (
       <Route component={Logout} path="logout" onEnter={requireAuth}/>
       <Route component={Forgot} path="forgot"/>
       <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
-      
       <Route component={Authenticated} name="home">
         <IndexRoute component={Authenticated}/>
-        <Route path="client">
-          <IndexRoute component={AdminClientList}/>
+        <Route path="client" onEnter={requireAuth}>
+          <IndexRoute component={AdminClientList}  onEnter={requireAuth}/>
           <Route component={AdminClientAdd} path="new" onEnter={requireAuth}/>
           <Route component={AdminClientProfile} path=":id" onEnter={requireAuth}/>
         </Route>
-        <Route path="account">
+        <Route path="account" onEnter={requireAuth}>
           <IndexRoute component={AdminUserManagementList}/>
           <Route component={AdminUserManagementAdd} path="new"/>
           <Route component={AdminUserManagementEdit} path=":id"/>
