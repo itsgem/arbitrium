@@ -41,7 +41,7 @@ export default () => (
         <IndexRoute component={UsersView} onEnter={requireAuth}/>
         <Route component={UsersView} path="users" onEnter={requireAuth}/>
         <Route component={AdminClientAdd} path="client/new" onEnter={requireAuth}/>
-        <Route component={AdminClientView} path="client/:id" onEnter={requireAuth}/>
+        <Route component={AdminClientProfile} path="client/:id" onEnter={requireAuth}/>
       </Route>
     </Route>
   </Route>

@@ -98,7 +98,7 @@ class ClientProfile extends React.Component {
                                                 value={client.user.email_address}
                                                 readOnly={true}
                                                 />
-                                            <label className="mdl-textfield__label" htmlFor="email_address">Email Address *</label>
+                                            <label className="mdl-textfield__label" htmlFor="email_address">Email Address</label>
                                             {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                                         </div>
                                     </div>
