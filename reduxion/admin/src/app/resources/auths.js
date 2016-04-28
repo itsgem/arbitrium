@@ -74,7 +74,6 @@ export default {
       }
     });
   },
-
   requestConfirmPasswordReset(payload) {
     return patch('password/reset', {
       params: {

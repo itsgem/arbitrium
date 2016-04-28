@@ -9,7 +9,7 @@ import Logout from 'parts/auth/containers/adminLogout';
 import Signup from 'parts/auth/containers/signup';
 import Forgot from 'parts/auth/containers/forgot';
 import RegistrationComplete from 'parts/auth/containers/registrationComplete';
-import ResetPassword from 'parts/auth/containers/confirmResetPassword';
+import ConfirmResetPassword from 'parts/auth/containers/confirmResetPassword';
 
 import UsersView from 'parts/admin/usersView';
 import AdminClientProfile from 'parts/admin/containers/clientProfile';
@@ -35,7 +35,7 @@ export default () => (
       <Route component={Forgot} path="forgot"/>
 
       <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail/"/>
-      <Route component={ResetPassword} name="ResetPassword" path="resetPassword"/>
+      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
 
       <Route path="admin" component={Authenticated}>
         <IndexRoute component={UsersView} onEnter={requireAuth}/>
