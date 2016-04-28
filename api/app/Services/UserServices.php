@@ -177,7 +177,7 @@ class UserServices extends NrbServices
                 log_api_access($controller, 'verifyEmail', $user);
                 return $this->respondWithSuccess();
             }
-            return $this->respondWithError(Errors::EXPIRED_TOKEN);
+            return $this->respondWithError(Errors::EXPIRED_TOKEN, ['token' => trans('errors.'.Errors::EXPIRED_TOKEN)]);
         });
     }
 
@@ -193,6 +193,6 @@ class UserServices extends NrbServices
         {
             return $this->respondWithSuccess(['token' => $reset_token->getTokenField($field)]);
         }
-        return $this->respondWithError(Errors::EXPIRED_TOKEN);
+        return $this->respondWithError(Errors::EXPIRED_TOKEN, ['token' => trans('errors.'.Errors::EXPIRED_TOKEN)]);
     }
 }
