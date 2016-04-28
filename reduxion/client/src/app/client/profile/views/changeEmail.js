@@ -38,6 +38,7 @@ export default React.createClass({
             <ClientChangeEmail
               user={user}
               updateClientEmail={this.props.updateClientEmail}
+              cancelEmailChange={this.props.cancelEmailChange}
               responseSuccess={this.props.success}
               />
           </div>

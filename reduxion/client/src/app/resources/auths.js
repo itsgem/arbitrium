@@ -158,8 +158,27 @@ export default {
       params: payload
     });
   },
+  // Send Change Email Address Email
   updateClientEmail(payload) {
     return get('user/email/change', {
+      params: payload
+    });
+  },
+  // Retrieve Change Email Token
+  retrieveEmailChangeToken(payload) {
+    return get('user/email/token', {
+      params: payload
+    });
+  },
+  // Change Email
+  verifyEmailChange(payload) {
+    return patch('user/email/verify', {
+      params: payload
+    });
+  },
+  // Cancel Change Email
+  cancelEmailChange(payload) {
+    return get('user/email/cancel-change', {
       params: payload
     });
   }
