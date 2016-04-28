@@ -120,11 +120,9 @@ class UserManagementList extends React.Component {
       <div className="filter-search">
         <p>Filter / Search</p>
         <dialog className="mdl-dialog">
-          <div className="mdl-dialog__content">
-            <p>
+          <p>
               Are you sure you want to delete IdeaRobin, Inc.’s account?<br />This cannot be undone.
-            </p>
-          </div>
+          </p>
           <div className="mdl-dialog__actions">
             <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
             <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
@@ -227,15 +225,13 @@ class UserManagementList extends React.Component {
       errors: {},
       errorServer: null
     } );
-    //window.componentHandler.upgradeDom();
     $('.msg').html('Successfully deleted').addClass('bg-green');
     $('.msg').fadeIn(1000, function() {
       $(this).fadeOut(2000);
     });
     this.modalClose();
-    console.log('test', this.state.id);
-    return this.props.adminclientDelete(this.state.id);
-    }
+    this.props.adminclientDelete(this.state.id);
+  }
 
 };
 

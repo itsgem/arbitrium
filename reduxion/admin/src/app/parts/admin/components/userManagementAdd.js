@@ -79,7 +79,7 @@ class UserManagementAdd extends React.Component {
               <div className={this.formClassNames('password', errors)}>
                 <input
                   className="mdl-textfield__input"
-                  type="text"
+                  type="password"
                   id='password'
                   ref="password"
                   />

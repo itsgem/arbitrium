@@ -19,8 +19,10 @@ export default React.createClass( {
     }
   },
   render() {
-    console.log('test', this);
     this.renderSuccess();
+    if (this.props.registerCompleted) {
+      this.context.router.push('/coffee/client/');
+    }
     return (
       <div id="client_add" className="auth-view">
         <DocTitle

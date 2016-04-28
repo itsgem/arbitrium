@@ -376,6 +376,9 @@ dialog p {
    z-index: 99999;
    display: none;
 }
+.mdl-dialog {
+  width: 350px;
+}
 .bg-green {
    background-color: #00CC99;
 }
