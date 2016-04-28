@@ -161,7 +161,7 @@ export default {
       params: payload
     });
   },
-<<<<<<< HEAD:reduxion/src/app/resources/auths.js
+
   // Admin - User Management
   adminUserManagementList(payload = {page: 1}) {
     return get('admin', {params: payload});
