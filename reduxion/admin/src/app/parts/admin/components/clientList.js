@@ -119,8 +119,8 @@ class UserManagementList extends React.Component {
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
-        <dialog class="mdl-dialog">
-          <div class="mdl-dialog__content">
+        <dialog className="mdl-dialog">
+          <div className="mdl-dialog__content">
             <p>
               Are you sure you want to delete IdeaRobin, Inc.’s account?<br />This cannot be undone.
             </p>
