@@ -8,22 +8,22 @@ export default React.createClass( {
         <div className="mdl-grid header-container">
           <div className="mdl-layout__header-row main-header">
             <div className="logo">
-              <img src="/assets/images/admin/logo-arbitrium.png"></img>
+              <img src={window.location.origin + '/assets/images/admin/logo-arbitrium.png'}></img>
             </div>
             <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
               <div className="mdl-tabs__tab-bar tab">
-                <a href="#dashboard" className="mdl-tabs__tab is-active">DASHBOARD</a>
-                <a href="#clients" className="mdl-tabs__tab">CLIENTS</a>
-                <a href="api.html" className="mdl-tabs__tab">API</a>
-                <a href="#pricing" className="mdl-tabs__tab">PRICING</a>
-                <a href="#admin-accounts" className="mdl-tabs__tab">ADMIN ACCOUNTS</a>
-                <a href="#logs" className="mdl-tabs__tab">LOGS</a>
+                <Link className="mdl-tabs__tab" to="/coffee">Dashboard</Link>
+                <Link className="mdl-tabs__tab" to="/coffee/client">Clients</Link>
+                <Link className="mdl-tabs__tab" to="/coffee/api">API</Link>
+                <Link className="mdl-tabs__tab" to="/coffee/pricing">Pricing</Link>
+                <Link className="mdl-tabs__tab" to="/coffee/account">Admin Accounts</Link>
+                <Link className="mdl-tabs__tab" to="/coffee/log">Logs</Link>
                 <div className="icon-profile">
                   <button id="menu" className="mdl-button mdl-js-button mdl-button--icon">
                     <i className="material-icons">account_circle</i>
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
-                    <li className="mdl-menu__item">Settings</li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/setting">Settings</Link></li>
                     <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout">Logout</Link></li>
                   </ul>
                 </div>
