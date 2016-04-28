@@ -31,7 +31,7 @@ class Dashboard extends React.Component{
             <div className="mdl-layout__header-row main-header">
               {/*<!-- LOGO -->*/}
               <div className="logo">
-                <img src="../assets/img/logo-arbitrium.png"></img>
+                <img src="https://s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png"></img>
               </div>
             {/*  <!-- NAVIGATION -->*/}
               <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
