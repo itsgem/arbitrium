@@ -38,7 +38,7 @@ export default {
           password_confirmation: payload.password_confirmation,
           email_address: payload.email_address,
           username: payload.username,
-          callback_url: window.location.origin + "/verifyEmail/"
+          callback_url: window.location.origin + "/i/verifyEmail/"
           }
       });
   },

@@ -25,7 +25,7 @@ export default React.createClass( {
         debug("componentWillReceiveProps ", this.props);
         if (nextProps.emailCodeVerified) {
             debug("componentWillReceiveProps router ", this.context.router);
-            let path = '/login';
+            let path = '/i/login';
             this.context.router.push(path);
         }
     },
