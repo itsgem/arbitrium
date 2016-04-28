@@ -6,6 +6,7 @@ import Dashboard from 'parts/core/views/dashboard';
 
 import Authenticated from 'parts/auth/containers/authenticatedComponent';
 import Login from 'parts/auth/containers/login';
+import ConfirmResetPassword from 'parts/auth/containers/confirmResetPassword';
 
 import ClientLogout from 'parts/auth/containers/clientLogout';
 import Signup from 'parts/auth/containers/signup';
@@ -39,6 +40,7 @@ export default () => (
       <Route component={Signup} path="signup"/>
       <Route component={ClientLogout} path="logout"/>
       <Route component={Forgot} path="forgot"/>
+      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
 
       <Route path="client" component={Authenticated} onEnter={requireAuth}>
         <IndexRoute component={ClientProfile} onEnter={requireAuth} />
