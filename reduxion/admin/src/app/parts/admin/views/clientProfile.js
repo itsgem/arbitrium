@@ -19,6 +19,8 @@ export default React.createClass( {
       clientInfo: this.props.clientProfileSuccess.get('data'),
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
+      clientActivate: this.props.clientActivate,
+      clientDeactivate: this.props.clientDeactivate,
       clientUpdateProfile: this.props.clientUpdateProfile,
       updateCompleted: this.props.updateCompleted,
       validateUsername: this.props.validateUsername

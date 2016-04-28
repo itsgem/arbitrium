@@ -123,30 +123,80 @@ class ClientProfile extends React.Component {
           </div>
         </div>
         <div className="mdl-grid">
-          <div className="mdl-layout__content">
+          {/*Approval layout*/}
+          <div className="mdl-layout__content status-content">
             <div className="mdl-cell mdl-cell--6-col">
-              <h5>Approval Status</h5>
-              <h4>{client.approval_status}</h4>
-              { status &&
-              <button
-                id='btnClientApproval'
-                type='button'
-                className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent'
-                onClick={(e) => this.changeApprovalStatus(e)}>Approve</button>
-              }
-              { status &&
-              <button
-                id='btnClientDisapproval'
-                type='button'
-                className='mdl-button mdl-js-button mdl-button--raised'
-                onClick={(e) => this.clientDisapproveStatus(e)}>Disapprove</button>
-              }
+             <div className="mdl-cell mdl-cell--6-col status-col">
+                <div className="mdl-cell mdl-cell--2-col float-lft mg-lf">Approval Status:</div>
+                <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
+                <div className="mdl-cell mdl-cell--6-col float-lft">
+                  { status &&
+                    <button
+                      id='btnClientApproval'
+                      type='button'
+                      className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
+                      onClick={(e) => this.changeApprovalStatus(e)}>
+                        <span>Approve</span>
+                        <span className="ion-checkmark-circled icon-con"></span>
+                    </button>
+                  }
+                  { status &&
+                    <button
+                      id='btnClientDisapproval'
+                      type='button'
+                      className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent status-btn'
+                      onClick={(e) => this.clientDisapproveStatus(e)}>
+                        <span>Disapprove</span>
+                        <span className="ion-android-cancel icon-con"></span>
+                    </button>
+                  }
+                </div>
+              </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h5>Credit Balance</h5>
               <h4>{client.credit_balance}</h4>
             </div>
           </div>
+        {/*Status layout*/}
+          <div className="mdl-layout__content status-content">
+            <div className="mdl-cell mdl-cell--6-col">
+             <div className="mdl-cell mdl-cell--6-col status-col">
+                <div className="mdl-cell mdl-cell--2-col float-lft mg-lf">Status:</div>
+                <div className="mdl-cell mdl-cell--2-col float-lft">
+                  {client.user.activated_at? "Active": 'Inactive'}
+                </div>
+                <div className="mdl-cell mdl-cell--6-col float-lft">
+                  { (client.approval_status === 'Approved')?
+                  client.user.activated_at?
+                    <div>
+                      <button
+                        id='btnClientDisapproval'
+                        type='button'
+                        className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent status-btn'
+                        onClick={(e) => this.clientDeactivateStatus(e)}>
+                          <span>Deactivate</span>
+                          <span className="ion-flash-off icon-con"></span>
+                      </button>
+                    </div>
+                    :
+                    <div>
+                      <button
+                        id='btnClientApproval'
+                        type='button'
+                        className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
+                        onClick={(e) => this.clienActivateStatus(e)}>
+                          <span>Activate </span>
+                          <span className="ion-power icon-con"></span>
+                      </button>
+                    </div>
+                    :null
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div className="mdl-grid">
           <div className="mdl-layout__content">
@@ -567,6 +617,17 @@ class ClientProfile extends React.Component {
     e.preventDefault();
     this.props.client.clientDisapprove(this.props.client.clientInfo.id);
   }
+
+  clienActivateStatus (e) {
+    e.preventDefault();
+    this.props.client.clientActivate(this.props.client.clientInfo.id);
+  }
+  clientDeactivateStatus (e) {
+    e.preventDefault();
+    this.props.client.clientDeactivate(this.props.client.clientInfo.id);
+  }
+
+
   onSubmitClientProfile ( e ) {
     e.preventDefault();
     this.setState( {

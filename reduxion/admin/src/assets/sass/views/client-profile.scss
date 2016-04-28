@@ -114,7 +114,37 @@ div#application{
 	}
 }
 
+.status-content {
 
+	.status-col {
+		display:flex;
+		margin-left: 0;
+		overflow: auto;
+		width: 100%;
+
+		.mg-lf {
+			margin-left: 0;
+		}
+		.float-lft{
+			float: left;
+	    	align-self: center;
+		}
+	}
+
+	.status-btn{
+	    height: 29px !important;
+	    line-height: 10px !important;
+	    min-width: 50px !important;
+	    margin-left: 10px;
+		.icon-con {
+		    display: inline-table;
+		    line-height: 0;
+		    padding-bottom: 3px;
+		    padding-left: 10px;
+		    vertical-align: middle;
+		}
+	}
+}
 
 
 

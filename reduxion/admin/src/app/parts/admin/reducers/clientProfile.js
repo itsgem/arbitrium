@@ -7,6 +7,8 @@ import auth from 'resources/auths';
 export const clientProfile = createActionAsync('CLIENTPROFILE', auth.clientProfile);
 export const clientApprove = createActionAsync('CLIENTAPPROVE', auth.clientApprove);
 export const clientDisapprove = createActionAsync('CLIENTDISAPPROVE', auth.clientDisapprove);
+export const clientActivate = createActionAsync('CLIENT_ACTIVATE', auth.clientActivate);
+export const clientDeactivate = createActionAsync('CLIENT_DEACTIVATE', auth.clientDeactivate);
 
 export const validateUsername = createActionAsync('VALIDATE_USERNAME', auth.validateUsername);
 export const clientAdd = createActionAsync('CLIENT_ADD', auth.adminClientAdd);
@@ -19,6 +21,8 @@ const initialState = Immutable.fromJS({
   clientProfileSuccess: {},
   clientApproveSuccess: false,
   clientDisapproveSuccess: false,
+  clientActivateSuccess: false,
+  clientDeactivateSuccess: false,
   clientDeleteSuccess: false,
   loading: false,
   registerCompleted: false,
@@ -48,6 +52,18 @@ export default createReducer({
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
     loading: true}),
+
+  [clientActivate.ok]: (state) => state.merge({clientActivateSuccess: true, loading: false}),
+  [clientActivate.request]: (state) => state.merge({
+    clientActivateSuccess: false,
+    clientDeactivateSuccess: false,
+    loading: true}),
+  [clientDeactivate.ok]: (state) => state.merge({clientDeactivateSuccess: true, loading: false}),
+  [clientDeactivate.request]: (state) => state.merge({
+    clientActivateSuccess: false,
+    clientDeactivateSuccess: false,
+    loading: true}),
+
   [validateUsername.ok]: (state, payload) => state.merge({validateCompleted: state.concat(payload)}),
   [clientRegister.ok]: (state) => state.merge({registerCompleted: true, loading: false}),
   [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true}),
