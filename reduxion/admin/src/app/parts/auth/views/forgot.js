@@ -33,15 +33,20 @@ export default React.createClass( {
     let email = e.target.value;
     this.setState({ email:email });
   },
-  renderError() {
-      let error =this.props.error.get('status') ? true : false;
-      if(!error) return;
 
-      return (
-         <div className="alert alert-danger text-center animate bounceIn" role="alert">
-            {this.props.error.get('data').message}
-        </div>
-      );
+  renderError() {
+    let error = this.state.errorServer;
+    if(!error) return;
+
+    let results = error.response;
+
+    return (
+      <div className="alert alert-danger text-center animate bounceIn" role="alert">
+        {mapObject(results, function (key, value) {
+          return <div key={key}>{value}</div>;
+        })}
+      </div>
+    );
   },
 
   componentDidMount() {
@@ -60,16 +65,21 @@ export default React.createClass( {
     }
 
   },
+
   componentWillMount() {
     let url = window.location.origin +'/'+ this.props.routes[1].path+'/resetPassword';
     this.setState({callbackUrl: url});
   },
 
-
   render() {
+
+    let {errors, errorServer} = this.state ? this.state :'';
+    if (errorServer) {
+      errors = Object.assign({}, errorServer.response);
+    }
     return (
       <div id="forgot" className="auth-view">
-        <div className="container mdl-shadow--2dp" title="Forgot password">
+        <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
             <span className="bar-title">Forgot Password</span>
@@ -104,10 +114,10 @@ export default React.createClass( {
           <form>
             <span className="forgot-text"><strong>Enter the email address used when you registered with username and password. </strong></span>
             <span className="forgot-text">You'll be sent a reset code to change your password.</span>
-            <div className={ this.formClassNames('email') }>
+            <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
               <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
-              {errors.email && <small className="mdl-textfield__error shown">{errors.email}</small>}
+              {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
             <div className="spacer">
               <button type="button"
@@ -141,14 +151,6 @@ export default React.createClass( {
     );
   },
 
-  renderErrorsFor( field ) {
-    if ( this.state.errors[ field ] ) {
-      return (
-        <span className="label label-danger animate bounceIn">{ this.state.errors[ field ]}</span>
-      );
-    }
-  },
-
   requestReset(e) {
     e.preventDefault();
     this.setState( {
@@ -168,8 +170,8 @@ export default React.createClass( {
   },
   validateEmail(payload) {
     let rules = new Checkit( {
-      email: [{rule: 'required', label: 'new password'}],
-      callbackUrl: [],
+      email: ['required', 'email'],
+      callbackUrl: []
     });
     return rules.run( payload );
   },
@@ -182,10 +184,18 @@ export default React.createClass( {
     return this.props.passwordReset(email);
   },
 
-  formClassNames( field ) {
+  formClassNames( field ,errors) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
-      'is-invalid is-dirty': this.state.errors[ field ],
-      'has-error': this.state.errors[ field ]
+      'is-invalid is-dirty': errors[ field ],
+      'has-error': errors[ field ]
     });
   },
 });
+
+//function for mapping error
+function mapObject(object, callback) {
+  return Object.keys(object).map(function (key) {
+      return callback(key, object[key]);
+  });
+}
+
