@@ -55,7 +55,7 @@ export default React.createClass( {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.isConfirmPasswordReset){
-     this.context.router.push('/coffee/login');
+     this.context.router.push('/i/login');
     }
   },
 
@@ -109,19 +109,11 @@ export default React.createClass( {
         </div>
         <div className="mdl-grid mdl-grid--no-spacing forgot-footer" id="other-links">
           <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-            <Link to="/coffee/login"> Back to Login </Link>
+            <Link to="/i/login"> Back to Login </Link>
           </div>
         </div>
       </div>
     );
-  },
-
-  renderErrorsFor( field ) {
-    if ( this.state.errors[ field ] ) {
-      return (
-        <span className="label label-danger animate bounceIn">{ this.state.errors[ field ]}</span>
-      );
-    }
   },
 
   confirmReset(e) {
@@ -142,6 +134,7 @@ export default React.createClass( {
      .then(this.requestService)
      .catch( this.errors );
   },
+
   validateConfirmPassword(payload) {
     let rules = new Checkit( {
       token:[],
@@ -161,7 +154,6 @@ export default React.createClass( {
   },
 
   requestService(payload){
-    console.log("dddddddddd",this.props);
     return this.props.confirmPasswordReset(payload);
   },
 

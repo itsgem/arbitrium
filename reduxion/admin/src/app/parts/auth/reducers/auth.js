@@ -34,7 +34,7 @@ export default createReducer({
     error: state.concat(payload),
     forgotPassword:false
   }),
-   [confirmPasswordReset.ok]: (state, payload) => state.merge({
+  [confirmPasswordReset.ok]: (state, payload) => state.merge({
     isConfirmPasswordReset: true,
     error: {}
   }),

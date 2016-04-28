@@ -69,12 +69,11 @@ export default {
     return get('password/forgot', {
       params: {
         login: payload.email,
-        user_type: 2,
+        user_type: 1,
         callback_url: payload.callbackUrl
       }
     });
   },
-
   requestConfirmPasswordReset(payload) {
     return patch('password/reset', {
       params: {
