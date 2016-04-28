@@ -14,8 +14,7 @@ export default React.createClass( {
               <div className="mdl-tabs__tab-bar tab">
                 <a href="#dashboard" className="mdl-tabs__tab is-active">DASHBOARD</a>
                 <a href="#clients" className="mdl-tabs__tab">CLIENTS</a>
-                <a href="#respondents" className="mdl-tabs__tab">RESPONDENTS</a>
-                <a href="#survey-admin" className="mdl-tabs__tab">SURVEY ADMIN</a>
+                <a href="api.html" className="mdl-tabs__tab">API</a>
                 <a href="#pricing" className="mdl-tabs__tab">PRICING</a>
                 <a href="#admin-accounts" className="mdl-tabs__tab">ADMIN ACCOUNTS</a>
                 <a href="#logs" className="mdl-tabs__tab">LOGS</a>
