@@ -1,11 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import Alert from 'components/alert';
-import tr from 'i18next';
 import Country from '../../auth/components/country'
 
 class ClientProfile extends React.Component {
@@ -45,13 +42,13 @@ class ClientProfile extends React.Component {
   render() {
     if (this.props.client.clientInfo) {
       return (
-        <div id="client" className="inner_content">
+        <div id="client" className="auth-view">
           { this.renderClient() }
         </div>
       );
     } else {
       return (
-        <div id="client" className="inner_content">
+        <div id="client" className="auth-view">
           { this.renderError() }
         </div>
       );
@@ -104,7 +101,7 @@ class ClientProfile extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--6-col">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised"
+              className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
               id='check_availability'
               type='button'
               onClick={(e) => this.checkUsername(e)}>Check Availability</button>
@@ -544,12 +541,13 @@ class ClientProfile extends React.Component {
   renderSuccess() {
     let success = this.state.updateCompleted;
     if(!success) return;
-
-    return (
-      <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
-        Successfully updated profile.
-      </div>
-    );
+    let {errors} = this.state ? this.state :'';
+    if (Array.isArray(errors)) {
+      $('.msg').html('Successfully updated profile').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+    }
   }
 
   formClassNames( field, errors ) {

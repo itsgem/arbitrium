@@ -1,5 +1,4 @@
 import React from 'react';
-import DocTitle from 'components/docTitle';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -33,6 +32,7 @@ export default React.createClass( {
             </div>
           </div>
         </div>
+        <div className="msg">Success message</div>
       </header>
     );
   }

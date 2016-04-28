@@ -91,12 +91,20 @@ export default {
       }
     });
   },
+  clientList(payload = {page: 1}) {
+    return get('admin/client/',{
+      params: payload
+    });
+  },
   clientProfile(id) {
     return get('admin/client/' + id, {
       params: {
         'with-user': 1
       }
     });
+  },
+  clientDelete(id) {
+    return del('admin/client/' + id);
   },
   clientApprove(id) {
     return patch('admin/client/' + id + '/approve', {
@@ -151,4 +159,48 @@ export default {
       params: payload
     });
   },
+  // Admin - User Management
+  adminUserManagementList(payload = {page: 1}) {
+    return get('admin', {params: payload});
+  },
+  adminUserManagementAdd(payload) {
+    return post('admin', {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
+  adminUserManagementEdit(payload) {
+    return put('admin/' + payload.id, {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
+  getAdminInfo(id) {
+    return get('admin/' + id, {
+      params: {
+        'with-user': 1
+      }
+    });
+  },
+
+  listRoleAdmin(){
+    return get('list/role/admin');
+  },
+  deleteAdminAccount(payload){
+    return del('admin/' + payload.id);
+  }
 };

@@ -143,7 +143,6 @@ export default {
       }
     });
   },
-
   // User - Client
   getAvailableUsername(payload) {
     return get('user/available', {
@@ -161,6 +160,51 @@ export default {
     return put('client/profile', {
       params: payload
     });
+  },
+<<<<<<< HEAD:reduxion/src/app/resources/auths.js
+  // Admin - User Management
+  adminUserManagementList(payload = {page: 1}) {
+    return get('admin', {params: payload});
+  },
+  adminUserManagementAdd(payload) {
+    return post('admin', {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
+  adminUserManagementEdit(payload) {
+    return put('admin/' + payload.id, {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
+  getAdminInfo(id) {
+    return get('admin/' + id, {
+      params: {
+        'with-user': 1
+      }
+    });
+  },
+
+  listRoleAdmin(){
+    return get('list/role/admin');
+  },
+  deleteAdminAccount(payload){
+    return del('admin/' + payload.id);
   },
   updateClientPassword(payload) {
     return put('user/password/change', {

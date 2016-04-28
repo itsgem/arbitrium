@@ -22,12 +22,12 @@ export default createReducer({
     authenticated: true,
     user: payload
   }),
-  [logout.ok]: (state) => state.merge({
+  [logout.ok]: (state, payload) => state.merge({
     authenticated: false,
     user: null,
     logout: payload
   }),
-  [passwordReset.ok]: (state, payload) => state.merge({
+  [passwordReset.ok]: (state) => state.merge({
     forgotPassword: true
   }),
   [passwordReset.error]: (state, payload) => state.merge({

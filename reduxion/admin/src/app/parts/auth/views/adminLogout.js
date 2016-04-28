@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from './login';
 
 export default React.createClass( {
 
@@ -17,8 +16,6 @@ export default React.createClass( {
 
     }
   },
-
-
   render() {
     return (
       <div id="logout"></div>
