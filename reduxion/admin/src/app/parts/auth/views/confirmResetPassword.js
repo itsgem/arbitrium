@@ -38,7 +38,7 @@ export default React.createClass( {
     let results = error.response;
 
     return (
-      <div className="bs-callout bs-callout-danger text-center animate bounceIn" role="alert">
+      <div className="alert alert-danger text-center animate bounceIn" role="alert">
         {mapObject(results, function (key, value) {
           return <div key={key}>{value}</div>;
         })}
@@ -73,7 +73,7 @@ export default React.createClass( {
 
     return (
       <div id="forgot" className="auth-view">
-        <div className="container mdl-shadow--2dp" title="Forgot password">
+        <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
             <span className="bar-title">Confirm Reset Password</span>
@@ -170,4 +170,12 @@ export default React.createClass( {
       'has-error': errors[ field ]
     });
   },
+
 });
+
+//function for mapping error
+function mapObject(object, callback) {
+  return Object.keys(object).map(function (key) {
+      return callback(key, object[key]);
+  });
+}
