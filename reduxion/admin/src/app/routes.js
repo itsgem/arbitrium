@@ -7,7 +7,8 @@ import Dashboard from 'parts/admin/views/dashboard';
 import Login from 'parts/auth/containers/login';
 import Logout from 'parts/auth/containers/adminLogout';
 import Forgot from 'parts/auth/containers/forgot';
-import ResetPassword from 'parts/auth/views/resetPassword';
+
+import ConfirmResetPassword from 'parts/auth/containers/confirmResetPassword';
 
 import AdminClientList from 'parts/admin/containers/clientList';
 import AdminClientProfile from 'parts/admin/containers/clientProfile';
@@ -33,6 +34,8 @@ export default () => (
       <Route component={Login} path="login"/>
       <Route component={Logout} path="logout" onEnter={requireAuth}/>
       <Route component={Forgot} path="forgot"/>
+       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
+
       <Route component={ResetPassword} name="ResetPasswordToken" path="resetPassword/:token"/>
       <Route component={Authenticated} name="home">
         <IndexRoute component={Authenticated}/>

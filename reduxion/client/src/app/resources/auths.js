@@ -67,13 +67,22 @@ export default {
       });
   },
   requestPasswordReset(payload) {
-      return get('password/forgot', {
-          params: {
-              login: payload.email,
-              user_type: 2,
-              callback_url: 'http://localhost:9991/login'
-          }
-      });
+    return get('password/forgot', {
+      params: {
+        login: payload.email,
+        user_type: 2,
+        callback_url: payload.callbackUrl
+      }
+    });
+  },
+  requestConfirmPasswordReset(payload) {
+    return patch('password/reset', {
+      params: {
+        token: payload.token,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
   },
   verifyResetPasswordToken(token, password) {
       return post('auth/verify_reset_password_token', {
@@ -202,8 +211,27 @@ export default {
       params: payload
     });
   },
+  // Send Change Email Address Email
   updateClientEmail(payload) {
     return get('user/email/change', {
+      params: payload
+    });
+  },
+  // Retrieve Change Email Token
+  retrieveEmailChangeToken(payload) {
+    return get('user/email/token', {
+      params: payload
+    });
+  },
+  // Change Email
+  verifyEmailChange(payload) {
+    return patch('user/email/verify', {
+      params: payload
+    });
+  },
+  // Cancel Change Email
+  cancelEmailChange(payload) {
+    return get('user/email/cancel-change', {
       params: payload
     });
   }
