@@ -541,12 +541,13 @@ class ClientProfile extends React.Component {
   renderSuccess() {
     let success = this.state.updateCompleted;
     if(!success) return;
-
-    return (
-      <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
-        Successfully updated profile.
-      </div>
-    );
+    let {errors} = this.state ? this.state :'';
+    if (Array.isArray(errors)) {
+      $('.msg').html('Successfully updated profile').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+    }
   }
 
   formClassNames( field, errors ) {

@@ -5,7 +5,8 @@ import ClientList from '../views/clientList';
 const mapStateToProps = (state) => {
   return {
     clientList: state.get('clientadmin').get('clientList'),
-    clientDeleteSuccess: state.get('clientadmin').get('clientDeleteSuccess')
+    clientDeleteSuccess: state.get('clientadmin').get('clientDeleteSuccess'),
+    loading: state.get('clientadmin').get('loading')
   };
 }
 

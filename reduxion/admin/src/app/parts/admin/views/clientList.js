@@ -10,6 +10,11 @@ export default React.createClass( {
   componentWillMount(){
    this.props.adminClientList();
   },
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.loading && nextProps.clientDeleteSuccess) {
+      nextProps.adminClientList();
+    }
+  },
   render() {
     return (
       <div id="client_add">
@@ -25,7 +30,7 @@ export default React.createClass( {
         <ClientList
           clientList={this.props.clientList}
           adminClientList={this.props.adminClientList}
-          adminclientDelete={this.props.adminclientDelete}
+          adminclientDelete={this.props.adminClientDelete}
         />
       </div>
     );

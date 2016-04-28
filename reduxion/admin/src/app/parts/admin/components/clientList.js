@@ -9,9 +9,9 @@ class UserManagementList extends React.Component {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null
-    };
-  }
+      errorServer:null,
+      id: null
+    };  }
   componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -32,8 +32,8 @@ class UserManagementList extends React.Component {
             className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
             to={"/coffee/client/" + data.id}><i className="material-icons">open_in_new</i></Link>
             <button
-                className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-                onClick={(e) => this.deleteItem(e, data.id)}>
+                className="btn-delete mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
+                onClick={(e) => this.modalConfirm(e, data.id)}>
               <i className="material-icons">delete</i>
             </button>
           </td>
@@ -119,6 +119,17 @@ class UserManagementList extends React.Component {
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
+        <dialog class="mdl-dialog">
+          <div class="mdl-dialog__content">
+            <p>
+              Are you sure you want to delete IdeaRobin, Inc.’s account?<br />This cannot be undone.
+            </p>
+          </div>
+          <div className="mdl-dialog__actions">
+            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+          </div>
+        </dialog>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
@@ -175,6 +186,17 @@ class UserManagementList extends React.Component {
       </div>
     );
   }
+  modalConfirm (e, id) {
+    let dialog = document.querySelector('dialog');
+    dialog.showModal();
+    this.setState( {
+      id: id
+    } );
+  }
+  modalClose () {
+    let dialog = document.querySelector('dialog');
+    dialog.close();
+  }
   clearSearch(e) {
     e.preventDefault();
     this.refs.email_address.value = "";
@@ -198,48 +220,23 @@ class UserManagementList extends React.Component {
     };
     this.props.adminClientList(payload);
   }
-  deleteItem (e, id) {
-    e.preventDefault();
+  deleteItem () {
+    let dialog = document.querySelector('dialog');
     this.setState( {
       loading: true,
       errors: {},
       errorServer: null
     } );
-    let payload = {
-      id: id
-    };
-    window.componentHandler.upgradeDom();
-    return validateDelete.call( this, payload )
-      .with( this )
-      .then( deletefunc )
-      .catch( setErrors );
-  }
-
-};
-
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
+    //window.componentHandler.upgradeDom();
+    $('.msg').html('Successfully deleted').addClass('bg-green');
+    $('.msg').fadeIn(1000, function() {
+      $(this).fadeOut(2000);
     });
-}
+    this.modalClose();
+    console.log('test', this.state.id);
+    return this.props.adminclientDelete(this.state.id);
+    }
 
-function validateDelete (payload) {
-  let rules = new Checkit( {
-    id: []
-    } );
-    return rules.run( payload );
-}
-
-function deletefunc (payload) {
-  return this.props.adminclientDelete(payload);
-}
-
-function setErrors( e ) {
-  this.setState(createError(e));
-}
-
-UserManagementList.mixins = [LinkedStateMixin];
-UserManagementList.defaultProps = {
-    errors: []
 };
+
 export default UserManagementList;

@@ -10,10 +10,17 @@ export default React.createClass( {
   componentWillMount(){
     this.props.country();
   },
-  render() {
+  renderSuccess () {
     if (this.props.registerCompleted) {
-      this.context.router.push('/admin/clientlist');
+      $('.msg').html('Client successfully added').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
     }
+  },
+  render() {
+    console.log('test', this);
+    this.renderSuccess();
     return (
       <div id="client_add" className="auth-view">
         <DocTitle

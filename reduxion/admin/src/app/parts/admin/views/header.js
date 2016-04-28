@@ -32,6 +32,7 @@ export default React.createClass( {
             </div>
           </div>
         </div>
+        <div className="msg">Success message</div>
       </header>
     );
   }
