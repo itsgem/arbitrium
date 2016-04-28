@@ -1,5 +1,15 @@
 import { connect } from 'react-redux';
-import { clientProfile, clientApprove, clientDisapprove, clientUpdateProfile, validateUsername  } from '../reducers/clientProfile'
+
+import {
+  clientProfile,
+  clientApprove,
+  clientDisapprove,
+  clientUpdateProfile,
+  validateUsername,
+  clientActivate,
+  clientDeactivate
+} from '../reducers/clientProfile'
+
 import { country } from '../../auth/reducers/country'
 import AdminClientProfile from '../views/clientProfile';
 
@@ -9,6 +19,10 @@ const mapStateToProps = (state) => {
     clientProfileSuccess: state.get('clientadmin').get('clientProfileSuccess'),
     clientApproveSuccess: state.get('clientadmin').get('clientApproveSuccess'),
     clientDisapproveSuccess: state.get('clientadmin').get('clientDisapproveSuccess'),
+
+    clientActivateSuccess: state.get('clientadmin').get('clientActivateSuccess'),
+    clientDeactivateSuccess: state.get('clientadmin').get('clientDeactivateSuccess'),
+
     updateCompleted: state.get('clientadmin').get('updateCompleted'),
     validateCompleted: state.get('clientadmin').get('validateCompleted'),
     loading: state.get('clientadmin').get('loading')
@@ -16,5 +30,14 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-  country, clientProfile, clientApprove, clientDisapprove, clientUpdateProfile, validateUsername
+
+  country,
+  clientProfile,
+  clientApprove,
+  clientDisapprove,
+  clientUpdateProfile,
+  validateUsername,
+  clientActivate,
+  clientDeactivate
+
 })(AdminClientProfile)

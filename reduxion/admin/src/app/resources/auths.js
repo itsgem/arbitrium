@@ -120,6 +120,12 @@ export default {
       }
     });
   },
+  clientActivate(id) {
+    return patch('user/' + id + '/activate', {});
+  },
+  clientDeactivate(id) {
+    return patch('user/' + id + '/deactivate', {});
+  },
   validateUsername(payload) {
     return get('user/available', {
       params: payload
