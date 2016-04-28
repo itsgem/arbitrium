@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
   	adminEdit: state.get('adminUserManagement').get('adminEdit'),
     adminInfo: state.get('adminUserManagement').get('adminInfo'),
     role: state.get('adminUserManagement').get('role'),
+    loading: state.get('adminUserManagement').get('loading'),
     validateCompleted: state.get('validateUsername').get('validateCompleted')
   };
 }

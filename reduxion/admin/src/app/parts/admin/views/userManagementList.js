@@ -10,6 +10,11 @@ export default React.createClass( {
   componentWillMount(){
     this.props.adminUserManagementList();
   },
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.loading && nextProps.adminDelete) {
+      nextProps.adminUserManagementList();
+    }
+  },
   render() {
     return (
       <div id="client_add">

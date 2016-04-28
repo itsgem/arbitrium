@@ -200,7 +200,7 @@ export default {
   listRoleAdmin(){
     return get('list/role/admin');
   },
-  deleteAdminAccount(payload){
-    return del('admin/' + payload.id);
+  deleteAdminAccount(id){
+    return del('admin/' + id);
   }
 };
