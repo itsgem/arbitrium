@@ -599,17 +599,12 @@ class ClientProfile extends React.Component {
     if(!error) return;
 
     let results = error.response;
-    let message = 'An Error Occurred';
-
-    if (typeof results === 'object') {
-      message = Object.keys(results).map(function (key, value) {
-        return <div key={key}>{value}</div>;
-      });
-    }
 
     return (
       <div className="bs-callout bs-callout-danger text-center animate bounceIn" role="alert">
-        {message}
+        {mapObject(results, function (key, value) {
+          return <div key={key}>{value}</div>;
+        })}
       </div>
     );
   }

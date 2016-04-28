@@ -102,6 +102,11 @@ trait JsonResponseTrait
             $this->response_details['extended_code'] =  Errors::$extended_codes[$error_code];
         }
 
+        // If no array of errors passed to data_bag, contain it with its respective status code message as default
+        if (!$a_errors) {
+            $a_errors = [trans('errors.'.$error_code)];
+        }
+
         $str_replacers = [];
         if (isset($a_errors['str_replace']))
         {
