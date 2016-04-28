@@ -34,7 +34,7 @@ export default () => (
       <Route component={Login} path="login"/>
       <Route component={Logout} path="logout" onEnter={requireAuth}/>
       <Route component={Forgot} path="forgot"/>
-       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
+      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
 
       <Route component={Authenticated} name="home">
         <IndexRoute component={Authenticated}/>
