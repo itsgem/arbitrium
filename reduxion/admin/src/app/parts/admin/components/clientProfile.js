@@ -84,7 +84,6 @@ class ClientProfile extends React.Component {
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <div className="required">Required fields</div>
-        { this.renderSuccess() }
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--6-col">
             <legend>USER ACCOUNT DETAILS</legend>
@@ -102,10 +101,12 @@ class ClientProfile extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--6-col">
             <button
-              className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
+              className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
               id='check_availability'
               type='button'
-              onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+              onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
           </div>
           <div className="mdl-layout__content">
             <div className="mdl-cell mdl-cell--6-col">
@@ -588,18 +589,6 @@ class ClientProfile extends React.Component {
     return (
       <Country country={this.props.countryList} selected={country} />
     );
-  }
-
-  renderSuccess() {
-    let success = this.state.updateCompleted;
-    if(!success) return;
-    let {errors} = this.state ? this.state :'';
-    if (Array.isArray(errors)) {
-      $('.msg').html('Successfully updated profile').addClass('bg-green');
-      $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(2000);
-      });
-    }
   }
 
   formClassNames( field, errors ) {

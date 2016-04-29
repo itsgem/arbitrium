@@ -247,6 +247,11 @@ div#application #client_add .mdl-layout__content, legend {
 #client_add #btn-save, #client_add #check_availability {
   background-color: rgb(255,110,64)
 }
+#client_add #check_availability:disabled {
+  background-color: #e1e1e1;
+  color: #b0b0b0;
+  cursor: default;
+}
 
 div.required {
     color: #aaa;
@@ -380,7 +385,7 @@ dialog p {
   width: 350px;
 }
 .bg-green {
-   background-color: #00CC99;
+   background-color: #00CC99!important;
 }
 .ui-dialog-buttonset {
    padding-bottom: 20px;
@@ -429,10 +434,11 @@ nav ul li:hover {
 nav .mdl-menu__container {
   top: 60px!important
 }
-
-/*.mdl-menu__container.is-visible .mdl-menu__outline {
-  margin-top: 13px;
-}*/
+#check_availability .material-icons {
+    font-size: 13px;
+    vertical-align: bottom;
+    padding-left: 8px;
+}
 
 @media (min-width: 1200px) {
   div#application #client_add .mdl-cell--full-col {

@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
 
     updateCompleted: state.get('clientadmin').get('updateCompleted'),
     validateCompleted: state.get('clientadmin').get('validateCompleted'),
+    registerCompleted: state.get('clientadmin').get('registerCompleted'),
     loading: state.get('clientadmin').get('loading')
   };
 }

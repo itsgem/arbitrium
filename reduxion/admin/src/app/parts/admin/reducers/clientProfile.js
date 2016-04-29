@@ -27,7 +27,7 @@ const initialState = Immutable.fromJS({
   loading: false,
   registerCompleted: false,
   updateCompleted: false,
-  validateCompleted: {},
+  validateCompleted: false,
   clientList: {}
 });
 
@@ -38,6 +38,7 @@ export default createReducer({
     clientDisapproveSuccess: false,
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
+    updateCompleted: false,
     loading: false
   }),
   [clientProfile.request]: (state) => state.merge({
@@ -45,6 +46,7 @@ export default createReducer({
     clientDisapproveSuccess: false,
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
+    updateCompleted: false,
     loading: true}),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
@@ -68,10 +70,12 @@ export default createReducer({
     clientDeactivateSuccess: false,
     loading: true}),
 
-  [validateUsername.ok]: (state, payload) => state.merge({validateCompleted: state.concat(payload)}),
-  [clientRegister.ok]: (state) => state.merge({registerCompleted: true, loading: false}),
-  [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true}),
-  [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false}),
+  [validateUsername.ok]: (state) => state.merge({validateCompleted: true}),
+  [validateUsername.request]: (state) => state.merge({validateCompleted: false}),
+  [validateUsername.error]: (state) => state.merge({validateCompleted: false}),
+  [clientRegister.ok]: (state) => state.merge({registerCompleted: true, loading: false, validateCompleted: false}),
+  [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true, validateCompleted: false}),
+  [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false, validateCompleted: false}),
   [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
   [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload),registerCompleted: false, loading: false}),
   [adminClientList.request]: (state, payload) => state.merge({

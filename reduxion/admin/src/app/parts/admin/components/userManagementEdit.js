@@ -40,6 +40,7 @@ class UserManagementEdit extends React.Component {
                   type="text"
                   id='username'
                   ref="username"
+                  onChange={(e) => this.notUsername(e, userInfo.get("user").get("username"))}
                   defaultValue={userInfo.get("user").get("username")}
                   />
                 <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
@@ -48,10 +49,13 @@ class UserManagementEdit extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <button
-                className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
+                className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
                 id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+                disabled
+                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
           </div>
           <div className="mdl-grid">
@@ -74,9 +78,6 @@ class UserManagementEdit extends React.Component {
                   <option></option>
                   {role.map(item =>
                     {
-                      // if (item.get('id') == userRole) {
-                      //   return <option key={item.get('id')} selected defaultValue={item.get('id')}>{item.get('display_name')}</option>
-                      // }
                       return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>
                     }
                   )}
@@ -164,10 +165,18 @@ class UserManagementEdit extends React.Component {
     );
   }
   formClassNames( field, errors = null ) {
-    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
+    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
       'is-invalid is-dirty': errors[ field ],
       'has-success': errors && !(errors[ field ])
     } );
+  }
+  notUsername (e, id) {
+    if (id == e.target.value) {
+      $('#check_availability').attr("disabled", "disabled");
+    } else {
+      $('#check_availability').removeAttr('disabled');
+    }
+    
   }
   edit ( e, id ) {
     e.preventDefault();

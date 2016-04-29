@@ -16,13 +16,11 @@ export default React.createClass( {
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
+      this.context.router.push('/coffee/client/');
     }
   },
   render() {
     this.renderSuccess();
-    if (this.props.registerCompleted) {
-      this.context.router.push('/coffee/client/');
-    }
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
@@ -37,6 +35,7 @@ export default React.createClass( {
         <ClientAdd
           clientRegister={this.props.clientRegister}
           validateUsername={this.props.validateUsername}
+          validateCompleted={this.props.validateCompleted}
           country={this.props.country}
           countryList={this.props.countryList}/>
       </div>

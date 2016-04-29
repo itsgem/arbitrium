@@ -16,13 +16,11 @@ export default React.createClass( {
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
+      this.context.router.push('/coffee/account');
     }
   },
   render() {
     this.renderSuccess();
-    if (this.props.registerCompleted) {
-      this.context.router.push('/coffee/account');
-    }
     return (
       <div id="client_add" className="auth-view">
         <DocTitle

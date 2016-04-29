@@ -32,7 +32,7 @@ export default createReducer({
   [deleteAdminAccount.ok]: (state, payload) => state.merge({adminDelete: true, loading: false}),
   [deleteAdminAccount.request]: (state, payload) => state.merge({adminDelete: false, loading: true}),
   [getAdminInfo.ok]: (state, payload) => state.merge({adminInfo: payload, registerCompleted: false, adminEdit: false, loading: false}),
-  [getAdminInfo.request]: (state, payload) => state.merge({loading: true, registerCompleted: false, adminEdit: false}),
+  [getAdminInfo.request]: (state, payload) => state.merge({loading: true, registerCompleted: false, adminEdit: false, loading: true}),
   [adminUserManagementEdit.ok]: (state) => state.merge({adminEdit: true, loading: false}),
   [adminUserManagementEdit.request]: (state) => state.merge({adminEdit: false, loading: true})
 }, initialState);

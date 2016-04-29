@@ -4,6 +4,9 @@ import DocTitle from 'components/docTitle';
 import { Link } from 'react-router';
 
 export default React.createClass( {
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   componentDidMount(){
     let id = this.props.params.id;
     this.props.clientProfile(id);
@@ -17,7 +20,17 @@ export default React.createClass( {
       nextProps.clientProfile(nextProps.params.id);
     }
   },
+  renderSuccess () {
+    if (this.props.updateCompleted) {
+      $('.msg').html('Client successfully added').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.context.router.push('/coffee/client/');
+    }
+  },
   render() {
+    this.renderSuccess();
     let client = {
       clientInfo: this.props.clientProfileSuccess.get('data'),
       clientApprove: this.props.clientApprove,
@@ -25,7 +38,6 @@ export default React.createClass( {
       clientActivate: this.props.clientActivate,
       clientDeactivate: this.props.clientDeactivate,
       clientUpdateProfile: this.props.clientUpdateProfile,
-      updateCompleted: this.props.updateCompleted,
       validateUsername: this.props.validateUsername
     };
     let countryList = this.props.countryList;
@@ -46,6 +58,7 @@ export default React.createClass( {
         <ClientProfile
           client={client}
           countryList={countryList}
+          validateCompleted={this.props.validateCompleted}
           />
       </div>
     );
