@@ -729,22 +729,28 @@ function validateClientProfile ( payload) {
     ],
     rep_gender:        [{ rule: 'required', label: 'gender'}],
     rep_mobile_code:   [
+      { rule: 'required', label: 'mobile code' },
       { rule: 'numeric', label: 'mobile code' },
       { rule: 'min:1', label: 'mobile code' },
       { rule: 'max:3', label: 'mobile code' }
     ],
     rep_mobile_number: [
+      { rule: 'required', label: 'mobile number'},
       { rule: 'numeric', label: 'mobile number'},
       { rule: 'min:1', label: 'mobile number' },
       { rule: 'max:12', label: 'mobile number' }
     ],
     rep_phone_code:    [
+      { rule: 'required', label: 'phone code' },
       { rule: 'numeric', label: 'phone code' },
       { rule: 'min:1', label: 'phone code' },
       { rule: 'max:3', label: 'phone code' }
     ],
     rep_phone_number:  [
-      { rule: 'numeric', label: 'phone number'}
+      { rule: 'required', label: 'phone number'},
+      { rule: 'numeric', label: 'phone number'},
+      { rule: 'min:1', label: 'phone number' },
+      { rule: 'max:12', label: 'phone number' }
     ],
     rep_position:      [
       { rule: 'required', label: 'position' },
@@ -775,8 +781,8 @@ function validateClientProfile ( payload) {
     ],
     alt_phone_number:  [
       { rule: 'numeric', label: 'phone number'},
-      { rule: 'min:1', label: 'mobile number' },
-      { rule: 'max:12', label: 'mobile number' }
+      { rule: 'min:1', label: 'phone number' },
+      { rule: 'max:12', label: 'phone number' }
     ],
     alt_position:      [{ rule: 'max:100', label: 'position'}],
     alt_department:    [{ rule: 'max:100', label: 'department'}],
