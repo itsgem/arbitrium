@@ -79,7 +79,6 @@ class ClientProfile extends React.Component {
 
     let client = this.state.client;
     let status = client.approval_status == 'Pending' ? true : false;
-
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <div className="required">Required fields</div>
@@ -620,11 +619,11 @@ class ClientProfile extends React.Component {
 
   clienActivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientActivate(this.props.client.clientInfo.id);
+    this.props.client.clientActivate(this.props.client.clientInfo.user.id);
   }
   clientDeactivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientDeactivate(this.props.client.clientInfo.id);
+    this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
   }
 
 
