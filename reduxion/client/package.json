@@ -108,6 +108,7 @@
     "html-webpack-plugin": "2.15.0",
     "imports-loader": "0.6.5",
     "mocha": "^2.4.5",
+    "moment": "^2.12.0",
     "nightwatch": "0.8.18",
     "node-sass": "^3.4.2",
     "open-browser-webpack-plugin": "0.0.2",

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
+import moment from 'moment';
 
 import Application from 'parts/core/containers/application';
 import Dashboard from 'parts/core/views/dashboard';
@@ -24,7 +25,16 @@ import AdminClientAdd from 'parts/admin/containers/clientAdd';
 import NoMatch from './components/noMatch';
 
 function requireAuth(nextState, replace, cb) {
-  if (!localStorage.getItem('token')) {
+
+  if(!localStorage.getItem('token')) {
+    replace({
+      pathname: '/i/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+
+  if(localStorage.getItem('token') && localStorage.getItem('expired') <= moment().valueOf()) {
+    localStorage.clear();
     replace({
       pathname: '/i/login',
       state: { nextPathname: nextState.location.pathname }
@@ -36,10 +46,10 @@ function requireAuth(nextState, replace, cb) {
 export default () => (
   <Route component={Application} name="home" path="/">
     <Route component={Application} name="home" path="i">
-      <IndexRoute component={Dashboard}/>
+      <IndexRoute component={Dashboard} onEnter={requireAuth}/>
       <Route component={Login} path="login"/>
       <Route component={Signup} path="signup"/>
-      <Route component={ClientLogout} path="logout"/>
+      <Route component={ClientLogout} path="logout" onEnter={requireAuth}/>
       <Route component={Forgot} path="forgot"/>
       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
       <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail"/>
