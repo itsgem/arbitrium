@@ -20,12 +20,12 @@ export default React.createClass( {
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-client">
                       <li className="mdl-menu__item"><Link to="/coffee/client/">Client List</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/client/new">Add New Clien</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/invoices/">Invoices</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/client-surveys/">Survey Management</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee">Invoices</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee">Survey Management</Link></li>
                     </ul>
                   </div>
-                  <Link className="mdl-layout__tab" to="/coffee/api">API</Link>
-                  <Link className="mdl-layout__tab" to="/coffee/pricing">Pricing</Link>
+                  <Link className="mdl-layout__tab" to="/coffee">API</Link>
+                  <Link className="mdl-layout__tab" to="/coffee">Pricing</Link>
                   <div className="container">
                     <button id="demo-menu-account"
                       className="mdl-button mdl-js-button">Admin Accounts</button>
@@ -35,14 +35,14 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
                     </ul>
                   </div>
-                  <Link className="mdl-layout__tab" to="/coffee/log">Logs</Link>
+                  <Link className="mdl-layout__tab" to="/coffee">Logs</Link>
                 </nav>
                 <div className="icon-profile">
                   <button id="menu" className="mdl-button mdl-js-button mdl-button--icon">
                     <i className="material-icons">account_circle</i>
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/setting">Settings</Link></li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee">Settings</Link></li>
                     <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout">Logout</Link></li>
                   </ul>
                 </div>
