@@ -13,6 +13,9 @@ export default React.createClass( {
     if (!nextProps.loading && (nextProps.clientDisapproveSuccess || nextProps.clientApproveSuccess)) {
       nextProps.clientProfile(nextProps.params.id);
     }
+    if (!nextProps.loading && (nextProps.clientActivateSuccess || nextProps.clientDeactivateSuccess)) {
+      nextProps.clientProfile(nextProps.params.id);
+    }
   },
   render() {
     let client = {

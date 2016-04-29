@@ -36,11 +36,15 @@ export default createReducer({
     clientProfileSuccess: state.concat(payload),
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
+    clientActivateSuccess: false,
+    clientDeactivateSuccess: false,
     loading: false
   }),
   [clientProfile.request]: (state) => state.merge({
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
+    clientActivateSuccess: false,
+    clientDeactivateSuccess: false,
     loading: true}),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({

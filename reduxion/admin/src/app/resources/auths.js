@@ -121,10 +121,18 @@ export default {
     });
   },
   clientActivate(id) {
-    return patch('user/' + id + '/activate', {});
+    return patch('user/' + id + '/activate', {
+      params: {
+        callback_url: window.location.origin
+      }
+    });
   },
   clientDeactivate(id) {
-    return patch('user/' + id + '/deactivate', {});
+    return patch('user/' + id + '/deactivate', {
+      params: {
+        callback_url: window.location.origin
+      }
+    });
   },
   validateUsername(payload) {
     return get('user/available', {
