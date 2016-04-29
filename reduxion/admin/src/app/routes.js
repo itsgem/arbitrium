@@ -8,7 +8,6 @@ import Dashboard from 'parts/admin/views/dashboard';
 import Login from 'parts/auth/containers/login';
 import Logout from 'parts/auth/containers/adminLogout';
 import Forgot from 'parts/auth/containers/forgot';
-
 import ConfirmResetPassword from 'parts/auth/containers/confirmResetPassword';
 
 import AdminClientList from 'parts/admin/containers/clientList';
@@ -17,6 +16,9 @@ import AdminClientAdd from 'parts/admin/containers/clientAdd';
 import AdminUserManagementList from 'parts/admin/containers/userManagementList';
 import AdminUserManagementAdd from 'parts/admin/containers/userManagementAdd';
 import AdminUserManagementEdit from 'parts/admin/containers/userManagementEdit';
+
+import NoMatch from './components/noMatch';
+
 
 function requireAuth(nextState, replace, cb) {
 
@@ -59,7 +61,7 @@ export default () => (
           <Route component={AdminUserManagementEdit} path=":id" onEnter={requireAuth}/>
         </Route>
       </Route>
-      {/*<Route path="*" components={NoMatch} />*/}
+      <Route path="*" components={NoMatch} />
     </Route>
   </Route>
 );

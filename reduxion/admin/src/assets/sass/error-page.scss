@@ -1,0 +1,62 @@
+
+.error-page {
+	height: 100%;
+
+	.error-msg {
+		background: #fff;
+		//@include vertical-align();
+		max-height: 415px;
+		max-width: 700px;
+		margin: 0 auto;
+		position: relative;
+		padding-top: 1rem;
+
+		/* @include box-shadow($opacity);
+
+
+		@include breakpoint(small) {
+			@include border-radius($box-radius);
+		} */
+
+		h2, p {
+			color: #fff;
+		}
+
+		h2 {
+
+
+			span {
+
+				display: block;
+				font-size: 13rem;
+				line-height: 1;
+
+
+			}
+
+			em {
+				font-style: normal;
+				text-transform: uppercase;
+			}
+		}
+
+
+		.copy {
+			color: #fff;
+			background-color: blue;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			margin: 0;
+			width: 100%;
+			text-align: center;
+			padding: 0.8rem 0;
+			font-size: 12px;
+
+				/* @include breakpoint(small) {
+					@include border-bottom-radius($box-radius);
+				} */
+
+		}
+	}
+}
