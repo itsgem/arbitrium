@@ -90,6 +90,21 @@ div#application{
   }
 }
 
+.form-group-get-available-username {
+  .mdl-button, .mdl-icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .mdl-icon {
+    margin: 10px;
+    font-size: 24px;
+    line-height: normal;
+  }
+}
+
+.mdl-icon-danger {color: #D50000}
+.mdl-icon-success {color: #228b22}
+
 .box-right {
   text-align: right;
 }
