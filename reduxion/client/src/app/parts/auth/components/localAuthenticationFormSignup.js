@@ -319,7 +319,7 @@ class LocalAuthenticationFormSignup extends React.Component {
     }
 
     formClassNames( field ) {
-        return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
+        return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
             'is-invalid is-dirty': this.props.errors[ field ],
             'has-success': this.state[ field ] && !(this.props.errors[ field ])
         } );
