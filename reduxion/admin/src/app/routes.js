@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
+import moment from 'moment';
 
 import Authenticated from 'parts/auth/containers/authenticatedComponent';
 import Application from 'parts/admin/containers/application';
@@ -18,7 +19,16 @@ import AdminUserManagementAdd from 'parts/admin/containers/userManagementAdd';
 import AdminUserManagementEdit from 'parts/admin/containers/userManagementEdit';
 
 function requireAuth(nextState, replace, cb) {
-  if (!localStorage.getItem('token')) {
+
+  if(!localStorage.getItem('token')) {
+    replace({
+      pathname: '/coffee/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+
+  if(localStorage.getItem('token') && localStorage.getItem('expired') <= moment().valueOf()) {
+    localStorage.clear();
     replace({
       pathname: '/coffee/login',
       state: { nextPathname: nextState.location.pathname }
@@ -29,26 +39,27 @@ function requireAuth(nextState, replace, cb) {
 
 export default () => (
   <Route component={Application} name="home" path="/">
-    <Route component={Application} name="home" path="coffee">
-      <IndexRoute component={Dashboard} />
+    <Route component={Application} name="home" path="coffee" >
+      <IndexRoute component={Dashboard} onEnter={requireAuth} />
       <Route component={Login} path="login"/>
       <Route component={Logout} path="logout" onEnter={requireAuth}/>
       <Route component={Forgot} path="forgot"/>
        <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
 
       <Route component={Authenticated} name="home">
-        <IndexRoute component={Authenticated}/>
+        <IndexRoute component={Authenticated} onEnter={requireAuth}/>
         <Route path="client" onEnter={requireAuth}>
           <IndexRoute component={AdminClientList}  onEnter={requireAuth}/>
           <Route component={AdminClientAdd} path="new" onEnter={requireAuth}/>
           <Route component={AdminClientProfile} path=":id" onEnter={requireAuth}/>
         </Route>
         <Route path="account" onEnter={requireAuth}>
-          <IndexRoute component={AdminUserManagementList}/>
-          <Route component={AdminUserManagementAdd} path="new"/>
-          <Route component={AdminUserManagementEdit} path=":id"/>
+          <IndexRoute component={AdminUserManagementList} onEnter={requireAuth}/>
+          <Route component={AdminUserManagementAdd} path="new" onEnter={requireAuth}/>
+          <Route component={AdminUserManagementEdit} path=":id" onEnter={requireAuth}/>
         </Route>
       </Route>
+      {/*<Route path="*" components={NoMatch} />*/}
     </Route>
   </Route>
 );

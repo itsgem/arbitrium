@@ -3,25 +3,27 @@ import { Link } from 'react-router';
 import tr from 'i18next';
 import LocalLoginForm from '../components/localLoginForm';
 import DocTitle from 'components/docTitle';
+import moment from 'moment';
 
 import Debug from 'debug';
 let debug = new Debug("views:login");
 
 class Login extends React.Component {
     componentWillReceiveProps(nextProps){
-        debug("componentWillReceiveProps", nextProps);
+
         let path = nextProps.location.query.nextPath || '/i';
-        debug("componentWillReceiveProps next path: ", path);
         if (nextProps.authenticated) {
+
           let token = nextProps.user.get('data').get('token');
           let lifetime = nextProps.user.get('data').get('lifetime');
           let user =  nextProps.user.get('data').get('username');
-          let date = new Date();
-          let expired = date.setMinutes(date.getMinutes()+parseInt(lifetime));
+          let expired = moment().add(parseInt(lifetime),'minutes').valueOf();
+
           localStorage.setItem('token', token);
           localStorage.setItem('expired', expired);
           localStorage.setItem('user', user);
           this.context.router.push(path);
+
         }
     }
 

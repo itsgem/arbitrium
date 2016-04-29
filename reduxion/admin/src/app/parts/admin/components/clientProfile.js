@@ -79,6 +79,7 @@ class ClientProfile extends React.Component {
 
     let client = this.state.client;
     let status = client.approval_status == 'Pending' ? true : false;
+
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <div className="required">Required fields</div>
@@ -126,7 +127,7 @@ class ClientProfile extends React.Component {
           <div className="mdl-layout__content status-content">
             <div className="mdl-cell mdl-cell--6-col">
              <div className="mdl-cell mdl-cell--6-col status-col">
-                <div className="mdl-cell mdl-cell--2-col float-lft mg-lf">Approval Status:</div>
+                <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">Approval Status:</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
                 <div className="mdl-cell mdl-cell--6-col float-lft">
                   { status &&
@@ -619,11 +620,11 @@ class ClientProfile extends React.Component {
 
   clienActivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientActivate(this.props.client.clientInfo.user.id);
+    this.props.client.clientActivate(this.props.client.clientInfo.id);
   }
   clientDeactivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
+    this.props.client.clientDeactivate(this.props.client.clientInfo.id);
   }
 
 
