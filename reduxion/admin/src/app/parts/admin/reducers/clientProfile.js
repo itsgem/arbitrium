@@ -73,9 +73,10 @@ export default createReducer({
   [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true}),
   [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false}),
   [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
-  [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload), loading: false}),
+  [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload),registerCompleted: false, loading: false}),
   [adminClientList.request]: (state, payload) => state.merge({
     clientDeleteSuccess: false,
+    registerCompleted: false,
     loading: true
   }),
   [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true, loading: false}),

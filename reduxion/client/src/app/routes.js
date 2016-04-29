@@ -12,6 +12,7 @@ import ConfirmResetPassword from 'parts/auth/containers/confirmResetPassword';
 import ClientLogout from 'parts/auth/containers/clientLogout';
 import Signup from 'parts/auth/containers/signup';
 import Forgot from 'parts/auth/containers/forgot';
+import RegistrationComplete from 'parts/auth/containers/registrationComplete';
 
 import ClientProfile from 'client/profile/containers/profile';
 import ClientChangePassword from 'client/profile/containers/changePassword';
@@ -51,6 +52,7 @@ export default () => (
       <Route component={ClientLogout} path="logout" onEnter={requireAuth}/>
       <Route component={Forgot} path="forgot"/>
       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
+      <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail"/>
 
       <Route path="client" component={Authenticated} onEnter={requireAuth}>
         <IndexRoute component={ClientProfile} onEnter={requireAuth} />

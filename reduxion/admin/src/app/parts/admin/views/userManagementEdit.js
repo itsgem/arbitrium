@@ -22,7 +22,7 @@ export default React.createClass( {
   },
   renderAdminInfo() {
     if (this.props.adminEdit) {
-      this.context.router.push('/coffee/admin/account');
+      this.context.router.push('/coffee/account');
     }
     return (
       <div id="client_add" className="auth-view">

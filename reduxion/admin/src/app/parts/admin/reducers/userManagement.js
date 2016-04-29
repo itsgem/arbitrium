@@ -15,17 +15,24 @@ export const listRoleAdmin = createActionAsync('LIST_ROLE_ADMIN', auth.listRoleA
 const initialState = Immutable.fromJS({
   adminList: {},
   adminAdd: {},
-  adminDelete: {},
+  adminDelete: false,
   adminEdit: false,
   adminInfo: {},
-  role: {}
+  role: {},
+  registerCompleted: false,
+  deleteSuccess: false,
+  loading: false
 });
 
 export default createReducer({
-  [adminUserManagementList.ok]: (state, payload) => state.merge({adminList: payload}),
-  [adminUserManagementAdd.ok]: (state, payload) => state.merge({adminAdd: state.concat(payload)}),
+  [adminUserManagementList.ok]: (state, payload) => state.merge({adminList: payload, loading:false, adminDelete: false}),
+  [adminUserManagementList.request]: (state, payload) => state.merge({loading: true, adminDelete: false}),
+  [adminUserManagementAdd.ok]: (state, payload) => state.merge({adminAdd: state.concat(payload), registerCompleted: true}),
   [listRoleAdmin.ok]: (state, payload) => state.merge({role: payload}),
-  [deleteAdminAccount.ok]: (state, payload) => state.merge({adminDelete: payload}),
-  [getAdminInfo.ok]: (state, payload) => state.merge({adminInfo: payload}),
-  [adminUserManagementEdit.ok]: (state) => state.merge({adminEdit: true})
+  [deleteAdminAccount.ok]: (state, payload) => state.merge({adminDelete: true, loading: false}),
+  [deleteAdminAccount.request]: (state, payload) => state.merge({adminDelete: false, loading: true}),
+  [getAdminInfo.ok]: (state, payload) => state.merge({adminInfo: payload, registerCompleted: false, adminEdit: false, loading: false}),
+  [getAdminInfo.request]: (state, payload) => state.merge({loading: true, registerCompleted: false, adminEdit: false}),
+  [adminUserManagementEdit.ok]: (state) => state.merge({adminEdit: true, loading: false}),
+  [adminUserManagementEdit.request]: (state) => state.merge({adminEdit: false, loading: true})
 }, initialState);

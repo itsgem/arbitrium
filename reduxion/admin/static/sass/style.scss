@@ -1,12 +1,19 @@
 
+html{
+  font-size: 87.5%;
+
+  body{
+    font-size: 14px; font-size: 1rem; line-height: 1;
+    font-family: 'Roboto Condensed', sans-serif;
+
+  }
+
+}
+
 // ******************** START HEADER ********************
 
 .body-bg{
   background: #e9eaed;
-  font-family: 'Roboto Condensed', sans-serif;
-  font-size: 14px; font-size: 1rem; line-height: 1;
-  font-size: 87.5%;
-
 
   .header-bg{
     background: #0e3192;
@@ -21,9 +28,6 @@
         background: none;
         height: 48px;
         padding: 0px;
-        margin: 0 auto;
-        width: 1200px;
-        max-width: 100%;
 
         .logo{
 
@@ -37,34 +41,8 @@
 
         .nav{
           background: none;
+          float: right;
           width: 1030px;
-
-          .mdl-navigation {
-            float: right;
-
-            .mdl-navigation__link {
-              text-transform: uppercase;
-            }
-
-            .icon-profile {
-              position: relative;
-
-              .mdl-menu {
-                .mdl-menu__item {
-                  height: auto;
-                  padding: 10px 15px;
-                  line-height: normal;
-                  
-                  .mdl-navigation__link {
-                    display: block;
-                    padding: 0;
-                    line-height: normal;
-                    color: #424242;
-                  }
-                }
-              }
-            }
-          }
 
           .tab{
             border-bottom: none;
@@ -109,11 +87,11 @@
 
 // ******************** START SECTION-CLIENT-LIST ********************
 
-  .client-list{
+  .table-list-container{
     padding: 50px 0px 0px 0px;
     width: 1200px;
 
-    .client-tab{
+    .table-tab{
       background: #0e3192;
       height: 48px;
       padding: 0px;
@@ -124,8 +102,6 @@
         font-size: 1rem;
         font-weight: 400;
         padding: 0px 18px;
-
-
 
         i{
 
@@ -193,8 +169,9 @@
 
     }
 
-    .table-client-list{
+    .table-list{
       width:100%;
+      border: 0px;
 
       thead{
 
@@ -211,37 +188,47 @@
       }
 
       tbody{
+        border: 0px;
 
         tr{
+          background: #fbfeff;
 
-          &.bg-dark{
-            background: #f5fafe;
-
-            td{
-              border: 0px;
+            &:hover{
+              background-color: #f0f5fa;
             }
 
-          }
+          &:nth-child(odd) {
+           background-color: #f5fafe;
 
-          &.bg-light{
-            background: #fbfeff;
-
-            td{
-              border: 0px;
-
+            &:hover{
+              background-color: #f0f5fa;
             }
 
           }
 
           td{
+            border: 0px;
+
+            span{
+              font-size: 1rem;
+            }
+
+            .switch{
+              width: 70%;
+            }
 
             .btn-view-edit{
               background: #ff6600;
               margin-right: 6px;
+
             }
 
             .btn-delete{
               background: #ff4a4a;
+            }
+
+            &.api-col-action{
+              width: 220px;
             }
 
           }
@@ -308,43 +295,8 @@
 
 }
 
-.status-content {
+.api-key{
 
-  .status-col {
-    display:flex;
-    margin-left: 0;
-    overflow: auto;
-    width: 100%;
-
-    .mg-lf {
-      margin-left: 0;
-    }
-    .float-lft{
-      float: left;
-      align-self: center;
-    }
-  }
-
-  .status-btn{
-    height: 29px !important;
-    line-height: 10px !important;
-    min-width: 50px !important;
-    margin-left: 10px;
-    .icon-con {
-      display: inline-table;
-      line-height: 0;
-      padding-bottom: 3px;
-      padding-left: 10px;
-      vertical-align: middle;
-    }
-  }
-}
-
-.logout-text{
-  color: #777 !important;
-  font-size: 11px !important;
-  padding: 0 !important;
-  text-align: left !important;
 }
 // ******************** END SECTION-CLIENT-LIST ********************
 

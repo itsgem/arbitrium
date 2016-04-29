@@ -38,7 +38,7 @@ export default {
           password_confirmation: payload.password_confirmation,
           email_address: payload.email_address,
           username: payload.username,
-          callback_url: window.location.origin + "/verifyEmail/"
+          callback_url: window.location.origin + "/i/verifyEmail"
           }
       });
   },
@@ -98,7 +98,7 @@ export default {
   clientApprove(id) {
       return patch('admin/client/' + id + '/approve', {
           params: {
-              callback_url: 'http://localhost:9991/'
+              callback_url: window.location.origin
           }
       });
   },
@@ -115,7 +115,7 @@ export default {
     });
   },
   adminClientRegister(payload) {
-    return post('admin/client/', {
+    return post('admin/client', {
       params: {
         company_name: payload.company_name,
         street_address_1: payload.street_address_1,
@@ -139,7 +139,7 @@ export default {
         password_confirmation: payload.password_confirmation,
         email_address: payload.email_address,
         username: payload.username,
-        callback_url: window.location.origin + "/fotgot/"
+        callback_url: window.location.origin + "/forgot"
       }
     });
   },

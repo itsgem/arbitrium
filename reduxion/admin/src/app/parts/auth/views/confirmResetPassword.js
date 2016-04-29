@@ -166,7 +166,7 @@ export default React.createClass( {
   },
 
   formClassNames( field, errors ) {
-    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
+    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
       'has-error': errors[ field ]
     });

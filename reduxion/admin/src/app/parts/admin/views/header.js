@@ -8,22 +8,41 @@ export default React.createClass( {
         <div className="mdl-grid header-container">
           <div className="mdl-layout__header-row main-header">
             <div className="logo">
-              <img src="/assets/images/admin/logo-arbitrium.png"></img>
+              <img src="https://s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png"></img>
             </div>
             <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
               <div className="mdl-tabs__tab-bar tab">
-                <a href="#dashboard" className="mdl-tabs__tab is-active">DASHBOARD</a>
-                <a href="#clients" className="mdl-tabs__tab">CLIENTS</a>
-                <a href="api.html" className="mdl-tabs__tab">API</a>
-                <a href="#pricing" className="mdl-tabs__tab">PRICING</a>
-                <a href="#admin-accounts" className="mdl-tabs__tab">ADMIN ACCOUNTS</a>
-                <a href="#logs" className="mdl-tabs__tab">LOGS</a>
+                <nav className="mdl-navigation">
+                  <Link className="mdl-layout__tab" to="/coffee">Dashboard</Link>
+                  <div className="container">
+                    <button id="demo-menu-client"
+                      className="mdl-button mdl-js-button">Clients</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-client">
+                      <li className="mdl-menu__item"><Link to="/coffee/client/">Client List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/client/new">Add New Clien</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/invoices/">Invoices</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/client-surveys/">Survey Management</Link></li>
+                    </ul>
+                  </div>
+                  <Link className="mdl-layout__tab" to="/coffee/api">API</Link>
+                  <Link className="mdl-layout__tab" to="/coffee/pricing">Pricing</Link>
+                  <div className="container">
+                    <button id="demo-menu-account"
+                      className="mdl-button mdl-js-button">Admin Accounts</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-account">
+                      <li className="mdl-menu__item"><Link to="/coffee/account/">Admin List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
+                    </ul>
+                  </div>
+                  <Link className="mdl-layout__tab" to="/coffee/log">Logs</Link>
+                </nav>
                 <div className="icon-profile">
                   <button id="menu" className="mdl-button mdl-js-button mdl-button--icon">
                     <i className="material-icons">account_circle</i>
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
-                    <li className="mdl-menu__item">Settings</li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/setting">Settings</Link></li>
                     <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout">Logout</Link></li>
                   </ul>
                 </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Checkit from 'checkit';
+import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
@@ -145,10 +146,11 @@ class UserManagementEdit extends React.Component {
           </div>
           <div className="layout-gt-md-row layout-align-end-end btn">
             <div className="flex-order-gt-md-2 pd-10">
-              <button
+              <Link
                 className="mdl-button mdl-js-button mdl-button--colored"
                 id='btn-cancel'
-                type='button'>CANCEL</button>
+                to="/coffee/account/"
+                >CANCEL</Link>
             </div>
             <div className="flex-order-gt-md-2">
               <button
@@ -162,7 +164,7 @@ class UserManagementEdit extends React.Component {
     );
   }
   formClassNames( field, errors = null ) {
-    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
+    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
       'has-success': errors && !(errors[ field ])
     } );
