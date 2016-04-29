@@ -129,7 +129,7 @@ class ClientProfile extends React.Component {
                                     {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
                                   </div>
                               </div>
-                              <div className="mdl-cell mdl-cell--3-col">
+                              <div className="mdl-cell mdl-cell--3-col form-group-get-available-username">
                                   <button
                                     type="button"
                                     className="mdl-button mdl-js-button mdl-button--raised"
@@ -138,7 +138,7 @@ class ClientProfile extends React.Component {
                                     >
                                     Check availability
                                   </button>
-                                  <i className="material-icons">{ this.isUsernameAvailable() }</i>
+                                  { this.isUsernameAvailable() }
                               </div>
                           </div>
                           <div className="mdl-grid">
@@ -639,17 +639,22 @@ class ClientProfile extends React.Component {
   }
 
   isUsernameAvailable() {
-    let indicator = '';
-    if (this.props.isUsernameAvailable != null){
-      if (this.props.isUsernameAvailable) {
-        indicator = 'done';
-      } else {
-        indicator = 'clear';
-      }
-    } else {
-      indicator = '';
+    let icon = '';
+    let className = 'mdl-icon material-icons';
+
+    if (this.props.isUsernameAvailable == true) {
+      icon = 'done';
+      className += ' mdl-icon-success';
+    } else if (this.props.isUsernameAvailable == false) {
+      icon = 'clear';
+      className += ' mdl-icon-danger';
+    } else if (this.props.isUsernameAvailable == 'loading') {
+      icon = 'hourglass_empty';
     }
-    return indicator;
+
+    return (
+      <i className={className}>{icon}</i>
+    );
   }
 
   isAvailableUsernameButtonDisabled() {

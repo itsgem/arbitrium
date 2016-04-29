@@ -47,7 +47,7 @@ export default createReducer({
   }),
   [getAvailableUsername.request]: (state, payload) => state.merge({
     loading: true,
-    isUsernameAvailable: false
+    isUsernameAvailable: 'loading'
   }),
   [getAvailableUsername.error]: (state, payload) => state.merge({
     loading: false,
