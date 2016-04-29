@@ -8,6 +8,10 @@ export default React.createClass({
   componentDidMount() {
     this.props.clientProfile();
     this.props.country();
+      if ( typeof(window.componentHandler) != 'undefined' )
+      {
+        setTimeout(() => {window.componentHandler.upgradeDom()},10);
+      }
   },
   render () {
     let user = this.props.user.get('data');
