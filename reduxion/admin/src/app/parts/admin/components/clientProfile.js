@@ -1,5 +1,6 @@
 import React from 'react';
 import Checkit from 'checkit';
+import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
@@ -561,10 +562,11 @@ class ClientProfile extends React.Component {
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
           <div className="flex-order-gt-md-2 pd-10">
-            <button
-              className="mdl-button mdl-js-button mdl-button--raised"
+            <Link
+              className="mdl-button mdl-js-button mdl-button--colored"
               id='btn-cancel'
-              type='button'>CANCEL</button>
+              to="/coffee/client/"
+              >CANCEL</Link>
           </div>
           <div className="flex-order-gt-md-2">
             <button

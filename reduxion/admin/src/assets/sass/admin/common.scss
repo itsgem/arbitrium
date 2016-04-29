@@ -386,6 +386,53 @@ dialog p {
    padding-bottom: 20px;
    padding-right: 20px;
 }
+header nav {
+  font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+  font-weight: 300;
+  height: 100%!important;
+}
+#main-container nav  a {
+  font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.mdl-menu__container:before {
+  background: transparent;
+  color: #FFF;
+  content: "\f10d";
+  display: block;
+  font-family: "Ionicons";
+  font-size: 24px;
+  height: 24px;
+  line-height: 24px;
+  margin-top: -16px;
+  position: absolute;
+  right: 5px;
+  text-align: right;
+  text-shadow: 1px -1px 5px rgba(0, 0, 0, 0.1);
+}
+nav .container {
+  height: 100%;
+}
+nav .mdl-button {
+  height: 48px;
+  color: #fff;
+  font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+  font-weight: 300;
+}
+nav ul li a{
+  color: #000!important;
+}
+nav ul li:hover {
+  background-color: #ffccaa!important;
+}
+nav .mdl-menu__container {
+  top: 60px!important
+}
+
+/*.mdl-menu__container.is-visible .mdl-menu__outline {
+  margin-top: 13px;
+}*/
 
 @media (min-width: 1200px) {
   div#application #client_add .mdl-cell--full-col {
