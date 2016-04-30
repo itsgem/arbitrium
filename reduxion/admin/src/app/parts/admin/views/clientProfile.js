@@ -7,17 +7,37 @@ export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
+  getInitialState() {
+    return {
+      clientInfo: null,
+      clientUpdateProfile: null,
+      updateCompleted: null,
+    };
+  },
   componentDidMount(){
     let id = this.props.params.id;
     this.props.clientProfile(id);
     this.props.country();
+    console.log("=== componentDidMount - this.props.params.id : ", this.props.params.id);
   },
   componentWillReceiveProps(nextProps) {
+    // Disapprove/Approve Client
     if (!nextProps.loading && (nextProps.clientDisapproveSuccess || nextProps.clientApproveSuccess)) {
       nextProps.clientProfile(nextProps.params.id);
     }
     if (!nextProps.loading && (nextProps.clientActivateSuccess || nextProps.clientDeactivateSuccess)) {
       nextProps.clientProfile(nextProps.params.id);
+    }
+
+    // Displaying and Updating Client
+    if (!nextProps.loading && nextProps.clientProfileSuccess) {
+      this.setState({clientInfo: nextProps.clientProfileSuccess.get('data')});
+    }
+    if (!nextProps.loading && nextProps.clientUpdateProfile) {
+      this.setState({clientUpdateProfile: nextProps.clientUpdateProfile});
+    }
+    if (!nextProps.loading && nextProps.updateCompleted) {
+      this.setState({updateCompleted: nextProps.updateCompleted});
     }
   },
   renderSuccess () {
@@ -32,12 +52,13 @@ export default React.createClass( {
   render() {
     this.renderSuccess();
     let client = {
-      clientInfo: this.props.clientProfileSuccess.get('data'),
+      clientInfo: this.state.clientInfo,
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
       clientActivate: this.props.clientActivate,
       clientDeactivate: this.props.clientDeactivate,
-      clientUpdateProfile: this.props.clientUpdateProfile,
+      clientUpdateProfile: this.state.clientUpdateProfile,
+      updateCompleted: this.state.updateCompleted,
       validateUsername: this.props.validateUsername
     };
     let countryList = this.props.countryList;

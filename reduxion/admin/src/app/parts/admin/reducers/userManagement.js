@@ -25,8 +25,8 @@ const initialState = Immutable.fromJS({
 });
 
 export default createReducer({
-  [adminUserManagementList.ok]: (state, payload) => state.merge({adminList: payload, loading:false, adminDelete: false}),
-  [adminUserManagementList.request]: (state, payload) => state.merge({loading: true, adminDelete: false}),
+  [adminUserManagementList.ok]: (state, payload) => state.merge({adminList: payload, loading:false, adminDelete: false, adminInfo: {} }),
+  [adminUserManagementList.request]: (state, payload) => state.merge({loading: true, adminDelete: false, adminInfo: {} }),
   [adminUserManagementAdd.ok]: (state, payload) => state.merge({adminAdd: state.concat(payload), registerCompleted: true}),
   [listRoleAdmin.ok]: (state, payload) => state.merge({role: payload}),
   [deleteAdminAccount.ok]: (state, payload) => state.merge({adminDelete: true, loading: false}),

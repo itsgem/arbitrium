@@ -247,9 +247,9 @@ div#application #client_add .mdl-layout__content, legend {
 #client_add #btn-save, #client_add #check_availability {
   background-color: rgb(255,110,64)
 }
-#client_add #check_availability:disabled {
-  background-color: #e1e1e1;
-  color: #b0b0b0;
+#client_add .disabled {
+  background-color: #e1e1e1!important;
+  color: #b0b0b0!important;
   cursor: default;
 }
 

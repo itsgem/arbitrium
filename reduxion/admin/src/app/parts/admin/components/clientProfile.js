@@ -270,7 +270,7 @@ class ClientProfile extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className={this.formClassNames('country_id', errors)}>
-              { this.renderCountry(client.country_id) }
+              { this.renderCountry(client.country_id, true) }
               {errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
             </div>
           </div>
@@ -283,7 +283,7 @@ class ClientProfile extends React.Component {
                 ref="postal_code"
                 defaultValue={(client.postal_code) ? client.postal_code : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="postal_code">Postal code</label>
+              <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
               {errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
             </div>
           </div>
@@ -340,7 +340,7 @@ class ClientProfile extends React.Component {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
-              <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+              <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
               {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
             </div>
           </div>
@@ -436,7 +436,7 @@ class ClientProfile extends React.Component {
                 ref="alt_first_name"
                 defaultValue={(client.alt_first_name) ? client.alt_first_name : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_first_name">First name *</label>
+              <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
               {errors.alt_first_name && <small className="mdl-textfield__error shown">{errors.alt_first_name[0]}</small>}
             </div>
           </div>
@@ -449,7 +449,7 @@ class ClientProfile extends React.Component {
                 ref="alt_last_name"
                 defaultValue={(client.alt_last_name) ? client.alt_last_name : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name *</label>
+              <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
               {errors.alt_last_name && <small className="mdl-textfield__error shown">{errors.alt_last_name[0]}</small>}
             </div>
           </div>
@@ -462,7 +462,7 @@ class ClientProfile extends React.Component {
                 ref="alt_email_address"
                 defaultValue={(client.alt_email_address) ? client.alt_email_address : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail *</label>
+              <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail</label>
               {errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
             </div>
           </div>
@@ -492,7 +492,7 @@ class ClientProfile extends React.Component {
                 ref="alt_mobile_code"
                 defaultValue={(client.alt_mobile_code) ? client.alt_mobile_code : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Country Code*</label>
+              <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Country Code</label>
               {errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
             </div>
           </div>
@@ -505,7 +505,7 @@ class ClientProfile extends React.Component {
                 ref="alt_mobile_number"
                 defaultValue={(client.alt_mobile_number) ? client.alt_mobile_number : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.*</label>
+              <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
               {errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
             </div>
           </div>
@@ -518,7 +518,7 @@ class ClientProfile extends React.Component {
                 ref="alt_phone_code"
                 defaultValue={(client.alt_phone_code) ? client.alt_phone_code : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_phone_code">Country Code*</label>
+              <label className="mdl-textfield__label" htmlFor="alt_phone_code">Country Code</label>
               {errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
             </div>
           </div>
@@ -531,7 +531,7 @@ class ClientProfile extends React.Component {
                 ref="alt_phone_number"
                 defaultValue={(client.alt_phone_number) ? client.alt_phone_number : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_phone_number">Telephone no.*</label>
+              <label className="mdl-textfield__label" htmlFor="alt_phone_number">Telephone no.</label>
               {errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
             </div>
           </div>
@@ -544,7 +544,7 @@ class ClientProfile extends React.Component {
                 ref="alt_position"
                 defaultValue={(client.alt_position) ? client.alt_position : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_position">Position *</label>
+              <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
               {errors.alt_position && <small className="mdl-textfield__error shown">{errors.alt_position[0]}</small>}
             </div>
           </div>
@@ -557,7 +557,7 @@ class ClientProfile extends React.Component {
                 ref="alt_department"
                 defaultValue={(client.alt_department) ? client.alt_department : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_department">Department *</label>
+              <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
               {errors.alt_department && <small className="mdl-textfield__error shown">{errors.alt_department[0]}</small>}
             </div>
           </div>
@@ -582,12 +582,13 @@ class ClientProfile extends React.Component {
     );
   }
 
-  renderCountry(selected) {
+  renderCountry(selected, required) {
     if (!this.props.countryList) return;
     let country = (selected) ? selected : '';
+    let isRequired = (required) ? true : false;
 
     return (
-      <Country country={this.props.countryList} selected={country} />
+      <Country country={this.props.countryList} selected={country} required={isRequired} />
     );
   }
 
@@ -706,7 +707,7 @@ function validateClientProfile ( payload) {
     street_address_1:  [{ rule: 'required', label: 'street address 1'}],
     street_address_2:  [],
     city:              [{ rule: 'required', label: 'city'}],
-    state:             [],
+    state:             [{ rule: 'required', label: 'state'}],
     country_id:        [{ rule: 'required', label: 'country'}],
     postal_code:       [{ rule: 'required', label: 'postal code'}],
     rep_first_name:    [{ rule: 'required', label: 'first name'}],
@@ -716,10 +717,30 @@ function validateClientProfile ( payload) {
       { rule: 'email', label: 'email' }
     ],
     rep_gender:        [{ rule: 'required', label: 'gender'}],
-    rep_mobile_code:   [{ rule: 'numeric', label: 'mobile code'}],
-    rep_mobile_number: [{ rule: 'numeric', label: 'mobile number'}],
-    rep_phone_code:    [{ rule: 'numeric', label: 'phone code'}],
-    rep_phone_number:  [{ rule: 'numeric', label: 'phone number'}],
+    rep_mobile_code:   [
+      { rule: 'required', label: 'mobile code' },
+      { rule: 'numeric', label: 'mobile code' },
+      { rule: 'min:1', label: 'mobile code' },
+      { rule: 'max:3', label: 'mobile code' }
+    ],
+    rep_mobile_number: [
+      { rule: 'required', label: 'mobile number'},
+      { rule: 'numeric', label: 'mobile number'},
+      { rule: 'min:1', label: 'mobile number' },
+      { rule: 'max:12', label: 'mobile number' }
+    ],
+    rep_phone_code:    [
+      { rule: 'required', label: 'phone code' },
+      { rule: 'numeric', label: 'phone code' },
+      { rule: 'min:1', label: 'phone code' },
+      { rule: 'max:3', label: 'phone code' }
+    ],
+    rep_phone_number:  [
+      { rule: 'required', label: 'phone number'},
+      { rule: 'numeric', label: 'phone number'},
+      { rule: 'min:1', label: 'phone number' },
+      { rule: 'max:12', label: 'phone number' }
+    ],
     rep_position:      [
       { rule: 'required', label: 'position' },
       { rule: 'max:100', label: 'position' }
@@ -732,10 +753,26 @@ function validateClientProfile ( payload) {
     alt_last_name:     [],
     alt_email_address: [{ rule: 'email', label: 'email'}],
     alt_gender:        [],
-    alt_mobile_code:   [{ rule: 'numeric', label: 'mobile code'}],
-    alt_mobile_number: [{ rule: 'numeric', label: 'mobile number'}],
-    alt_phone_code:    [{ rule: 'numeric', label: 'phone code'}],
-    alt_phone_number:  [{ rule: 'numeric', label: 'phone number'}],
+    alt_mobile_code:   [
+      { rule: 'numeric', label: 'mobile code'},
+      { rule: 'min:1', label: 'mobile code' },
+      { rule: 'max:3', label: 'mobile code' }
+    ],
+    alt_mobile_number: [
+      { rule: 'numeric', label: 'mobile number'},
+      { rule: 'min:1', label: 'mobile number' },
+      { rule: 'max:12', label: 'mobile number' }
+    ],
+    alt_phone_code:    [
+      { rule: 'numeric', label: 'phone code'},
+      { rule: 'min:1', label: 'phone code' },
+      { rule: 'max:3', label: 'phone code' }
+    ],
+    alt_phone_number:  [
+      { rule: 'numeric', label: 'phone number'},
+      { rule: 'min:1', label: 'phone number' },
+      { rule: 'max:12', label: 'phone number' }
+    ],
     alt_position:      [{ rule: 'max:100', label: 'position'}],
     alt_department:    [{ rule: 'max:100', label: 'department'}],
     username:          [

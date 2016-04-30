@@ -3,7 +3,7 @@ import '../../assets/sass/base';
 
 export default React.createClass({
     render() {
-    	let baseUrl = window.location.origin+"/i";
+    	let baseUrl = window.location.origin+"/coffee";
 		return (
 			<div className='small-12 coloumn error-msg'>
 				<h2 className='text-center'><span>404</span><em>Page not Found</em></h2>
