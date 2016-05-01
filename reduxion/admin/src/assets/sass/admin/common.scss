@@ -244,9 +244,6 @@ div#application #client_add .mdl-layout__content, legend {
 #client_add #btn-cancel, #client_add #btn-save{
   min-width: 88px;
 }
-#client_add #btn-save, #client_add #check_availability {
-  background-color: rgb(255,110,64)
-}
 
 div.required {
     color: #aaa;
@@ -264,16 +261,6 @@ div.required:before {
     vertical-align: top;
     font-size: 10px;
     margin-right: 3px;
-}
-
-#client_add #check_availability {
-  color: #fff;
-  font-size: 14px;
-  font: 11px BlinkMacSystemFont;
-  padding: 4px 15px;
-  min-height: 18px;
-  position: relative;
-  top: 30px;
 }
 
 #client_add #btn-cancel:active {
@@ -300,7 +287,7 @@ div.required:before {
    border:none;
 }
 .mdl-button:focus:not(:active) {
-   background-color: #f44336;
+   /*background-color: #f44336;*/
 }
 dialog {
    border-radius: 4px;

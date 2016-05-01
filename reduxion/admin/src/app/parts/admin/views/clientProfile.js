@@ -7,8 +7,8 @@ export default React.createClass( {
   getInitialState() {
     return {
       clientInfo: null,
-      clientUpdateProfile: null,
-      updateCompleted: null,
+      updateCompleted: false,
+      isUsernameAvailable: null
     };
   },
   componentDidMount(){
@@ -30,27 +30,30 @@ export default React.createClass( {
     if (!nextProps.loading && nextProps.clientProfileSuccess) {
       this.setState({clientInfo: nextProps.clientProfileSuccess.get('data')});
     }
-    if (!nextProps.loading && nextProps.clientUpdateProfile) {
-      this.setState({clientUpdateProfile: nextProps.clientUpdateProfile});
-    }
     if (!nextProps.loading && nextProps.updateCompleted) {
       this.setState({updateCompleted: nextProps.updateCompleted});
     }
+
+    this.setState({isUsernameAvailable: nextProps.isUsernameAvailable});
   },
   render() {
     console.log("=== render - this.props.params.id : ", this.props.params.id);
+
     let client = {
       clientInfo: this.state.clientInfo,
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
       clientActivate: this.props.clientActivate,
       clientDeactivate: this.props.clientDeactivate,
-      clientUpdateProfile: this.state.clientUpdateProfile,
+      clientUpdateProfile: this.props.clientUpdateProfile,
       updateCompleted: this.state.updateCompleted,
-      validateUsername: this.props.validateUsername
+      validateUsername: this.props.validateUsername,
+      isUsernameAvailable: this.state.isUsernameAvailable
     };
     let countryList = this.props.countryList;
-    console.log("=== render - client.clientInfo : ", client.clientInfo);
+    let loading = this.props.loading;
+
+    console.log("=== render - client : ", client);
     return (
       <div id="client_add">
         <DocTitle
@@ -68,6 +71,7 @@ export default React.createClass( {
         <ClientProfile
           client={client}
           countryList={countryList}
+          loading={loading}
           />
       </div>
     );
