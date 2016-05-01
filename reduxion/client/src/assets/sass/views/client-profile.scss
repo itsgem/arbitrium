@@ -35,6 +35,42 @@ div#application{
 .bs-callout+.bs-callout {
   margin-top: -5px;
 }
+.mdl-layout__drawer {
+  header {
+    padding: 7px 10px;
+    background: #3F51B5;
+    height: 51px;
+
+    & + .mdl-navigation {
+      padding-top: 85px;
+
+      a.mdl-navigation__link {
+        color: #555555;
+        font-size: 15px;
+
+        i {
+          background: none;
+          color: #555555;
+        }
+
+        &:hover {
+          background: #FF6600;
+          color: #FFFFFF;
+          i {
+            background: none;
+            box-shadow: none;
+            color: #FFFFFF;
+          }
+        }
+      }
+
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+}
 
 .mdl-layout__header-row .mdl-menu__container {
   .mdl-menu__item {
@@ -113,6 +149,31 @@ div#application{
   .client-tab-header {
     height: 48px;
     min-height: 0;
+  }
+}
+
+.mdl-tabs__tab-bar {
+  background: #3F51B5;
+  border-bottom: none;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: flex-start;
+  justify-content: flex-start;
+}
+.mdl-tabs__tab {
+  color: #A7B1E6;
+}
+.mdl-tabs__panel {
+  background: #FFFFFF;
+  padding: 10px;
+}
+
+.mdl-layout.is-upgraded .mdl-layout__tab.is-active,
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+  color: #fff;
+
+  &:after {
+    height: 4px;
+    background: #FF4081;
   }
 }
 
