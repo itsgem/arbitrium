@@ -756,7 +756,7 @@ function validateClientProfile ( payload) {
     street_address_1:  [{ rule: 'required', label: 'street address 1'}],
     street_address_2:  [],
     city:              [{ rule: 'required', label: 'city'}],
-    state:             [{ rule: 'required', label: 'state'}],
+    state:             [{ rule: 'required', label: 'state / province'}],
     country_id:        [{ rule: 'required', label: 'country'}],
     postal_code:       [{ rule: 'required', label: 'postal code'}],
     rep_first_name:    [{ rule: 'required', label: 'first name'}],
