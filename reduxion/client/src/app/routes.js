@@ -40,6 +40,13 @@ function requireAuth(nextState, replace, cb) {
       state: { nextPathname: nextState.location.pathname }
     })
   }
+
+  if(localStorage.getItem('token') && localStorage.getItem('expired') > moment().valueOf()) {
+    let lifetime = localStorage.getItem('lifetime');
+    let expired = moment().add(parseInt(lifetime),'minutes').valueOf();
+    localStorage.setItem('expired', expired);
+  }
+
   return cb();
 }
 
