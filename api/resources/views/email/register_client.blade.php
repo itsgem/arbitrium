@@ -10,7 +10,6 @@
         <div>Thank you for registering.</div>
         <div>Please click on the link below to verify your account:</div>
         <div>Link: <a href="{{ $link }}">{{ $link }}</a></div>
-        <div>Mobile Code: {{ $code }}</div>
 
         <br/><div>If you did not request for this, please contact the administrator right away.</div><br/>
 

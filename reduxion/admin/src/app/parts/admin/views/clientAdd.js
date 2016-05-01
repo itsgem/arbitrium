@@ -35,6 +35,7 @@ export default React.createClass( {
         <ClientAdd
           clientRegister={this.props.clientRegister}
           validateUsername={this.props.validateUsername}
+          registerCompleted={this.props.registerCompleted}
           validateCompleted={this.props.validateCompleted}
           country={this.props.country}
           countryList={this.props.countryList}/>

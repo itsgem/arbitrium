@@ -17,6 +17,8 @@ export const clientUpdateProfile = createActionAsync('CLIENT_UPDATE', auth.admin
 export const adminClientDelete = createActionAsync('CLIENT_DELETE', auth.clientDelete);
 export const adminClientList = createActionAsync('CLIENT_LIST', auth.clientList);
 
+export const country = createActionAsync('COUNTRY', auth.listCountries);
+
 const initialState = Immutable.fromJS({
   clientProfileSuccess: {},
   clientApproveSuccess: false,
@@ -28,7 +30,8 @@ const initialState = Immutable.fromJS({
   registerCompleted: false,
   updateCompleted: false,
   validateCompleted: false,
-  clientList: {}
+  clientList: {},
+  countryList: {}
 });
 
 export default createReducer({
@@ -39,7 +42,8 @@ export default createReducer({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
     updateCompleted: false,
-    loading: false
+    loading: false,
+    validateCompleted: false
   }),
   [clientProfile.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -47,7 +51,8 @@ export default createReducer({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
     updateCompleted: false,
-    loading: true}),
+    loading: true,
+    validateCompleted: false }),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -77,12 +82,21 @@ export default createReducer({
   [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true, validateCompleted: false}),
   [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false, validateCompleted: false}),
   [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
-  [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload),registerCompleted: false, loading: false}),
-  [adminClientList.request]: (state, payload) => state.merge({
+  [adminClientList.ok]: (state, payload) => state.merge({
+    clientList: state.concat(payload),
+    registerCompleted: false,
+    loading: false,
+    updateCompleted: false,
+    validateCompleted: false}),
+  [adminClientList.request]: (state) => state.merge({
     clientDeleteSuccess: false,
     registerCompleted: false,
-    loading: true
+    loading: true,
+    updateCompleted: false,
+    validateCompleted: false
   }),
   [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true, loading: false}),
-  [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true})
+  [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true}),
+  [country.ok]: (state, payload) => state.merge({countryList: payload, validateCompleted: false}),
+  [country.request]: (state) => state.merge({validateCompleted: false})
 }, initialState);

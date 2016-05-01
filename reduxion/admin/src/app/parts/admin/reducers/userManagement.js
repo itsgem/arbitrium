@@ -11,6 +11,7 @@ export const deleteAdminAccount = createActionAsync('ADMIN_USER_MANAGEMENT_DELET
 export const getAdminInfo = createActionAsync('GET_ADMIN_INFO', auth.getAdminInfo);
 export const listRoleAdmin = createActionAsync('LIST_ROLE_ADMIN', auth.listRoleAdmin);
 
+export const validateUsername = createActionAsync('CHECK_USERNAME', auth.validateUsername);
 
 const initialState = Immutable.fromJS({
   adminList: {},
@@ -21,18 +22,65 @@ const initialState = Immutable.fromJS({
   role: {},
   registerCompleted: false,
   deleteSuccess: false,
-  loading: false
+  loading: false,
+  validateCompleted: false
 });
 
 export default createReducer({
-  [adminUserManagementList.ok]: (state, payload) => state.merge({adminList: payload, loading:false, adminDelete: false, adminInfo: {} }),
-  [adminUserManagementList.request]: (state, payload) => state.merge({loading: true, adminDelete: false, adminInfo: {} }),
-  [adminUserManagementAdd.ok]: (state, payload) => state.merge({adminAdd: state.concat(payload), registerCompleted: true}),
-  [listRoleAdmin.ok]: (state, payload) => state.merge({role: payload}),
-  [deleteAdminAccount.ok]: (state, payload) => state.merge({adminDelete: true, loading: false}),
-  [deleteAdminAccount.request]: (state, payload) => state.merge({adminDelete: false, loading: true}),
-  [getAdminInfo.ok]: (state, payload) => state.merge({adminInfo: payload, registerCompleted: false, adminEdit: false, loading: false}),
-  [getAdminInfo.request]: (state, payload) => state.merge({loading: true, registerCompleted: false, adminEdit: false, loading: true}),
-  [adminUserManagementEdit.ok]: (state) => state.merge({adminEdit: true, loading: false}),
-  [adminUserManagementEdit.request]: (state) => state.merge({adminEdit: false, loading: true})
+  [adminUserManagementList.ok]: (state, payload) => state.merge({
+    adminList: payload,
+    adminAdd: {},
+    adminDelete: false,
+    adminEdit: false,
+    adminInfo: {},
+    role: {},
+    registerCompleted: false,
+    deleteSuccess: false,
+    loading: false,
+    validateCompleted: false }),
+  [adminUserManagementList.request]: (state) => state.merge({
+    adminAdd: {},
+    adminDelete: false,
+    adminEdit: false,
+    adminInfo: {},
+    role: {},
+    registerCompleted: false,
+    deleteSuccess: false,
+    loading: true,
+    validateCompleted: false }),
+  [adminUserManagementAdd.ok]: (state, payload) => state.merge({
+    adminAdd: state.concat(payload),
+    registerCompleted: true,
+    loading: false }),
+  [adminUserManagementAdd.request]: (state) => state.merge({
+    registerCompleted: false,
+    loading: true}),
+  [listRoleAdmin.ok]: (state, payload) => state.merge({
+    role: payload,
+    validateCompleted: false}),
+  [deleteAdminAccount.ok]: (state, payload) => state.merge({
+    adminDelete: true,
+    loading: false}),
+  [deleteAdminAccount.request]: (state, payload) => state.merge({
+    adminDelete: false,
+    loading: true}),
+  [getAdminInfo.ok]: (state, payload) => state.merge({
+    adminInfo: payload,
+    registerCompleted: false,
+    adminEdit: false,
+    loading: false}),
+  [getAdminInfo.request]: (state, payload) => state.merge({
+    loading: true,
+    registerCompleted: false,
+    adminEdit: false,
+    loading: true}),
+  [adminUserManagementEdit.ok]: (state) => state.merge({
+    adminEdit: true,
+    loading: false}),
+  [adminUserManagementEdit.request]: (state) => state.merge({
+    adminEdit: false,
+    loading: true}),
+  [validateUsername.ok]: (state) => state.merge({validateCompleted: true}),
+  [validateUsername.request]: (state) => state.merge({validateCompleted: false}),
+  [validateUsername.error]: (state) => state.merge({validateCompleted: false}),
 }, initialState);

@@ -18,9 +18,15 @@ export default React.createClass( {
     let id = this.props.params.id;
     this.props.clientProfile(id);
     this.props.country();
-    console.log("=== componentDidMount - this.props.params.id : ", this.props.params.id);
   },
   componentWillReceiveProps(nextProps) {
+    if (nextProps.updateCompleted && !nextProps.loading) {
+      $('.msg').html('Client successfully added').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.context.router.push('/coffee/client/');
+    }
     // Disapprove/Approve Client
     if (!nextProps.loading && (nextProps.clientDisapproveSuccess || nextProps.clientApproveSuccess)) {
       nextProps.clientProfile(nextProps.params.id);
@@ -40,17 +46,16 @@ export default React.createClass( {
       this.setState({updateCompleted: nextProps.updateCompleted});
     }
   },
-  renderSuccess () {
-    if (this.props.updateCompleted) {
-      $('.msg').html('Client successfully added').addClass('bg-green');
-      $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(2000);
-      });
-      this.context.router.push('/coffee/client/');
+  render() {
+    if (this.state.clientInfo) {
+      return this.renderAdminInfo();
+    } else {
+       return (
+        <div id="client" className="inner_content"></div>
+      );
     }
   },
-  render() {
-    this.renderSuccess();
+  renderAdminInfo() {
     let client = {
       clientInfo: this.state.clientInfo,
       clientApprove: this.props.clientApprove,

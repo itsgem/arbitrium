@@ -93,6 +93,7 @@ class ClientProfile extends React.Component {
                 type="text"
                 id='username'
                 ref="username"
+                onChange={(e) => this.notUsername(e, client.user.username)}
                 defaultValue={(client.user) ? client.user.username : ''}
                 />
               <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
@@ -102,10 +103,12 @@ class ClientProfile extends React.Component {
           <div className="mdl-cell mdl-cell--6-col">
             <button
               className={!this.props.validateCompleted || errors.username ?
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope disabled" :
                     "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
               id='check_availability'
               type='button'
+              value="disabled"
+              ref="checkUser"
               onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
           </div>
           <div className="mdl-layout__content">
@@ -581,7 +584,18 @@ class ClientProfile extends React.Component {
       </form>
     );
   }
+  notUsername (e, id) {
+    if (id == e.target.value) {
+      $('#check_availability').addClass('disabled');
+      this.refs.checkUser.value = "disabled";
+      $("#check_availability").removeClass('bg-green');
+      $('form').find('.material-icons').hide();
 
+    } else {
+      $('#check_availability').removeClass('disabled');
+      this.refs.checkUser.value = "not-disabled";
+    }
+  }
   renderCountry(selected, required) {
     if (!this.props.countryList) return;
     let country = (selected) ? selected : '';
@@ -677,6 +691,9 @@ class ClientProfile extends React.Component {
 
   checkUsername( e ) {
     e.preventDefault();
+    if (e.target.value == "disabled") {
+      return false;
+    }
     this.setState( {
       loading: true,
       errors: {},

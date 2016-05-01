@@ -22,7 +22,17 @@ class UserManagementEdit extends React.Component {
     let role = this.props.role.toArray();
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
+      errors = Object.assign({}, errorServer.response, {password_confirmation: []});
+      errors.password = [];
+      if (errorServer.response.password.length == 1) {
+        errors.password_confirmation[0] = errorServer.response.password[0];
+      }else if (errorServer.response.password.length == 3) {
+        errors.password[0] = errorServer.response.password[0];
+        errors.password_confirmation[0] = errorServer.response.password[2];
+      } else {
+        errors.password[0] = errorServer.response.password[0];
+        errors.password_confirmation[0] = errorServer.response.password[1];
+      }
     }
     let userInfo = {};
     userInfo = this.props.adminInfo.get('data');
@@ -103,7 +113,7 @@ class UserManagementEdit extends React.Component {
                   id='password'
                   ref="password"
                   />
-                <label className="mdl-textfield__label" htmlFor="password">Password*</label>
+                <label className="mdl-textfield__label" htmlFor="password">Password</label>
                 {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
               </div>
             </div>
@@ -115,7 +125,7 @@ class UserManagementEdit extends React.Component {
                   id='password_confirmation'
                   ref="password_confirmation"
                   />
-                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password *</label>
+                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password</label>
                 {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
               </div>
             </div>
@@ -188,7 +198,6 @@ class UserManagementEdit extends React.Component {
       $('#check_availability').removeClass('disabled');
       this.refs.checkUser.value = "not-disabled";
     }
-    console.log('test', this.refs);
   }
   edit ( e, id ) {
     e.preventDefault();
@@ -248,8 +257,8 @@ function validateEdit ( payload) {
     id: [],
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
     email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
-    password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-    password_confirmation: {rule: 'required', label: 'confirm password'},
+    password: [],
+    password_confirmation: [],
     first_name: { rule: 'required', label: 'first name' },
     last_name: { rule: 'required', label: 'fast name' },
     role_id: { rule: 'required', label: 'role' }

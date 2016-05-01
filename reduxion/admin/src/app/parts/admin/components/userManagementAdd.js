@@ -22,8 +22,21 @@ class UserManagementAdd extends React.Component {
     let role = this.props.role.toArray();
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
+      errors = Object.assign({}, errorServer.response, {password_confirmation: []});
+      errors.password = [];
+      if (errorServer.response.password) {
+        if (errorServer.response.password.length == 1) {
+          errors.password_confirmation[0] = errorServer.response.password[0];
+        }else if (errorServer.response.password.length == 3) {
+          errors.password[0] = errorServer.response.password[0];
+          errors.password_confirmation[0] = errorServer.response.password[2];
+        } else {
+          errors.password[0] = errorServer.response.password[0];
+          errors.password_confirmation[0] = errorServer.response.password[1];
+        }
+      }
     }
+
     return (
       <form>
         <div className="required">Required fields</div>
@@ -36,6 +49,7 @@ class UserManagementAdd extends React.Component {
                   type="text"
                   id='username'
                   ref="username"
+                  onChange={(e) => this.notUsername(e)}
                   />
                 <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
@@ -43,10 +57,12 @@ class UserManagementAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <button
-                className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
-                id='check_availability'
+                className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
+                    id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
           </div>
           <div className="mdl-grid">
@@ -156,6 +172,11 @@ class UserManagementAdd extends React.Component {
       'has-success': errors && !(errors[ field ])
     } );
   }
+  notUsername (e) {
+    e.preventDefault();
+    $("#check_availability").removeClass('bg-green');
+    $('form').find('.material-icons').hide();
+  }
   register ( e ) {
     e.preventDefault();
     this.setState( {
@@ -212,7 +233,7 @@ function validateRegister ( payload) {
     password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
     password_confirmation: {rule: 'required', label: 'confirm password'},
     first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'fast name' },
+    last_name: { rule: 'required', label: 'last name' },
     role_id: { rule: 'required', label: 'role' }
     } );
     return rules.run( payload );

@@ -10,8 +10,8 @@ export default React.createClass( {
   componentWillMount(){
     this.props.listRoleAdmin();
   },
-  renderSuccess () {
-    if (this.props.registerCompleted) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.registerCompleted && !nextProps.loading) {
       $('.msg').html('Client successfully added').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
@@ -20,7 +20,6 @@ export default React.createClass( {
     }
   },
   render() {
-    this.renderSuccess();
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
@@ -35,6 +34,7 @@ export default React.createClass( {
         <UserManagementAdd
             validateUsername={this.props.validateUsername}
             adminUserManagementAdd={this.props.adminUserManagementAdd}
+            validateCompleted={this.props.validateCompleted}
             role={this.props.role}
             />
       </div>

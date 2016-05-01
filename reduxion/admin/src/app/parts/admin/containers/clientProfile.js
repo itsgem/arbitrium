@@ -7,15 +7,16 @@ import {
   clientUpdateProfile,
   validateUsername,
   clientActivate,
-  clientDeactivate
+  clientDeactivate,
+  country
 } from '../reducers/clientProfile'
 
-import { country } from '../../auth/reducers/country'
+//import { country } from '../../auth/reducers/country'
 import AdminClientProfile from '../views/clientProfile';
 
 const mapStateToProps = (state) => {
   return {
-    countryList: state.get('country').get('countryList'),
+    countryList: state.get('clientadmin').get('countryList'),
     clientProfileSuccess: state.get('clientadmin').get('clientProfileSuccess'),
     clientApproveSuccess: state.get('clientadmin').get('clientApproveSuccess'),
     clientDisapproveSuccess: state.get('clientadmin').get('clientDisapproveSuccess'),

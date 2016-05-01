@@ -320,6 +320,10 @@ dialog p {
    font-family: 'Roboto Condensed', sans-serif;
    font-weight: 300!important;
 }
+dialog p label{
+  text-transform: none;
+  font-weight: 400;
+}
 .modal-cancel,
 .modal-yes {
     border: none;
@@ -400,6 +404,9 @@ header nav {
   font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
   font-weight: 300;
   text-transform: uppercase;
+}
+.mdl-menu__item  a {
+  width: 100%;
 }
 .mdl-menu__container:before {
   background: transparent;

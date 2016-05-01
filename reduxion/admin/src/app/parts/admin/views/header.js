@@ -8,7 +8,9 @@ export default React.createClass( {
         <div className="mdl-grid header-container">
           <div className="mdl-layout__header-row main-header">
             <div className="logo">
-              <img src="https://s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png"></img>
+              <Link to="/coffee">
+                <img src="https://s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png"></img>
+              </Link>
             </div>
             <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
               <div className="mdl-tabs__tab-bar tab">
