@@ -25,33 +25,42 @@ const initialState = Immutable.fromJS({
 export default createReducer({
   [clientProfile.ok]: (state, payload) => state.merge({
     loading: false,
+    isUsernameAvailable: null,
+    success: {},
     user: state.concat(payload)
   }),
 
   [updateClientProfile.ok]: (state, payload) => state.merge({
     loading: false,
+    isUsernameAvailable: null,
     success: state.concat(payload)
   }),
   [updateClientProfile.request]: (state, payload) => state.merge({
     loading: true,
+    isUsernameAvailable: null,
     success: {}
   }),
   [updateClientProfile.error]: (state, payload) => state.merge({
     loading: false,
+    isUsernameAvailable: null,
+    success: {},
     errors: state.concat(payload)
   }),
 
   [getAvailableUsername.ok]: (state, payload) => state.merge({
     loading: false,
-    isUsernameAvailable: true
+    isUsernameAvailable: true,
+    success: {}
   }),
   [getAvailableUsername.request]: (state, payload) => state.merge({
     loading: true,
-    isUsernameAvailable: 'loading'
+    isUsernameAvailable: 'loading',
+    success: {}
   }),
   [getAvailableUsername.error]: (state, payload) => state.merge({
     loading: false,
     isUsernameAvailable: false,
+    success: {},
     errors: state.concat(payload)
   }),
 

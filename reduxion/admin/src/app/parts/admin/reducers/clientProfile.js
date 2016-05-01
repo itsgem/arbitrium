@@ -28,6 +28,7 @@ const initialState = Immutable.fromJS({
   registerCompleted: false,
   updateCompleted: false,
   validateCompleted: {},
+  isUsernameAvailable: null,
   clientList: {}
 });
 
@@ -38,6 +39,8 @@ export default createReducer({
     clientDisapproveSuccess: false,
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
+    updateCompleted: false,
+    isUsernameAvailable: null,
     loading: false
   }),
   [clientProfile.request]: (state) => state.merge({
@@ -45,40 +48,95 @@ export default createReducer({
     clientDisapproveSuccess: false,
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
+    updateCompleted: false,
+    isUsernameAvailable: null,
     loading: true}),
+
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
+    updateCompleted: false,
+    isUsernameAvailable: null,
     loading: true}),
+
   [clientDisapprove.ok]: (state) => state.merge({clientDisapproveSuccess: true, loading: false}),
   [clientDisapprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
+    updateCompleted: false,
+    isUsernameAvailable: null,
     loading: true}),
 
   [clientActivate.ok]: (state) => state.merge({clientActivateSuccess: true, loading: false}),
   [clientActivate.request]: (state) => state.merge({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
+    updateCompleted: false,
+    isUsernameAvailable: null,
     loading: true}),
+
   [clientDeactivate.ok]: (state) => state.merge({clientDeactivateSuccess: true, loading: false}),
   [clientDeactivate.request]: (state) => state.merge({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
+    updateCompleted: false,
+    isUsernameAvailable: null,
     loading: true}),
 
-  [validateUsername.ok]: (state, payload) => state.merge({validateCompleted: state.concat(payload)}),
-  [clientRegister.ok]: (state) => state.merge({registerCompleted: true, loading: false}),
-  [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true}),
-  [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false}),
-  [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
+  [validateUsername.ok]: (state, payload) => state.merge({
+    validateCompleted: state.concat(payload),
+    updateCompleted: false,
+    isUsernameAvailable: true,
+    loading: false
+  }),
+  [validateUsername.error]: (state, payload) => state.merge({
+    updateCompleted: false,
+    isUsernameAvailable: false,
+    loading: false
+  }),
+  [validateUsername.request]: (state, payload) => state.merge({
+    updateCompleted: false,
+    isUsernameAvailable: 'loading',
+    loading: true
+  }),
+
+  [clientRegister.ok]: (state) => state.merge({
+    registerCompleted: true,
+    loading: false
+  }),
+  [clientRegister.error]: (state) => state.merge({
+    registerCompleted: false,
+    loading: false
+  }),
+  [clientRegister.request]: (state) => state.merge({
+    registerCompleted: false,
+    loading: true
+  }),
+
+  [clientUpdateProfile.ok]: (state) => state.merge({
+    updateCompleted: true,
+    isUsernameAvailable: null,
+    loading: false
+  }),
+  [clientUpdateProfile.error]: (state) => state.merge({
+    updateCompleted: false,
+    isUsernameAvailable: null,
+    loading: false
+  }),
+  [clientUpdateProfile.request]: (state) => state.merge({
+    updateCompleted: false,
+    isUsernameAvailable: null,
+    loading: true
+  }),
+
   [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload),registerCompleted: false, loading: false}),
   [adminClientList.request]: (state, payload) => state.merge({
     clientDeleteSuccess: false,
     registerCompleted: false,
     loading: true
   }),
+
   [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true, loading: false}),
   [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true})
 }, initialState);

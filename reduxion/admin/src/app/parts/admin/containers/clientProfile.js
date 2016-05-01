@@ -13,6 +13,11 @@ import {
 import { country } from '../../auth/reducers/country'
 import AdminClientProfile from '../views/clientProfile';
 
+const strMapToObj=(strMap) => {
+  let obj = JSON.parse(JSON.stringify(strMap));
+  return obj;
+}
+
 const mapStateToProps = (state) => {
   return {
     countryList: state.get('country').get('countryList'),
@@ -25,6 +30,7 @@ const mapStateToProps = (state) => {
 
     updateCompleted: state.get('clientadmin').get('updateCompleted'),
     validateCompleted: state.get('clientadmin').get('validateCompleted'),
+    isUsernameAvailable: state.get('clientadmin').get('isUsernameAvailable'),
     loading: state.get('clientadmin').get('loading')
   };
 }

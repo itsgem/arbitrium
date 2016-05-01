@@ -13,7 +13,8 @@ class ClientProfile extends React.Component {
       errors: {},
       errorServer:null,
       client: null,
-      updateCompleted: false
+      updateCompleted: false,
+      isUsernameAvailable: null
     };
   }
   componentDidMount() {
@@ -22,23 +23,27 @@ class ClientProfile extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.client.clientInfo) {
+    if (!nextProps.loading && nextProps.client.clientInfo) {
       this.setState({
         client: nextProps.client.clientInfo
       });
     }
 
-    if (nextProps.client.updateCompleted) {
+    if (!nextProps.loading && nextProps.client.updateCompleted) {
       this.setState({
         updateCompleted: nextProps.client.updateCompleted
       });
     }
 
-    if (nextProps.errors) {
+    if (!nextProps.loading && nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
     }
+
+    this.setState({
+      isUsernameAvailable: nextProps.client.isUsernameAvailable
+    });
   }
   render() {
     if (this.props.client.clientInfo) {
@@ -100,12 +105,13 @@ class ClientProfile extends React.Component {
               {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--6-col">
+          <div className="mdl-cell mdl-cell--6-col form-group-flag-icon">
             <button
-              className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
               id='check_availability'
               type='button'
               onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+            { this.isUsernameAvailable() }
           </div>
           <div className="mdl-layout__content">
             <div className="mdl-cell mdl-cell--6-col">
@@ -594,6 +600,9 @@ class ClientProfile extends React.Component {
   renderSuccess() {
     let success = this.state.updateCompleted;
     if(!success) return;
+
+    console.log('=== renderSuccess() - this.state.updateCompleted', this.state.updateCompleted);
+
     let {errors} = this.state ? this.state :'';
     if (Array.isArray(errors)) {
       $('.msg').html('Successfully updated profile').addClass('bg-green');
@@ -688,21 +697,50 @@ class ClientProfile extends React.Component {
 
   checkUsername( e ) {
     e.preventDefault();
-    this.setState( {
+
+    if (!this.state.client) return;
+
+    console.log('=== checkUsername() - this.state BEFORE', this.state);
+    this.setState({
       loading: true,
       errors: {},
-      errorServer: null
-    } );
+      errorServer: null,
+      updateCompleted: false
+    });
+
+    console.log('=== checkUsername() - this.state AFTER', this.state);
+    console.log('=== checkUsername() - this.state.updateCompleted', this.state.updateCompleted);
 
     let payload = {
-      username: this.refs.username.value
-    }
+      username: this.refs.username.value,
+      except_user_id: this.state.client.user.id
+    };
 
     window.componentHandler.upgradeDom();
     return validateUsername.call( this, payload )
       .with( this )
       .then( getUsername )
       .catch( setErrors );
+  }
+
+  isUsernameAvailable() {
+    let icon = '';
+    let className = 'mdl-icon material-icons';
+
+    if (this.state.isUsernameAvailable == true) {
+      icon = 'done';
+      className += ' mdl-icon-success';
+    } else if (this.state.isUsernameAvailable == false) {
+      icon = 'clear';
+      className += ' mdl-icon-danger';
+    } else if (this.state.isUsernameAvailable == 'loading') {
+      icon = 'hourglass_empty';
+    }
+    console.log('=== this.state.isUsernameAvailable : ', this.state.isUsernameAvailable);
+
+    return (
+      <i className={className}>{icon}</i>
+    );
   }
 };
 
@@ -801,13 +839,15 @@ function validateClientProfile ( payload) {
   return rules.run( payload );
 }
 function updateClientProfile (payload) {
-  payload.id = this.props.client.clientInfo.id;
+  payload.id = this.state.client.id;
+  console.log('=== updateClientProfile() - this.state.updateCompleted', this.state.updateCompleted);
   return this.props.client.clientUpdateProfile(payload);
 }
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-    username: [ 'required', 'minLength:8', 'maxLength:64' ]
+    username: [ 'required', 'minLength:8', 'maxLength:64' ],
+    except_user_id: [ 'required' ]
   } );
   return rules.run( payload );
 }
