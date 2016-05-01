@@ -21,6 +21,7 @@ class Login extends React.Component {
       localStorage.setItem('token', token);
       localStorage.setItem('expired', expired);
       localStorage.setItem('user', user);
+      localStorage.setItem('lifetime', lifetime);
       this.context.router.push(path);
 
     }
