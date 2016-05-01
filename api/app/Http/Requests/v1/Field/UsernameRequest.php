@@ -20,6 +20,13 @@ class UsernameRequest extends NrbRequest
 
     public function rules()
     {
-        return ['username' => 'required|min:8|max:32|alpha_dash_dot|unique_username:id,NULL'];
+        $unique_username_rule = '|unique_username:id,NULL';
+
+        // Username is available if the user trying to update owns it
+        if ($except_user_id = request()->get('except_user_id')) {
+            $unique_username_rule = '|unique:users,username,'.$except_user_id;
+        }
+
+        return ['username' => 'required|min:8|max:32|alpha_dash_dot'.$unique_username_rule];
     }
 }

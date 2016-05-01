@@ -127,7 +127,7 @@ class ClientProfile extends React.Component {
                                     {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
                                   </div>
                               </div>
-                              <div className="mdl-cell mdl-cell--3-col form-group-get-available-username">
+                              <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
                                   <button
                                     type="button"
                                     className="mdl-button mdl-js-button mdl-button--raised"
@@ -592,7 +592,7 @@ class ClientProfile extends React.Component {
 
   renderError() {
     let error = this.state.errorServer;
-    if(!error) return;
+    if(!error || this.props.isUsernameAvailable == false) return;
 
     let results = error.response;
 
@@ -707,8 +707,10 @@ class ClientProfile extends React.Component {
 
     let {username} = this.refs;
     let payload = {
-      username: username.value
+      username: username.value,
+      except_user_id: this.state.client.user.id
     }
+    console.log('=== onClickGetAvailableUsername() - payload : ', payload);
 
     window.componentHandler.upgradeDom();
     return this.validateAvailableUsername.call(this, payload)
@@ -831,7 +833,8 @@ class ClientProfile extends React.Component {
         { rule: 'required', label: 'username' },
         { rule: 'min:8', label: 'username' },
         { rule: 'max:32', label: 'username' }
-      ]
+      ],
+      except_user_id: [ 'required' ]
     });
 
     return rules.run(payload);
