@@ -145,7 +145,6 @@ class UserManagementAdd extends React.Component {
                 {errors.last_name && <small className="mdl-textfield__error shown">{errors.last_name[0]}</small>}
               </div>
             </div>
-
           </div>
           <div className="layout-gt-md-row layout-align-end-end btn">
             <div className="flex-order-gt-md-2 pd-10">

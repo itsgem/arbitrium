@@ -164,6 +164,16 @@ export default {
         password_confirmation: payload.password_confirmation,
         email_address: payload.email_address,
         username: payload.username,
+        alt_first_name: payload.alt_first_name,
+        alt_last_name: payload.alt_last_name,
+        alt_gender: payload.alt_gender,
+        alt_email_address: payload.alt_email_address,
+        alt_mobile_code: payload.alt_mobile_code,
+        alt_mobile_number: payload.alt_mobile_number,
+        alt_phone_code: payload.alt_phone_code,
+        alt_phone_number: payload.alt_phone_number,
+        alt_position: payload.alt_position,
+        alt_department: payload.alt_department,
         callback_url: window.location.origin + "/forgot"
       }
     });
