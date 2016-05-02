@@ -21,7 +21,7 @@ export default React.createClass( {
                       className="mdl-button mdl-js-button">Clients</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-client">
                       <li className="mdl-menu__item"><a href="/coffee/client/">Client List</a></li>
-                      <li className="mdl-menu__item"><a href="/coffee/client/new">Add New Clien</a></li>
+                      <li className="mdl-menu__item"><a href="/coffee/client/new">Add New Client</a></li>
                       <li className="mdl-menu__item"><a href="/coffee">Invoices</a></li>
                       <li className="mdl-menu__item"><a href="/coffee">Survey Management</a></li>
                     </ul>
