@@ -295,7 +295,54 @@ html{
 
 }
 
-.api-key{
+.form-container {
+
+  background: #fff;
+  margin-bottom: 0px;
+  width: 1200px;
+
+  .mdl-grid {
+    padding: 20px;
+
+    .mdl-cell--12-col{
+
+      .full-width{
+        width: 100%;
+      }
+
+      .padding-bot{
+        padding-bottom: 60px;
+      }
+
+      p {
+        color: #969896;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 0.928571429rem;
+        font-weight: 300;
+      }
+
+      .check-test-key {
+        padding-top: 40px;
+      }
+
+
+
+      .mdl-button--accent {
+        background: #ff6600;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-right: 16px;
+      }
+
+    }
+
+  }
+
+  .cta {
+    padding-top: 20px;
+    padding-left: 868px;
+  }
 
 }
 // ******************** END SECTION-CLIENT-LIST ********************
