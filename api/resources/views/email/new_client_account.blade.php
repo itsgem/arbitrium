@@ -12,7 +12,6 @@
         <div>Your email address is: {{ $email }} </div><br/>
         <div>To set your password, click on the link provided below.</div>
         <div>Link: <a href="{{ $link }}">{{ $link }}</a></div>
-        <div>Mobile Code: {{ $code }} </div><br/>
 
         <div>Regards,</div><br/>
         <div>{{ trans('email.sender') }}</div>
