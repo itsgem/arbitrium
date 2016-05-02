@@ -25,7 +25,7 @@ class LocalAuthenticationForm extends React.Component {
                         <div className={this.formClassNames('email')}>
                             <input
                                 className="mdl-textfield__input"
-                                type="email"
+                                type="text"
                                 id='email'
                                 ref="email"
                                 />
@@ -40,7 +40,7 @@ class LocalAuthenticationForm extends React.Component {
                             id='password'
                             ref="password"
                             type='password'
-                            autocomplete="false"
+                            autoComplete="false"
                             />
                         <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
                         {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
@@ -64,7 +64,7 @@ class LocalAuthenticationForm extends React.Component {
     }
 
     formClassNames( field ) {
-        return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield pristine', {
+        return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
             'is-invalid is-dirty': this.props.errors[ field ],
             'has-success': this.state[ field ] && !(this.props.errors[ field ])
         } );

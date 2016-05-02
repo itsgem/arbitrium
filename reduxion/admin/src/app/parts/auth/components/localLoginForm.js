@@ -57,7 +57,7 @@ class LocalLoginForm extends React.Component {
 
     setErrors( e ) {
         debug("setErrors:", e);
-        var message = null;
+        let message = null;
         switch(e.status) {
             case 401 :
              message = 'No matching credentials. Please check your e-mail and password.';
