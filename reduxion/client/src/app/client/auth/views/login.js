@@ -66,9 +66,9 @@ Login.contextTypes = {
 
 
 Login.propTypes = {
-    authenticated: React.PropTypes.bool.isRequired,
-    login: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object
+  authenticated: React.PropTypes.bool.isRequired,
+  login: React.PropTypes.func.isRequired,
+  user: React.PropTypes.object
 }
 
 export default Login;

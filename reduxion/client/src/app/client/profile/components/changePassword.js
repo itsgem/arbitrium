@@ -47,7 +47,8 @@ class ClientChangePassword extends React.Component {
 
       // Log out user when successfully changed password
       if (nextProps.responseSuccess && nextProps.responseSuccess.get('success')) {
-        this.context.router.push('/i/logout');
+        //this.context.router.push('/i/logout');
+        location.href ='/i/logout';
       }
     }
 
