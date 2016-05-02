@@ -13,7 +13,9 @@ class ClientProfile extends React.Component {
       errors: {},
       errorServer:null,
       client: null,
-      updateCompleted: false
+      updateCompleted: false,
+      addClass: null
+
     };
   }
   componentDidMount() {
@@ -134,7 +136,7 @@ class ClientProfile extends React.Component {
              <div className="mdl-cell mdl-cell--6-col status-col">
                 <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">Approval Status:</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
-                <div className="mdl-cell mdl-cell--6-col float-lft">
+                <div className="mdl-cell mdl-cell--7-col float-lft">
                   { status &&
                     <button
                       id='btnClientApproval'
@@ -335,7 +337,7 @@ class ClientProfile extends React.Component {
           <div className="mdl-cell mdl-cell--3-col">
             <div className={this.formClassNames('rep_gender', errors)}>
               <select
-                className="mdl-select__input"
+                className="mdl-textfield__input"
                 id='rep_gender'
                 ref="rep_gender"
                 defaultValue={(client.rep_gender) ? client.rep_gender : ''} >
@@ -586,12 +588,14 @@ class ClientProfile extends React.Component {
   }
   notUsername (e, id) {
     if (id == e.target.value) {
+      this.setState({addClass: 'disabled'});
       $('#check_availability').addClass('disabled');
       this.refs.checkUser.value = "disabled";
       $("#check_availability").removeClass('bg-green');
       $('form').find('.material-icons').hide();
 
     } else {
+      this.setState({addClass: null});
       $('#check_availability').removeClass('disabled');
       this.refs.checkUser.value = "not-disabled";
     }

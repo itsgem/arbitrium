@@ -444,6 +444,20 @@ nav ul li:hover {
 nav .mdl-menu__container {
   top: 60px!important
 }
+.inner-profile .mdl-menu__container ul{
+  width: 192px;
+}
+.inner-profile .mdl-menu__container ul li a{
+  display: block;
+}
+.inner-profile .mdl-menu__container ul li a i{
+  vertical-align: middle;
+  padding-right: 10px;
+}
+.inner-profile .mdl-menu__container{
+  top: 50px!important;
+  min-width: 88px;
+}
 #check_availability .material-icons {
     font-size: 13px;
     vertical-align: bottom;

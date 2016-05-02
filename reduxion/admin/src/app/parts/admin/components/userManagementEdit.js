@@ -84,9 +84,9 @@ class UserManagementEdit extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className={"is-dirty is-upgraded" + this.formClassNames('role_id', errors)}>
+              <div className={this.formClassNames('role_id', errors)}>
                 <div>
-                  <select className="mdl-select__input"
+                  <select className="mdl-textfield__input"
                     id="role_id"
                     name="role_id"
                     ref="role_id"
@@ -193,7 +193,6 @@ class UserManagementEdit extends React.Component {
       this.refs.checkUser.value = "disabled";
       $("#check_availability").removeClass('bg-green');
       $('form').find('.material-icons').hide();
-
     } else {
       $('#check_availability').removeClass('disabled');
       this.refs.checkUser.value = "not-disabled";
@@ -260,7 +259,7 @@ function validateEdit ( payload) {
     password: [],
     password_confirmation: [],
     first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'fast name' },
+    last_name: { rule: 'required', label: 'last name' },
     role_id: { rule: 'required', label: 'role' }
     } );
     return rules.run( payload );

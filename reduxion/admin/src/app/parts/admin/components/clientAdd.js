@@ -192,7 +192,7 @@ class ClientAdd extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('rep_gender', errors)}>
                 <select
-                  className="mdl-select__input"
+                  className="mdl-textfield__input"
                   id='rep_gender'
                   ref="rep_gender" >
                   <option value=""></option>
@@ -374,7 +374,7 @@ function mapObject(object, callback) {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    company_name: { rule: 'required'},
+    company_name: { rule: 'required', label: 'comapany name'},
     street_address_1: { rule: 'required', label: 'Street address' },
     street_address_2: [],
     city: { rule: 'required', label: 'City' },
@@ -384,14 +384,22 @@ function validateRegister ( payload) {
     rep_first_name: { rule: 'required', label: 'first name' },
     rep_last_name: { rule: 'required', label: 'last name' },
     rep_gender: { rule: 'required', label: 'Gender' },
-    rep_email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+    rep_email_address: [
+      {rule: 'required', label: 'E-mail address'},
+      {rule: 'email', label: 'E-mail address'},
+      {rule: 'minLength:6', label: 'E-mail address'},
+      {rule: 'maxLength:64', label: 'E-mail address'} ],
     rep_mobile_code: { rule: 'required', label: 'Country Code' },
     rep_mobile_number: { rule: 'required', label: 'Mobile no.' },
     rep_phone_code: { rule: 'required', label: 'Country Code' },
     rep_phone_number: { rule: 'required', label: 'Phone no.' },
     rep_position: { rule: 'required', label: 'position' },
     rep_department: { rule: 'required', label: 'department' },
-    email_address:  ['required', 'email', 'minLength:6', 'maxLength:64' ],
+    email_address: [
+      {rule: 'required', label: 'E-mail address'},
+      {rule: 'email', label: 'E-mail address'},
+      {rule: 'minLength:6', label: 'E-mail address'},
+      {rule: 'maxLength:64', label: 'E-mail address'} ],
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
     } );
     return rules.run( payload );

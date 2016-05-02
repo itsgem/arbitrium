@@ -80,7 +80,7 @@ class UserManagementAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('role_id', errors)}>
-                <select className="mdl-select__input" ref="role_id">
+                <select className="mdl-textfield__input" ref="role_id">
                   <option></option>
                   {role.map(item =>
                     {return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>}
@@ -229,7 +229,11 @@ function mapObject(object, callback) {
 function validateRegister ( payload) {
   let rules = new Checkit( {
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
-    email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+    email_address: [
+      {rule: 'required', label: 'E-mail address'},
+      {rule: 'email', label: 'E-mail address'},
+      {rule: 'minLength:6', label: 'E-mail address'},
+      {rule: 'maxLength:64', label: 'E-mail address'} ],
     password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
     password_confirmation: {rule: 'required', label: 'confirm password'},
     first_name: { rule: 'required', label: 'first name' },
