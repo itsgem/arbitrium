@@ -45,10 +45,12 @@ class ClientAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <button
-                className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
+                className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
                 id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
             <div className="mdl-layout__content">
               <div className="mdl-cell mdl-cell--6-col">

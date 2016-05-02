@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { signup } from '../reducers/signup'
-import { country } from '../reducers/country'
+import { signup, country } from '../reducers/signup'
+//import { country } from '../reducers/country'
 import SignupView from '../views/signup';
 
 const mapStateToProps = (state) => {
   return {
     registerCompleted: state.get('signup').get('registerCompleted'),
-    countryList: state.get('country').get('countryList')
+    countryList: state.get('signup').get('countryList')
   };
 }
 

@@ -313,6 +313,17 @@ div#application {
       box-sizing: border-box;
     }
   }
+}
 
-
+.bg-green {
+  background-color: #00CC99!important;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+.to-login {
+  margin-top: 20px;
 }

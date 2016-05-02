@@ -22,7 +22,17 @@ class UserManagementEdit extends React.Component {
     let role = this.props.role.toArray();
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
+      errors = Object.assign({}, errorServer.response, {password_confirmation: []});
+      errors.password = [];
+      if (errorServer.response.password.length == 1) {
+        errors.password_confirmation[0] = errorServer.response.password[0];
+      }else if (errorServer.response.password.length == 3) {
+        errors.password[0] = errorServer.response.password[0];
+        errors.password_confirmation[0] = errorServer.response.password[2];
+      } else {
+        errors.password[0] = errorServer.response.password[0];
+        errors.password_confirmation[0] = errorServer.response.password[1];
+      }
     }
     let userInfo = {};
     userInfo = this.props.adminInfo.get('data');
@@ -40,6 +50,7 @@ class UserManagementEdit extends React.Component {
                   type="text"
                   id='username'
                   ref="username"
+                  onChange={(e) => this.notUsername(e, userInfo.get("user").get("username"))}
                   defaultValue={userInfo.get("user").get("username")}
                   />
                 <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
@@ -48,10 +59,14 @@ class UserManagementEdit extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <button
-                className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
+                className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope disabled" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
                 id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+                value="disabled"
+                ref="checkUser"
+                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
           </div>
           <div className="mdl-grid">
@@ -69,20 +84,23 @@ class UserManagementEdit extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className={this.formClassNames('role_id', errors)}>
-                <select className="mdl-select__input" ref="role_id" defaultValue={userRole}>
-                  <option></option>
-                  {role.map(item =>
-                    {
-                      // if (item.get('id') == userRole) {
-                      //   return <option key={item.get('id')} selected defaultValue={item.get('id')}>{item.get('display_name')}</option>
-                      // }
-                      return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>
-                    }
-                  )}
-                </select>
-                <label className="mdl-textfield__label" htmlFor="email_address">Role*</label>
-                {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
+              <div className={"is-dirty is-upgraded" + this.formClassNames('role_id', errors)}>
+                <div>
+                  <select className="mdl-select__input"
+                    id="role_id"
+                    name="role_id"
+                    ref="role_id"
+                    defaultValue={userRole.toString()}>
+                    <option value=""></option>
+                    {role.map(item =>
+                      {
+                        return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>
+                      }
+                    )}
+                  </select>
+                  <label className="mdl-textfield__label" htmlFor="role_id">Role*</label>
+                  {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
+                </div>
               </div>
             </div>
           </div>
@@ -95,7 +113,7 @@ class UserManagementEdit extends React.Component {
                   id='password'
                   ref="password"
                   />
-                <label className="mdl-textfield__label" htmlFor="password">Password*</label>
+                <label className="mdl-textfield__label" htmlFor="password">Password</label>
                 {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
               </div>
             </div>
@@ -107,7 +125,7 @@ class UserManagementEdit extends React.Component {
                   id='password_confirmation'
                   ref="password_confirmation"
                   />
-                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password *</label>
+                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password</label>
                 {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
               </div>
             </div>
@@ -164,10 +182,22 @@ class UserManagementEdit extends React.Component {
     );
   }
   formClassNames( field, errors = null ) {
-    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
+    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield', {
       'is-invalid is-dirty': errors[ field ],
       'has-success': errors && !(errors[ field ])
     } );
+  }
+  notUsername (e, id) {
+    if (id == e.target.value) {
+      $('#check_availability').addClass('disabled');
+      this.refs.checkUser.value = "disabled";
+      $("#check_availability").removeClass('bg-green');
+      $('form').find('.material-icons').hide();
+
+    } else {
+      $('#check_availability').removeClass('disabled');
+      this.refs.checkUser.value = "not-disabled";
+    }
   }
   edit ( e, id ) {
     e.preventDefault();
@@ -196,6 +226,9 @@ class UserManagementEdit extends React.Component {
   }
   checkUsername( e ) {
     e.preventDefault();
+    if (e.target.value == "disabled") {
+      return false;
+    }
     this.setState( {
       loading: true,
       errors: {},
@@ -224,8 +257,8 @@ function validateEdit ( payload) {
     id: [],
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
     email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
-    password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-    password_confirmation: {rule: 'required', label: 'confirm password'},
+    password: [],
+    password_confirmation: [],
     first_name: { rule: 'required', label: 'first name' },
     last_name: { rule: 'required', label: 'fast name' },
     role_id: { rule: 'required', label: 'role' }

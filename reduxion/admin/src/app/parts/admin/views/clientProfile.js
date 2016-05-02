@@ -4,20 +4,29 @@ import DocTitle from 'components/docTitle';
 import { Link } from 'react-router';
 
 export default React.createClass( {
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   getInitialState() {
     return {
       clientInfo: null,
-      updateCompleted: false,
-      isUsernameAvailable: null
+      clientUpdateProfile: null,
+      updateCompleted: null,
     };
   },
   componentDidMount(){
     let id = this.props.params.id;
     this.props.clientProfile(id);
     this.props.country();
-    console.log("=== componentDidMount - this.props.params.id : ", this.props.params.id);
   },
   componentWillReceiveProps(nextProps) {
+    if (nextProps.updateCompleted && !nextProps.loading) {
+      $('.msg').html('Client successfully added').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.context.router.push('/coffee/client/');
+    }
     // Disapprove/Approve Client
     if (!nextProps.loading && (nextProps.clientDisapproveSuccess || nextProps.clientApproveSuccess)) {
       nextProps.clientProfile(nextProps.params.id);
@@ -30,30 +39,34 @@ export default React.createClass( {
     if (!nextProps.loading && nextProps.clientProfileSuccess) {
       this.setState({clientInfo: nextProps.clientProfileSuccess.get('data')});
     }
+    if (!nextProps.loading && nextProps.clientUpdateProfile) {
+      this.setState({clientUpdateProfile: nextProps.clientUpdateProfile});
+    }
     if (!nextProps.loading && nextProps.updateCompleted) {
       this.setState({updateCompleted: nextProps.updateCompleted});
     }
-
-    this.setState({isUsernameAvailable: nextProps.isUsernameAvailable});
   },
   render() {
-    console.log("=== render - this.props.params.id : ", this.props.params.id);
-
+    if (this.state.clientInfo) {
+      return this.renderAdminInfo();
+    } else {
+       return (
+        <div id="client" className="inner_content"></div>
+      );
+    }
+  },
+  renderAdminInfo() {
     let client = {
       clientInfo: this.state.clientInfo,
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
       clientActivate: this.props.clientActivate,
       clientDeactivate: this.props.clientDeactivate,
-      clientUpdateProfile: this.props.clientUpdateProfile,
+      clientUpdateProfile: this.state.clientUpdateProfile,
       updateCompleted: this.state.updateCompleted,
-      validateUsername: this.props.validateUsername,
-      isUsernameAvailable: this.state.isUsernameAvailable
+      validateUsername: this.props.validateUsername
     };
     let countryList = this.props.countryList;
-    let loading = this.props.loading;
-
-    console.log("=== render - client : ", client);
     return (
       <div id="client_add">
         <DocTitle
@@ -71,7 +84,7 @@ export default React.createClass( {
         <ClientProfile
           client={client}
           countryList={countryList}
-          loading={loading}
+          validateCompleted={this.props.validateCompleted}
           />
       </div>
     );

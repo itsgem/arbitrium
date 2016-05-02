@@ -244,6 +244,14 @@ div#application #client_add .mdl-layout__content, legend {
 #client_add #btn-cancel, #client_add #btn-save{
   min-width: 88px;
 }
+#client_add #btn-save, #client_add #check_availability {
+  background-color: rgb(255,110,64)
+}
+#client_add .disabled {
+  background-color: #e1e1e1!important;
+  color: #b0b0b0!important;
+  cursor: default;
+}
 
 div.required {
     color: #aaa;
@@ -261,6 +269,16 @@ div.required:before {
     vertical-align: top;
     font-size: 10px;
     margin-right: 3px;
+}
+
+#client_add #check_availability {
+  color: #fff;
+  font-size: 14px;
+  font: 11px BlinkMacSystemFont;
+  padding: 4px 15px;
+  min-height: 18px;
+  position: relative;
+  top: 30px;
 }
 
 #client_add #btn-cancel:active {
@@ -287,7 +305,7 @@ div.required:before {
    border:none;
 }
 .mdl-button:focus:not(:active) {
-   /*background-color: #f44336;*/
+   background-color: #f44336;
 }
 dialog {
    border-radius: 4px;
@@ -301,6 +319,13 @@ dialog p {
    color: #555;
    font-family: 'Roboto Condensed', sans-serif;
    font-weight: 300!important;
+}
+dialog p label{
+  text-transform: none;
+  font-weight: 400;
+}
+.selectBox {
+  height: 24px;
 }
 .modal-cancel,
 .modal-yes {
@@ -367,7 +392,7 @@ dialog p {
   width: 350px;
 }
 .bg-green {
-   background-color: #00CC99;
+   background-color: #00CC99!important;
 }
 .ui-dialog-buttonset {
    padding-bottom: 20px;
@@ -382,6 +407,9 @@ header nav {
   font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
   font-weight: 300;
   text-transform: uppercase;
+}
+.mdl-menu__item  a {
+  width: 100%;
 }
 .mdl-menu__container:before {
   background: transparent;
@@ -416,10 +444,11 @@ nav ul li:hover {
 nav .mdl-menu__container {
   top: 60px!important
 }
-
-/*.mdl-menu__container.is-visible .mdl-menu__outline {
-  margin-top: 13px;
-}*/
+#check_availability .material-icons {
+    font-size: 13px;
+    vertical-align: bottom;
+    padding-left: 8px;
+}
 
 @media (min-width: 1200px) {
   div#application #client_add .mdl-cell--full-col {
