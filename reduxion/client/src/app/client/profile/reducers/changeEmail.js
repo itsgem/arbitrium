@@ -12,7 +12,8 @@ const initialState = Immutable.fromJS({
   user: {},
   isCancelEmailChangeSuccess: false,
   success: {},
-  errors: {}
+  errors: {},
+  loading: false
 });
 
 export default createReducer({
@@ -26,9 +27,14 @@ export default createReducer({
     errors: state.concat(payload)
   }),
   [cancelEmailChange.ok]: (state, payload) => state.merge({
-    success: state.concat(payload)
+    success: state.concat(payload),
+    loading: false
   }),
   [cancelEmailChange.error]: (state, payload) => state.merge({
-    errors: state.concat(payload)
+    errors: state.concat(payload),
+    loading: false
+  }),
+  [cancelEmailChange.request]: (state) => state.merge({
+    loading: true
   })
 }, initialState);
