@@ -40,7 +40,7 @@ class LocalAuthenticationForm extends React.Component {
                             id='password'
                             ref="password"
                             type='password'
-                            autocomplete="false"
+                            autoComplete="false"
                             />
                         <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
                         {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
