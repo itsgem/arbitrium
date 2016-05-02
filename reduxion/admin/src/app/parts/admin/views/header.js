@@ -42,8 +42,8 @@ export default React.createClass( {
                     <i className="material-icons">account_circle</i>
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee"><i className="material-icons">settings</i>Settings</Link></li>
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout"><i className="material-icons">exit_to_app</i>Logout</Link></li>
+                    <li className="mdl-menu__item"><a className="logout-text" href ="/coffee"><i className="material-icons">settings</i>Settings</a></li>
+                    <li className="mdl-menu__item"><a className="logout-text" href ="/coffee/logout"><i className="material-icons">exit_to_app</i>Logout</a></li>
                   </ul>
                 </div>
               </div>
