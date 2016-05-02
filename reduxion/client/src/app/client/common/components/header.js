@@ -29,9 +29,9 @@ class ClientHeader extends React.Component {
               <i className="material-icons">person</i>
             </button>
             <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo_menu-lower-right">
-              <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i"><i className="material-icons mdl-list__item-icon">settings</i> Settings</Link></li>
-              <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i/client/profile"><i className="material-icons mdl-list__item-icon">person</i> Profile</Link></li>
-              <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</Link></li>
+              <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i"><i className="material-icons mdl-list__item-icon">settings</i> Settings</a></li>
+              <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/client/profile"><i className="material-icons mdl-list__item-icon">person</i> Profile</a></li>
+              <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</a></li>
             </ul>
           </div>
         </div>

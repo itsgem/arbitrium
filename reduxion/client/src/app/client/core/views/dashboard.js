@@ -28,7 +28,6 @@ class Dashboard extends React.Component{
         <ClientHeader />
         <ClientSidebar />
         <main className="mdl-layout__content">
-          <p>client/core/views/dashboard.js</p>
           <h1>Client Dashboard</h1>
         </main>
       </div>
