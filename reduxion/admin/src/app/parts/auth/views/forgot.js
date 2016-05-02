@@ -152,6 +152,9 @@ export default React.createClass( {
   },
 
   requestReset(e) {
+    if(e.keyCode == 13){
+      return false;
+    }
     e.preventDefault();
     this.setState( {
       errors: {},
