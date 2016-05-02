@@ -74,11 +74,11 @@ class ClientProfile extends React.Component {
       errors = Object.assign({}, errorServer.response);
     }
 
-    if (!this.props.client || !this.state.client) {
+    if (!this.props.client.clientInfo) {
       return (<div className="mdl-grid"></div>);
     }
 
-    let client = this.state.client;
+    let client = this.props.client.clientInfo;
     let status = client.approval_status == 'Pending' ? true : false;
 
     return (
@@ -173,7 +173,7 @@ class ClientProfile extends React.Component {
                 </div>
                 <div className="mdl-cell mdl-cell--6-col float-lft">
                   { (client.approval_status === 'Approved')?
-                  client.user.activated_at?
+                  client.user.activated_at ?
                     <div>
                       <button
                         id='btnClientDisapproval'
@@ -626,11 +626,11 @@ class ClientProfile extends React.Component {
 
   clienActivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientActivate(this.props.client.clientInfo.id);
+    this.props.client.clientActivate(this.props.client.clientInfo.user.id);
   }
   clientDeactivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientDeactivate(this.props.client.clientInfo.id);
+    this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
   }
 
 

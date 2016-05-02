@@ -143,7 +143,12 @@ class UserManagementList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="status" ref="status"/>
+                <select className="mdl-select__input" id="status" ref="status">
+                  <option value=""></option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option> 
+                  <option value="Disapproved">Disapproved</option>
+                </select>
                 <label className="mdl-textfield__label">Status</label>
               </div>
             </div>
