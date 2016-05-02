@@ -71,9 +71,9 @@ class ClientProfile extends React.Component {
     }
 
     // (Optional) Finalize changing of email
-    if (!this.props.loading && this.props.isRetrieveEmailChangeTokenSuccess && !this.props.isVerifyEmailChangeSuccess) {
+    if (!nextProps.loading && nextProps.isRetrieveEmailChangeTokenSuccess && !nextProps.isVerifyEmailChangeSuccess) {
       let payload = {
-        token: this.props.emailChangeToken.get('data').token
+        token: nextProps.emailChangeToken.get('data').token
       };
 
       window.componentHandler.upgradeDom();
@@ -84,8 +84,8 @@ class ClientProfile extends React.Component {
     }
 
     // (Optional) Logout user after finalizing of changing of email
-    if (!this.props.loading && this.props.isVerifyEmailChangeSuccess) {
-      this.context.history.pushState(null, '/i/logout');
+    if (!nextProps.loading && nextProps.isVerifyEmailChangeSuccess) {
+      this.context.router.push('/i/logout');
     }
   }
 
@@ -104,9 +104,7 @@ class ClientProfile extends React.Component {
     let isAvailableUsernameButtonDisabled = this.state.isAvailableUsernameButtonDisabled;
 
     return (
-      <section className="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-          <div className="mdl-grid mdl-grid--no-spacing">
-              <div className="mdl-cell mdl-cell--12-col">
+              <div>
                   { this.renderSuccess() }
                   { this.renderError() }
 
@@ -153,7 +151,7 @@ class ClientProfile extends React.Component {
                                         value={(client.user) ? client.user.email_address : ''}
                                         readOnly={true}
                                         />
-                                      <label className="mdl-textfield__label" htmlFor="email_address">E-mail *</label>
+                                      <label className="mdl-textfield__label" htmlFor="email_address">E-mail</label>
                                       {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                                   </div>
                               </div>
@@ -580,8 +578,6 @@ class ClientProfile extends React.Component {
                       </button>
                   </form>
               </div>
-          </div>
-      </section>
     );
   }
 
@@ -727,7 +723,7 @@ class ClientProfile extends React.Component {
     e.preventDefault();
 
     this.setState({
-      success: null,
+      success: {},
       errors: {},
       errorServer: null,
       isUsernameAvailable: null
@@ -874,6 +870,7 @@ ClientProfile.defaultProps = {
 };
 
 ClientProfile.contextTypes = {
+  router: React.PropTypes.object,
   history: React.PropTypes.object,
   location: React.PropTypes.object
 };

@@ -6,7 +6,12 @@ import ClientChangeEmail from '../components/changeEmail';
 
 export default React.createClass({
     componentDidMount () {
-        this.props.clientProfileEmail();
+      this.props.clientProfileEmail();
+
+      if ( typeof(window.componentHandler) != 'undefined' )
+      {
+        setTimeout(() => {window.componentHandler.upgradeDom()},10);
+      }
     },
 
     render () {
@@ -27,20 +32,26 @@ export default React.createClass({
                 </div>
               </div>
             </div>
-            <header className="mdl-layout__header mdl-layout--fixed-tabs">
-              <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
+
+            <div className="mdl-tabs mdl-js-tabs">
+              <div className="mdl-tabs__tab-bar">
                 <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile">Profile</Link>
                 <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile/change_password">Password</Link>
                 <Link className="mdl-navigation__link mdl-layout__tab is-active" to="/i/client/profile/change_email">Email Address</Link>
-                <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile"></Link>
               </div>
-            </header>
-            <ClientChangeEmail
-              user={user}
-              updateClientEmail={this.props.updateClientEmail}
-              cancelEmailChange={this.props.cancelEmailChange}
-              responseSuccess={this.props.success}
-              />
+              <div className="mdl-tabs__panel" id="profile">
+              </div>
+              <div className="mdl-tabs__panel" id="change_password">
+              </div>
+              <div className="mdl-tabs__panel is-active" id="change_email">
+                <ClientChangeEmail
+                  user={user}
+                  updateClientEmail={this.props.updateClientEmail}
+                  cancelEmailChange={this.props.cancelEmailChange}
+                  responseSuccess={this.props.success}
+                  />
+              </div>
+            </div>
           </div>
         </main>
       );

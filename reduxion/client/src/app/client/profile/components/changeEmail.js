@@ -56,9 +56,7 @@ class ClientProfile extends React.Component {
     }
 
     return (
-      <section className="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-        <div className="mdl-grid mdl-grid--no-spacing">
-          <div className="mdl-cell mdl-cell--12-col">
+          <div>
             { this.renderSuccess() }
             { this.renderError() }
 
@@ -115,8 +113,6 @@ class ClientProfile extends React.Component {
               </button>
             </form>
           </div>
-        </div>
-      </section>
     );
   }
 
@@ -194,7 +190,7 @@ class ClientProfile extends React.Component {
     e.preventDefault();
 
     this.setState({
-      success: null,
+      success: {},
       errors: {},
       errorServer: null
     });
@@ -217,7 +213,7 @@ class ClientProfile extends React.Component {
     e.preventDefault();
 
     this.setState({
-      success: null,
+      success: {},
       errors: {},
       errorServer: null
     });
