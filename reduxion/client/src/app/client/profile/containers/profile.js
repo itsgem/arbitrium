@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { clientProfile, updateClientProfile, getAvailableUsername, retrieveEmailChangeToken, verifyEmailChange } from '../reducers/profile';
-import { country } from '../../../parts/auth/reducers/country';
+import { country } from '../../auth/reducers/country';
 import ClientProfile from '../views/profile';
 
 const mapStateToProps = (state) => {

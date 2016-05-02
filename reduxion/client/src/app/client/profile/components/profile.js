@@ -2,7 +2,8 @@ import React from 'react';
 import {Router, Link, History} from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
-import Country from '../../../parts/auth/components/country';
+import Country from '../../auth/components/country';
+
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 
@@ -129,6 +130,7 @@ class ClientProfile extends React.Component {
                               </div>
                               <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
                                   <button
+                                    id="check_availability"
                                     type="button"
                                     className="mdl-button mdl-js-button mdl-button--raised"
                                     onClick={this.onClickGetAvailableUsername.bind(this)}
