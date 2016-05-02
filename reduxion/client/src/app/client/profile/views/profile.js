@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import ClientHeader from '../../common/components/header';
-import ClientSidebar from '../../common/components/sidebar';
 import ClientProfile from '../components/profile';
 
 export default React.createClass({
@@ -14,7 +12,13 @@ export default React.createClass({
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   },
+
+  componentWillReceiveProps(nextProps) {
+
+  },
+
   render () {
+
     let user = this.props.user.get('data');
     let countryList = this.props.countryList;
 

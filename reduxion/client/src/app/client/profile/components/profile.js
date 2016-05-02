@@ -2,7 +2,8 @@ import React from 'react';
 import {Router, Link, History} from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
-import Country from '../../../parts/auth/components/country';
+import Country from '../../auth/components/country';
+
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 

@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux-immutable';
 
-import auth from '../parts/auth/reducers/auth'
-import signup from '../parts/auth/reducers/signup'
-import profile from '../parts/profile/reducers/profile'
+import auth from '../client/auth/reducers/auth'
+import signup from '../client/auth/reducers/signup'
+import profile from '../client/profile/reducers/profile'
 import clientProfile from '../client/profile/reducers/profile'
 import clientChangePassword from '../client/profile/reducers/changePassword'
 import clientChangeEmail from '../client/profile/reducers/changeEmail'
-import router from '../parts/core/reducers/routerRedux'
-import country from '../parts/auth/reducers/country'
-
-import clientadmin from '../parts/admin/reducers/client'
+import router from '../client/core/reducers/routerRedux'
+import country from '../client/auth/reducers/country'
 
 export default combineReducers({
   auth,
@@ -19,6 +17,5 @@ export default combineReducers({
   clientChangePassword,
   clientChangeEmail,
   router,
-  clientadmin,
   country
 })

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import ClientHeader from '../../../client/common/components/header';
-import ClientSidebar from '../../../client/common/components/sidebar';
+import ClientHeader from '../../common/components/header';
+import ClientSidebar from '../../common/components/sidebar';
 
 class Dashboard extends React.Component{
   constructor(props) {
