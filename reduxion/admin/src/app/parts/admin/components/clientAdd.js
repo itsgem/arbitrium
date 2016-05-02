@@ -440,7 +440,9 @@ class ClientAdd extends React.Component {
     } );
     let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code,
         rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
-        rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department} = this.refs;
+        rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department,
+        alt_first_name, alt_last_name, alt_gender, alt_email_address, alt_mobile_code,
+        alt_mobile_number, alt_phone_code, alt_phone_number, alt_position, alt_department} = this.refs;
 
     let payload = {
       company_name: company_name.value,
