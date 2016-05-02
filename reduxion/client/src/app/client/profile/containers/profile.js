@@ -3,6 +3,11 @@ import { clientProfile, updateClientProfile, getAvailableUsername, retrieveEmail
 import { country } from '../../auth/reducers/country';
 import ClientProfile from '../views/profile';
 
+const strMapToObj=(strMap) => {
+  let obj = JSON.parse(JSON.stringify(strMap));
+  return obj;
+}
+
 const mapStateToProps = (state) => {
   return {
     countryList: state.get('country').get('countryList'),
@@ -12,7 +17,7 @@ const mapStateToProps = (state) => {
     isVerifyEmailChangeSuccess: state.get('clientProfile').get('isVerifyEmailChangeSuccess'),
     emailChangeToken: state.get('clientProfile').get('emailChangeToken'),
     loading: state.get('clientProfile').get('loading'),
-    success: state.get('clientProfile').get('success'),
+    success: strMapToObj(state.get('clientProfile').get('success')),
     errors: state.get('clientProfile').get('errors')
   };
 }
