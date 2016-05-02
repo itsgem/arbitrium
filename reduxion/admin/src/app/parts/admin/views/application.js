@@ -21,7 +21,6 @@ export default class Application extends React.Component {
         return (
             <div id="application-view" className={css}>
                 <main id='main-container'>
-                    <h1>admin/views/application.js</h1>
                     {this.props.children}
                 </main>
             </div>
