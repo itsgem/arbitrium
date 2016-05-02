@@ -30,9 +30,9 @@ class ClientHeader extends React.Component {
               <button id="demo-menu-account"
                 className="mdl-button mdl-js-button">Account</button>
               <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-account">
-                <li className="mdl-menu__item"><Link to="/i/client/profile">Profile</Link></li>
-                <li className="mdl-menu__item"><Link to="/i/client/profile/change_password">Password</Link></li>
-                <li className="mdl-menu__item"><Link to="/i/client/profile/change_email">Email Address</Link></li>
+                <li className="mdl-menu__item"><a href="/i/client/profile">Profile</a></li>
+                <li className="mdl-menu__item"><a href="/i/client/profile/change_password">Password</a></li>
+                <li className="mdl-menu__item"><a href="/i/client/profile/change_email">Email Address</a></li>
               </ul>
             </div>
             <button id="demo_menu-lower-right" className="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
