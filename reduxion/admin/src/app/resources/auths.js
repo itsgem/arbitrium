@@ -91,7 +91,7 @@ export default {
       }
     });
   },
-  clientList(payload = {page: 1}) {
+  clientList(payload = {page: 1, per_page: 10}) {
     return get('admin/client',{
       params: payload
     });
