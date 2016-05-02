@@ -29,6 +29,12 @@ export default createReducer({
     success: {},
     user: state.concat(payload)
   }),
+  [clientProfile.request]: (state, payload) => state.merge({
+    loading: true,
+    isUsernameAvailable: null,
+    success: {},
+    user: {}
+  }),
 
   [updateClientProfile.ok]: (state, payload) => state.merge({
     loading: false,
