@@ -25,7 +25,7 @@ class LocalAuthenticationForm extends React.Component {
                         <div className={this.formClassNames('email')}>
                             <input
                                 className="mdl-textfield__input"
-                                type="email"
+                                type="text"
                                 id='email'
                                 ref="email"
                                 />
