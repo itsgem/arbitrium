@@ -32,7 +32,7 @@ class UserManagementList extends React.Component {
             to={"/coffee/account/" + id}><i className="material-icons">open_in_new</i></Link>
             <button
                 className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-                onClick={(e) => this.modalConfirm(e, id)}>
+                onClick={(e) => this.modalConfirm(e, id, data.get('name'))}>
               <i className="material-icons">delete</i>
             </button>
           </td>
@@ -120,7 +120,7 @@ class UserManagementList extends React.Component {
         <p>Filter / Search</p>
         <dialog className="mdl-dialog">
           <p>
-            Are you sure you want to delete IdeaRobin, Inc.’s account?<br />This cannot be undone.
+            Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.
           </p>
           <div className="mdl-dialog__actions">
             <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
@@ -184,9 +184,10 @@ class UserManagementList extends React.Component {
       </div>
     );
   }
-  modalConfirm (e, id) {
+  modalConfirm (e, id, name) {
     let dialog = document.querySelector('dialog');
     dialog.showModal();
+    $('dialog label').text(name);
     this.setState( {
       id: id
     } );

@@ -23,7 +23,7 @@ class UserManagementList extends React.Component {
           <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.company_name}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.rep_last_name}, {data.rep_first_name} </td>
-          <td className="mdl-data-table__cell--non-numeric">{data.rep_email_address}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.user.email_address}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.rep_phone_code} {data.rep_phone_number}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.rep_mobile_code} {data.rep_mobile_number}</td>
           <td className="mdl-data-table__cell--non-numeric">{data.approval_status}</td>
@@ -33,7 +33,7 @@ class UserManagementList extends React.Component {
             to={"/coffee/client/" + data.id}><i className="material-icons">open_in_new</i></Link>
             <button
                 className="btn-delete mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-                onClick={(e) => this.modalConfirm(e, data.id)}>
+                onClick={(e) => this.modalConfirm(e, data.id, data.company_name)}>
               <i className="material-icons">delete</i>
             </button>
           </td>
@@ -121,7 +121,7 @@ class UserManagementList extends React.Component {
         <p>Filter / Search</p>
         <dialog className="mdl-dialog">
           <p>
-              Are you sure you want to delete IdeaRobin, Inc.’s account?<br />This cannot be undone.
+              Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.
           </p>
           <div className="mdl-dialog__actions">
             <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
@@ -129,19 +129,30 @@ class UserManagementList extends React.Component {
           </div>
         </dialog>
           <div className="mdl-grid filter-search-bar">
-            <div className="mdl-cell mdl-cell--4-col">
+            <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input className="mdl-textfield__input" type="text" id="company" ref="company"/>
+                <label className="mdl-textfield__label">Company</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="email-address" ref="email_address" />
                 <label className="mdl-textfield__label">Email Address</label>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--4-col">
+            <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
-                <label className="mdl-textfield__label">Name</label>
+                <select className="selectBox mdl-textfield__input" id="status" ref="status">
+                  <option value=""></option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Disapproved">Disapproved</option>
+                </select>
+                <label className="mdl-textfield__label">Status</label>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--4-col search-cta">
+            <div className="mdl-cell mdl-cell--3-col search-cta">
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
                 onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
@@ -184,8 +195,9 @@ class UserManagementList extends React.Component {
       </div>
     );
   }
-  modalConfirm (e, id) {
+  modalConfirm (e, id, company) {
     let dialog = document.querySelector('dialog');
+    $('dialog label').text(company);
     dialog.showModal();
     this.setState( {
       id: id
@@ -197,15 +209,17 @@ class UserManagementList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
+    this.refs.company.value = "";
     this.refs.email_address.value = "";
-    this.refs.name.value = "";
+    this.refs.status.value = "";
     this.searchList(e);
   }
   searchList(e) {
     e.preventDefault();
     let payload = {
+      company_name: this.refs.company.value,
       email_address: this.refs.email_address.value,
-      name: this.refs.name.value
+      approval_status: this.refs.status.value
     };
     this.props.adminClientList(payload);
   }
@@ -213,8 +227,9 @@ class UserManagementList extends React.Component {
     e.preventDefault();
     let payload = {
       page: id,
+      company_name: this.refs.company.value,
       email_address: this.refs.email_address.value,
-      name: this.refs.name.value
+      approval_status: this.refs.status.value
     };
     this.props.adminClientList(payload);
   }

@@ -62,7 +62,7 @@ export default {
       return patch('user/register/verify', {
           params: {
               token: code,
-              callback_url: window.location.origin
+              callback_url: window.location.origin + "/i/login"
           }
       });
   },

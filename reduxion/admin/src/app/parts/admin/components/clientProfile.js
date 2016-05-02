@@ -14,7 +14,8 @@ class ClientProfile extends React.Component {
       errorServer:null,
       client: null,
       updateCompleted: false,
-      isUsernameAvailable: null
+      addClass: null
+
     };
   }
   componentDidMount() {
@@ -23,27 +24,23 @@ class ClientProfile extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loading && nextProps.client.clientInfo) {
+    if (nextProps.client.clientInfo) {
       this.setState({
         client: nextProps.client.clientInfo
       });
     }
 
-    if (!nextProps.loading && nextProps.client.updateCompleted) {
+    if (nextProps.client.updateCompleted) {
       this.setState({
         updateCompleted: nextProps.client.updateCompleted
       });
     }
 
-    if (!nextProps.loading && nextProps.errors) {
+    if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
     }
-
-    this.setState({
-      isUsernameAvailable: nextProps.client.isUsernameAvailable
-    });
   }
   render() {
     if (this.props.client.clientInfo) {
@@ -79,17 +76,16 @@ class ClientProfile extends React.Component {
       errors = Object.assign({}, errorServer.response);
     }
 
-    if (!this.props.client || !this.state.client) {
+    if (!this.props.client.clientInfo) {
       return (<div className="mdl-grid"></div>);
     }
 
-    let client = this.state.client;
+    let client = this.props.client.clientInfo;
     let status = client.approval_status == 'Pending' ? true : false;
 
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <div className="required">Required fields</div>
-        { this.renderSuccess() }
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--6-col">
             <legend>USER ACCOUNT DETAILS</legend>
@@ -99,19 +95,23 @@ class ClientProfile extends React.Component {
                 type="text"
                 id='username'
                 ref="username"
+                onChange={(e) => this.notUsername(e, client.user.username)}
                 defaultValue={(client.user) ? client.user.username : ''}
                 />
               <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
               {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--6-col form-group-flag-icon">
+          <div className="mdl-cell mdl-cell--6-col">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+              className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope disabled" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
               id='check_availability'
               type='button'
-              onClick={(e) => this.checkUsername(e)}>Check Availability</button>
-            { this.isUsernameAvailable() }
+              value="disabled"
+              ref="checkUser"
+              onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
           </div>
           <div className="mdl-layout__content">
             <div className="mdl-cell mdl-cell--6-col">
@@ -136,7 +136,7 @@ class ClientProfile extends React.Component {
              <div className="mdl-cell mdl-cell--6-col status-col">
                 <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">Approval Status:</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
-                <div className="mdl-cell mdl-cell--6-col float-lft">
+                <div className="mdl-cell mdl-cell--7-col float-lft">
                   { status &&
                     <button
                       id='btnClientApproval'
@@ -175,7 +175,7 @@ class ClientProfile extends React.Component {
                 </div>
                 <div className="mdl-cell mdl-cell--6-col float-lft">
                   { (client.approval_status === 'Approved')?
-                  client.user.activated_at?
+                  client.user.activated_at ?
                     <div>
                       <button
                         id='btnClientDisapproval'
@@ -337,7 +337,7 @@ class ClientProfile extends React.Component {
           <div className="mdl-cell mdl-cell--3-col">
             <div className={this.formClassNames('rep_gender', errors)}>
               <select
-                className="mdl-select__input"
+                className="mdl-textfield__input"
                 id='rep_gender'
                 ref="rep_gender"
                 defaultValue={(client.rep_gender) ? client.rep_gender : ''} >
@@ -586,7 +586,20 @@ class ClientProfile extends React.Component {
       </form>
     );
   }
+  notUsername (e, id) {
+    if (id == e.target.value) {
+      this.setState({addClass: 'disabled'});
+      $('#check_availability').addClass('disabled');
+      this.refs.checkUser.value = "disabled";
+      $("#check_availability").removeClass('bg-green');
+      $('form').find('.material-icons').hide();
 
+    } else {
+      this.setState({addClass: null});
+      $('#check_availability').removeClass('disabled');
+      this.refs.checkUser.value = "not-disabled";
+    }
+  }
   renderCountry(selected, required) {
     if (!this.props.countryList) return;
     let country = (selected) ? selected : '';
@@ -595,21 +608,6 @@ class ClientProfile extends React.Component {
     return (
       <Country country={this.props.countryList} selected={country} required={isRequired} />
     );
-  }
-
-  renderSuccess() {
-    let success = this.state.updateCompleted;
-    if(!success) return;
-
-    console.log('=== renderSuccess() - this.state.updateCompleted', this.state.updateCompleted);
-
-    let {errors} = this.state ? this.state :'';
-    if (Array.isArray(errors)) {
-      $('.msg').html('Successfully updated profile').addClass('bg-green');
-      $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(2000);
-      });
-    }
   }
 
   formClassNames( field, errors ) {
@@ -632,11 +630,11 @@ class ClientProfile extends React.Component {
 
   clienActivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientActivate(this.props.client.clientInfo.id);
+    this.props.client.clientActivate(this.props.client.clientInfo.user.id);
   }
   clientDeactivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientDeactivate(this.props.client.clientInfo.id);
+    this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
   }
 
 
@@ -697,50 +695,24 @@ class ClientProfile extends React.Component {
 
   checkUsername( e ) {
     e.preventDefault();
-
-    if (!this.state.client) return;
-
-    console.log('=== checkUsername() - this.state BEFORE', this.state);
-    this.setState({
+    if (e.target.value == "disabled") {
+      return false;
+    }
+    this.setState( {
       loading: true,
       errors: {},
-      errorServer: null,
-      updateCompleted: false
-    });
-
-    console.log('=== checkUsername() - this.state AFTER', this.state);
-    console.log('=== checkUsername() - this.state.updateCompleted', this.state.updateCompleted);
+      errorServer: null
+    } );
 
     let payload = {
-      username: this.refs.username.value,
-      except_user_id: this.state.client.user.id
-    };
+      username: this.refs.username.value
+    }
 
     window.componentHandler.upgradeDom();
     return validateUsername.call( this, payload )
       .with( this )
       .then( getUsername )
       .catch( setErrors );
-  }
-
-  isUsernameAvailable() {
-    let icon = '';
-    let className = 'mdl-icon material-icons';
-
-    if (this.state.isUsernameAvailable == true) {
-      icon = 'done';
-      className += ' mdl-icon-success';
-    } else if (this.state.isUsernameAvailable == false) {
-      icon = 'clear';
-      className += ' mdl-icon-danger';
-    } else if (this.state.isUsernameAvailable == 'loading') {
-      icon = 'hourglass_empty';
-    }
-    console.log('=== this.state.isUsernameAvailable : ', this.state.isUsernameAvailable);
-
-    return (
-      <i className={className}>{icon}</i>
-    );
   }
 };
 
@@ -839,15 +811,13 @@ function validateClientProfile ( payload) {
   return rules.run( payload );
 }
 function updateClientProfile (payload) {
-  payload.id = this.state.client.id;
-  console.log('=== updateClientProfile() - this.state.updateCompleted', this.state.updateCompleted);
+  payload.id = this.props.client.clientInfo.id;
   return this.props.client.clientUpdateProfile(payload);
 }
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-    username: [ 'required', 'minLength:8', 'maxLength:64' ],
-    except_user_id: [ 'required' ]
+    username: [ 'required', 'minLength:8', 'maxLength:64' ]
   } );
   return rules.run( payload );
 }
