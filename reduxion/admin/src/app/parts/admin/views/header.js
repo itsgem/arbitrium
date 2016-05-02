@@ -39,13 +39,13 @@ export default React.createClass( {
                   </div>
                   <a className="mdl-layout__tab" href="/coffee">Logs</a>
                 </nav>
-                <div className="icon-profile">
+                <div className="icon-profile inner-profile">
                   <button id="menu" className="mdl-button mdl-js-button mdl-button--icon">
                     <i className="material-icons">account_circle</i>
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee">Settings</Link></li>
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout">Logout</Link></li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee"><i className="material-icons">settings</i>Settings</Link></li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/logout"><i className="material-icons">exit_to_app</i>Logout</Link></li>
                   </ul>
                 </div>
               </div>
