@@ -8,10 +8,11 @@ export default React.createClass({
   componentDidMount() {
     this.props.clientProfile();
     this.props.country();
-      if ( typeof(window.componentHandler) != 'undefined' )
-      {
-        setTimeout(() => {window.componentHandler.upgradeDom()},10);
-      }
+
+    if ( typeof(window.componentHandler) != 'undefined' )
+    {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
   },
   render () {
     let user = this.props.user.get('data');
@@ -36,30 +37,36 @@ export default React.createClass({
               </div>
             </div>
           </div>
-          <header className="mdl-layout__header mdl-layout--fixed-tabs">
-            <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
+
+          <div className="mdl-tabs mdl-js-tabs">
+            <div className="mdl-tabs__tab-bar">
               <Link className="mdl-navigation__link mdl-layout__tab is-active" to="/i/client/profile">Profile</Link>
               <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile/change_password">Password</Link>
               <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile/change_email">Email Address</Link>
-              <Link className="mdl-navigation__link mdl-layout__tab" to="/i/client/profile"></Link>
             </div>
-          </header>
-          <ClientProfile
-            user={user}
-            country={countryList}
-            updateClientProfile={this.props.updateClientProfile}
-            getAvailableUsername={this.props.getAvailableUsername}
-            isUsernameAvailable={this.props.isUsernameAvailable}
-            retrieveEmailChangeToken={this.props.retrieveEmailChangeToken}
-            locationQuery={this.props.location.query}
-            isRetrieveEmailChangeTokenSuccess={this.props.isRetrieveEmailChangeTokenSuccess}
-            emailChangeToken={this.props.emailChangeToken}
-            verifyEmailChange={this.props.verifyEmailChange}
-            isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
-            loading={this.props.loading}
-            responseSuccess={success}
-            responseError={errors}
-            />
+            <div className="mdl-tabs__panel is-active" id="profile">
+              <ClientProfile
+                user={user}
+                country={countryList}
+                updateClientProfile={this.props.updateClientProfile}
+                getAvailableUsername={this.props.getAvailableUsername}
+                isUsernameAvailable={this.props.isUsernameAvailable}
+                retrieveEmailChangeToken={this.props.retrieveEmailChangeToken}
+                locationQuery={this.props.location.query}
+                isRetrieveEmailChangeTokenSuccess={this.props.isRetrieveEmailChangeTokenSuccess}
+                emailChangeToken={this.props.emailChangeToken}
+                verifyEmailChange={this.props.verifyEmailChange}
+                isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
+                loading={this.props.loading}
+                responseSuccess={success}
+                responseError={errors}
+                />
+            </div>
+            <div className="mdl-tabs__panel" id="change_password">
+            </div>
+            <div className="mdl-tabs__panel" id="change_email">
+            </div>
+          </div>
         </div>
       </main>
     );

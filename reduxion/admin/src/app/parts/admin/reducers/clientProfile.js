@@ -17,6 +17,8 @@ export const clientUpdateProfile = createActionAsync('CLIENT_UPDATE', auth.admin
 export const adminClientDelete = createActionAsync('CLIENT_DELETE', auth.clientDelete);
 export const adminClientList = createActionAsync('CLIENT_LIST', auth.clientList);
 
+export const country = createActionAsync('COUNTRY', auth.listCountries);
+
 const initialState = Immutable.fromJS({
   clientProfileSuccess: {},
   clientApproveSuccess: false,
@@ -27,9 +29,9 @@ const initialState = Immutable.fromJS({
   loading: false,
   registerCompleted: false,
   updateCompleted: false,
-  validateCompleted: {},
-  isUsernameAvailable: null,
-  clientList: {}
+  validateCompleted: false,
+  clientList: {},
+  countryList: {}
 });
 
 export default createReducer({
@@ -40,8 +42,8 @@ export default createReducer({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
     updateCompleted: false,
-    isUsernameAvailable: null,
-    loading: false
+    loading: false,
+    validateCompleted: false
   }),
   [clientProfile.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -49,94 +51,52 @@ export default createReducer({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
     updateCompleted: false,
-    isUsernameAvailable: null,
-    loading: true}),
-
+    loading: true,
+    validateCompleted: false }),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
-    updateCompleted: false,
-    isUsernameAvailable: null,
     loading: true}),
-
   [clientDisapprove.ok]: (state) => state.merge({clientDisapproveSuccess: true, loading: false}),
   [clientDisapprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
-    updateCompleted: false,
-    isUsernameAvailable: null,
     loading: true}),
 
   [clientActivate.ok]: (state) => state.merge({clientActivateSuccess: true, loading: false}),
   [clientActivate.request]: (state) => state.merge({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
-    updateCompleted: false,
-    isUsernameAvailable: null,
     loading: true}),
-
   [clientDeactivate.ok]: (state) => state.merge({clientDeactivateSuccess: true, loading: false}),
   [clientDeactivate.request]: (state) => state.merge({
     clientActivateSuccess: false,
     clientDeactivateSuccess: false,
-    updateCompleted: false,
-    isUsernameAvailable: null,
     loading: true}),
 
-  [validateUsername.ok]: (state, payload) => state.merge({
-    validateCompleted: state.concat(payload),
-    updateCompleted: false,
-    isUsernameAvailable: true,
-    loading: false
-  }),
-  [validateUsername.error]: (state, payload) => state.merge({
-    updateCompleted: false,
-    isUsernameAvailable: false,
-    loading: false
-  }),
-  [validateUsername.request]: (state, payload) => state.merge({
-    updateCompleted: false,
-    isUsernameAvailable: 'loading',
-    loading: true
-  }),
-
-  [clientRegister.ok]: (state) => state.merge({
-    registerCompleted: true,
-    loading: false
-  }),
-  [clientRegister.error]: (state) => state.merge({
+  [validateUsername.ok]: (state) => state.merge({validateCompleted: true}),
+  [validateUsername.request]: (state) => state.merge({validateCompleted: false}),
+  [validateUsername.error]: (state) => state.merge({validateCompleted: false}),
+  [clientRegister.ok]: (state) => state.merge({registerCompleted: true, loading: false, validateCompleted: false}),
+  [clientRegister.request]: (state) => state.merge({registerCompleted: false, loading: true, validateCompleted: false}),
+  [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false, validateCompleted: false}),
+  [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
+  [adminClientList.ok]: (state, payload) => state.merge({
+    clientList: state.concat(payload),
     registerCompleted: false,
-    loading: false
-  }),
-  [clientRegister.request]: (state) => state.merge({
-    registerCompleted: false,
-    loading: true
-  }),
-
-  [clientUpdateProfile.ok]: (state) => state.merge({
-    updateCompleted: true,
-    isUsernameAvailable: null,
-    loading: false
-  }),
-  [clientUpdateProfile.error]: (state) => state.merge({
+    loading: false,
     updateCompleted: false,
-    isUsernameAvailable: null,
-    loading: false
-  }),
-  [clientUpdateProfile.request]: (state) => state.merge({
-    updateCompleted: false,
-    isUsernameAvailable: null,
-    loading: true
-  }),
-
-  [adminClientList.ok]: (state, payload) => state.merge({clientList: state.concat(payload),registerCompleted: false, loading: false}),
-  [adminClientList.request]: (state, payload) => state.merge({
+    validateCompleted: false}),
+  [adminClientList.request]: (state) => state.merge({
     clientDeleteSuccess: false,
     registerCompleted: false,
-    loading: true
+    loading: true,
+    updateCompleted: false,
+    validateCompleted: false
   }),
-
   [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true, loading: false}),
-  [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true})
+  [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true}),
+  [country.ok]: (state, payload) => state.merge({countryList: payload, validateCompleted: false}),
+  [country.request]: (state) => state.merge({validateCompleted: false})
 }, initialState);

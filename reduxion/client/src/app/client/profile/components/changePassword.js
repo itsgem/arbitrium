@@ -47,7 +47,7 @@ class ClientChangePassword extends React.Component {
 
       // Log out user when successfully changed password
       if (nextProps.responseSuccess && nextProps.responseSuccess.get('success')) {
-        this.context.history.pushState(null, '/i/logout');
+        this.context.router.push('/i/logout');
       }
     }
 
@@ -58,9 +58,7 @@ class ClientChangePassword extends React.Component {
         }
 
         return (
-            <section className="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-                <div className="mdl-grid mdl-grid--no-spacing">
-                    <div className="mdl-cell mdl-cell--12-col">
+                    <div>
                         {/* this.renderSuccess() */}
                         {/* this.renderError() */}
 
@@ -126,8 +124,6 @@ class ClientChangePassword extends React.Component {
                             </button>
                         </form>
                     </div>
-                </div>
-            </section>
         );
     }
 
@@ -189,7 +185,7 @@ class ClientChangePassword extends React.Component {
       e.preventDefault();
 
       this.setState({
-        success: null,
+        success: {},
         errors: {},
         errorServer: null
       });
@@ -236,6 +232,7 @@ ClientChangePassword.defaultProps = {
 };
 
 ClientChangePassword.contextTypes = {
+  router: React.PropTypes.object,
   history: React.PropTypes.object,
   location: React.PropTypes.object
 };

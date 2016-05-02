@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { adminUserManagementAdd, listRoleAdmin } from '../reducers/userManagement'
-import { validateUsername } from '../reducers/validateUsername'
+import { adminUserManagementAdd, listRoleAdmin, validateUsername } from '../reducers/userManagement'
+//import { validateUsername } from '../reducers/validateUsername'
 import ViewUserManagementAdd from '../views/userManagementAdd';
 
 const mapStateToProps = (state) => {
@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
     adminAdd: state.get('adminUserManagement').get('adminAdd'),
     role: state.get('adminUserManagement').get('role'),
     registerCompleted: state.get('adminUserManagement').get('registerCompleted'),
-    validateCompleted: state.get('validateUsername').get('validateCompleted')
+    validateCompleted: state.get('adminUserManagement').get('validateCompleted')
   };
 }
 

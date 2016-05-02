@@ -1,0 +1,174 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arbitrium</title>
+  <link href="https://assets.idearobin.com/mdl/material.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script defer type="text/javascript" src="https://assets.idearobin.com/mdl/material.js"></script>
+</head>
+
+<body>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header body-bg">
+
+  <header class="mdl-layout__header header-bg">
+    <div class="mdl-grid header-container">
+
+      <div class="mdl-layout__header-row main-header">
+        <!-- LOGO -->
+        <div class="logo">
+          <img src="./img/logo-arbitrium.png"></img>
+        </div>
+        <!-- NAVIGATION -->
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
+          <div class="mdl-tabs__tab-bar tab">
+              <a href="#dashboard-panel" class="mdl-tabs__tab">DASHBOARD</a>
+              <a href="client.html" class="mdl-tabs__tab">CLIENTS</a>
+              <a href="api.html" class="mdl-tabs__tab is-active">API</a>
+              <a href="#pricing-panel" class="mdl-tabs__tab">PRICING</a>
+              <a href="#admin-accounts-panel" class="mdl-tabs__tab">ADMIN ACCOUNTS</a>
+              <a href="#logs-panel" class="mdl-tabs__tab">LOGS</a>
+
+              <div class="icon-profile">
+                <!-- Right aligned menu below button -->
+                <button id="menu" class="mdl-button mdl-js-button mdl-button--icon">
+                  <i class="material-icons">account_circle</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu">
+                  <li class="mdl-menu__item">Settings</li>
+                  <li class="mdl-menu__item">Logout</li>
+                </ul>
+
+              </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-js-layout">
+    <div class="mdl-grid table-list-container">
+
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect table-tab">
+        <a href="#" class="mdl-layout__tab">List of API Keys</a>
+        <a href="#" class="mdl-layout__tab is-active">Add New Api Key<i class="material-icons add">add</i></a>
+      </div>
+
+      <div class="mdl-layout__panel is-active" id="#">
+
+          <!-- Textfield with Floating Label -->
+
+          <form class="form-container" action="#">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                  <input class="mdl-textfield__input font-input" type="text" id="api-description">
+                  <label class="mdl-textfield__label" for="sample1">Description...</label>
+                </div>
+                <p>Add a description to your API key to allow you to filter by key</p>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                  <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input">
+                  <span class="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
+                </label>
+              </div>
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="mdl-textfield mdl-js-textfield full-width">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="add-ip-address" ></textarea>
+                  <label class="mdl-textfield__label" for="sample5">Add IP Address...</label>
+                </div>
+                <p>Add one IP Address per line separated by line breaks</p>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" for="checkbox-2">
+                  <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input">
+                  <span class="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
+                </label>
+              </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-3">
+                    <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Users</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-4">
+                    <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Messages</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-5">
+                    <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Tags</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-6">
+                    <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Rejects</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-7">
+                    <input type="checkbox" id="checkbox-7" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Info</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-8">
+                    <input type="checkbox" id="checkbox-8" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Send</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-9">
+                    <input type="checkbox" id="checkbox-9" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">List</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-10">
+                    <input type="checkbox" id="checkbox-10" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Add</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--1-col check-test-key">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-11">
+                    <input type="checkbox" id="checkbox-11" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">Test Key</span>
+                  </label>
+                </div>
+                <div class="mdl-cell mdl-cell--1-col check-test-key">
+                  <div id="tt4" class="icon material-icons">help</div>
+                    <div class="mdl-tooltip mdl-tooltip--large" for="tt4">
+                      You can use a test key to experiment
+                      with Arbitrium's API. No mail is actually sent
+                      but webhooks, trigger normally and you can
+                      generate synthetic bounces and complaints
+                      without impacting your reputation
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col cta">
+                  <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i class="material-icons">add</i>Create API Key</button>
+                  <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i class="material-icons">clear</i>Cancel</button>
+                </div>
+            </div>
+
+
+          </form>
+
+
+      </div>
+
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
