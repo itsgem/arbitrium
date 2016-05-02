@@ -186,8 +186,7 @@ class UserManagementList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <button
-              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page"
-              onClick={(e) => this.page(e, clientList.get('last_page'))}>{counter && clientList.get('last_page')}</button>
+              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page">10</button>
           </div>
         </div>
       </div>
@@ -221,10 +220,11 @@ class UserManagementList extends React.Component {
     };
     this.props.adminClientList(payload);
   }
-  page(e, id) {
+  page(e, pageNumber) {
     e.preventDefault();
     let payload = {
-      page: id,
+      page: pageNumber,
+      per_page: 10,
       company_name: this.refs.company.value,
       email_address: this.refs.email_address.value,
       approval_status: this.refs.status.value
