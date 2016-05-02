@@ -29,6 +29,7 @@ export default React.createClass({
                   updateClientEmail={this.props.updateClientEmail}
                   cancelEmailChange={this.props.cancelEmailChange}
                   responseSuccess={this.props.success}
+                  loading={this.props.loading}
                   />
               </div>
           </div>
