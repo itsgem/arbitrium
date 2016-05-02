@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     registerCompleted: state.get('clientadmin').get('registerCompleted'),
     validateCompleted: state.get('clientadmin').get('validateCompleted'),
-    countryList: state.get('clientadmin').get('countryList')
+    countryList: state.get('clientadmin').get('countryList'),
+    loading: state.get('clientadmin').get('loading')
   };
 }
 
