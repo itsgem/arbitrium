@@ -33,12 +33,17 @@ legend {
   width: 200px;
 }
 #check_availability {
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
   color: #fff;
-  font-size: 14px;
-  font: 11px BlinkMacSystemFont;
+  font-size: 12px;
+  line-height: normal;
   padding: 4px 15px;
   height: 21px;
-  position: relative;
-  top: 8px;
   background-color: rgb(255,64,129);
+}
+
+.mdl-button-group .mdl-button {
+  margin: 0 10px;
 }

@@ -108,20 +108,21 @@ class ClientChangePassword extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            <div className="mdl-button-group">
+                              <button
+                                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                                  type="submit"
+                                  >
+                                  Save
+                              </button>
 
-                            <button
-                                className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                                type="submit"
-                                >
-                                Save
-                            </button>
-
-                            <button
-                                className="mdl-button mdl-js-button mdl-button--raised"
-                                type="button"
-                                >
-                                Cancel
-                            </button>
+                              <button
+                                  className="mdl-button mdl-js-button mdl-button--raised"
+                                  type="reset"
+                                  >
+                                  Cancel
+                              </button>
+                            </div>
                         </form>
                     </div>
         );

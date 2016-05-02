@@ -162,7 +162,7 @@ class ClientServices extends NrbServices
                 // client has to use change email address API
                 $client->user()->update($request->only('username', 'items_per_page', 'timezone'));
             }
-            return $this->respondWithSuccess($client);
+            return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
         });
     }
 }

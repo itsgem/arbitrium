@@ -565,19 +565,14 @@ class ClientProfile extends React.Component {
                           </div>
                       </div>
 
-                      <button
-                        className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                        type="submit"
-                        >
-                        Save
-                      </button>
-
-                      <button
-                        className="mdl-button mdl-js-button mdl-button--raised"
-                        type="button"
-                        >
-                        Cancel
-                      </button>
+                      <div className="mdl-button-group">
+                        <button
+                          className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                          type="submit"
+                          >
+                          Save
+                        </button>
+                      </div>
                   </form>
               </div>
     );

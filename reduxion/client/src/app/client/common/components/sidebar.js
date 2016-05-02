@@ -24,7 +24,7 @@ class ClientSidebar extends React.Component {
         </header>
         <nav className="arbitrium-navigation mdl-navigation">
           <a className="mdl-navigation__link" href="/i"><i className="material-icons" role="presentation">home</i>Dashboard</a>
-          <a className="mdl-navigation__link" href="/i/client/profile"><i className="material-icons" role="presentation">person</i>User</a>
+          <a className="mdl-navigation__link" href="/i/client/profile"><i className="material-icons" role="presentation">person</i>My Profile</a>
           <div className="mdl-layout-spacer"></div>
           <a className="mdl-navigation__link" href="/i/logout"><i className="material-icons" role="presentation">exit_to_app</i>Logout</a>
         </nav>

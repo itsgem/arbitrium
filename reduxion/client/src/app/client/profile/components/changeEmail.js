@@ -95,21 +95,22 @@ class ClientProfile extends React.Component {
                   </div>
                 </div>
               </div>
+              <div className="mdl-button-group">
+                <button
+                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                  type="submit"
+                  >
+                  Request Reset Email
+                </button>
 
-              <button
-                className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                type="submit"
-                >
-                Request Reset Email
-              </button>
-
-              <button
-                className="mdl-button mdl-js-button mdl-button--raised"
-                type="button"
-                onClick={this.onClickResetEmail.bind(this)}
-                >
-                Cancel Request
-              </button>
+                <button
+                  className="mdl-button mdl-js-button mdl-button--raised"
+                  type="button"
+                  onClick={this.onClickResetEmail.bind(this)}
+                  >
+                  Cancel Request
+                </button>
+              </div>
             </form>
           </div>
     );
