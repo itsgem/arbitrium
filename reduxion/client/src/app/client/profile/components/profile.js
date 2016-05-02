@@ -130,6 +130,7 @@ class ClientProfile extends React.Component {
                               </div>
                               <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
                                   <button
+                                    id="check_availability"
                                     type="button"
                                     className="mdl-button mdl-js-button mdl-button--raised"
                                     onClick={this.onClickGetAvailableUsername.bind(this)}
