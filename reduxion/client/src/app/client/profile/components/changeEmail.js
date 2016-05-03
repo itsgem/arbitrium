@@ -137,8 +137,6 @@ class ClientProfile extends React.Component {
     let success = this.state.success;
     if(Object.keys(success).length === 0 && JSON.stringify(success) === JSON.stringify({})) return;
 
-    console.log("=== success : ", success);
-
     return (
       <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
         {success.message}

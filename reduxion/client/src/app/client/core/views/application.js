@@ -19,12 +19,11 @@ export default class Application extends React.Component {
                 ? `vw-${this.props.children.props.route.path}`
                 : `vw-home`;
         return (
-            <div id="application-view" className={css}>
-
-                <main id='main-container'>
-                    {this.props.children}
-                </main>
-            </div>
+          <div id="application-view" className={css}>
+            <main id='main-container'>
+              {this.props.children}
+            </main>
+          </div>
         );
     }
 };

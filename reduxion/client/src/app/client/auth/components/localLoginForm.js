@@ -28,7 +28,6 @@ class LocalLoginForm extends React.Component {
         debug('render state:', this.state);
         return (
             <div className="local-login-form">
-                <Alert error={this.state.errorServer}/>
                 <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
                     <div className="mdl-snackbar__text"></div>
                     <button type="button" className="mdl-snackbar__action"></button>
@@ -58,19 +57,40 @@ class LocalLoginForm extends React.Component {
 
     setErrors( e ) {
         debug("setErrors:", e);
-        if ( e.status === 401 ) {
-            let notification = document.querySelector('.mdl-snackbar');
-            notification.MaterialSnackbar.showSnackbar(
-                {
-                    message: 'No matching credentials. Please check your e-mail and password.'
-                }
-            );
+        let message = null;
+        switch(e.status) {
+            case 401 :
+             message = 'No matching credentials. Please check your e-mail and password.';
+            break;
+
+            case 403 :
+            if (e.data.messages.length >1){
+                message = e.data.messages[0] +" "+ e.data.messages[1];
+            }else {
+                message = e.data.message;
+            }
+            break;
+
+            case 423 :
+                message = e.data.message;
+            break;
+
+            default:
+                message = null;
+                this.setState(createError(e));
+        }
+
+        let notification = document.querySelector('.mdl-snackbar');
+        if(message){
+            notification.MaterialSnackbar.showSnackbar( {
+                message: message
+            });
+
             this.setState( {
                 badPassword: true
-            } );
-        } else {
-            this.setState(createError(e));
+            })
         }
+
     }
 
 };
