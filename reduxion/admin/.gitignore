@@ -9,5 +9,5 @@ build
 deploy/keys
 
 admin/..css
-admin/static/client/.sass-cache/
+admin/static/client/.sass-cache
 admin/static/css/style.css.map
