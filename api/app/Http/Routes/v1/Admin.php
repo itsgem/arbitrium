@@ -5,6 +5,20 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
 {
     Route::group(['prefix' => 'admin'], function()
     {
+        //-- API
+
+        Route::group(['prefix' => 'api-key'], function()
+        {
+            Route::get('generate',              ['uses' => 'api\ApiKeyController@generate']);
+
+            Route::group(['prefix' => 'ip-address'], function()
+            {
+                Route::patch('{ip_address}/assign', ['uses' => 'api\ApiIpAddressController@assign']);
+            });
+            Route::resource('ip-address', 'api\ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+        });
+        Route::resource('api-key', 'api\ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()
         {

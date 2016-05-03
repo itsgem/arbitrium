@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1\Api;
+namespace App\Http\Controllers\v1\Admin\Api;
 
 use App\Http\Requests\v1\Api\ApiIpAddressRequest;
 use App\Http\Requests\v1\Api\ApiIpAddressAssignRequest;

@@ -7,21 +7,6 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     {
         include('Admin.php');
         include('Client.php');
-
-        // API Keys
-        Route::resource('api-key', 'api\ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
-        Route::group(['prefix' => 'api-key'], function()
-        {
-            Route::get('generate',              ['uses' => 'api\ApiKeyController@generate']);
-
-        });
-
-        // IP Address
-        Route::resource('ip-address', 'api\ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
-        Route::group(['prefix' => 'ip-address'], function()
-        {
-            Route::patch('{ip_address}/assign', ['uses' => 'api\ApiIpAddressController@assign']);
-        });
     });
 
     Route::get('form/lists',    ['uses' => 'DropdownListsController@getListByType']);

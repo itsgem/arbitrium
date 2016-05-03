@@ -32,7 +32,7 @@ class ApiIpAddressServices extends NrbServices
     {
         return $this->respondWithData(
             ApiIpAddress::select(
-                'id', 'api_key_id', 'ip_address', 'created_at', 'updated_at', 'deleted_at'
+                'id', 'api_key_id', 'ip_address', 'name', 'created_at', 'updated_at', 'deleted_at'
             )
             ->with(['api_key' => function($query){
                 $query->select(
