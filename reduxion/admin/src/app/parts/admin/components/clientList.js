@@ -44,7 +44,7 @@ class UserManagementList extends React.Component {
   pagination (key, currentPage) {
     let className = "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-" + (key == currentPage ? 'active' : 'normal');
     return (
-        <button key={key} className={className} onClick={(e) => this.page(e, key)}>{key}</button>
+        <input type="button" ref={key == currentPage ? 'currentpage' : ''} key={key} className={className} onClick={(e) => this.page(e, key)} value={key} />
       );
   }
   prevPage (key, prev) {
@@ -105,6 +105,7 @@ class UserManagementList extends React.Component {
     let pagination = [];
     let users = {};
     let clientList = {last_page: 1};
+    let perPage = 10;
     if (this.props.clientList.size) {
       let i=0;
       counter = true;
@@ -115,6 +116,7 @@ class UserManagementList extends React.Component {
         pagination[i] = this.pagination(i, clientList.get('current_page'));
       }
       pagination[i+1] = this.nextPage(i+1, ((clientList.get('current_page') == clientList.get('last_page'))|| clientList.get('last_page') == 0 ? false : (clientList.get('current_page') + 1 )), clientList.get('last_page') );
+      perPage = clientList.get('per_page');
     }
     return (
       <div className="filter-search">
@@ -184,13 +186,57 @@ class UserManagementList extends React.Component {
           <div className="mdl-cell mdl-cell--6-col">
             {counter && pagination}
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
-            <button
-              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page">10</button>
+          <div className="mdl-cell mdl-cell--3-col tooltipBox">
+            <span className="tooltiptext">Items to show per page</span>
+            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
           </div>
         </div>
       </div>
     );
+  }
+  selectPageNumber (pageNum) {
+    let thisEvent = document.getElementById("numDisplay");
+    let btOne = document.querySelector("#bt-10");
+    let btTwo = document.querySelector("#bt-20");
+    let btThree = document.querySelector("#bt-50");
+    if (thisEvent.getAttribute("aria-expanded") == 'true') {
+      thisEvent.setAttribute("aria-expanded", "false");
+      btOne.style.opacity = "0";
+      btOne.style.transform = "scale(0)";
+      btOne.style.transitionDelay = "-127ms";
+
+      btTwo.style.opacity = "0";
+      btTwo.style.transform = "scale(0)";
+      btTwo.style.transitionDelay = "-62ms";
+
+      btThree.style.opacity = "0";
+      btThree.style.transform = "scale(0)";
+      btThree.style.transitionDelay = "3ms";
+    } else {
+      thisEvent.setAttribute("aria-expanded", "true");
+      btOne.style.opacity = "1";
+      btOne.style.transform = "scale(1)";
+      btOne.style.transitionDelay = "130ms";
+
+      btTwo.style.opacity = "1";
+      btTwo.style.transform = "scale(1)";
+      btTwo.style.transitionDelay = "65ms";
+
+      btThree.style.opacity = "1";
+      btThree.style.transform = "scale(1)";
+      btThree.style.transitionDelay = "0ms";
+    }
+  }
+  itemPage (e, pageNum = 10) {
+    this.selectPageNumber(pageNum);
+    let thisEvent = document.getElementById("numDisplay");
+    thisEvent.value = pageNum;
+
+    let currentPage = this.refs.currentpage.value;
+    this.page(e, currentPage);
   }
   modalConfirm (e, id, company) {
     let dialog = document.querySelector('dialog');
@@ -224,7 +270,7 @@ class UserManagementList extends React.Component {
     e.preventDefault();
     let payload = {
       page: pageNumber,
-      per_page: 10,
+      per_page: this.refs.pageNum.value,
       company_name: this.refs.company.value,
       email_address: this.refs.email_address.value,
       approval_status: this.refs.status.value
