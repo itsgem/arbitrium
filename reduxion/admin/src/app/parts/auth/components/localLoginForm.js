@@ -76,18 +76,20 @@ class LocalLoginForm extends React.Component {
             break;
 
             default:
-              message =''
+                message = null;
+                this.setState(createError(e));
         }
 
         let notification = document.querySelector('.mdl-snackbar');
-        console.log(notification)
-        notification.MaterialSnackbar.showSnackbar( {
-            message: message
-        });
+        if(message){
+            notification.MaterialSnackbar.showSnackbar( {
+                message: message
+            });
 
-        this.setState( {
-            badPassword: true
-        } );
+            this.setState( {
+                badPassword: true
+            })
+        }
 
     }
 
