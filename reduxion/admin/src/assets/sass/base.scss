@@ -14,9 +14,10 @@
 
 @import './forgot';
 @import './admin/common';
-@import './admin/_color';
+@import './_colors';
 @import './admin/_input-dropdown';
 @import './admin/adminClient';
+@import './admin/adminApi';
 
 // views
 @import './views/application';
