@@ -24,7 +24,15 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><a href="/coffee/client/new">Add New Client</a></li>
                     </ul>
                   </div>
-                  <Link className="mdl-layout__tab" to="/coffee">API</Link>
+                  <div className="container">
+                    <button id="demo-menu-api"
+                      className="mdl-button mdl-js-button">API</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-api">
+                      <li className="mdl-menu__item"><a href="/coffee/api/">API List</a></li>
+                      <li className="mdl-menu__item"><a href="/coffee/api/new/">Add New API</a></li>
+                    </ul>
+                  </div>
                   <Link className="mdl-layout__tab" to="/coffee">Pricing</Link>
                   <div className="container">
                     <button id="demo-menu-account"

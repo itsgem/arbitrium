@@ -13,9 +13,13 @@ import ConfirmResetPassword from 'parts/auth/containers/confirmResetPassword';
 import AdminClientList from 'parts/admin/containers/clientList';
 import AdminClientProfile from 'parts/admin/containers/clientProfile';
 import AdminClientAdd from 'parts/admin/containers/clientAdd';
+
 import AdminUserManagementList from 'parts/admin/containers/userManagementList';
 import AdminUserManagementAdd from 'parts/admin/containers/userManagementAdd';
 import AdminUserManagementEdit from 'parts/admin/containers/userManagementEdit';
+
+import ApiList from 'parts/admin/containers/apiList';
+import ApiAdd from 'parts/admin/containers/apiAdd';
 
 import NoMatch from './components/noMatch';
 
@@ -61,6 +65,10 @@ export default () => (
           <IndexRoute component={AdminClientList}  onEnter={requireAuth}/>
           <Route component={AdminClientAdd} path="new" onEnter={requireAuth}/>
           <Route component={AdminClientProfile} path=":id" onEnter={requireAuth}/>
+        </Route>
+        <Route path="api" onEnter={requireAuth}>
+          <IndexRoute component={ApiList}  onEnter={requireAuth}/>
+          <Route component={ApiAdd} path="new" onEnter={requireAuth}/>
         </Route>
         <Route path="account" onEnter={requireAuth}>
           <IndexRoute component={AdminUserManagementList} onEnter={requireAuth}/>
