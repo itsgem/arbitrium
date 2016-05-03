@@ -8,11 +8,11 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.adminUserManagementList();
+    this.props.adminUserManagementList({per_page: 10});
   },
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.adminDelete) {
-      nextProps.adminUserManagementList();
+      nextProps.adminUserManagementList({per_page: 10});
     }
   },
   render() {
