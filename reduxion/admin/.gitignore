@@ -7,3 +7,7 @@ node_modules
 build
 
 deploy/keys
+
+admin/..css
+admin/static/client/.sass-cache/
+admin/static/css/style.css.map
