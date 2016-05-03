@@ -1,62 +1,24 @@
-
-.error-page {
+.section-error {
 	height: 100%;
+	margin-top: 5%;
 
-	.error-msg {
+	.error-content {
 		background: #fff;
-		//@include vertical-align();
-		max-height: 415px;
-		max-width: 700px;
+		color: #454545;
+		min-height: 415px;
 		margin: 0 auto;
+		text-align: center;
+		padding: 50px;
 		position: relative;
-		padding-top: 1rem;
 
-		/* @include box-shadow($opacity);
-
-
-		@include breakpoint(small) {
-			@include border-radius($box-radius);
-		} */
-
-		h2, p {
-			color: #fff;
+		.md-display-1 {
+			font-size: 10em;
+			line-height: 1;
 		}
 
-		h2 {
-
-
-			span {
-
-				display: block;
-				font-size: 13rem;
-				line-height: 1;
-
-
-			}
-
-			em {
-				font-style: normal;
-				text-transform: uppercase;
-			}
-		}
-
-
-		.copy {
-			color: #fff;
-			background-color: blue;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			margin: 0;
-			width: 100%;
-			text-align: center;
-			padding: 0.8rem 0;
-			font-size: 12px;
-
-				/* @include breakpoint(small) {
-					@include border-bottom-radius($box-radius);
-				} */
-
+		.sub-title {
+			font-size: 3em;
+			text-transform: uppercase;
 		}
 	}
 }

@@ -56,7 +56,7 @@ class MailServices extends NrbServices
     public function clientVerifiedForApproval($user, $callback_url)
     {
         $this->sendMail('email.client_for_approval', [
-            'link'  => $callback_url.'/'.$user->client->id,
+            'link'  => $callback_url.'/',
             'to_email_address'  => SystemSetting::getAdminEmail(),
             'email_category'    => EmailLog::CLIENT_VERIFIED
         ]);

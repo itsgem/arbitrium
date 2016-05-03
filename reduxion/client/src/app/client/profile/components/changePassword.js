@@ -47,7 +47,8 @@ class ClientChangePassword extends React.Component {
 
       // Log out user when successfully changed password
       if (nextProps.responseSuccess && nextProps.responseSuccess.get('success')) {
-        this.context.router.push('/i/logout');
+        //this.context.router.push('/i/logout');
+        location.href ='/i/logout';
       }
     }
 
@@ -108,20 +109,21 @@ class ClientChangePassword extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            <div className="mdl-button-group">
+                              <button
+                                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                                  type="submit"
+                                  >
+                                  Save
+                              </button>
 
-                            <button
-                                className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                                type="submit"
-                                >
-                                Save
-                            </button>
-
-                            <button
-                                className="mdl-button mdl-js-button mdl-button--raised"
-                                type="button"
-                                >
-                                Cancel
-                            </button>
+                              <button
+                                  className="mdl-button mdl-js-button mdl-button--raised"
+                                  type="reset"
+                                  >
+                                  Cancel
+                              </button>
+                            </div>
                         </form>
                     </div>
         );

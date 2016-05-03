@@ -88,7 +88,6 @@ class ClientProfile extends React.Component {
                         id="new_email_address"
                         ref="new_email_address"
                         value={client.new_email_address}
-                        onChange={this.onChangeFields.bind(this)}
                         />
                       <label className="mdl-textfield__label" htmlFor="new_email_address">New Email Address *</label>
                       {errors && errors.new_email_address && <small className="mdl-textfield__error shown">{errors.new_email_address[0]}</small>}
@@ -96,21 +95,22 @@ class ClientProfile extends React.Component {
                   </div>
                 </div>
               </div>
+              <div className="mdl-button-group">
+                <button
+                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                  type="submit"
+                  >
+                  Request Reset Email
+                </button>
 
-              <button
-                className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                type="submit"
-                >
-                Request Reset Email
-              </button>
-
-              <button
-                className="mdl-button mdl-js-button mdl-button--raised"
-                type="button"
-                onClick={this.onClickResetEmail.bind(this)}
-                >
-                Cancel Request
-              </button>
+                <button
+                  className="mdl-button mdl-js-button mdl-button--raised"
+                  type="button"
+                  onClick={this.onClickResetEmail.bind(this)}
+                  >
+                  Cancel Request
+                </button>
+              </div>
             </form>
           </div>
     );
@@ -135,20 +135,11 @@ class ClientProfile extends React.Component {
 
   renderSuccess() {
     let success = this.state.success;
-    if(!success || (!success.get('success') && (success.get('success') == 'undefined' || success.get('success') == null))) return;
-
-    let response = {
-      success: (success.get('success')) ? success.get('success') : false,
-      statusClassName: (success.get('success')) ? 'success' : 'danger',
-      message: (success.get('message')) ? success.get('message') : {},
-      data: (success.get('data')) ? success.get('data') : {}
-    };
-
-    let notificationClass = 'bs-callout bs-callout-' + response.statusClassName + ' text-center animate bounceIn';
+    if(Object.keys(success).length === 0 && JSON.stringify(success) === JSON.stringify({})) return;
 
     return (
-      <div className={notificationClass} role="alert">
-        {response.message}
+      <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
+        {success.message}
       </div>
     );
   }
@@ -173,18 +164,6 @@ class ClientProfile extends React.Component {
   }
 
   // --- Events
-
-  onChangeFields(e) {
-    let client = this.state.client;
-
-    if (e.target.getAttribute('data-client')) {
-      client[e.target.getAttribute('data-client')][e.target.id] = e.target.value;
-    } else {
-      client[e.target.id] = e.target.value;
-    }
-
-    this.setState({client: client});
-  }
 
   onSubmitProfile(e) {
     e.preventDefault();

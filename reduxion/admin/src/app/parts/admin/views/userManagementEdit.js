@@ -20,10 +20,16 @@ export default React.createClass( {
       );
     }
   },
-  renderAdminInfo() {
-    if (this.props.adminEdit) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.adminEdit && !nextProps.loading) {
+      $('.msg').html('Client Successfully Updated').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
       this.context.router.push('/coffee/account');
     }
+  },
+  renderAdminInfo() {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
@@ -42,6 +48,8 @@ export default React.createClass( {
           validateUsername={this.props.validateUsername}
           adminInfo={this.props.adminInfo}
           adminUserManagementEdit={this.props.adminUserManagementEdit}
+          validateCompleted={this.props.validateCompleted}
+          adminEdit={this.props.adminEdit}
           role={this.props.role}
           />
       </div>

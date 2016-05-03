@@ -45,10 +45,12 @@ class ClientAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <button
-                className="md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope"
+                className={!this.props.validateCompleted || errors.username ?
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
+                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
                 id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>Check Availability</button>
+                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
             <div className="mdl-layout__content">
               <div className="mdl-cell mdl-cell--6-col">
@@ -190,7 +192,7 @@ class ClientAdd extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('rep_gender', errors)}>
                 <select
-                  className="mdl-select__input"
+                  className="mdl-textfield__input"
                   id='rep_gender'
                   ref="rep_gender" >
                   <option value=""></option>
@@ -281,6 +283,128 @@ class ClientAdd extends React.Component {
                 {errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
               </div>
             </div>
+            <div className="mdl-cell mdl-cell--9-col">
+              <legend>ALTERNATIVE REPRESENTATIVE</legend>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className={this.formClassNames('alt_first_name', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_first_name'
+                  ref="alt_first_name"
+                    />
+                <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className={this.formClassNames('alt_last_name', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_last_name'
+                  ref="alt_last_name"
+                    />
+                <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className={this.formClassNames('alt_email_address', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_email_address'
+                  ref="alt_email_address"
+                    />
+                <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail address</label>
+                {errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className={this.formClassNames('alt_gender', errors)}>
+                <select
+                  className="mdl-textfield__input"
+                  id='alt_gender'
+                  ref="alt_gender" >
+                  <option value=""></option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <legend>Mobile Number</legend>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <legend>Telephone Number</legend>
+            </div>
+            <div className="mdl-cell mdl-cell--2-col">
+              <div className={this.formClassNames('alt_mobile_code', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_mobile_code'
+                  ref="alt_mobile_code"
+                  />
+                <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Country Code</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--4-col">
+              <div className={this.formClassNames('alt_mobile_number', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_mobile_number'
+                  ref="alt_mobile_number"
+                  />
+                <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--2-col">
+              <div className={this.formClassNames('alt_phone_code', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_phone_code'
+                  ref="alt_phone_code"
+                  />
+                <label className="mdl-textfield__label" htmlFor="alt_phone_code">Country Code</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--4-col">
+              <div className={this.formClassNames('alt_phone_number', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_phone_number'
+                  ref="alt_phone_number"
+                  />
+                <label className="mdl-textfield__label" htmlFor="alt_phone_number">Telephone no.</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className={this.formClassNames('alt_position', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_position'
+                  ref="alt_position"
+                  />
+                <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className={this.formClassNames('alt_department', errors)}>
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  id='alt_department'
+                  ref="alt_department"
+                    />
+                <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
+              </div>
+            </div>
           </div>
           <div className="layout-gt-md-row layout-align-end-end btn">
             <div className="flex-order-gt-md-2 pd-10">
@@ -316,7 +440,9 @@ class ClientAdd extends React.Component {
     } );
     let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code,
         rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
-        rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department} = this.refs;
+        rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department,
+        alt_first_name, alt_last_name, alt_gender, alt_email_address, alt_mobile_code,
+        alt_mobile_number, alt_phone_code, alt_phone_number, alt_position, alt_department} = this.refs;
 
     let payload = {
       company_name: company_name.value,
@@ -337,7 +463,17 @@ class ClientAdd extends React.Component {
       rep_position: rep_position.value,
       rep_department: rep_department.value,
       email_address: email_address.value,
-      username: username.value
+      username: username.value,
+      alt_first_name: alt_first_name.value,
+      alt_last_name: alt_last_name.value,
+      alt_gender: alt_gender.value,
+      alt_email_address: alt_email_address.value,
+      alt_mobile_code: alt_mobile_code.value,
+      alt_mobile_number: alt_mobile_number.value,
+      alt_phone_code: alt_phone_code.value,
+      alt_phone_number: alt_phone_number.value,
+      alt_position: alt_position.value,
+      alt_department: alt_department.value,
     };
     window.componentHandler.upgradeDom();
     return validateRegister.call( this, payload )
@@ -372,7 +508,7 @@ function mapObject(object, callback) {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    company_name: { rule: 'required'},
+    company_name: { rule: 'required', label: 'comapany name'},
     street_address_1: { rule: 'required', label: 'Street address' },
     street_address_2: [],
     city: { rule: 'required', label: 'City' },
@@ -382,15 +518,33 @@ function validateRegister ( payload) {
     rep_first_name: { rule: 'required', label: 'first name' },
     rep_last_name: { rule: 'required', label: 'last name' },
     rep_gender: { rule: 'required', label: 'Gender' },
-    rep_email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+    rep_email_address: [
+      {rule: 'required', label: 'E-mail address'},
+      {rule: 'email', label: 'E-mail address'},
+      {rule: 'minLength:6', label: 'E-mail address'},
+      {rule: 'maxLength:64', label: 'E-mail address'} ],
     rep_mobile_code: { rule: 'required', label: 'Country Code' },
     rep_mobile_number: { rule: 'required', label: 'Mobile no.' },
     rep_phone_code: { rule: 'required', label: 'Country Code' },
     rep_phone_number: { rule: 'required', label: 'Phone no.' },
     rep_position: { rule: 'required', label: 'position' },
     rep_department: { rule: 'required', label: 'department' },
-    email_address:  ['required', 'email', 'minLength:6', 'maxLength:64' ],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+    email_address: [
+      {rule: 'required', label: 'E-mail address'},
+      {rule: 'email', label: 'E-mail address'},
+      {rule: 'minLength:6', label: 'E-mail address'},
+      {rule: 'maxLength:64', label: 'E-mail address'} ],
+    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
+    alt_first_name: [],
+    alt_last_name: [],
+    alt_gender: [],
+    alt_email_address: {rule: 'email', label: 'E-mail address'},
+    alt_mobile_code: [],
+    alt_mobile_number: [],
+    alt_phone_code: [],
+    alt_phone_number: [],
+    alt_position: [],
+    alt_department: [],
     } );
     return rules.run( payload );
 }

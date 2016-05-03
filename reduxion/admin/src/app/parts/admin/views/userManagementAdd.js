@@ -10,19 +10,16 @@ export default React.createClass( {
   componentWillMount(){
     this.props.listRoleAdmin();
   },
-  renderSuccess () {
-    if (this.props.registerCompleted) {
-      $('.msg').html('Client successfully added').addClass('bg-green');
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.registerCompleted && !nextProps.loading) {
+      $('.msg').html('Client Successfully Added').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
+      this.context.router.push('/coffee/account');
     }
   },
   render() {
-    this.renderSuccess();
-    if (this.props.registerCompleted) {
-      this.context.router.push('/coffee/account');
-    }
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
@@ -37,6 +34,7 @@ export default React.createClass( {
         <UserManagementAdd
             validateUsername={this.props.validateUsername}
             adminUserManagementAdd={this.props.adminUserManagementAdd}
+            validateCompleted={this.props.validateCompleted}
             role={this.props.role}
             />
       </div>

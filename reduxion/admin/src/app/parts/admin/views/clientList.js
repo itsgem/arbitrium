@@ -8,11 +8,11 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-   this.props.adminClientList();
+   this.props.adminClientList({per_page: 10});
   },
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.clientDeleteSuccess) {
-      nextProps.adminClientList();
+      nextProps.adminClientList({per_page: 10});
     }
   },
   render() {

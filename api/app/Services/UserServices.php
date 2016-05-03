@@ -30,7 +30,7 @@ class UserServices extends NrbServices
     {
         $user = auth()->user();
         $user->cancelChangeEmail();
-        return $this->respondWithSuccess();
+        return $this->respondWithSuccess([], trans("messages.success_cancel_email_change_request"));
     }
 
     // UsersController::changeEmail
@@ -39,7 +39,7 @@ class UserServices extends NrbServices
         $user = auth()->user();
         $user->sendChangeEmail($request->get('callback_url'), $request->get('new_email_address'));
 
-        return $this->respondWithSuccess();
+        return $this->respondWithSuccess([], trans("messages.success_email_change_request"));
     }
 
     // UsersController::getChangeEmailToken

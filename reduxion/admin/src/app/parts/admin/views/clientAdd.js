@@ -10,19 +10,17 @@ export default React.createClass( {
   componentWillMount(){
     this.props.country();
   },
-  renderSuccess () {
-    if (this.props.registerCompleted) {
-      $('.msg').html('Client successfully added').addClass('bg-green');
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.registerCompleted && !nextProps.loading) {
+      $('.msg').html('Client Successfully Added').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
+      this.context.router.push('/coffee/client/');
     }
   },
   render() {
-    this.renderSuccess();
-    if (this.props.registerCompleted) {
-      this.context.router.push('/coffee/client/');
-    }
+    //this.renderSuccess();
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
@@ -37,6 +35,8 @@ export default React.createClass( {
         <ClientAdd
           clientRegister={this.props.clientRegister}
           validateUsername={this.props.validateUsername}
+          registerCompleted={this.props.registerCompleted}
+          validateCompleted={this.props.validateCompleted}
           country={this.props.country}
           countryList={this.props.countryList}/>
       </div>

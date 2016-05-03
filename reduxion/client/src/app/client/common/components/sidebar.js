@@ -23,10 +23,10 @@ class ClientSidebar extends React.Component {
           <img src="https://s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png" className="demo-avatar" width="120"/>
         </header>
         <nav className="arbitrium-navigation mdl-navigation">
-          <Link className="mdl-navigation__link" to="/i"><i className="material-icons" role="presentation">home</i>Dashboard</Link>
-          <Link className="mdl-navigation__link" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>User</Link>
+          <a className="mdl-navigation__link" href="/i"><i className="material-icons" role="presentation">home</i>Dashboard</a>
+          <a className="mdl-navigation__link" href="/i/client/profile"><i className="material-icons" role="presentation">person</i>My Profile</a>
           <div className="mdl-layout-spacer"></div>
-          <Link className="mdl-navigation__link" to="/i/logout"><i className="material-icons" role="presentation">exit_to_app</i>Logout</Link>
+          <a className="mdl-navigation__link" href="/i/logout"><i className="material-icons" role="presentation">exit_to_app</i>Logout</a>
         </nav>
       </div>
     );

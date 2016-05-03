@@ -2,7 +2,8 @@ import React from 'react';
 import {Router, Link, History} from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
-import Country from '../../../parts/auth/components/country';
+import Country from '../../auth/components/country';
+
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 
@@ -19,7 +20,8 @@ class ClientProfile extends React.Component {
       errorServer: null,
       loading: false,
       isUsernameAvailable: null,
-      isAvailableUsernameButtonDisabled: false
+      isAvailableUsernameButtonDisabled: false,
+      isShowSuccess: false
     };
   }
 
@@ -129,6 +131,7 @@ class ClientProfile extends React.Component {
                               </div>
                               <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
                                   <button
+                                    id="check_availability"
                                     type="button"
                                     className="mdl-button mdl-js-button mdl-button--raised"
                                     onClick={this.onClickGetAvailableUsername.bind(this)}
@@ -563,19 +566,14 @@ class ClientProfile extends React.Component {
                           </div>
                       </div>
 
-                      <button
-                        className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                        type="submit"
-                        >
-                        Save
-                      </button>
-
-                      <button
-                        className="mdl-button mdl-js-button mdl-button--raised"
-                        type="button"
-                        >
-                        Cancel
-                      </button>
+                      <div className="mdl-button-group">
+                        <button
+                          className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                          type="submit"
+                          >
+                          Save
+                        </button>
+                      </div>
                   </form>
               </div>
     );
@@ -607,20 +605,11 @@ class ClientProfile extends React.Component {
 
   renderSuccess() {
     let success = this.state.success;
-    if(!success || (!success.get('success') && (success.get('success') == 'undefined' || success.get('success') == null))) return;
-
-    let response = {
-      success: (success.get('success')) ? success.get('success') : false,
-      statusClassName: (success.get('success')) ? 'success' : 'danger',
-      message: (success.get('message')) ? success.get('message') : {},
-      data: (success.get('data')) ? success.get('data') : {}
-    };
-
-    let notificationClass = 'bs-callout bs-callout-' + response.statusClassName + ' text-center animate bounceIn';
+    if(Object.keys(success).length === 0 && JSON.stringify(success) === JSON.stringify({})) return;
 
     return (
-      <div className={notificationClass} role="alert">
-        {response.message}
+      <div className="bs-callout bs-callout-success text-center animate bounceIn" role="alert">
+        {success.message}
       </div>
     );
   }
@@ -710,7 +699,6 @@ class ClientProfile extends React.Component {
       username: username.value,
       except_user_id: this.state.client.user.id
     }
-    console.log('=== onClickGetAvailableUsername() - payload : ', payload);
 
     window.componentHandler.upgradeDom();
     return this.validateAvailableUsername.call(this, payload)

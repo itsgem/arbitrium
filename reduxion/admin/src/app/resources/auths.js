@@ -91,7 +91,7 @@ export default {
       }
     });
   },
-  clientList(payload = {page: 1}) {
+  clientList(payload = {page: 1, per_page: 10}) {
     return get('admin/client',{
       params: payload
     });
@@ -109,30 +109,18 @@ export default {
   clientApprove(id) {
     return patch('admin/client/' + id + '/approve', {
       params: {
-        callback_url: window.location.origin
+        callback_url: "http://dev.w3.client.arbitriumgroup.com/i/"
       }
     });
   },
   clientDisapprove(id) {
-    return patch('admin/client/' + id + '/disapprove', {
-      params: {
-        callback_url: window.location.origin
-      }
-    });
+    return patch('admin/client/' + id + '/disapprove');
   },
   clientActivate(id) {
-    return patch('user/' + id + '/activate', {
-      params: {
-        callback_url: window.location.origin
-      }
-    });
+    return patch('user/' + id + '/activate');
   },
   clientDeactivate(id) {
-    return patch('user/' + id + '/deactivate', {
-      params: {
-        callback_url: window.location.origin
-      }
-    });
+    return patch('user/' + id + '/deactivate');
   },
   validateUsername(payload) {
     return get('user/available', {
@@ -164,6 +152,16 @@ export default {
         password_confirmation: payload.password_confirmation,
         email_address: payload.email_address,
         username: payload.username,
+        alt_first_name: payload.alt_first_name,
+        alt_last_name: payload.alt_last_name,
+        alt_gender: payload.alt_gender,
+        alt_email_address: payload.alt_email_address,
+        alt_mobile_code: payload.alt_mobile_code,
+        alt_mobile_number: payload.alt_mobile_number,
+        alt_phone_code: payload.alt_phone_code,
+        alt_phone_number: payload.alt_phone_number,
+        alt_position: payload.alt_position,
+        alt_department: payload.alt_department,
         callback_url: window.location.origin + "/forgot"
       }
     });
