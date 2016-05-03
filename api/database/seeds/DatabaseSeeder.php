@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CountrySeeder::class);
         $this->call(SystemSettingSeeder::class);
         $this->call(DropdownListSeeder::class);
+        $this->call(ApiKeySeeder::class);
+        $this->call(ApiIpAddressSeeder::class);
 
         Model::reguard();
     }

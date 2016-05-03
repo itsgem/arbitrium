@@ -27,8 +27,30 @@ class ApiIpAddress extends NrbModel
     }
 
     //---------- scopes
-    public function scopeApiKey($query, $client_id)
+    public function scopeApiKey($query, $api_key_id)
     {
-        return $query->where('api_key_id', $client_id);
+        return $query->where('api_key_id', $api_key_id);
+    }
+
+    //---------- helpers
+    public function canDelete()
+    {
+        //$is_client = (is_client_user_logged_in() && $this->client_id == get_logged_in_client_id());
+        $is_client = false;
+
+        // Can delete if user is admin or client that owns the API Key
+        if (is_admin_user_logged_in() || $is_client) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function assign($api_key_id)
+    {
+        if ($api_key_id) {
+            $this->api_key_id = $api_key_id;
+            $this->save();
+        }
     }
 }

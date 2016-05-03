@@ -65,7 +65,7 @@ class ApiKey extends NrbModel
 
     public function scopeTestKey($query, $flag = true)
     {
-        return $query->where('is_active', (int) $flag);
+        return $query->where('is_test_key', (int) $flag);
     }
 
     //---------- helpers
@@ -80,5 +80,10 @@ class ApiKey extends NrbModel
         }
 
         return false;
+    }
+
+    public function isActive($flag = true)
+    {
+        return $this->is_active == (int) $flag;
     }
 }

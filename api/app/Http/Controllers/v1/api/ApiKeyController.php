@@ -17,11 +17,12 @@ class ApiKeyController extends ApiController
     protected function getMethods()
     {
         return [
-            'destroy' => 'Delete API Key',
-            'index'   => 'Get all API Keys',
-            'show'    => 'Get single API Key',
-            'store'   => 'Add new API Key',
-            'update'  => 'Update API Key',
+            'destroy'  => 'Delete API Key',
+            'generate' => 'Generate API Key token',
+            'index'    => 'Get all API Keys',
+            'show'     => 'Get single API Key',
+            'store'    => 'Add new API Key',
+            'update'   => 'Update API Key',
         ];
     }
 

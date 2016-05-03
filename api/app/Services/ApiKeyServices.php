@@ -38,8 +38,8 @@ class ApiKeyServices extends NrbServices
             )
             ->with(['client' => function($query){
                 $query->select(
-                'id', 'user_id', 'company_name', 'rep_first_name', 'rep_last_name', 'rep_email_address',
-                'rep_phone_code', 'rep_phone_number', 'rep_mobile_code', 'rep_mobile_number', 'approval_status'
+                    'id', 'user_id', 'company_name', 'rep_first_name', 'rep_last_name', 'rep_email_address',
+                    'rep_phone_code', 'rep_phone_number', 'rep_mobile_code', 'rep_mobile_number', 'approval_status'
                 );
             }])
             ->paginate($request->get('per_page')),
