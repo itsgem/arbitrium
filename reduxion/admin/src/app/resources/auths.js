@@ -109,30 +109,18 @@ export default {
   clientApprove(id) {
     return patch('admin/client/' + id + '/approve', {
       params: {
-        callback_url: window.location.origin
+        callback_url: "http://dev.w3.client.arbitriumgroup.com/i/"
       }
     });
   },
   clientDisapprove(id) {
-    return patch('admin/client/' + id + '/disapprove', {
-      params: {
-        callback_url: window.location.origin
-      }
-    });
+    return patch('admin/client/' + id + '/disapprove');
   },
   clientActivate(id) {
-    return patch('user/' + id + '/activate', {
-      params: {
-        callback_url: window.location.origin
-      }
-    });
+    return patch('user/' + id + '/activate');
   },
   clientDeactivate(id) {
-    return patch('user/' + id + '/deactivate', {
-      params: {
-        callback_url: window.location.origin
-      }
-    });
+    return patch('user/' + id + '/deactivate');
   },
   validateUsername(payload) {
     return get('user/available', {
