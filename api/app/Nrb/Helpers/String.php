@@ -22,6 +22,12 @@ function generate_token($size = 32)
     return bin2hex(openssl_random_pseudo_bytes($size));
 }
 
+function generate_api_key_token($client_id = '')
+{
+    $now = Carbon\Carbon::now();
+    return Hash::make($client_id.' '.$now);
+}
+
 function replace_placeholders($string, $data)
 {
     if ($data && is_array($data))
