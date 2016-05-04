@@ -140,7 +140,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                   {errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-cell mdl-cell--4-col">
                 <div className={this.formClassNames('rep_gender')}>
                     <select
                       className="mdl-select__input"

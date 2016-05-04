@@ -1,49 +1,48 @@
 legend {
-  font-weight: 700;
-  padding-left: 10px;
+	padding-left: 10px;
 }
 #demo-menu-account {
-  color: #fff;
+	color: #fff;
 }
 .mdl-menu__container {
-  top: 60px!important;
+	top: 60px!important;
 }
 .mdl-menu__container:before {
-  background: transparent;
-  color: #FFF;
-  content: "\F10D";
-  display: block;
-  font-family: "Ionicons";
-  font-size: 24px;
-  height: 24px;
-  line-height: 24px;
-  margin-top: -16px;
-  position: absolute;
-  right: 5px;
-  text-align: right;
-  text-shadow: 1px -1px 5px rgba(0, 0, 0, 0.1);
+	background: transparent;
+	color: #FFF;
+	content: "\F10D";
+	display: block;
+	font-family: "Ionicons";
+	font-size: 24px;
+	height: 24px;
+	line-height: 24px;
+	margin-top: -16px;
+	position: absolute;
+	right: 5px;
+	text-align: right;
+	text-shadow: 1px -1px 5px rgba(0, 0, 0, 0.1);
 }
 .mdl-menu__container ul li a{
-  font-size: 15px;
-  float: none;
-  padding: 10px 15px;
-  display: block;
+	font-size: 15px;
+	float: none;
+	padding: 10px 15px;
+	display: block;
 }
 .mdl-menu__container ul {
-  width: 200px;
+	width: 200px;
 }
 #check_availability {
-  display: inline-block;
-  float: none;
-  vertical-align: middle;
-  color: #fff;
-  font-size: 12px;
-  line-height: normal;
-  padding: 4px 15px;
-  height: 21px;
-  background-color: rgb(255,64,129);
+	background-color: rgb(255,64,129);
+	color: #fff;
+	display: inline-block;
+	float: none;
+	font-size: 12px;
+	height: 21px;
+	line-height: normal;
+	padding: 4px 15px;
+	vertical-align: middle;
 }
 
 .mdl-button-group .mdl-button {
-  margin: 0 10px;
+	margin: 0 10px;
 }

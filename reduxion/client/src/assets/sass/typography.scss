@@ -3,42 +3,69 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
 $font-family: 'Roboto Condensed', sans-serif;
 
+// Typography
+@import url(https://fonts.googleapis.com/css?family=Poppins:400,600);
+html {
+  font-size: 62.5%;
+  font-family: $font-family;
+  line-height: 1.5;
+}
+body {
+  font-family: $font-family;
+  font-size: 1.5rem;
+}
+
+a {
+  font-size: 1.6rem;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family;
   margin-bottom: 1rem;
   margin-top: 0;
 }
+
 h1 {
   font-size: 3.400rem;
   font-weight: $base-font-weight;
   line-height: 4rem;
 }
+
 h2 {
   font-size: 2.400rem;
   font-weight: $base-font-weight;
   line-height: 3.2rem;
 }
+
 h3 {
   font-size: 2.000rem;
   font-weight: 400;
   letter-spacing: 0.005em;
 }
+
 h4 {
   font-size: 1.600rem;
   font-weight: $base-font-weight;
   letter-spacing: 0.010em;
   line-height: 2.4rem;
 }
+
 legend {
+  color: #0E1F79;
   display: block;
-  font-size: 1.200rem;
-  font-weight: $base-font-weight;
-  letter-spacing: 0.010em;
+  font-weight: $bold-font-weight;
+  letter-spacing: 0.0.5em;
   line-height: 2.0rem;
   text-transform: uppercase;
-  color: #0E1F79;
 }
+
 p {
+  font-size: 1.5rem;
   font-weight: $base-font-weight;
   letter-spacing: 0.010em;
   margin: 0 0 1em;
@@ -47,4 +74,9 @@ p {
 label {
   text-transform: uppercase;
   font-weight: $md-font-weight;
+}
+
+.mdl-textfield__input,
+input, textarea {
+  font-size: 15px;
 }

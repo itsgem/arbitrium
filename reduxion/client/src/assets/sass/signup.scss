@@ -13,10 +13,6 @@ a.md-button.md-formal-blue-theme.md-hue-1.md-primary.md-raised, a.md-button.md-f
     justify-content: flex-end;
 }
 
-button, select, html, textarea, input {
-    font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
-}
-
 .margin-bottom-10 {
     margin-bottom: 10px!important;
 }
@@ -72,7 +68,7 @@ button, select, html, textarea, input {
     text-align: center;
     text-transform: uppercase;
     font-weight: 500;
-    font-size: 14px;
+    // font-size: 14px;
     font-style: inherit;
     font-variant: inherit;
     text-decoration: none;
@@ -82,7 +78,7 @@ button, select, html, textarea, input {
 }
 .mdl-select {
   position: relative;
-  font-size: 16px;
+  // font-size: 1.5em;
   display: inline-block;
   box-sizing: border-box;
   width: 300px;
@@ -101,9 +97,9 @@ button, select, html, textarea, input {
   background: 16px;
   text-align: left;
   color: inherit;
-  font-size: 11px;
+  // font-size: 1.4em;
   font-weight: 400;
-  height: 23px;
+  height: 27px;
 }
 
 .mdl-select.is-focused .mdl-select__input { outline: none; }
@@ -120,7 +116,7 @@ button, select, html, textarea, input {
 .mdl-select__label {
   bottom: 0;
   color: rgba(0,0,0, 0.26);
-  font-size: 16px;
+  // font-size: 1.5em;
   left: 0;
   right: 0;
   pointer-events: none;
@@ -144,7 +140,7 @@ button, select, html, textarea, input {
 .mdl-select--floating-label.is-focused .mdl-select__label,
 .mdl-select--floating-label.is-dirty .mdl-select__label {
   color: rgb(63,81,181);
-  font-size: 12px;
+  // font-size: 1.5em;
   top: 4px;
   visibility: visible;
 }
@@ -156,7 +152,7 @@ button, select, html, textarea, input {
 
 .mdl-select--floating-label.is-invalid .mdl-select__label {
   color: rgb(222, 50, 38);
-  font-size: 12px;
+  // font-size: 1.5em;
 }
 
 .mdl-select__label:after {
@@ -187,7 +183,7 @@ button, select, html, textarea, input {
 .mdl-select__error {
   color: rgb(222, 50, 38);
   position: absolute;
-  font-size: 12px;
+  // font-size: 12px;
   margin-top: 3px;
   visibility: hidden;
 }
@@ -326,3 +322,7 @@ div#application {
 .to-login {
   margin-top: 20px;
 }
+.mdl-button {
+  font-size: 15px;
+}
+

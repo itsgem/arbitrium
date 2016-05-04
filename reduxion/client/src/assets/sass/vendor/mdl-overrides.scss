@@ -291,3 +291,18 @@ $loader-max-height: 16px;
     -moz-transform: translateY(-20px);
   }
 }
+
+.mdl-select__input {
+  height: 27px;
+}
+
+.mdl-textfield__input {
+  font-size: inherit;
+}
+
+.mdl-textfield__label {
+  font-size: inherit;
+}
+.mdl-button {
+  font-size: 1.5em;
+}
