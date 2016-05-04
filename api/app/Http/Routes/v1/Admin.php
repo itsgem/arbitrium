@@ -5,6 +5,28 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
 {
     Route::group(['prefix' => 'admin'], function()
     {
+        //-- API
+        Route::group(['namespace' => 'api'], function()
+        {
+            Route::group(['prefix' => 'api-key'], function()
+            {
+                Route::get('generate',            ['uses' => 'ApiKeyController@generate']);
+                Route::group(['prefix' => '{api_key}'], function()
+                {
+                    Route::post('permission',     ['uses' => 'ApiKeyController@addPermission']);
+                    Route::patch('permission',    ['uses' => 'ApiKeyController@updatePermission']);
+                    Route::delete('permission',   ['uses' => 'ApiKeyController@removePermission']);
+                });
+
+                Route::group(['prefix' => 'ip-address'], function()
+                {
+                    Route::patch('{ip_address}/assign', ['uses' => 'ApiIpAddressController@assign']);
+                });
+                Route::resource('ip-address', 'ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+            });
+            Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+        });
+
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()
         {
