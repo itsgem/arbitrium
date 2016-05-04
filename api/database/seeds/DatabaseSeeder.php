@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DropdownListSeeder::class);
         $this->call(ApiKeySeeder::class);
         $this->call(ApiIpAddressSeeder::class);
+        $this->call(ApiPermissionSeeder::class);
+        $this->call(ApiKeyPermissionSeeder::class);
 
         Model::reguard();
     }

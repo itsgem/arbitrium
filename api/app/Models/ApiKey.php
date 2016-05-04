@@ -19,7 +19,6 @@ class ApiKey extends NrbModel
         'token',
         'name',
         'description',
-        'api_permissions',
         'is_api_call_restricted',
         'is_whitelist',
         'is_active',
@@ -35,6 +34,11 @@ class ApiKey extends NrbModel
     public function ip_addresses()
     {
         return $this->hasMany(ApiIpAddress::class);
+    }
+
+    public function permissions()
+    {
+        return $this->hasMany(ApiKeyPermission::class);
     }
 
     //---------- scopes

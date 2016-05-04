@@ -18,7 +18,6 @@ class CreateApiKeysTable extends Migration
             $table->string('token', 500)->nullable();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->text('api_permissions')->nullable();
 
             $table->enum('is_api_call_restricted', [0, 1])->default(0);
             $table->enum('is_whitelist', [0, 1])->default(0);

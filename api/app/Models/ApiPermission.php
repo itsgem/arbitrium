@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use App\Nrb\NrbModel;
 
 class ApiPermission extends NrbModel
@@ -16,11 +14,11 @@ class ApiPermission extends NrbModel
         'parent_id',
     ];
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
-    //---------- helpers
-    public function template()
+    //---------- scopes
+    public function scopeSlug($query, $slug)
     {
-        return [];
+        return $query->where('slug', $slug);
     }
 }

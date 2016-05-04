@@ -6,10 +6,12 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
     Route::group(['prefix' => 'admin'], function()
     {
         //-- API
-
         Route::group(['prefix' => 'api-key'], function()
         {
-            Route::get('generate',              ['uses' => 'api\ApiKeyController@generate']);
+            Route::get('generate',                  ['uses' => 'api\ApiKeyController@generate']);
+            Route::post('{api_key}/permission',     ['uses' => 'api\ApiKeyController@addPermission']);
+            Route::patch('{api_key}/permission',    ['uses' => 'api\ApiKeyController@updatePermission']);
+            Route::delete('{api_key}/permission',   ['uses' => 'api\ApiKeyController@removePermission']);
 
             Route::group(['prefix' => 'ip-address'], function()
             {

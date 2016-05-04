@@ -30,5 +30,7 @@ return [
     Errors::INVALID_PAGE_SEQUENCE   => 'Invalid page no sequence',
     Errors::OTHER_ANSWER_TEXT_LOGIC => 'Can only add Other as answer option once.',
     Errors::INSUFFICIENT_CREDIT     => 'Your remaining credit balance in your account is insufficient. Please purchase additional credits.',
-    Errors::EXISTING_SUBSCRIPTION   => 'You have an existing subscription.'
+    Errors::EXISTING_SUBSCRIPTION   => 'You have an existing subscription.',
+    Errors::EXISTING_API_KEY_PERMISSION => 'You have an existing API Key Permission.',
+    Errors::API_KEY_PERMISSION_NOT_FOUND => 'API Key Permission not found.'
 ];
