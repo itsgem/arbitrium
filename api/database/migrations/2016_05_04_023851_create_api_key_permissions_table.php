@@ -16,7 +16,7 @@ class CreateApiKeyPermissionsTable extends Migration
             $table->increments('id');
             $table->integer('api_key_id')->unsigned();
             $table->integer('api_permission_id')->unsigned();
-            $table->enum('value', [0, 1])->default(1);
+            $table->boolean('value')->default(false); //set default as true in controller
 
             $table->foreign('api_key_id')->references('id')->on('api_keys')->onDelete('cascade');
             $table->foreign('api_permission_id')->references('id')->on('api_permissions')->onDelete('cascade');

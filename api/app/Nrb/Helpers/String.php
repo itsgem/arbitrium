@@ -24,8 +24,7 @@ function generate_token($size = 32)
 
 function generate_api_key_token($client_id = '')
 {
-    $now = Carbon\Carbon::now();
-    return Hash::make($client_id.' '.$now);
+    return Hash::make($client_id.' '.current_datetime());
 }
 
 function replace_placeholders($string, $data)

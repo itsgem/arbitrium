@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 
-class ApiPermissionSeeder extends Seeder
+class TestApiPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,19 +12,25 @@ class ApiPermissionSeeder extends Seeder
     public function run()
     {
         DB::statement("SET FOREIGN_KEY_CHECKS = 0");
-        DB::table('api_permissions')->truncate();
+
+        $ids = [999000001, 999000002, 999000003];
+        DB::table('api_permissions')->whereIn('id', $ids)->delete();
+
         $data = [
             [
+                'id'        => 999000001,
                 'slug'      => 'loan',
                 'name'      => 'Loan',
                 'parent_id' => '',
             ],
             [
+                'id'        => 999000002,
                 'slug'      => 'credit_card',
                 'name'      => 'Credit Card',
                 'parent_id' => '',
             ],
             [
+                'id'        => 999000003,
                 'slug'      => 'life_insurance',
                 'name'      => 'Life Insurance',
                 'parent_id' => '',

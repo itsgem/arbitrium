@@ -8,8 +8,6 @@ use App\Errors;
 use App\Models\ApiKey;
 use App\Models\ApiKeyPermission;
 use App\Nrb\NrbServices;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class ApiKeyServices extends NrbServices
 {
@@ -67,9 +65,13 @@ class ApiKeyServices extends NrbServices
     // Api\ApiKeyController::store
     public function store($request)
     {
-        return DB::transaction(function () use ($request)
+        // Transform payload to eloquent format, set defaults
+        $payload = $request->all();
+        $payload['is_active'] = (array_key_exists('is_active', $payload)) ? $payload['is_active'] : true;
+
+        return DB::transaction(function () use ($payload)
         {
-            $api_key = ApiKey::create($request->all());
+            $api_key = ApiKey::create($payload);
             return $this->respondWithSuccess($api_key);
         });
     }
@@ -114,37 +116,34 @@ class ApiKeyServices extends NrbServices
 
     // Api\ApiKeyController::updatePermission
     public function updatePermission($request, $id)
-    {;
+    {
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
 
         if (!ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::API_KEY_PERMISSION_NOT_FOUND);
+            return $this->respondWithError(Errors::NOT_FOUND);
         }
 
         return DB::transaction(function () use ($payload)
         {
-            $api_key_permission = ApiKeyPermission::permission($payload);
-            $api_key_permission->update([
+            ApiKeyPermission::permission($payload)->update([
                 'value' => $payload['value']
             ]);
 
-            $api_key_permission = ApiKeyPermission::permission($payload)->first();
-
-            return $this->respondWithSuccess($api_key_permission);
+            return $this->respondWithSuccess();
         });
     }
 
     // Api\ApiKeyController::removePermission
     public function removePermission($request, $id)
-    {;
+    {
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
 
         if (!ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::API_KEY_PERMISSION_NOT_FOUND);
+            return $this->respondWithError(Errors::NOT_FOUND);
         }
 
         return DB::transaction(function () use ($payload)

@@ -6,20 +6,26 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
     Route::group(['prefix' => 'admin'], function()
     {
         //-- API
-        Route::group(['prefix' => 'api-key'], function()
+        Route::group(['namespace' => 'api'], function()
         {
-            Route::get('generate',                  ['uses' => 'api\ApiKeyController@generate']);
-            Route::post('{api_key}/permission',     ['uses' => 'api\ApiKeyController@addPermission']);
-            Route::patch('{api_key}/permission',    ['uses' => 'api\ApiKeyController@updatePermission']);
-            Route::delete('{api_key}/permission',   ['uses' => 'api\ApiKeyController@removePermission']);
-
-            Route::group(['prefix' => 'ip-address'], function()
+            Route::group(['prefix' => 'api-key'], function()
             {
-                Route::patch('{ip_address}/assign', ['uses' => 'api\ApiIpAddressController@assign']);
+                Route::get('generate',            ['uses' => 'ApiKeyController@generate']);
+                Route::group(['prefix' => '{api_key}'], function()
+                {
+                    Route::post('permission',     ['uses' => 'ApiKeyController@addPermission']);
+                    Route::patch('permission',    ['uses' => 'ApiKeyController@updatePermission']);
+                    Route::delete('permission',   ['uses' => 'ApiKeyController@removePermission']);
+                });
+
+                Route::group(['prefix' => 'ip-address'], function()
+                {
+                    Route::patch('{ip_address}/assign', ['uses' => 'ApiIpAddressController@assign']);
+                });
+                Route::resource('ip-address', 'ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
             });
-            Route::resource('ip-address', 'api\ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+            Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
         });
-        Route::resource('api-key', 'api\ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()

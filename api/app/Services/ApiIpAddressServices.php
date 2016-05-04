@@ -7,8 +7,6 @@ use DB;
 use App\Errors;
 use App\Models\ApiIpAddress;
 use App\Nrb\NrbServices;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class ApiIpAddressServices extends NrbServices
 {
@@ -68,9 +66,13 @@ class ApiIpAddressServices extends NrbServices
     // Api\ApiIpAddressController::store
     public function store($request)
     {
-        return DB::transaction(function () use ($request)
+        // Transform payload to eloquent format, set defaults
+        $payload = $request->all();
+        $payload['value'] = (array_key_exists('value', $payload)) ? $payload['value'] : true;
+
+        return DB::transaction(function () use ($payload)
         {
-            $api_ip = ApiIpAddress::create($request->all());
+            $api_ip = ApiIpAddress::create($payload);
             return $this->respondWithSuccess($api_ip);
         });
     }

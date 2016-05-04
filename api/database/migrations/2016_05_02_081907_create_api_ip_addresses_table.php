@@ -15,7 +15,7 @@ class CreateApiIpAddressesTable extends Migration
         Schema::create('api_ip_addresses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('api_key_id')->unsigned()->nullable();
-            $table->string('ip_address');
+            $table->string('ip_address')->nullable();
             $table->string('name')->nullable();
 
             $table->timestamps();

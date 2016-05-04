@@ -14,8 +14,8 @@ class CreateApiPermissionsTable extends Migration
     {
         Schema::create('api_permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug');
-            $table->string('name');
+            $table->string('slug')->nullable();
+            $table->string('name')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
         });
     }

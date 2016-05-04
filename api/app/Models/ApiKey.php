@@ -75,8 +75,7 @@ class ApiKey extends NrbModel
     //---------- helpers
     public function canDelete()
     {
-        //$is_client = (is_client_user_logged_in() && $this->client_id == get_logged_in_client_id());
-        $is_client = false;
+        $is_client = (is_client_user_logged_in() && $this->client_id == get_logged_in_client_id());
 
         // Can delete if user is admin or client that owns the API Key
         if (is_admin_user_logged_in() || $is_client) {

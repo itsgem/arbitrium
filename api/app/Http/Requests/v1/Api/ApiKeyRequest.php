@@ -19,7 +19,7 @@ class ApiKeyRequest extends NrbRequest
         {
             $rules = [
                 'client_id'              => 'required|exists:clients,id',
-                'token'                  => 'required',
+                'token'                  => 'required|max:500',
                 'name'                   => 'required|max:255',
                 'description'            => 'max:255',
                 'api_permissions'        => 'array',

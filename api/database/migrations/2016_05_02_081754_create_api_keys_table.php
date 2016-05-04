@@ -14,15 +14,15 @@ class CreateApiKeysTable extends Migration
     {
         Schema::create('api_keys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id')->unsigned();
+            $table->integer('client_id')->unsigned()->nullable();
             $table->string('token', 500)->nullable();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('description')->nullable();
 
-            $table->enum('is_api_call_restricted', [0, 1])->default(0);
-            $table->enum('is_whitelist', [0, 1])->default(0);
-            $table->enum('is_active', [0, 1])->default(1);
-            $table->enum('is_test_key', [0, 1])->default(0);
+            $table->boolean('is_api_call_restricted')->default(false);
+            $table->boolean('is_whitelist')->default(false);
+            $table->boolean('is_active')->default(false); //set default as true in controller
+            $table->boolean('is_test_key')->default(false);
 
             $table->timestamps();
             $table->softDeletes()->nullable();
