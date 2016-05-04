@@ -21,7 +21,6 @@ import ClientChangeEmail from 'client/profile/containers/changeEmail';
 import NoMatch from './components/noMatch';
 
 function requireAuth(nextState, replace, cb) {
-
   if(!localStorage.getItem('token')) {
     replace({
       pathname: '/i/login',
@@ -39,7 +38,7 @@ function requireAuth(nextState, replace, cb) {
 
   if(localStorage.getItem('token') && localStorage.getItem('expired') > moment().valueOf()) {
     let lifetime = localStorage.getItem('lifetime');
-    let expired = moment().add(parseInt(lifetime),'minutes').valueOf();
+    let expired = moment().add(lifetime,'minutes').valueOf();
     localStorage.setItem('expired', expired);
   }
 
