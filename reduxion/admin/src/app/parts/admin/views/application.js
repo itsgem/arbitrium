@@ -1,6 +1,5 @@
 import React from 'react';
-//import ThemeManager from 'material-ui/lib/styles/theme-manager';
-//import MyRawTheme from './rawTheme';
+
 
 import Debug from 'debug';
 let debug = new Debug("views:app");
