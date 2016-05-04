@@ -36,7 +36,7 @@ class ApiIpAddressServices extends NrbServices
             )
             ->with(['api_key' => function($query){
                 $query->select(
-                    'id', 'client_id', 'token', 'name', 'description', 'api_permissions',
+                    'id', 'client_id', 'token', 'name', 'description',
                     'is_api_call_restricted', 'is_whitelist', 'is_active', 'is_test_key',
                     'created_at', 'updated_at', 'deleted_at'
                 );
@@ -50,11 +50,11 @@ class ApiIpAddressServices extends NrbServices
     public function show($request, $id)
     {
         $api_ip = new ApiIpAddress();
-        if ($request->get('with-api_key'))
+        if ($request->get('with-api-key'))
         {
             $api_ip = $api_ip->with(['api_key' => function($query){
                 $query->select(
-                    'id', 'client_id', 'token', 'name', 'description', 'api_permissions',
+                    'id', 'client_id', 'token', 'name', 'description',
                     'is_api_call_restricted', 'is_whitelist', 'is_active', 'is_test_key',
                     'created_at', 'updated_at', 'deleted_at'
                 );
@@ -62,7 +62,6 @@ class ApiIpAddressServices extends NrbServices
         }
 
         $api_ip = $api_ip->findOrFail($id);
-        $this->addResponseData($api_ip);
         return $this->respondWithSuccess($api_ip);
     }
 
