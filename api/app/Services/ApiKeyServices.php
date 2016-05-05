@@ -94,7 +94,8 @@ class ApiKeyServices extends NrbServices
         return $this->respondWithSuccess(['token' => $token]);
     }
 
-    // Api\ApiKeyController::addPermission
+    // Admin\Api\ApiKeyController::addPermission
+    // Client\Api\ApiKeyController::addPermission
     public function addPermission($request, $id)
     {
         // Transform payload to eloquent format
@@ -108,7 +109,8 @@ class ApiKeyServices extends NrbServices
         });
     }
 
-    // Api\ApiKeyController::updatePermission
+    // Admin\Api\ApiKeyController::updatePermission
+    // Client\Api\ApiKeyController::updatePermission
     public function updatePermission($request, $id)
     {
         // Transform payload to eloquent format
@@ -125,7 +127,8 @@ class ApiKeyServices extends NrbServices
         });
     }
 
-    // Api\ApiKeyController::removePermission
+    // Admin\Api\ApiKeyController::removePermission
+    // Client\Api\ApiKeyController::removePermission
     public function removePermission($request, $id)
     {
         // Transform payload to eloquent format
