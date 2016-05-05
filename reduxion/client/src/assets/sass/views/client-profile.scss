@@ -18,8 +18,8 @@ div#application{
   color: #777777;
 
   h4 {
-	margin-top: 0;
-	margin-bottom: 5px;
+  	margin-top: 0;
+  	margin-bottom: 5px;
   }
 
   &.bs-callout-info h4 {color: #1b809e;}
@@ -220,11 +220,7 @@ div#application{
   }
 }
 .mdl-textfield {
-  .mdl-textfield__input {
-    line-height: 34px;
-    font-size: 14px;
-  }
-
+  
   textarea.mdl-textfield__input {
     line-height: initial;
     min-height: 100px;
@@ -232,7 +228,6 @@ div#application{
 
   .textfield-caption {
     color: #aaa;
-    font-size: 11px;
     font-weight: 100;
     position: absolute;
     padding-top: 10px;
