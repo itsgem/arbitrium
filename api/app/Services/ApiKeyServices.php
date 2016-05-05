@@ -4,7 +4,7 @@ namespace App\Services;
 
 use DB;
 
-use App\Errors;
+use App\Models\ApiIpAddress;
 use App\Models\ApiKey;
 use App\Models\ApiKeyPermission;
 use App\Nrb\NrbServices;
@@ -59,10 +59,21 @@ class ApiKeyServices extends NrbServices
         $payload = $request->all();
         $payload['is_active'] = (array_key_exists('is_active', $payload)) ? $payload['is_active'] : true;
         $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
+        $payload['permissions'] = (array_key_exists('permissions', $payload)) ? $payload['permissions'] : [];
+        $payload['ip_addresses'] = (array_key_exists('ip_addresses', $payload)) ? $payload['ip_addresses'] : [];
 
         return DB::transaction(function () use ($payload)
         {
             $api_key = ApiKey::create($payload);
+
+            foreach($payload['permissions'] as $permission) {
+                $api_key->permissions()->save(new ApiKeyPermission($permission));
+            }
+
+            foreach($payload['ip_addresses'] as $ip_address) {
+                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
+            }
+
             return $this->respondWithSuccess($api_key);
         });
     }
@@ -74,11 +85,23 @@ class ApiKeyServices extends NrbServices
         // Transform payload to eloquent format, set defaults
         $payload = $request->all();
         $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
+        $payload['permissions']  = (array_key_exists('permissions', $payload)) ? $payload['permissions'] : [];
+        $payload['ip_addresses'] = (array_key_exists('ip_addresses', $payload)) ? $payload['ip_addresses'] : [];
 
         return DB::transaction(function () use ($payload, $id, $client_id)
         {
             $api_key = ApiKey::clientId($client_id)->findOrFail($id);
             $api_key->update($payload);
+
+            ApiKeyPermission::apiKeyId($id)->delete();
+            foreach($payload['permissions'] as $permission) {
+                $api_key->permissions()->save(new ApiKeyPermission($permission));
+            }
+
+            ApiIpAddress::apiKeyId($id)->delete();
+            foreach($payload['ip_addresses'] as $ip_address) {
+                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
+            }
 
             return $this->respondWithSuccess();
         });
