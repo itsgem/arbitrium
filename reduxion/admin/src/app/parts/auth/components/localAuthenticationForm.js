@@ -19,6 +19,8 @@ class LocalAuthenticationForm extends React.Component {
     render() {
         let {errors} = this.props;
         return (
+
+
             <div className="local-signin-form">
                 <form className="mdl-shadow--2dp" action={ this.signup }>
                     { !this.props.hideEmail &&
@@ -33,7 +35,6 @@ class LocalAuthenticationForm extends React.Component {
                             {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
                         </div>
                     }
-
                     <div className={this.formClassNames('password')}>
                         <input
                             className="mdl-textfield__input"

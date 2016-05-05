@@ -70,7 +70,7 @@ div#application {
 
     form {
       background: #fff;
-      border-radius: 3px;
+      border-radius: 0 0 3px 3px;
       display: block;
       margin: auto;
       padding: 16px;
@@ -105,10 +105,10 @@ div#application {
 
       &:not(:disabled) {
         &.primary {
-          @include cyan-button;
+          background: #ff6600;
         }
         &.secondary {
-          @include purple-button;
+          background: #0e3192;
         }
       }
     }

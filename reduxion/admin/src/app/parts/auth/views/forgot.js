@@ -201,4 +201,3 @@ function mapObject(object, callback) {
       return callback(key, object[key]);
   });
 }
-
