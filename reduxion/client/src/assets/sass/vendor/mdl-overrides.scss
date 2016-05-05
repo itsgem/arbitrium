@@ -292,6 +292,11 @@ $loader-max-height: 16px;
   }
 }
 
+/*
+*
+* Form and field
+*
+*/
 .mdl-select__input {
   height: 27px;
 }
@@ -303,6 +308,18 @@ $loader-max-height: 16px;
 .mdl-textfield__label {
   font-size: inherit;
 }
-.mdl-button {
-  font-size: 1.5em;
+
+/*
+*
+* Buttons
+*
+*/
+
+.mdl-button--accent.mdl-button--accent.mdl-button--raised,
+.mdl-button--accent.mdl-button--accent.mdl-button--fab,
+.mdl-button--accent {
+  background: $base-orange;
+  color: #fff;
 }
+
+
