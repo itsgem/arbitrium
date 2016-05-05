@@ -1,21 +1,3 @@
-a.md-button.md-formal-blue-theme.md-hue-1.md-raised[disabled], a.md-button.md-formal-blue-theme.md-hue-1.md-fab[disabled], .md-button.md-formal-blue-theme.md-hue-1.md-raised[disabled], .md-button.md-formal-blue-theme.md-hue-1.md-fab[disabled] {
-    background-color: rgba(0,0,0,0.12);
-}
-
-a.md-button.md-formal-blue-theme.md-hue-1.md-primary.md-raised, a.md-button.md-formal-blue-theme.md-hue-1.md-primary.md-fab, .md-button.md-formal-blue-theme.md-hue-1.md-primary.md-raised, .md-button.md-formal-blue-theme.md-hue-1.md-primary.md-fab {
-    color: rgba(255,255,255,0.87);
-    background-color: rgb(107,99,158);
-}
-
-.layout-align-end, .layout-align-end-center, .layout-align-end-start, .layout-align-end-end {
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-}
-
-button, select, html, textarea, input {
-    font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
-}
 
 .margin-bottom-10 {
     margin-bottom: 10px!important;
@@ -34,55 +16,17 @@ button, select, html, textarea, input {
 }
 
 .login-frame .link {
-    color: #336;
-}
-
-.md-button {
-    letter-spacing: .01em;
+  color: #336;
 }
 
 .full-width {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.md-button {
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: currentColor;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    position: relative;
-    outline: none;
-    border: 0;
-    display: inline-block;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 0 6px;
-    margin: 6px 8px;
-    line-height: 36px;
-    min-height: 36px;
-    background: 0 0;
-    white-space: nowrap;
-    min-width: 88px;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    font-style: inherit;
-    font-variant: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    overflow: hidden;
-    transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
-}
 .mdl-select {
   position: relative;
-  font-size: 16px;
   display: inline-block;
   box-sizing: border-box;
   width: 300px;
@@ -101,9 +45,8 @@ button, select, html, textarea, input {
   background: 16px;
   text-align: left;
   color: inherit;
-  font-size: 11px;
   font-weight: 400;
-  height: 23px;
+  height: 27px;
 }
 
 .mdl-select.is-focused .mdl-select__input { outline: none; }
@@ -120,7 +63,6 @@ button, select, html, textarea, input {
 .mdl-select__label {
   bottom: 0;
   color: rgba(0,0,0, 0.26);
-  font-size: 16px;
   left: 0;
   right: 0;
   pointer-events: none;
@@ -144,7 +86,6 @@ button, select, html, textarea, input {
 .mdl-select--floating-label.is-focused .mdl-select__label,
 .mdl-select--floating-label.is-dirty .mdl-select__label {
   color: rgb(63,81,181);
-  font-size: 12px;
   top: 4px;
   visibility: visible;
 }
@@ -156,7 +97,6 @@ button, select, html, textarea, input {
 
 .mdl-select--floating-label.is-invalid .mdl-select__label {
   color: rgb(222, 50, 38);
-  font-size: 12px;
 }
 
 .mdl-select__label:after {
@@ -187,7 +127,6 @@ button, select, html, textarea, input {
 .mdl-select__error {
   color: rgb(222, 50, 38);
   position: absolute;
-  font-size: 12px;
   margin-top: 3px;
   visibility: hidden;
 }
@@ -232,21 +171,18 @@ div#application {
 
       form {
         width: auto!important;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
       }
 
       .sign-top {
-        background-color: #336;
+        background-color: $base-blue;
         border-radius: 5px 5px 0 0;
+        color: #fff;
+        text-align: left;
         padding: 20px;
-        height: 50px;
 
-
-      }
-      .title {
-        padding: 0 16px;
-        font-size: 20px;
+        .mdl-typography--headline, p {
+          margin-bottom: 0;
+        }
       }
 
       .view {
@@ -264,53 +200,20 @@ div#application {
       .mdl-layout__content{
         width: 100%;
       }
-      .mdl-cell {
-        margin: 8px;
-      }
-      .mdl-cell--full-col {
-        width: 100%;
-      }
     }
-
-    main {
-      /*width: 100%;*/
-    }
+    
     .login-view {
       width: 312px;
       margin: auto;
     }
   }
+}
 
-  @media (min-width: 960px) {
-    .layout-gt-md-row {
-      -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-      flex-direction: row;
-    }
+.footer-action {
+  text-align: right;
 
-    .layout-gt-md, .layout-gt-md-column, .layout-gt-md-row {
-        box-sizing: border-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-    }
-    .flex-gt-md-25, .layout-row>.flex-gt-md-25, .layout-gt-md-row>.flex-gt-md-25 {
-      -webkit-flex: 0 0 25%;
-      -ms-flex: 0 0 25%;
-      flex: 0 0 25%;
-      max-width: 25%;
-      max-height: 100%;
-      box-sizing: border-box;
-    }
-
-    .flex-gt-md-30, .layout-row>.flex-gt-md-30, .layout-gt-md-row>.flex-gt-md-30 {
-      -webkit-flex: 0 0 30%;
-      -ms-flex: 0 0 30%;
-      flex: 0 0 30%;
-      max-width: 30%;
-      max-height: 100%;
-      box-sizing: border-box;
-    }
+  .mdl-button--accent {
+    margin-left: 20px;
   }
 }
 
@@ -323,6 +226,9 @@ div#application {
   width: 100%;
   z-index: 9999;
 }
+
 .to-login {
   margin-top: 20px;
 }
+
+
