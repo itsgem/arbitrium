@@ -43,6 +43,9 @@ class Errors
     const INSUFFICIENT_CREDIT   = 50001;
     const EXISTING_SUBSCRIPTION = 50002;
 
+    // API Key
+    const EXISTING_API_KEY_PERMISSION  = 60001;
+
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
         self::UNAUTHORIZED          => Response::HTTP_UNAUTHORIZED,

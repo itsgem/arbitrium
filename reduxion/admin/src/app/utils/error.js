@@ -10,6 +10,14 @@ Suitable to update the component state.
 */
 export function createError(errorIn) {
     debug("setErrors in: ", errorIn);
+
+    let message = errorIn.toString();
+
+    if( message === 'Error: Network Error') {
+        localStorage.clear();
+        location.href ='/coffee/login';
+    }
+
     if ( errorIn instanceof Checkit.Error ) { //local validation
         return {
             errors: errorIn.toJSON()

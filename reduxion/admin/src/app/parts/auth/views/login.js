@@ -16,7 +16,7 @@ class Login extends React.Component {
       let token = nextProps.user.get('data').get('token');
       let lifetime = nextProps.user.get('data').get('lifetime');
       let user =  nextProps.user.get('data').get('username');
-      let expired = moment().add(parseInt(lifetime),'minutes').valueOf();
+      let expired = moment().add(lifetime,'minutes').valueOf();
 
       localStorage.setItem('token', token);
       localStorage.setItem('expired', expired);

@@ -206,6 +206,39 @@ div#application{
   }
 }
 
+.section-api-keys {
+  padding: 30px;
+
+  .keys-group {
+    margin-bottom: 30px;
+  }
+  .item {
+    label {
+      padding-left: 7px;
+      text-transform: none;
+    }
+  }
+}
+.mdl-textfield {
+  .mdl-textfield__input {
+    line-height: 34px;
+    font-size: 14px;
+  }
+
+  textarea.mdl-textfield__input {
+    line-height: initial;
+    min-height: 100px;
+  }
+
+  .textfield-caption {
+    color: #aaa;
+    font-size: 11px;
+    font-weight: 100;
+    position: absolute;
+    padding-top: 10px;
+  }
+}
+
 
 
 
