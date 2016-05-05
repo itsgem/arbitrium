@@ -90,7 +90,8 @@ class LocalLoginForm extends React.Component {
         let notification = document.querySelector('.mdl-snackbar');
         if(message){
             notification.MaterialSnackbar.showSnackbar( {
-                message: message
+                message: message,
+                timeout: 5000
             });
 
             this.setState( {
