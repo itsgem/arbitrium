@@ -5,6 +5,7 @@ import {createError} from 'utils/error';
 import Alert from 'components/alert';
 import tr from 'i18next';
 import Debug from 'debug';
+import DocTitle from 'components/docTitle';
 
 let debug = new Debug("components:login");
 
@@ -28,6 +29,12 @@ class LocalLoginForm extends React.Component {
         debug('render state:', this.state);
         return (
             <div className="local-login-form">
+              <div className="container">
+                <div className="bar">
+                  <span className="bar-title">Arbitrium</span>
+                  <DocTitle title="Forgot password"/>
+                </div>
+                </div>
                 <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
                     <div className="mdl-snackbar__text"></div>
                     <button type="button" className="mdl-snackbar__action"></button>
