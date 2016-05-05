@@ -29,9 +29,11 @@ class LocalLoginForm extends React.Component {
         debug('render state:', this.state);
         return (
             <div className="local-login-form">
-              <div className="container">
+              <div className="headerContainer">
                 <div className="bar">
-                  <span className="bar-title">Arbitrium</span>
+                  <div className="bar-title">
+                    <img className="logo" src="https://s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png"></img>
+                  </div>
                   <DocTitle title="Forgot password"/>
                 </div>
                 </div>
