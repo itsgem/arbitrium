@@ -20,10 +20,8 @@ class LocalAuthenticationFormSignup extends React.Component {
     return (
       <div className="local-signin-form login-frame">
         <div className="sign-top">
-          <div className="title">
-            <div className="view">Sign up</div>
-            <div className="text-small">Fields with asterisks are required.</div>
-          </div>
+            <h3 className="mdl-typography--headline">Sign up</h3>
+            <p>Fields with asterisks are required.</p>
         </div>
         <form className="mdl-shadow--2dp" action={ this.signup }>
           <legend>Company / Organization</legend>
@@ -140,7 +138,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                   {errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-cell mdl-cell--4-col">
                 <div className={this.formClassNames('rep_gender')}>
                     <select
                       className="mdl-select__input"
@@ -296,23 +294,19 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
             </div>
           </div>
-          <div className="layout-gt-md-row layout-align-end-end">
-            <div className="flex-order-gt-md-1 flex-gt-md-30">
-              <p className="text-small text-center to-login">
-                <Link
-                  className='margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 link ng-scope'
-                  id='btn-signup'
-                  to="/i/login">Already have an account? Login here.</Link>
-              </p>
-            </div>
-            <div className="flex-order-gt-md-2 flex-gt-md-25">
+          <footer className="mdl-grid mdl-grid--no-spacing footer-action">
+            <div className="mdl-cell mdl-cell--6-offset mdl-cell--6-col">
+              <Link
+                className=''
+                id='btn-signup'
+                to="/i/login">Already have an account? Login here.</Link>
               <button
-                className="md-raised md-primary md-hue-1 full-width margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope md-formal-blue-theme md-ink-ripple"
+                className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"
                 id='btn-login'
                 type='button'
                 onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
             </div>
-          </div>
+          </footer>
         </form>
       </div>
     );

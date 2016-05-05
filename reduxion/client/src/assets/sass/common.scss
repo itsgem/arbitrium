@@ -1,49 +1,98 @@
+button, select, html, textarea, input, legend {
+  font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+}
 legend {
-  font-weight: 700;
-  padding-left: 10px;
+	padding-left: 10px;
 }
 #demo-menu-account {
-  color: #fff;
+	color: #fff;
 }
 .mdl-menu__container {
-  top: 60px!important;
+	top: 60px!important;
 }
 .mdl-menu__container:before {
-  background: transparent;
-  color: #FFF;
-  content: "\F10D";
-  display: block;
-  font-family: "Ionicons";
-  font-size: 24px;
-  height: 24px;
-  line-height: 24px;
-  margin-top: -16px;
-  position: absolute;
-  right: 5px;
-  text-align: right;
-  text-shadow: 1px -1px 5px rgba(0, 0, 0, 0.1);
+	background: transparent;
+	color: #FFF;
+	content: "\F10D";
+	display: block;
+	font-family: "Ionicons";
+	font-size: 24px;
+	height: 24px;
+	line-height: 24px;
+	margin-top: -16px;
+	position: absolute;
+	right: 5px;
+	text-align: right;
+	text-shadow: 1px -1px 5px rgba(0, 0, 0, 0.1);
 }
 .mdl-menu__container ul li a{
-  font-size: 15px;
-  float: none;
-  padding: 10px 15px;
-  display: block;
+	font-size: 15px;
+	float: none;
+	padding: 10px 15px;
+	display: block;
 }
 .mdl-menu__container ul {
-  width: 200px;
+	width: 200px;
 }
 #check_availability {
-  display: inline-block;
-  float: none;
-  vertical-align: middle;
-  color: #fff;
-  font-size: 12px;
-  line-height: normal;
-  padding: 4px 15px;
-  height: 21px;
-  background-color: rgb(255,64,129);
+	background-color: rgb(255,64,129);
+	color: #fff;
+	display: inline-block;
+	float: none;
+	font-size: 12px;
+	height: 21px;
+	line-height: normal;
+	padding: 4px 15px;
+	vertical-align: middle;
 }
 
 .mdl-button-group .mdl-button {
   margin: 0 10px;
 }
+
+/* -- header --*/
+.mdl-layout__drawer header{
+  height: 35px;
+  padding: 7px 40px;
+}
+
+.mdl-layout__header {
+  min-height: 20px;
+}
+.mdl-button {
+  font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+}
+
+main {
+  .mdl-layout__drawer{
+    header {
+      & + .mdl-navigation {
+        a.mdl-navigation__link{
+          font-weight: 500;
+          font-size: 14px;
+          font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+          i {
+            font-size: 20px;
+            line-height: 40px;
+          }
+        }
+      }
+    }
+  }
+
+  .mdl-layout__header-row {
+    height: 49px;
+
+    .mdl-menu__container {
+      .mdl-menu__item {
+        .mdl-navigation__link{
+          font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+          i {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+

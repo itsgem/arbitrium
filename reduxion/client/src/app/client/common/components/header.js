@@ -27,21 +27,23 @@ class ClientHeader extends React.Component {
           <div className="wrapper">
           <nav className="mdl-navigation">
             <div className="container">
-              <button id="demo-menu-account"
-                className="mdl-button mdl-js-button">Account</button>
+              <a id="demo-menu-account"
+                className="mdl-button mdl-js-button">Account</a>
               <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-account">
                 <li className="mdl-menu__item"><a href="/i/client/profile">My Profile</a></li>
                 <li className="mdl-menu__item"><a href="/i/client/profile/change_password">Change Password</a></li>
                 <li className="mdl-menu__item"><a href="/i/client/profile/change_email">Change Email Address</a></li>
               </ul>
             </div>
-            <button id="demo_menu-lower-right" className="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
-              <i className="material-icons">person</i>
-            </button>
-            <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo_menu-lower-right">
-              <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i"><i className="material-icons mdl-list__item-icon">settings</i> Settings</a></li>
-              <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</a></li>
-            </ul>
+            <div className="container">
+              <button id="demo_menu-lower-right" className="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
+                <i className="material-icons">person</i>
+              </button>
+              <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo_menu-lower-right">
+                <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i"><i className="material-icons mdl-list__item-icon">settings</i> Settings</a></li>
+                <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</a></li>
+              </ul>
+            </div>
             </nav>
           </div>
         </div>
