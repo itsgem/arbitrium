@@ -60,7 +60,7 @@ div#application {
 
 		form {
 			background: #fff;
-			border-radius: 3px;
+			border-radius: 0 0 3px 3px;
 			display: block;
 			margin: auto;
 			padding: 16px;
@@ -69,6 +69,10 @@ div#application {
 			h2, p {
 				color: #555;
 			}
+		}
+
+		.mdl-button {
+			margin-top: 15px;
 		}
 
 		.callout {
@@ -119,6 +123,20 @@ div#application {
 				display: inline-block;
 				vertical-align: text-bottom;
 			}
+		}
+	}
+}
+
+.login-view {
+	.login-header {
+		border-radius: 3px 3px 0 0;
+		background: $base-blue;
+		min-height: 50px;
+		text-align: center;
+		padding: 6px 0;
+
+		img {
+			height: 50px;
 		}
 	}
 }
