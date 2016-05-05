@@ -27,9 +27,18 @@ class ApiIpAddress extends NrbModel
     }
 
     //---------- scopes
-    public function scopeApiKey($query, $api_key_id)
+    public function scopeApiKeyId($query, $api_key_id)
     {
         return $query->where('api_key_id', $api_key_id);
+    }
+
+    public function scopeClientId($query, $client_id)
+    {
+        if ($client_id) {
+            return $query->whereHas('api_key', function($query) use($client_id) {
+                $query->clientId($client_id);
+            });
+        }
     }
 
     //---------- helpers
@@ -43,6 +52,13 @@ class ApiIpAddress extends NrbModel
         }
 
         return false;
+    }
+
+    public function isOwnedByClientId($client_id)
+    {
+        if ($client_id) {
+            return $this->api_key && $this->api_key->client_id == $client_id;
+        }
     }
 
     public function assign($api_key_id)

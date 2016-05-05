@@ -42,9 +42,11 @@ class ApiKey extends NrbModel
     }
 
     //---------- scopes
-    public function scopeByClient($query, $client_id)
+    public function scopeClientId($query, $client_id)
     {
-        return $query->where('client_id', $client_id);
+        if ($client_id) {
+            return $query->where('client_id', $client_id);
+        }
     }
 
     public function scopeRestricted($query, $flag = true)
@@ -88,5 +90,10 @@ class ApiKey extends NrbModel
     public function isActive($flag = true)
     {
         return $this->is_active == (int) $flag;
+    }
+
+    public function isOwnedByClientId($client_id)
+    {
+        return $this->client_id == $client_id;
     }
 }

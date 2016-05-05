@@ -10,44 +10,47 @@ use App\Nrb\NrbServices;
 
 class ApiIpAddressServices extends NrbServices
 {
-    // Api\ApiIpAddressController::destroy
-    public function destroy($id)
+    // Admin\Api\ApiIpAddressController::destroy
+    // Client\Api\ApiIpAddressController::destroy
+    public function destroy($id, $client_id = null)
     {
-        return DB::transaction(function () use ($id)
+        return DB::transaction(function () use ($id, $client_id)
         {
             $api_ip = ApiIpAddress::findOrFail($id);
-            if ($api_ip->canDelete())
+
+            if(is_admin_user_logged_in() || $api_ip->isOwnedByClientId($client_id))
             {
                 $api_ip->delete();
-                return $this->respondWithSuccess($api_ip);
+                return $this->respondWithSuccess();
             }
-            return $this->respondWithError(Errors::CANNOT_DELETE, ['str_replace' => ['model' => 'api ip address']]);
+
+            return $this->respondWithError(Errors::NO_CONTENT);
         });
     }
 
-    // Api\ApiIpAddressController::index
-    public function index($request)
+    // Admin\Api\ApiIpAddressController::index
+    // Client\Api\ApiIpAddressController::index
+    public function index($request, $client_id = null)
     {
-        return $this->respondWithData(
-            ApiIpAddress::select(
-                'id', 'api_key_id', 'ip_address', 'name', 'created_at', 'updated_at', 'deleted_at'
-            )
-            ->with(['api_key' => function($query){
+        $ip_addresses = ApiIpAddress::with(['api_key' => function($query){
                 $query->select(
                     'id', 'client_id', 'token', 'name', 'description',
                     'is_api_call_restricted', 'is_whitelist', 'is_active', 'is_test_key',
                     'created_at', 'updated_at', 'deleted_at'
                 );
             }])
-            ->paginate($request->get('per_page')),
-            $request->get('max_pagination_links')
-        );
+            ->clientId($client_id)
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($ip_addresses, $request->get('max_pagination_links'));
     }
 
-    // Api\ApiIpAddressController::show
-    public function show($request, $id)
+    // Admin\Api\ApiIpAddressController::show
+    // Client\Api\ApiIpAddressController::show
+    public function show($request, $id, $client_id = null)
     {
         $api_ip = new ApiIpAddress();
+
         if ($request->get('with-api-key'))
         {
             $api_ip = $api_ip->with(['api_key' => function($query){
@@ -59,25 +62,24 @@ class ApiIpAddressServices extends NrbServices
             }]);
         }
 
-        $api_ip = $api_ip->findOrFail($id);
+        $api_ip = $api_ip->clientId($client_id)->findOrFail($id);
+
         return $this->respondWithSuccess($api_ip);
     }
 
-    // Api\ApiIpAddressController::store
+    // Admin\Api\ApiIpAddressController::store
+    // Client\Api\ApiIpAddressController::store
     public function store($request)
     {
-        // Transform payload to eloquent format, set defaults
-        $payload = $request->all();
-        $payload['value'] = (array_key_exists('value', $payload)) ? $payload['value'] : true;
-
-        return DB::transaction(function () use ($payload)
+        return DB::transaction(function () use ($request)
         {
-            $api_ip = ApiIpAddress::create($payload);
+            $api_ip = ApiIpAddress::create($request->all());
             return $this->respondWithSuccess($api_ip);
         });
     }
 
-    // Api\ApiIpAddressController::update
+    // Admin\Api\ApiIpAddressController::update
+    // Client\Api\ApiIpAddressController::update
     public function update($request, $id)
     {
         return DB::transaction(function () use ($request, $id)
@@ -89,7 +91,7 @@ class ApiIpAddressServices extends NrbServices
         });
     }
 
-    // Api\ApiIpAddressController::assign
+    // Admin\Api\ApiIpAddressController::assign
     public function assign($request, $id)
     {
         $api_ip = ApiIpAddress::findOrFail($id);

@@ -28,31 +28,26 @@ class ApiIpAddressController extends ApiController
 
     public function destroy($id, ApiIpAddressServices $service)
     {
-        return $service->destroy($id);
+        return $service->destroy($id, get_logged_in_client_id());
     }
 
     public function index(ApiIpAddressServices $service)
     {
-        return $service->index($this->request);
+        return $service->index($this->request, get_logged_in_client_id());
     }
 
     public function show($id, ApiIpAddressServices $service)
     {
-        return $service->show($this->request, $id);
+        return $service->show($this->request, $id, get_logged_in_client_id());
     }
 
     public function store(ApiIpAddressRequest $request, ApiIpAddressServices $service)
     {
-        return $service->store($request);
+        return $service->store($request, get_logged_in_client_id());
     }
 
     public function update(ApiIpAddressRequest $request, $id, ApiIpAddressServices $service)
     {
-        return $service->update($request, $id);
-    }
-
-    public function assign(ApiIpAddressAssignRequest $request, $id, ApiIpAddressServices $service)
-    {
-        return $service->assign($request, $id);
+        return $service->update($request, $id, get_logged_in_client_id());
     }
 }
