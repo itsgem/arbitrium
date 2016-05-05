@@ -4,7 +4,6 @@ namespace App\Services;
 
 use DB;
 
-use App\Errors;
 use App\Models\ApiIpAddress;
 use App\Nrb\NrbServices;
 
@@ -16,15 +15,10 @@ class ApiIpAddressServices extends NrbServices
     {
         return DB::transaction(function () use ($id, $client_id)
         {
-            $api_ip = ApiIpAddress::findOrFail($id);
+            $api_key = ApiIpAddress::clientId($client_id)->findOrFail($id);
+            $api_key->delete();
 
-            if(is_admin_user_logged_in() || $api_ip->isOwnedByClientId($client_id))
-            {
-                $api_ip->delete();
-                return $this->respondWithSuccess();
-            }
-
-            return $this->respondWithError(Errors::NO_CONTENT);
+            return $this->respondWithSuccess($api_key);
         });
     }
 

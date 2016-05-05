@@ -18,7 +18,7 @@ class ApiKeyRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'client_id'              => 'required|exists:clients,id',
+                'client_id'              => 'exists:clients,id',
                 'token'                  => 'required|max:500',
                 'name'                   => 'required|max:255',
                 'description'            => 'max:255',
@@ -28,6 +28,11 @@ class ApiKeyRequest extends NrbRequest
                 'is_active'              => 'boolean',
                 'is_test_key'            => 'boolean'
             ];
+
+            if (is_admin_user_logged_in())
+            {
+                $rules['client_id'] .= '|required';
+            }
         }
 
         return $rules;

@@ -45,8 +45,9 @@ class Errors
 
     // API Key
     const UNAUTHORIZED_API_KEY             = 60001;
-    const EXISTING_API_KEY_PERMISSION      = 60002;
-    const UNAUTHORIZED_API_KEY_IP_ADDRESS  = 60003;
+    const INVALID_API_KEY_PERMISSION       = 60002;
+    const EXISTING_API_KEY_PERMISSION      = 60003;
+    const UNAUTHORIZED_API_KEY_IP_ADDRESS  = 60004;
 
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,

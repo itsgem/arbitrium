@@ -2,17 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use App\Nrb\NrbModel;
 
 class ApiIpAddress extends NrbModel
 {
-    use SoftDeletes;
-
     protected $table = 'api_ip_addresses';
-
-    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'api_key_id',

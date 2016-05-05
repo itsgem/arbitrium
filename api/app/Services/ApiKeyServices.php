@@ -11,7 +11,8 @@ use App\Nrb\NrbServices;
 
 class ApiKeyServices extends NrbServices
 {
-    // Api\ApiKeyController::destroy
+    // Admin\Api\ApiKeyController::destroy
+    // Client\Api\ApiKeyController::destroy
     public function destroy($id, $client_id = null)
     {
         return DB::transaction(function () use ($id, $client_id)
@@ -23,7 +24,8 @@ class ApiKeyServices extends NrbServices
         });
     }
 
-    // Api\ApiKeyController::index
+    // Admin\Api\ApiKeyController::index
+    // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
         if ($client_id) {
@@ -39,25 +41,18 @@ class ApiKeyServices extends NrbServices
         return $this->respondWithData($api_keys, $request->get('max_pagination_links'));
     }
 
-    // Api\ApiKeyController::show
+    // Admin\Api\ApiKeyController::show
+    // Client\Api\ApiKeyController::show
     public function show($request, $id, $client_id = null)
     {
-        $api_key = new ApiKey();
-
-        if ($request->get('with-client') && !$client_id)
-        {
-            $api_key = $api_key->with(['client.user' => function($query){
-                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-            }]);
-        }
-
-        $api_key = $api_key->with(['permissions', 'ip_addresses']);
+        $api_key = ApiKey::with(['client.user', 'permissions', 'ip_addresses']);
         $api_key = $api_key->clientId($client_id)->findOrFail($id);
 
         return $this->respondWithSuccess($api_key);
     }
 
-    // Api\ApiKeyController::store
+    // Admin\Api\ApiKeyController::store
+    // Client\Api\ApiKeyController::store
     public function store($request, $client_id = null)
     {
         // Transform payload to eloquent format, set defaults
@@ -72,19 +67,25 @@ class ApiKeyServices extends NrbServices
         });
     }
 
-    // Api\ApiKeyController::update
+    // Admin\Api\ApiKeyController::update
+    // Client\Api\ApiKeyController::update
     public function update($request, $id, $client_id = null)
     {
-        return DB::transaction(function () use ($request, $id, $client_id)
+        // Transform payload to eloquent format, set defaults
+        $payload = $request->all();
+        $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
+
+        return DB::transaction(function () use ($payload, $id, $client_id)
         {
             $api_key = ApiKey::clientId($client_id)->findOrFail($id);
-            $api_key->update($request->except(['client_id']));
+            $api_key->update($payload);
 
             return $this->respondWithSuccess();
         });
     }
 
-    // Api\ApiKeyController::generate
+    // Admin\Api\ApiKeyController::generate
+    // Client\Api\ApiKeyController::generate
     public function generate($request, $client_id = null)
     {
         $client_id = ($client_id) ? $client_id : $request->get('client_id');
@@ -100,10 +101,6 @@ class ApiKeyServices extends NrbServices
         $payload = $request->all();
         $payload['api_key_id'] = $id;
 
-        if (ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::EXISTING_API_KEY_PERMISSION);
-        }
-
         return DB::transaction(function () use ($payload)
         {
             $api_key_permission = ApiKeyPermission::create($payload);
@@ -117,10 +114,6 @@ class ApiKeyServices extends NrbServices
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
-
-        if (!ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::NOT_FOUND);
-        }
 
         return DB::transaction(function () use ($payload)
         {
@@ -138,10 +131,6 @@ class ApiKeyServices extends NrbServices
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
-
-        if (!ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::NOT_FOUND);
-        }
 
         return DB::transaction(function () use ($payload)
         {
