@@ -19,7 +19,7 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title="Client Add"
+          title="User Management List"
         />
         <div className="client-tab">
           <label className="mdl-layout__tab is-active">Admin List</label>

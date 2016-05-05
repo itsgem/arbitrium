@@ -33,7 +33,7 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title="Client Add"
+          title="User Management Profile"
         />
         <div className="client-tab">
           <Link
