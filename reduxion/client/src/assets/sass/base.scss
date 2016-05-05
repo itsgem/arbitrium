@@ -13,7 +13,6 @@
 @import './signup';
 
 @import './forgot';
-@import './common';
 
 // views
 @import './views/application';
@@ -21,3 +20,5 @@
 
 //error page
 @import './error-page';
+
+@import './common';
