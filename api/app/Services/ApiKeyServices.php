@@ -12,50 +12,62 @@ use App\Nrb\NrbServices;
 class ApiKeyServices extends NrbServices
 {
     // Api\ApiKeyController::destroy
-    public function destroy($id)
+    public function destroy($id, $client_id = null)
     {
-        return DB::transaction(function () use ($id)
+        return DB::transaction(function () use ($id, $client_id)
         {
-            $api_key = ApiKey::findOrFail($id);
-            if ($api_key->canDelete())
-            {
-                $api_key->delete();
-                return $this->respondWithSuccess($api_key);
+            $api_key = new ApiKey();
+
+            if ($client_id) {
+                $api_key = $api_key->byClient($client_id);
             }
-            return $this->respondWithError(Errors::CANNOT_DELETE, ['str_replace' => ['model' => 'api key']]);
+
+            $api_key = $api_key->findOrFail($id);
+            $api_key->delete();
+
+            return $this->respondWithSuccess($api_key);
         });
     }
 
     // Api\ApiKeyController::index
-    public function index($request)
+    public function index($request, $client_id = null)
     {
+        $api_keys = ApiKey::select(
+            'id', 'client_id', 'token', 'name', 'description',
+            'is_api_call_restricted', 'is_whitelist', 'is_active', 'is_test_key',
+            'created_at', 'updated_at', 'deleted_at'
+        );
+
+        if ($client_id) {
+            $api_keys = $api_keys->byClient($client_id);
+        } else {
+            $api_keys = $api_keys->with(['client.user' => function($query){
+                    $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+                }]);
+        }
+
+        $api_keys = $api_keys->paginate($request->get('per_page'));
+
         return $this->respondWithData(
-            ApiKey::select(
-                'id', 'client_id', 'token', 'name', 'description',
-                'is_api_call_restricted', 'is_whitelist', 'is_active', 'is_test_key',
-                'created_at', 'updated_at', 'deleted_at'
-            )
-            ->with(['client.user' => function($query){
-                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-            }])
-            ->paginate($request->get('per_page')),
+            $api_keys,
             $request->get('max_pagination_links')
         );
     }
 
     // Api\ApiKeyController::show
-    public function show($request, $id)
+    public function show($request, $id, $client_id = null)
     {
         $api_key = new ApiKey();
-        if ($request->get('with-client'))
+        if ($request->get('with-client') && !$client_id)
         {
             $api_key = $api_key->with(['client.user' => function($query){
                 $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
             }]);
         }
-        if ($request->get('with-permissions'))
-        {
-            $api_key = $api_key->with(['permissions']);
+        $api_key = $api_key->with(['permissions', 'ip_addresses']);
+
+        if ($client_id) {
+            $api_key = $api_key->byClient($client_id);
         }
 
         $api_key = $api_key->findOrFail($id);
@@ -63,11 +75,15 @@ class ApiKeyServices extends NrbServices
     }
 
     // Api\ApiKeyController::store
-    public function store($request)
+    public function store($request, $client_id = null)
     {
         // Transform payload to eloquent format, set defaults
         $payload = $request->all();
         $payload['is_active'] = (array_key_exists('is_active', $payload)) ? $payload['is_active'] : true;
+
+        if ($client_id) {
+            $payload['client_id'] = $client_id;
+        }
 
         return DB::transaction(function () use ($payload)
         {
@@ -77,21 +93,28 @@ class ApiKeyServices extends NrbServices
     }
 
     // Api\ApiKeyController::update
-    public function update($request, $id)
+    public function update($request, $id, $client_id = null)
     {
-        return DB::transaction(function () use ($request, $id)
+        return DB::transaction(function () use ($request, $id, $client_id)
         {
-            $api_key = ApiKey::findOrFail($id);
+            $api_key = new ApiKey();
+
+            if ($client_id) {
+                $api_key = $api_key->byClient($client_id);
+            }
+
+            $api_key = $api_key->findOrFail($id);
             $api_key->update($request->all());
 
-            return $this->respondWithSuccess($api_key);
+            return $this->respondWithSuccess();
         });
     }
 
     // Api\ApiKeyController::generate
-    public function generate($request)
+    public function generate($request, $client_id = null)
     {
-        $token = generate_api_key_token($request->get('client_id'));
+        $client_id = ($client_id) ? $client_id : $request->get('client_id');
+        $token = generate_api_key_token($client_id);
 
         return $this->respondWithSuccess(['token' => $token]);
     }
