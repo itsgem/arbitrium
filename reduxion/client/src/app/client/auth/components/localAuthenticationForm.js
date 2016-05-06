@@ -47,7 +47,7 @@ class LocalAuthenticationForm extends React.Component {
                     </div>
 
                     <button
-                        className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
+                        className='mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect mdl-button--fullwidth'
                         id='btn-login'
                         type='button'
                         onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>

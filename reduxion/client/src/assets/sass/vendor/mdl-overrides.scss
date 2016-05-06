@@ -14,9 +14,66 @@
 }
 
 /*
+* Select Field Variables
+*/
+$color-black: "0,0,0";
+$select-background-color: transparent;
+$select-border-color: unquote("rgba(#{$color-black}, 0.12)") !default;
+$select-color: unquote("rgba(#{$color-black}, 0.26)") !default;
+
+/*
+* Select Field
+*/
+select {
+	font-family: inherit;
+	background-color: transparent;
+	width: 100%;
+	padding: 4 0;
+	font-size: 15px;
+	color: $select-color;
+	border: none;
+	border-bottom: 1px solid $select-border-color;
+}
+
+select:focus {
+ 	outline: none
+}
+
+/* Hide label */
+.mdl-selectfield label {
+	display: none;
+}
+
+/* Use custom arrow */
+.mdl-selectfield select {
+	appearance: none
+}
+
+.mdl-selectfield {
+	position: relative;
+
+	&:after {
+		position: absolute;
+		top: 0.75em;
+		right: 0.5em;
+		/* Styling the down arrow */
+		width: 0;
+		height: 0;
+		padding: 0;
+		content: '';
+		border-left: .25em solid transparent;
+		border-right: .25em solid transparent;
+		border-top: .375em solid $select-border-color;
+		pointer-events: none;
+	}
+}
+
+/*
 * Buttons
 */
 .mdl-button {
+	font-size: 15px;
+	
 	&:hover {
 		background: $base-orange;
 	}
@@ -28,6 +85,13 @@
 	background: $base-orange;
 }
 
+.mdl-button.mdl-button--fullwidth {
+	width: 100%;
+}
+
+/*
+* Menus
+*/
 .mdl-menu__item {
 	color: #777;
 	font-size: 11px;

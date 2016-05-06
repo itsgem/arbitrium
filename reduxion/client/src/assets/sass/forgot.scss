@@ -6,43 +6,24 @@
 
 	.background {
 		background-color: #fff;
-
-		.forgot-legend {
-			color: #555;
-			display: block;
-			font-size: 13px;
-			padding: 20px 20px 0px 20px;
-		}
-
-		.forgot-step-two {
-			color: #555;
-			display: block;
-			font-size: 13px;
-			font-weight: 300;
-			line-height: 18px;
-			padding: 10px;
-			text-align: center;
-		}
-
-		.step-two-content {
-			height:auto;
-			overflow: auto;
-			padding: 16px;
-		}
 	}
 
-	.forgot-text {
+	.local-login-form {
 		color: #555;
-		display: block;
-		font-size: 13px;
-		font-weight: 300;
-		line-height: 18px;
-		padding: 10px;
 		text-align: center;
+
+		legend {
+			display: inline-block;
+			padding: 0 0 20px 0;
+		}
+
+		p {
+			color: #555;
+		}
 	}
 
 	.bar {
-		background: #336;
+		background: $base-blue;
 		box-sizing: border-box;
 		border-radius: 5px 5px 0 0;
 		color: white;
