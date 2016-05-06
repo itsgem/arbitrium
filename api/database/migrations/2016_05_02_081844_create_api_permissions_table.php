@@ -16,7 +16,7 @@ class CreateApiPermissionsTable extends Migration
             $table->increments('id');
             $table->string('slug')->nullable();
             $table->string('name')->nullable();
-            $table->integer('parent_id')->unsigned()->nullable();
+            $table->integer('parent_id')->unsigned()->default(0);
         });
     }
 

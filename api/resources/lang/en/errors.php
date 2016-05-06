@@ -31,5 +31,8 @@ return [
     Errors::OTHER_ANSWER_TEXT_LOGIC => 'Can only add Other as answer option once.',
     Errors::INSUFFICIENT_CREDIT     => 'Your remaining credit balance in your account is insufficient. Please purchase additional credits.',
     Errors::EXISTING_SUBSCRIPTION   => 'You have an existing subscription.',
-    Errors::EXISTING_API_KEY_PERMISSION => 'You have an existing API Key Permission.'
+    Errors::UNAUTHORIZED_API_KEY    => 'You do not own this API Key.',
+    Errors::INVALID_API_KEY_PERMISSION      => 'Invalid API Key Permission.',
+    Errors::EXISTING_API_KEY_PERMISSION     => 'You have an existing API Key Permission.',
+    Errors::UNAUTHORIZED_API_KEY_IP_ADDRESS => 'You do not own this API Key IP Address.'
 ];

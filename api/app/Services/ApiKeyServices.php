@@ -4,108 +4,133 @@ namespace App\Services;
 
 use DB;
 
-use App\Errors;
+use App\Models\ApiIpAddress;
 use App\Models\ApiKey;
 use App\Models\ApiKeyPermission;
 use App\Nrb\NrbServices;
 
 class ApiKeyServices extends NrbServices
 {
-    // Api\ApiKeyController::destroy
-    public function destroy($id)
+    // Admin\Api\ApiKeyController::destroy
+    // Client\Api\ApiKeyController::destroy
+    public function destroy($id, $client_id = null)
     {
-        return DB::transaction(function () use ($id)
+        return DB::transaction(function () use ($id, $client_id)
         {
-            $api_key = ApiKey::findOrFail($id);
-            if ($api_key->canDelete())
-            {
-                $api_key->delete();
-                return $this->respondWithSuccess($api_key);
-            }
-            return $this->respondWithError(Errors::CANNOT_DELETE, ['str_replace' => ['model' => 'api key']]);
+            $api_key = ApiKey::clientId($client_id)->findOrFail($id);
+            $api_key->delete();
+
+            return $this->respondWithSuccess($api_key);
         });
     }
 
-    // Api\ApiKeyController::index
-    public function index($request)
+    // Admin\Api\ApiKeyController::index
+    // Client\Api\ApiKeyController::index
+    public function index($request, $client_id = null)
     {
-        return $this->respondWithData(
-            ApiKey::select(
-                'id', 'client_id', 'token', 'name', 'description',
-                'is_api_call_restricted', 'is_whitelist', 'is_active', 'is_test_key',
-                'created_at', 'updated_at', 'deleted_at'
-            )
-            ->with(['client.user' => function($query){
-                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-            }])
-            ->paginate($request->get('per_page')),
-            $request->get('max_pagination_links')
-        );
+        if ($client_id)
+        {
+            $api_keys = ApiKey::clientId($client_id);
+        }
+        else
+        {
+            $api_keys = ApiKey::with(['client.user' => function($query){
+                    $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+                }]);
+        }
+
+        $api_keys = $api_keys->paginate($request->get('per_page'));
+
+        return $this->respondWithData($api_keys, $request->get('max_pagination_links'));
     }
 
-    // Api\ApiKeyController::show
-    public function show($request, $id)
+    // Admin\Api\ApiKeyController::show
+    // Client\Api\ApiKeyController::show
+    public function show($request, $id, $client_id = null)
     {
-        $api_key = new ApiKey();
-        if ($request->get('with-client'))
-        {
-            $api_key = $api_key->with(['client.user' => function($query){
-                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-            }]);
-        }
-        if ($request->get('with-permissions'))
-        {
-            $api_key = $api_key->with(['permissions']);
-        }
+        $api_key = ApiKey::with(['client.user', 'permissions', 'ip_addresses']);
+        $api_key = $api_key->clientId($client_id)->findOrFail($id);
 
-        $api_key = $api_key->findOrFail($id);
         return $this->respondWithSuccess($api_key);
     }
 
-    // Api\ApiKeyController::store
-    public function store($request)
+    // Admin\Api\ApiKeyController::store
+    // Client\Api\ApiKeyController::store
+    public function store($request, $client_id = null)
     {
         // Transform payload to eloquent format, set defaults
         $payload = $request->all();
-        $payload['is_active'] = (array_key_exists('is_active', $payload)) ? $payload['is_active'] : true;
+        $payload['is_active'] = get_val($payload, 'is_active', true);
+        $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
+        $payload['permissions'] = get_val($payload, 'permissions', []);
+        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
 
         return DB::transaction(function () use ($payload)
         {
             $api_key = ApiKey::create($payload);
+
+            foreach($payload['permissions'] as $permission)
+            {
+                $api_key->permissions()->save(new ApiKeyPermission($permission));
+            }
+
+            foreach($payload['ip_addresses'] as $ip_address)
+            {
+                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
+            }
+
             return $this->respondWithSuccess($api_key);
         });
     }
 
-    // Api\ApiKeyController::update
-    public function update($request, $id)
+    // Admin\Api\ApiKeyController::update
+    // Client\Api\ApiKeyController::update
+    public function update($request, $id, $client_id = null)
     {
-        return DB::transaction(function () use ($request, $id)
+        // Transform payload to eloquent format, set defaults
+        $payload = $request->all();
+        $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
+        $payload['permissions'] = get_val($payload, 'permissions', []);
+        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
+
+        return DB::transaction(function () use ($payload, $id, $client_id)
         {
-            $api_key = ApiKey::findOrFail($id);
-            $api_key->update($request->all());
+            $api_key = ApiKey::clientId($client_id)->findOrFail($id);
+            $api_key->update($payload);
 
-            return $this->respondWithSuccess($api_key);
+            ApiKeyPermission::apiKeyId($id)->delete();
+            foreach($payload['permissions'] as $permission)
+            {
+                $api_key->permissions()->save(new ApiKeyPermission($permission));
+            }
+
+            ApiIpAddress::apiKeyId($id)->delete();
+            foreach($payload['ip_addresses'] as $ip_address)
+            {
+                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
+            }
+
+            return $this->respondWithSuccess();
         });
     }
 
-    // Api\ApiKeyController::generate
-    public function generate($request)
+    // Admin\Api\ApiKeyController::generate
+    // Client\Api\ApiKeyController::generate
+    public function generate($request, $client_id = null)
     {
-        $token = generate_api_key_token($request->get('client_id'));
+        $client_id = ($client_id) ? $client_id : $request->get('client_id');
+        $token = generate_api_key_token($client_id);
 
         return $this->respondWithSuccess(['token' => $token]);
     }
 
-    // Api\ApiKeyController::addPermission
+    // Admin\Api\ApiKeyController::addPermission
+    // Client\Api\ApiKeyController::addPermission
     public function addPermission($request, $id)
     {
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
-
-        if (ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::EXISTING_API_KEY_PERMISSION);
-        }
 
         return DB::transaction(function () use ($payload)
         {
@@ -114,16 +139,13 @@ class ApiKeyServices extends NrbServices
         });
     }
 
-    // Api\ApiKeyController::updatePermission
+    // Admin\Api\ApiKeyController::updatePermission
+    // Client\Api\ApiKeyController::updatePermission
     public function updatePermission($request, $id)
     {
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
-
-        if (!ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::NOT_FOUND);
-        }
 
         return DB::transaction(function () use ($payload)
         {
@@ -135,16 +157,13 @@ class ApiKeyServices extends NrbServices
         });
     }
 
-    // Api\ApiKeyController::removePermission
+    // Admin\Api\ApiKeyController::removePermission
+    // Client\Api\ApiKeyController::removePermission
     public function removePermission($request, $id)
     {
         // Transform payload to eloquent format
         $payload = $request->all();
         $payload['api_key_id'] = $id;
-
-        if (!ApiKeyPermission::permission($payload)->count()) {
-            return $this->respondWithError(Errors::NOT_FOUND);
-        }
 
         return DB::transaction(function () use ($payload)
         {
