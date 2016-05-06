@@ -30,14 +30,17 @@ input:-webkit-autofill:active {
 	}
 }
 
-.mdl-textfield__label, .mdl-textfield__input {
-	font-family: $font-family;
-	font-weight: 400;
-	letter-spacing: 1px;
+.mdl-textfield__label,
+.mdl-textfield__input,
+.mdl-select__input {
+  font-family: $font-family;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 15px;
 
-	&.is-invalid {
-		color: #f90;
-	}
+  &.is-invalid {
+    color: #f90;
+  }
 }
 
 .mdl-textfield--floating-label {
@@ -52,15 +55,12 @@ small.mdl-textfield__error {
 	font-size: 9.5px;
 }
 
-div#application .client{
+div#application {
 	div.auth-view {
-		h2, p {
-			color: #fff;
-		}
 
 		form {
 			background: #fff;
-			border-radius: 3px;
+			border-radius: 0 0 3px 3px;
 			display: block;
 			margin: auto;
 			padding: 16px;
@@ -69,6 +69,10 @@ div#application .client{
 			h2, p {
 				color: #555;
 			}
+		}
+
+		.mdl-button {
+			margin-top: 15px;
 		}
 
 		.callout {
@@ -88,29 +92,11 @@ div#application .client{
 			}
 		}
 
-		.auth-button {
-			box-sizing: border-box;
-			border-radius: 2px;
-			margin-top: 12px;
-			width: 100%;
-
-			&:not(:disabled) {
-				&.primary {
-					@include cyan-button;
-				}
-				&.secondary {
-					@include purple-button;
-				}
-			}
-		}
-
 		.error-snack {
 			@include error-container;
 		}
 
 		#facebook_button {
-			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2c539e+0,2c539e+100;Blue+3D+%232 */
-			@include facebook-fill;
 
 			.ion-social-facebook:before {
 				font-size: 18px;
@@ -119,6 +105,20 @@ div#application .client{
 				display: inline-block;
 				vertical-align: text-bottom;
 			}
+		}
+	}
+}
+
+.login-view {
+	.login-header {
+		border-radius: 3px 3px 0 0;
+		background: $base-blue;
+		min-height: 50px;
+		text-align: center;
+		padding: 6px 0;
+
+		img {
+			height: 50px;
 		}
 	}
 }
