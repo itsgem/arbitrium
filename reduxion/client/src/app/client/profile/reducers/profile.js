@@ -10,12 +10,15 @@ export const getAvailableUsername = createActionAsync('GET_AVAILABLE_USERNAME', 
 
 export const retrieveEmailChangeToken = createActionAsync('RETRIEVE_EMAIL_CHANGE_TOKEN', auth.retrieveEmailChangeToken);
 export const verifyEmailChange = createActionAsync('VERIFY_EMAIL_CHANGE_TOKEN', auth.verifyEmailChange);
+export const countryProfile = createActionAsync('COUNTRY_PROFILE', auth.listCountries);
 
-const initialState = Immutable.fromJS({
+export const initialState = Immutable.fromJS({
+  countryList: {},
   user: {},
   isUsernameAvailable: null,
   isRetrieveEmailChangeTokenSuccess: false,
   isVerifyEmailChangeSuccess: false,
+  isProfileSuccess: false,
   emailChangeToken: {},
   success: {},
   errors: {},
@@ -23,10 +26,12 @@ const initialState = Immutable.fromJS({
 });
 
 export default createReducer({
+  [countryProfile.ok]: (state, payload) => state.merge({countryList: payload}),
   [clientProfile.ok]: (state, payload) => state.merge({
     loading: false,
     isUsernameAvailable: null,
     success: {},
+    isProfileSuccess: true,
     user: state.concat(payload)
   }),
   [clientProfile.request]: (state, payload) => state.merge({
@@ -39,7 +44,8 @@ export default createReducer({
   [updateClientProfile.ok]: (state, payload) => state.merge({
     loading: false,
     isUsernameAvailable: null,
-    success: state.concat(payload)
+    success: state.concat(payload),
+    isProfileSuccess: true,
   }),
   [updateClientProfile.request]: (state, payload) => state.merge({
     loading: true,
