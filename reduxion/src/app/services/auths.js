@@ -188,6 +188,11 @@ export default {
   deleteAdminAccount(id){
     return del('admin/' + id);
   },
+  getApiList(payload = {page: 1, per_page: 10}) {
+    return get('admin/api-key',{
+      params: payload
+    });
+  },
 
   // ------- CLIENT -------
   getAvailableUsername(payload) {

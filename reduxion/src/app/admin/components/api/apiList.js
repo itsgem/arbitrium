@@ -19,20 +19,25 @@ class ApiList extends React.Component {
   }
   userDisplay (data, alter) {
     return (
-       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-          <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.key}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
-          <td width="220" className="mdl-data-table__cell--non-numeric">
-            <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor="switch-1">
-                <input type="checkbox" id="switch-1" className="mdl-switch__input" unchecked />
-                <span className="mdl-switch__label">On / Off</span>
-              </label>
-            <Link
-            className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-            to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
-          </td>
-        </tr>
+      <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="220" className="mdl-data-table__cell--non-numeric">
+          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
+            {data.is_active &&
+                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked />
+            }
+            {!data.is_active &&
+                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" />
+            }
+            <span className="mdl-switch__label">On / Off</span>
+            </label>
+          <Link
+          className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
+          to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
+        </td>
+      </tr>
     )
   }
 
@@ -98,46 +103,18 @@ class ApiList extends React.Component {
     let counter = false;
     let alter = false;
     let pagination = [];
-    let users = {};
-    let perPage = 10;
 
-    let apiList = {
-      "total": 18,
-      "per_page": "10",
-      "current_page": 1,
-      "last_page": 1,
-      "next_page_url": "http:\/\/arbitrium.dev\/api\/v1\/admin\/client?page=2",
-      "prev_page_url": null,
-      "from": 1,
-      "to": 10,
-      "data": [{
-        "id": 1,
-        "description": "Marketing Desicion Api",
-        "key": "bm67sALnSB25WdYnF--wLr",
-        "created_at": "2016-04-14 02:17:15",
-      }],
-      "page_urls": [{
-        "page": 1,
-        "url": "http:\/\/arbitrium.dev\/api\/v1\/admin\/client?page=1"
-      }, {
-        "page": 2,
-        "url": "http:\/\/arbitrium.dev\/api\/v1\/admin\/client?page=2"
-      }],
-      "max_pagination_links": 5,
-      size: 1
+    let i=0;
+    counter = true;
+    let apiList = this.props.apiList;
+    let users = apiList.data;
+    pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
+    for (i = 1; i <= apiList.last_page; i++) {
+      pagination[i] = this.pagination(i, apiList.current_page);
     }
-    if (apiList.size) {
-      let i=0;
-      counter = true;
-      //apiList = this.props.apiList;
-      users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-      for (i = 1; i <= apiList.last_page; i++) {
-        pagination[i] = this.pagination(i, apiList.current_page);
-      }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-      perPage = apiList.per_page;
-    }
+    pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
+    let perPage = apiList.per_page;
+
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -188,7 +165,7 @@ class ApiList extends React.Component {
             <tbody>
               {counter && users.map(item => {
                 alter = alter ? false : true;
-                return this.userDisplay(item, alter); }) }
+                return this.userDisplay(item, alter); })}
             </tbody>
           </table>
           {/* <!-- Pagination -->*/}

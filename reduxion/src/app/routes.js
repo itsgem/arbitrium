@@ -1,5 +1,7 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
+import config from 'config';
+import CryptoJS from 'crypto-js';
 
 import moment from 'moment';
 import NoMatch from 'common/components/noMatch';
@@ -40,6 +42,8 @@ import ClientChangeEmail from 'client/containers/profile/changeEmail';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
+  let bytes ='';
+  let tokenName = '';
   switch (link[3]) {
       case 'coffee' :
         if(!localStorage.getItem('coffee')) {
@@ -48,6 +52,7 @@ function requireAuth(nextState, replace, cb) {
             state: { nextPathname: nextState.location.pathname }
           })
         }
+        tokenName = 'coffee';
       break;
 
       default :
@@ -57,7 +62,33 @@ function requireAuth(nextState, replace, cb) {
             state: { nextPathname: nextState.location.pathname }
           })
         }
+        tokenName = 'token';
   }
+
+  if (localStorage.getItem(tokenName) ){
+    bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
+
+    let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
+      localStorage.removeItem(tokenName);
+      replace({
+        pathname: "/" + tokenName+ "/login",
+        state: { nextPathname: nextState.location.pathname }
+      })
+    }
+
+    if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
+      let lifetime = decryptedData.lifetime;
+      let expired = moment().add(lifetime,'minutes').valueOf();
+      let encryptToken = {
+        token: decryptedData.token,
+        expired: expired,
+        lifetime: lifetime
+      };
+      localStorage.setItem(tokenName, CryptoJS.AES.encrypt(JSON.stringify(encryptToken), config.key));
+    }
+  }
+
   return cb();
 }
 

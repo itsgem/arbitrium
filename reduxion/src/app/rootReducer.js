@@ -6,6 +6,7 @@ import router from 'admin/reducers/routerRedux'
 import AdminAuth from 'admin/reducers/auth'
 import adminUserManagement from 'admin/reducers/userManagement'
 import clientadmin from 'admin/reducers/clientProfile'
+import AdminApi from 'admin/reducers/api'
 
 import ClientAuth from 'client/reducers/auth'
 import ClientSignup from 'client/reducers/signup'
@@ -20,6 +21,7 @@ export default combineReducers({
   AdminAuth,
   clientadmin,
   adminUserManagement,
+  AdminApi,
   ClientAuth,
   ClientSignup,
   ClientCountry,

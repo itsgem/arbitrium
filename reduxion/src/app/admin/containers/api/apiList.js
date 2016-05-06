@@ -1,13 +1,19 @@
 import { connect } from 'react-redux';
-//import {apiManagement} from '../reducers/apiManagement'
+import { apiList } from 'admin/reducers/api'
 import ApiList from 'admin/views/api/apiList';
+
+const strMapToObj=(strMap) => {
+  let obj = JSON.parse(JSON.stringify(strMap));
+  return obj;
+}
 
 const mapStateToProps = (state) => {
   return {
-  	test: 'test'
-    //clientList: state.get('clientadmin').get('clientList'),
+    ListApiSuccess: strMapToObj(state.get('AdminApi').get('apiList')),
+    loading: state.get('AdminApi').get('loading')
   };
 }
 
 export default connect(mapStateToProps, {
+  apiList
 })(ApiList)

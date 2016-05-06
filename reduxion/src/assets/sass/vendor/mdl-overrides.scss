@@ -93,6 +93,16 @@ select:focus {
 /*
 * Menus
 */
+
+#application{
+  .coffee{
+    .mdl-grid{
+      padding-bottom: 0px;
+      padding-top: 0px;
+    }
+  }
+}
+
 .mdl-menu__item {
   color: #777;
   font-size: 11px;
@@ -386,5 +396,4 @@ $loader-max-height: 16px;
     -moz-transform: translateY(-20px);
   }
 }
-
 

@@ -15,13 +15,20 @@ class ApiPermissionRequest extends NrbRequest
     {
         $rules = [];
         $method = $this->method();
+
+        $permission_id = $this->route('api_permission');
+
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'slug'      => 'required|unique:api_permissions|max:255',
                 'name'      => 'required|max:255',
                 'parent_id' => 'integer',
             ];
+
+            if ($method == 'POST')
+            {
+                $rules['slug'] = 'required|unique:api_permissions,slug,'.$permission_id.'|max:255';
+            }
         }
 
         return $rules;

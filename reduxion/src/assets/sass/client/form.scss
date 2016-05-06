@@ -1,7 +1,5 @@
-input {
-	&[type="text"], &[type="password"], &[type="email"], &[type="number"] {
-		outline: none;
-	}
+input, select {
+  outline: none;
 }
 
 input:-webkit-autofill,
@@ -52,10 +50,25 @@ input:-webkit-autofill:active {
 }
 
 small.mdl-textfield__error {
-	font-size: 9.5px;
+  font-size: 10.5px;
+  line-height: 10px;
 }
 
-div#application {
+.mdl-button-group .mdl-button {
+  margin: 0 10px;
+  min-width: 100px;
+}
+
+div#application .client{
+	.mdl-button-group {
+	  margin: 0 5px;
+
+	  .mdl-button {
+	    margin: 0 5px;
+	    min-width: 100px;
+	  }
+	}
+
 	div.auth-view {
 
 		form {
