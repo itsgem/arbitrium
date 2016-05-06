@@ -94,20 +94,20 @@ div#application{
 }
 
 .form-group-flag-icon {
-	.mdl-button, .mdl-icon {
-		display: inline-block;
-		vertical-align: middle;
-	}
-	.mdl-icon {
-		margin: 10px;
-		font-size: 24px;
-		line-height: normal;
-		color: #e0e0e0;
-		height: 23px;
+  .mdl-button, .mdl-icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .mdl-icon {
+    margin: 12px 10px 0;
+    font-size: 24px;
+    line-height: normal;
+    color: #e0e0e0;
+    height: 23px;
 
-		&.mdl-icon-danger {color: #D50000}
-		&.mdl-icon-success {color: #228b22}
-	}
+    &.mdl-icon-danger {color: #D50000}
+    &.mdl-icon-success {color: #228b22}
+  }
 }
 
 .box-right {
