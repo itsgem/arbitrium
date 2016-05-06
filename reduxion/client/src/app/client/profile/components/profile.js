@@ -107,6 +107,7 @@ class ClientProfile extends React.Component {
           });
         }
       }
+
     if (!this.props.user || !this.state.client) {
       return (<div className="mdl-grid"></div>);
     }
@@ -588,6 +589,12 @@ class ClientProfile extends React.Component {
                           >
                           Save
                         </button>
+                        <a
+                          className="mdl-button mdl-js-button mdl-button--raised"
+                          href="/i"
+                          >
+                          Cancel
+                        </a>
                       </div>
                   </form>
               </div>

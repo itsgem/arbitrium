@@ -59,9 +59,13 @@ small.mdl-textfield__error {
   line-height: 10px;
 }
 
-.mdl-button-group .mdl-button {
-  margin: 0 10px;
-  min-width: 100px;
+.mdl-button-group {
+  margin: 0 5px;
+
+  .mdl-button {
+    margin: 0 5px;
+    min-width: 100px;
+  }
 }
 
 div#application {

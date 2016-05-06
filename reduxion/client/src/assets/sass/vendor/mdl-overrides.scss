@@ -72,11 +72,12 @@ select:focus {
 * Buttons
 */
 .mdl-button {
-	font-size: 15px;
-	
-	&:hover {
-		background: $base-orange;
-	}
+  font-size: 15px;
+
+  &:hover {
+    background: $base-orange;
+    color: #ffffff;
+  }
 }
 
 .mdl-button.mdl-button--accent,
