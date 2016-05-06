@@ -52,7 +52,17 @@ small.mdl-textfield__error {
 	font-size: 9.5px;
 }
 
+
 div#application .client{
+	.mdl-button-group {
+	  margin: 0 5px;
+
+	  .mdl-button {
+	    margin: 0 5px;
+	    min-width: 100px;
+	  }
+	}
+
 	div.auth-view {
 		h2, p {
 			color: #fff;
