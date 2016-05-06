@@ -109,11 +109,11 @@ export default React.createClass( {
     let errors = this.state.errors;
     return (
       <div className="login-view">
-         <legend className="forgot-legend">Password Reset</legend>
         <div className="local-login-form">
           <form>
-            <span className="forgot-text"><strong>Enter the email address used when you registered with username and password. </strong></span>
-            <span className="forgot-text">You'll be sent a reset code to change your password.</span>
+            <legend className="forgot-legend">Password Reset</legend>
+            <p><strong>Enter the email address used when you registered with username and password.</strong></p>
+            <p> You'll be sent a reset code to change your password.</p>
             <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
               <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
@@ -121,7 +121,7 @@ export default React.createClass( {
             </div>
             <div className="spacer">
               <button type="button"
-              className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
+              className='auth-button primary mdl-button mdl-js-button mdl-button--fullwidth mdl-button--accent mdl-js-ripple-effect'
               onClick={(e)=>this.requestReset(e)}>
                 Send Reset Email
               </button>
@@ -137,12 +137,10 @@ export default React.createClass( {
     }
     return (
       <div className="login-view">
-        <legend className="forgot-legend">Step 2 - Check Email</legend>
-        <div className="local-login-form">
-          <div className="step-two-content">
-            <span className="forgot-step-two"><strong>An email has been sent containing your reset link. Click on the link to proceed.</strong></span>
-            <span className="forgot-step-two">Please also check your spam folder just in case the reset email ended up there.</span>
-          </div>
+        <div className="local-login-form padding-15">
+          <legend className="forgot-legend">Step 2 - Check Email</legend>
+          <p><strong>An email has been sent containing your reset link. Click on the link to proceed.</strong></p>
+          <p>Please also check your spam folder just in case the reset email ended up there.</p>
         </div>
       </div>
     );

@@ -2,74 +2,74 @@ $fast-transition-speed: 0.2s;
 $very-fast-transition-speed: 0.1s;
 
 .background-transition {
-    transition: background-color $fast-transition-speed ease-in;
+	transition: background-color $fast-transition-speed ease-in;
 }
 
 .fade {
 
-    &-enter {
-        opacity: 0.01;
-        transition: opacity $fast-transition-speed ease-in;
+	&-enter {
+		opacity: 0.01;
+		transition: opacity $fast-transition-speed ease-in;
 
-        &-active {
-            opacity: 1;
-        }
-    }
+		&-active {
+			opacity: 1;
+		}
+	}
 
-    &-leave {
-        opacity: 1;
-        transition: opacity $very-fast-transition-speed ease-out;
+	&-leave {
+		opacity: 1;
+		transition: opacity $very-fast-transition-speed ease-out;
 
-        &-active {
-            opacity: 0.01;
-        }
-    }
+		&-active {
+			opacity: 0.01;
+		}
+	}
 
 }
 
 .zoom {
 
-    &-enter {
-        opacity: 0.01;
-        transform: scale3d(.3, .3, .3);
-        transition: all 0.1s ease-in;
+	&-enter {
+		opacity: 0.01;
+		transform: scale3d(.3, .3, .3);
+		transition: all 0.1s ease-in;
 
-        &-active {
-            opacity: 1;
-            transform: scale3d(1, 1, 1);
-        }
+		&-active {
+			opacity: 1;
+			transform: scale3d(1, 1, 1);
+		}
 
-    }
+	}
 
-    &-leave {
-        opacity: 1;
-        transition: all 0.1s ease-in;
+	&-leave {
+		opacity: 1;
+		transition: all 0.1s ease-in;
 
-        &-active {
-            opacity: 0.01;
-            transform: scale3d(.3, .3, .3);
-        }
-    }
+		&-active {
+			opacity: 0.01;
+			transform: scale3d(.3, .3, .3);
+		}
+	}
 
 }
 
 
 @mixin keyframes($animation-name) {
-    @-webkit-keyframes #{$animation-name} {
-        @content;
-    }
-    @-moz-keyframes #{$animation-name} {
-        @content;
-    }  
-    @-ms-keyframes #{$animation-name} {
-        @content;
-    }
-    @-o-keyframes #{$animation-name} {
-        @content;
-    }  
-    @keyframes #{$animation-name} {
-        @content;
-    }
+	@-webkit-keyframes #{$animation-name} {
+		@content;
+	}
+	@-moz-keyframes #{$animation-name} {
+		@content;
+	}  
+	@-ms-keyframes #{$animation-name} {
+		@content;
+	}
+	@-o-keyframes #{$animation-name} {
+		@content;
+	}  
+	@keyframes #{$animation-name} {
+		@content;
+	}
 }
 
 @mixin animation($str) {
@@ -80,11 +80,11 @@ $very-fast-transition-speed: 0.1s;
   animation: #{$str};      
 }
 .animate {
-    @include keyframes(slide-down) {
-      0% { max-height: 1px; opacity: 0; }
-      90% { max-height: 200px; opacity: 1; }
-    }
-    &.bounceIn {
-        @include animation('slide-down 0.2s 0.3');
-    }
+	@include keyframes(slide-down) {
+	  0% { max-height: 1px; opacity: 0; }
+	  90% { max-height: 200px; opacity: 1; }
+	}
+	&.bounceIn {
+		@include animation('slide-down 0.2s 0.3');
+	}
 }

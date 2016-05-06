@@ -28,6 +28,9 @@ class LocalLoginForm extends React.Component {
         debug('render state:', this.state);
         return (
             <div className="local-login-form">
+                <div className="login-header">
+                  <img src="//s3.amazonaws.com/assets.idearobin.com/arbitrium/logo-arbitrium.png"/>
+                </div>
                 <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
                     <div className="mdl-snackbar__text"></div>
                     <button type="button" className="mdl-snackbar__action"></button>
