@@ -1,7 +1,5 @@
-input {
-	&[type="text"], &[type="password"], &[type="email"], &[type="number"] {
-		outline: none;
-	}
+input, select {
+  outline: none;
 }
 
 input:-webkit-autofill,
@@ -30,14 +28,17 @@ input:-webkit-autofill:active {
 	}
 }
 
-.mdl-textfield__label, .mdl-textfield__input {
-	font-family: $font-family;
-	font-weight: 400;
-	letter-spacing: 1px;
+.mdl-textfield__label, .mdl-textfield__input, .mdl-select__input {
+  font-family: $font-family;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 16px;
+  padding: 3px 0;
+  height: auto;
 
-	&.is-invalid {
-		color: #f90;
-	}
+  &.is-invalid {
+    color: #f90;
+  }
 }
 
 .mdl-textfield--floating-label {
@@ -49,7 +50,13 @@ input:-webkit-autofill:active {
 }
 
 small.mdl-textfield__error {
-	font-size: 9.5px;
+  font-size: 10.5px;
+  line-height: 10px;
+}
+
+.mdl-button-group .mdl-button {
+  margin: 0 10px;
+  min-width: 100px;
 }
 
 

@@ -19,8 +19,7 @@ class ClientProfile extends React.Component {
       errors: {},
       errorServer: null,
       loading: false,
-      isUsernameAvailable: null,
-      isAvailableUsernameButtonDisabled: false
+      isUsernameAvailable: null
     };
   }
 
@@ -118,476 +117,479 @@ class ClientProfile extends React.Component {
       errors = Object.assign({}, errorServer.response);
     }
 
-    let isAvailableUsernameButtonDisabled = this.state.isAvailableUsernameButtonDisabled;
-
     return (
       <div>
-          { this.renderError() }
-          <form>
-              <legend>Login Information</legend>
-              <div className="">
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('username', errors)}>
-                            <input
+        { this.renderError() }
+        <form>
+          <legend>Login Information</legend>
+          <div className="">
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('username', errors)}>
+                        <input
+                          className="mdl-textfield__input"
+                          type="text"
+                          id="username"
+                          ref="username"
+                          data-client="user"
+                          defaultValue={(client.user) ? client.user.username : ''}
+
+                          />
+                        <label className="mdl-textfield__label" htmlFor="username">Username *</label>
+                        {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
+                      <button
+                        id="check_availability"
+                        type="button"
+                        className="mdl-button mdl-js-button mdl-button--raised"
+                        onClick={this.onClickGetAvailableUsername.bind(this)}
+                        >
+                        Check availability
+                      </button>
+                      { this.isUsernameAvailable() }
+                  </div>
+              </div>
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('email_address', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="email_address"
+                            ref="email_address"
+                            data-client="user"
+                            defaultValue={(client.user) ? client.user.email_address : ''}
+                            readOnly={true}
+                            />
+                          <label className="mdl-textfield__label" htmlFor="email_address">E-mail</label>
+                          {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <legend>General Information</legend>
+          <div className="">
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--6-col">
+                      <div className={this.formClassNames('company_name', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="company_name"
+                            ref="company_name"
+                            defaultValue={client.company_name}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
+                          {errors && errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
+                      </div>
+                  </div>
+              </div>
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('street_address_1', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="street_address_1"
+                            ref="street_address_1"
+                            defaultValue={client.street_address_1}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1 *</label>
+                          {errors && errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('street_address_2', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="street_address_2"
+                            ref="street_address_2"
+                            defaultValue={client.street_address_2}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
+                          {errors && errors.street_address_2 && <small className="mdl-textfield__error shown">{errors.street_address_2[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('city', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="city"
+                            ref="city"
+                            defaultValue={client.city}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="city">City *</label>
+                          {errors && errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
+                      </div>
+                  </div>
+              </div>
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('state', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="state"
+                            ref="state"
+                            defaultValue={client.state}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="state">State / Province</label>
+                          {errors && errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('postal_code', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="postal_code"
+                            ref="postal_code"
+                            defaultValue={client.postal_code}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
+                          {errors && errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('country_id', errors)}>
+                        { this.renderCountry() }
+                        {errors && errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <legend>Company Representative</legend>
+          <div className="">
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('rep_first_name', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_first_name"
+                            ref="rep_first_name"
+                            defaultValue={client.rep_first_name}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
+                          {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('rep_last_name', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_last_name"
+                            ref="rep_last_name"
+                            defaultValue={client.rep_last_name}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
+                          {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('rep_email_address', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_email_address"
+                            ref="rep_email_address"
+                            defaultValue={client.rep_email_address}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
+                          {errors && errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
+                      </div>
+                  </div>
+
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('rep_gender', errors)}>
+                          <select
+                            className="mdl-select__input"
+                            id="rep_gender"
+                            ref="rep_gender"
+                            defaultValue={client.rep_gender}
+
+                            >
+                            <option value=""></option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                          <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
+                          {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                      </div>
+                  </div>
+              </div>
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--1-col">
+                      <div className={this.formClassNames('rep_mobile_code', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_mobile_code"
+                            ref="rep_mobile_code"
+                            defaultValue={client.rep_mobile_code}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Code</label>
+                          {errors && errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--2-col">
+                      <div className={this.formClassNames('rep_mobile_number', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_mobile_number"
+                            ref="rep_mobile_number"
+                            defaultValue={client.rep_mobile_number}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.</label>
+                          {errors && errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--1-col">
+                      <div className={this.formClassNames('rep_phone_code', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_phone_code"
+                            ref="rep_phone_code"
+                            defaultValue={client.rep_phone_code}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_phone_code">Code</label>
+                          {errors && errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--2-col">
+                      <div className={this.formClassNames('rep_phone_number', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_phone_number"
+                            ref="rep_phone_number"
+                            defaultValue={client.rep_phone_number}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
+                          {errors && errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('rep_position', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_position"
+                            ref="rep_position"
+                            defaultValue={client.rep_position}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_position">Position *</label>
+                          {errors && errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
+                      </div>
+                  </div>
+
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('rep_department', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="rep_department"
+                            ref="rep_department"
+                            defaultValue={client.rep_department}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="rep_department">Department *</label>
+                          {errors && errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <legend>Company Alternative</legend>
+          <div className="">
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('alt_first_name', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_first_name"
+                            ref="alt_first_name"
+                            defaultValue={client.alt_first_name}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
+                          {errors && errors.alt_first_name && <small className="mdl-textfield__error shown">{errors.alt_first_name[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('alt_last_name', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_last_name"
+                            ref="alt_last_name"
+                            defaultValue={client.alt_last_name}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
+                          {errors && errors.alt_last_name && <small className="mdl-textfield__error shown">{errors.alt_last_name[0]}</small>}
+                      </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('alt_email_address', errors)}>
+                          <input
                               className="mdl-textfield__input"
                               type="text"
-                              id="username"
-                              ref="username"
-                              data-client="user"
-                              defaultValue={(client.user) ? client.user.username : ''}
+                              id="alt_email_address"
+                              ref="alt_email_address"
+                              defaultValue={client.alt_email_address}
 
                               />
-                            <label className="mdl-textfield__label" htmlFor="username">Username *</label>
-                            {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
-                          </div>
+                          <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail</label>
+                          {errors && errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
                       </div>
-                      <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
-                          <button
-                            id="check_availability"
-                            type="button"
-                            className="mdl-button mdl-js-button mdl-button--raised"
-                            onClick={this.onClickGetAvailableUsername.bind(this)}
-                            disabled={isAvailableUsernameButtonDisabled}
+                  </div>
+
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('alt_gender', errors)}>
+                          <select
+                            className="mdl-select__input"
+                            id="alt_gender"
+                            ref="alt_gender"
+                            defaultValue={client.alt_gender}
+
                             >
-                            Check availability
-                          </button>
-                          { this.isUsernameAvailable() }
-                      </div>
-                  </div>
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('email_address', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="email_address"
-                                ref="email_address"
-                                data-client="user"
-                                defaultValue={(client.user) ? client.user.email_address : ''}
-                                readOnly={true}
-                                />
-                              <label className="mdl-textfield__label" htmlFor="email_address">E-mail</label>
-                              {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
-                          </div>
+                            <option value=""></option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                          <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
                       </div>
                   </div>
               </div>
+              <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--1-col">
+                      <div className={this.formClassNames('alt_mobile_code', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_mobile_code"
+                            ref="alt_mobile_code"
+                            defaultValue={client.alt_mobile_code}
 
-              <legend>General Information</legend>
-              <div className="">
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--6-col">
-                          <div className={this.formClassNames('company_name', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="company_name"
-                                ref="company_name"
-                                defaultValue={client.company_name}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
-                              {errors && errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
-                          </div>
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Code</label>
+                          {errors && errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
                       </div>
                   </div>
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('street_address_1', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="street_address_1"
-                                ref="street_address_1"
-                                defaultValue={client.street_address_1}
+                  <div className="mdl-cell mdl-cell--2-col">
+                      <div className={this.formClassNames('alt_mobile_number', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_mobile_number"
+                            ref="alt_mobile_number"
+                            defaultValue={client.alt_mobile_number}
 
-                                />
-                              <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1 *</label>
-                              {errors && errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('street_address_2', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="street_address_2"
-                                ref="street_address_2"
-                                defaultValue={client.street_address_2}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
-                              {errors && errors.street_address_2 && <small className="mdl-textfield__error shown">{errors.street_address_2[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('city', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="city"
-                                ref="city"
-                                defaultValue={client.city}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="city">City *</label>
-                              {errors && errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
-                          </div>
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
+                          {errors && errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
                       </div>
                   </div>
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('state', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="state"
-                                ref="state"
-                                defaultValue={client.state}
+                  <div className="mdl-cell mdl-cell--1-col">
+                      <div className={this.formClassNames('alt_phone_code', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_phone_code"
+                            ref="alt_phone_code"
+                            defaultValue={client.alt_phone_code}
 
-                                />
-                              <label className="mdl-textfield__label" htmlFor="state">State / Province</label>
-                              {errors && errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
-                          </div>
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_phone_code">Code</label>
+                          {errors && errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
                       </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('postal_code', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="postal_code"
-                                ref="postal_code"
-                                defaultValue={client.postal_code}
+                  </div>
+                  <div className="mdl-cell mdl-cell--2-col">
+                      <div className={this.formClassNames('alt_phone_number', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_phone_number"
+                            ref="alt_phone_number"
+                            defaultValue={client.alt_phone_number}
 
-                                />
-                              <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
-                              {errors && errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
-                          </div>
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone no.</label>
+                          {errors && errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
                       </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('country_id', errors)}>
-                            { this.renderCountry() }
-                            {errors && errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
-                          </div>
+                  </div>
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('alt_position', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_position"
+                            ref="alt_position"
+                            defaultValue={client.alt_position}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
+                          {errors && errors.alt_position && <small className="mdl-textfield__error shown">{errors.alt_position[0]}</small>}
+                      </div>
+                  </div>
+
+                  <div className="mdl-cell mdl-cell--3-col">
+                      <div className={this.formClassNames('alt_department', errors)}>
+                          <input
+                            className="mdl-textfield__input"
+                            type="text"
+                            id="alt_department"
+                            ref="alt_department"
+                            defaultValue={client.alt_department}
+
+                            />
+                          <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
+                          {errors && errors.alt_department && <small className="mdl-textfield__error shown">{errors.alt_department[0]}</small>}
                       </div>
                   </div>
               </div>
-
-              <legend>Company Representative</legend>
-              <div className="">
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('rep_first_name', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_first_name"
-                                ref="rep_first_name"
-                                defaultValue={client.rep_first_name}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
-                              {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('rep_last_name', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_last_name"
-                                ref="rep_last_name"
-                                defaultValue={client.rep_last_name}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
-                              {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('rep_email_address', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_email_address"
-                                ref="rep_email_address"
-                                defaultValue={client.rep_email_address}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
-                              {errors && errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
-                          </div>
-                      </div>
-
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('rep_gender', errors)}>
-                              <select
-                                className="mdl-select__input"
-                                id="rep_gender"
-                                ref="rep_gender"
-                                defaultValue={client.rep_gender}
-
-                                >
-                                <option value=""></option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                              </select>
-                              <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
-                              {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
-                          </div>
-                      </div>
-                  </div>
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--1-col">
-                          <div className={this.formClassNames('rep_mobile_code', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_mobile_code"
-                                ref="rep_mobile_code"
-                                defaultValue={client.rep_mobile_code}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Code</label>
-                              {errors && errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--2-col">
-                          <div className={this.formClassNames('rep_mobile_number', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_mobile_number"
-                                ref="rep_mobile_number"
-                                defaultValue={client.rep_mobile_number}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.</label>
-                              {errors && errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--1-col">
-                          <div className={this.formClassNames('rep_phone_code', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_phone_code"
-                                ref="rep_phone_code"
-                                defaultValue={client.rep_phone_code}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_phone_code">Code</label>
-                              {errors && errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--2-col">
-                          <div className={this.formClassNames('rep_phone_number', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_phone_number"
-                                ref="rep_phone_number"
-                                defaultValue={client.rep_phone_number}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
-                              {errors && errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('rep_position', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_position"
-                                ref="rep_position"
-                                defaultValue={client.rep_position}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_position">Position *</label>
-                              {errors && errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
-                          </div>
-                      </div>
-
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('rep_department', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="rep_department"
-                                ref="rep_department"
-                                defaultValue={client.rep_department}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="rep_department">Department *</label>
-                              {errors && errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-              <legend>Company Alternative</legend>
-              <div className="">
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('alt_first_name', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_first_name"
-                                ref="alt_first_name"
-                                defaultValue={client.alt_first_name}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
-                              {errors && errors.alt_first_name && <small className="mdl-textfield__error shown">{errors.alt_first_name[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('alt_last_name', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_last_name"
-                                ref="alt_last_name"
-                                defaultValue={client.alt_last_name}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
-                              {errors && errors.alt_last_name && <small className="mdl-textfield__error shown">{errors.alt_last_name[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('alt_email_address', errors)}>
-                              <input
-                                  className="mdl-textfield__input"
-                                  type="text"
-                                  id="alt_email_address"
-                                  ref="alt_email_address"
-                                  defaultValue={client.alt_email_address}
-
-                                  />
-                              <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail</label>
-                              {errors && errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
-                          </div>
-                      </div>
-
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('alt_gender', errors)}>
-                              <select
-                                className="mdl-select__input"
-                                id="alt_gender"
-                                ref="alt_gender"
-                                defaultValue={client.alt_gender}
-
-                                >
-                                <option value=""></option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                              </select>
-                              <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
-                          </div>
-                      </div>
-                  </div>
-                  <div className="mdl-grid">
-                      <div className="mdl-cell mdl-cell--1-col">
-                          <div className={this.formClassNames('alt_mobile_code', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_mobile_code"
-                                ref="alt_mobile_code"
-                                defaultValue={client.alt_mobile_code}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Code</label>
-                              {errors && errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--2-col">
-                          <div className={this.formClassNames('alt_mobile_number', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_mobile_number"
-                                ref="alt_mobile_number"
-                                defaultValue={client.alt_mobile_number}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
-                              {errors && errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--1-col">
-                          <div className={this.formClassNames('alt_phone_code', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_phone_code"
-                                ref="alt_phone_code"
-                                defaultValue={client.alt_phone_code}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_phone_code">Code</label>
-                              {errors && errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--2-col">
-                          <div className={this.formClassNames('alt_phone_number', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_phone_number"
-                                ref="alt_phone_number"
-                                defaultValue={client.alt_phone_number}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone no.</label>
-                              {errors && errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
-                          </div>
-                      </div>
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('alt_position', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_position"
-                                ref="alt_position"
-                                defaultValue={client.alt_position}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
-                              {errors && errors.alt_position && <small className="mdl-textfield__error shown">{errors.alt_position[0]}</small>}
-                          </div>
-                      </div>
-
-                      <div className="mdl-cell mdl-cell--3-col">
-                          <div className={this.formClassNames('alt_department', errors)}>
-                              <input
-                                className="mdl-textfield__input"
-                                type="text"
-                                id="alt_department"
-                                ref="alt_department"
-                                defaultValue={client.alt_department}
-
-                                />
-                              <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
-                              {errors && errors.alt_department && <small className="mdl-textfield__error shown">{errors.alt_department[0]}</small>}
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div className="mdl-button-group">
-                <button
-                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-                  type="submit"
-                  onClick = { this.onSubmitProfile.bind(this) }
-                  >
-                  Save
-                </button>
-              </div>
-          </form>
+          </div>
+          <div className="mdl-button-group">
+            <button
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+              type="submit"
+              onClick = { this.onSubmitProfile.bind(this) }
+              >
+              Save
+            </button>
+            <a
+              className="mdl-button mdl-js-button mdl-button--raised"
+              href="/i"
+              >
+              Cancel
+            </a>
+          </div>
+        </form>
       </div>
     );
   }
@@ -653,14 +655,6 @@ class ClientProfile extends React.Component {
     );
   }
 
-  isAvailableUsernameButtonDisabled() {
-    let client = this.state.client;
-    if (!client) return;
-
-    //let isAvailableUsernameButtonDisabled = (client.user && (client.user.username == this.state.original.user.username || !client.user.username)) ? true : false;
-    //this.setState({isAvailableUsernameButtonDisabled: isAvailableUsernameButtonDisabled});
-  }
-
   // --- Actions
 
   getAvailableUsername(payload) {
@@ -691,8 +685,6 @@ class ClientProfile extends React.Component {
     }
 
     this.setState({client: client});
-
-    //this.isAvailableUsernameButtonDisabled();
   }
 
   onClickGetAvailableUsername(e) {
@@ -701,8 +693,7 @@ class ClientProfile extends React.Component {
     this.setState({
       success: null,
       errors: {},
-      errorServer: null,
-      isAvailableUsernameButtonDisabled: false
+      errorServer: null
     });
 
     let {username} = this.refs;
