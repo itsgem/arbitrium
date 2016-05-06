@@ -28,9 +28,12 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
-        if ($client_id) {
+        if ($client_id)
+        {
             $api_keys = ApiKey::clientId($client_id);
-        } else {
+        }
+        else
+        {
             $api_keys = ApiKey::with(['client.user' => function($query){
                     $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
                 }]);
@@ -66,11 +69,13 @@ class ApiKeyServices extends NrbServices
         {
             $api_key = ApiKey::create($payload);
 
-            foreach($payload['permissions'] as $permission) {
+            foreach($payload['permissions'] as $permission)
+            {
                 $api_key->permissions()->save(new ApiKeyPermission($permission));
             }
 
-            foreach($payload['ip_addresses'] as $ip_address) {
+            foreach($payload['ip_addresses'] as $ip_address)
+            {
                 $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
             }
 
@@ -94,12 +99,14 @@ class ApiKeyServices extends NrbServices
             $api_key->update($payload);
 
             ApiKeyPermission::apiKeyId($id)->delete();
-            foreach($payload['permissions'] as $permission) {
+            foreach($payload['permissions'] as $permission)
+            {
                 $api_key->permissions()->save(new ApiKeyPermission($permission));
             }
 
             ApiIpAddress::apiKeyId($id)->delete();
-            foreach($payload['ip_addresses'] as $ip_address) {
+            foreach($payload['ip_addresses'] as $ip_address)
+            {
                 $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
             }
 

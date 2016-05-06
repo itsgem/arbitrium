@@ -56,8 +56,10 @@ class ApiKeyRequest extends NrbRequest
                 'api_permission_id' => ['required', 'exists:api_permissions,id'],
                 'value'             => ['required', 'boolean'],
             ];
-            if ($this->get('permissions')) {
-                foreach ($this->get('permissions') as $permission) {
+            if ($this->get('permissions'))
+            {
+                foreach ($this->get('permissions') as $permission)
+                {
                     $validation = Validator::make(
                         [
                             'api_permission_id' => get_val($permission, 'api_permission_id', ''),
@@ -65,7 +67,8 @@ class ApiKeyRequest extends NrbRequest
                         ],
                         $rules_permissions
                     );
-                    if ($validation->fails()) {
+                    if ($validation->fails())
+                    {
                         $errors['permissions'][] = $validation->messages()->toArray();
                     }
                 }
@@ -76,8 +79,10 @@ class ApiKeyRequest extends NrbRequest
                 'ip_address' => ['required', 'ip'],
                 'name'       => ['max:255']
             ];
-            if ($this->get('ip_addresses')) {
-                foreach ($this->get('ip_addresses') as $ip_address) {
+            if ($this->get('ip_addresses'))
+            {
+                foreach ($this->get('ip_addresses') as $ip_address)
+                {
                     $validation = Validator::make(
                         [
                             'api_key_id' => get_val($ip_address, 'api_key_id', ''),
@@ -86,7 +91,8 @@ class ApiKeyRequest extends NrbRequest
                         ],
                         $rules_ip_addresses
                     );
-                    if ($validation->fails()) {
+                    if ($validation->fails())
+                    {
                         $errors['ip_addresses'][] = $validation->messages()->toArray();
                     }
                 }

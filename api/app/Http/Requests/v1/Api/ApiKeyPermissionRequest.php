@@ -56,7 +56,8 @@ class ApiKeyPermissionRequest extends NrbRequest
             // Add: Validate API Key Permission if already exist and prevent it from proceeding
             if ($method == 'POST')
             {
-                if ($permission_exists) {
+                if ($permission_exists)
+                {
                     $errors['permission'] = trans('errors.'.Errors::EXISTING_API_KEY_PERMISSION);
                 }
             }
@@ -64,7 +65,8 @@ class ApiKeyPermissionRequest extends NrbRequest
             // Edit / Delete: Validate API Key Permission exists
             if ($method == 'PUT' || $method == 'DELETE')
             {
-                if (!$permission_exists) {
+                if (!$permission_exists)
+                {
                     $errors['permission'] = trans('errors.'.Errors::INVALID_API_KEY_PERMISSION);
                 }
             }

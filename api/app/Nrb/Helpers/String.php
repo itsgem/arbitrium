@@ -39,6 +39,7 @@ function replace_placeholders($string, $data)
     return $string;
 }
 
-function str_to_slug($string){
+function str_to_slug($string)
+{
     return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $string)));
 }

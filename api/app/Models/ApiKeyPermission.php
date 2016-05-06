@@ -45,7 +45,8 @@ class ApiKeyPermission extends NrbModel
 
     public function scopeClientId($query, $client_id)
     {
-        if ($client_id) {
+        if ($client_id)
+        {
             return $query->whereHas('api_key', function($query) use($client_id) {
                 $query->clientId($client_id);
             });
@@ -55,7 +56,8 @@ class ApiKeyPermission extends NrbModel
     public function scopePermission($query, $payload = [])
     {
         if (array_key_exists('api_key_id', $payload) && $payload['api_key_id']
-            && array_key_exists('api_permission_id', $payload) && $payload['api_permission_id']) {
+            && array_key_exists('api_permission_id', $payload) && $payload['api_permission_id'])
+        {
             return $query->where('api_key_id', $payload['api_key_id'])
                 ->where('api_permission_id', $payload['api_permission_id']);
         }
@@ -64,7 +66,8 @@ class ApiKeyPermission extends NrbModel
     //---------- helpers
     public function isOwnedByClientId($client_id)
     {
-        if ($client_id) {
+        if ($client_id)
+        {
             return $this->api_key && $this->api_key->client_id == $client_id;
         }
     }
