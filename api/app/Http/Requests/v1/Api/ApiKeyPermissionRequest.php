@@ -46,16 +46,17 @@ class ApiKeyPermissionRequest extends NrbRequest
         {
             $permission = [
                 'api_key_id'        => ($this->route('api_key')) ? $this->route('api_key') : '',
-                'api_permission_id' => ($this->get('api_permission_id')) ? $this->get('api_permission_id') : '',
+                'api_permission_id' => $this->get('api_permission_id', ''),
             ];
 
             // Validate API Key
             $api_key = ApiKey::findOrFail($permission['api_key_id']);
+            $permission_exists = ApiKeyPermission::permission($permission)->count();
 
             // Add: Validate API Key Permission if already exist and prevent it from proceeding
             if ($method == 'POST')
             {
-                if (ApiKeyPermission::permission($permission)->count()) {
+                if ($permission_exists) {
                     $errors['permission'] = trans('errors.'.Errors::EXISTING_API_KEY_PERMISSION);
                 }
             }
@@ -63,7 +64,7 @@ class ApiKeyPermissionRequest extends NrbRequest
             // Edit / Delete: Validate API Key Permission exists
             if ($method == 'PUT' || $method == 'DELETE')
             {
-                if (!ApiKeyPermission::permission($permission)->count()) {
+                if (!$permission_exists) {
                     $errors['permission'] = trans('errors.'.Errors::INVALID_API_KEY_PERMISSION);
                 }
             }

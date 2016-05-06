@@ -57,10 +57,10 @@ class ApiKeyServices extends NrbServices
     {
         // Transform payload to eloquent format, set defaults
         $payload = $request->all();
-        $payload['is_active'] = (array_key_exists('is_active', $payload)) ? $payload['is_active'] : true;
+        $payload['is_active'] = get_val($payload, 'is_active', true);
         $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
-        $payload['permissions'] = (array_key_exists('permissions', $payload)) ? $payload['permissions'] : [];
-        $payload['ip_addresses'] = (array_key_exists('ip_addresses', $payload)) ? $payload['ip_addresses'] : [];
+        $payload['permissions'] = get_val($payload, 'permissions', []);
+        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
 
         return DB::transaction(function () use ($payload)
         {
@@ -85,8 +85,8 @@ class ApiKeyServices extends NrbServices
         // Transform payload to eloquent format, set defaults
         $payload = $request->all();
         $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
-        $payload['permissions']  = (array_key_exists('permissions', $payload)) ? $payload['permissions'] : [];
-        $payload['ip_addresses'] = (array_key_exists('ip_addresses', $payload)) ? $payload['ip_addresses'] : [];
+        $payload['permissions'] = get_val($payload, 'permissions', []);
+        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
 
         return DB::transaction(function () use ($payload, $id, $client_id)
         {

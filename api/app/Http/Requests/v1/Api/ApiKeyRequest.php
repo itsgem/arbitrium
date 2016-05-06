@@ -60,8 +60,8 @@ class ApiKeyRequest extends NrbRequest
                 foreach ($this->get('permissions') as $permission) {
                     $validation = Validator::make(
                         [
-                            'api_permission_id' => (array_key_exists('api_permission_id', $permission)) ? $permission['api_permission_id'] : '',
-                            'value'             => (array_key_exists('value', $permission)) ? $permission['value'] : ''
+                            'api_permission_id' => get_val($permission, 'api_permission_id', ''),
+                            'value'             => get_val($permission, 'value', ''),
                         ],
                         $rules_permissions
                     );
@@ -80,9 +80,9 @@ class ApiKeyRequest extends NrbRequest
                 foreach ($this->get('ip_addresses') as $ip_address) {
                     $validation = Validator::make(
                         [
-                            'api_key_id' => (array_key_exists('api_key_id', $ip_address)) ? $ip_address['api_key_id'] : '',
-                            'ip_address' => (array_key_exists('ip_address', $ip_address)) ? $ip_address['ip_address'] : '',
-                            'name'       => (array_key_exists('name', $ip_address)) ? $ip_address['name'] : ''
+                            'api_key_id' => get_val($ip_address, 'api_key_id', ''),
+                            'ip_address' => get_val($ip_address, 'ip_address', ''),
+                            'name'       => get_val($ip_address, 'name', ''),
                         ],
                         $rules_ip_addresses
                     );

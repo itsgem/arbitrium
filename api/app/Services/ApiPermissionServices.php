@@ -46,7 +46,7 @@ class ApiPermissionServices extends NrbServices
     {
         // Transform payload to eloquent format, set defaults
         $payload = $request->all();
-        $payload['slug'] = (array_key_exists('slug', $payload)) ? str_to_slug($payload['slug']) : str_to_slug($payload['name']);
+        $payload['slug'] = str_to_slug(get_val($payload, 'slug', $payload['name']));
 
         return DB::transaction(function () use ($payload)
         {
