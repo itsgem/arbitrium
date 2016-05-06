@@ -2,6 +2,20 @@
   height: 100vh;
   width: 100%;
 
+  .client {
+    .local-login-form {
+      text-align: center;
+
+      legend {
+        display: inline-block;
+        padding-bottom: 15px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+    }
+  }
   .vw-login, .vw-signup, .vw-forgot, .vw-resetPassword{
     background-image: url('//s3.amazonaws.com/assets.idearobin.com/arbitrium/bg-client.jpg');
     background-attachment: fixed;
