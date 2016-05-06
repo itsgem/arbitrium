@@ -22,40 +22,30 @@ class TestApiIpAddressSeeder extends Seeder
                 'api_key_id' => 999000001,
                 'ip_address' => '192.168.1.1',
                 'name'       => 'Dell PC',
-                'created_at' => current_datetime(),
-                'updated_at' => current_datetime(),
             ],
             [
                 'id'         => 999000002,
                 'api_key_id' => 999000001,
                 'ip_address' => '192.168.1.2',
                 'name'       => 'Netbook PC',
-                'created_at' => current_datetime(),
-                'updated_at' => current_datetime(),
             ],
             [
                 'id'         => 999000003,
                 'api_key_id' => 999000001,
                 'ip_address' => '192.168.1.3',
                 'name'       => 'Office PC',
-                'created_at' => current_datetime(),
-                'updated_at' => current_datetime(),
             ],
             [
                 'id'         => 999000004,
                 'api_key_id' => 999000002,
                 'ip_address' => '192.168.1.4',
                 'name'       => '',
-                'created_at' => current_datetime(),
-                'updated_at' => current_datetime(),
             ],
             [
                 'id'         => 999000005,
                 'api_key_id' => 999000003,
                 'ip_address' => '192.168.1.5',
                 'name'       => 'Testing',
-                'created_at' => current_datetime(),
-                'updated_at' => current_datetime(),
             ]
         ];
         DB::table('api_ip_addresses')->insert($data);

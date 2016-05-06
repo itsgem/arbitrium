@@ -19,7 +19,6 @@ class CreateApiIpAddressesTable extends Migration
             $table->string('name')->nullable();
 
             $table->timestamps();
-            $table->softDeletes()->nullable();
 
             $table->foreign('api_key_id')->references('id')->on('api_keys')->onDelete('cascade');
         });

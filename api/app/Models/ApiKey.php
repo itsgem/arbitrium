@@ -42,9 +42,12 @@ class ApiKey extends NrbModel
     }
 
     //---------- scopes
-    public function scopeClient($query, $client_id)
+    public function scopeClientId($query, $client_id)
     {
-        return $query->where('client_id', $client_id);
+        if ($client_id)
+        {
+            return $query->where('client_id', $client_id);
+        }
     }
 
     public function scopeRestricted($query, $flag = true)
@@ -78,7 +81,8 @@ class ApiKey extends NrbModel
         $is_client = (is_client_user_logged_in() && $this->client_id == get_logged_in_client_id());
 
         // Can delete if user is admin or client that owns the API Key
-        if (is_admin_user_logged_in() || $is_client) {
+        if (is_admin_user_logged_in() || $is_client)
+        {
             return true;
         }
 
@@ -88,5 +92,10 @@ class ApiKey extends NrbModel
     public function isActive($flag = true)
     {
         return $this->is_active == (int) $flag;
+    }
+
+    public function isOwnedByClientId($client_id)
+    {
+        return $this->client_id == $client_id;
     }
 }
