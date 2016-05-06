@@ -9,6 +9,10 @@
 }
 
 div#application {
+	#signup .footer-action .mdl-button {
+		margin-top: 0;
+	}
+
 	@media (min-width: 1200px) {
 		#signup {
 			.signup-view {
