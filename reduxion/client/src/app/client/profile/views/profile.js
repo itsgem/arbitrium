@@ -3,9 +3,10 @@ import { Link } from 'react-router';
 import ClientProfile from '../components/profile';
 
 export default React.createClass({
+
   componentDidMount() {
     this.props.clientProfile();
-    this.props.country();
+    this.props.countryProfile();
 
     if ( typeof(window.componentHandler) != 'undefined' )
     {
@@ -13,20 +14,19 @@ export default React.createClass({
     }
   },
 
-  componentWillReceiveProps(nextProps) {
-
-  },
-
   render () {
 
     let user = this.props.user.get('data');
     let countryList = this.props.countryList;
-
     let success = this.props.success;
     let errors = this.props.errors.get('data');
 
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
+          <div className="mdl-snackbar__text"></div>
+          <button type="button" className="mdl-snackbar__action"></button>
+        </div>
         <div className="page-content">
             <div className="mdl-tabs__panel is-active" id="profile">
               <ClientProfile
@@ -42,8 +42,10 @@ export default React.createClass({
                 verifyEmailChange={this.props.verifyEmailChange}
                 isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
                 loading={this.props.loading}
-                responseSuccess={success}
+                responseSuccess={this.props.success}
+                success ={this.props.isProfileSuccess}
                 responseError={errors}
+                clientProfile ={this.props.clientProfile}
                 />
             </div>
             <div className="mdl-tabs__panel" id="change_password">
