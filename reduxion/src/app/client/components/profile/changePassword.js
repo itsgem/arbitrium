@@ -64,7 +64,7 @@ class ClientChangePassword extends React.Component {
           <legend>Change password</legend>
           <div className="">
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('current_password', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -78,7 +78,7 @@ class ClientChangePassword extends React.Component {
               </div>
             </div>
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('password', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -92,7 +92,7 @@ class ClientChangePassword extends React.Component {
               </div>
             </div>
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('password_confirmation', errors)}>
                   <input
                     className="mdl-textfield__input"

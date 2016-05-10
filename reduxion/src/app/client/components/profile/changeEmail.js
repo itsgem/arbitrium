@@ -63,7 +63,7 @@ class ClientProfile extends React.Component {
           <legend>Change Email Address</legend>
           <div className="">
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('email_address', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -79,7 +79,7 @@ class ClientProfile extends React.Component {
               </div>
             </div>
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('new_email_address', errors)}>
                   <input
                     className="mdl-textfield__input"

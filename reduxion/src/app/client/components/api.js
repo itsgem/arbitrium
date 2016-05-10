@@ -23,14 +23,14 @@ class Dashboard extends React.Component{
 
   render() {
     return (
-      <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <div className="theme-arbitrium mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <ClientHeader />
         <ClientSidebar />
         <main className="mdl-layout__content">
           <section className="section-api-keys">
               <form>
                 <div className="mdl-cell mdl-cell--12-col">
-                  <h1>API Keys</h1>
+                  <h4>API Keys</h4>
                   <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col keys-group">
                     <input className="mdl-textfield__input"></input>
                     <label className="mdl-textfield__label">Description</label>

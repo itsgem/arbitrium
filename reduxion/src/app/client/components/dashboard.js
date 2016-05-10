@@ -15,7 +15,7 @@ export default class Application extends React.Component {
         : `vw-home`;
     return (
       <div id="application-view" className={css}>
-        <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <div className="theme-arbitrium mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
           <ClientHeader />
           <ClientSidebar />
             <main className="mdl-layout__content">
