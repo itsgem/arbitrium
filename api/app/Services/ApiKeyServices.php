@@ -58,16 +58,12 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::store
     public function store($request, $client_id = null)
     {
-        $client_id = ($client_id) ? $client_id : $request->get('client_id');
-        $token = generate_api_key_token($client_id);
-
         // Transform payload to eloquent format, set defaults
-        $payload = $request->except('token');
-        $payload['client_id'] = $client_id;
-        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
+        $payload = $request->all();
         $payload['is_active'] = get_val($payload, 'is_active', true);
+        $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
         $payload['permissions'] = get_val($payload, 'permissions', []);
-        $payload['token'] = $token;
+        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
 
         return DB::transaction(function () use ($payload)
         {
@@ -92,10 +88,10 @@ class ApiKeyServices extends NrbServices
     public function update($request, $id, $client_id = null)
     {
         // Transform payload to eloquent format, set defaults
-        $payload = $request->except('token');
+        $payload = $request->all();
         $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
-        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
         $payload['permissions'] = get_val($payload, 'permissions', []);
+        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
 
         return DB::transaction(function () use ($payload, $id, $client_id)
         {

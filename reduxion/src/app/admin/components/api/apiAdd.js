@@ -10,7 +10,8 @@ class ApiAdd extends React.Component {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null
+      errorServer:null,
+      client_id: null
     };
   }
   componentDidMount() {
@@ -20,85 +21,65 @@ class ApiAdd extends React.Component {
   }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
+    let clientList = this.props.clientList.data;
+    let permissions = this.props.apiPermissions.data;
+    console.log('test', this.props.apiPermissions.data);
     return (
-      <form className="form-container" action="#">
+      <form className="form-container" action="#" autoComplete="off">
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <input className="mdl-textfield__input font-input" type="text" id="api-key" />
-              <label className="mdl-textfield__label" htmlFor="sample1">Name *</label>
+              <div className={this.formClassNames('client_id', errors)}>
+                <input className="dropList mdl-textfield__input font-input"
+                  ref="client_id"
+                  type="text"
+                  id="client_id"
+                  autoComplete="off"
+                  onChange={(e) => this.searchClient(e)}/>
+                <ul className="dropDownList">
+                  {
+                    clientList  && clientList.map(item => {
+                    return <li onClick={(e) => this.selectedCompany(e, item.id, item.company_name)} key={item.id}>{item.company_name}</li>; })
+                  }
+                </ul>
+                <label className="mdl-textfield__label" htmlFor="client_id">Client Company *</label>
+                {errors.client_id && <small className="mdl-textfield__error shown">{errors.client_id[0]}</small>}
+              </div>
             </div>
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <input className="mdl-textfield__input font-input" type="text" id="api-description" />
-              <label className="mdl-textfield__label" htmlFor="sample1">Description *</label>
-            </div>
-            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <input className="mdl-textfield__input font-input" type="text" id="api-key" />
-              <label className="mdl-textfield__label" htmlFor="sample1">Key *</label>
+              <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" />
+              <label className="mdl-textfield__label" >Description *</label>
             </div>
             <p>Add a description to your API key to allow you to filter by key</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
-              <input type="checkbox" id="checkbox-1" className="mdl-checkbox__input" />
+              <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" />
               <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
             </label>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield full-width">
-              <textarea className="mdl-textfield__input" type="text" rows= "3" id="add-ip-address" ></textarea>
+              <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" ></textarea>
               <label className="mdl-textfield__label" htmlFor="sample5">Add IP Address...</label>
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" className="mdl-checkbox__input" />
+              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
+          {
+            permissions  && permissions.map(item => {
+              return <div key={item.id} className="mdl-cell mdl-cell--3-col">
+                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-3">
+                        <input type="checkbox" id="checkbox-3" className="mdl-checkbox__input" />
+                        <span className="mdl-checkbox__label">{item.name}</span>
+                      </label>
+                    </div>; })
+            }
             <div className="mdl-cell mdl-cell--3-col">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-3">
                 <input type="checkbox" id="checkbox-3" className="mdl-checkbox__input" />
                 <span className="mdl-checkbox__label">Users</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-4">
-                <input type="checkbox" id="checkbox-4" className="mdl-checkbox__input" />
-                <span className="mdl-checkbox__label">Messages</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-5">
-                <input type="checkbox" id="checkbox-5" className="mdl-checkbox__input" />
-                <span className="mdl-checkbox__label">Tags</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-6">
-                <input type="checkbox" id="checkbox-6" className="mdl-checkbox__input" />
-                <span className="mdl-checkbox__label">Rejects</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-7">
-                <input type="checkbox" id="checkbox-7" className="mdl-checkbox__input" />
-                <span className="mdl-checkbox__label">Info</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-8">
-                <input type="checkbox" id="checkbox-8" className="mdl-checkbox__input" />
-                <span className="mdl-checkbox__label">Send</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-9">
-                <input type="checkbox" id="checkbox-9" className="mdl-checkbox__input"/>
-                <span className="mdl-checkbox__label">List</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-10">
-                <input type="checkbox" id="checkbox-10" className="mdl-checkbox__input"/>
-                <span className="mdl-checkbox__label">Add</span>
               </label>
             </div>
             <div className="mdl-cell mdl-cell--1-col check-test-key">
@@ -118,17 +99,60 @@ class ApiAdd extends React.Component {
         <div className="layout-gt-md-row layout-align-end-end btn">
               <div className="flex-order-gt-md-2 pd-10">
                 <Link
+                  ref="is_test_key"
                   className="mdl-button mdl-js-button mdl-button--colored"
                   id='btn-cancel'
-                  to="/coffee/client/">CANCEL</Link>
+                  to="/coffee/api/">CANCEL</Link>
               </div>
               <div className="flex-order-gt-md-2" >
-                <button id="btn-save" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Create API Key</button>
+                <button id="btn-save"
+                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+                  onClick={(e) => this.register(e)}>Create API Key</button>
               </div>
             </div>
       </form>
     );
   }
+  selectedCompany ( e, id, companyName ) {
+    this.refs.client_id.value = companyName;
+    this.setState( {
+      client_id: id,
+    } );
+  }
+  searchClient( e ) {
+    let payload = {
+      company_name: this.refs.client_id.value,
+    }
+    this.props.adminClientList(payload);
+  }
+  register ( e ) {
+    e.preventDefault();
+    this.setState( {
+      loading: true,
+      errors: {},
+      errorServer: null
+    } );
+
+    let ipAddresses = this.refs.ip_addresses.value;
+    ipAddresses = ipAddresses.split(',');
+    ipAddresses = ipAddresses.map(function(obj){
+       let rObj = {};
+       rObj = {ip_address: obj};
+       return rObj;
+    });
+
+    let payload = {
+      client_id: this.state.client_id,
+      description: this.refs.description.value,
+      ip_addresses: ipAddresses
+    };
+    window.componentHandler.upgradeDom();
+    return validateRegister.call( this, payload )
+      .with( this )
+      .then( registerApi )
+      .catch( setErrors );
+  }
+
   formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
@@ -136,6 +160,22 @@ class ApiAdd extends React.Component {
     } );
   }
 };
+
+function validateRegister ( payload) {
+  let rules = new Checkit( {
+    client_id: { rule: 'required', label: 'comapany name'},
+    description: [],
+    ip_addresses: []
+    } );
+    return rules.run( payload );
+}
+function registerApi (payload) {
+  return this.props.registerApi(payload);
+}
+
+function setErrors( e ) {
+  this.setState(createError(e));
+}
 
 function mapObject(object, callback) {
     return Object.keys(object).map(function (key) {

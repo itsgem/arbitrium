@@ -161,7 +161,6 @@ export default React.createClass( {
   },
 
   requestService(payload){
-    console.log("dddddddddd",this.props);
     return this.props.confirmPasswordReset(payload);
   },
 

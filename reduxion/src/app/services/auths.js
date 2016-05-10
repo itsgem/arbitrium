@@ -193,6 +193,24 @@ export default {
       params: payload
     });
   },
+  registerApi(payload) {
+    return post('admin/api-key',{
+      params: {
+        client_id: payload.client_id,
+        name: payload.client_id,
+        description: payload.client_id,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
+        permissions: payload.permissions,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key
+      }
+    });
+  },
+  getApiPermission() {
+    return get('api-permission');
+  },
+
 
   // ------- CLIENT -------
   signupLocal(payload) {
