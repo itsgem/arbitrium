@@ -94,20 +94,21 @@ class ClientProfile extends React.Component {
   }
 
   render() {
-      if(this.props.success){
-        let message = null;
-        let success = this.props.responseSuccess;
-        let notification = document.querySelector('.mdl-snackbar');
-        message = success.message;
-        if(message){
-          notification.MaterialSnackbar.showSnackbar( {
-              message: message,
-              timeout: 1000
-          });
-        }
+    if(this.props.success){
+      let message = null;
+      let success = this.props.responseSuccess;
+      let notification = document.querySelector('.mdl-snackbar');
+      message = success.message;
+      if(message){
+        notification.MaterialSnackbar.showSnackbar( {
+            message: message,
+            timeout: 1000
+        });
       }
-    if (!this.props.user || !this.state.client) {
-      return (<div className="mdl-grid"></div>);
+    }
+
+    if (!this.props.user || !this.state.client || !Object.keys(this.props.country ).length) {
+      return (<div className="mdl-grid">LOADING</div>);
     }
 
     let client = this.state.client;

@@ -18,7 +18,7 @@ class LocalAuthenticationFormSignup extends React.Component {
   render() {
     let {errors} = this.props;
     return (
-      <div className="local-signin-form login-frame">
+      <div id="top" className="local-signin-form login-frame">
         <div className="sign-top">
             <h3 className="mdl-typography--headline">Sign up</h3>
             <p>Fields with asterisks are required.</p>
@@ -304,7 +304,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"
                 id='btn-login'
                 type='button'
-                onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
+                onClick={(e) => this.signup(e, document.getElementById('top'))}>{ this.props.buttonCaption }</button>
             </div>
           </footer>
         </form>
@@ -318,9 +318,30 @@ class LocalAuthenticationFormSignup extends React.Component {
       'has-success': this.state[ field ] && !(this.props.errors[ field ])
     } );
   }
+  scrolltop (target) {
+    let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
 
-  signup( e ) {
-    e.preventDefault();
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+  }
+  signup( e, target ) {
+    this.scrolltop(target);
 
     this.setState( {
       loading: true,
