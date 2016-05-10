@@ -39,8 +39,20 @@ class LocalSignupForm extends React.Component {
   }
 
   render() {
+    if (this.props.registerCompleted) {
+      let notification = document.querySelector('.mdl-snackbar');
+      notification.MaterialSnackbar.showSnackbar( {
+        message: 'A confirmation email has been sent. Click on the link to verify your email address and activate your account.',
+        timeout: 3000
+      });
+    }
+
     return (
       <div className="local-signup-form">
+        <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
+          <div className="mdl-snackbar__text"></div>
+          <button type="button" className="mdl-snackbar__action"></button>
+        </div>
         { this.renderError()}
         <LocalAuthenticationFormSignup
           showLogin={true}

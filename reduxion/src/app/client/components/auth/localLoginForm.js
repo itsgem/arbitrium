@@ -4,9 +4,9 @@ import ValidateLoginFields from 'utils/validations/validateLoginFields';
 import {createError} from 'utils/error';
 import Alert from 'common/components/alert';
 import tr from 'i18next';
-import Debug from 'debug';
+//import Debug from 'debug';
 
-let debug = new Debug("components:login");
+//let debug = new Debug("components:login");
 
 class LocalLoginForm extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class LocalLoginForm extends React.Component {
   }
 
   render() {
-    debug('render state:', this.state);
+    //debug('render state:', this.state);
     return (
       <div className="local-login-form">
         <div className="login-header">
@@ -59,7 +59,7 @@ class LocalLoginForm extends React.Component {
   }
 
   setErrors( e ) {
-    debug("setErrors:", e);
+    //debug("setErrors:", e);
     let message = null;
     switch(e.status) {
       case 401 :

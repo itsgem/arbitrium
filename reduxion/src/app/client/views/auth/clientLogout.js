@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from './login';
 
 export default React.createClass( {
 
@@ -11,6 +10,7 @@ export default React.createClass( {
     this.props.logout();
   },
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps)
     if(!nextProps.authenticated){
       localStorage.removeItem('token');
       this.context.router.push(`/i/login`);
@@ -20,7 +20,6 @@ export default React.createClass( {
   render() {
     return (
       <div id="logout">
-        <Login />
       </div>
     );
   }

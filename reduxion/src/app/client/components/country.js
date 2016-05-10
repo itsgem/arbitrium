@@ -6,7 +6,7 @@ class Country extends React.Component {
     let selected = (this.props.selected) ? this.props.selected : "";
     return (
       <div>
-        <select className="mdl-select__input" id="country_id" name="country_id" ref="country_id" defaultValue={selected}>
+        <select className="mdl-textfield__input" id="country_id" name="country_id" ref="country_id" defaultValue={selected}>
           <option value=""></option>
           {countries.map(item =>
             {return <option key={item.get('id')} value={item.get('id')}>{item.get('name')}</option>}
