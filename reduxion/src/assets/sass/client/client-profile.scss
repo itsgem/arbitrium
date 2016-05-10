@@ -165,23 +165,22 @@ div#application{
       color: #e0e0e0;
       height: 23px;
 
-    .mdl-button--fab.mdl-button--accent {
-      background: #ff6600;
-      color: #fff;
-    }
-    .mdl-button--active,
-    .mdl-button.mdl-button--fab.mdl-button--active {
-      background: #ff944d;
-      color: #fff;
+      .mdl-button--fab.mdl-button--accent {
+        background: #ff6600;
+        color: #fff;
+      }
+      .mdl-button--active,
+      .mdl-button.mdl-button--fab.mdl-button--active {
+        background: #ff944d;
+        color: #fff;
+      }
     }
   }
-
   .arbitrium-pagination.mdl-button--mini-fab {
     font-size: 11px;
     margin: 0 3px;
   }
 }
-
 .section-api-keys {
   padding: 30px;
 
@@ -210,8 +209,3 @@ div#application{
     padding-top: 10px;
   }
 }
-
-
-
-
-
