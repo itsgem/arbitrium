@@ -44,6 +44,7 @@ function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
   let bytes ='';
   let tokenName = '';
+
   switch (link[3]) {
       case 'coffee' :
         if(!localStorage.getItem('coffee')) {
@@ -68,7 +69,16 @@ function requireAuth(nextState, replace, cb) {
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
 
-    let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    if (JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
+      let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    } else {
+      localStorage.removeItem(tokenName);
+      replace({
+        pathname: "/" + tokenName+ "/login",
+        state: { nextPathname: nextState.location.pathname }
+      })
+    }
+
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
       localStorage.removeItem(tokenName);
       replace({

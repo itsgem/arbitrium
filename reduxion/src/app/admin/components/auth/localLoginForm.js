@@ -2,9 +2,7 @@ import React from 'react';
 import LocalAuthenticationForm from 'admin/components/auth/localAuthenticationForm';
 import ValidateLoginFields from 'utils/validations/validateLoginFields';
 import {createError} from 'utils/error';
-import Alert from 'common/components/alert';
 import tr from 'i18next';
-import DocTitle from 'common/components/docTitle';
 
 class LocalLoginForm extends React.Component {
   constructor(props) {

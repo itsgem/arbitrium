@@ -1,8 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Checkit from 'checkit';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {createError} from 'utils/error';
 
 class UserManagementList extends React.Component {
   constructor(props) {

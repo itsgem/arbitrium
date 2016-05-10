@@ -4,8 +4,6 @@ import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import Alert from 'common/components/alert';
-import tr from 'i18next';
 import Country from 'admin/components/country';
 
 class ClientAdd extends React.Component {
