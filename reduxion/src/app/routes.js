@@ -68,9 +68,9 @@ function requireAuth(nextState, replace, cb) {
 
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
-
+    let decryptedData ="";
     if (JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
-      let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     } else {
       localStorage.removeItem(tokenName);
       replace({
