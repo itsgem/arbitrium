@@ -318,7 +318,7 @@ class LocalAuthenticationFormSignup extends React.Component {
       'has-success': this.state[ field ] && !(this.props.errors[ field ])
     } );
   }
-  scrooltop (target) {
+  scrolltop (target) {
     let scrollContainer = target;
       do { //find scroll container
           scrollContainer = scrollContainer.parentNode;
@@ -341,7 +341,7 @@ class LocalAuthenticationFormSignup extends React.Component {
       scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
   }
   signup( e, target ) {
-    this.scrooltop(target);
+    this.scrolltop(target);
 
     this.setState( {
       loading: true,
