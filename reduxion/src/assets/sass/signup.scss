@@ -1,45 +1,16 @@
-div#application .coffee {
-  a.md-button.md-formal-blue-theme.md-hue-1.md-raised[disabled], a.md-button.md-formal-blue-theme.md-hue-1.md-fab[disabled], .md-button.md-formal-blue-theme.md-hue-1.md-raised[disabled], .md-button.md-formal-blue-theme.md-hue-1.md-fab[disabled] {
-      background-color: rgba(0,0,0,0.12);
-  }
+.login-frame .link {
+  color: #336;
+}
 
-  a.md-button.md-formal-blue-theme.md-hue-1.md-primary.md-raised, a.md-button.md-formal-blue-theme.md-hue-1.md-primary.md-fab, .md-button.md-formal-blue-theme.md-hue-1.md-primary.md-raised, .md-button.md-formal-blue-theme.md-hue-1.md-primary.md-fab {
-      color: rgba(255,255,255,0.87);
-      background-color: rgb(107,99,158);
-  }
+.full-width {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
-  button, select, html, textarea, input {
-      font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
-  }
-
-  .margin-bottom-10 {
-      margin-bottom: 10px!important;
-  }
-
-  .margin-top-10 {
-      margin-top: 10px!important;
-  }
-
-  .margin-right-0 {
-      margin-right: 0!important;
-  }
-
-  .margin-left-0 {
-      margin-left: 0!important;
-  }
-
-  .login-frame .link {
-      color: #336;
-  }
-
-  .md-button {
-      letter-spacing: .01em;
-  }
-
-  .full-width {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
+div#application {
+  #signup .footer-action .mdl-button {
+    margin-top: 0;
   }
 
   @media (min-width: 1200px) {
@@ -56,21 +27,18 @@ div#application .coffee {
 
       form {
         width: auto!important;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
       }
 
       .sign-top {
-        background-color: #336;
+        background-color: $base-blue;
         border-radius: 5px 5px 0 0;
+        color: #fff;
+        text-align: left;
         padding: 20px;
-        height: 50px;
 
-
-      }
-      .title {
-        padding: 0 16px;
-        font-size: 20px;
+        .mdl-typography--headline, p {
+          margin-bottom: 0;
+        }
       }
 
       .view {
@@ -88,21 +56,33 @@ div#application .coffee {
       .mdl-layout__content{
         width: 100%;
       }
-      .mdl-cell {
-        margin: 8px;
-      }
-      .mdl-cell--full-col {
-        width: 100%;
-      }
     }
 
-    main {
-      /*width: 100%;*/
-    }
     .login-view {
       width: 312px;
       margin: auto;
     }
   }
+}
 
+.footer-action {
+  text-align: right;
+
+  .mdl-button--accent {
+    margin-left: 20px;
+  }
+}
+
+.bg-green {
+  background-color: #00CC99!important;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+.to-login {
+  margin-top: 20px;
 }

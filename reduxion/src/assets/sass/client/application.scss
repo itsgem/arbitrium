@@ -1,44 +1,56 @@
 #application {
+  height: 100vh;
+  width: 100%;
+
   .client {
-    height: 100vh;
-    width: 100%;
+    .local-login-form {
+      text-align: center;
 
-    .vw-login, .vw-signup, .vw-forgot, .vw-resetPassword{
-      background-image: url('//s3.amazonaws.com/assets.idearobin.com/arbitrium/bg-client.jpg');
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: top center;
-      background-repeat: no-repeat;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      min-height: 100vh;
-      -webkit-box-pack: center;
-      -webkit-justify-content: center;
-      -ms-flex-pack: center;
-      justify-content: center;
+      legend {
+        display: inline-block;
+        padding-bottom: 15px;
+      }
 
-      #other-links {
-        padding: 16px 0 0;
-
-        a {
-          color: #fff;
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
+      p {
+        font-size: 15px;
       }
     }
+  }
+  .vw-login, .vw-signup, .vw-forgot, .vw-resetPassword{
+    background-image: url('//s3.amazonaws.com/assets.idearobin.com/arbitrium/bg-client.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: 100vh;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 
-    .fixed-middle {
-      -webkit-box-flex: 0;
-      -webkit-flex: none;
-      -ms-flex: none;
-      flex: none;
-      max-width: 50%;
+    #other-links {
+      padding: 16px 0 0;
+
+      a {
+        color: #fff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      }
     }
+  }
+
+  .fixed-middle {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+    max-width: 50%;
   }
 }
