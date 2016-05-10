@@ -28,18 +28,24 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
-        if ($client_id)
-        {
-            $api_keys = ApiKey::clientId($client_id);
-        }
-        else
+        // If non-client
+        if (!$client_id)
         {
             $api_keys = ApiKey::with(['client.user' => function($query){
                     $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
                 }]);
+
+            $client_id = $request->get('client_id', '');
         }
 
-        $api_keys = $api_keys->paginate($request->get('per_page'));
+        $api_keys = $api_keys->clientId($client_id)
+            ->like('name', $request->get('name', ''))
+            ->like('description', $request->get('description', ''))
+            ->active($request->get('is_active', true))
+            ->testKey($request->get('is_test_key', false))
+            ->dateFrom('created_at', $request->get('date_created', ''), true)
+            ->dateTo('created_at', $request->get('date_created', ''), true)
+            ->paginate($request->get('per_page'));
 
         return $this->respondWithData($api_keys, $request->get('max_pagination_links'));
     }

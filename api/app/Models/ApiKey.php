@@ -70,7 +70,7 @@ class ApiKey extends NrbModel
         return $query->where('is_active', (int) false);
     }
 
-    public function scopeTestKey($query, $flag = true)
+    public function scopeTestKey($query, $flag = false)
     {
         return $query->where('is_test_key', (int) $flag);
     }
