@@ -2,299 +2,295 @@
 // ******************** START HEADER ********************
 
 .body-bg {
-	background: #e9eaed;
+  background: #e9eaed;
 
-	.header-bg{
-	 background: #0e3192;
-	 min-height: 48px;
+  .header-bg{
+   background: #0e3192;
+   min-height: 48px;
 
-	 .header-container{
-		height: 48px;
-		max-width: 1200px;
-		padding: 0px;
+   .header-container{
+    height: 48px;
+    max-width: 1200px;
+    padding: 0px;
 
-		.main-header{
-			background: none;
-			height: 48px;
-			padding: 0px;
+    .main-header{
+      background: none;
+      height: 48px;
+      padding: 0px;
 
-			.logo{
+      .logo{
 
-			 img{
-				height: 40px;
-			 }
+       img{
+        height: 40px;
+       }
 
-			}
+      }
 
 // ******************** START NAVIGATION ********************
 
-			.nav {
-			 background: none;
-			 float: right;
-			 width: 1030px;
+      .nav {
+       background: none;
+       float: right;
+       width: 1030px;
 
-			 .tab{
-				border-bottom: none;
-				float: right;
+       .tab{
+        border-bottom: none;
+        float: right;
 
-				a{
-					color: #fff;
-					font-weight: 400;
-					padding: 0px 18px;
-				}
+        a{
+          color: #fff;
+          font-weight: 400;
+          padding: 0px 18px;
+        }
 
-				a:hover{
-					background: rgba(255,255,255,0.05);
-				}
+        a:hover{
+          background: rgba(255,255,255,0.05);
+        }
 
-				.is-active{
-					color: #fff;
-				}
+        .is-active{
+          color: #fff;
+        }
 
-				.is-active:after{
-					background: #ff6600;
-				}
+        .is-active:after{
+          background: #ff6600;
+        }
 
-				.icon-profile{
-					position: relative;
-					top: 50%;
-					transform: translateY(-50%);
-				}
+        .icon-profile{
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+        }
 
-			 }
+       }
 
-			}
+      }
 
 // ******************** END NAVIGATION ********************
 
-		}
-	 }
-	}
+    }
+   }
+  }
 
 // ******************** END HEADER ********************
 
 // ******************** START SECTION-CLIENT-LIST ********************
 
-	.table-list-container{
-	 padding: 50px 0px 0px 0px;
-	 width: 1200px;
+.table-list-container {
+    padding: 50px 0px 0px 0px;
+    width: 1200px;
 
-	 .table-tab{
-		background: #0e3192;
-		height: 48px;
-		padding: 0px;
-		width: 1200px;
+   .table-tab{
+    background: #0e3192;
+    height: 48px;
+    padding: 0px;
+    width: 1200px;
 
-		a{
-			color: #fff;
-			font-weight: 400;
-			padding: 0px 18px;
+    a{
+      color: #fff;
+      font-weight: 400;
+      padding: 0px 18px;
 
-			i{
+      i{
 
-			 &.add{
-				padding-left: 6px;
-				position: relative;
-				top: 40%;
-				transform: translateY(-50%);
-			 }
-			}
-		}
+       &.add{
+        padding-left: 6px;
+        position: relative;
+        top: 40%;
+        transform: translateY(-50%);
+       }
+      }
+    }
 
-		a:hover{
-			background: rgba(255,255,255,0.05);
-		}
+    a:hover{
+      background: rgba(255,255,255,0.05);
+    }
 
-		.is-active:after{
-			background: #ff6600 !important;
-		}
+    .is-active:after{
+      background: #ff6600 !important;
+    }
 
-	 }
+   }
 
-	 .filter-search{
-		background: #fff;
-		height: auto;
-		min-height: 130px;
-		width: 1200px;
+   .filter-search{
+    background: #fff;
+    height: auto;
+    min-height: 130px;
+    width: 1200px;
 
-		p{
-			font-weight: 400;
-			padding: 20px 0px 0px 20px;
-			margin: 0px;
-		}
+    p{
+      font-weight: 400;
+      padding: 20px 0px 0px 20px;
+      margin: 0px;
+    }
 
-		form{
-			margin-bottom: 0px;
-		}
+    form{
+      margin-bottom: 0px;
+    }
 
-		.filter-search-bar{
-			list-style: none;
-			padding: 0px 12px 0px 12px;
+    .filter-search-bar{
+      list-style: none;
+      padding: 0px 12px 0px 12px;
 
-			.search-cta{
-			 text-align: right;
+      .search-cta{
+       text-align: right;
 
-			 .mdl-button--accent{
-				background: #ff6600;
-				font-weight: 400;
-				margin-right: 16px;
+       .mdl-button--accent{
+        background: #ff6600;
+        font-weight: 400;
+        margin-right: 16px;
+       }
 
-			 }
-
-			 .mdl-button--raised{
-				font-weight: 400;
-			 }
-
-			}
-
-		}
-
-	 }
-
-.table-list{
-	width:100%;
-	border: 0;
-
-	thead {
-		tr{
-			background: #e3ecf5;
-
-			th {
-				font-weight: 700;
-			}
-		}
-	}
-
-	tbody {
-		border: 0px;
-
-		tr {
-		 	background: #fbfeff;
-
-			&:hover{
-				background-color: #f0f5fa;
-			}
-
-			&:nth-child(odd) {
-				background-color: #f5fafe;
-
-				&:hover{
-					background-color: #f0f5fa;
-				}
-			}
-
-			td {
-				border: 0px;
-
-				.switch {
-					width: 70%;
-				}
-
-				.btn-view-edit {
-					background: #ff6600;
-					margin-right: 6px;
-				}
-
-				.btn-delete {
-					background: #ff4a4a;
-				}
-
-				&.api-col-action{
-					width: 220px;
-				}
-			}
-		}
-	}
+      .mdl-button--raised{
+        font-weight: 400;
+      }
+    }
+  }
 }
 
-	 .pagination {
-		align-items: center;
-		background: #0e3192;
-		height: 90px;
-		padding: 0px;
-		text-align: center;
+.table-list{
+  width:100%;
+  border: 0;
 
-		.btn-paginate-active{
-			background: #fff;
-			color: #ff6600;
+  thead {
+    tr{
+      background: #e3ecf5;
 
-			font-weight: 400;
-			margin: 4px;
-		}
+      th {
+        font-weight: 700;
+      }
+    }
+  }
 
-		.btn-paginate-normal{
-			background: #ff6600;
-			font-weight: 400;
-			margin: 4px;
-		}
+  tbody {
+    border: 0px;
 
-		.btn-paginate-disabled{
-			background: #0d2c81;
-			cursor: not-allowed;
-			font-weight: 400;
-			margin: 4px;
-		}
+    tr {
+      background: #fbfeff;
 
-		.btn-paginate-blue{
-			background: #0e3192;
-			font-weight: 400;
-			margin: 4px;
-		}
+      &:hover{
+        background-color: #f0f5fa;
+      }
 
-		.btn-paginate-items-per-page{
-			background: #ff6600;
-			font-weight: 400;
-			float: right;
-			margin-right: 10px;
-		}
-	 }
-	}
+      &:nth-child(odd) {
+        background-color: #f5fafe;
+
+        &:hover{
+          background-color: #f0f5fa;
+        }
+      }
+
+      td {
+        border: 0px;
+
+        .switch {
+          width: 70%;
+        }
+
+        .btn-view-edit {
+          background: #ff6600;
+          margin-right: 6px;
+        }
+
+        .btn-delete {
+          background: #ff4a4a;
+        }
+
+        &.api-col-action{
+          width: 220px;
+        }
+      }
+    }
+  }
+}
+
+   .pagination {
+    align-items: center;
+    background: #0e3192;
+    height: 90px;
+    padding: 0px;
+    text-align: center;
+
+    .btn-paginate-active{
+      background: #fff;
+      color: #ff6600;
+
+      font-weight: 400;
+      margin: 4px;
+    }
+
+    .btn-paginate-normal{
+      background: #ff6600;
+      font-weight: 400;
+      margin: 4px;
+    }
+
+    .btn-paginate-disabled{
+      background: #0d2c81;
+      cursor: not-allowed;
+      font-weight: 400;
+      margin: 4px;
+    }
+
+    .btn-paginate-blue{
+      background: #0e3192;
+      font-weight: 400;
+      margin: 4px;
+    }
+
+    .btn-paginate-items-per-page{
+      background: #ff6600;
+      font-weight: 400;
+      float: right;
+      margin-right: 10px;
+    }
+   }
+  }
 }
 
 .form-container {
 
-	background: #fff;
-	margin-bottom: 0px;
-	width: 1200px;
+  background: #fff;
+  margin-bottom: 0px;
+  width: 1200px;
 
-	.mdl-grid {
-	 padding: 20px;
+  .mdl-grid {
+   padding: 20px;
 
-	 .mdl-cell--12-col{
+   .mdl-cell--12-col{
 
-		.full-width{
-			width: 100%;
-		}
+    .full-width{
+      width: 100%;
+    }
 
-		.padding-bot{
-			padding-bottom: 60px;
-		}
+    .padding-bot{
+      padding-bottom: 60px;
+    }
 
-		p {
-			color: #969896;
-			font-weight: 300;
-		}
+    p {
+      color: #969896;
+      font-weight: 300;
+    }
 
-		.check-test-key {
-			padding-top: 40px;
-		}
+    .check-test-key {
+      padding-top: 40px;
+    }
 
 
 
-		.mdl-button--accent {
-			background: #ff6600;
-			font-weight: 400;
-			margin-right: 16px;
-		}
+    .mdl-button--accent {
+      background: #ff6600;
+      font-weight: 400;
+      margin-right: 16px;
+    }
 
-	 }
+   }
 
-	}
+  }
 
-	.cta {
-	 padding-top: 20px;
-	 padding-left: 868px;
-	}
+  .cta {
+   padding-top: 20px;
+   padding-left: 868px;
+  }
 
 }
 // ******************** END SECTION-CLIENT-LIST ********************
