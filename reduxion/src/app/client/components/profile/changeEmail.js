@@ -96,7 +96,7 @@ class ClientProfile extends React.Component {
           </div>
           <div className="mdl-button-group">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
               type="submit"
               >
               Request Reset Email

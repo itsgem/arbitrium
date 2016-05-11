@@ -2,13 +2,6 @@ input, select {
   outline: none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-		transition: background-color 5000s ease-in-out 0s;
-}
-
 @mixin error-container {
 	background: rgba(255, 79, 34, 0.57);
 	box-shadow: 0 0 3px rgba(0,0,0,0.2);
