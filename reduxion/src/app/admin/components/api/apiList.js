@@ -18,6 +18,7 @@ class ApiList extends React.Component {
     }
   }
   userDisplay (data, alter) {
+    let is_active = data.is_active ? true : false;
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
@@ -25,12 +26,7 @@ class ApiList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
         <td width="220" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            {data.is_active &&
-                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
-            }
-            {!data.is_active &&
-                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" onChange={(e) => this.changeActive(e, data.id, data.is_active)}/>
-            }
+            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={data.is_active ? true : false} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
@@ -189,7 +185,11 @@ class ApiList extends React.Component {
     );
   }
   changeActive (e, id, status) {
-
+    let payload = {
+      id: id,
+      is_active: (status ? 0 : 1)
+    };
+    this.props.isActiveApiKey(payload);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");

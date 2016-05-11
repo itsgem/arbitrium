@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { apiList } from 'admin/reducers/api'
+import { apiList, isActiveApiKey } from 'admin/reducers/api'
 import ApiList from 'admin/views/api/apiList';
 
 const strMapToObj=(strMap) => {
@@ -15,5 +15,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-  apiList
+  apiList, isActiveApiKey
 })(ApiList)

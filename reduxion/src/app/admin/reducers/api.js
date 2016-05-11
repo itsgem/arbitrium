@@ -9,6 +9,7 @@ export const registerApi = createActionAsync('ADMIN_REGISTER_API', auth.register
 export const getApiPermission = createActionAsync('ADMIN_API_PERMISSION', auth.getApiPermission);
 export const getApiKey = createActionAsync('ADMIN_GET_API_KEY', auth.getApiKey);
 export const editApiKey = createActionAsync('ADMIN_API_EDIT', auth.editApiKey);
+export const isActiveApiKey = createActionAsync('ADMIN_ACTIVATE_API_KEY', auth.isActiveApiKey);
 
 
 const initialState = Immutable.fromJS({
@@ -66,5 +67,11 @@ export default createReducer({
   [editApiKey.request]: (state) => state.merge({
     loading: true,
     apiEditSuccess: false
+  }),
+  [isActiveApiKey.ok]: (state) => state.merge({
+    loading: false
+  }),
+  [isActiveApiKey.request]: (state) => state.merge({
+    loading: true
   })
 }, initialState);

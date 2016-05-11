@@ -189,8 +189,15 @@ export default {
     return del('admin/' + id);
   },
   getApiList(payload = {page: 1, per_page: 10}) {
-    return get('admin/api-key',{
+    return get('admin/api-key', {
       params: payload
+    });
+  },
+  isActiveApiKey(payload) {
+    return patch('admin/api-key/' + payload.id + "/activate", {
+      params: {
+        is_active: payload.is_active
+      }
     });
   },
   registerApi(payload) {
