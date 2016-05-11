@@ -108,13 +108,13 @@ class ClientChangePassword extends React.Component {
           </div>
           <div className="mdl-button-group">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
               type="submit"
               >
               Save
             </button>
             <button
-              className="mdl-button mdl-js-button mdl-button--raised"
+              className="mdl-button mdl-js-button mdl-button--raised "
               type="reset"
               >
               Cancel
