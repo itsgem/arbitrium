@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Admin\Api;
 use App\Http\Requests\v1\Api\ApiKeyRequest;
 use App\Http\Requests\v1\Api\ApiKeyGenerateRequest;
 use App\Http\Requests\v1\Api\ApiKeyPermissionRequest;
+use App\Http\Requests\v1\Api\ApiKeyActivateRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ApiKeyServices;
 
@@ -58,6 +59,11 @@ class ApiKeyController extends ApiController
     public function generate(ApiKeyGenerateRequest $request, ApiKeyServices $service)
     {
         return $service->generate($request);
+    }
+
+    public function activate(ApiKeyActivateRequest $request, $id, ApiKeyServices $service)
+    {
+        return $service->activate($request, $id);
     }
 
     public function addPermission(ApiKeyPermissionRequest $request, $id, ApiKeyServices $service)

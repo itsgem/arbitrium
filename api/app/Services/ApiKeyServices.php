@@ -28,10 +28,12 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
+        $api_keys = new ApiKey;
+
         // If non-client
         if (!$client_id)
         {
-            $api_keys = ApiKey::with(['client.user' => function($query){
+            $api_keys = $api_keys->with(['client.user' => function($query){
                     $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
                 }]);
 
@@ -41,8 +43,8 @@ class ApiKeyServices extends NrbServices
         $api_keys = $api_keys->clientId($client_id)
             ->like('name', $request->get('name', ''))
             ->like('description', $request->get('description', ''))
-            ->active($request->get('is_active', true))
-            ->testKey($request->get('is_test_key', false))
+            ->active($request->get('is_active', ''))
+            ->testKey($request->get('is_test_key', ''))
             ->dateFrom('created_at', $request->get('date_created', ''), true)
             ->dateTo('created_at', $request->get('date_created', ''), true)
             ->paginate($request->get('per_page'));
@@ -132,6 +134,18 @@ class ApiKeyServices extends NrbServices
         $token = generate_api_key_token($client_id);
 
         return $this->respondWithSuccess(['token' => $token]);
+    }
+
+    // Admin\Api\ApiKeyController::activate
+    // Client\Api\ApiKeyController::activate
+    public function activate($request, $id)
+    {
+        return DB::transaction(function () use ($request, $id)
+        {
+            ApiKey::findOrFail($id)->update($request->only('is_active'));
+
+            return $this->respondWithSuccess();
+        });
     }
 
     // Admin\Api\ApiKeyController::addPermission
