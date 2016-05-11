@@ -141,7 +141,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               <div className="mdl-cell mdl-cell--4-col">
                 <div className={this.formClassNames('rep_gender')}>
                     <select
-                      className="mdl-select__input"
+                      className="mdl-textfield__input"
                       id='rep_gender'
                       ref="rep_gender" >
                       <option value=""></option>

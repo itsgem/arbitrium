@@ -193,8 +193,56 @@ export default {
       params: payload
     });
   },
+  registerApi(payload) {
+    return post('admin/api-key',{
+      params: {
+        client_id: payload.client_id,
+        name: payload.client_id,
+        description: payload.description,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
+        permissions: payload.permissions,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
+        token: 'sample'
+      }
+    });
+  },
+  getApiPermission() {
+    return get('api-permission');
+  },
+
 
   // ------- CLIENT -------
+  signupLocal(payload) {
+      return post('user/client/register', {
+          params: {
+          company_name: payload.company_name,
+          street_address_1: payload.street_address_1,
+          street_address_2: payload.street_address_2,
+          city: payload.city,
+          state: payload.state,
+          postal_code: payload.postal_code,
+          country_id: payload.country_id,
+          rep_first_name: payload.rep_first_name,
+          rep_last_name: payload.rep_last_name,
+          rep_gender: payload.rep_gender,
+          rep_email_address: payload.rep_email_address,
+          rep_mobile_code: payload.rep_mobile_code,
+          rep_mobile_number: payload.rep_mobile_number,
+          rep_phone_code: payload.rep_phone_code,
+          rep_phone_number: payload.rep_phone_number,
+          rep_position: payload.rep_position,
+          rep_department: payload.rep_department,
+          username: payload.username,
+          password: payload.password,
+          password_confirmation: payload.password_confirmation,
+          email_address: payload.email_address,
+          username: payload.username,
+          callback_url: window.location.origin + "/i/verifyEmail"
+          }
+      });
+  },
   getAvailableUsername(payload) {
     return get('user/available', {
       params: payload

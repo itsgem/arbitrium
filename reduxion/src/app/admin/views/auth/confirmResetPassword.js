@@ -91,7 +91,7 @@ export default React.createClass( {
                       </div>
                       <div className={ this.formClassNames('password_confirmation',errors) }>
                         <input className="mdl-textfield__input" type="password" id='passwordConfirmation'ref="passwordConfirmation"/>
-                        <label className="mdl-textfield__label" htmlFor="email">{tr.t('password_confirmation')}</label>
+                        <label className="mdl-textfield__label" htmlFor="email">Password Confirmation</label>
                         {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                       </div>
                       <div className="spacer">
@@ -161,7 +161,6 @@ export default React.createClass( {
   },
 
   requestService(payload){
-    console.log("dddddddddd",this.props);
     return this.props.confirmPasswordReset(payload);
   },
 

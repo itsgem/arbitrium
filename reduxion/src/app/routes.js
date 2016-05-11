@@ -21,9 +21,9 @@ import AdminClientAdd from 'admin/containers/client/clientAdd';
 import AdminApiList from 'admin/containers/api/apiList';
 import AdminApiAdd from 'admin/containers/api/apiAdd';
 
-import AdminUserManagementList from 'admin/containers/usermanagement/userManagementList';
-import AdminUserManagementAdd from 'admin/containers/usermanagement/userManagementAdd';
-import AdminUserManagementEdit from 'admin/containers/usermanagement/userManagementEdit';
+import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
+import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
+import AdminUserManagementEdit from 'admin/containers/userManagement/userManagementEdit';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';

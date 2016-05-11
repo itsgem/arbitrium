@@ -704,6 +704,28 @@ div#application {
     -ms-flex-pack: end;
     justify-content: flex-end;
   }
+  .dropDownList {
+    max-height: 100px;
+    position: absolute;
+    overflow-y: scroll;
+    width: 100%;
+    background: #fff;
+    z-index: 9;
+    display: none;
+    border-left: 1px solid #e3ecf5;
+    border-bottom: 1px solid #e3ecf5;
+
+
+    li {
+      padding: 5px;
+    }
+    li:hover {
+        background-color: #e3ecf5;
+    }
+  }
+  .dropList:hover + .dropDownList, .dropDownList:hover  {
+    display: block;
+  }
 }
 @media (min-width: 1200px) {
   div#application #client_add .mdl-cell--full-col {
