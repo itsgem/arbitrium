@@ -198,12 +198,13 @@ export default {
       params: {
         client_id: payload.client_id,
         name: payload.client_id,
-        description: payload.client_id,
+        description: payload.description,
         ip_addresses: payload.ip_addresses,
         is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
-        is_test_key: payload.is_test_key
+        is_test_key: payload.is_test_key,
+        token: 'sample'
       }
     });
   },

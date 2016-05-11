@@ -13,6 +13,8 @@ const mapStateToProps = (state) => {
   return {
     loading: state.get('AdminApi').get('loading'),
     apiPermissions: strMapToObj(state.get('AdminApi').get('apiPermissions')),
+    apiPermissionsError: strMapToObj(state.get('AdminApi').get('apiPermissionsError')),
+    registerApiSuccess: strMapToObj(state.get('AdminApi').get('registerApiSuccess')),
     clientList: strMapToObj(state.get('clientadmin').get('clientList')),
   };
 }

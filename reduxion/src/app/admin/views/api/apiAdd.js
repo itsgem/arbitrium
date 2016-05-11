@@ -10,12 +10,16 @@ export default React.createClass( {
   componentWillMount(){
     this.props.getApiPermission();
   },
-  render() {
-    if (this.props.loading) {
-      return (
-        <div>LOADING</div>
-      );    
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.registerApiSuccess && !nextProps.loading) {
+      $('.msg').html('Client Successfully Added').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.context.router.push('/coffee/api/');
     }
+  },
+  render() {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle

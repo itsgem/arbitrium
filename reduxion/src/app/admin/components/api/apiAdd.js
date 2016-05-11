@@ -11,7 +11,8 @@ class ApiAdd extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      client_id: null
+      client_id: null,
+      permissions: {}
     };
   }
   componentDidMount() {
@@ -23,7 +24,6 @@ class ApiAdd extends React.Component {
     let {errors, errorServer} = this.state ? this.state :'';
     let clientList = this.props.clientList.data;
     let permissions = this.props.apiPermissions.data;
-    console.log('test', this.props.apiPermissions.data);
     return (
       <form className="form-container" action="#" autoComplete="off">
         <div className="mdl-grid">
@@ -47,8 +47,11 @@ class ApiAdd extends React.Component {
               </div>
             </div>
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" />
-              <label className="mdl-textfield__label" >Description *</label>
+              <div className={this.formClassNames('description', errors)}>
+                <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" />
+                <label className="mdl-textfield__label" htmlFor="description">Description *</label>
+                {errors.description && <small className="mdl-textfield__error shown">{errors.description[0]}</small>}
+              </div>
             </div>
             <p>Add a description to your API key to allow you to filter by key</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
@@ -70,21 +73,21 @@ class ApiAdd extends React.Component {
           {
             permissions  && permissions.map(item => {
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-3">
-                        <input type="checkbox" id="checkbox-3" className="mdl-checkbox__input" />
+                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                        <input
+                          type="checkbox"
+                          className="mdl-checkbox__input"
+                          id={"checkbox-" + item.id}
+                          name="chkRights[]"
+                          value={ item.id }
+                          onClick={(e) => this.ckPermissions(e)}/>
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
                     </div>; })
             }
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-3">
-                <input type="checkbox" id="checkbox-3" className="mdl-checkbox__input" />
-                <span className="mdl-checkbox__label">Users</span>
-              </label>
-            </div>
             <div className="mdl-cell mdl-cell--1-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
-                <input type="checkbox" id="checkbox-11" className="mdl-checkbox__input"/>
+                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input"/>
                 <span className="mdl-checkbox__label">Test Key</span>
               </label>
             </div>
@@ -99,7 +102,6 @@ class ApiAdd extends React.Component {
         <div className="layout-gt-md-row layout-align-end-end btn">
               <div className="flex-order-gt-md-2 pd-10">
                 <Link
-                  ref="is_test_key"
                   className="mdl-button mdl-js-button mdl-button--colored"
                   id='btn-cancel'
                   to="/coffee/api/">CANCEL</Link>
@@ -112,6 +114,13 @@ class ApiAdd extends React.Component {
             </div>
       </form>
     );
+  }
+  ckPermissions ( e, id ) {
+    if (e.target.checked) {
+      e.target.setAttribute("checked", "checked");
+    } else {
+      e.target.removeAttribute("checked");
+    }
   }
   selectedCompany ( e, id, companyName ) {
     this.refs.client_id.value = companyName;
@@ -126,6 +135,20 @@ class ApiAdd extends React.Component {
     this.props.adminClientList(payload);
   }
   register ( e ) {
+    let chkArr =  document.getElementsByName("chkRights[]");
+    let arr = [];
+    for(let k=0;k < chkArr.length;k++) {
+      if (chkArr[k].checked) {
+        arr[k] = chkArr[k].value;
+      }
+    }
+
+    let permissions = arr.map(function(obj) {
+       let rObj = {};
+       rObj = {api_permission_id: obj, value: 1};
+       return rObj;
+    });
+
     e.preventDefault();
     this.setState( {
       loading: true,
@@ -137,14 +160,18 @@ class ApiAdd extends React.Component {
     ipAddresses = ipAddresses.split(',');
     ipAddresses = ipAddresses.map(function(obj){
        let rObj = {};
-       rObj = {ip_address: obj};
+       rObj = {ip_address: obj.trim()};
        return rObj;
     });
-
+    console.log('permissions', permissions);
     let payload = {
       client_id: this.state.client_id,
       description: this.refs.description.value,
-      ip_addresses: ipAddresses
+      ip_addresses: ipAddresses,
+      permissions: permissions,
+      is_whitelist: (this.refs.is_whitelist.checked ? 1 : 0),
+      is_api_call_restricted: (this.refs.is_api_call_restricted.checked ? 1 : 0),
+      is_test_key: (this.refs.is_test_key.checked ? 1 : 0)
     };
     window.componentHandler.upgradeDom();
     return validateRegister.call( this, payload )
@@ -164,8 +191,12 @@ class ApiAdd extends React.Component {
 function validateRegister ( payload) {
   let rules = new Checkit( {
     client_id: { rule: 'required', label: 'comapany name'},
-    description: [],
-    ip_addresses: []
+    description: { rule: 'required', label: 'description'},
+    ip_addresses: [],
+    is_whitelist: [],
+    permissions: [],
+    is_api_call_restricted: [],
+    is_test_key: []
     } );
     return rules.run( payload );
 }

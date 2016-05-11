@@ -12,7 +12,9 @@ export const getApiPermission = createActionAsync('ADMIN_API_PERMISSION', auth.g
 const initialState = Immutable.fromJS({
   apiList:{},
   loading: false,
-  apiPermissions: {}
+  apiPermissions: {},
+  registerApiSuccess: false,
+  apiPermissionsError: {}
 });
 
 export default createReducer({
@@ -25,16 +27,23 @@ export default createReducer({
     loading: true
   }),
   [registerApi.ok]: (state) => state.merge({
-    loading: false
+    loading: false,
+    registerApiSuccess: true
   }),
   [registerApi.request]: (state) => state.merge({
-    loading: true
+    loading: true,
+    registerApiSuccess: false
+  }),
+  [registerApi.error]: (state) => state.merge({
+    loading: false
   }),
   [getApiPermission.ok]: (state, payload) => state.merge({
     apiPermissions: state.concat(payload),
-    loading: false
+    loading: false,
+    registerApiSuccess: false
   }),
-  [getApiPermission.request]: (state, payload) => state.merge({
-    loading: true
+  [getApiPermission.request]: (state) => state.merge({
+    loading: true,
+    registerApiSuccess: false
   })
 }, initialState);
