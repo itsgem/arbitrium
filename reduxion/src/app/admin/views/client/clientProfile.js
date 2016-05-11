@@ -35,6 +35,18 @@ export default React.createClass( {
       nextProps.clientProfile(nextProps.params.id);
     }
 
+    // Unlock Client
+    if (!nextProps.loading && nextProps.clientUnlockSuccess ) {
+      nextProps.clientProfile(nextProps.params.id);
+      $('.msg').html('Client Successfully Unlocked').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      })
+      setTimeout(()=>{ location.href='/coffee/client/'+nextProps.params.id; },2000)
+
+    }
+
+
     // Displaying and Updating Client
     if (!nextProps.loading && nextProps.clientProfileSuccess) {
       this.setState({clientInfo: nextProps.clientProfileSuccess.get('data')});
@@ -64,7 +76,8 @@ export default React.createClass( {
       clientDeactivate: this.props.clientDeactivate,
       clientUpdateProfile: this.state.clientUpdateProfile,
       updateCompleted: this.state.updateCompleted,
-      validateUsername: this.props.validateUsername
+      validateUsername: this.props.validateUsername,
+      clientUnlock: this.props.clientUnlock
     };
     let countryList = this.props.countryList;
     return (
