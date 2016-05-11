@@ -74,12 +74,10 @@ select:focus {
 */
 .mdl-button {
   font-size: 15px;
-  
-  &:hover {
-    background: $base-orange;
-  }
 }
 
+.mdl-button--accent.mdl-button--accent.mdl-button--raised,
+.mdl-button--accent.mdl-button--accent.mdl-button--fab,
 .mdl-button.mdl-button--accent,
 .mdl-button--accent {
   color: #fff;
@@ -120,80 +118,13 @@ nav {
   }
 }
 
-.irx-header {
-  .mdl-layout__drawer-button {
-    background: none;
-    color: inherit;
-    font-family: 'ionicons';
-    line-height: 44px;
-    outline: none;
-    height: 44px;
-    width: 44px;
-
-    .material-icons {
-      display: none;
-    }
-    &:before {
-      content: "\f394";
-    }
-  }
-  .mdl-layout-title {
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    color: #999;
-    letter-spacing: 0;
-  }
-  .mdl-layout__header-row {
-    background: #fff;
-    padding-right: 0;
-
-    > div {
-      min-height: 100%;
-    }
-
-    .irx-navigation {
-      > a {
-        border-left: 1px solid #eaeaea;
-        border-right: 1px solid #fcfcfc;
-      }
-    }
-
-    .mdl-menu__container {
-      .mdl-menu {
-        padding: 0;
-      }
-      .mdl-menu__outline {
-        width: 200px;
-      }
-    }
-    .mdl-menu__item {
-      width: 200px;
-    }
-
-    .mdl-navigation__link {
-      color: inherit;
-      font-size: 12px;
-    }
-
-    .mdl-textfield--expandable {
-      padding: 0;
-
-      .mdl-textfield__input {
-        font-size: 14px;
-        font-weight: 300;
-      }
-
-      .mdl-button {
-        bottom: 0;
-      }
-
-      &.is-focused {
-        .mdl-button--icon {
-          opacity: 0;
-        }
-      }
-    }
+/*
+* MDL Layout - header part
+*/
+.theme-arbitrium.mdl-layout {
+  .mdl-layout__drawer header,
+  .mdl-layout__header {
+    background: $base-blue;
   }
 }
 

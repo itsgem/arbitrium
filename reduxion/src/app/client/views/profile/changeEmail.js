@@ -19,10 +19,6 @@ export default React.createClass({
     return (
     <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
       <div className="page-content">
-        <div className="mdl-tabs__panel" id="profile">
-        </div>
-        <div className="mdl-tabs__panel" id="change_password">
-        </div>
         <div className="mdl-tabs__panel is-active" id="change_email">
         <ClientChangeEmail
           user={user}

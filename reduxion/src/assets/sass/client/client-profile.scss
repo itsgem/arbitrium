@@ -1,4 +1,4 @@
-div#application{
+div#application {
   @media (min-width: 1200px) {
     main {
       width: auto;
@@ -27,6 +27,7 @@ div#application{
   &.bs-callout-warning h4 {color: #aa6708;}
   &.bs-callout-success h4 {color: #53aa29;}
 }
+
 .bs-callout-info {border-left-color: #1b809e;}
 .bs-callout-danger {border-left-color: #ce4844;}
 .bs-callout-warning {border-left-color: #aa6708;}
@@ -64,7 +65,6 @@ div#application{
           }
         }
       }
-
     }
 
     img {
@@ -164,25 +164,28 @@ div#application{
       line-height: normal;
       color: #e0e0e0;
       height: 23px;
+    }
 
-      .mdl-button--fab.mdl-button--accent {
-        background: #ff6600;
-        color: #fff;
-      }
-      .mdl-button--active,
-      .mdl-button.mdl-button--fab.mdl-button--active {
-        background: #ff944d;
-        color: #fff;
-      }
+    .mdl-button--fab.mdl-button--accent {
+      background: #ff6600;
+      color: #fff;
+    }
+
+    .mdl-button--active,
+    .mdl-button.mdl-button--fab.mdl-button--active {
+      background: #ff944d;
+      color: #fff;
     }
   }
+
   .arbitrium-pagination.mdl-button--mini-fab {
     font-size: 11px;
     margin: 0 3px;
   }
 }
+
 .section-api-keys {
-  padding: 30px;
+  padding: 10px;
 
   .keys-group {
     margin-bottom: 30px;

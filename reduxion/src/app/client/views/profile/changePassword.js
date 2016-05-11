@@ -19,8 +19,6 @@ export default React.createClass({
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <div className="page-content">
-          <div className="mdl-tabs__panel" id="profile">
-          </div>
           <div className="mdl-tabs__panel is-active" id="change_password">
             <ClientChangePassword
               user={user}
@@ -28,7 +26,6 @@ export default React.createClass({
               responseSuccess={this.props.success}
               />
           </div>
-          <div className="mdl-tabs__panel" id="change_email"></div>
         </div>
       </main>
     );
