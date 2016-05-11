@@ -574,20 +574,38 @@ class ClientProfile extends React.Component {
             </div>
           </div>
         </div>
-        <div className="layout-gt-md-row layout-align-end-end btn">
-          <div className="flex-order-gt-md-2 pd-10">
-            <Link
-              className="mdl-button mdl-js-button mdl-button--colored"
-              id='btn-cancel'
-              to="/coffee/client/"
-              >CANCEL</Link>
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--6-col">
+            {
+              client.user.locked_at?
+                <button
+                  id='btnClientApproval'
+                  type='button'
+                  className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
+                  onClick={(e) => this.clientUnlock(e)}>
+                    <span>Unlock </span>
+                    <span className="ion-unlocked icon-con"></span>
+                </button>
+              : null
+            }
           </div>
-          <div className="flex-order-gt-md-2">
-            <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-              id='btn-save'
-              type='submit'
-              >SAVE</button>
+          <div className="mdl-cell mdl-cell--6-col">
+            <div className="layout-gt-md-row layout-align-end-end btn">
+              <div className="flex-order-gt-md-2 pd-10">
+                <Link
+                  className="mdl-button mdl-js-button mdl-button--colored"
+                  id='btn-cancel'
+                  to="/coffee/client/"
+                  >CANCEL</Link>
+              </div>
+              <div className="flex-order-gt-md-2">
+                <button
+                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                  id='btn-save'
+                  type='submit'
+                  >SAVE</button>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -642,6 +660,10 @@ class ClientProfile extends React.Component {
   clientDeactivateStatus (e) {
     e.preventDefault();
     this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
+  }
+  clientUnlock (e) {
+    e.preventDefault();
+    this.props.client.clientUnlock(this.props.client.clientInfo.user.id);
   }
 
 
