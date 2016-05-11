@@ -12,7 +12,7 @@ class ApiList extends React.Component {
       errorServer:null,
       id: null
     };  }
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -106,7 +106,7 @@ class ApiList extends React.Component {
     let perPage = 10;
     let apiList = {last_page: 1};
     let users = {};
-    //if (Object.keys(this.props.ListApiSuccess).length) {
+    if (Object.keys(this.props.ListApiSuccess).length) {
       let i=0;
       counter = true;
       apiList = this.props.ListApiSuccess;
@@ -117,7 +117,7 @@ class ApiList extends React.Component {
       }
       pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
       perPage = apiList.per_page;
-    //}
+    }
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -246,9 +246,9 @@ class ApiList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.company.value = "";
-    this.refs.email_address.value = "";
-    this.refs.status.value = "";
+    this.refs.description.value = "";
+    this.refs.api_key.value = "";
+    this.refs.created_at.value = "";
     this.searchList(e);
   }
   searchList(e) {
@@ -256,7 +256,7 @@ class ApiList extends React.Component {
     let payload = {
       description: this.refs.description.value,
       api_key: this.refs.api_key.value,
-      created_at: this.refs.created_at.value
+      date_created: this.refs.created_at.value
     };
     this.props.apiList(payload);
   }
@@ -267,7 +267,7 @@ class ApiList extends React.Component {
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       api_key: this.refs.api_key.value,
-      created_at: this.refs.created_at.value
+      date_created: this.refs.created_at.value
     };
     this.props.apiList(payload);
   }
