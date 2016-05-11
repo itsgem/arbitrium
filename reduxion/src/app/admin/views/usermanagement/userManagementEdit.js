@@ -1,6 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
-import UserManagementEdit from 'admin/components/usermanagement/userManagementEdit';
+import UserManagementEdit from 'admin/components/userManagement/userManagementEdit';
 import { Link } from 'react-router';
 
 export default React.createClass( {
