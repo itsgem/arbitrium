@@ -197,7 +197,7 @@ export default {
     return post('admin/api-key',{
       params: {
         client_id: payload.client_id,
-        name: payload.client_id,
+        name: payload.description,
         description: payload.description,
         ip_addresses: payload.ip_addresses,
         is_whitelist: payload.is_whitelist,
@@ -207,6 +207,24 @@ export default {
         token: 'sample'
       }
     });
+  },
+  editApiKey(payload) {
+    return put('admin/api-key/' + payload.id,{
+      params: {
+        client_id: payload.client_id,
+        name: payload.description,
+        description: payload.description,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
+        permissions: payload.permissions,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
+        token: 'sample'
+      }
+    });
+  },
+  getApiKey(id) {
+    return get('admin/api-key/' + id);
   },
   getApiPermission() {
     return get('api-permission');
