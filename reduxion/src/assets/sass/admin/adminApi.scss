@@ -74,18 +74,17 @@
 // ******************** END HEADER ********************
 
 // ******************** START SECTION-CLIENT-LIST ********************
-
 .table-list-container {
     padding: 50px 0px 0px 0px;
     width: 1200px;
 
-   .table-tab{
+   .table-tab {
     background: #0e3192;
     height: 48px;
     padding: 0px;
     width: 1200px;
 
-    a{
+    a {
       color: #fff;
       font-weight: 400;
       padding: 0px 18px;
@@ -108,194 +107,136 @@
     .is-active:after{
       background: #ff6600 !important;
     }
-
    }
 
-   .filter-search{
-    background: #fff;
-    height: auto;
-    min-height: 130px;
-    width: 1200px;
+   .filter-search {
+      background: #fff;
+      height: auto;
+      min-height: 130px;
+      width: 1200px;
 
-    p{
+    p {
       font-weight: 400;
       padding: 20px 0px 0px 20px;
       margin: 0px;
     }
 
-    form{
+    form {
       margin-bottom: 0px;
     }
 
-    .filter-search-bar{
+    .filter-search-bar {
       list-style: none;
       padding: 0px 12px 0px 12px;
 
-      .search-cta{
-       text-align: right;
+      .search-cta {
+        text-align: right;
 
-       .mdl-button--accent{
-        background: #ff6600;
-        font-weight: 400;
-        margin-right: 16px;
-       }
+        .mdl-button--accent {
+          background: #ff6600;
+          font-weight: 400;
+          margin-right: 16px;
+        }
 
-      .mdl-button--raised{
+      .mdl-button--raised {
         font-weight: 400;
       }
     }
   }
 }
 
-.table-list{
-  width:100%;
-  border: 0;
+    .table-list {
+      width:100%;
+      border: 0;
 
-  thead {
-    tr{
-      background: #e3ecf5;
+      thead {
+        tr{
+          background: #e3ecf5;
 
-      th {
-        font-weight: 700;
-      }
-    }
-  }
-
-  tbody {
-    border: 0px;
-
-    tr {
-      background: #fbfeff;
-
-      &:hover{
-        background-color: #f0f5fa;
-      }
-
-      &:nth-child(odd) {
-        background-color: #f5fafe;
-
-        &:hover{
-          background-color: #f0f5fa;
+          th {
+            font-weight: 700;
+          }
         }
       }
 
-      td {
+      tbody {
         border: 0px;
 
-        .switch {
-          width: 70%;
-        }
+        tr {
+          background: #fbfeff;
 
-        .btn-view-edit {
-          background: #ff6600;
-          margin-right: 6px;
-        }
+          &:hover{
+            background-color: #f0f5fa;
+          }
 
-        .btn-delete {
-          background: #ff4a4a;
-        }
+          &:nth-child(odd) {
+            background-color: #f5fafe;
 
-        &.api-col-action{
-          width: 220px;
+            &:hover{
+              background-color: #f0f5fa;
+            }
+          }
+
+          td {
+            border: 0px;
+
+            .switch {
+              width: 70%;
+            }
+
+            .btn-view-edit {
+              background: #ff6600;
+              margin-right: 6px;
+            }
+
+            .btn-delete {
+              background: #ff4a4a;
+            }
+
+            &.api-col-action{
+              width: 220px;
+            }
+          }
         }
       }
     }
-  }
-}
-
-   .pagination {
-    align-items: center;
-    background: #0e3192;
-    height: 90px;
-    padding: 0px;
-    text-align: center;
-
-    .btn-paginate-active{
-      background: #fff;
-      color: #ff6600;
-
-      font-weight: 400;
-      margin: 4px;
-    }
-
-    .btn-paginate-normal{
-      background: #ff6600;
-      font-weight: 400;
-      margin: 4px;
-    }
-
-    .btn-paginate-disabled{
-      background: #0d2c81;
-      cursor: not-allowed;
-      font-weight: 400;
-      margin: 4px;
-    }
-
-    .btn-paginate-blue{
-      background: #0e3192;
-      font-weight: 400;
-      margin: 4px;
-    }
-
-    .btn-paginate-items-per-page{
-      background: #ff6600;
-      font-weight: 400;
-      float: right;
-      margin-right: 10px;
-    }
-   }
   }
 }
 
 .form-container {
-
   background: #fff;
   margin-bottom: 0px;
   width: 1200px;
 
   .mdl-grid {
-   padding: 20px;
+   .mdl-cell--12-col {
 
-   .mdl-cell--12-col{
+      .full-width {
+        width: 100%;
+      }
 
-    .full-width{
-      width: 100%;
+      .padding-bot {
+        padding-bottom: 60px;
+      }
+
+      p {
+        color: #969896;
+        font-weight: 300;
+      }
+
+      .check-test-key {
+        padding-top: 40px;
+      }
+
+      .mdl-button--accent {
+        margin-right: 16px;
+      }
     }
-
-    .padding-bot{
-      padding-bottom: 60px;
-    }
-
-    p {
-      color: #969896;
-      font-weight: 300;
-    }
-
-    .check-test-key {
-      padding-top: 40px;
-    }
-
-
-
-    .mdl-button--accent {
-      background: #ff6600;
-      font-weight: 400;
-      margin-right: 16px;
-    }
-
-   }
-
   }
 
   .cta {
-   padding-top: 20px;
-   padding-left: 868px;
+    padding-top: 20px;
+    padding-left: 868px;
   }
-
 }
-// ******************** END SECTION-CLIENT-LIST ********************
 
-// ******************** START FOOTER ********************
-
-
-// ******************** END FOOTER ********************

@@ -131,38 +131,6 @@ div#application {
     .body-bg .client-list .table-client-list tbody tr td .btn-delete {
         background: #ff4a4a;
     }
-    .body-bg .client-list .pagination {
-        align-items: center;
-        background: #0e3192;
-        height: 90px;
-        padding: 0px;
-        text-align: center;
-    }
-    .body-bg .client-list .pagination .btn-paginate-active {
-        background: #fff;
-        color: #ff6600;
-        font-weight: 400;
-        margin: 4px;
-    }
-
-    .body-bg .client-list .pagination .btn-paginate-disabled {
-        background: #0d2c81;
-        cursor: not-allowed;
-        font-weight: 400;
-        margin: 4px;
-    }
-    .body-bg .client-list .pagination .btn-paginate-blue {
-        background: #0e3192;
-        font-weight: 400;
-        margin: 4px;
-    }
-    .body-bg .client-list .pagination .btn-paginate-items-per-page {
-        background: #ff6600;
-        font-weight: 400;
-        float: right;
-        margin-right: 10px;
-    }
-    /*# sourceMappingURL=adminClient.css.map */
 
     .inner_content {
         width: 85%;
