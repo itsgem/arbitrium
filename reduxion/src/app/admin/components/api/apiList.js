@@ -18,7 +18,6 @@ class ApiList extends React.Component {
     }
   }
   userDisplay (data, alter) {
-    let is_active = data.is_active ? true : false;
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td className="mdl-data-table__cell--non-numeric">{data.description}</td>

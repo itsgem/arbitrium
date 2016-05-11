@@ -133,6 +133,7 @@ class ApiAdd extends React.Component {
     this.setState( {
       client_id: id,
     } );
+    e.target.className = "mystyle";
   }
   searchClient( e ) {
     let payload = {

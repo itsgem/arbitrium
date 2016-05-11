@@ -14,7 +14,6 @@ class Login extends React.Component {
   componentWillReceiveProps(nextProps){
     let path = nextProps.location.query.nextPath || '/i';
     if (nextProps.authenticated) {
-
       let token = nextProps.user.get('data').get('token');
       let lifetime = nextProps.user.get('data').get('lifetime');
       let user =  nextProps.user.get('data').get('username');
@@ -28,7 +27,6 @@ class Login extends React.Component {
 
       localStorage.setItem('token', CryptoJS.AES.encrypt(JSON.stringify(encryptToken), config.key));
       this.context.router.push(path);
-
     }
   }
 

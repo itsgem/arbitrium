@@ -15,48 +15,42 @@ class LocalAuthenticationForm extends React.Component {
       loading:false
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
   render() {
     let {errors} = this.props;
     return (
       <div className="local-signin-form">
         <form className="mdl-shadow--2dp" action={ this.signup }>
-          { !this.props.hideEmail &&
-            <div className={this.formClassNames('email')}>
-              <input
-                className="mdl-textfield__input"
-                type="text"
-                id='email'
-                ref="email"
-                />
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
-              {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
-            </div>
-          }
+          <div className={this.formClassNames('email')}>
+            <input
+              className="mdl-textfield__input"
+              type="text"
+              id='email'
+              ref="email"
+              />
+            <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
+            {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
+          </div>
+
           <div className={this.formClassNames('password')}>
             <input
               className="mdl-textfield__input"
+              type="password"
               id='password'
               ref="password"
-              type='password'
-              autoComplete="false"
               />
             <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
             {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
           </div>
-
           <button
             className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
             id='btn-login'
             type='button'
             onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
-
-          { this.props.showLogin &&
-            <Link
-            className='auth-button secondary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
-            id='btn-signup'
-            to="/login">{ tr.t('login') }</Link>
-          }
         </form>
       </div>
     );
