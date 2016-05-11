@@ -144,7 +144,7 @@ class ClientProfile extends React.Component {
                       <button
                         id="check_availability"
                         type="button"
-                        className="mdl-button mdl-js-button mdl-button--raised"
+                        className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
                         onClick={this.onClickGetAvailableUsername.bind(this)}
                         >
                         Check availability
