@@ -3,8 +3,7 @@ import Immutable from 'immutable'
 import { createReducer } from 'redux-act';
 import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
-
-import user from 'resources/user';
+import user from 'services/user';
 
 export const clientProfile = createActionAsync('CLIENTPROFILE', auth.clientProfile);
 export const clientApprove = createActionAsync('CLIENTAPPROVE', auth.clientApprove);
