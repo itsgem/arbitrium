@@ -27,6 +27,88 @@ class Dashboard extends React.Component{
         <ClientHeader />
         <ClientSidebar />
         <main className="mdl-layout__content">
+          <section className="section-api-key-list">
+            <div className="mdl-grid">
+              <div className="mdl-cell">
+                <button className="mdl-button mdl-button--raised mdl-button--accent">New API Key</button>
+              </div>
+            </div>
+            <table className="mdl-data-table mdl-js-data-table table-client-list">
+              <thead>
+                <tr>
+                  <th className="mdl-data-table__cell--non-numeric thead-title--key">Keys</th>
+                  <th className="mdl-data-table__cell--non-numeric thead-title--desc">Description</th>
+                  <th className="mdl-data-table__cell--non-numeric thead-title--created">Created</th>
+                  <th className="mdl-data-table__cell--non-numeric thead-title--action">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-dark">
+                  <th className="mdl-data-table__cell--non-numeric">sad99a0dfgagagggnrww</th>
+                  <th className="mdl-data-table__cell--non-numeric">Login key</th>
+                  <th className="mdl-data-table__cell--non-numeric">May 10, 2016</th>
+                  <th className="mdl-data-table__cell--non-numeric">
+                    <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect" htmlFor="switch-1">
+                      <input type="checkbox" id="switch-1" className="mdl-switch__input"/>
+                      <span className="mdl-switch__label"></span>
+                    </label>
+                  </th>
+                </tr>
+                <tr>
+                  <th className="mdl-data-table__cell--non-numeric">doiqw488351-935=15jiowjegq</th>
+                  <th className="mdl-data-table__cell--non-numeric">Auth key</th>
+                  <th className="mdl-data-table__cell--non-numeric">May 10, 2016</th>
+                  <th className="mdl-data-table__cell--non-numeric">
+                    <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect" htmlFor="switch-2">
+                      <input type="checkbox" id="switch-2" className="mdl-switch__input"/>
+                      <span className="mdl-switch__label"></span>
+                    </label>
+                  </th>
+                </tr>
+                <tr className="bg-dark">
+                  <th className="mdl-data-table__cell--non-numeric">sad99a0dfgagagggnrww</th>
+                  <th className="mdl-data-table__cell--non-numeric">Login key</th>
+                  <th className="mdl-data-table__cell--non-numeric">May 10, 2016</th>
+                  <th className="mdl-data-table__cell--non-numeric">
+                    <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect" htmlFor="switch-3">
+                      <input type="checkbox" id="switch-3" className="mdl-switch__input"/>
+                      <span className="mdl-switch__label"></span>
+                    </label>
+                  </th>
+                </tr>
+                <tr>
+                  <th className="mdl-data-table__cell--non-numeric">doiqw488351-935=15jiowjegq</th>
+                  <th className="mdl-data-table__cell--non-numeric">Auth key</th>
+                  <th className="mdl-data-table__cell--non-numeric">May 10, 2016</th>
+                  <th className="mdl-data-table__cell--non-numeric">
+                    <span>
+                      <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect" htmlFor="switch-4">
+                        <input type="checkbox" id="switch-4" className="mdl-switch__input"/>
+                        <span className="mdl-switch__label"></span>
+                      </label>
+                    </span>
+                  </th>
+                </tr>
+                <tr className="bg-dark">
+                  <th className="mdl-data-table__cell--non-numeric">sad99a0dfgagagggnrww</th>
+                  <th className="mdl-data-table__cell--non-numeric">Login key</th>
+                  <th className="mdl-data-table__cell--non-numeric">May 10, 2016</th>
+                  <th className="mdl-data-table__cell--non-numeric btn-action">
+                      <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect" htmlFor="switch-5">
+                        <input type="checkbox" id="switch-5" className="mdl-switch__input"/>
+                        <span className="mdl-switch__label"></span>
+                      </label>
+                      <button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                        <i className="material-icons">add</i>
+                      </button>
+                      <button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                        <i className="material-icons">add</i>
+                      </button>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </section>
           <section className="section-api-keys">
               <form>
                 <div className="mdl-cell mdl-cell--12-col">
