@@ -41,8 +41,10 @@ class ApiKeyServices extends NrbServices
         }
 
         $api_keys = $api_keys->clientId($client_id)
+            ->like('id', $request->get('id', ''))
             ->like('name', $request->get('name', ''))
             ->like('description', $request->get('description', ''))
+            ->token($request->get('key', ''))
             ->active($request->get('is_active', ''))
             ->testKey($request->get('is_test_key', ''))
             ->dateFrom('created_at', $request->get('date_created', ''), true)

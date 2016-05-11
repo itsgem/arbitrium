@@ -42,6 +42,14 @@ class ApiKey extends NrbModel
     }
 
     //---------- scopes
+    public function scopeToken($query, $token)
+    {
+        if ($token)
+        {
+            return $query->where('token', $token);
+        }
+    }
+
     public function scopeClientId($query, $client_id)
     {
         if ($client_id)
