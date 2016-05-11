@@ -10,8 +10,10 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
             Route::group(['prefix' => 'api-key'], function()
             {
                 Route::get('generate',            ['uses' => 'ApiKeyController@generate']);
+
                 Route::group(['prefix' => '{api_key}'], function()
                 {
+                    Route::patch('activate',      ['uses' => 'ApiKeyController@activate']);
                     Route::post('permission',     ['uses' => 'ApiKeyController@addPermission']);
                     Route::patch('permission',    ['uses' => 'ApiKeyController@updatePermission']);
                     Route::delete('permission',   ['uses' => 'ApiKeyController@removePermission']);

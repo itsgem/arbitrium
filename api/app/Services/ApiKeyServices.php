@@ -136,6 +136,18 @@ class ApiKeyServices extends NrbServices
         return $this->respondWithSuccess(['token' => $token]);
     }
 
+    // Admin\Api\ApiKeyController::activate
+    // Client\Api\ApiKeyController::activate
+    public function activate($request, $id)
+    {
+        return DB::transaction(function () use ($request, $id)
+        {
+            ApiKey::findOrFail($id)->update($request->only('is_active'));
+
+            return $this->respondWithSuccess();
+        });
+    }
+
     // Admin\Api\ApiKeyController::addPermission
     // Client\Api\ApiKeyController::addPermission
     public function addPermission($request, $id)
