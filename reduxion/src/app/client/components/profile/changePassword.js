@@ -63,7 +63,7 @@ class ClientChangePassword extends React.Component {
         <form onSubmit={ this.onSubmitChangePassword.bind(this) }>
           <legend>Change password</legend>
           <div className="">
-            <div className="mdl-grid">
+            <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('current_password', errors)}>
                   <input
@@ -77,7 +77,7 @@ class ClientChangePassword extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="mdl-grid">
+            <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('password', errors)}>
                   <input
@@ -91,7 +91,7 @@ class ClientChangePassword extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="mdl-grid">
+            <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('password_confirmation', errors)}>
                   <input

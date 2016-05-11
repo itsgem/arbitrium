@@ -264,6 +264,11 @@ class Dashboard extends React.Component{
                     </p>
                   </div>
                 </div>
+                <div className="mdl-grid">
+                  <div className="mdl-cell mdl-cell--12-col footer-action">
+                    <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Save </button>
+                  </div>
+                </div>
               </form>
           </section>
         </main>

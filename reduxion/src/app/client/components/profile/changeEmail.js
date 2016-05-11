@@ -62,7 +62,7 @@ class ClientProfile extends React.Component {
         <form onSubmit={ this.onSubmitProfile.bind(this) }>
           <legend>Change Email Address</legend>
           <div className="">
-            <div className="mdl-grid">
+            <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('email_address', errors)}>
                   <input
@@ -78,7 +78,7 @@ class ClientProfile extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="mdl-grid">
+            <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('new_email_address', errors)}>
                   <input
