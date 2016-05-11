@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1\Client\Api;
 
 use App\Http\Requests\v1\Api\ApiKeyRequest;
 use App\Http\Requests\v1\Api\ApiKeyPermissionRequest;
+use App\Http\Requests\v1\Api\ApiKeyActivateRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ApiKeyServices;
 
@@ -57,6 +58,11 @@ class ApiKeyController extends ApiController
     public function generate(ApiKeyServices $service)
     {
         return $service->generate($this->request, get_logged_in_client_id());
+    }
+
+    public function activate(ApiKeyActivateRequest $request, $id, ApiKeyServices $service)
+    {
+        return $service->activate($request, $id);
     }
 
     public function addPermission(ApiKeyPermissionRequest $request, $id, ApiKeyServices $service)
