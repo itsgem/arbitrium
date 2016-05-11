@@ -20,6 +20,7 @@ import AdminClientAdd from 'admin/containers/client/clientAdd';
 
 import AdminApiList from 'admin/containers/api/apiList';
 import AdminApiAdd from 'admin/containers/api/apiAdd';
+import AdminApiEdit from 'admin/containers/api/apiEdit';
 
 import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
@@ -121,6 +122,7 @@ export default () => (
         <Route path="api" onEnter={requireAuth}>
           <IndexRoute component={AdminApiList} onEnter={requireAuth}/>
           <Route component={AdminApiAdd} path="new" onEnter={requireAuth}/>
+          <Route component={AdminApiEdit} path=":id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account" onEnter={requireAuth}>

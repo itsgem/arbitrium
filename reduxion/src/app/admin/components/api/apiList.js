@@ -20,7 +20,7 @@ class ApiList extends React.Component {
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
         <td width="220" className="mdl-data-table__cell--non-numeric">
@@ -103,18 +103,21 @@ class ApiList extends React.Component {
     let counter = false;
     let alter = false;
     let pagination = [];
-
-    let i=0;
-    counter = true;
-    let apiList = this.props.apiList;
-    let users = apiList.data;
-    pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-    for (i = 1; i <= apiList.last_page; i++) {
-      pagination[i] = this.pagination(i, apiList.current_page);
-    }
-    pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-    let perPage = apiList.per_page;
-
+    let perPage = 10;
+    let apiList = {last_page: 1};
+    let users = {};
+    //if (Object.keys(this.props.ListApiSuccess).length) {
+      let i=0;
+      counter = true;
+      apiList = this.props.ListApiSuccess;
+      users = apiList.data;
+      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
+      for (i = 1; i <= apiList.last_page; i++) {
+        pagination[i] = this.pagination(i, apiList.current_page);
+      }
+      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
+      perPage = apiList.per_page;
+    //}
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -128,19 +131,19 @@ class ApiList extends React.Component {
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="company" ref="description"/>
+                <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
                 <label className="mdl-textfield__label">Description</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="email-address" ref="api_key" />
+                <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
                 <label className="mdl-textfield__label">API Key</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="email-address" ref="created_at" />
+                <input className="mdl-textfield__input" type="text" id="created_at" ref="created_at" />
                 <label className="mdl-textfield__label">Date created</label>
               </div>
             </div>
@@ -186,7 +189,7 @@ class ApiList extends React.Component {
     );
   }
   changeActive (e, id, status) {
-    alert(status);
+
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
@@ -251,38 +254,23 @@ class ApiList extends React.Component {
   searchList(e) {
     e.preventDefault();
     let payload = {
-      company_name: this.refs.company.value,
-      email_address: this.refs.email_address.value,
-      approval_status: this.refs.status.value
+      description: this.refs.description.value,
+      api_key: this.refs.api_key.value,
+      created_at: this.refs.created_at.value
     };
-    this.props.adminapiList(payload);
+    this.props.apiList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      company_name: this.refs.company.value,
-      email_address: this.refs.email_address.value,
-      approval_status: this.refs.status.value
+      description: this.refs.description.value,
+      api_key: this.refs.api_key.value,
+      created_at: this.refs.created_at.value
     };
-    this.props.adminapiList(payload);
+    this.props.apiList(payload);
   }
-  deleteItem () {
-    let dialog = document.querySelector('dialog');
-    this.setState( {
-      loading: true,
-      errors: {},
-      errorServer: null
-    } );
-    $('.msg').html('Successfully deleted').addClass('bg-green');
-    $('.msg').fadeIn(1000, function() {
-      $(this).fadeOut(2000);
-    });
-    this.modalClose();
-    this.props.adminclientDelete(this.state.id);
-  }
-
 };
 
 export default ApiList;

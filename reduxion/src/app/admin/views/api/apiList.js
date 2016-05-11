@@ -31,7 +31,8 @@ export default React.createClass( {
                 to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
           </div>
           <ApiList
-            apiList={this.props.ListApiSuccess}
+            ListApiSuccess={this.props.ListApiSuccess}
+            apiList={this.props.apiList}
             />
         </div>
       );
