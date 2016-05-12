@@ -58,8 +58,8 @@ class UserManagementAdd extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <button
                 className={!this.props.validateCompleted || errors.username ?
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
+                    "mdl-button mdl-button--accent mdl-button--raised" :
+                    "mdl-button mdl-button--accent mdl-button--raised disabled" }
                     id='check_availability'
                 type='button'
                 onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
