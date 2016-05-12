@@ -99,7 +99,7 @@ function mapObject(object, callback) {
 
 function validateSignup( payload ) {
   let rules = new Checkit( {
-    company_name: { rule: 'required', label: 'compan name'},
+    company_name: { rule: 'required', label: 'company name'},
     street_address_1: [],
     street_address_2: [],
     city: [],

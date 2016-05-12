@@ -140,7 +140,7 @@ export default React.createClass( {
         <legend className="forgot-legend">Step 2 - Check Email</legend>
         <div className="local-login-form">
           <div className="step-two-content">
-            <span className="forgot-step-two"><strong>An email has been sent containing your reset link. Click on this link to proceed.</strong></span>
+            <span className="forgot-step-two"><strong>An email has been sent containing your reset link. Click on the link to proceed.</strong></span>
 
             <span className="forgot-step-two">Please also check your spam folder just in case the reset email ended up there.</span>
 
