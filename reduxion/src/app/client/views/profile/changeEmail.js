@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import ClientHeader from 'client/components/header';
-import ClientSidebar from 'client/components/sidebar';
 import ClientChangeEmail from 'client/components/profile/changeEmail';
 
 export default React.createClass({
@@ -16,6 +14,8 @@ export default React.createClass({
 
   render () {
     let user = this.props.user.get('data');
+    let success = this.props.success;
+    let errors = this.props.errors.get('data');
     return (
     <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
       <div className="page-content">
@@ -24,8 +24,10 @@ export default React.createClass({
           user={user}
           updateClientEmail={this.props.updateClientEmail}
           cancelEmailChange={this.props.cancelEmailChange}
-          responseSuccess={this.props.success}
           loading={this.props.loading}
+          responseSuccess={this.props.success}
+          success ={this.props.isProfileSuccess}
+          responseError={errors}
           />
         </div>
       </div>
