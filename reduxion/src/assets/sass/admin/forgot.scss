@@ -1,3 +1,14 @@
+#forgot {
+  text-align: center;
+
+  .login-view {
+    legend {
+      display: inline-block;
+      padding-bottom: 20px;
+    }
+  }
+}
+
 .container {
   margin-left: auto;
   margin-right: auto;
@@ -6,6 +17,7 @@
 
   .background {
     background-color: #fff;
+    border-radius: 0 0 3px 3px;
 
     .forgot-legend {
       color: #555;
@@ -61,6 +73,5 @@
 
 .forgot-footer {
   max-width: 312px;
-  margin-left:auto;
-  margin-right:auto;
+  text-align: left;
 }
