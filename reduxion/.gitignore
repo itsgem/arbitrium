@@ -11,3 +11,5 @@ deploy/keys
 admin/..css
 admin/static/client/.sass-cache
 admin/static/css/style.css.map
+
+static/css/style.css
