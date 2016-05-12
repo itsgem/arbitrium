@@ -21,22 +21,6 @@ input, select {
 	}
 }
 
-.mdl-textfield__label,
-.mdl-textfield__input,
-.mdl-select__input {
-  font-family: $font-family;
-  font-weight: 400;
-  letter-spacing: 1px;
-  line-height: 20px;
-  font-size: 15px;
-  padding: 3px 0;
-  height: auto;
-
-  &.is-invalid {
-    color: #f90;
-  }
-}
-
 .mdl-textfield--floating-label {
 	&.is-focused, &.is-dirty {
 		.mdl-textfield__label {
