@@ -136,19 +136,15 @@ export default React.createClass( {
       return;
     }
     return (
-      <div className="login-view">
-        <div className="local-login-form">
-          <legend className="forgot-legend">Step 2 - Check Email</legend>
-          <div className="step-two-content">
-            <p>
-              <strong>An email has been sent containing your reset link. Click on this link to proceed.</strong>
-            </p>
-            <p>
-              Please also check your spam folder just in case the reset email ended up there.
-            </p>
-            <p>This page can be safely closed.</p>
-          </div>
-        </div>
+      <div className="login-view padding-15">
+          <legend>Step 2 - Check Email</legend>
+          <p>
+            <strong>An email has been sent containing your reset link. Click on this link to proceed.</strong>
+          </p>
+          <p>
+            Please also check your spam folder just in case the reset email ended up there.
+          </p>
+          <p>This page can be safely closed.</p>
       </div>
     );
   },
