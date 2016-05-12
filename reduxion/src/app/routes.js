@@ -20,11 +20,11 @@ import AdminClientAdd from 'admin/containers/client/clientAdd';
 
 import AdminApiList from 'admin/containers/api/apiList';
 import AdminApiAdd from 'admin/containers/api/apiAdd';
-import AdminApiEdit from 'admin/containers/api/apiEdit';
+import AdminApiUpdate from 'admin/containers/api/apiUpdate';
 
 import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
-import AdminUserManagementEdit from 'admin/containers/userManagement/userManagementEdit';
+import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
@@ -41,7 +41,9 @@ import ClientProfile from 'client/containers/profile/profile';
 import ClientChangePassword from 'client/containers/profile/changePassword';
 import ClientChangeEmail from 'client/containers/profile/changeEmail';
 
-import ClientApi from 'client/views/api/apiConfig';
+import ClientApiList from 'client/containers/api/apiList';
+import ClientApiAdd from 'client/containers/api/apiAdd';
+import ClientApiUpdate from 'client/containers/api/apiUpdate';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
@@ -124,13 +126,13 @@ export default () => (
         <Route path="api" onEnter={requireAuth}>
           <IndexRoute component={AdminApiList} onEnter={requireAuth}/>
           <Route component={AdminApiAdd} path="new" onEnter={requireAuth}/>
-          <Route component={AdminApiEdit} path=":id" onEnter={requireAuth}/>
+          <Route component={AdminApiUpdate} path=":id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account" onEnter={requireAuth}>
           <IndexRoute component={AdminUserManagementList} onEnter={requireAuth}/>
           <Route component={AdminUserManagementAdd} path="new" onEnter={requireAuth}/>
-          <Route component={AdminUserManagementEdit} path=":id" onEnter={requireAuth}/>
+          <Route component={AdminUserManagementUpdate} path=":id" onEnter={requireAuth}/>
         </Route>
       </Route>
     </Route>
@@ -151,7 +153,9 @@ export default () => (
         <Route component={ClientChangeEmail} path="profile/change_email" onEnter={requireAuth} />
       </Route>
       <Route path="api" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientApi} onEnter={requireAuth}/>
+        <IndexRoute component={ClientApiList} onEnter={requireAuth}/>
+        <Route component={ClientApiAdd} path="new" onEnter={requireAuth}/>
+        <Route component={ClientApiUpdate} path=":id" onEnter={requireAuth}/>
       </Route>
     </Route>
     <Route path="*" components={NoMatch} />

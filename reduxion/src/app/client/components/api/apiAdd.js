@@ -11,7 +11,6 @@ class ApiAdd extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      client_id: null,
       permissions: {}
     };
   }
@@ -25,30 +24,11 @@ class ApiAdd extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address});
     }
-    let clientList = this.props.clientList.data;
     let permissions = this.props.apiPermissions.data;
     return (
-      <form className="form-container" action="#" autoComplete="off">
+      <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
-            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <div className={this.formClassNames('client_id', errors)}>
-                <input className="dropList mdl-textfield__input font-input"
-                  ref="client_id"
-                  type="text"
-                  id="client_id"
-                  autoComplete="off"
-                  onChange={(e) => this.searchClient(e)}/>
-                <ul className="dropDownList">
-                  {
-                    clientList  && clientList.map(item => {
-                    return <li onClick={(e) => this.selectedCompany(e, item.id, item.company_name)} key={item.id}>{item.company_name}</li>; })
-                  }
-                </ul>
-                <label className="mdl-textfield__label" htmlFor="client_id">Client Company *</label>
-                {errors.client_id && <small className="mdl-textfield__error shown">{errors.client_id[0]}</small>}
-              </div>
-            </div>
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
               <div className={this.formClassNames('description', errors)}>
                 <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" />
@@ -108,19 +88,19 @@ class ApiAdd extends React.Component {
             </div>
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
-              <div className="flex-order-gt-md-2 pd-10">
-                <Link
-                  className="mdl-button mdl-js-button mdl-button--colored"
-                  id='btn-cancel'
-                  to="/coffee/api/">CANCEL</Link>
-              </div>
-              <div className="flex-order-gt-md-2" >
-                <button id="btn-save"
-                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e)}>Create API Key</button>
-              </div>
-            </div>
-      </form>
+          <div className="flex-order-gt-md-2 pd-10">
+            <Link
+              className="mdl-button mdl-js-button mdl-button--colored"
+              id='btn-cancel'
+              to="/i/api/">CANCEL</Link>
+          </div>
+          <div className="flex-order-gt-md-2" >
+            <button id="btn-save"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.register(e)}>Create API Key</button>
+          </div>
+        </div>
+      </main>
     );
   }
   ckPermissions ( e, id ) {
@@ -130,32 +110,16 @@ class ApiAdd extends React.Component {
       e.target.removeAttribute("checked");
     }
   }
-  selectedCompany ( e, id, companyName ) {
-    this.refs.client_id.value = companyName;
-    this.setState( {
-      client_id: id,
-    } );
-  }
-  searchClient( e ) {
-    let payload = {
-      company_name: this.refs.client_id.value,
-    }
-    this.props.adminClientList(payload);
-  }
   register ( e ) {
     let chkArr =  document.getElementsByName("chkRights[]");
-    let arr = [];
+    let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        arr[k] = chkArr[k].value;
+        permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
+      } else {
+        permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
       }
     }
-
-    let permissions = arr.map(function(obj) {
-       let rObj = {};
-       rObj = {api_permission_id: obj, value: 1};
-       return rObj;
-    });
 
     e.preventDefault();
     this.setState( {
@@ -173,7 +137,6 @@ class ApiAdd extends React.Component {
     });
     console.log('permissions', permissions);
     let payload = {
-      client_id: this.state.client_id,
       description: this.refs.description.value,
       ip_addresses: ipAddresses,
       permissions: permissions,
@@ -198,7 +161,6 @@ class ApiAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    client_id: { rule: 'required', label: 'comapany name'},
     description: { rule: 'required', label: 'description'},
     ip_addresses: [],
     is_whitelist: [],
@@ -209,7 +171,7 @@ function validateRegister ( payload) {
     return rules.run( payload );
 }
 function registerApi (payload) {
-  return this.props.registerApi(payload);
+  return this.props.clientRegisterApi(payload);
 }
 
 function setErrors( e ) {

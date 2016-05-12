@@ -5,7 +5,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 
-class UserManagementEdit extends React.Component {
+class UserManagementUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -175,7 +175,7 @@ class UserManagementEdit extends React.Component {
                 className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                 id='btn-save'
                 type='button'
-                onClick={(e) => this.edit(e, userInfo.get("id"))}>SAVE</button>
+                onClick={(e) => this.update(e, userInfo.get("id"))}>UPDATE</button>
             </div>
           </div>
       </form>
@@ -198,7 +198,7 @@ class UserManagementEdit extends React.Component {
       this.refs.checkUser.value = "not-disabled";
     }
   }
-  edit ( e, id ) {
+  update ( e, id ) {
     e.preventDefault();
     this.setState( {
       loading: true,
@@ -218,9 +218,9 @@ class UserManagementEdit extends React.Component {
       role_id: role_id.value
     };
     window.componentHandler.upgradeDom();
-    return validateEdit.call( this, payload )
+    return validateUpdate.call( this, payload )
       .with( this )
-      .then( editAdmin )
+      .then( updateAdmin )
       .catch( setErrors );
   }
   checkUsername( e ) {
@@ -251,7 +251,7 @@ function mapObject(object, callback) {
     });
 }
 
-function validateEdit ( payload) {
+function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
@@ -264,8 +264,8 @@ function validateEdit ( payload) {
     } );
     return rules.run( payload );
 }
-function editAdmin (payload) {
-  return this.props.adminUserManagementEdit(payload);
+function updateAdmin (payload) {
+  return this.props.adminUserManagementUpdate(payload);
 }
 
 function validateUsername( payload ) {
@@ -282,8 +282,8 @@ function setErrors( e ) {
   this.setState(createError(e));
 }
 
-UserManagementEdit.mixins = [LinkedStateMixin];
-UserManagementEdit.defaultProps = {
+UserManagementUpdate.mixins = [LinkedStateMixin];
+UserManagementUpdate.defaultProps = {
     errors: []
 };
-export default UserManagementEdit;
+export default UserManagementUpdate;

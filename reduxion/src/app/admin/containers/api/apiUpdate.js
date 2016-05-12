@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { getApiKey, getApiPermission, editApiKey } from 'admin/reducers/api'
+import { getApiKey, getApiPermission, updateApiKey } from 'admin/reducers/api'
 import { clientProfile } from 'admin/reducers/clientProfile'
-import ApiAdd from 'admin/views/api/apiEdit';
+import ApiUpdate from 'admin/views/api/apiUpdate';
 
 const strMapToObj=(strMap) => {
   let obj = JSON.parse(JSON.stringify(strMap));
@@ -16,10 +16,10 @@ const mapStateToProps = (state) => {
     apiPermissions: strMapToObj(state.get('AdminApi').get('apiPermissions')),
     getApiInfo: strMapToObj(state.get('AdminApi').get('getApiInfo')),
     clientProfileSuccess: strMapToObj(state.get('clientadmin').get('clientProfileSuccess')),
-    apiEditSuccess: strMapToObj(state.get('AdminApi').get('apiEditSuccess'))
+    apiUpdateSuccess: strMapToObj(state.get('AdminApi').get('apiUpdateSuccess'))
   };
 }
 
 export default connect(mapStateToProps, {
-  getApiKey, getApiPermission, clientProfile, editApiKey
-})(ApiAdd)
+  getApiKey, getApiPermission, clientProfile, updateApiKey
+})(ApiUpdate)

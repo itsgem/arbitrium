@@ -8,7 +8,7 @@ export const apiList = createActionAsync('ADMIN_API_LISTS', auth.getApiList);
 export const registerApi = createActionAsync('ADMIN_REGISTER_API', auth.registerApi);
 export const getApiPermission = createActionAsync('ADMIN_API_PERMISSION', auth.getApiPermission);
 export const getApiKey = createActionAsync('ADMIN_GET_API_KEY', auth.getApiKey);
-export const editApiKey = createActionAsync('ADMIN_API_EDIT', auth.editApiKey);
+export const updateApiKey = createActionAsync('ADMIN_API_UPDATE', auth.adminUpdateApiKey);
 export const isActiveApiKey = createActionAsync('ADMIN_ACTIVATE_API_KEY', auth.isActiveApiKey);
 
 
@@ -19,18 +19,18 @@ const initialState = Immutable.fromJS({
   registerApiSuccess: false,
   apiPermissionsError: {},
   getApiInfo: {},
-  apiEditSuccess: false
+  apiUpdateSuccess: false
 });
 
 export default createReducer({
   [apiList.ok]: (state, payload) => state.merge({
     apiList: state.concat(payload),
     loading: false,
-    apiEditSuccess: false
+    apiUpdateSuccess: false
   }),
   [apiList.request]: (state) => state.merge({
     loading: true,
-    apiEditSuccess: false
+    apiUpdateSuccess: false
   }),
   [registerApi.ok]: (state) => state.merge({
     loading: false,
@@ -60,13 +60,13 @@ export default createReducer({
     loading: false,
     getApiInfo: {},
   }),
-  [editApiKey.ok]: (state) => state.merge({
+  [updateApiKey.ok]: (state) => state.merge({
     loading: false,
-    apiEditSuccess: true
+    apiUpdateSuccess: true
   }),
-  [editApiKey.request]: (state) => state.merge({
+  [updateApiKey.request]: (state) => state.merge({
     loading: true,
-    apiEditSuccess: false
+    apiUpdateSuccess: false
   }),
   [isActiveApiKey.ok]: (state) => state.merge({
     loading: false

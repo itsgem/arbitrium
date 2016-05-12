@@ -148,17 +148,24 @@ div#application {
 }
 
 
+div#application {
+  .client {
+    .section-api-keys {
+      padding: 10px;
 
-.section-api-keys {
-  padding: 10px;
+      main {
+        width: 100%;
+      }
 
-  .keys-group {
-    margin-bottom: 30px;
-  }
+      .keys-group {
+        margin-bottom: 30px;
+      }
 
-  .item {
-    label {
-      text-transform: none;
+      .item {
+        label {
+          text-transform: none;
+        }
+      }
     }
   }
 }

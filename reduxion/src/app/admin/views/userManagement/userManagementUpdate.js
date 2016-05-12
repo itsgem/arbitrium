@@ -1,6 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
-import UserManagementEdit from 'admin/components/userManagement/userManagementEdit';
+import UserManagementUpdate from 'admin/components/userManagement/userManagementUpdate';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -21,7 +21,7 @@ export default React.createClass( {
     }
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.adminEdit && !nextProps.loading) {
+    if (nextProps.adminUpdate && !nextProps.loading) {
       $('.msg').html('Client Successfully Updated').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
@@ -44,12 +44,12 @@ export default React.createClass( {
               to="/coffee/account/new">Add New Admin<i className="material-icons add">add</i></Link>
           <a className="mdl-layout__tab is-active" >VIEW ADMIN<i className="material-icons add">edit</i></a>
         </div>
-        <UserManagementEdit
+        <UserManagementUpdate
           validateUsername={this.props.validateUsername}
           adminInfo={this.props.adminInfo}
-          adminUserManagementEdit={this.props.adminUserManagementEdit}
+          adminUserManagementUpdate={this.props.adminUserManagementUpdate}
           validateCompleted={this.props.validateCompleted}
-          adminEdit={this.props.adminEdit}
+          adminUpdate={this.props.adminUpdate}
           role={this.props.role}
           />
       </div>

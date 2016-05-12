@@ -5,7 +5,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 
-class ApiEdit extends React.Component {
+class ApiUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,25 +25,15 @@ class ApiEdit extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address});
     }
-    let getApiInfo = this.props.getApiInfo.data;
-    let clientInfo = this.props.clientProfileSuccess.data;
-    let permissions = this.props.apiPermissions.data;
+
     let ipAddresses = '';
+    let getApiInfo = this.props.getApiInfo.data;
+    let permissions = this.props.apiPermissions.data;
     ipAddresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
     return (
-      <form className="form-container" action="#" autoComplete="off">
+      <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
-            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <input className="dropList mdl-textfield__input font-input"
-                type="text"
-                id="client_id"
-                defaultValue={clientInfo.company_name}
-                disabled
-                autoComplete="off"/>
-              <input type="hidden" ref="client_id" value={clientInfo.id}/>
-              <label className="mdl-textfield__label" htmlFor="client_id">Client Company</label>
-            </div>
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
               <div className={this.formClassNames('description', errors)}>
                 <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" defaultValue={getApiInfo.description} />
@@ -94,6 +84,8 @@ class ApiEdit extends React.Component {
                       </label>
                     </div>; })
             }
+        </div>
+          <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--1-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
                 <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_test_key ? true : false}/>
@@ -109,19 +101,19 @@ class ApiEdit extends React.Component {
             </div>
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
-              <div className="flex-order-gt-md-2 pd-10">
-                <Link
-                  className="mdl-button mdl-js-button mdl-button--colored"
-                  id='btn-cancel'
-                  to="/coffee/api/">CANCEL</Link>
-              </div>
-              <div className="flex-order-gt-md-2" >
-                <button id="btn-save"
-                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e, getApiInfo.id)}>Create API Key</button>
-              </div>
-            </div>
-      </form>
+          <div className="flex-order-gt-md-2 pd-10">
+            <Link
+              className="mdl-button mdl-js-button mdl-button--colored"
+              id='btn-cancel'
+              to="/i/api/">CANCEL</Link>
+          </div>
+          <div className="flex-order-gt-md-2" >
+            <button id="btn-save"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.register(e, getApiInfo.id)}>Update API Key</button>
+          </div>
+        </div>
+      </main>
     );
   }
   ckPermissions ( e, id ) {
@@ -137,7 +129,6 @@ class ApiEdit extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        //arr[k] = chkArr[k].value;
         permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
       } else {
         permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
@@ -159,7 +150,6 @@ class ApiEdit extends React.Component {
     });
     let payload = {
       id: id,
-      client_id: this.refs.client_id.value,
       description: this.refs.description.value,
       ip_addresses: ipAddresses,
       permissions: permissions,
@@ -168,9 +158,9 @@ class ApiEdit extends React.Component {
       is_test_key: (this.refs.is_test_key.checked ? 1 : 0)
     };
     window.componentHandler.upgradeDom();
-    return validateEdit.call( this, payload )
+    return validateUpdate.call( this, payload )
       .with( this )
-      .then( editApi )
+      .then( updateApi )
       .catch( setErrors );
   }
 
@@ -182,10 +172,9 @@ class ApiEdit extends React.Component {
   }
 };
 
-function validateEdit ( payload) {
+function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],
-    client_id: [],
     description: { rule: 'required', label: 'description'},
     ip_addresses: [],
     is_whitelist: [],
@@ -195,8 +184,8 @@ function validateEdit ( payload) {
     } );
     return rules.run( payload );
 }
-function editApi (payload) {
-  return this.props.editApiKey(payload);
+function updateApi (payload) {
+  return this.props.updateApi(payload);
 }
 
 function setErrors( e ) {
@@ -209,8 +198,8 @@ function mapObject(object, callback) {
     });
 }
 
-ApiEdit.mixins = [LinkedStateMixin];
-ApiEdit.defaultProps = {
+ApiUpdate.mixins = [LinkedStateMixin];
+ApiUpdate.defaultProps = {
     errors: []
 };
-export default ApiEdit;
+export default ApiUpdate;
