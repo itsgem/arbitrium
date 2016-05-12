@@ -236,7 +236,9 @@ export default {
   getApiPermission() {
     return get('api-permission');
   },
-
+  adminDeleteApiKey(id) {
+    return del('admin/api-key/' + id);
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {
@@ -356,4 +358,7 @@ export default {
       }
     });
   },
+  clientDeleteApiKey(id) {
+    return del('client/api-key/' + id);
+  }
 };

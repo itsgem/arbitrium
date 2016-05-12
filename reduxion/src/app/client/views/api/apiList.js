@@ -6,6 +6,11 @@ export default React.createClass({
   componentWillMount () {
     this.props.clietApiKeys();
   },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+      this.props.apiList({per_page: 10});
+    }
+  },
   render () {
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
@@ -13,7 +18,8 @@ export default React.createClass({
           <ApiList
             isActiveApiKey={this.props.isActiveApiKey}
             clietApiKeys={this.props.clietApiKeys}
-            listApiKeys={this.props.listApiKeys}/>
+            listApiKeys={this.props.listApiKeys}
+            clientDeleteApiKey={this.props.clientDeleteApiKey}/>
         </div>
       </main>
     );

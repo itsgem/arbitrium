@@ -20,10 +20,10 @@ class ApiList extends React.Component {
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
+        <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
-        <td width="400" className="mdl-data-table__cell--non-numeric">
+        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={data.is_active ? true : false} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
             <span className="mdl-switch__label">On / Off</span>
@@ -122,7 +122,7 @@ class ApiList extends React.Component {
       <div className="filter-search">
         <p>Filter / Search</p>
         <dialog className="mdl-dialog">
-          <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
+          <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
           <div className="mdl-dialog__actions">
             <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
             <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
@@ -188,6 +188,10 @@ class ApiList extends React.Component {
       </div>
     );
   }
+  deleteItem () {
+    this.props.adminDeleteApiKey(this.state.id);
+    this.modalClose();
+  }
   changeActive (e, id, status) {
     let payload = {
       id: id,
@@ -238,7 +242,6 @@ class ApiList extends React.Component {
   }
   modalConfirm (e, id, description) {
     let dialog = document.querySelector('dialog');
-    $('dialog label').text(description);
     dialog.showModal();
     this.setState( {
       id: id
@@ -247,6 +250,8 @@ class ApiList extends React.Component {
   modalClose () {
     let dialog = document.querySelector('dialog');
     dialog.close();
+    // document.getElementsByClassName('mdl-layout__inner-container')[0].style.overflowX='auto';
+    // document.getElementsByClassName('mdl-layout__inner-container')[0].style.overflowX='';
   }
   clearSearch(e) {
     e.preventDefault();

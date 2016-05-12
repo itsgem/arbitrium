@@ -10,12 +10,10 @@ export default React.createClass( {
   componentWillMount(){
     this.props.apiList({per_page: 10});
   },
-  loading() {
-    return (
-        <div id="client_add">
-          LOADING
-        </div>
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+      this.props.apiList({per_page: 10});
+    }
   },
   render() {
     return (
@@ -33,6 +31,7 @@ export default React.createClass( {
           ListApiSuccess={this.props.ListApiSuccess}
           apiList={this.props.apiList}
           isActiveApiKey={this.props.isActiveApiKey}
+          adminDeleteApiKey={this.props.adminDeleteApiKey}
           />
       </div>
     );
