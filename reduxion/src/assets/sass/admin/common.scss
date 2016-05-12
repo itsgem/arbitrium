@@ -408,22 +408,6 @@ div#application {
     padding: 20px 0;
   }
 
-  .mdl-select__input {
-    border: none;
-    border-bottom: 1px solid rgba(0,0,0, 0.12);
-    display: inline-block;
-    margin: 0;
-    padding: 4px 0;
-    width: 100%;
-    background: 16px;
-    text-align: left;
-    color: inherit;
-    font-family: "Montserrat";
-    font-size: 11px;
-    font-weight: 400;
-    height: 27px;
-  }
-
   .mdl-select.is-focused .mdl-select__input { outline: none; }
   .mdl-select.is-invalid .mdl-select__input {
     border-color: rgb(222, 50, 38);
