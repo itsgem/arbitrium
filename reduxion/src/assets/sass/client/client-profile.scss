@@ -147,41 +147,7 @@ div#application {
   }
 }
 
-.pagination {
-  background: #0e3192;
-  padding: 20px 0;
 
-  .item-to-show {
-    .mdl-button.mdl-button--blue {
-      background: #0e3192 !important;
-      color: #fff;
-    }
-
-    .mdl-icon {
-      margin: 12px 10px 0;
-      font-size: 24px;
-      line-height: normal;
-      color: #e0e0e0;
-      height: 23px;
-    }
-
-    .mdl-button--fab.mdl-button--accent {
-      background: #ff6600;
-      color: #fff;
-    }
-
-    .mdl-button--active,
-    .mdl-button.mdl-button--fab.mdl-button--active {
-      background: #ff944d;
-      color: #fff;
-    }
-  }
-
-  .arbitrium-pagination.mdl-button--mini-fab {
-    font-size: 11px;
-    margin: 0 3px;
-  }
-}
 
 .section-api-keys {
   padding: 10px;
