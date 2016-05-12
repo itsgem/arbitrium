@@ -109,11 +109,11 @@ export default React.createClass( {
     let errors = this.state.errors;
     return (
       <div className="login-view">
-         <legend className="forgot-legend">Password Reset</legend>
         <div className="local-login-form">
           <form>
-            <span className="forgot-text"><strong>Enter the email address used when you registered with username and password. </strong></span>
-            <span className="forgot-text">You'll be sent a reset code to change your password.</span>
+            <legend>Password Reset</legend>
+            <p><strong>Enter the email address used when you registered with username and password. </strong></p>
+            <p>You'll be sent a reset code to change your password.</p>
             <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
               <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
