@@ -46,6 +46,7 @@ html{
           width: 1030px;
 
           .tab{
+            background: none;
             border-bottom: none;
             float: right;
 
@@ -345,6 +346,19 @@ html{
     padding-left: 868px;
   }
 
+}
+
+.header-title-container{
+  @extend .table-tab;
+
+  .header-title{
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 48px;
+    margin-bottom: 0px;
+    padding: 0px 18px;
+  }
 }
 // ******************** END SECTION-CLIENT-LIST ********************
 
