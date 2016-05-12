@@ -158,6 +158,7 @@ export default React.createClass( {
     } );
     let payload ={
       email: this.refs.email.value,
+      user_type: 2,
       callbackUrl: this.state.callbackUrl
     }
 
@@ -170,6 +171,7 @@ export default React.createClass( {
   validateEmail(payload) {
     let rules = new Checkit( {
       email: ['required', 'email'],
+      user_type: [],
       callbackUrl: []
     });
     return rules.run( payload );

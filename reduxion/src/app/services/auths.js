@@ -42,7 +42,7 @@ export default {
     return get('password/forgot', {
       params: {
         login: payload.email,
-        user_type: 1,
+        user_type: payload.user_type,
         callback_url: payload.callbackUrl
       }
     });
