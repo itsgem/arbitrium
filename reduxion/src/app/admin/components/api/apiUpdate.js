@@ -5,7 +5,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 
-class ApiAdd extends React.Component {
+class ApiUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -25,59 +25,61 @@ class ApiAdd extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address});
     }
-    let clientList = this.props.clientList.data;
+    let getApiInfo = this.props.getApiInfo.data;
+    let clientInfo = this.props.clientProfileSuccess.data;
     let permissions = this.props.apiPermissions.data;
+    let ipAddresses = '';
+    ipAddresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
     return (
       <form className="form-container" action="#" autoComplete="off">
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <div className={this.formClassNames('client_id', errors)}>
-                <input className="dropList mdl-textfield__input font-input"
-                  ref="client_id"
-                  type="text"
-                  id="client_id"
-                  autoComplete="off"
-                  onChange={(e) => this.searchClient(e)}/>
-                <ul className="dropDownList">
-                  {
-                    clientList  && clientList.map(item => {
-                    return <li onClick={(e) => this.selectedCompany(e, item.id, item.company_name)} key={item.id}>{item.company_name}</li>; })
-                  }
-                </ul>
-                <label className="mdl-textfield__label" htmlFor="client_id">Client Company *</label>
-                {errors.client_id && <small className="mdl-textfield__error shown">{errors.client_id[0]}</small>}
-              </div>
+              <input className="dropList mdl-textfield__input font-input"
+                type="text"
+                id="client_id"
+                defaultValue={clientInfo.company_name}
+                disabled
+                autoComplete="off"/>
+              <input type="hidden" ref="client_id" value={clientInfo.id}/>
+              <label className="mdl-textfield__label" htmlFor="client_id">Client Company</label>
             </div>
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
               <div className={this.formClassNames('description', errors)}>
-                <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" />
+                <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" defaultValue={getApiInfo.description} />
                 <label className="mdl-textfield__label" htmlFor="description">Description *</label>
                 {errors.description && <small className="mdl-textfield__error shown">{errors.description[0]}</small>}
               </div>
             </div>
             <p>Add a description to your API key to allow you to filter by key</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
-              <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" />
+              <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_whitelist ? true : false} />
               <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
             </label>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield full-width">
               <div className={this.formClassNames('ip_addresses', errors)}>
-                <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" ></textarea>
-                <label className="mdl-textfield__label" htmlFor="sample5">Add IP Address...</label>
+                <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" defaultValue={ipAddresses}></textarea>
+                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address...</label>
                 {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
+              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_api_call_restricted ? true : false}/>
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
           {
             permissions  && permissions.map(item => {
+              let getCk = false;
+              for (let i = 0; i < getApiInfo.permissions.length; i++) {
+                if (getApiInfo.permissions[i].api_permission_id == item.id && getApiInfo.permissions[i].value == 1) {
+                  getCk = true;
+                  break;
+                }
+              }
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
                       <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
                         <input
@@ -85,7 +87,8 @@ class ApiAdd extends React.Component {
                           className="mdl-checkbox__input"
                           id={"checkbox-" + item.id}
                           name="chkRights[]"
-                          value={ item.id }
+                          defaultChecked={getCk}
+                          defaultValue={ item.id }
                           onClick={(e) => this.ckPermissions(e)}/>
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
@@ -95,7 +98,7 @@ class ApiAdd extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--1-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
-                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input"/>
+                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_test_key ? true : false}/>
                 <span className="mdl-checkbox__label">Test Key</span>
               </label>
             </div>
@@ -117,7 +120,7 @@ class ApiAdd extends React.Component {
               <div className="flex-order-gt-md-2" >
                 <button id="btn-save"
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e)}>Create API Key</button>
+                  onClick={(e) => this.register(e, getApiInfo.id)}>Update API Key</button>
               </div>
             </div>
       </form>
@@ -130,34 +133,18 @@ class ApiAdd extends React.Component {
       e.target.removeAttribute("checked");
     }
   }
-  selectedCompany ( e, id, companyName ) {
-    this.refs.client_id.value = companyName;
-    this.setState( {
-      client_id: id,
-    } );
-  }
-  searchClient( e ) {
-    let payload = {
-      company_name: this.refs.client_id.value,
-    }
-    this.props.adminClientList(payload);
-  }
-  register ( e ) {
+  register ( e, id ) {
+    e.preventDefault();
     let chkArr =  document.getElementsByName("chkRights[]");
-    let arr = [];
+    let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        arr[k] = chkArr[k].value;
+        permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
+      } else {
+        permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
       }
     }
 
-    let permissions = arr.map(function(obj) {
-       let rObj = {};
-       rObj = {api_permission_id: obj, value: 1};
-       return rObj;
-    });
-
-    e.preventDefault();
     this.setState( {
       loading: true,
       errors: {},
@@ -171,9 +158,9 @@ class ApiAdd extends React.Component {
        rObj = {ip_address: obj.trim()};
        return rObj;
     });
-    console.log('permissions', permissions);
     let payload = {
-      client_id: this.state.client_id,
+      id: id,
+      client_id: this.refs.client_id.value,
       description: this.refs.description.value,
       ip_addresses: ipAddresses,
       permissions: permissions,
@@ -182,9 +169,9 @@ class ApiAdd extends React.Component {
       is_test_key: (this.refs.is_test_key.checked ? 1 : 0)
     };
     window.componentHandler.upgradeDom();
-    return validateRegister.call( this, payload )
+    return validateUpdate.call( this, payload )
       .with( this )
-      .then( registerApi )
+      .then( updateApi )
       .catch( setErrors );
   }
 
@@ -196,9 +183,10 @@ class ApiAdd extends React.Component {
   }
 };
 
-function validateRegister ( payload) {
+function validateUpdate ( payload) {
   let rules = new Checkit( {
-    client_id: { rule: 'required', label: 'comapany name'},
+    id: [],
+    client_id: [],
     description: { rule: 'required', label: 'description'},
     ip_addresses: [],
     is_whitelist: [],
@@ -208,8 +196,8 @@ function validateRegister ( payload) {
     } );
     return rules.run( payload );
 }
-function registerApi (payload) {
-  return this.props.registerApi(payload);
+function updateApi (payload) {
+  return this.props.updateApiKey(payload);
 }
 
 function setErrors( e ) {
@@ -222,8 +210,8 @@ function mapObject(object, callback) {
     });
 }
 
-ApiAdd.mixins = [LinkedStateMixin];
-ApiAdd.defaultProps = {
+ApiUpdate.mixins = [LinkedStateMixin];
+ApiUpdate.defaultProps = {
     errors: []
 };
-export default ApiAdd;
+export default ApiUpdate;

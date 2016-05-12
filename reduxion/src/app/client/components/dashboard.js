@@ -19,6 +19,10 @@ export default class Application extends React.Component {
           <ClientHeader />
           <ClientSidebar />
             <main className="mdl-layout__content">
+              <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
+                <div className="mdl-snackbar__text"></div>
+                <button type="button" className="mdl-snackbar__action"></button>
+              </div>
               <section className="section-api-keys">
                 {this.props.children}
               </section>

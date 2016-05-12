@@ -16,7 +16,12 @@ class LocalLoginForm extends React.Component {
       errors: {}
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' )
+    {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
   render() {
     //debug('render state:', this.state);
     return (

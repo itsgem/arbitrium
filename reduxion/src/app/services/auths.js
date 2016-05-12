@@ -161,7 +161,7 @@ export default {
       }
     });
   },
-  adminUserManagementEdit(payload) {
+  adminUserManagementUpdate(payload) {
     return put('admin/' + payload.id, {
       params: {
         username: payload.username,
@@ -215,7 +215,7 @@ export default {
       }
     });
   },
-  editApiKey(payload) {
+  adminUpdateApiKey(payload) {
     return put('admin/api-key/' + payload.id,{
       params: {
         client_id: payload.client_id,
@@ -313,5 +313,47 @@ export default {
     return get('user/email/cancel-change', {
       params: payload
     });
-  }
+  },
+  clietApiKeys(payload = {page: 1, per_page: 10}) {
+    return get('client/api-key', {
+      params : payload
+    });
+  },
+  clientIsActiveApiKey(payload) {
+    return patch('client/api-key/' + payload.id + "/activate", {
+      params: {
+        is_active: payload.is_active
+      }
+    });
+  },
+  clientRegisterApi(payload) {
+    return post('client/api-key',{
+      params: {
+        name: payload.description,
+        description: payload.description,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
+        permissions: payload.permissions,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
+      }
+    });
+  },
+  clientGetApiKey(id) {
+    return get('client/api-key/' + id);
+  },
+  clientUpdateApiKey(payload) {
+    return put('client/api-key/' + payload.id,{
+      params: {
+        name: payload.description,
+        description: payload.description,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
+        permissions: payload.permissions,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
+        token: 'sample'
+      }
+    });
+  },
 };

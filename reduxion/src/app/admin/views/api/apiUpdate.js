@@ -1,6 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
-import ApiEdit from 'admin/components/api/apiEdit';
+import ApiUpdate from 'admin/components/api/apiUpdate';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -13,8 +13,8 @@ export default React.createClass( {
     this.props.getApiPermission();
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.apiEditSuccess && !nextProps.loading) {
-      $('.msg').html('Client Successfully Added').addClass('bg-green');
+    if (nextProps.apiUpdateSuccess && !nextProps.loading) {
+      $('.msg').html('Client Successfully Updated').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
@@ -40,11 +40,11 @@ export default React.createClass( {
               to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
             <a className="mdl-layout__tab is-active" >VIEW API key<i className="material-icons add">edit</i></a>
           </div>
-          <ApiEdit
+          <ApiUpdate
             getApiInfo={this.props.getApiInfo}
             apiPermissions={this.props.apiPermissions}
             clientProfileSuccess={this.props.clientProfileSuccess}
-            editApiKey={this.props.editApiKey}
+            updateApiKey={this.props.updateApiKey}
           />
         </div>
       );
