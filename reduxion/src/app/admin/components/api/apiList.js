@@ -248,13 +248,14 @@ class ApiList extends React.Component {
     this.refs.description.value = "";
     this.refs.api_key.value = "";
     this.refs.created_at.value = "";
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      api_key: this.refs.api_key.value,
+      key: this.refs.api_key.value,
       date_created: this.refs.created_at.value
     };
     this.props.apiList(payload);
@@ -265,7 +266,7 @@ class ApiList extends React.Component {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
-      api_key: this.refs.api_key.value,
+      key: this.refs.api_key.value,
       date_created: this.refs.created_at.value
     };
     this.props.apiList(payload);

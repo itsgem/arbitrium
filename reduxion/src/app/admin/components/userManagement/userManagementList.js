@@ -241,11 +241,12 @@ class UserManagementList extends React.Component {
     e.preventDefault();
     this.refs.email_address.value = "";
     this.refs.name.value = "";
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       email_address: this.refs.email_address.value,
       name: this.refs.name.value
     };

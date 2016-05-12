@@ -252,12 +252,15 @@ class UserManagementList extends React.Component {
     this.refs.company.value = "";
     this.refs.email_address.value = "";
     this.refs.status.value = "";
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
-      per_page: 10
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
+      company_name: this.refs.company.value,
+      email_address: this.refs.email_address.value,
+      approval_status: this.refs.status.value
     };
     this.props.adminClientList(payload);
   }
