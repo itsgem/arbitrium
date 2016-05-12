@@ -18,11 +18,6 @@ class ClientProfile extends React.Component {
 
     };
   }
-  componentDidMount() {
-    if ( typeof(window.componentHandler) != 'undefined' ) {
-      setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    }
-  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.client.clientInfo) {
       this.setState({
@@ -40,6 +35,9 @@ class ClientProfile extends React.Component {
       this.setState({
         errors: nextProps.errors
       });
+    }
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
   render() {
@@ -82,13 +80,12 @@ class ClientProfile extends React.Component {
 
     let client = this.props.client.clientInfo;
     let status = client.approval_status == 'Pending' ? true : false;
-
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <dialog className="mdl-dialog">
-          <p>Are you sure you want to <label ref="txtNote"></label> this account?<br />This cannot be undone.</p>
+          <p>Are you sure you want to deactivate this account?<br />This cannot be undone.</p>
           <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
             <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
           </div>
         </dialog>
@@ -199,7 +196,7 @@ class ClientProfile extends React.Component {
                         id='btnClientApproval'
                         type='button'
                         className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
-                        onClick={(e) => this.clienActivateStatus(e)}>
+                        onClick={(e) => this.modalConfirm(e)}>
                           <span>Activate </span>
                           <span className="ion-power icon-con"></span>
                       </button>
@@ -643,6 +640,15 @@ class ClientProfile extends React.Component {
   }
 
   // --- Actions
+  activeStatus(e, status) {
+    if (status) {
+      this.clientDeactivateStatus(e);
+    } else {
+      this.clienActivateStatus(e);
+    }
+    let dialog = document.querySelector('dialog');
+    dialog.close();
+  }
 
   changeApprovalStatus (e) {
     e.preventDefault();
@@ -721,7 +727,6 @@ class ClientProfile extends React.Component {
   }
   modalConfirm (e) {
     let dialog = document.querySelector('dialog');
-    //$('dialog label').text(company);
     dialog.showModal();
   }
   modalClose () {
