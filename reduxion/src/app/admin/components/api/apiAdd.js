@@ -15,13 +15,16 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
+    if (errorServer) {
+      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address});
+    }
     let clientList = this.props.clientList.data;
     let permissions = this.props.apiPermissions.data;
     return (
@@ -61,8 +64,11 @@ class ApiAdd extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield full-width">
-              <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" ></textarea>
-              <label className="mdl-textfield__label" htmlFor="sample5">Add IP Address...</label>
+              <div className={this.formClassNames('ip_addresses', errors)}>
+                <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" ></textarea>
+                <label className="mdl-textfield__label" htmlFor="sample5">Add IP Address...</label>
+                {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
+              </div>
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
@@ -127,6 +133,7 @@ class ApiAdd extends React.Component {
     this.setState( {
       client_id: id,
     } );
+    e.target.className = "mystyle";
   }
   searchClient( e ) {
     let payload = {

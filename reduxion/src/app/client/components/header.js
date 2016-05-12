@@ -6,19 +6,11 @@ class ClientHeader extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount () {
-    if ( typeof(window.componentHandler) != 'undefined' )
-    {
+  componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-  }
-
-  // --- Render
-
   render() {
     return (
       <header className="mdl-layout__header">

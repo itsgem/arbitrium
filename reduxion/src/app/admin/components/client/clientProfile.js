@@ -112,8 +112,8 @@ class ClientProfile extends React.Component {
           <div className="mdl-cell mdl-cell--6-col">
             <button
               className={!this.props.validateCompleted || errors.username ?
-                    "mdl-button mdl-button--accent mdl-button--raised" :
-                    "mdl-button mdl-button--accent mdl-button--raised disabled" }
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button disabled" :
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button bg-green" }
               id='check_availability'
               type='button'
               value="disabled"

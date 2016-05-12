@@ -12,7 +12,7 @@ class ApiList extends React.Component {
       errorServer:null,
       id: null
     };  }
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -25,12 +25,7 @@ class ApiList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
         <td width="220" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            {data.is_active &&
-                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
-            }
-            {!data.is_active &&
-                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" onChange={(e) => this.changeActive(e, data.id, data.is_active)}/>
-            }
+            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={data.is_active ? true : false} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
@@ -106,7 +101,7 @@ class ApiList extends React.Component {
     let perPage = 10;
     let apiList = {last_page: 1};
     let users = {};
-    //if (Object.keys(this.props.ListApiSuccess).length) {
+    if (Object.keys(this.props.ListApiSuccess).length) {
       let i=0;
       counter = true;
       apiList = this.props.ListApiSuccess;
@@ -117,7 +112,7 @@ class ApiList extends React.Component {
       }
       pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
       perPage = apiList.per_page;
-    //}
+    }
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -189,7 +184,11 @@ class ApiList extends React.Component {
     );
   }
   changeActive (e, id, status) {
-
+    let payload = {
+      id: id,
+      is_active: (status ? 0 : 1)
+    };
+    this.props.isActiveApiKey(payload);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
@@ -246,17 +245,18 @@ class ApiList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.company.value = "";
-    this.refs.email_address.value = "";
-    this.refs.status.value = "";
-    this.searchList(e);
+    this.refs.description.value = "";
+    this.refs.api_key.value = "";
+    this.refs.created_at.value = "";
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      api_key: this.refs.api_key.value,
-      created_at: this.refs.created_at.value
+      key: this.refs.api_key.value,
+      date_created: this.refs.created_at.value
     };
     this.props.apiList(payload);
   }
@@ -266,8 +266,8 @@ class ApiList extends React.Component {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
-      api_key: this.refs.api_key.value,
-      created_at: this.refs.created_at.value
+      key: this.refs.api_key.value,
+      date_created: this.refs.created_at.value
     };
     this.props.apiList(payload);
   }
