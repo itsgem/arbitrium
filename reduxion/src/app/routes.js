@@ -28,7 +28,7 @@ import AdminUserManagementEdit from 'admin/containers/userManagement/userManagem
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
-import ClientAPI from 'client/components/api';
+import ClientTopPage from 'client/components/main';
 import ClientLogin from 'client/containers/auth/login';
 
 import ClientLogout from 'client/containers/auth/clientLogout';
@@ -40,6 +40,8 @@ import RegistrationComplete from 'client/containers/auth/registrationComplete';
 import ClientProfile from 'client/containers/profile/profile';
 import ClientChangePassword from 'client/containers/profile/changePassword';
 import ClientChangeEmail from 'client/containers/profile/changeEmail';
+
+import ClientApi from 'client/views/api/apiConfig';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
@@ -75,7 +77,7 @@ function requireAuth(nextState, replace, cb) {
     } else {
       localStorage.removeItem(tokenName);
       replace({
-        pathname: "/" + tokenName+ "/login",
+        pathname: "/" + (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
       })
     }
@@ -83,7 +85,7 @@ function requireAuth(nextState, replace, cb) {
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
       localStorage.removeItem(tokenName);
       replace({
-        pathname: "/" + tokenName+ "/login",
+        pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
       })
     }
@@ -134,7 +136,7 @@ export default () => (
     </Route>
 
     <Route name="home" path="i" >
-      <IndexRoute component={ClientAPI} onEnter={requireAuth} />
+      <IndexRoute component={ClientTopPage} onEnter={requireAuth} />
       <Route component={ClientLogin} name="login" path="login"/>
       <Route component={Signup} path="signup"/>
       <Route component={ClientLogout} path="logout" onEnter={requireAuth}/>
@@ -148,7 +150,10 @@ export default () => (
         <Route component={ClientChangePassword} path="profile/change_password" onEnter={requireAuth} />
         <Route component={ClientChangeEmail} path="profile/change_email" onEnter={requireAuth} />
       </Route>
+      <Route path="api" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientApi} onEnter={requireAuth}/>
       </Route>
+    </Route>
     <Route path="*" components={NoMatch} />
   </Route>
 );

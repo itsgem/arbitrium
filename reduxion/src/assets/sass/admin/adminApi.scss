@@ -1,20 +1,10 @@
 
-html{
-  font-size: 87.5%;
-
-  body{
-	 font-size: 14px; font-size: 1rem; line-height: 1;
-	 font-family: 'Roboto Condensed', sans-serif;
-  }
-
-}
-
 // ******************** START HEADER ********************
 
 .body-bg {
-  background: #e9eaed;
+	background: #e9eaed;
 
-  .header-bg{
+	.header-bg{
 	 background: #0e3192;
 	 min-height: 48px;
 
@@ -24,21 +14,21 @@ html{
 		padding: 0px;
 
 		.main-header{
-		  background: none;
-		  height: 48px;
-		  padding: 0px;
+			background: none;
+			height: 48px;
+			padding: 0px;
 
-		  .logo{
+			.logo{
 
 			 img{
 				height: 40px;
 			 }
 
-		  }
+			}
 
 // ******************** START NAVIGATION ********************
 
-		  .nav {
+			.nav {
 			 background: none;
 			 float: right;
 			 width: 1030px;
@@ -48,45 +38,44 @@ html{
 				float: right;
 
 				a{
-				  color: #fff;
-				  font-size: 1rem;
-				  font-weight: 400;
-				  padding: 0px 18px;
+					color: #fff;
+					font-weight: 400;
+					padding: 0px 18px;
 				}
 
 				a:hover{
-				  background: rgba(255,255,255,0.05);
+					background: rgba(255,255,255,0.05);
 				}
 
 				.is-active{
-				  color: #fff;
+					color: #fff;
 				}
 
 				.is-active:after{
-				  background: #ff6600;
+					background: #ff6600;
 				}
 
 				.icon-profile{
-				  position: relative;
-				  top: 50%;
-				  transform: translateY(-50%);
+					position: relative;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 
 			 }
 
-		  }
+			}
 
 // ******************** END NAVIGATION ********************
 
 		}
 	 }
-  }
+	}
 
 // ******************** END HEADER ********************
 
 // ******************** START SECTION-CLIENT-LIST ********************
 
-  .table-list-container{
+	.table-list-container{
 	 padding: 50px 0px 0px 0px;
 	 width: 1200px;
 
@@ -97,12 +86,11 @@ html{
 		width: 1200px;
 
 		a{
-		  color: #fff;
-		  font-size: 1rem;
-		  font-weight: 400;
-		  padding: 0px 18px;
+			color: #fff;
+			font-weight: 400;
+			padding: 0px 18px;
 
-		  i{
+			i{
 
 			 &.add{
 				padding-left: 6px;
@@ -110,15 +98,15 @@ html{
 				top: 40%;
 				transform: translateY(-50%);
 			 }
-		  }
+			}
 		}
 
 		a:hover{
-		  background: rgba(255,255,255,0.05);
+			background: rgba(255,255,255,0.05);
 		}
 
 		.is-active:after{
-		  background: #ff6600 !important;
+			background: #ff6600 !important;
 		}
 
 	 }
@@ -130,113 +118,94 @@ html{
 		width: 1200px;
 
 		p{
-		  font-size: 1rem;
-		  font-weight: 400;
-		  padding: 20px 0px 0px 20px;
-		  margin: 0px;
+			font-weight: 400;
+			padding: 20px 0px 0px 20px;
+			margin: 0px;
 		}
 
 		form{
-		  margin-bottom: 0px;
+			margin-bottom: 0px;
 		}
 
 		.filter-search-bar{
-		  list-style: none;
-		  padding: 0px 12px 0px 12px;
+			list-style: none;
+			padding: 0px 12px 0px 12px;
 
-		  .search-cta{
+			.search-cta{
 			 text-align: right;
 
 			 .mdl-button--accent{
 				background: #ff6600;
-				font-family: 'Roboto Condensed', sans-serif;
-				font-size: 1rem;
 				font-weight: 400;
 				margin-right: 16px;
 
 			 }
 
 			 .mdl-button--raised{
-				font-family: 'Roboto Condensed', sans-serif;
-				font-size: 1rem;
 				font-weight: 400;
 			 }
 
-		  }
+			}
 
 		}
 
 	 }
 
-	 .table-list{
-		width:100%;
+.table-list{
+	width:100%;
+	border: 0;
+
+	thead {
+		tr{
+			background: #e3ecf5;
+
+			th {
+				font-weight: 700;
+			}
+		}
+	}
+
+	tbody {
 		border: 0px;
 
-		thead{
+		tr {
+		 	background: #fbfeff;
 
-		  tr{
-			 background: #e3ecf5;
+			&:hover{
+				background-color: #f0f5fa;
+			}
 
-			 th{
-				font-size: 1.142857143rem;
-				font-weight: 700;
-			 }
-
-		  }
-
-		}
-
-		tbody{
-		  border: 0px;
-
-		  tr{
-			 background: #fbfeff;
+			&:nth-child(odd) {
+				background-color: #f5fafe;
 
 				&:hover{
-				  background-color: #f0f5fa;
+					background-color: #f0f5fa;
 				}
+			}
 
-			 &:nth-child(odd) {
-			  background-color: #f5fafe;
-
-				&:hover{
-				  background-color: #f0f5fa;
-				}
-
-			 }
-
-			 td{
+			td {
 				border: 0px;
 
-				span{
-				  font-size: 1rem;
+				.switch {
+					width: 70%;
 				}
 
-				.switch{
-				  width: 70%;
+				.btn-view-edit {
+					background: #ff6600;
+					margin-right: 6px;
 				}
 
-				.btn-view-edit{
-				  background: #ff6600;
-				  margin-right: 6px;
-
-				}
-
-				.btn-delete{
-				  background: #ff4a4a;
+				.btn-delete {
+					background: #ff4a4a;
 				}
 
 				&.api-col-action{
-				  width: 220px;
+					width: 220px;
 				}
-
-			 }
-
-		  }
-
+			}
 		}
-
-	 }
+	}
+}
 
 	 .pagination {
 		align-items: center;
@@ -246,90 +215,86 @@ html{
 		text-align: center;
 
 		.btn-paginate-active{
-		  background: #fff;
-		  color: #ff6600;
-		  font-size: 1rem;
-		  font-weight: 400;
-		  margin: 4px;
+			background: #fff;
+			color: #ff6600;
+
+			font-weight: 400;
+			margin: 4px;
 		}
 
 		.btn-paginate-normal{
-		  background: #ff6600;
-		  font-size: 1rem;
-		  font-weight: 400;
-		  margin: 4px;
+			background: #ff6600;
+			font-weight: 400;
+			margin: 4px;
 		}
 
 		.btn-paginate-disabled{
-		  background: #0d2c81;
-		  cursor: not-allowed;
-		  font-size: 1rem;
-		  font-weight: 400;
-		  margin: 4px;
+			background: #0d2c81;
+			cursor: not-allowed;
+			font-weight: 400;
+			margin: 4px;
 		}
 
 		.btn-paginate-blue{
 			background: #0e3192;
-			font-size: 1rem;
 			font-weight: 400;
 			margin: 4px;
 		}
 
 		.btn-paginate-items-per-page{
 			background: #ff6600;
-			font-size: 1rem;
 			font-weight: 400;
 			float: right;
 			margin-right: 10px;
 		}
 	 }
-  }
+	}
 }
 
 .form-container {
 
-  background: #fff;
-  margin-bottom: 0px;
-  width: 1200px;
+	background: #fff;
+	margin-bottom: 0px;
+	width: 1200px;
 
-  .mdl-grid {
+	.mdl-grid {
 	 padding: 20px;
 
 	 .mdl-cell--12-col{
 
 		.full-width{
-		  width: 100%;
+			width: 100%;
 		}
 
 		.padding-bot{
-		  padding-bottom: 60px;
+			padding-bottom: 60px;
 		}
 
 		p {
-		  color: #969896;
-		  font-weight: 300;
+			color: #969896;
+			font-weight: 300;
 		}
 
 		.check-test-key {
-		  padding-top: 40px;
+			padding-top: 40px;
 		}
 
 
 
 		.mdl-button--accent {
-		  background: #ff6600;
-		  font-weight: 400;
-		  margin-right: 16px;
+			background: #ff6600;
+			font-weight: 400;
+			margin-right: 16px;
 		}
 
 	 }
 
-  }
+	}
 
-  .cta {
+	.cta {
 	 padding-top: 20px;
 	 padding-left: 868px;
-  }
+	}
 
 }
 // ******************** END SECTION-CLIENT-LIST ********************

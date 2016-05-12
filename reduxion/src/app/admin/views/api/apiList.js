@@ -32,6 +32,7 @@ export default React.createClass( {
         <ApiList
           ListApiSuccess={this.props.ListApiSuccess}
           apiList={this.props.apiList}
+          isActiveApiKey={this.props.isActiveApiKey}
           />
       </div>
     );
