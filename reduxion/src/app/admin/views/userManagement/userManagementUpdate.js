@@ -22,11 +22,18 @@ export default React.createClass( {
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.adminUpdate && !nextProps.loading) {
-      $('.msg').html('Client Successfully Updated').addClass('bg-green');
+      $('.msg').html('User Successfully Updated').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
       this.context.router.push('/coffee/account');
+    }
+    if (nextProps.adminUnlockSuccess && !nextProps.loading) {
+      $('.msg').html('User Successfully Unlocked').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.props.getAdminInfo(this.props.params.id);
     }
   },
   renderAdminInfo() {
@@ -51,6 +58,7 @@ export default React.createClass( {
           validateCompleted={this.props.validateCompleted}
           adminUpdate={this.props.adminUpdate}
           role={this.props.role}
+          adminUnlock={this.props.adminUnlock}
           />
       </div>
     );

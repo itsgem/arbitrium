@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import { createReducer } from 'redux-act';
 import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
+import user from 'services/user';
 
 export const adminUserManagementList = createActionAsync('ADMIN_USER_MANAGEMENT_LIST', auth.adminUserManagementList);
 export const adminUserManagementAdd = createActionAsync('ADMIN_USER_MANAGEMENT_ADD', auth.adminUserManagementAdd);
@@ -10,6 +11,7 @@ export const adminUserManagementUpdate = createActionAsync('ADMIN_USER_MANAGEMEN
 export const deleteAdminAccount = createActionAsync('ADMIN_USER_MANAGEMENT_DELETE', auth.deleteAdminAccount);
 export const getAdminInfo = createActionAsync('GET_ADMIN_INFO', auth.getAdminInfo);
 export const listRoleAdmin = createActionAsync('LIST_ROLE_ADMIN', auth.listRoleAdmin);
+export const adminUnlock = createActionAsync('ADMIN_USER_UNLOCK', user.clientUnlock);
 
 export const validateUsername = createActionAsync('CHECK_USERNAME', auth.validateUsername);
 
@@ -23,7 +25,8 @@ const initialState = Immutable.fromJS({
   registerCompleted: false,
   deleteSuccess: false,
   loading: false,
-  validateCompleted: false
+  validateCompleted: false,
+  adminUnlockSuccess: false
 });
 
 export default createReducer({
@@ -68,12 +71,14 @@ export default createReducer({
     adminInfo: payload,
     registerCompleted: false,
     adminUpdate: false,
-    loading: false}),
+    loading: false,
+    adminUnlockSuccess: false}),
   [getAdminInfo.request]: (state, payload) => state.merge({
     loading: true,
     registerCompleted: false,
     adminUpdate: false,
-    loading: true}),
+    loading: true,
+    adminUnlockSuccess: false}),
   [adminUserManagementUpdate.ok]: (state) => state.merge({
     adminUpdate: true,
     loading: false}),
@@ -83,4 +88,6 @@ export default createReducer({
   [validateUsername.ok]: (state) => state.merge({validateCompleted: true}),
   [validateUsername.request]: (state) => state.merge({validateCompleted: false}),
   [validateUsername.error]: (state) => state.merge({validateCompleted: false}),
+  [adminUnlock.ok]: (state) => state.merge({adminUnlockSuccess: true, loading: false}),
+  [adminUnlock.request]: (state) => state.merge({adminUnlockSuccess: false, loading: true})
 }, initialState);
