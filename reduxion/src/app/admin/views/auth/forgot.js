@@ -144,7 +144,6 @@ export default React.createClass( {
           <p>
             Please also check your spam folder just in case the reset email ended up there.
           </p>
-          <p>This page can be safely closed.</p>
       </div>
     );
   },
