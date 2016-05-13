@@ -1,6 +1,7 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import LocalSignupForm from 'client/components/auth/localSignupForm';
+import { Link } from 'react-router';
 
 export default React.createClass( {
   contextTypes: {
@@ -22,15 +23,22 @@ export default React.createClass( {
           title="Register"
         />
         { this.props.registerCompleted && this.renderRegisterComplete() }
-        { this.renderRegisterForm() }
+        { !this.props.registerCompleted && this.renderRegisterForm() }
       </div>
     );
   },
   renderRegisterComplete(){
-    setTimeout(this.toLogin, 3000);
-  },
-  toLogin() {
-    this.context.router.push('/i/login');
+    return (
+        <div className="local-signup-form">
+          <div id="success-box" className="local-signin-form login-frame">
+            <p>A confirmation email has been sent. Click on the link to verify your email address and activate your account.</p>
+            <Link
+                className=''
+                id='btn-signup'
+                to="/i/login">Back to Login.</Link>
+          </div>
+        </div>
+    );
   },
   renderRegisterForm(){
     let countryList = this.props.countryList;
