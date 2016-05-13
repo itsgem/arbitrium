@@ -73,8 +73,7 @@ class LocalAuthenticationForm extends React.Component {
     } );
   }
   toLogin(e) {
-    let {email, password} = this.refs;
-    if ((e.which == 13 || e.keyCode == 13) && email.value && password.value) {
+    if (e.which == 13 || e.keyCode == 13) {
       this.login(e);
     }
   }

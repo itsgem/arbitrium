@@ -20,10 +20,10 @@ class ApiList extends React.Component {
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
-        <td width="250" className="mdl-data-table__cell--non-numeric">
+        <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={data.is_active ? true : false} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
             <span className="mdl-switch__label">On / Off</span>
@@ -132,7 +132,7 @@ class ApiList extends React.Component {
             <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
           </div>
         </dialog>
-        <table className="mdl-data-table mdl-js-data-table table-client-list">
+        <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
               <th className="mdl-data-table__cell--non-numeric">Description</th>
