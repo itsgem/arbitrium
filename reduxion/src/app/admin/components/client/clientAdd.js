@@ -207,7 +207,7 @@ class ClientAdd extends React.Component {
               <legend>Mobile Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>Telephone Number</legend>
+              <legend>Phone Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('rep_mobile_code', errors)}>
@@ -335,7 +335,7 @@ class ClientAdd extends React.Component {
               <legend>Mobile Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>Telephone Number</legend>
+              <legend>Phone Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('alt_mobile_code', errors)}>
