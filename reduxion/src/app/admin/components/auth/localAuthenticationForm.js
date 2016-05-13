@@ -33,7 +33,7 @@ class LocalAuthenticationForm extends React.Component {
               ref="email"
               onKeyPress={(e) => this.toLogin(e)}
               />
-            <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
+            <label className="mdl-textfield__label" htmlFor="email">{tr.t('email_or_username')}</label>
             {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
           </div>
 
