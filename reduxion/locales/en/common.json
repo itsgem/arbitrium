@@ -2,6 +2,7 @@
   "login": "Login",
   "logout": "Logout",
   "email": "Email",
+  "email_or_username": "Email / Username",
   "username": "Username",
   "password": "Password",
   "forgotPassword": "Forgot Password",
