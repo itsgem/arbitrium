@@ -46,7 +46,7 @@ class ClientsController extends ApiController
      * @SWG\Get(
      *     path="/client/profile",
      *     tags={"Clients"},
-     *     summary="Client - My Profile",
+     *     summary="My Profile",
      *     description="Get authenticated client profile",
      *     @SWG\Response(response="200", description="Success",
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},

@@ -11,40 +11,75 @@ use App\User;
 /**
  * Class Client
  *
- * @SWG\Definition(definition="ClientProfileResponse", required={"id", "credit_balance", "approval_status", "company_name", "street_address_1", "city", "country_id", "postal_code", "rep_first_name", "rep_last_name", "rep_email_address", "rep_gender", "rep_position", "rep_department", "can_delete"})
- * @SWG\Property(property="id", type="integer", format="int64", description="Client ID", default="2")
- * @SWG\Property(property="credit_balance", type="integer", format="int64", description="Credit Balance", default="0")
- * @SWG\Property(property="approval_status", type="string", description="Approval Status", default="Approved")
- * @SWG\Property(property="approved_at", type="string", description="Date Approved", default="null")
- * @SWG\Property(property="disapproved_at", type="string", description="Date Disapproved", default="null")
- * @SWG\Property(property="company_name", type="string", description="Company Name", default="ABC")
- * @SWG\Property(property="street_address_1", type="string", description="Street Address Line 1", default="Mabolo")
- * @SWG\Property(property="street_address_2", type="string", description="Street Address Line 2", default="null")
- * @SWG\Property(property="city", type="string", description="City Address", default="Cebu")
- * @SWG\Property(property="state", type="string", description="State Address", default="null")
- * @SWG\Property(property="country_id", type="integer", format="int64", description="Country Address", default="175")
- * @SWG\Property(property="postal_code", type="string", description="Postal Code Address", default="6000")
- * @SWG\Property(property="rep_first_name", type="string", description="Representative First Name", default="John")
- * @SWG\Property(property="rep_last_name", type="string", description="Representative Last Name", default="Doe")
- * @SWG\Property(property="rep_email_address", type="string", description="Representative Email Address", default="contact")
- * @SWG\Property(property="rep_gender", type="string", description="Representative Gender", default="Male")
- * @SWG\Property(property="rep_mobile_code", type="string", description="Representative Mobile Code", default="null")
- * @SWG\Property(property="rep_mobile_number", type="string", description="Representative Mobile Number", default="null")
- * @SWG\Property(property="rep_phone_code", type="string", description="Representative Phone Code", default="null")
- * @SWG\Property(property="rep_phone_number", type="string", description="Representative Phone Number", default="null")
- * @SWG\Property(property="rep_position", type="string", description="Representative Position", default="CEO")
- * @SWG\Property(property="rep_department", type="string", description="Representative Department", default="IT")
- * @SWG\Property(property="alt_first_name", type="string", description="Alternative First Name", default="null")
- * @SWG\Property(property="alt_last_name", type="string", description="Alternative Last Name", default="null")
- * @SWG\Property(property="alt_email_address", type="string", description="Alternative Email Address", default="null")
- * @SWG\Property(property="alt_gender", type="string", description="Alternative Gender", default="null")
- * @SWG\Property(property="alt_mobile_code", type="string", description="Alternative Mobile Code", default="null")
- * @SWG\Property(property="alt_mobile_number", type="string", description="Alternative Mobile Number", default="null")
- * @SWG\Property(property="alt_phone_code", type="string", description="Alternative Phone Code", default="null")
- * @SWG\Property(property="alt_phone_number", type="string", description="Alternative Phone Number", default="null")
- * @SWG\Property(property="alt_position", type="string", description="Alternative Position", default="null")
- * @SWG\Property(property="alt_department", type="string", description="Alternative Department", default="null")
- * @SWG\Property(property="can_delete", type="string", description="Can user delete", default="false")
+ * @SWG\Definition(
+ *     definition="ClientProfile",
+ *     required={"company_name", "street_address_1", "city", "country_id", "postal_code", "rep_first_name", "rep_last_name", "rep_email_address", "rep_gender", "rep_position", "rep_department"},
+ *     @SWG\Property(property="company_name", type="string", description="Company Name", default="ABC"),
+ *     @SWG\Property(property="street_address_1", type="string", description="Street Address Line 1", default="Mabolo"),
+ *     @SWG\Property(property="street_address_2", type="string", description="Street Address Line 2", default="null"),
+ *     @SWG\Property(property="city", type="string", description="City Address", default="Cebu"),
+ *     @SWG\Property(property="state", type="string", description="State Address", default="null"),
+ *     @SWG\Property(property="country_id", type="integer", format="int64", description="Country Address", default="175"),
+ *     @SWG\Property(property="postal_code", type="string", description="Postal Code Address", default="6000"),
+ *     @SWG\Property(property="rep_first_name", type="string", description="Representative First Name", default="John"),
+ *     @SWG\Property(property="rep_last_name", type="string", description="Representative Last Name", default="Doe"),
+ *     @SWG\Property(property="rep_email_address", type="string", description="Representative Email Address", default="contact"),
+ *     @SWG\Property(property="rep_gender", type="string", description="Representative Gender", default="Male"),
+ *     @SWG\Property(property="rep_mobile_code", type="string", description="Representative Mobile Code", default="null"),
+ *     @SWG\Property(property="rep_mobile_number", type="string", description="Representative Mobile Number", default="null"),
+ *     @SWG\Property(property="rep_phone_code", type="string", description="Representative Phone Code", default="null"),
+ *     @SWG\Property(property="rep_phone_number", type="string", description="Representative Phone Number", default="null"),
+ *     @SWG\Property(property="rep_position", type="string", description="Representative Position", default="CEO"),
+ *     @SWG\Property(property="rep_department", type="string", description="Representative Department", default="IT"),
+ *     @SWG\Property(property="alt_first_name", type="string", description="Alternative First Name", default="null"),
+ *     @SWG\Property(property="alt_last_name", type="string", description="Alternative Last Name", default="null"),
+ *     @SWG\Property(property="alt_email_address", type="string", description="Alternative Email Address", default="null"),
+ *     @SWG\Property(property="alt_gender", type="string", description="Alternative Gender", default="null"),
+ *     @SWG\Property(property="alt_mobile_code", type="string", description="Alternative Mobile Code", default="null"),
+ *     @SWG\Property(property="alt_mobile_number", type="string", description="Alternative Mobile Number", default="null"),
+ *     @SWG\Property(property="alt_phone_code", type="string", description="Alternative Phone Code", default="null"),
+ *     @SWG\Property(property="alt_phone_number", type="string", description="Alternative Phone Number", default="null"),
+ *     @SWG\Property(property="alt_position", type="string", description="Alternative Position", default="null"),
+ *     @SWG\Property(property="alt_department", type="string", description="Alternative Department", default="null")
+ * )
+ *
+ * @SWG\Definition(
+ *     definition="ClientProfileResponse",
+ *     required={"id", "credit_balance", "approval_status", "company_name", "street_address_1", "city", "country_id", "postal_code", "rep_first_name", "rep_last_name", "rep_email_address", "rep_gender", "rep_position", "rep_department", "can_delete"},
+ *     @SWG\Property(property="id", type="integer", format="int64", description="Client ID", default="2"),
+ *     @SWG\Property(property="credit_balance", type="integer", format="int64", description="Credit Balance", default="0"),
+ *     @SWG\Property(property="approval_status", type="string", description="Approval Status", default="Approved"),
+ *     @SWG\Property(property="approved_at", type="string", description="Date Approved", default="null"),
+ *     @SWG\Property(property="disapproved_at", type="string", description="Date Disapproved", default="null"),
+ *     @SWG\Property(property="company_name", type="string", description="Company Name", default="ABC"),
+ *     @SWG\Property(property="street_address_1", type="string", description="Street Address Line 1", default="Mabolo"),
+ *     @SWG\Property(property="street_address_2", type="string", description="Street Address Line 2", default="null"),
+ *     @SWG\Property(property="city", type="string", description="City Address", default="Cebu"),
+ *     @SWG\Property(property="state", type="string", description="State Address", default="null"),
+ *     @SWG\Property(property="country_id", type="integer", format="int64", description="Country Address", default="175"),
+ *     @SWG\Property(property="postal_code", type="string", description="Postal Code Address", default="6000"),
+ *     @SWG\Property(property="rep_first_name", type="string", description="Representative First Name", default="John"),
+ *     @SWG\Property(property="rep_last_name", type="string", description="Representative Last Name", default="Doe"),
+ *     @SWG\Property(property="rep_email_address", type="string", description="Representative Email Address", default="contact"),
+ *     @SWG\Property(property="rep_gender", type="string", description="Representative Gender", default="Male"),
+ *     @SWG\Property(property="rep_mobile_code", type="string", description="Representative Mobile Code", default="null"),
+ *     @SWG\Property(property="rep_mobile_number", type="string", description="Representative Mobile Number", default="null"),
+ *     @SWG\Property(property="rep_phone_code", type="string", description="Representative Phone Code", default="null"),
+ *     @SWG\Property(property="rep_phone_number", type="string", description="Representative Phone Number", default="null"),
+ *     @SWG\Property(property="rep_position", type="string", description="Representative Position", default="CEO"),
+ *     @SWG\Property(property="rep_department", type="string", description="Representative Department", default="IT"),
+ *     @SWG\Property(property="alt_first_name", type="string", description="Alternative First Name", default="null"),
+ *     @SWG\Property(property="alt_last_name", type="string", description="Alternative Last Name", default="null"),
+ *     @SWG\Property(property="alt_email_address", type="string", description="Alternative Email Address", default="null"),
+ *     @SWG\Property(property="alt_gender", type="string", description="Alternative Gender", default="null"),
+ *     @SWG\Property(property="alt_mobile_code", type="string", description="Alternative Mobile Code", default="null"),
+ *     @SWG\Property(property="alt_mobile_number", type="string", description="Alternative Mobile Number", default="null"),
+ *     @SWG\Property(property="alt_phone_code", type="string", description="Alternative Phone Code", default="null"),
+ *     @SWG\Property(property="alt_phone_number", type="string", description="Alternative Phone Number", default="null"),
+ *     @SWG\Property(property="alt_position", type="string", description="Alternative Position", default="null"),
+ *     @SWG\Property(property="alt_department", type="string", description="Alternative Department", default="null"),
+ *     @SWG\Property(property="can_delete", type="string", description="Can user delete", default="false")
+ * )
  *
  * @package App\Models
  */
