@@ -22,7 +22,7 @@ export default React.createClass( {
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.adminUpdate && !nextProps.loading) {
-      $('.msg').html('User Successfully Updated').addClass('bg-green');
+      $('.msg').html('Admin User Successfully Updated').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
