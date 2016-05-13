@@ -39,13 +39,13 @@ class LocalSignupForm extends React.Component {
   }
 
   render() {
-    if (this.props.registerCompleted) {
-      let notification = document.querySelector('.mdl-snackbar');
-      notification.MaterialSnackbar.showSnackbar( {
-        message: 'A confirmation email has been sent. Click on the link to verify your email address and activate your account.',
-        timeout: 3000
-      });
-    }
+    // if (this.props.registerCompleted) {
+    //   let notification = document.querySelector('.mdl-snackbar');
+    //   notification.MaterialSnackbar.showSnackbar( {
+    //     message: 'A confirmation email has been sent. Click on the link to verify your email address and activate your account.',
+    //     timeout: 3000
+    //   });
+    // }
 
     return (
       <div className="local-signup-form">
