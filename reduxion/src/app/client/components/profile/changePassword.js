@@ -106,7 +106,7 @@ class ClientChangePassword extends React.Component {
               </div>
             </div>
           </div>
-          <div className="mdl-button-group">
+          <div className="mdl-button-group padding-15">
             <button
               className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
               type="submit"
