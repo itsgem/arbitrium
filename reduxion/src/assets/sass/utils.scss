@@ -93,9 +93,43 @@
   background-color: #ffccbc !important;
   transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
 }
-.mdl-layout__inner-container {
+/*.mdl-layout__inner-container {
   display: inline-table;
-}
+}*/
 .mdl-layout{
   display: inline-table;
 }
+.dialog-box {
+  position: fixed;
+  background-color: #000;
+  top: 0;
+  left: 0;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  display: none;
+  z-index: 100;
+}
+.dialog-content{
+  position: fixed;
+  display: none;
+  z-index: 200;
+  top: 0;
+  left: 0;
+}
+.dialog-inner{
+  position: relative;
+  top: 35%;
+}
+.msg-box{
+  background-color: #fff;
+  color: #000;
+  width: 370px;
+  padding: 20px 20px 0px 20px;
+  margin: auto;
+  border-radius: 3px;
+  text-align: center;
+}
+
+
+
+

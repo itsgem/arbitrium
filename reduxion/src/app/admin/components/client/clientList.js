@@ -117,14 +117,19 @@ class UserManagementList extends React.Component {
     }
     return (
       <div className="filter-search">
-        <p>Filter / Search</p>
-        <dialog className="mdl-dialog">
-          <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+              <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </div>
+        <p>Filter / Search</p>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
@@ -236,16 +241,16 @@ class UserManagementList extends React.Component {
     this.page(e, currentPage);
   }
   modalConfirm (e, id, company) {
-    let dialog = document.querySelector('dialog');
-    $('dialog label').text(company);
-    dialog.showModal();
+    document.querySelector('.dialog-box').style.display = 'block';
+    document.querySelector('.msg-box p label').innerHTML = company;
+    document.querySelector('.dialog-content').style.display = 'block';
     this.setState( {
       id: id
     } );
   }
   modalClose () {
-    let dialog = document.querySelector('dialog');
-    dialog.close();
+    document.querySelector('.dialog-box').style.display = 'none';
+    document.querySelector('.dialog-content').style.display = 'none';
   }
   clearSearch(e) {
     e.preventDefault();
@@ -276,7 +281,7 @@ class UserManagementList extends React.Component {
     this.props.adminClientList(payload);
   }
   deleteItem () {
-    let dialog = document.querySelector('dialog');
+    this.modalClose();
     this.setState( {
       loading: true,
       errors: {},
@@ -286,7 +291,6 @@ class UserManagementList extends React.Component {
     $('.msg').fadeIn(1000, function() {
       $(this).fadeOut(2000);
     });
-    this.modalClose();
     this.props.adminclientDelete(this.state.id);
   }
 

@@ -2,6 +2,36 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default React.createClass( {
+
+  componentDidMount() {
+    function resize() { 
+      if ( typeof(window.componentHandler) != 'undefined' ) {
+        setTimeout(() => {window.componentHandler.upgradeDom()},10);
+      }
+      let myWidth = 0, myHeight = 0;
+      if( typeof( window.innerWidth ) == 'number' ) {
+        //Non-IE
+        myWidth = window.innerWidth;
+        myHeight = window.innerHeight;
+      } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+        //IE 6+ in 'standards compliant mode'
+        myWidth = document.documentElement.clientWidth;
+        myHeight = document.documentElement.clientHeight;
+      } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+        //IE 4 compatible
+        myWidth = document.body.clientWidth;
+        myHeight = document.body.clientHeight;
+      }
+      let dialogBox = document.querySelector(".dialog-box");
+      let dialogContent = document.querySelector(".dialog-content");
+      dialogBox.style.height = myHeight + "px";
+      dialogBox.style.width = myWidth + "px";
+      dialogContent.style.height = myHeight + "px";
+      dialogContent.style.width = myWidth + "px";
+    }
+    resize();
+    window.onresize = resize;
+  },
   render() {
     return (
       <header className="mdl-layout__header header-bg">
@@ -61,5 +91,5 @@ export default React.createClass( {
         <div className="msg">Success message</div>
       </header>
     );
-  }
+  },
 } );
