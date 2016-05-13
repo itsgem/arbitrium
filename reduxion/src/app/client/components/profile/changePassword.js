@@ -137,10 +137,9 @@ class ClientChangePassword extends React.Component {
     this.refs.current_password.value = '';
     this.refs.password.value = '';
     this.refs.password_confirmation.value = '';
-    for (var item of document.querySelectorAll('.is-dirty')) {
+    for (let item of document.querySelectorAll('.is-dirty')) {
         item.classList.remove('is-dirty');
     }
-    
   }
   renderError() {
     let error = this.state.errorServer;
