@@ -366,18 +366,47 @@ html{
   width: 1200px;
   padding: 0px;
 
-    .content{
-      padding: 20px;
+  .content{
+    padding: 20px;
 
-      // .subscription-type{
-      //   width:1160px;
-      //
-      //   .test{
-      //
-      //   }
-      // }
+    .subscription-type{
+      @extend .table-list;
+
+      th{
+        text-align: center;
+      }
+
+      td{
+        text-align: center;
+
+        i{
+
+          &.check{
+            color: #6abf3c;
+          }
+        }
+      }
     }
+  }
 }
+
+.arb-demo{
+
+  &.mdl-list{
+
+    padding: 46px 0px 0px 0px;
+
+    .mdl-list__item{
+      letter-spacing: 0px;
+
+      .mdl-list__item-primary-content{
+        display: block;
+        text-align: right;
+      }
+    }
+  }
+}
+
 // ******************** END SECTION-CLIENT-LIST ********************
 
 // ******************** START FOOTER ********************
