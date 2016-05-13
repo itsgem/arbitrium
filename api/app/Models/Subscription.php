@@ -17,7 +17,7 @@ class Subscription extends NrbModel
 
     protected $table = 'subscriptions';
 
-    protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['country', 'country_id', 'created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $dates = [];
 
@@ -27,7 +27,13 @@ class Subscription extends NrbModel
         'created_by', 'updated_by'
     ];
 
-    protected $appends = ['total'];
+    protected $appends = ['total', 'currency'];
+
+    //---------- relationships
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 
     //---------- scopes
     public function scopeName($query, $name)
@@ -50,6 +56,11 @@ class Subscription extends NrbModel
     public function getTotalAttribute()
     {
         return $this->calculateTotal();
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return $this->country->currency_code;
     }
 
     //---------- helpers
