@@ -14,7 +14,7 @@ export default React.createClass( {
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {
-      $('.msg').html('Client Successfully Updated').addClass('bg-green');
+      $('.msg').html('API Key Successfully Updated').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });

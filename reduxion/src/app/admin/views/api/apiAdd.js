@@ -12,7 +12,7 @@ export default React.createClass( {
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.registerApiSuccess && !nextProps.loading) {
-      $('.msg').html('Client Successfully Added').addClass('bg-green');
+      $('.msg').html('API Key Successfully Added').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
