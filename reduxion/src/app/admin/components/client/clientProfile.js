@@ -83,7 +83,7 @@ class ClientProfile extends React.Component {
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
         <dialog className="mdl-dialog">
-          <p>Are you sure you want to deactivate this account?<br />This cannot be undone.</p>
+          <p>Are you sure you want to {client.user.activated_at ? 'deactivate' : 'activate'} this account?<br />This cannot be undone.</p>
           <div className="mdl-dialog__actions">
             <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
             <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
