@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Subscription;
 
 class SubscriptionsSeeder extends Seeder
 {
@@ -11,12 +12,14 @@ class SubscriptionsSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement("SET FOREIGN_KEY_CHECKS = 0");
+
         DB::table('subscriptions')->truncate();
 
         $data = [
             [
                 'name'                    => 'Trial',
-                'type'                    => 'trial',
+                'type'                    => Subscription::TYPE_TRIAL,
                 'country_id'              => 202,
                 'fee_monthly'             => 0,
                 'fee_monthly_maintenance' => 0,
@@ -27,12 +30,14 @@ class SubscriptionsSeeder extends Seeder
                 'max_api_calls'           => 10,
                 'max_decisions'           => 10,
                 'discounts'               => 0,
+                'created_by'              => 1,
+                'updated_by'              => 1,
                 'created_at'              => current_datetime(),
                 'updated_at'              => current_datetime(),
             ],
             [
                 'name'                    => 'Basic',
-                'type'                    => 'plan',
+                'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 20,
                 'fee_monthly_maintenance' => 12,
@@ -43,12 +48,14 @@ class SubscriptionsSeeder extends Seeder
                 'max_api_calls'           => 50,
                 'max_decisions'           => 50,
                 'discounts'               => 5,
+                'created_by'              => 1,
+                'updated_by'              => 1,
                 'created_at'              => current_datetime(),
                 'updated_at'              => current_datetime(),
             ],
             [
                 'name'                    => 'Standard',
-                'type'                    => 'plan',
+                'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 40,
                 'fee_monthly_maintenance' => 40,
@@ -59,12 +66,14 @@ class SubscriptionsSeeder extends Seeder
                 'max_api_calls'           => 100,
                 'max_decisions'           => 100,
                 'discounts'               => 6,
+                'created_by'              => 1,
+                'updated_by'              => 1,
                 'created_at'              => current_datetime(),
                 'updated_at'              => current_datetime(),
             ],
             [
                 'name'                    => 'Business',
-                'type'                    => 'plan',
+                'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 60,
                 'fee_monthly_maintenance' => 50,
@@ -75,12 +84,14 @@ class SubscriptionsSeeder extends Seeder
                 'max_api_calls'           => 150,
                 'max_decisions'           => 150,
                 'discounts'               => 7,
+                'created_by'              => 1,
+                'updated_by'              => 1,
                 'created_at'              => current_datetime(),
                 'updated_at'              => current_datetime(),
             ],
             [
                 'name'                    => 'Premium',
-                'type'                    => 'plan',
+                'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 80,
                 'fee_monthly_maintenance' => 80,
@@ -91,11 +102,15 @@ class SubscriptionsSeeder extends Seeder
                 'max_api_calls'           => 10,
                 'max_decisions'           => 10,
                 'discounts'               => 8,
+                'created_by'              => 1,
+                'updated_by'              => 1,
                 'created_at'              => current_datetime(),
                 'updated_at'              => current_datetime(),
             ],
         ];
 
         DB::table('subscriptions')->insert($data);
+
+        DB::statement("SET FOREIGN_KEY_CHECKS = 1");
     }
 }

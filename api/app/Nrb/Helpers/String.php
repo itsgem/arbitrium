@@ -43,3 +43,13 @@ function str_to_slug($string)
 {
     return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $string)));
 }
+
+function get_regex_money()
+{
+    return '/^[0-9]+(?:\.[0-9]{2}){0,1}$/';
+}
+
+function money_format($num)
+{
+    return number_format($num, 2);
+}

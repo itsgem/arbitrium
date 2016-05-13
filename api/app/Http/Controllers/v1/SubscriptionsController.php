@@ -21,4 +21,9 @@ class SubscriptionsController extends ApiController
     {
         return $service->index();
     }
+
+    public function show($id, SubscriptionServices $service)
+    {
+        return $service->show($id);
+    }
 }
