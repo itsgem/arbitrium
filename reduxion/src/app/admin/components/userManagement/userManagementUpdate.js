@@ -162,20 +162,38 @@ class UserManagementUpdate extends React.Component {
             </div>
 
           </div>
-          <div className="layout-gt-md-row layout-align-end-end btn">
-            <div className="flex-order-gt-md-2 pd-10">
-              <Link
-                className="mdl-button mdl-js-button mdl-button--colored"
-                id='btn-cancel'
-                to="/coffee/account/"
-                >CANCEL</Link>
+          <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--6-col">
+              {
+                userInfo.get('user').get("locked_at")?
+                  <button
+                    id='btnClientApproval'
+                    type='button'
+                    className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
+                    onClick={(e) => this.adminUnlock(e, userInfo.get("user").get("id"))}>
+                      <span>Unlock </span>
+                      <span className="ion-unlocked icon-con"></span>
+                  </button>
+                : null
+              }
             </div>
-            <div className="flex-order-gt-md-2">
-              <button
-                className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                id='btn-save'
-                type='button'
-                onClick={(e) => this.update(e, userInfo.get("id"))}>UPDATE</button>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className="layout-gt-md-row layout-align-end-end btn">
+                <div className="flex-order-gt-md-2 pd-10">
+                  <Link
+                    className="mdl-button mdl-js-button mdl-button--colored"
+                    id='btn-cancel'
+                    to="/coffee/account/"
+                    >CANCEL</Link>
+                </div>
+                <div className="flex-order-gt-md-2">
+                  <button
+                    className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    id='btn-save'
+                    type='button'
+                    onClick={(e) => this.update(e, userInfo.get("id"))}>UPDATE</button>
+                </div>
+              </div>
             </div>
           </div>
       </form>
@@ -242,6 +260,11 @@ class UserManagementUpdate extends React.Component {
       .then( getUsername )
       .catch( setErrors );
   }
+  adminUnlock (e, id) {
+    e.preventDefault();
+    this.props.adminUnlock(id);
+  }
+
 
 };
 

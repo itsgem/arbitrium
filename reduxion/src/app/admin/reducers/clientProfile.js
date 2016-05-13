@@ -46,7 +46,8 @@ export default createReducer({
     clientDeactivateSuccess: false,
     updateCompleted: false,
     loading: false,
-    validateCompleted: false
+    validateCompleted: false,
+    clientUnlockSuccess: false
   }),
   [clientProfile.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -55,7 +56,8 @@ export default createReducer({
     clientDeactivateSuccess: false,
     updateCompleted: false,
     loading: true,
-    validateCompleted: false }),
+    validateCompleted: false,
+    clientUnlockSuccess: false }),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
     clientApproveSuccess: false,

@@ -42,8 +42,6 @@ export default React.createClass( {
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       })
-      setTimeout(()=>{ location.href='/coffee/client/'+nextProps.params.id; },2000)
-
     }
 
 
