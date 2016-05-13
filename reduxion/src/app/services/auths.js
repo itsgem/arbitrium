@@ -82,7 +82,7 @@ export default {
   clientApprove(id) {
     return patch('admin/client/' + id + '/approve', {
       params: {
-        callback_url: "http://dev.w3.client.arbitriumgroup.com/i/"
+        callback_url: window.location.origin + "/i/login"
       }
     });
   },
