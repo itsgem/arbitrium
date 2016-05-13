@@ -4,6 +4,19 @@ namespace App\Models;
 
 class ClientSubscription extends Subscription
 {
+    const TERM_MONTHLY         = 'Monthly';
+    const TERM_ANNUALLY        = 'Annually';
+
+    const TYPE_TRIAL           = 'Trial';
+    const TYPE_PLAN            = 'Plan';
+
+    const STATUS_ACTIVE        = 'Active';
+    const STATUS_INACTIVE      = 'Inactive';
+
+    const STATUS_END_CANCELLED = 'Cancelled';
+    const STATUS_END_UPGRADED  = 'Upgraded';
+    const STATUS_END_RENEWED   = 'Renewed';
+
     protected $table = 'client_subscriptions';
 
     protected $dates = ['valid_from', 'valid_to'];
@@ -24,8 +37,6 @@ class ClientSubscription extends Subscription
         return $this->belongsTo(Subscription::class);
     }
 
-    //---------- mutators
-
     //---------- scopes
     public function scopeClientId($query, $client_id)
     {
@@ -35,20 +46,27 @@ class ClientSubscription extends Subscription
         }
     }
 
+    public function scopeType($query, $type)
+    {
+        if ($type)
+        {
+            return $query->where('client_id', $type);
+        }
+    }
+
     public function scopeCurrent($query)
     {
         $date = current_date_to_string();
-        return $query->whereRaw("'{$date}' BETWEEN valid_from and valid_to ");
+        return $query->whereRaw("'{$date}' BETWEEN valid_from and valid_to ")
+            ->where('status', self::STATUS_ACTIVE);
     }
 
-    public function scopeEmailReminderSent($query, $sent = true)
+    public function scopeIsAutoRenew($query, $flag = false)
     {
-        return $query->where('email_reminder_sent', $sent);
-    }
-
-    public function scopeRenew($query)
-    {
-        return $query->where('renew', true);
+        if ($flag != null)
+        {
+            return $query->where('is_auto_renew', (int) $flag);
+        }
     }
 
     public function scopeSubscriptionId($query, $id)
@@ -78,9 +96,37 @@ class ClientSubscription extends Subscription
     //---------- helpers
     public function cancel()
     {
-        $this->renew = 0;
+        $this->status = self::STATUS_INACTIVE;
+        $this->status_end = self::STATUS_END_CANCELLED;
         $this->save();
     }
+
+    public function renew()
+    {
+        $this->status = self::STATUS_INACTIVE;
+        $this->status_end = self::STATUS_END_RENEWED;
+        $this->save();
+    }
+
+    public function upgrade()
+    {
+        $this->status = self::STATUS_INACTIVE;
+        $this->status_end = self::STATUS_END_UPGRADED;
+        $this->save();
+    }
+
+// @TODO
+//    public function isFreeTrialValid()
+//    {
+//        $trial_count = self::type(self::TYPE_TRIAL)->count();
+//
+//        if ($trial_count)
+//        {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     public function generateInvoice()
     {
@@ -101,12 +147,5 @@ class ClientSubscription extends Subscription
         {
             $this->invoice_id = $invoice->id;
         }
-    }
-
-    public function setValidity($date)
-    {
-        // TODO-GEM: validity range
-        $this->valid_from   = $date;
-        $this->valid_to     = $this->valid_from->addDays(29);
     }
 }

@@ -75,4 +75,24 @@ class ClientsController extends ApiController
     {
         return $service->update($request, $id);
     }
+
+    public function getSubscriptionHistory(ClientServices $service)
+    {
+        return $service->getSubscriptionHistory($this->request);
+    }
+
+    public function getSubscription(ClientServices $service)
+    {
+        return $service->getSubscription($this->request);
+    }
+
+//    public function changeSubscription(ClientUserRequest $request, ClientServices $service)
+//    {
+//        return $service->changeSubscription($request);
+//    }
+//
+//    public function cancelSubscription(ClientUserRequest $request, ClientServices $service)
+//    {
+//        return $service->cancelSubscription($request);
+//    }
 }

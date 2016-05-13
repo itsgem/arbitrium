@@ -104,6 +104,7 @@ class ApiKeyRequest extends NrbRequest
             $this->failedValidation($instance);
         }
     }
+
     public function response(array $errors)
     {
         return parent::response($this->errors);

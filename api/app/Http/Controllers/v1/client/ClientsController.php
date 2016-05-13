@@ -11,16 +11,18 @@ class ClientsController extends ApiController
 {
     protected function excludeMethodsInLog()
     {
-        return ['getSubscription'];
+        return [];
     }
 
     protected function getMethods()
     {
         return [
-            'cancelSubscription'    => 'Cancel Subscription',
-            'purchaseSubscription'  => 'Purchase Subscription',
-            'show'      => 'Show Client Profile',
-            'update'    => 'Update Client Profile'
+            'cancelSubscription'     => 'Cancel Subscription',
+            'getSubscription'        => 'Get Current Subscription',
+            'getSubscriptionHistory' => 'Get Subscription History',
+            'purchaseSubscription'   => 'Purchase Subscription',
+            'show'                   => 'Show Client Profile',
+            'update'                 => 'Update Client Profile'
         ];
     }
 
@@ -31,7 +33,12 @@ class ClientsController extends ApiController
 
     public function getSubscription(ClientServices $service)
     {
-        return $service->getSubscription(auth()->user()->client->id);
+        return $service->getSubscription($this->request, get_logged_in_client_id());
+    }
+
+    public function getSubscriptionHistory(ClientServices $service)
+    {
+        return $service->getSubscriptionHistory($this->request, get_logged_in_client_id());
     }
 
     public function purchaseSubscription(SubscriptionRequest $request, ClientServices $service)
@@ -39,9 +46,8 @@ class ClientsController extends ApiController
         return $service->purchaseSubscription($request, auth()->user()->client);
     }
 
-
     /**
-     * Client - My Profile
+     * Get authenticated client profile
      *
      * @SWG\Get(
      *     path="/client/profile",
@@ -71,11 +77,11 @@ class ClientsController extends ApiController
      */
     public function show(ClientServices $service)
     {
-        return $service->show($this->request, auth()->user()->client->id);
+        return $service->show($this->request, get_logged_in_client_id());
     }
 
     public function update(ClientUserRequest $request, ClientServices $service)
     {
-        return $service->update($request, auth()->user()->client->id);
+        return $service->update($request, get_logged_in_client_id());
     }
 }

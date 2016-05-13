@@ -32,6 +32,14 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()
         {
+            Route::group(['prefix' => 'subscription'], function()
+            {
+                Route::get('',         ['uses' => 'ClientsController@getSubscriptionHistory']);
+                Route::get('current',  ['uses' => 'ClientsController@getSubscription']);
+                Route::post('',        ['uses' => 'ClientsController@changeSubscription']);
+                Route::patch('cancel', ['uses' => 'ClientsController@cancelSubscription']);
+            });
+
             Route::patch('{client}/approve',    ['uses' => 'ClientsController@approve']);
             Route::patch('{client}/disapprove', ['uses' => 'ClientsController@disapprove']);
 

@@ -54,10 +54,47 @@ class ClientServices extends NrbServices
     }
 
     // Client\ClientsController::getSubscription
-    public function getSubscription($client_id)
+    public function getSubscription($request, $client_id = null)
     {
-        $client = Client::findOrFail($client_id);
-        return $this->respondWithSuccess($client->subscription);
+        // If user is client
+        if ($client_id)
+        {
+            $current_subscription = Client::findOrFail($client_id)->subscription;
+            return $this->respondWithSuccess($current_subscription);
+        }
+
+        $current_subscription = ClientSubscription::clientId($request->get('client_id'))
+            ->subscriptionId($request->get('subscription_id'))
+            ->current()
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
+    }
+
+    // Client\ClientsController::getSubscriptionHistory
+    public function getSubscriptionHistory($request, $client_id = null)
+    {
+        $subscriptions = new ClientSubscription;
+
+        // If non-client
+        if (!$client_id)
+        {
+            $subscriptions = $subscriptions->with(['client.user' => function($query){
+                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+            }]);
+
+            $client_id = $request->get('client_id', '');
+        }
+
+        $subscriptions = $subscriptions->clientId($client_id)
+            ->subscriptionId($request->get('subscription_id'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($subscriptions, $request->get('max_pagination_links'));
     }
 
     // Admin\ClientsController::index
