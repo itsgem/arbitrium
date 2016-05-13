@@ -93,3 +93,9 @@
   background-color: #ffccbc !important;
   transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
 }
+.mdl-layout__inner-container {
+  display: inline-table;
+}
+.mdl-layout{
+  display: inline-table;
+}

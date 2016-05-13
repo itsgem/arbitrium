@@ -10,6 +10,7 @@ export const getApiPermission = createActionAsync('CLIENT_API_PERMISSION', auth.
 export const clientRegisterApi = createActionAsync('CLIENT_REGISTER_API', auth.clientRegisterApi);
 export const clientGetApiKey = createActionAsync('CLIENT_GET_API_KEY', auth.clientGetApiKey);
 export const clientUpdateApiKey = createActionAsync('CLIENT_GET_UPDATE_API_KEY', auth.clientUpdateApiKey);
+export const clientDeleteApiKey = createActionAsync('CLIENT_DELETE_API_KEY', auth.clientDeleteApiKey);
 
 const initialState = Immutable.fromJS({
   loading: false,
@@ -17,18 +18,21 @@ const initialState = Immutable.fromJS({
   registerApiSuccess: false,
   apiPermissions: {},
   apiKeyInfo: {},
-  apiUpdateSuccess: false
+  apiUpdateSuccess: false,
+  deleteApiKeySuccess: false
 });
 
 export default createReducer({
   [clietApiKeys.ok]: (state, payload) => state.merge({
     loading: false,
     listApiKeys: state.concat(payload),
-    apiUpdateSuccess: false
+    apiUpdateSuccess: false,
+    deleteApiKeySuccess: false
   }),
   [clietApiKeys.request]: (state) => state.merge({
     loading: true,
-    apiUpdateSuccess: false
+    apiUpdateSuccess: false,
+    deleteApiKeySuccess: false
   }),
   [isActiveApiKey.ok]: (state) => state.merge({
     loading: false
@@ -68,5 +72,13 @@ export default createReducer({
   [clientUpdateApiKey.request]: (state) => state.merge({
     loading: true,
     apiUpdateSuccess: false
+  }),
+  [clientDeleteApiKey.ok]: (state) => state.merge({
+    loading: false,
+    deleteApiKeySuccess: true
+  }),
+  [clientDeleteApiKey.request]: (state) => state.merge({
+    loading: true,
+    deleteApiKeySuccess: false
   }),
 }, initialState);

@@ -112,6 +112,11 @@ div#application {
     .body-bg .client-list .table-client-list thead tr th {
         font-weight: 700;
     }
+    .body-bg .client-list .table-client-list tbody tr td {
+      white-space: normal;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
     .body-bg .client-list .table-client-list tbody tr.bg-dark {
         background: #f5fafe;
     }

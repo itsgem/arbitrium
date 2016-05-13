@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { clietApiKeys, isActiveApiKey } from 'client/reducers/api'
+import { clietApiKeys, isActiveApiKey, clientDeleteApiKey } from 'client/reducers/api'
 import ApiList from 'client/views/api/apiList';
 
 const strMapToObj=(strMap) => {
@@ -9,9 +9,10 @@ const strMapToObj=(strMap) => {
 
 const mapStateToProps = (state) => ({
   loading: state.get('ClientApi').get('loading'),
-  listApiKeys: strMapToObj(state.get('ClientApi').get('listApiKeys'))
+  listApiKeys: strMapToObj(state.get('ClientApi').get('listApiKeys')),
+  deleteApiKeySuccess: strMapToObj(state.get('ClientApi').get('deleteApiKeySuccess'))
 });
 
 export default connect((mapStateToProps), {
-  clietApiKeys, isActiveApiKey
+  clietApiKeys, isActiveApiKey, clientDeleteApiKey
 })(ApiList)

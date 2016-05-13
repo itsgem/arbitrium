@@ -23,7 +23,7 @@ class ApiList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
-        <td width="220" className="mdl-data-table__cell--non-numeric">
+        <td className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={data.is_active ? true : false} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
             <span className="mdl-switch__label">On / Off</span>
@@ -31,6 +31,11 @@ class ApiList extends React.Component {
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
           to={"/i/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          <button
+              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
+              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+            <i className="material-icons">delete</i>
+          </button>
         </td>
       </tr>
     )
@@ -120,7 +125,14 @@ class ApiList extends React.Component {
             <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--accent">New API Key</Link>
           </div>
         </div>
-        <table className="mdl-data-table mdl-js-data-table table-client-list">
+        <dialog className="mdl-dialog">
+          <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
+          <div className="mdl-dialog__actions">
+            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+          </div>
+        </dialog>
+        <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
               <th className="mdl-data-table__cell--non-numeric">Description</th>
@@ -151,6 +163,10 @@ class ApiList extends React.Component {
         </div>
       </div>
     );
+  }
+  deleteItem () {
+    this.props.clientDeleteApiKey(this.state.id);
+    this.modalClose();
   }
   changeActive (e, id, status) {
     let payload = {
@@ -202,7 +218,6 @@ class ApiList extends React.Component {
   }
   modalConfirm (e, id, company) {
     let dialog = document.querySelector('dialog');
-    $('dialog label').text(company);
     dialog.showModal();
     this.setState( {
       id: id

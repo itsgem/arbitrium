@@ -85,12 +85,12 @@ export default React.createClass( {
                 <div className="local-login-form">
                   <form>
                     <div className={ this.formClassNames('password',errors) }>
-                      <input className="mdl-textfield__input" type="password" id='password'ref="password"/>
+                      <input className="mdl-textfield__input" type="password" id='password'ref="password" onKeyPress={(e) => this.toConfirmReset(e)}/>
                       <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
                       {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                     </div>
                     <div className={ this.formClassNames('password_confirmation',errors) }>
-                      <input className="mdl-textfield__input" type="password" id='passwordConfirmation'ref="passwordConfirmation"/>
+                      <input className="mdl-textfield__input" type="password" id='passwordConfirmation'ref="passwordConfirmation" onKeyPress={(e) => this.toConfirmReset(e)}/>
                       <label className="mdl-textfield__label" htmlFor="email">Password Confirmation</label>
                       {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                     </div>
@@ -114,6 +114,12 @@ export default React.createClass( {
         </div>
       </div>
     );
+  },
+
+  toConfirmReset (e) {
+    if (e.which == 13 || e.keyCode == 13) {
+      this.confirmReset(e);
+    }
   },
 
   confirmReset(e) {

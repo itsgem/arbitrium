@@ -31,6 +31,7 @@ class LocalAuthenticationForm extends React.Component {
               type="text"
               id='email'
               ref="email"
+              onKeyPress={(e) => this.toLogin(e)}
               />
             <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
             {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
@@ -42,6 +43,7 @@ class LocalAuthenticationForm extends React.Component {
               type="password"
               id='password'
               ref="password"
+              onKeyPress={(e) => this.toLogin(e)}
               />
             <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
             {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
@@ -50,7 +52,7 @@ class LocalAuthenticationForm extends React.Component {
             className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
             id='btn-login'
             type='button'
-            onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
+            onClick={(e) => this.login(e)}>{ this.props.buttonCaption }</button>
         </form>
       </div>
     );
@@ -62,19 +64,23 @@ class LocalAuthenticationForm extends React.Component {
       'has-success': this.state[ field ] && !(this.props.errors[ field ])
     } );
   }
-
-  signup( e ) {
-    e.preventDefault();
-
+  toLogin(e) {
+    if (e.which == 13 || e.keyCode == 13) {
+      this.login(e);
+    }
+  }
+  login( e ) {
     this.setState( {
       loading: true,
     } );
-    let {email, password} = this.refs;
 
+    let {email, password} = this.refs;
+    e.preventDefault();
     this.props.onButtonClick( {
       password: password.value,
       email: email.value
     } );
+
   }
 
 }

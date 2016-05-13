@@ -236,6 +236,8 @@ class UserManagementList extends React.Component {
   modalClose () {
     let dialog = document.querySelector('dialog');
     dialog.close();
+    document.getElementsByClassName('mdl-layout__inner-container')[0].style.overflowX='auto';
+    document.getElementsByClassName('mdl-layout__inner-container')[0].style.overflowX='';
   }
   clearSearch(e) {
     e.preventDefault();
