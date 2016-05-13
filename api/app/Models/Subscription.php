@@ -67,14 +67,14 @@ class Subscription extends NrbModel
     public function calculateTotal($term = null)
     {
         $total = [
-            'monthly'  => money_format(
+            'monthly'  => format_money(
                 array_sum([
                     $this->fee_monthly,
                     $this->fee_monthly_maintenance,
                     $this->fee_initial_setup
                 ])
             ),
-            'annually' => money_format(
+            'annually' => format_money(
                 array_sum([
                     $this->fee_yearly,
                     $this->fee_yearly_license,
