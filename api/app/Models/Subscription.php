@@ -8,13 +8,10 @@ use App\Nrb\NrbModel;
 
 class Subscription extends NrbModel
 {
-    // multi_language
-    const ENGLISH_ONLY  = 0;
-    const MULTI_LINGUAL = 1;
+    const TRIAL_PERIOD = 30; // Days
 
-    // statistical_analysis and tbl_graph_charts
-    const DESCRIPTIVE   = 1;
-    const DETAILED      = 2;
+    const TYPE_TRIAL = 'Trial';
+    const TYPE_PLAN  = 'Plan';
 
     use SoftDeletes;
 
@@ -25,17 +22,12 @@ class Subscription extends NrbModel
     protected $dates = [];
 
     protected $fillable = [
-        'name', 'price_in_credit', 'max_questions', 'max_surveys', 'max_responses',
-        'has_email_support', 'has_templates', 'multi_language', 'has_export_data', 'has_real_time_reporting',
-        'statistical_analysis', 'tbl_graph_charts', 'has_skip_question_logic', 'can_edit_survey_questions', 'can_embed_media',
-        'can_customize_invite', 'can_randomize_questions', 'can_add_open_ended_questions', 'can_theme',
-        'has_data_validation', 'has_incentive_payments', 'has_respondent_management', 'has_call_support', 'has_piping',
+        'name', 'type', 'country_id', 'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
+        'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
     ];
 
-    //---------- relationships
-
-    //---------- mutators
+    protected $appends = ['total'];
 
     //---------- scopes
     public function scopeName($query, $name)
@@ -46,24 +38,45 @@ class Subscription extends NrbModel
         }
     }
 
-    public function scopePriceInCredit($query, $price = 0)
+    public function scopeType($query, $type)
     {
-        return $query->where('price_in_credit', $price);
+        if ($type)
+        {
+            return $query->where('type', $type);
+        }
+    }
+
+    //---------- appends
+    public function getTotalAttribute()
+    {
+        return $this->calculateTotal();
     }
 
     //---------- helpers
-    public function canDelete()
+    public function calculateTotal($term = null)
     {
-        return ClientSubscription::subscriptionId($this->id)->count() == 0;
-    }
+        $total = [
+            'monthly'  => money_format(
+                array_sum([
+                    $this->fee_monthly,
+                    $this->fee_monthly_maintenance,
+                    $this->fee_initial_setup
+                ])
+            ),
+            'annually' => money_format(
+                array_sum([
+                    $this->fee_yearly,
+                    $this->fee_yearly_license,
+                    $this->fee_yearly_maintenance,
+                    $this->fee_initial_setup
+                ])
+            ),
+        ];
 
-    public function isEnglishOnly()
-    {
-        return $this->multi_language == self::ENGLISH_ONLY;
-    }
+        if ($term) {
+            return $total[$term];
+        }
 
-    public function isMultiLanguage()
-    {
-        return $this->multi_language ==  self::MULTI_LINGUAL;
+        return $total;
     }
 }
