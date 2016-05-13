@@ -194,7 +194,7 @@ class ApiAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    client_id: { rule: 'required', label: 'comapany name'},
+    client_id: { rule: 'required', label: 'company name'},
     description: { rule: 'required', label: 'description'},
     ip_addresses: [],
     is_whitelist: [],

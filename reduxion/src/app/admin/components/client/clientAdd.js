@@ -506,7 +506,7 @@ function mapObject(object, callback) {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    company_name: { rule: 'required', label: 'comapany name'},
+    company_name: { rule: 'required', label: 'company name'},
     street_address_1: { rule: 'required', label: 'Street address' },
     street_address_2: [],
     city: { rule: 'required', label: 'City' },

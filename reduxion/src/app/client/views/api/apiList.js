@@ -8,7 +8,7 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
-      this.props.apiList({per_page: 10});
+      this.props.clietApiKeys({per_page: 10});
     }
   },
   render () {
