@@ -24,15 +24,15 @@ class SubscriptionRequest extends NrbRequest
                 'name'                    => 'required',
                 'type'                    => 'required|in:'.Subscription::TYPE_TRIAL.','.Subscription::TYPE_PLAN,
                 'country_id'              => 'required|exists:countries,id',
-                'fee_monthly'             => 'required|regex:'.get_regex_money(),
-                'fee_monthly_maintenance' => 'required|regex:'.get_regex_money(),
-                'fee_yearly'              => 'required|regex:'.get_regex_money(),
-                'fee_yearly_license'      => 'required|regex:'.get_regex_money(),
-                'fee_yearly_maintenance'  => 'required|regex:'.get_regex_money(),
-                'fee_initial_setup'       => 'required|regex:'.get_regex_money(),
+                'fee_monthly'             => 'required|money',
+                'fee_monthly_maintenance' => 'required|money',
+                'fee_yearly'              => 'required|money',
+                'fee_yearly_license'      => 'required|money',
+                'fee_yearly_maintenance'  => 'required|money',
+                'fee_initial_setup'       => 'required|money',
                 'max_api_calls'           => 'required|integer|min:0',
                 'max_decisions'           => 'required|integer|min:0',
-                'discounts'               => 'required|regex:'.get_regex_money()
+                'discounts'               => 'required|money'
             ];
         }
 

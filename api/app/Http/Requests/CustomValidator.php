@@ -49,6 +49,11 @@ class CustomValidator extends Validator
         return preg_match("/^[a-zA-Z0-9_\-\.]+$/", $value);
     }
 
+    public function validateMoney($attribute, $value)
+    {
+        return preg_match("/^[0-9]+(?:\.[0-9]{2}){0,1}$/", $value);
+    }
+
     public function validateCommonPassword($attribute, $value)
     {
         $model = CommonPassword::password($value)->first();
