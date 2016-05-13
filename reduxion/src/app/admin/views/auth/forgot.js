@@ -139,7 +139,7 @@ export default React.createClass( {
       <div className="login-view padding-15">
           <legend>Step 2 - Check Email</legend>
           <p>
-            <strong>An email has been sent containing your reset link. Click on this link to proceed.</strong>
+            <strong>An email has been sent containing your reset link. Click on the link to proceed.</strong>
           </p>
           <p>
             Please also check your spam folder just in case the reset email ended up there.
