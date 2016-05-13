@@ -146,7 +146,6 @@ export default React.createClass( {
       token:[],
       password: [
         { rule: 'required', label: 'new password'},
-        { rule: 'alphaDash', label: 'new password'},
         { rule: 'minLength:8', label: 'new password'},
         { rule: 'maxLength:64', label: 'new password'}
       ],
