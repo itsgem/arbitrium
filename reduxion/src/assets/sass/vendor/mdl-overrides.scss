@@ -8,9 +8,15 @@
 .mdl-textfield__input {
   font-size: inherit;
 }
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+.mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
+.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
+  color: $base-blue;
+}
 
 .mdl-textfield__label {
   font-size: inherit;
+  opacity: 1;
   top: 20px;
 }
 
