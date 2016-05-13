@@ -29,13 +29,19 @@ export default React.createClass( {
   },
   renderRegisterComplete(){
     return (
-        <div className="local-signup-form">
-          <div id="success-box" className="local-signin-form login-frame">
-            <p>A confirmation email has been sent. Click on the link to verify your email address and activate your account.</p>
-            <Link
-                className=''
-                id='btn-signup'
-                to="/i/login">Back to Login.</Link>
+        <div className="container">
+          <div className="local-login-form">
+            <div className="bar">
+              <span className="bar-title">Sign up</span>
+            </div>
+            <div id="success-box" className="local-signin-form login-frame">
+
+              <p>A confirmation email has been sent.<br />Click on the link to verify your email address and activate your account.</p>
+              <Link
+                  className=''
+                  id='btn-signup'
+                  to="/i/login">Back to Login.</Link>
+            </div>
           </div>
         </div>
     );
