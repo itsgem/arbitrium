@@ -61,8 +61,8 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
             Route::get('client',    ['uses' => 'LogsController@showClientLogs']);
         });
 
-        //-- PRICING BY SUBSCRIPTIONS
-        Route::resource('subscription', 'SubscriptionsController',      ['except' => ['create']]);
+        //-- SUBSCRIPTIONS
+        Route::resource('subscription', 'SubscriptionsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
          //-- SYSTEM SETTINGS
         Route::get('system-setting/{segment}',  ['uses' => 'SystemSettingsController@get']);

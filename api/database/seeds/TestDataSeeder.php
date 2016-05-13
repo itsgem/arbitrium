@@ -19,6 +19,7 @@ class TestDataSeeder extends Seeder
          $this->call(TestApiPermissionSeeder::class);
          $this->call(TestApiKeyPermissionSeeder::class);
          $this->call(TestUserSeeder::class);
+         $this->call(TestClientSubscriptionsSeeder::class);
 
         Model::reguard();
     }
