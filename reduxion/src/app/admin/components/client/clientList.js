@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import {modal, openModal, closeModal} from 'common/components/modal'
 
 class UserManagementList extends React.Component {
   constructor(props) {
@@ -9,10 +10,11 @@ class UserManagementList extends React.Component {
       errorServer:null,
       id: null
     };  }
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    modal();
   }
   userDisplay (data, alter) {
     return (
@@ -241,16 +243,14 @@ class UserManagementList extends React.Component {
     this.page(e, currentPage);
   }
   modalConfirm (e, id, company) {
-    document.querySelector('.dialog-box').style.display = 'block';
     document.querySelector('.msg-box p label').innerHTML = company;
-    document.querySelector('.dialog-content').style.display = 'block';
+    openModal();
     this.setState( {
       id: id
     } );
   }
   modalClose () {
-    document.querySelector('.dialog-box').style.display = 'none';
-    document.querySelector('.dialog-content').style.display = 'none';
+    closeModal();
   }
   clearSearch(e) {
     e.preventDefault();

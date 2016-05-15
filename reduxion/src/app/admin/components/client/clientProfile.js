@@ -5,6 +5,8 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 import Country from 'admin/components/country'
+import {modal, openModal, closeModal} from 'common/components/modal'
+
 
 class ClientProfile extends React.Component {
   constructor(props) {
@@ -39,6 +41,7 @@ class ClientProfile extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    modal();
   }
   render() {
     if (this.props.client.clientInfo) {
@@ -82,13 +85,18 @@ class ClientProfile extends React.Component {
     let status = client.approval_status == 'Pending' ? true : false;
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
-        <dialog className="mdl-dialog">
-          <p>Are you sure you want to {client.user.activated_at ? 'deactivate' : 'activate'} this account?<br />This cannot be undone.</p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+              <p>Are you sure you want to {client.user.activated_at ? 'deactivate' : 'activate'} this account?<br />This cannot be undone.</p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </div>
         <div className="required">Required fields</div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--6-col">
@@ -646,8 +654,7 @@ class ClientProfile extends React.Component {
     } else {
       this.clienActivateStatus(e);
     }
-    let dialog = document.querySelector('dialog');
-    dialog.close();
+    closeModal();
   }
 
   changeApprovalStatus (e) {
@@ -726,12 +733,10 @@ class ClientProfile extends React.Component {
       .catch(setErrors);
   }
   modalConfirm (e) {
-    let dialog = document.querySelector('dialog');
-    dialog.showModal();
+    openModal();
   }
   modalClose () {
-    let dialog = document.querySelector('dialog');
-    dialog.close();
+    closeModal();
   }
 
   // --- Validations
