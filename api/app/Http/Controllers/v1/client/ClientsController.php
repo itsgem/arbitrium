@@ -17,10 +17,10 @@ class ClientsController extends ApiController
     protected function getMethods()
     {
         return [
-            'cancelSubscription'     => 'Cancel Subscription',
-            'getSubscription'        => 'Get Current Subscription',
-            'getSubscriptionHistory' => 'Get Subscription History',
-            'purchaseSubscription'   => 'Purchase Subscription',
+            'cancelSubscription'     => 'Cancel Client Subscription',
+            'getSubscription'        => 'Get Client Current Subscription',
+            'getSubscriptionHistory' => 'Get Client Subscription History',
+            'purchaseSubscription'   => 'Purchase / Renew Client Subscription',
             'show'                   => 'Show Client Profile',
             'update'                 => 'Update Client Profile'
         ];
