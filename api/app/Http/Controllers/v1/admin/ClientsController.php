@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Admin;
 use App\Http\Requests\v1\Admin\ClientApprovalRequest;
 use App\Http\Requests\v1\Admin\CreditRequest;
 use App\Http\Requests\v1\ClientUserRequest;
+use App\Http\Requests\v1\Client\SubscriptionRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ClientServices;
 use App\Services\ClientCreditServices;
@@ -86,13 +87,13 @@ class ClientsController extends ApiController
         return $service->getSubscription($this->request);
     }
 
-//    public function changeSubscription(ClientUserRequest $request, ClientServices $service)
-//    {
-//        return $service->changeSubscription($request);
-//    }
-//
-//    public function cancelSubscription(ClientUserRequest $request, ClientServices $service)
-//    {
-//        return $service->cancelSubscription($request);
-//    }
+    public function cancelSubscription($id, ClientServices $service)
+    {
+        return $service->cancelSubscription($id);
+    }
+
+    public function purchaseSubscription(SubscriptionRequest $request, $id, ClientServices $service)
+    {
+        return $service->purchaseSubscription($request, $id);
+    }
 }

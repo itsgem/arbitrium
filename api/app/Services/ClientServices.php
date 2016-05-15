@@ -27,6 +27,11 @@ class ClientServices extends NrbServices
     // Client\ClientsController::cancelSubscription
     public function cancelSubscription($client)
     {
+        if (!($client instanceof Client))
+        {
+            $client = Client::findOrFail($client);
+        }
+
         return DB::transaction(function () use ($client)
         {
             if ($client->last_subscription)
@@ -120,6 +125,11 @@ class ClientServices extends NrbServices
     // Client\ClientsController::purchaseSubscription
     public function purchaseSubscription($request, $client, $is_renew = false)
     {
+        if (!($client instanceof Client))
+        {
+            $client = Client::findOrFail($client);
+        }
+
         return DB::transaction(function () use ($request, $client, $is_renew)
         {
             // Subscribe
