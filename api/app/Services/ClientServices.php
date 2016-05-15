@@ -24,6 +24,7 @@ class ClientServices extends NrbServices
         });
     }
 
+    // Admin\ClientsController::cancelSubscription
     // Client\ClientsController::cancelSubscription
     public function cancelSubscription($client)
     {
@@ -58,6 +59,7 @@ class ClientServices extends NrbServices
         });
     }
 
+    // Admin\ClientsController::getSubscription
     // Client\ClientsController::getSubscription
     public function getSubscription($request, $client_id = null)
     {
@@ -76,6 +78,7 @@ class ClientServices extends NrbServices
         return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
     }
 
+    // Admin\ClientsController::getSubscriptionHistory
     // Client\ClientsController::getSubscriptionHistory
     public function getSubscriptionHistory($request, $client_id = null)
     {
@@ -97,6 +100,7 @@ class ClientServices extends NrbServices
             ->validTo($request->get('valid_to'))
             ->dateFrom('valid_from', $request->get('valid_range_from'))
             ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
             ->paginate($request->get('per_page'));
 
         return $this->respondWithData($subscriptions, $request->get('max_pagination_links'));
@@ -122,6 +126,7 @@ class ClientServices extends NrbServices
         );
     }
 
+    // Admin\ClientsController::purchaseSubscription
     // Client\ClientsController::purchaseSubscription
     public function purchaseSubscription($request, $client, $is_renew = false)
     {

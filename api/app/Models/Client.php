@@ -252,6 +252,8 @@ class Client extends NrbModel
 
         $client_subscription->subscription_id   = $subscription->id;
         $client_subscription->client_id         = $client_id;
+        $client_subscription->country_id        = $subscription->country_id;
+        $client_subscription->status            = ClientSubscription::STATUS_ACTIVE;
         $client_subscription->setValidity($start_date);
         $client_subscription->save();
 
