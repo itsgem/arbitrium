@@ -154,6 +154,11 @@ class Client extends NrbModel
         return $this->hasOne(ClientSubscription::class)->current()->latest();
     }
 
+    public function last_subscription()
+    {
+        return $this->hasOne(ClientSubscription::class)->latest();
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(ClientSubscription::class);
@@ -218,29 +223,6 @@ class Client extends NrbModel
         return $can_delete && $this->user->canDelete();
     }
 
-    public function canPurchaseSubscription($subscription)
-    {
-        $can_purchase = false;
-
-        if ($subscription instanceof Subscription && $subscription->price_in_credit == 0)
-        {
-            $can_purchase = true;
-        }
-
-        if ($this->credit_balance > 0)
-        {
-            if (!($subscription instanceof Subscription))
-            {
-                $subscription = Subscription::findOrFail($subscription);
-            }
-            if ($this->credit_balance >= $subscription->price_in_credit)
-            {
-                $can_purchase = true;
-            }
-        }
-        return $can_purchase;
-    }
-
     public function isApproved()
     {
         return $this->approval_status == self::APPROVED;
@@ -258,18 +240,21 @@ class Client extends NrbModel
         {
             $subscription = Subscription::findOrFail($subscription);
         }
-        if ($this->canPurchaseSubscription($subscription))
+
+        $client_id = $this->id;
+
+        $client_subscription = new ClientSubscription($subscription->toArray());
+
+        if ($subscription->type == Subscription::TYPE_TRIAL && !$client_subscription->canAvailFreeTrial($client_id))
         {
-            $client_subscription = new ClientSubscription($subscription->toArray());
-            $client_subscription->subscription_id   = $subscription->id;
-            $client_subscription->client_id         = $this->id;
-            $client_subscription->setValidity($start_date);
-            if ($subscription->price_in_credit > 0)
-            {
-                $client_subscription->generateInvoice();
-            }
-            $client_subscription->save();
+            return false;
         }
+
+        $client_subscription->subscription_id   = $subscription->id;
+        $client_subscription->client_id         = $client_id;
+        $client_subscription->setValidity($start_date);
+        $client_subscription->save();
+
         return $client_subscription;
     }
 }

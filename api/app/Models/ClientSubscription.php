@@ -50,7 +50,7 @@ class ClientSubscription extends Subscription
     {
         if ($type)
         {
-            return $query->where('client_id', $type);
+            return $query->where('type', $type);
         }
     }
 
@@ -115,18 +115,21 @@ class ClientSubscription extends Subscription
         $this->save();
     }
 
-// @TODO
-//    public function isFreeTrialValid()
-//    {
-//        $trial_count = self::type(self::TYPE_TRIAL)->count();
-//
-//        if ($trial_count)
-//        {
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    public function canAvailFreeTrial($client_id = null)
+    {
+        $client_id = ($client_id) ? $client_id : $this->client_id;
+
+        $trial_count = self::clientId($client_id)->type(self::TYPE_TRIAL)->count();
+
+        // Once a free trial is used, even if its valid_from is not yet due or,
+        // the user can no longer avail
+        if ($trial_count)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     public function generateInvoice()
     {
@@ -147,5 +150,11 @@ class ClientSubscription extends Subscription
         {
             $this->invoice_id = $invoice->id;
         }
+    }
+
+    public function setValidity($date)
+    {
+        $this->valid_from = $date;
+        $this->valid_to   = $this->valid_from->addMonth()->subDay();
     }
 }

@@ -29,9 +29,9 @@ class ClientServices extends NrbServices
     {
         return DB::transaction(function () use ($client)
         {
-            if ($client->subscription)
+            if ($client->last_subscription)
             {
-                $client->subscription->cancel();
+                $client->last_subscription->cancel();
             }
 
             return $this->respondWithSuccess();
@@ -118,22 +118,34 @@ class ClientServices extends NrbServices
     }
 
     // Client\ClientsController::purchaseSubscription
-    public function purchaseSubscription($request, $client)
+    public function purchaseSubscription($request, $client, $is_renew = false)
     {
-        return DB::transaction(function () use ($request, $client)
+        return DB::transaction(function () use ($request, $client, $is_renew)
         {
-            // client has a current subscription; upgrade subscription instead
-            if ($client->subscription)
+            // Subscribe
+            $subscription_id = $request->get('subscription_id');
+
+            if ($is_renew || $client->last_subscription->subscription_id == $subscription_id)
             {
-                return $this->respondWithError(Errors::EXISTING_SUBSCRIPTION);
+                $client->last_subscription->renew();
+            }
+            else
+            {
+                $client->last_subscription->upgrade();
             }
 
-            $result = $client->purchaseSubscription($request->get('subscription_id'), current_date_to_string());
+            $result = $client->purchaseSubscription($subscription_id, current_date_to_string());
+
+            // @TODO: Pay via PayPal
+
+            // @TODO: Send Invoice
+
             if ($result)
             {
                 return $this->respondWithSuccess($result);
             }
-            return $this->respondWithError(Errors::INSUFFICIENT_CREDIT);
+
+            return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
         });
     }
 

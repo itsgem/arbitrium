@@ -46,6 +46,11 @@ class ClientsController extends ApiController
         return $service->purchaseSubscription($request, auth()->user()->client);
     }
 
+    public function renewSubscription(SubscriptionRequest $request, ClientServices $service)
+    {
+        return $service->purchaseSubscription($request, auth()->user()->client, true);
+    }
+
     /**
      * Get authenticated client profile
      *

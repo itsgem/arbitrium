@@ -38,6 +38,7 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
             Route::get('',                  ['uses' => 'ClientsController@getSubscriptionHistory']);
             Route::get('current',           ['uses' => 'ClientsController@getSubscription']);
             Route::post('',                 ['uses' => 'ClientsController@purchaseSubscription']);
+            Route::post('renew',            ['uses' => 'ClientsController@renewSubscription']);
             Route::patch('cancel',          ['uses' => 'ClientsController@cancelSubscription']);
         });
     });
