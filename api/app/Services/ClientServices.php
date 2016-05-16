@@ -71,8 +71,13 @@ class ClientServices extends NrbServices
         }
 
         $current_subscription = ClientSubscription::clientId($request->get('client_id'))
-            ->subscriptionId($request->get('subscription_id'))
             ->current()
+            ->subscriptionId($request->get('subscription_id'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
             ->paginate($request->get('per_page'));
 
         return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
