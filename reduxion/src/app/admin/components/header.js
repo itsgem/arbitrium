@@ -61,5 +61,5 @@ export default React.createClass( {
         <div className="msg">Success message</div>
       </header>
     );
-  }
+  },
 } );

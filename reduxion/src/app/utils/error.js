@@ -15,7 +15,7 @@ export function createError(errorIn) {
       errors: errorIn.toJSON()
     };
   };
-console.log('errors', errorIn);
+
   let errorServer = {
     name: errorIn.name,
     status: errorIn.status,

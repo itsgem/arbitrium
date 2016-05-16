@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
+import {modal, openModal, closeModal} from 'common/components/modal'
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class ApiList extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    modal();
   }
   userDisplay (data, alter) {
     return (
@@ -121,13 +123,18 @@ class ApiList extends React.Component {
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
-        <dialog className="mdl-dialog">
-          <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+              <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </div>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
@@ -191,6 +198,10 @@ class ApiList extends React.Component {
   deleteItem () {
     this.props.adminDeleteApiKey(this.state.id);
     this.modalClose();
+    $('.msg').html('Successfully deleted').addClass('bg-green');
+    $('.msg').fadeIn(1000, function() {
+      $(this).fadeOut(2000);
+    });
   }
   changeActive (e, id, status) {
     let payload = {
@@ -241,17 +252,13 @@ class ApiList extends React.Component {
     this.page(e, currentPage);
   }
   modalConfirm (e, id, description) {
-    let dialog = document.querySelector('dialog');
-    dialog.showModal();
+    openModal();
     this.setState( {
       id: id
     } );
   }
   modalClose () {
-    let dialog = document.querySelector('dialog');
-    dialog.close();
-    // document.getElementsByClassName('mdl-layout__inner-container')[0].style.overflowX='auto';
-    // document.getElementsByClassName('mdl-layout__inner-container')[0].style.overflowX='';
+    closeModal();
   }
   clearSearch(e) {
     e.preventDefault();

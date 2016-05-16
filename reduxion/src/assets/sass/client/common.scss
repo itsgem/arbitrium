@@ -64,6 +64,55 @@ button, select, html, textarea, input, legend {
 .mdl-layout__header {
   min-height: 20px;
 }
+.client {
+  .mdl-layout__content {
+    z-index: initial;
+  }
+  .modal-cancel, .modal-yes {
+    border: none;
+    background: none;
+    color: #143757;
+    font-size: 14px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: currentColor;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    outline: none;
+    border: 0;
+    display: inline-block;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 6px;
+    margin: 6px 8px;
+    line-height: 36px;
+    min-height: 36px;
+    background: transparent;
+    white-space: nowrap;
+    min-width: 88px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    font-style: inherit;
+    font-variant: inherit;
+    /* font-family: inherit; */
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .modal-yes {
+    color: white;
+    background-color: #f44336;
+  }
+  .modal-cancel:hover {
+    background-color: rgba(158, 158, 158, 0.2);
+  }
+} 
 
 main {
   .mdl-layout__drawer{
