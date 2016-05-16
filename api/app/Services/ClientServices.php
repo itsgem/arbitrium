@@ -24,14 +24,20 @@ class ClientServices extends NrbServices
         });
     }
 
+    // Admin\ClientsController::cancelSubscription
     // Client\ClientsController::cancelSubscription
     public function cancelSubscription($client)
     {
+        if (!($client instanceof Client))
+        {
+            $client = Client::findOrFail($client);
+        }
+
         return DB::transaction(function () use ($client)
         {
-            if ($client->subscription)
+            if ($client->latest_subscription)
             {
-                $client->subscription->cancel();
+                $client->latest_subscription->cancel();
             }
 
             return $this->respondWithSuccess();
@@ -53,11 +59,56 @@ class ClientServices extends NrbServices
         });
     }
 
+    // Admin\ClientsController::getSubscription
     // Client\ClientsController::getSubscription
-    public function getSubscription($client_id)
+    public function getSubscription($request, $client_id = null)
     {
-        $client = Client::findOrFail($client_id);
-        return $this->respondWithSuccess($client->subscription);
+        // If user is client
+        if ($client_id)
+        {
+            $current_subscription = Client::findOrFail($client_id)->subscription;
+            return $this->respondWithSuccess($current_subscription);
+        }
+
+        $current_subscription = ClientSubscription::clientId($request->get('client_id'))
+            ->current()
+            ->subscriptionId($request->get('subscription_id'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
+    }
+
+    // Admin\ClientsController::getSubscriptionHistory
+    // Client\ClientsController::getSubscriptionHistory
+    public function getSubscriptionHistory($request, $client_id = null)
+    {
+        $subscriptions = new ClientSubscription;
+
+        // If non-client
+        if (!$client_id)
+        {
+            $subscriptions = $subscriptions->with(['client.user' => function($query){
+                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+            }]);
+
+            $client_id = $request->get('client_id', '');
+        }
+
+        $subscriptions = $subscriptions->clientId($client_id)
+            ->subscriptionId($request->get('subscription_id'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($subscriptions, $request->get('max_pagination_links'));
     }
 
     // Admin\ClientsController::index
@@ -80,23 +131,41 @@ class ClientServices extends NrbServices
         );
     }
 
+    // Admin\ClientsController::purchaseSubscription
     // Client\ClientsController::purchaseSubscription
-    public function purchaseSubscription($request, $client)
+    public function purchaseSubscription($request, $client, $is_renew = false)
     {
-        return DB::transaction(function () use ($request, $client)
+        if (!($client instanceof Client))
         {
-            // client has a current subscription; upgrade subscription instead
-            if ($client->subscription)
+            $client = Client::findOrFail($client);
+        }
+
+        return DB::transaction(function () use ($request, $client, $is_renew)
+        {
+            // Subscribe
+            $subscription_id = $request->get('subscription_id');
+
+            if ($is_renew || $client->latest_subscription->subscription_id == $subscription_id)
             {
-                return $this->respondWithError(Errors::EXISTING_SUBSCRIPTION);
+                $client->latest_subscription->renew();
+            }
+            else
+            {
+                $client->latest_subscription->upgrade();
             }
 
-            $result = $client->purchaseSubscription($request->get('subscription_id'), current_date_to_string());
+            $result = $client->purchaseSubscription($subscription_id, current_date_to_string(), $request->get('term'));
+
+            // @TODO: Pay via PayPal
+
+            // @TODO: Send Invoice
+
             if ($result)
             {
                 return $this->respondWithSuccess($result);
             }
-            return $this->respondWithError(Errors::INSUFFICIENT_CREDIT);
+
+            return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
         });
     }
 

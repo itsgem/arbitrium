@@ -13,7 +13,7 @@ class TestClientSubscriptionsSeeder extends Seeder
     {
         DB::statement("SET FOREIGN_KEY_CHECKS = 0");
 
-        $ids = [999000001, 999000002, 999000003];
+        $ids = [999000001, 999000002, 999000003, 999000004];
         DB::table('client_subscriptions')->whereIn('id', $ids)->delete();
 
         $data = [
@@ -76,6 +76,34 @@ class TestClientSubscriptionsSeeder extends Seeder
             [
                 'id'                      => 999000003,
                 'client_id'               => 999000001,
+                'subscription_id'         => 3,
+                'invoice_id'              => null,
+                'term'                    => 'Monthly',
+                'valid_from'              => current_date(),
+                'valid_to'                => current_date_add_months(1, 1),
+                'is_auto_renew'           => 1,
+                'status'                  => 'Active',
+                'status_end'              => null,
+                'name'                    => 'Standard',
+                'type'                    => 'Plan',
+                'country_id'              => 202,
+                'fee_monthly'             => 40,
+                'fee_monthly_maintenance' => 40,
+                'fee_yearly'              => 100,
+                'fee_yearly_license'      => 40,
+                'fee_yearly_maintenance'  => 40,
+                'fee_initial_setup'       => 40,
+                'max_api_calls'           => 100,
+                'max_decisions'           => 100,
+                'discounts'               => 6,
+                'created_by'              => 1,
+                'updated_by'              => 1,
+                'created_at'              => current_datetime(),
+                'updated_at'              => current_datetime(),
+            ],
+            [
+                'id'                      => 999000004,
+                'client_id'               => 999000002,
                 'subscription_id'         => 2,
                 'invoice_id'              => null,
                 'term'                    => 'Monthly',

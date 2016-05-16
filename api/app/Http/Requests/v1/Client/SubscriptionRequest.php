@@ -3,6 +3,7 @@
 namespace App\Http\Requests\v1\Client;
 
 use App\Nrb\Http\v1\Requests\NrbRequest;
+use App\Models\ClientSubscription;
 
 // Client\ClientsController::purchaseSubscription
 class SubscriptionRequest extends NrbRequest
@@ -19,7 +20,8 @@ class SubscriptionRequest extends NrbRequest
         if ($method == 'POST')
         {
             $rules = [
-                'subscription_id'   => 'required|exists:subscriptions,id,deleted_at,NULL'
+                'subscription_id' => 'required|exists:subscriptions,id,deleted_at,NULL',
+                'term'            => 'required|in:'.ClientSubscription::TERM_MONTHLY.','.ClientSubscription::TERM_ANNUALLY
             ];
         }
 

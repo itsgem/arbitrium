@@ -32,8 +32,23 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()
         {
-            Route::patch('{client}/approve',    ['uses' => 'ClientsController@approve']);
-            Route::patch('{client}/disapprove', ['uses' => 'ClientsController@disapprove']);
+            Route::group(['prefix' => '{client}'], function()
+            {
+                Route::patch('approve',    ['uses' => 'ClientsController@approve']);
+                Route::patch('disapprove', ['uses' => 'ClientsController@disapprove']);
+
+                Route::group(['prefix' => 'subscription'], function()
+                {
+                    Route::post('',        ['uses' => 'ClientsController@purchaseSubscription']);
+                    Route::patch('cancel', ['uses' => 'ClientsController@cancelSubscription']);
+                });
+            });
+
+            Route::group(['prefix' => 'subscription'], function()
+            {
+                Route::get('',         ['uses' => 'ClientsController@getSubscriptionHistory']);
+                Route::get('current',  ['uses' => 'ClientsController@getSubscription']);
+            });
 
             Route::group(['middleware' => 'valid.client_id'], function()
             {
