@@ -72,6 +72,9 @@ class ClientServices extends NrbServices
 
         $current_subscription = ClientSubscription::clientId($request->get('client_id'))
             ->current()
+            ->with(['client.user' => function($query){
+                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+            }])
             ->subscriptionId($request->get('subscription_id'))
             ->validFrom($request->get('valid_from'))
             ->validTo($request->get('valid_to'))

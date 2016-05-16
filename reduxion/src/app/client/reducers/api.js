@@ -19,7 +19,8 @@ const initialState = Immutable.fromJS({
   apiPermissions: {},
   apiKeyInfo: {},
   apiUpdateSuccess: false,
-  deleteApiKeySuccess: false
+  deleteApiKeySuccess: false,
+  activeApiKey: false
 });
 
 export default createReducer({
@@ -27,18 +28,22 @@ export default createReducer({
     loading: false,
     listApiKeys: state.concat(payload),
     apiUpdateSuccess: false,
-    deleteApiKeySuccess: false
+    deleteApiKeySuccess: false,
+    activeApiKey: false
   }),
   [clietApiKeys.request]: (state) => state.merge({
     loading: true,
     apiUpdateSuccess: false,
-    deleteApiKeySuccess: false
+    deleteApiKeySuccess: false,
+    activeApiKey: false
   }),
   [isActiveApiKey.ok]: (state) => state.merge({
-    loading: false
+    loading: false,
+    activeApiKey: true
   }),
   [isActiveApiKey.request]: (state) => state.merge({
-    loading: true
+    loading: true,
+    activeApiKey: false
   }),
   [getApiPermission.ok]: (state, payload) => state.merge({
     apiPermissions: state.concat(payload),

@@ -78,7 +78,19 @@ use App\User;
  *     @SWG\Property(property="alt_phone_number", type="string", description="Alternative Phone Number", default="null"),
  *     @SWG\Property(property="alt_position", type="string", description="Alternative Position", default="null"),
  *     @SWG\Property(property="alt_department", type="string", description="Alternative Department", default="null"),
- *     @SWG\Property(property="can_delete", type="string", description="Can user delete", default="false")
+ *     @SWG\Property(property="user", description="Client User Data", ref="#/definitions/ClientUserResponse"),
+ * )
+ *
+ * @SWG\Definition(
+ *     definition="ClientUserResponse",
+ *     required={"id", "username", "email_address", "activated_at", "items_per_page", "timezone", "locked_at"},
+ *     @SWG\Property(property="id", type="integer", format="int64", description="Client User ID", default="1"),
+ *     @SWG\Property(property="username", type="string", description="Username", default="client0001"),
+ *     @SWG\Property(property="email_address", type="string", description="Email", default="client0001-arbitrium@gmail.com"),
+ *     @SWG\Property(property="activated_at", type="string", format="date", description="Date account was activated", default="2016-05-12 03:45:47"),
+ *     @SWG\Property(property="items_per_page", type="integer", format="int64", description="Number of rows per page in viewing list", default="10"),
+ *     @SWG\Property(property="timezone", type="string", description="Timezone", default="Asia/Singapore"),
+ *     @SWG\Property(property="locked_at", type="string", format="date", description="Date account was locked", default=""),
  * )
  *
  * @package App\Models

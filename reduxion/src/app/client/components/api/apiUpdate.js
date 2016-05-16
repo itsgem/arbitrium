@@ -30,6 +30,7 @@ class ApiUpdate extends React.Component {
     let getApiInfo = this.props.getApiInfo.data;
     let permissions = this.props.apiPermissions.data;
     ipAddresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
+    ipAddresses = ipAddresses.split(',').join("\n")
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <div className="mdl-grid">
@@ -142,7 +143,8 @@ class ApiUpdate extends React.Component {
     } );
 
     let ipAddresses = this.refs.ip_addresses.value;
-    ipAddresses = ipAddresses.split(',');
+    ipAddresses = ipAddresses.split('\n');
+    console.log('test', ipAddresses);
     ipAddresses = ipAddresses.map(function(obj){
        let rObj = {};
        rObj = {ip_address: obj.trim()};
