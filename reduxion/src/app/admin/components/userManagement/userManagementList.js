@@ -231,7 +231,7 @@ class UserManagementList extends React.Component {
     this.page(e, currentPage);
   }
   modalConfirm (e, id, name) {
-    //document.querySelector('.msg-box p label').innerHTML = name;
+    document.querySelector('.msg-box p label').innerHTML = name;
     openModal();
     this.setState( {
       id: id
