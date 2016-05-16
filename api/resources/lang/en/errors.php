@@ -34,5 +34,6 @@ return [
     Errors::UNAUTHORIZED_API_KEY    => 'You do not own this API Key.',
     Errors::INVALID_API_KEY_PERMISSION      => 'Invalid API Key Permission.',
     Errors::EXISTING_API_KEY_PERMISSION     => 'You have an existing API Key Permission.',
-    Errors::UNAUTHORIZED_API_KEY_IP_ADDRESS => 'You do not own this API Key IP Address.'
+    Errors::UNAUTHORIZED_API_KEY_IP_ADDRESS => 'You do not own this API Key IP Address.',
+    Errors::EXISTING_TRIAL_SUBSCRIPTION => 'A Trial Subscription already exist.',
 ];
