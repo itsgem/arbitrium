@@ -50,8 +50,9 @@ use App\Nrb\NrbModel;
  *
  * @SWG\Definition(
  *     definition="ClientSubscription",
- *     required={"subscription_id"},
+ *     required={"subscription_id", "term"},
  *     @SWG\Property(property="subscription_id", type="integer", format="int64", description="Subscription ID (Refer to GET /subscription for the list)", default="1"),
+ *     @SWG\Property(property="term", type="string", description="Monthly|Annually", default="Monthly"),
  * )
  *
  * @SWG\Definition(
@@ -148,6 +149,11 @@ class Subscription extends NrbModel
     }
 
     //---------- helpers
+    public function isTrial()
+    {
+        return $this->type == self::TYPE_TRIAL;
+    }
+
     public function calculateTotal($term = null)
     {
         $total = [

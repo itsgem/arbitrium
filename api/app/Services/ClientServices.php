@@ -35,9 +35,9 @@ class ClientServices extends NrbServices
 
         return DB::transaction(function () use ($client)
         {
-            if ($client->last_subscription)
+            if ($client->latest_subscription)
             {
-                $client->last_subscription->cancel();
+                $client->latest_subscription->cancel();
             }
 
             return $this->respondWithSuccess();
@@ -140,16 +140,16 @@ class ClientServices extends NrbServices
             // Subscribe
             $subscription_id = $request->get('subscription_id');
 
-            if ($is_renew || $client->last_subscription->subscription_id == $subscription_id)
+            if ($is_renew || $client->latest_subscription->subscription_id == $subscription_id)
             {
-                $client->last_subscription->renew();
+                $client->latest_subscription->renew();
             }
             else
             {
-                $client->last_subscription->upgrade();
+                $client->latest_subscription->upgrade();
             }
 
-            $result = $client->purchaseSubscription($subscription_id, current_date_to_string());
+            $result = $client->purchaseSubscription($subscription_id, current_date_to_string(), $request->get('term'));
 
             // @TODO: Pay via PayPal
 

@@ -154,7 +154,7 @@ class Client extends NrbModel
         return $this->hasOne(ClientSubscription::class)->current()->latest();
     }
 
-    public function last_subscription()
+    public function latest_subscription()
     {
         return $this->hasOne(ClientSubscription::class)->latest();
     }
@@ -233,7 +233,7 @@ class Client extends NrbModel
         return $this->approval_status == self::PENDING;
     }
 
-    public function purchaseSubscription($subscription, $start_date)
+    public function purchaseSubscription($subscription, $start_date, $term)
     {
         $client_subscription = NULL;
         if (!($subscription instanceof Subscription))
@@ -245,16 +245,22 @@ class Client extends NrbModel
 
         $client_subscription = new ClientSubscription($subscription->toArray());
 
-        if ($subscription->type == Subscription::TYPE_TRIAL && !$client_subscription->canAvailFreeTrial($client_id))
+        if ($subscription->isTrial())
         {
-            return false;
+            if (!$client_subscription->canAvailFreeTrial($client_id))
+            {
+                return false;
+            }
+
+            $term = null;
         }
 
         $client_subscription->subscription_id   = $subscription->id;
         $client_subscription->client_id         = $client_id;
         $client_subscription->country_id        = $subscription->country_id;
         $client_subscription->status            = ClientSubscription::STATUS_ACTIVE;
-        $client_subscription->setValidity($start_date);
+        $client_subscription->term              = $term;
+        $client_subscription->setValidity($start_date, $term);
         $client_subscription->save();
 
         return $client_subscription;
