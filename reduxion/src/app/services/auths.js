@@ -193,6 +193,16 @@ export default {
       params: payload
     });
   },
+  adminSubscriptionList(payload = {page: 1}) {
+    return get('admin', {params: payload});
+  },
+  getSubscriptionInfo(id) {
+    return get('admin/' + id, {
+      params: {
+        'with-user': 1
+      }
+    });
+  },
 
   // ------- CLIENT -------
   getAvailableUsername(payload) {
