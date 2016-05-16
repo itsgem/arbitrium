@@ -803,7 +803,7 @@ class ClientProfile extends React.Component {
       alt_mobile_code:   [{ rule: 'numeric', label: 'mobile code'}],
       alt_mobile_number: [{ rule: 'numeric', label: 'mobile number'}],
       alt_phone_code:    [{ rule: 'numeric', label: 'phone code'}],
-      alt_phone_number:  [{ rule: 'numeric', label: 'phone numberTest Test'}],
+      alt_phone_number:  [{ rule: 'numeric', label: 'phone number'}],
       alt_position:      [{ rule: 'max:100', label: 'position'}],
       alt_department:    [{ rule: 'max:100', label: 'department'}],
       username:          [
