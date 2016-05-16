@@ -155,11 +155,15 @@ class ClientSubscription extends Subscription
     public function setValidity($date, $term = '')
     {
         $this->valid_from = $date;
-        $this->valid_to   = $this->valid_from->addDays(29); // Monthly and Trial
 
         if ($term == self::TERM_ANNUALLY)
         {
             $this->valid_to = $this->valid_from->addDays(364);
+        }
+        else
+        {
+            // Monthly and Trial
+            $this->valid_to = $this->valid_from->addDays(29);
         }
     }
 }
