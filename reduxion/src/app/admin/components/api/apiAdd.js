@@ -55,8 +55,9 @@ class ApiAdd extends React.Component {
                 <label className="mdl-textfield__label" htmlFor="description">Description *</label>
                 {errors.description && <small className="mdl-textfield__error shown">{errors.description[0]}</small>}
               </div>
+              <p>Add a description to your API key to allow you to filter by key</p>
             </div>
-            <p>Add a description to your API key to allow you to filter by key</p>
+            
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
               <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" />
               <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
@@ -69,8 +70,8 @@ class ApiAdd extends React.Component {
                 <label className="mdl-textfield__label" htmlFor="sample5">Add IP Address...</label>
                 {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
+              <p>Add one IP Address per line separated by line breaks</p>
             </div>
-            <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
               <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
@@ -137,6 +138,9 @@ class ApiAdd extends React.Component {
     } );
   }
   searchClient( e ) {
+    this.setState( {
+      client_id: null,
+    } );
     let payload = {
       company_name: this.refs.client_id.value,
     }
@@ -161,13 +165,12 @@ class ApiAdd extends React.Component {
     } );
 
     let ipAddresses = this.refs.ip_addresses.value;
-    ipAddresses = ipAddresses.split(',');
+    ipAddresses = ipAddresses.split('\n');
     ipAddresses = ipAddresses.map(function(obj){
        let rObj = {};
        rObj = {ip_address: obj.trim()};
        return rObj;
     });
-    console.log('permissions', permissions);
     let payload = {
       client_id: this.state.client_id,
       description: this.refs.description.value,
@@ -194,7 +197,7 @@ class ApiAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    client_id: { rule: 'required', label: 'company name'},
+    client_id: { rule: 'required', label: 'client company'},
     description: { rule: 'required', label: 'description'},
     ip_addresses: [],
     is_whitelist: [],
