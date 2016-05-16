@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
+import {modal, openModal, closeModal} from 'common/components/modal'
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -12,30 +13,31 @@ class ApiList extends React.Component {
       errorServer:null,
       id: null
     };  }
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    modal();
   }
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
+        <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
-        <td width="220" className="mdl-data-table__cell--non-numeric">
+        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            {data.is_active &&
-                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked />
-            }
-            {!data.is_active &&
-                <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" />
-            }
+            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={data.is_active ? true : false} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
           to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          <button
+              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
+              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+            <i className="material-icons">delete</i>
+          </button>
         </td>
       </tr>
     )
@@ -103,44 +105,52 @@ class ApiList extends React.Component {
     let counter = false;
     let alter = false;
     let pagination = [];
-
-    let i=0;
-    counter = true;
-    let apiList = this.props.apiList;
-    let users = apiList.data;
-    pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-    for (i = 1; i <= apiList.last_page; i++) {
-      pagination[i] = this.pagination(i, apiList.current_page);
+    let perPage = 10;
+    let apiList = {last_page: 1};
+    let users = {};
+    if (Object.keys(this.props.ListApiSuccess).length) {
+      let i=0;
+      counter = true;
+      apiList = this.props.ListApiSuccess;
+      users = apiList.data;
+      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
+      for (i = 1; i <= apiList.last_page; i++) {
+        pagination[i] = this.pagination(i, apiList.current_page);
+      }
+      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
+      perPage = apiList.per_page;
     }
-    pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-    let perPage = apiList.per_page;
-
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
-        <dialog className="mdl-dialog">
-          <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+              <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </div>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="company" ref="description"/>
+                <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
                 <label className="mdl-textfield__label">Description</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="email-address" ref="api_key" />
+                <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
                 <label className="mdl-textfield__label">API Key</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="email-address" ref="created_at" />
+                <input className="mdl-textfield__input" type="text" id="created_at" ref="created_at" />
                 <label className="mdl-textfield__label">Date created</label>
               </div>
             </div>
@@ -185,6 +195,21 @@ class ApiList extends React.Component {
       </div>
     );
   }
+  deleteItem () {
+    this.props.adminDeleteApiKey(this.state.id);
+    this.modalClose();
+    $('.msg').html('Successfully deleted').addClass('bg-green');
+    $('.msg').fadeIn(1000, function() {
+      $(this).fadeOut(2000);
+    });
+  }
+  changeActive (e, id, status) {
+    let payload = {
+      id: id,
+      is_active: (status ? 0 : 1)
+    };
+    this.props.isActiveApiKey(payload);
+  }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
@@ -226,60 +251,43 @@ class ApiList extends React.Component {
     let currentPage = this.refs.currentpage.value;
     this.page(e, currentPage);
   }
-  modalConfirm (e, id, company) {
-    let dialog = document.querySelector('dialog');
-    $('dialog label').text(company);
-    dialog.showModal();
+  modalConfirm (e, id, description) {
+    openModal();
     this.setState( {
       id: id
     } );
   }
   modalClose () {
-    let dialog = document.querySelector('dialog');
-    dialog.close();
+    closeModal();
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.company.value = "";
-    this.refs.email_address.value = "";
-    this.refs.status.value = "";
-    this.searchList(e);
+    this.refs.description.value = "";
+    this.refs.api_key.value = "";
+    this.refs.created_at.value = "";
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
-      company_name: this.refs.company.value,
-      email_address: this.refs.email_address.value,
-      approval_status: this.refs.status.value
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
+      description: this.refs.description.value,
+      key: this.refs.api_key.value,
+      date_created: this.refs.created_at.value
     };
-    this.props.adminapiList(payload);
+    this.props.apiList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      company_name: this.refs.company.value,
-      email_address: this.refs.email_address.value,
-      approval_status: this.refs.status.value
+      description: this.refs.description.value,
+      key: this.refs.api_key.value,
+      date_created: this.refs.created_at.value
     };
-    this.props.adminapiList(payload);
+    this.props.apiList(payload);
   }
-  deleteItem () {
-    let dialog = document.querySelector('dialog');
-    this.setState( {
-      loading: true,
-      errors: {},
-      errorServer: null
-    } );
-    $('.msg').html('Successfully deleted').addClass('bg-green');
-    $('.msg').fadeIn(1000, function() {
-      $(this).fadeOut(2000);
-    });
-    this.modalClose();
-    this.props.adminclientDelete(this.state.id);
-  }
-
 };
 
 export default ApiList;

@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
     isCancelEmailChangeSuccess: state.get('clientProfile').get('isCancelEmailChangeSuccess'),
     success: strMapToObj(state.get('clientChangeEmail').get('success')),
     errors: state.get('clientChangeEmail').get('errors'),
-    loading: state.get('clientChangeEmail').get('loading')
+    loading: state.get('clientChangeEmail').get('loading'),
+    isProfileSuccess: state.get('clientChangeEmail').get('isProfileSuccess')
   };
 }
 

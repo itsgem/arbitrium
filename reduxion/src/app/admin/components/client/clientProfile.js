@@ -5,6 +5,8 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 import Country from 'admin/components/country'
+import {modal, openModal, closeModal} from 'common/components/modal'
+
 
 class ClientProfile extends React.Component {
   constructor(props) {
@@ -19,9 +21,7 @@ class ClientProfile extends React.Component {
     };
   }
   componentDidMount() {
-    if ( typeof(window.componentHandler) != 'undefined' ) {
-      setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    }
+    modal();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.client.clientInfo) {
@@ -40,6 +40,9 @@ class ClientProfile extends React.Component {
       this.setState({
         errors: nextProps.errors
       });
+    }
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
   render() {
@@ -82,16 +85,20 @@ class ClientProfile extends React.Component {
 
     let client = this.props.client.clientInfo;
     let status = client.approval_status == 'Pending' ? true : false;
-
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
-        <dialog className="mdl-dialog">
-          <p>Are you sure you want to <label ref="txtNote"></label> this account?<br />This cannot be undone.</p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+              <p>Are you sure you want to {client.user.activated_at ? 'deactivate' : 'activate'} this account?<br />This cannot be undone.</p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </div>
         <div className="required">Required fields</div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--6-col">
@@ -112,8 +119,8 @@ class ClientProfile extends React.Component {
           <div className="mdl-cell mdl-cell--6-col">
             <button
               className={!this.props.validateCompleted || errors.username ?
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope disabled" :
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button disabled" :
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button bg-green" }
               id='check_availability'
               type='button'
               value="disabled"
@@ -199,7 +206,7 @@ class ClientProfile extends React.Component {
                         id='btnClientApproval'
                         type='button'
                         className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
-                        onClick={(e) => this.clienActivateStatus(e)}>
+                        onClick={(e) => this.modalConfirm(e)}>
                           <span>Activate </span>
                           <span className="ion-power icon-con"></span>
                       </button>
@@ -574,20 +581,38 @@ class ClientProfile extends React.Component {
             </div>
           </div>
         </div>
-        <div className="layout-gt-md-row layout-align-end-end btn">
-          <div className="flex-order-gt-md-2 pd-10">
-            <Link
-              className="mdl-button mdl-js-button mdl-button--colored"
-              id='btn-cancel'
-              to="/coffee/client/"
-              >CANCEL</Link>
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--6-col">
+            {
+              client.user.locked_at?
+                <button
+                  id='btnClientApproval'
+                  type='button'
+                  className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
+                  onClick={(e) => this.clientUnlock(e)}>
+                    <span>Unlock </span>
+                    <span className="ion-unlocked icon-con"></span>
+                </button>
+              : null
+            }
           </div>
-          <div className="flex-order-gt-md-2">
-            <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
-              id='btn-save'
-              type='submit'
-              >SAVE</button>
+          <div className="mdl-cell mdl-cell--6-col">
+            <div className="layout-gt-md-row layout-align-end-end btn">
+              <div className="flex-order-gt-md-2 pd-10">
+                <Link
+                  className="mdl-button mdl-js-button mdl-button--colored"
+                  id='btn-cancel'
+                  to="/coffee/client/"
+                  >CANCEL</Link>
+              </div>
+              <div className="flex-order-gt-md-2">
+                <button
+                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+                  id='btn-save'
+                  type='submit'
+                  >SAVE</button>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -625,6 +650,14 @@ class ClientProfile extends React.Component {
   }
 
   // --- Actions
+  activeStatus(e, status) {
+    if (status) {
+      this.clientDeactivateStatus(e);
+    } else {
+      this.clienActivateStatus(e);
+    }
+    closeModal();
+  }
 
   changeApprovalStatus (e) {
     e.preventDefault();
@@ -642,6 +675,10 @@ class ClientProfile extends React.Component {
   clientDeactivateStatus (e) {
     e.preventDefault();
     this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
+  }
+  clientUnlock (e) {
+    e.preventDefault();
+    this.props.client.clientUnlock(this.props.client.clientInfo.user.id);
   }
 
 
@@ -698,13 +735,10 @@ class ClientProfile extends React.Component {
       .catch(setErrors);
   }
   modalConfirm (e) {
-    let dialog = document.querySelector('dialog');
-    //$('dialog label').text(company);
-    dialog.showModal();
+    openModal();
   }
   modalClose () {
-    let dialog = document.querySelector('dialog');
-    dialog.close();
+    closeModal();
   }
 
   // --- Validations

@@ -3,13 +3,15 @@ import Immutable from 'immutable'
 import { createReducer } from 'redux-act';
 import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
+import user from 'services/user';
 
 export const adminUserManagementList = createActionAsync('ADMIN_USER_MANAGEMENT_LIST', auth.adminUserManagementList);
 export const adminUserManagementAdd = createActionAsync('ADMIN_USER_MANAGEMENT_ADD', auth.adminUserManagementAdd);
-export const adminUserManagementEdit = createActionAsync('ADMIN_USER_MANAGEMENT_EDIT', auth.adminUserManagementEdit);
+export const adminUserManagementUpdate = createActionAsync('ADMIN_USER_MANAGEMENT_UPDATE', auth.adminUserManagementUpdate);
 export const deleteAdminAccount = createActionAsync('ADMIN_USER_MANAGEMENT_DELETE', auth.deleteAdminAccount);
 export const getAdminInfo = createActionAsync('GET_ADMIN_INFO', auth.getAdminInfo);
 export const listRoleAdmin = createActionAsync('LIST_ROLE_ADMIN', auth.listRoleAdmin);
+export const adminUnlock = createActionAsync('ADMIN_USER_UNLOCK', user.clientUnlock);
 
 export const validateUsername = createActionAsync('CHECK_USERNAME', auth.validateUsername);
 
@@ -17,13 +19,14 @@ const initialState = Immutable.fromJS({
   adminList: {},
   adminAdd: {},
   adminDelete: false,
-  adminEdit: false,
+  adminUpdate: false,
   adminInfo: {},
   role: {},
   registerCompleted: false,
   deleteSuccess: false,
   loading: false,
-  validateCompleted: false
+  validateCompleted: false,
+  adminUnlockSuccess: false
 });
 
 export default createReducer({
@@ -31,7 +34,7 @@ export default createReducer({
     adminList: payload,
     adminAdd: {},
     adminDelete: false,
-    adminEdit: false,
+    adminUpdate: false,
     adminInfo: {},
     role: {},
     registerCompleted: false,
@@ -41,7 +44,7 @@ export default createReducer({
   [adminUserManagementList.request]: (state) => state.merge({
     adminAdd: {},
     adminDelete: false,
-    adminEdit: false,
+    adminUpdate: false,
     adminInfo: {},
     role: {},
     registerCompleted: false,
@@ -67,20 +70,24 @@ export default createReducer({
   [getAdminInfo.ok]: (state, payload) => state.merge({
     adminInfo: payload,
     registerCompleted: false,
-    adminEdit: false,
-    loading: false}),
+    adminUpdate: false,
+    loading: false,
+    adminUnlockSuccess: false}),
   [getAdminInfo.request]: (state, payload) => state.merge({
     loading: true,
     registerCompleted: false,
-    adminEdit: false,
-    loading: true}),
-  [adminUserManagementEdit.ok]: (state) => state.merge({
-    adminEdit: true,
+    adminUpdate: false,
+    loading: true,
+    adminUnlockSuccess: false}),
+  [adminUserManagementUpdate.ok]: (state) => state.merge({
+    adminUpdate: true,
     loading: false}),
-  [adminUserManagementEdit.request]: (state) => state.merge({
-    adminEdit: false,
+  [adminUserManagementUpdate.request]: (state) => state.merge({
+    adminUpdate: false,
     loading: true}),
   [validateUsername.ok]: (state) => state.merge({validateCompleted: true}),
   [validateUsername.request]: (state) => state.merge({validateCompleted: false}),
   [validateUsername.error]: (state) => state.merge({validateCompleted: false}),
+  [adminUnlock.ok]: (state) => state.merge({adminUnlockSuccess: true, loading: false}),
+  [adminUnlock.request]: (state) => state.merge({adminUnlockSuccess: false, loading: true})
 }, initialState);

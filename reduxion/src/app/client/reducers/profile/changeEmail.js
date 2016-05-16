@@ -13,28 +13,40 @@ const initialState = Immutable.fromJS({
   isCancelEmailChangeSuccess: false,
   success: {},
   errors: {},
+  isProfileSuccess: false,
   loading: false
 });
 
 export default createReducer({
   [clientProfileEmail.ok]: (state, payload) => state.merge({
-    user: state.concat(payload)
+    user: state.concat(payload),
+    loading: false,
+    isProfileSuccess: true
   }),
+
   [updateClientEmail.ok]: (state, payload) => state.merge({
-    success: state.concat(payload)
+    success: state.concat(payload),
+    loading: false,
+    isProfileSuccess: true
   }),
   [updateClientEmail.error]: (state, payload) => state.merge({
-    errors: state.concat(payload)
+    errors: state.concat(payload),
+    loading: false,
+    isProfileSuccess: false
   }),
+
   [cancelEmailChange.ok]: (state, payload) => state.merge({
     success: state.concat(payload),
-    loading: false
+    loading: false,
+    isProfileSuccess: true
   }),
   [cancelEmailChange.error]: (state, payload) => state.merge({
     errors: state.concat(payload),
-    loading: false
+    loading: false,
+    isProfileSuccess: false
   }),
   [cancelEmailChange.request]: (state) => state.merge({
-    loading: true
+    loading: true,
+    isProfileSuccess: false
   })
 }, initialState);

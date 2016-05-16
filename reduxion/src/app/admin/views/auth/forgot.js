@@ -109,11 +109,11 @@ export default React.createClass( {
     let errors = this.state.errors;
     return (
       <div className="login-view">
-         <legend className="forgot-legend">Password Reset</legend>
         <div className="local-login-form">
           <form>
-            <span className="forgot-text"><strong>Enter the email address used when you registered with username and password. </strong></span>
-            <span className="forgot-text">You'll be sent a reset code to change your password.</span>
+            <legend>Password Reset</legend>
+            <p><strong>Enter the email address used when you registered with username and password. </strong></p>
+            <p>You'll be sent a reset code to change your password.</p>
             <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
               <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
@@ -136,17 +136,14 @@ export default React.createClass( {
       return;
     }
     return (
-      <div className="login-view">
-        <legend className="forgot-legend">Step 2 - Check Email</legend>
-        <div className="local-login-form">
-          <div className="step-two-content">
-            <span className="forgot-step-two"><strong>An email has been sent containing your reset link. Click on this link to proceed.</strong></span>
-
-            <span className="forgot-step-two">Please also check your spam folder just in case the reset email ended up there.</span>
-
-            <span className="forgot-step-two">This page can be safely closed.</span>
-          </div>
-        </div>
+      <div className="login-view padding-15">
+          <legend>Step 2 - Check Email</legend>
+          <p>
+            <strong>An email has been sent containing your reset link. Click on the link to proceed.</strong>
+          </p>
+          <p>
+            Please also check your spam folder just in case the reset email ended up there.
+          </p>
       </div>
     );
   },
@@ -162,6 +159,7 @@ export default React.createClass( {
     } );
     let payload ={
       email: this.refs.email.value,
+      user_type: 1,
       callbackUrl: this.state.callbackUrl
     }
 
@@ -174,6 +172,7 @@ export default React.createClass( {
   validateEmail(payload) {
     let rules = new Checkit( {
       email: ['required', 'email'],
+      user_type: [],
       callbackUrl: []
     });
     return rules.run( payload );

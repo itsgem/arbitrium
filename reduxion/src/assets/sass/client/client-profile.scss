@@ -1,4 +1,4 @@
-div#application{
+div#application {
   @media (min-width: 1200px) {
     main {
       width: auto;
@@ -27,6 +27,7 @@ div#application{
   &.bs-callout-warning h4 {color: #aa6708;}
   &.bs-callout-success h4 {color: #53aa29;}
 }
+
 .bs-callout-info {border-left-color: #1b809e;}
 .bs-callout-danger {border-left-color: #ce4844;}
 .bs-callout-warning {border-left-color: #aa6708;}
@@ -64,7 +65,6 @@ div#application{
           }
         }
       }
-
     }
 
     img {
@@ -99,7 +99,7 @@ div#application{
     vertical-align: middle;
   }
   .mdl-icon {
-    margin: 10px;
+    margin: 12px 10px 0;
     font-size: 24px;
     line-height: normal;
     color: #e0e0e0;
@@ -122,7 +122,6 @@ div#application{
 }
 
 .mdl-tabs__tab-bar {
-  background: #3F51B5;
   border-bottom: none;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: flex-start;
@@ -148,50 +147,25 @@ div#application{
   }
 }
 
-.pagination {
-  background: #0e3192;
-  padding: 20px 0;
 
-  .item-to-show {
-    .mdl-button.mdl-button--blue {
-      background: #0e3192 !important;
-      color: #fff;
-    }
+div#application {
+  .client {
+    .section-api-keys {
+      padding: 10px;
 
-    .mdl-icon {
-      margin: 12px 10px 0;
-      font-size: 24px;
-      line-height: normal;
-      color: #e0e0e0;
-      height: 23px;
-
-      .mdl-button--fab.mdl-button--accent {
-        background: #ff6600;
-        color: #fff;
+      main {
+        width: 100%;
       }
-      .mdl-button--active,
-      .mdl-button.mdl-button--fab.mdl-button--active {
-        background: #ff944d;
-        color: #fff;
+
+      .keys-group {
+        margin-bottom: 30px;
       }
-    }
-  }
-  .arbitrium-pagination.mdl-button--mini-fab {
-    font-size: 11px;
-    margin: 0 3px;
-  }
-}
-.section-api-keys {
-  padding: 30px;
 
-  .keys-group {
-    margin-bottom: 30px;
-  }
-
-  .item {
-    label {
-      padding-left: 7px;
-      text-transform: none;
+      .item {
+        label {
+          text-transform: none;
+        }
+      }
     }
   }
 }

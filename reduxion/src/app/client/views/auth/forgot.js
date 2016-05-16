@@ -137,15 +137,11 @@ export default React.createClass( {
     }
     return (
       <div className="login-view">
-        <legend className="forgot-legend">Step 2 - Check Email</legend>
-        <div className="local-login-form">
-          <div className="step-two-content">
-            <span className="forgot-step-two"><strong>An email has been sent containing your reset link. Click on this link to proceed.</strong></span>
 
-            <span className="forgot-step-two">Please also check your spam folder just in case the reset email ended up there.</span>
-
-            <span className="forgot-step-two">This page can be safely closed.</span>
-          </div>
+        <div className="local-login-form padding-15">
+          <legend>Step 2 - Check Email</legend>
+          <p><strong>An email has been sent containing your reset link. Click on the link to proceed.</strong></p>
+          <p>Please also check your spam folder just in case the reset email ended up there.</p>
         </div>
       </div>
     );
@@ -162,6 +158,7 @@ export default React.createClass( {
     } );
     let payload ={
       email: this.refs.email.value,
+      user_type: 2,
       callbackUrl: this.state.callbackUrl
     }
 
@@ -174,6 +171,7 @@ export default React.createClass( {
   validateEmail(payload) {
     let rules = new Checkit( {
       email: ['required', 'email'],
+      user_type: [],
       callbackUrl: []
     });
     return rules.run( payload );

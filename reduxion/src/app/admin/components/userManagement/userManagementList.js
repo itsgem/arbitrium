@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import {modal, openModal, closeModal} from 'common/components/modal'
 
 class UserManagementList extends React.Component {
   constructor(props) {
@@ -9,10 +10,11 @@ class UserManagementList extends React.Component {
       errorServer:null
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    modal();
   }
   userDisplay (id, key, data, alter) {
     return (
@@ -116,15 +118,18 @@ class UserManagementList extends React.Component {
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
-        <dialog className="mdl-dialog">
-          <p>
-            Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.
-          </p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+               <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </div>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
@@ -155,7 +160,7 @@ class UserManagementList extends React.Component {
                 <th className="mdl-data-table__cell--non-numeric">Email Address</th>
                 <th className="mdl-data-table__cell--non-numeric">Name</th>
                 <th className="mdl-data-table__cell--non-numeric">Stats</th>
-                <th className="mdl-data-table__cell--non-numeric">View / Edit</th>
+                <th className="mdl-data-table__cell--non-numeric">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -226,26 +231,25 @@ class UserManagementList extends React.Component {
     this.page(e, currentPage);
   }
   modalConfirm (e, id, name) {
-    let dialog = document.querySelector('dialog');
-    dialog.showModal();
-    $('dialog label').text(name);
+    document.querySelector('.msg-box p label').innerHTML = name;
+    openModal();
     this.setState( {
       id: id
     } );
   }
   modalClose () {
-    let dialog = document.querySelector('dialog');
-    dialog.close();
+    closeModal();
   }
   clearSearch(e) {
     e.preventDefault();
     this.refs.email_address.value = "";
     this.refs.name.value = "";
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       email_address: this.refs.email_address.value,
       name: this.refs.name.value
     };

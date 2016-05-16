@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CountrySeeder::class);
         $this->call(SystemSettingSeeder::class);
         $this->call(DropdownListSeeder::class);
+        $this->call(SubscriptionsSeeder::class);
 
         Model::reguard();
     }

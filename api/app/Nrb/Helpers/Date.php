@@ -16,6 +16,36 @@ function current_date()
     return Carbon::today();
 }
 
+function current_date_add_days($days = 0)
+{
+    return current_date()->addDays($days);
+}
+
+function current_date_add_months($months = 0, $days_offset = 0)
+{
+    return current_date()->addMonths($months)->subDays($days_offset);
+}
+
+function current_date_add_years($years = 0, $days_offset = 0)
+{
+    return current_date()->addYears($years)->subDays($days_offset);
+}
+
+function current_date_sub_days($days = 0)
+{
+    return current_date()->subDays($days);
+}
+
+function current_date_sub_months($months = 0, $days_offset = 0)
+{
+    return current_date()->subMonths($months)->subDays($days_offset);
+}
+
+function current_date_sub_years($years = 0, $days_offset = 0)
+{
+    return current_date()->subYears($years)->subDays($days_offset);
+}
+
 function current_date_to_string()
 {
     return format_date_to_string(current_date());

@@ -10,33 +10,30 @@ export default React.createClass( {
   componentWillMount(){
     this.props.apiList({per_page: 10});
   },
-  loading() {
-    return (
-        <div id="client_add">
-          LOADING
-        </div>
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+      this.props.apiList({per_page: 10});
+    }
   },
   render() {
-    if (Object.keys(this.props.ListApiSuccess).length) {
-      return (
-        <div id="client_add">
-          <DocTitle
-            title="API List"
-          />
-          <div className="client-tab">
-            <label className="mdl-layout__tab is-active">List of API keys</label>
-            <Link
-                className='mdl-layout__tab'
-                to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
-          </div>
-          <ApiList
-            apiList={this.props.ListApiSuccess}
-            />
+    return (
+      <div id="client_add">
+        <DocTitle
+          title="API List"
+        />
+        <div className="client-tab">
+          <label className="mdl-layout__tab is-active">List of API keys</label>
+          <Link
+              className='mdl-layout__tab'
+              to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
         </div>
-      );
-    } else {
-      return this.loading();
-    }
+        <ApiList
+          ListApiSuccess={this.props.ListApiSuccess}
+          apiList={this.props.apiList}
+          isActiveApiKey={this.props.isActiveApiKey}
+          adminDeleteApiKey={this.props.adminDeleteApiKey}
+          />
+      </div>
+    );
   }
 } );

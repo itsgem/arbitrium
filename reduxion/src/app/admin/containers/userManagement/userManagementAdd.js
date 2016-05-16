@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { adminUserManagementAdd, listRoleAdmin, validateUsername } from 'admin/reducers/userManagement'
-import ViewUserManagementAdd from 'admin/views/usermanagement/userManagementAdd';
+import ViewUserManagementAdd from 'admin/views/userManagement/userManagementAdd';
 
 const mapStateToProps = (state) => {
   return {

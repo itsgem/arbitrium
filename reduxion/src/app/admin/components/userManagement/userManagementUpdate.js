@@ -5,7 +5,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 
-class UserManagementEdit extends React.Component {
+class UserManagementUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,8 +60,8 @@ class UserManagementEdit extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <button
                 className={!this.props.validateCompleted || errors.username ?
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope disabled" :
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button disabled" :
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button bg-green" }
                 id='check_availability'
                 type='button'
                 value="disabled"
@@ -162,20 +162,38 @@ class UserManagementEdit extends React.Component {
             </div>
 
           </div>
-          <div className="layout-gt-md-row layout-align-end-end btn">
-            <div className="flex-order-gt-md-2 pd-10">
-              <Link
-                className="mdl-button mdl-js-button mdl-button--colored"
-                id='btn-cancel'
-                to="/coffee/account/"
-                >CANCEL</Link>
+          <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--6-col">
+              {
+                userInfo.get('user').get("locked_at")?
+                  <button
+                    id='btnClientApproval'
+                    type='button'
+                    className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
+                    onClick={(e) => this.adminUnlock(e, userInfo.get("user").get("id"))}>
+                      <span>Unlock </span>
+                      <span className="ion-unlocked icon-con"></span>
+                  </button>
+                : null
+              }
             </div>
-            <div className="flex-order-gt-md-2">
-              <button
-                className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                id='btn-save'
-                type='button'
-                onClick={(e) => this.edit(e, userInfo.get("id"))}>SAVE</button>
+            <div className="mdl-cell mdl-cell--6-col">
+              <div className="layout-gt-md-row layout-align-end-end btn">
+                <div className="flex-order-gt-md-2 pd-10">
+                  <Link
+                    className="mdl-button mdl-js-button mdl-button--colored"
+                    id='btn-cancel'
+                    to="/coffee/account/"
+                    >CANCEL</Link>
+                </div>
+                <div className="flex-order-gt-md-2">
+                  <button
+                    className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    id='btn-save'
+                    type='button'
+                    onClick={(e) => this.update(e, userInfo.get("id"))}>UPDATE</button>
+                </div>
+              </div>
             </div>
           </div>
       </form>
@@ -198,7 +216,7 @@ class UserManagementEdit extends React.Component {
       this.refs.checkUser.value = "not-disabled";
     }
   }
-  edit ( e, id ) {
+  update ( e, id ) {
     e.preventDefault();
     this.setState( {
       loading: true,
@@ -218,9 +236,9 @@ class UserManagementEdit extends React.Component {
       role_id: role_id.value
     };
     window.componentHandler.upgradeDom();
-    return validateEdit.call( this, payload )
+    return validateUpdate.call( this, payload )
       .with( this )
-      .then( editAdmin )
+      .then( updateAdmin )
       .catch( setErrors );
   }
   checkUsername( e ) {
@@ -242,6 +260,11 @@ class UserManagementEdit extends React.Component {
       .then( getUsername )
       .catch( setErrors );
   }
+  adminUnlock (e, id) {
+    e.preventDefault();
+    this.props.adminUnlock(id);
+  }
+
 
 };
 
@@ -251,7 +274,7 @@ function mapObject(object, callback) {
     });
 }
 
-function validateEdit ( payload) {
+function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
@@ -264,8 +287,8 @@ function validateEdit ( payload) {
     } );
     return rules.run( payload );
 }
-function editAdmin (payload) {
-  return this.props.adminUserManagementEdit(payload);
+function updateAdmin (payload) {
+  return this.props.adminUserManagementUpdate(payload);
 }
 
 function validateUsername( payload ) {
@@ -282,8 +305,8 @@ function setErrors( e ) {
   this.setState(createError(e));
 }
 
-UserManagementEdit.mixins = [LinkedStateMixin];
-UserManagementEdit.defaultProps = {
+UserManagementUpdate.mixins = [LinkedStateMixin];
+UserManagementUpdate.defaultProps = {
     errors: []
 };
-export default UserManagementEdit;
+export default UserManagementUpdate;

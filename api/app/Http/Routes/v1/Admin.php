@@ -11,8 +11,10 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
             Route::group(['prefix' => 'api-key'], function()
             {
                 Route::get('generate',            ['uses' => 'ApiKeyController@generate']);
+
                 Route::group(['prefix' => '{api_key}'], function()
                 {
+                    Route::patch('activate',      ['uses' => 'ApiKeyController@activate']);
                     Route::post('permission',     ['uses' => 'ApiKeyController@addPermission']);
                     Route::patch('permission',    ['uses' => 'ApiKeyController@updatePermission']);
                     Route::delete('permission',   ['uses' => 'ApiKeyController@removePermission']);
@@ -30,8 +32,23 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()
         {
-            Route::patch('{client}/approve',    ['uses' => 'ClientsController@approve']);
-            Route::patch('{client}/disapprove', ['uses' => 'ClientsController@disapprove']);
+            Route::group(['prefix' => '{client}'], function()
+            {
+                Route::patch('approve',    ['uses' => 'ClientsController@approve']);
+                Route::patch('disapprove', ['uses' => 'ClientsController@disapprove']);
+
+                Route::group(['prefix' => 'subscription'], function()
+                {
+                    Route::post('',        ['uses' => 'ClientsController@purchaseSubscription']);
+                    Route::patch('cancel', ['uses' => 'ClientsController@cancelSubscription']);
+                });
+            });
+
+            Route::group(['prefix' => 'subscription'], function()
+            {
+                Route::get('',         ['uses' => 'ClientsController@getSubscriptionHistory']);
+                Route::get('current',  ['uses' => 'ClientsController@getSubscription']);
+            });
 
             Route::group(['middleware' => 'valid.client_id'], function()
             {
@@ -59,8 +76,8 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
             Route::get('client',    ['uses' => 'LogsController@showClientLogs']);
         });
 
-        //-- PRICING BY SUBSCRIPTIONS
-        Route::resource('subscription', 'SubscriptionsController',      ['except' => ['create']]);
+        //-- SUBSCRIPTIONS
+        Route::resource('subscription', 'SubscriptionsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
          //-- SYSTEM SETTINGS
         Route::get('system-setting/{segment}',  ['uses' => 'SystemSettingsController@get']);

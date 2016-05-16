@@ -29,8 +29,8 @@ export default React.createClass( {
                       className="mdl-button mdl-js-button">API</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-api">
-                      <li className="mdl-menu__item"><a href="/coffee/api/">API List</a></li>
-                      <li className="mdl-menu__item"><a href="/coffee/api/new/">Add New API</a></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/api/">API List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API</Link></li>
                     </ul>
                   </div>
                   <div className="container">
@@ -68,5 +68,5 @@ export default React.createClass( {
         <div className="msg">Success message</div>
       </header>
     );
-  }
+  },
 } );

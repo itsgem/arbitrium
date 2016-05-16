@@ -14,7 +14,11 @@ class LocalAuthenticationFormSignup extends React.Component {
       loading:false
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
   render() {
     let {errors} = this.props;
     return (
@@ -141,7 +145,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               <div className="mdl-cell mdl-cell--4-col">
                 <div className={this.formClassNames('rep_gender')}>
                     <select
-                      className="mdl-select__input"
+                      className="mdl-textfield__input"
                       id='rep_gender'
                       ref="rep_gender" >
                       <option value=""></option>

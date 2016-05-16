@@ -52,6 +52,14 @@ class NrbModel extends Model
     }
 
     //---------- scopes
+    public function scopeId($query, $id)
+    {
+        if ($id)
+        {
+            return $query->where('id', $id);
+        }
+    }
+
     public function scopeDateFrom($query, $field, $from, $time = false)
     {
         if ($from)

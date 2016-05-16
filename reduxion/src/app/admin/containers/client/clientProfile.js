@@ -8,7 +8,8 @@ import {
   validateUsername,
   clientActivate,
   clientDeactivate,
-  country
+  country,
+  clientUnlock
 } from 'admin/reducers/clientProfile'
 
 //import { country } from '../../auth/reducers/country'
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
     clientProfileSuccess: state.get('clientadmin').get('clientProfileSuccess'),
     clientApproveSuccess: state.get('clientadmin').get('clientApproveSuccess'),
     clientDisapproveSuccess: state.get('clientadmin').get('clientDisapproveSuccess'),
+    clientUnlockSuccess: state.get('clientadmin').get('clientUnlockSuccess'),
 
     clientActivateSuccess: state.get('clientadmin').get('clientActivateSuccess'),
     clientDeactivateSuccess: state.get('clientadmin').get('clientDeactivateSuccess'),
@@ -40,6 +42,7 @@ export default connect(mapStateToProps, {
   clientUpdateProfile,
   validateUsername,
   clientActivate,
-  clientDeactivate
+  clientDeactivate,
+  clientUnlock
 
 })(AdminClientProfile)

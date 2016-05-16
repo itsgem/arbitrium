@@ -3,12 +3,14 @@ import Immutable from 'immutable'
 import { createReducer } from 'redux-act';
 import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
+import user from 'services/user';
 
 export const clientProfile = createActionAsync('CLIENTPROFILE', auth.clientProfile);
 export const clientApprove = createActionAsync('CLIENTAPPROVE', auth.clientApprove);
 export const clientDisapprove = createActionAsync('CLIENTDISAPPROVE', auth.clientDisapprove);
 export const clientActivate = createActionAsync('CLIENT_ACTIVATE', auth.clientActivate);
 export const clientDeactivate = createActionAsync('CLIENT_DEACTIVATE', auth.clientDeactivate);
+export const clientUnlock = createActionAsync('CLIENT_UNLOCK', user.clientUnlock);
 
 export const validateUsername = createActionAsync('VALIDATE_USERNAME', auth.validateUsername);
 export const clientAdd = createActionAsync('CLIENT_ADD', auth.adminClientAdd);
@@ -26,12 +28,13 @@ const initialState = Immutable.fromJS({
   clientActivateSuccess: false,
   clientDeactivateSuccess: false,
   clientDeleteSuccess: false,
+  clientUnlockSuccess: false,
   loading: false,
   registerCompleted: false,
   updateCompleted: false,
   validateCompleted: false,
   clientList: {},
-  countryList: {}
+  countryList: {},
 });
 
 export default createReducer({
@@ -43,7 +46,8 @@ export default createReducer({
     clientDeactivateSuccess: false,
     updateCompleted: false,
     loading: false,
-    validateCompleted: false
+    validateCompleted: false,
+    clientUnlockSuccess: false
   }),
   [clientProfile.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -52,7 +56,8 @@ export default createReducer({
     clientDeactivateSuccess: false,
     updateCompleted: false,
     loading: true,
-    validateCompleted: false }),
+    validateCompleted: false,
+    clientUnlockSuccess: false }),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -98,5 +103,8 @@ export default createReducer({
   [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true, loading: false}),
   [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true}),
   [country.ok]: (state, payload) => state.merge({countryList: payload, validateCompleted: false}),
-  [country.request]: (state) => state.merge({validateCompleted: false})
+  [country.request]: (state) => state.merge({validateCompleted: false}),
+  [clientUnlock.ok]: (state) => state.merge({clientUnlockSuccess: true, loading: false}),
+  [clientUnlock.request]: (state) => state.merge({clientUnlockSuccess: false, loading: true})
+
 }, initialState);

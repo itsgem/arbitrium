@@ -4,7 +4,7 @@ import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 
-class ClientProfile extends React.Component {
+class ClientChangeEmail extends React.Component {
 
   constructor(props) {
     super(props);
@@ -30,10 +30,10 @@ class ClientProfile extends React.Component {
       });
     }
 
-    if (nextProps.responseSuccess) {
-      this.setState({
-        success: nextProps.responseSuccess
-      });
+    if(nextProps.success === true && Object.keys(nextProps.responseSuccess).length>0) {
+      setTimeout(() =>{
+        window.location.href ="/i/client/profile";
+      },3000);
     }
 
     if (nextProps.errors) {
@@ -44,6 +44,19 @@ class ClientProfile extends React.Component {
   }
 
   render() {
+    if(this.props.success){
+      let message = null;
+      let success = this.props.responseSuccess;
+      let notification = document.querySelector('.mdl-snackbar');
+      message = success.message;
+      if(message){
+        notification.MaterialSnackbar.showSnackbar( {
+          message: message,
+          timeout: 3000
+        });
+      }
+    }
+
     if (!this.props.user || !this.state.client) {
       return (<div className="mdl-grid"></div>);
     }
@@ -57,13 +70,12 @@ class ClientProfile extends React.Component {
 
     return (
       <div>
-        { this.renderSuccess() }
         { this.renderError() }
         <form onSubmit={ this.onSubmitProfile.bind(this) }>
           <legend>Change Email Address</legend>
           <div className="">
-            <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-grid mdl-grid--no-spacing">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('email_address', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -78,8 +90,8 @@ class ClientProfile extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-grid mdl-grid--no-spacing">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('new_email_address', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -96,7 +108,7 @@ class ClientProfile extends React.Component {
           </div>
           <div className="mdl-button-group">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
               type="submit"
               >
               Request Reset Email
@@ -229,13 +241,13 @@ class ClientProfile extends React.Component {
   }
 }
 
-ClientProfile.mixins = [LinkedStateMixin];
+ClientChangeEmail.mixins = [LinkedStateMixin];
 
-ClientProfile.defaultProps = {
+ClientChangeEmail.defaultProps = {
   errors: []
 };
 
-export default ClientProfile;
+export default ClientChangeEmail;
 
 /**
  * mapObject

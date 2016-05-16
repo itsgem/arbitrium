@@ -13,7 +13,7 @@ class SubscriptionServices extends NrbServices
     public function destroy($id)
     {
         $subscription = Subscription::findOrFail($id);
-        if ($subscription->canDelete())
+        if (is_admin_user_logged_in())
         {
             $subscription->delete();
             return $this->respondWithSuccess($subscription);
@@ -22,20 +22,21 @@ class SubscriptionServices extends NrbServices
     }
 
     // Admin\SubscriptionsController::index
-    // Client\SubscriptionsController::index
+    // SubscriptionsController::index
     public function index()
     {
-        return $this->respondWithSuccess(
-            Subscription::orderBy('price_in_credit')->get()
-        );
+        $subscription = Subscription::get();
+        $this->addResponseData($subscription);
+        return $this->respondWithSuccess();
     }
 
     // Admin\SubscriptionsController::show
+    // SubscriptionsController::show
     public function show($id)
     {
         $subscription = Subscription::findOrFail($id);
         $this->addResponseData($subscription);
-        return $this->respondWithSuccess(['can_delete' => $subscription->canDelete()]);
+        return $this->respondWithSuccess();
     }
 
     // Admin\SubscriptionsController::store

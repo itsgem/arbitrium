@@ -1,7 +1,3 @@
-.login-frame .link {
-  color: #336;
-}
-
 .full-width {
   width: 100%;
   max-width: 100%;
@@ -13,55 +9,53 @@ div#application {
     margin-top: 0;
   }
 
-  @media (min-width: 1200px) {
-    #signup {
-      .signup-view {
-        -webkit-flex: 0 0 70%;
-        -ms-flex: 0 0 70%;
-        flex: 0 0 70%;
-        max-width: 70%;
-        max-height: 100%;
-        box-sizing: border-box;
-        margin: auto;
-      }
-
-      form {
-        width: auto!important;
-      }
-
-      .sign-top {
-        background-color: $base-blue;
-        border-radius: 5px 5px 0 0;
-        color: #fff;
-        text-align: left;
-        padding: 20px;
-
-        .mdl-typography--headline, p {
-          margin-bottom: 0;
-        }
-      }
-
-      .view {
-        color: #eceff1;
-        font-weight: 700;
-        height: 26px;
-        padding-top: 2px;
-      }
-
-      .text-small {
-        color: #b0bec5;
-        font-size: 12px;
-      }
-
-      .mdl-layout__content{
-        width: 100%;
-      }
-    }
-
-    .login-view {
-      width: 312px;
+  #signup {
+    .signup-view {
+      -webkit-flex: 0 0 70%;
+      -ms-flex: 0 0 70%;
+      flex: 0 0 70%;
+      max-width: 70%;
+      max-height: 100%;
+      box-sizing: border-box;
       margin: auto;
     }
+
+    form {
+      width: auto!important;
+    }
+
+    .sign-top {
+      background-color: $base-blue;
+      border-radius: 5px 5px 0 0;
+      color: #fff;
+      text-align: left;
+      padding: 20px;
+
+      .mdl-typography--headline, p {
+        margin-bottom: 0;
+      }
+    }
+
+    .view {
+      color: #eceff1;
+      font-weight: 700;
+      height: 26px;
+      padding-top: 2px;
+    }
+
+    .text-small {
+      color: #b0bec5;
+      font-size: 12px;
+    }
+
+    .mdl-layout__content{
+      width: 100%;
+    }
+  }
+
+  .login-view {
+    width: 312px;
+    margin: auto;
   }
 }
 

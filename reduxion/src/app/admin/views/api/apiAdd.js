@@ -7,8 +7,19 @@ export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
+  componentWillMount(){
+    this.props.getApiPermission();
+  },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.registerApiSuccess && !nextProps.loading) {
+      $('.msg').html('API Key Successfully Added').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.context.router.push('/coffee/api/');
+    }
+  },
   render() {
-    //this.renderSuccess();
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
@@ -20,7 +31,11 @@ export default React.createClass( {
           to="/coffee/api/">List of API keys</Link>
         <a className="mdl-layout__tab is-active">Add New API key<i className="material-icons add">add</i></a>
       </div>
-        <ApiAdd />
+        <ApiAdd
+          registerApi={this.props.registerApi}
+          clientList={this.props.clientList}
+          apiPermissions={this.props.apiPermissions}
+          adminClientList={this.props.adminClientList}/>
       </div>
     );
   }

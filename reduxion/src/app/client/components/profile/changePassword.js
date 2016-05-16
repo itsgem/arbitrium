@@ -60,11 +60,11 @@ class ClientChangePassword extends React.Component {
 
     return (
       <div>
-        <form onSubmit={ this.onSubmitChangePassword.bind(this) }>
+        <form>
           <legend>Change password</legend>
           <div className="">
-            <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-grid mdl-grid--no-spacing">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('current_password', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -77,8 +77,8 @@ class ClientChangePassword extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-grid mdl-grid--no-spacing">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('password', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -91,8 +91,8 @@ class ClientChangePassword extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-grid mdl-grid--no-spacing">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className={this.formClassNames('password_confirmation', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -106,16 +106,17 @@ class ClientChangePassword extends React.Component {
               </div>
             </div>
           </div>
-          <div className="mdl-button-group">
+          <div className="mdl-button-group padding-15">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
               type="submit"
+              onClick={(e) => this.onSubmitChangePassword(e) }
               >
               Save
             </button>
             <button
-              className="mdl-button mdl-js-button mdl-button--raised"
-              type="reset"
+              className="mdl-button mdl-js-button mdl-button--raised "
+              onClick={(e) =>this.clearRender(e)}
               >
               Cancel
             </button>
@@ -126,7 +127,20 @@ class ClientChangePassword extends React.Component {
   }
 
   // --- Render
-
+  clearRender (e) {
+    this.setState({
+    success: {},
+    errors: {},
+    errorServer: null
+    });
+    e.preventDefault();
+    this.refs.current_password.value = '';
+    this.refs.password.value = '';
+    this.refs.password_confirmation.value = '';
+    for (let item of document.querySelectorAll('.is-dirty')) {
+        item.classList.remove('is-dirty');
+    }
+  }
   renderError() {
     let error = this.state.errorServer;
     if(!error) return;

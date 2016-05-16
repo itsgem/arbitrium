@@ -1,6 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
-import UserManagementAdd from 'admin/components/usermanagement/userManagementAdd';
+import UserManagementAdd from 'admin/components/userManagement/userManagementAdd';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -12,7 +12,7 @@ export default React.createClass( {
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.registerCompleted && !nextProps.loading) {
-      $('.msg').html('Client Successfully Added').addClass('bg-green');
+      $('.msg').html('Admin User Successfully Added').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });

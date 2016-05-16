@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\v1\Admin;
 
+use App\Errors;
+use App\Models\Subscription;
 use App\Nrb\Http\v1\Requests\NrbRequest;
 
 // Admin/SubscriptionsController::store
@@ -19,39 +21,55 @@ class SubscriptionRequest extends NrbRequest
         $method = $this->method();
         if ($method == 'POST' || $method == 'PUT')
         {
-            $id = 'NULL';
-            if ($method == 'PUT')
-            {
-                $id = last($this->segments());
-            }
             $rules = [
-                'name'              => 'required|max:20|unique:subscriptions,name,'.$id.',id,deleted_at,NULL',
-                'price_in_credit'   => 'required|integer',
-                'max_questions'     => 'required|integer',
-                'max_surveys'       => 'required|integer',
-                'max_responses'     => 'required|integer',
-                'has_email_support' => 'required|boolean',
-                'has_templates'     => 'required|boolean',
-                'multi_language'    => 'required|integer|in:0,1,2',
-                'has_export_data'   => 'required|boolean',
-                'has_real_time_reporting'   => 'required|boolean',
-                'statistical_analysis'      => 'required|integer|in:0,1,2',
-                'tbl_graph_charts'          => 'required|integer|in:0,1,2',
-                'has_skip_question_logic'   => 'required|boolean',
-                'can_edit_survey_questions' => 'required|boolean',
-                'can_embed_media'           => 'required|boolean',
-                'can_customize_invite'      => 'required|boolean',
-                'can_randomize_questions'   => 'required|boolean',
-                'can_add_open_ended_questions' => 'required|boolean',
-                'can_theme'                 => 'required|boolean',
-                'has_data_validation'       => 'required|boolean',
-                'has_incentive_payments'    => 'required|boolean',
-                'has_respondent_management' => 'required|boolean',
-                'has_call_support'  => 'required|boolean',
-                'has_piping'        => 'required|boolean'
+                'name'                    => 'required',
+                'type'                    => 'required|in:'.Subscription::TYPE_TRIAL.','.Subscription::TYPE_PLAN,
+                'country_id'              => 'required|exists:countries,id',
+                'fee_monthly'             => 'required|money',
+                'fee_monthly_maintenance' => 'required|money',
+                'fee_yearly'              => 'required|money',
+                'fee_yearly_license'      => 'required|money',
+                'fee_yearly_maintenance'  => 'required|money',
+                'fee_initial_setup'       => 'required|money',
+                'max_api_calls'           => 'required|integer|min:0',
+                'max_decisions'           => 'required|integer|min:0',
+                'discounts'               => 'required|money'
             ];
         }
 
         return $rules;
+    }
+
+    public function validate()
+    {
+        $errors = [];
+        // validate based on the rules defined above
+        $instance = $this->getValidatorInstance();
+        if (!$instance->passes())
+        {
+            $errors = $instance->errors()->toArray();
+        }
+        else
+        {
+            // Validate that there should only be one TRIAL subscription
+            if ($this->get('type') == Subscription::TYPE_TRIAL)
+            {
+                if (Subscription::type(Subscription::TYPE_TRIAL)->count() > 0)
+                {
+                    $errors['type'] = trans('errors.'.Errors::EXISTING_TRIAL_SUBSCRIPTION);
+                }
+            }
+        }
+
+        if (!empty($errors))
+        {
+            $this->errors = $errors;
+            $this->failedValidation($instance);
+        }
+    }
+
+    public function response(array $errors)
+    {
+        return parent::response($this->errors);
     }
 }

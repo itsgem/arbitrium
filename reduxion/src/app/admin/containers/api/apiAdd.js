@@ -1,13 +1,24 @@
 import { connect } from 'react-redux';
-//import {apiManagement} from '../reducers/apiManagement'
+import { registerApi, getApiPermission } from 'admin/reducers/api'
+import { adminClientList } from 'admin/reducers/clientProfile'
 import ApiAdd from 'admin/views/api/apiAdd';
+
+const strMapToObj=(strMap) => {
+  let obj = JSON.parse(JSON.stringify(strMap));
+  return obj;
+}
+
 
 const mapStateToProps = (state) => {
   return {
-  	test: 'test'
-    //clientList: state.get('clientadmin').get('clientList'),
+    loading: state.get('AdminApi').get('loading'),
+    apiPermissions: strMapToObj(state.get('AdminApi').get('apiPermissions')),
+    apiPermissionsError: strMapToObj(state.get('AdminApi').get('apiPermissionsError')),
+    registerApiSuccess: strMapToObj(state.get('AdminApi').get('registerApiSuccess')),
+    clientList: strMapToObj(state.get('clientadmin').get('clientList')),
   };
 }
 
 export default connect(mapStateToProps, {
+  registerApi, adminClientList, getApiPermission
 })(ApiAdd)

@@ -17,6 +17,8 @@ import clientProfile from 'client/reducers/profile/profile'
 import clientChangePassword from 'client/reducers/profile/changePassword'
 import clientChangeEmail from 'client/reducers/profile/changeEmail'
 
+import ClientApi from 'client/reducers/api'
+
 export default combineReducers({
   router,
   AdminAuth,
@@ -29,5 +31,6 @@ export default combineReducers({
   ClientCountry,
   clientProfile,
   clientChangePassword,
-  clientChangeEmail
+  clientChangeEmail,
+  ClientApi
 })

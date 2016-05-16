@@ -8,9 +8,16 @@
 .mdl-textfield__input {
   font-size: inherit;
 }
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+.mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
+.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
+  color: $base-blue;
+}
 
 .mdl-textfield__label {
   font-size: inherit;
+  opacity: 1;
+  top: 20px;
 }
 
 /*
@@ -74,12 +81,10 @@ select:focus {
 */
 .mdl-button {
   font-size: 15px;
-  
-  &:hover {
-    background: $base-orange;
-  }
 }
 
+.mdl-button--accent.mdl-button--accent.mdl-button--raised,
+.mdl-button--accent.mdl-button--accent.mdl-button--fab,
 .mdl-button.mdl-button--accent,
 .mdl-button--accent {
   color: #fff;
@@ -90,10 +95,6 @@ select:focus {
   width: 100%;
 }
 
-/*
-* Menus
-*/
-
 #application{
   .coffee{
     .mdl-grid{
@@ -103,9 +104,17 @@ select:focus {
   }
 }
 
+/*
+* MDL Menu
+*/
+.mdl-menu {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .mdl-menu__item {
   color: #777;
-  font-size: 11px;
+
   > a {
     color: inherit;
   }
@@ -114,86 +123,20 @@ select:focus {
 nav {
   display: block;
   height: 100%;
+
   a {
     color: inherit;
     float: left;
   }
 }
 
-.irx-header {
-  .mdl-layout__drawer-button {
-    background: none;
-    color: inherit;
-    font-family: 'ionicons';
-    line-height: 44px;
-    outline: none;
-    height: 44px;
-    width: 44px;
-
-    .material-icons {
-      display: none;
-    }
-    &:before {
-      content: "\f394";
-    }
-  }
-  .mdl-layout-title {
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    color: #999;
-    letter-spacing: 0;
-  }
-  .mdl-layout__header-row {
-    background: #fff;
-    padding-right: 0;
-
-    > div {
-      min-height: 100%;
-    }
-
-    .irx-navigation {
-      > a {
-        border-left: 1px solid #eaeaea;
-        border-right: 1px solid #fcfcfc;
-      }
-    }
-
-    .mdl-menu__container {
-      .mdl-menu {
-        padding: 0;
-      }
-      .mdl-menu__outline {
-        width: 200px;
-      }
-    }
-    .mdl-menu__item {
-      width: 200px;
-    }
-
-    .mdl-navigation__link {
-      color: inherit;
-      font-size: 12px;
-    }
-
-    .mdl-textfield--expandable {
-      padding: 0;
-
-      .mdl-textfield__input {
-        font-size: 14px;
-        font-weight: 300;
-      }
-
-      .mdl-button {
-        bottom: 0;
-      }
-
-      &.is-focused {
-        .mdl-button--icon {
-          opacity: 0;
-        }
-      }
-    }
+/*
+* MDL Layout - header part
+*/
+.theme-arbitrium.mdl-layout {
+  .mdl-layout__drawer header,
+  .mdl-layout__header {
+    background: $base-blue;
   }
 }
 
@@ -317,6 +260,7 @@ $loader-height: 16;
 
 $loader-start-height: 6px;
 $loader-max-height: 16px;
+
 @keyframes bubblingG {
   0% {
     width: $loader-start-height;
@@ -394,6 +338,106 @@ $loader-max-height: 16px;
     height: $loader-max-height;
     background-color:rgb(255,255,255);
     -moz-transform: translateY(-20px);
+  }
+}
+
+select {
+    border-bottom-right-radius:0;
+    border-bottom-left-radius: 0;
+}
+
+.mdl-data-table {
+  font-size: 15px;
+
+  th {
+    font-weight: normal;
+    font-size: 15px;
+  color: #444;
+    padding: 12px 18px;
+    vertical-align: middle;
+  }
+
+  thead {
+
+  }
+
+  tbody {
+    tr {
+      td {
+        font-size: 15px;
+        color: #444;
+      }
+    }
+  }
+}
+
+.table-client-list {
+  width: 100%;
+
+  thead {
+    .thead-title--key {
+      width: 30%;
+    }
+
+    .thead-title--action {
+      width: 17%;
+    }
+
+    tr {
+      background: #e3ecf5;
+
+      th {
+        font-weight: 700;
+        font-size: 15px;
+      }
+    }
+  }
+
+  tbody {
+    .btn-action {
+      .mdl-switch {
+        width: 23%;
+      }
+      button {
+        margin-left: 14px;
+      }
+    }
+
+    tr {
+      .mdl-button--fab {
+        height: 36px;
+        min-width: 36px;
+        width: 36px;
+      }
+      &.bg-dark{
+        background: #f5fafe;
+
+        td {
+          border: 0px;
+        }
+      }
+
+      &.bg-light{
+        background: #fbfeff;
+
+        td {
+          border: 0px;
+        }
+      }
+      .mdl-switch {
+        width: 60%;
+      }
+      td {
+        .btn-view-edit{
+          background: #ff6600;
+          margin-right: 6px;
+        }
+
+        .btn-delete{
+          background: #ff4a4a;
+        }
+      }
+    }
   }
 }
 

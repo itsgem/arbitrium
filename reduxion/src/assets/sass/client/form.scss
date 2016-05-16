@@ -2,51 +2,31 @@ input, select {
   outline: none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-		transition: background-color 5000s ease-in-out 0s;
-}
-
 @mixin error-container {
-	background: rgba(255, 79, 34, 0.57);
-	box-shadow: 0 0 3px rgba(0,0,0,0.2);
-	color: #FFE0E0;
+  background: rgba(255, 79, 34, 0.57);
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  color: #FFE0E0;
 }
 
 .alert {
-	border-radius: 4px;
-	font-size: 11px;
-	font-weight: 300;
-	line-height: 14px;
-	margin-bottom: 12px;
-	padding: 16px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 14px;
+  margin-bottom: 12px;
+  padding: 16px;
 
-	&.alert-danger {
-		@include error-container;
-	}
-}
-
-.mdl-textfield__label,
-.mdl-textfield__input,
-.mdl-select__input {
-  font-family: $font-family;
-  font-weight: 400;
-  letter-spacing: 1px;
-  font-size: 15px;
-
-  &.is-invalid {
-    color: #f90;
+  &.alert-danger {
+    @include error-container;
   }
 }
 
 .mdl-textfield--floating-label {
-	&.is-focused, &.is-dirty {
-		.mdl-textfield__label {
-			font-size: 11px;
-		}
-	}
+  &.is-focused, &.is-dirty {
+    .mdl-textfield__label {
+      font-size: 11px;
+    }
+  }
 }
 
 small.mdl-textfield__error {
@@ -60,78 +40,90 @@ small.mdl-textfield__error {
 }
 
 div#application .client{
-	.mdl-button-group {
-	  margin: 0 5px;
+  .mdl-data-table {
+    white-space: normal;
+  }
 
-	  .mdl-button {
-	    margin: 0 5px;
-	    min-width: 100px;
-	  }
-	}
+  .table-api th{
+    width: 25%;
+  }
+  .table-api td{
+    word-wrap: break-word;
+    word-break: break-all;
+  }
 
-	div.auth-view {
+  .mdl-button-group {
+    margin: 0 5px;
 
-		form {
-			background: #fff;
-			border-radius: 0 0 3px 3px;
-			display: block;
-			margin: auto;
-			padding: 16px;
-			width: 280px;
+    .mdl-button {
+      margin: 0 5px;
+      min-width: 100px;
+    }
+  }
 
-			h2, p {
-				color: #555;
-			}
-		}
+  div.auth-view {
 
-		.mdl-button {
-			margin-top: 15px;
-		}
+    form {
+      background: #fff;
+      border-radius: 0 0 3px 3px;
+      display: block;
+      margin: auto;
+      padding: 16px;
+      width: 280px;
 
-		.callout {
-			margin-bottom: 16px;
+      h2, p {
+        color: #555;
+      }
+    }
 
-			h2 {
-				margin: 0 0 6px;
-			}
-		}
+    .mdl-button {
+      margin-top: 15px;
+    }
 
-		.signup-links {
-			margin: 11px auto;
-			width: 312px;
+    .callout {
+      margin-bottom: 16px;
 
-			a {
-				color: #fff;
-			}
-		}
+      h2 {
+        margin: 0 0 6px;
+      }
+    }
 
-		.error-snack {
-			@include error-container;
-		}
+    .signup-links {
+      margin: 11px auto;
+      width: 312px;
 
-		#facebook_button {
+      a {
+        color: #fff;
+      }
+    }
 
-			.ion-social-facebook:before {
-				font-size: 18px;
-				line-height: 14px;
-				margin-right: 12px;
-				display: inline-block;
-				vertical-align: text-bottom;
-			}
-		}
-	}
+    .error-snack {
+      @include error-container;
+    }
+
+    #facebook_button {
+
+      .ion-social-facebook:before {
+        font-size: 18px;
+        line-height: 14px;
+        margin-right: 12px;
+        display: inline-block;
+        vertical-align: text-bottom;
+      }
+    }
+  }
 }
 
 .login-view {
-	.login-header {
-		border-radius: 3px 3px 0 0;
-		background: $base-blue;
-		min-height: 50px;
-		text-align: center;
-		padding: 6px 0;
+  .login-header {
+    border-radius: 3px 3px 0 0;
+    background: $base-blue;
+    min-height: 50px;
+    text-align: center;
+    padding: 6px 0;
 
-		img {
-			height: 50px;
-		}
-	}
+    img {
+      height: 50px;
+    }
+  }
 }

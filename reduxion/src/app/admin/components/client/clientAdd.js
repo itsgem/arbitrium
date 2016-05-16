@@ -44,8 +44,8 @@ class ClientAdd extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <button
                 className={!this.props.validateCompleted || errors.username ?
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope" :
-                    "md-raised md-primary md-hue-1 margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 md-button ng-scope bg-green" }
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button ng-scope" :
+                    "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button ng-scope bg-green" }
                 id='check_availability'
                 type='button'
                 onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
@@ -207,7 +207,7 @@ class ClientAdd extends React.Component {
               <legend>Mobile Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>Telephone Number</legend>
+              <legend>Phone Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('rep_mobile_code', errors)}>
@@ -335,7 +335,7 @@ class ClientAdd extends React.Component {
               <legend>Mobile Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>Telephone Number</legend>
+              <legend>Phone Number</legend>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('alt_mobile_code', errors)}>
@@ -506,7 +506,7 @@ function mapObject(object, callback) {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    company_name: { rule: 'required', label: 'comapany name'},
+    company_name: { rule: 'required', label: 'company name'},
     street_address_1: { rule: 'required', label: 'Street address' },
     street_address_2: [],
     city: { rule: 'required', label: 'City' },

@@ -42,6 +42,14 @@ class ApiKey extends NrbModel
     }
 
     //---------- scopes
+    public function scopeToken($query, $token)
+    {
+        if ($token)
+        {
+            return $query->where('token', $token);
+        }
+    }
+
     public function scopeClientId($query, $client_id)
     {
         if ($client_id)
@@ -52,17 +60,26 @@ class ApiKey extends NrbModel
 
     public function scopeRestricted($query, $flag = true)
     {
-        return $query->where('is_api_call_restricted', (int) $flag);
+        if ($flag != null)
+        {
+            return $query->where('is_api_call_restricted', (int) $flag);
+        }
     }
 
     public function scopeWhitelist($query, $flag = true)
     {
-        return $query->where('is_whitelist', (int) $flag);
+        if ($flag != null)
+        {
+            return $query->where('is_whitelist', (int) $flag);
+        }
     }
 
     public function scopeActive($query, $flag = true)
     {
-        return $query->where('is_active', (int) $flag);
+        if ($flag != null)
+        {
+            return $query->where('is_active', (int) $flag);
+        }
     }
 
     public function scopeInactive($query)
@@ -72,7 +89,10 @@ class ApiKey extends NrbModel
 
     public function scopeTestKey($query, $flag = true)
     {
-        return $query->where('is_test_key', (int) $flag);
+        if ($flag != null)
+        {
+            return $query->where('is_test_key', (int) $flag);
+        }
     }
 
     //---------- helpers

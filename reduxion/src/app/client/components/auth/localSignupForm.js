@@ -39,8 +39,20 @@ class LocalSignupForm extends React.Component {
   }
 
   render() {
+    // if (this.props.registerCompleted) {
+    //   let notification = document.querySelector('.mdl-snackbar');
+    //   notification.MaterialSnackbar.showSnackbar( {
+    //     message: 'A confirmation email has been sent. Click on the link to verify your email address and activate your account.',
+    //     timeout: 3000
+    //   });
+    // }
+
     return (
       <div className="local-signup-form">
+        <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
+          <div className="mdl-snackbar__text"></div>
+          <button type="button" className="mdl-snackbar__action"></button>
+        </div>
         { this.renderError()}
         <LocalAuthenticationFormSignup
           showLogin={true}
@@ -87,7 +99,7 @@ function mapObject(object, callback) {
 
 function validateSignup( payload ) {
   let rules = new Checkit( {
-    company_name: { rule: 'required'},
+    company_name: { rule: 'required', label: 'company name'},
     street_address_1: [],
     street_address_2: [],
     city: [],
@@ -97,7 +109,7 @@ function validateSignup( payload ) {
     rep_first_name: { rule: 'required', label: 'first name' },
     rep_last_name: { rule: 'required', label: 'last name' },
     rep_gender: [],
-    rep_email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+    rep_email_address: [{ rule: 'required', label: 'Email address' }, { rule: 'email', label: 'Email address' }],
     rep_mobile_code: [],
     rep_mobile_number: [],
     rep_phone_code: [],
@@ -106,7 +118,7 @@ function validateSignup( payload ) {
     rep_department: { rule: 'required', label: 'department' },
     password_confirmation: {rule: 'required', label: 'confirm password'},
     password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-    email_address:  ['required', 'email', 'minLength:6', 'maxLength:64' ],
+    email_address:  [{ rule: 'required', label: 'Email address' }, { rule: 'email', label: 'Email address' }],
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
     password: [ 'required', 'alphaDash', 'minLength:6', 'maxLength:64' ]
   } );

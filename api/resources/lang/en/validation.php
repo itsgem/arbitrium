@@ -230,6 +230,7 @@ return [
     'greater_than'      => 'The :attribute should be greater than the :other.',
     'greater_than_equal'    => 'The :attribute should be greater than or equal the :other.',
     'hex'               => 'The :attribute is invalid.',
+    'money'             => 'The :attribute must be a valid money format. (No commas and unit)',
     'password'          => 'The :attribute must have small letters, capital letters and numbers.',
     'past_date'         => 'The :attribute must be a date before the current date.',
     'unique_username'   => trans('errors.'.Errors::USERNAME_TAKEN),

@@ -1,6 +1,7 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import LocalSignupForm from 'client/components/auth/localSignupForm';
+import { Link } from 'react-router';
 
 export default React.createClass( {
   contextTypes: {
@@ -22,26 +23,34 @@ export default React.createClass( {
           title="Register"
         />
         { this.props.registerCompleted && this.renderRegisterComplete() }
-        { this.renderRegisterForm() }
+        { !this.props.registerCompleted && this.renderRegisterForm() }
       </div>
     );
   },
   renderRegisterComplete(){
-    setTimeout(this.myFunction, 3000);
-    return(
-      <div className="alert bg-green text-center animate bounceIn" role="alert">
-        A confirmation email has been sent. Click on the link to verify your email address and activate your account.
-      </div>
+    return (
+        <div className="container">
+          <div className="local-login-form">
+            <div className="bar">
+              <span className="bar-title">Sign up</span>
+            </div>
+            <div id="success-box" className="local-signin-form login-frame">
+
+              <p>A confirmation email has been sent.<br />Click on the link to verify your email address and activate your account.</p>
+              <Link
+                  className=''
+                  id='btn-signup'
+                  to="/i/login">Back to Login.</Link>
+            </div>
+          </div>
+        </div>
     );
-  },
-  myFunction() {
-    this.context.router.push('/i/login');
   },
   renderRegisterForm(){
     let countryList = this.props.countryList;
     return (
       <div className="signup-view">
-        <LocalSignupForm signup={this.props.signup} signupError={this.props.signupError} country={countryList}/>
+        <LocalSignupForm signup={this.props.signup} registerCompleted={this.props.registerCompleted} signupError={this.props.signupError} country={countryList}/>
         <div className="mdl-grid mdl-grid--no-spacing" id="other-links"></div>
       </div>
     );

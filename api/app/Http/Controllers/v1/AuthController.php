@@ -30,7 +30,7 @@ class AuthController extends ApiController
      *
      * @SWG\Post(
      *     path="/auth/login",
-     *     tags={"Authentication"},
+     *     tags={"* Authentication"},
      *     summary="Login",
      *     description="Authenticates guest user by logging in, either as client or admin.",
      *     @SWG\Response(response="200", description="Success",
@@ -58,9 +58,9 @@ class AuthController extends ApiController
      *         description="Login details",
      *         required=true,
      *         type="object",
-     *         @SWG\Schema(title="data", type="object",
-     *             @SWG\Property(property="login", type="string", description="Email address or username", default="user_client_1"),
-     *             @SWG\Property(property="password", type="string", description="Password", default="1234Password!@#$"),
+     *         @SWG\Schema(title="data", type="object", required={"login", "password", "user_type"},
+     *             @SWG\Property(property="login", type="string", description="Email address or username", default="client0001"),
+     *             @SWG\Property(property="password", type="string", description="Password", default="Passw0rd"),
      *             @SWG\Property(property="user_type", type="integer", format="int64", description="[1 => admin, 2 => client]", default="2"),
      *         )
      *     )

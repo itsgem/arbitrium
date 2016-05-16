@@ -4,19 +4,17 @@
 @import './vendor/ionicons';
 @import './vendor/mdl-overrides';
 @import './drawer';
+@import './pagination';
 
 @import './utils';
 @import './typography';
 @import './mixins';
 @import './transitions';
-
-
-@import './admin/forgot';
-
-@import './_colors';
+@import './colors';
 
 /* Admin */
 @import './admin/form';
+@import './admin/forgot';
 @import './admin/application';
 @import './admin/_input-dropdown';
 @import './admin/adminClient';

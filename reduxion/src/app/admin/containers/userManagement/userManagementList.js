@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { adminUserManagementList, deleteAdminAccount} from 'admin/reducers/userManagement'
-import ViewUserManagementList from 'admin/views/usermanagement/userManagementList';
+import ViewUserManagementList from 'admin/views/userManagement/userManagementList';
 
 const mapStateToProps = (state) => {
   return {
