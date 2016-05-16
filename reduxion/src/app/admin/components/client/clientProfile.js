@@ -20,6 +20,9 @@ class ClientProfile extends React.Component {
 
     };
   }
+  componentDidMount() {
+    modal();
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.client.clientInfo) {
       this.setState({
@@ -41,7 +44,6 @@ class ClientProfile extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-    modal();
   }
   render() {
     if (this.props.client.clientInfo) {

@@ -198,6 +198,10 @@ class ApiList extends React.Component {
   deleteItem () {
     this.props.adminDeleteApiKey(this.state.id);
     this.modalClose();
+    $('.msg').html('Successfully deleted').addClass('bg-green');
+    $('.msg').fadeIn(1000, function() {
+      $(this).fadeOut(2000);
+    });
   }
   changeActive (e, id, status) {
     let payload = {
