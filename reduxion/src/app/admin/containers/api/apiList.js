@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
   return {
     ListApiSuccess: strMapToObj(state.get('AdminApi').get('apiList')),
     loading: state.get('AdminApi').get('loading'),
-    deleteApiKeySuccess: state.get('AdminApi').get('deleteApiKeySuccess')
+    deleteApiKeySuccess: state.get('AdminApi').get('deleteApiKeySuccess'),
+    activeApiKey: state.get('AdminApi').get('activeApiKey')
   };
 }
 

@@ -7,7 +7,7 @@ export default React.createClass({
     this.props.clietApiKeys();
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+    if ((nextProps.activeApiKey || nextProps.deleteApiKeySuccess) && !nextProps.loading) {
       this.props.clietApiKeys({per_page: 10});
     }
   },

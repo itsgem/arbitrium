@@ -10,7 +10,8 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => ({
   loading: state.get('ClientApi').get('loading'),
   listApiKeys: strMapToObj(state.get('ClientApi').get('listApiKeys')),
-  deleteApiKeySuccess: strMapToObj(state.get('ClientApi').get('deleteApiKeySuccess'))
+  deleteApiKeySuccess: strMapToObj(state.get('ClientApi').get('deleteApiKeySuccess')),
+  activeApiKey: state.get('ClientApi').get('activeApiKey')
 });
 
 export default connect((mapStateToProps), {

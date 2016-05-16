@@ -11,7 +11,7 @@ export default React.createClass( {
     this.props.apiList({per_page: 10});
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+    if ((nextProps.deleteApiKeySuccess || nextProps.activeApiKey) && !nextProps.loading) {
       this.props.apiList({per_page: 10});
     }
   },
