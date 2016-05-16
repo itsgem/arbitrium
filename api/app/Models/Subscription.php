@@ -83,7 +83,8 @@ use App\Nrb\NrbModel;
  *         @SWG\Property(property="monthly", type="integer", format="int64", description="Package total fee (monthly)", default="72.00"),
  *         @SWG\Property(property="annually", type="integer", format="int64", description="Package total fee (annually)", default="180.00"),
  *     ),
- *     @SWG\Property(property="currency", type="string", description="Currency code", default="SGD")
+ *     @SWG\Property(property="currency", type="string", description="Currency code", default="SGD"),
+ *     @SWG\Property(property="client", description="Client Data", ref="#/definitions/ClientProfileResponse")
  * )
  *
  * @package App\Models
