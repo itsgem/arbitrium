@@ -12,7 +12,9 @@ class CreateNewSubscriptionsTable extends Migration
      */
     public function up()
     {
+        DB::statement("SET FOREIGN_KEY_CHECKS = 0");
         Schema::dropIfExists('subscriptions');
+        DB::statement("SET FOREIGN_KEY_CHECKS = 1");
 
         Schema::create('subscriptions', function(Blueprint $table)
         {

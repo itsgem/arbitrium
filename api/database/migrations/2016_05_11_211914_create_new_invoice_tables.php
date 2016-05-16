@@ -12,8 +12,10 @@ class CreateNewInvoiceTables extends Migration
      */
     public function up()
     {
+        DB::statement("SET FOREIGN_KEY_CHECKS = 0");
         Schema::dropIfExists('invoice_details');
         Schema::dropIfExists('invoices');
+        DB::statement("SET FOREIGN_KEY_CHECKS = 1");
 
         Schema::create('invoices', function(Blueprint $table)
         {
