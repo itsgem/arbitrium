@@ -57,7 +57,6 @@ class ApiAdd extends React.Component {
               </div>
               <p>Add a description to your API key to allow you to filter by key</p>
             </div>
-            
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
               <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" />
               <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
