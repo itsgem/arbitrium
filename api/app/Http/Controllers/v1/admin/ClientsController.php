@@ -181,7 +181,7 @@ class ClientsController extends ApiController
      * Get single client's current subscription
      *
      * @SWG\Get(
-     *     path="/admin/client/subscription/current",
+     *     path="/admin/client/{client}/subscription/current",
      *     tags={"Admin - Client Subscription"},
      *     summary="Single Client Current Subscription",
      *     description="Get single client's current subscription",
