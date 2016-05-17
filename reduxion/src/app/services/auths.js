@@ -193,8 +193,8 @@ export default {
       params: payload
     });
   },
-  adminSubscriptionList(payload = {page: 1}) {
-    return get('admin', {params: payload});
+  getAdminSubscriptionList(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/subscription/current', {params: payload});
   },
   getSubscriptionInfo(id) {
     return get('admin/' + id, {

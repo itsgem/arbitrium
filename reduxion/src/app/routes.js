@@ -134,7 +134,7 @@ export default () => (
 
         <Route path="subscription" onEnter={requireAuth}>
           <IndexRoute component={AdminSubscriptionList} onEnter={requireAuth}/>
-          <IndexRoute component={AdminSubscriptionEdit} path=":id" onEnter={requireAuth}/>
+          <Route component={AdminSubscriptionEdit} path=":id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account" onEnter={requireAuth}>

@@ -10,11 +10,6 @@ export default React.createClass( {
   componentWillMount(){
     this.props.adminSubscriptionList({per_page: 10});
   },
-  // componentWillReceiveProps(nextProps) {
-  //   if (!nextProps.loading) {
-  //     nextProps.adminSubscriptionList({per_page: 10});
-  //   }
-  // },
   render() {
     return (
       <div id="subscription_add_or_change">
@@ -25,6 +20,7 @@ export default React.createClass( {
           <label className="mdl-layout__tab is-active">View Subscriptions</label>
         </div>
         <SubscriptionList
+          subscriptionList={this.props.subscriptionList}
           adminSubscriptionList={this.props.adminSubscriptionList}
           />
       </div>

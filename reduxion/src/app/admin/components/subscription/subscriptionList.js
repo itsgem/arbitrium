@@ -14,20 +14,21 @@ class SubscriptionList extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-  userDisplay (id, key, data, alter) {
+
+  subscriptionDisplay (data, alter) {
     return (
-     <tr key={key} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{id}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.get('company_name')}<br /> {data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.get('representative_name')}<br /> {data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.get('email_address')}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.get('subscription')}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.get('plan_type')}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.get('status')}</td>
+      <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+        <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.client.company_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.client.rep_last_name}, {data.client.rep_first_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.client.user.email_address}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.type}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/subscription/" + id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/subscription/" + data.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -36,7 +37,7 @@ class SubscriptionList extends React.Component {
   pagination (key, currentPage) {
     let className = "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-" + (key == currentPage ? 'active' : 'normal');
     return (
-        <button key={key} ref={key == currentPage ? 'currentpage' : ''} className={className} onClick={(e) => this.page(e, key)}>{key}</button>
+        <input type="button" ref={key == currentPage ? 'currentpage' : ''} key={key} className={className} onClick={(e) => this.page(e, key)} value={key} />
       );
   }
   prevPage (key, prev) {
@@ -91,25 +92,25 @@ class SubscriptionList extends React.Component {
       </div>
     );
   }
+
   render() {
     let counter = false;
     let alter = false;
     let pagination = [];
-    let users = {};
-    let adminSubscriptionList = {last_page: 1};
     let perPage = 10;
-    console.log("!!! ADMIN", this.props.adminSubscriptionList);
-    if (this.props.adminSubscriptionList.size) {
+    let subscriptionList = {last_page: 1};
+    let subscription = {};
+    if (Object.keys(this.props.subscriptionList).length) {
       let i=0;
       counter = true;
-      adminSubscriptionList = this.props.adminSubscriptionList;
-      users = adminSubscriptionList.get('data').toArray();
-      pagination[i] = this.prevPage(i, (adminSubscriptionList.get('current_page') > 1 ? (adminSubscriptionList.get('current_page') - 1): false));
-      for (i = 1; i <= adminSubscriptionList.get('last_page'); i++) {
-        pagination[i] = this.pagination(i, adminSubscriptionList.get('current_page'));
+      subscriptionList = this.props.subscriptionList;
+      subscription = subscriptionList.data;
+      pagination[i] = this.prevPage(i, (subscriptionList.current_page > 1 ? (subscriptionList.current_page - 1): false));
+      for (i = 1; i <= subscriptionList.last_page; i++) {
+        pagination[i] = this.pagination(i, subscriptionList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((adminSubscriptionList.get('current_page') == adminSubscriptionList.get('last_page'))|| adminSubscriptionList.get('last_page') == 0 ? false : (adminSubscriptionList.get('current_page') + 1 )), adminSubscriptionList.get('last_page') );
-      perPage = adminSubscriptionList.get('per_page');
+      pagination[i+1] = this.nextPage(i+1, ((subscriptionList.current_page == subscriptionList.last_page)|| subscriptionList.last_page == 0 ? false : (subscriptionList.current_page + 1 )), subscriptionList.last_page );
+      perPage = subscriptionList.per_page;
     }
     return (
       <div className="filter-search">
@@ -126,19 +127,19 @@ class SubscriptionList extends React.Component {
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="company" ref="company" />
+                <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
                 <label className="mdl-textfield__label">Company</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="subscription" ref="subscription"/>
+                <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
                 <label className="mdl-textfield__label">Subscription</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="plan_type" ref="plan_type" />
+                <input className="mdl-textfield__input" type="text" id="type" ref="type" />
                 <label className="mdl-textfield__label">Plan Type</label>
               </div>
             </div>
@@ -165,12 +166,9 @@ class SubscriptionList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {counter && users.map(item =>
-                {
-                  alter = alter ? false : true;
-                  {return this.userDisplay(item.get('id'), item.get('user').get('id'), item.get('user'), alter)}
-                }
-              )}
+              {counter && subscription.map(item => {
+                alter = alter ? false : true;
+                return this.subscriptionDisplay(item, alter); })}
             </tbody>
           </table>
           {/* <!-- Pagination -->*/}
@@ -237,17 +235,17 @@ class SubscriptionList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.company.value = "";
-    this.refs.subscription.value = "";
-    this.refs.plan_type.value = "";
+    this.refs.company_name.value = "";
+    this.refs.name.value = "";
+    this.refs.type.value = "";
     this.searchList(e);
   }
   searchList(e) {
     e.preventDefault();
     let payload = {
-      company: this.refs.company.value,
-      subscription: this.refs.subscription.value,
-      plan_type: this.refs.plan_type.value
+      company_name: this.refs.company_name.value,
+      name: this.refs.name.value,
+      type: this.refs.type.value
     };
     this.props.adminSubscriptionList(payload);
   }
@@ -256,9 +254,9 @@ class SubscriptionList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      company: this.refs.company.value,
-      subscription: this.refs.subscription.value,
-      plan_type: this.refs.plan_type.value
+      company_name: this.refs.company_name.value,
+      name: this.refs.name.value,
+      type: this.refs.type.value
     };
     this.props.adminSubscriptionList(payload);
   }
