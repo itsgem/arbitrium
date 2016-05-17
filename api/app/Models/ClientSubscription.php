@@ -38,11 +38,34 @@ class ClientSubscription extends Subscription
     }
 
     //---------- scopes
+    public function scopeCurrent($query)
+    {
+        $date = current_date_to_string();
+        return $query->whereRaw("'{$date}' BETWEEN valid_from and valid_to ")
+            ->where('status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeSubscriptionId($query, $id)
+    {
+        if ($id)
+        {
+            return $query->where('subscription_id', $id);
+        }
+    }
+
     public function scopeClientId($query, $client_id)
     {
         if ($client_id)
         {
             return $query->where('client_id', $client_id);
+        }
+    }
+
+    public function scopeName($query, $name)
+    {
+        if ($name)
+        {
+            return $query->where('name', 'LIKE', "%$name%");
         }
     }
 
@@ -54,13 +77,6 @@ class ClientSubscription extends Subscription
         }
     }
 
-    public function scopeCurrent($query)
-    {
-        $date = current_date_to_string();
-        return $query->whereRaw("'{$date}' BETWEEN valid_from and valid_to ")
-            ->where('status', self::STATUS_ACTIVE);
-    }
-
     public function scopeIsAutoRenew($query, $flag = false)
     {
         if ($flag != null)
@@ -69,11 +85,13 @@ class ClientSubscription extends Subscription
         }
     }
 
-    public function scopeSubscriptionId($query, $id)
+    public function scopeCompanyName($query, $company_name)
     {
-        if ($id)
+        if ($company_name)
         {
-            return $query->where('subscription_id', $id);
+            return $query->whereHas('client', function($query) use ($company_name){
+                $query->where('company_name', 'LIKE', "%$company_name%");
+            });
         }
     }
 
