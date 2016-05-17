@@ -76,6 +76,9 @@ class ClientServices extends NrbServices
                 $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
             }])
             ->subscriptionId($request->get('subscription_id'))
+            ->name($request->get('name'))
+            ->type($request->get('type'))
+            ->companyName($request->get('company_name'))
             ->validFrom($request->get('valid_from'))
             ->validTo($request->get('valid_to'))
             ->dateFrom('valid_from', $request->get('valid_range_from'))
@@ -104,6 +107,9 @@ class ClientServices extends NrbServices
 
         $subscriptions = $subscriptions->clientId($client_id)
             ->subscriptionId($request->get('subscription_id'))
+            ->name($request->get('name'))
+            ->type($request->get('type'))
+            ->companyName($request->get('company_name'))
             ->validFrom($request->get('valid_from'))
             ->validTo($request->get('valid_to'))
             ->dateFrom('valid_from', $request->get('valid_range_from'))
