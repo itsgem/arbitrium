@@ -144,7 +144,6 @@ class ApiUpdate extends React.Component {
 
     let ipAddresses = this.refs.ip_addresses.value;
     ipAddresses = ipAddresses.split('\n');
-    console.log('test', ipAddresses);
     ipAddresses = ipAddresses.map(function(obj){
        let rObj = {};
        rObj = {ip_address: obj.trim()};
