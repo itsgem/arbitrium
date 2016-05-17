@@ -74,6 +74,11 @@ function requireAuth(nextState, replace, cb) {
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
     let decryptedData ="";
+    if (bytes.sigBytes < 0 ) {
+      localStorage.removeItem(tokenName);
+      window.location = window.location.origin + "/" + (tokenName == 'token' ? "i" : tokenName) + "/login";
+    }
+
     if (JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
       decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     } else {
@@ -81,7 +86,7 @@ function requireAuth(nextState, replace, cb) {
       replace({
         pathname: "/" + (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
-      })
+      });
     }
 
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
@@ -89,7 +94,7 @@ function requireAuth(nextState, replace, cb) {
       replace({
         pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
-      })
+      });
     }
 
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {

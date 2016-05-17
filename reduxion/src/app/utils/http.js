@@ -36,14 +36,19 @@ function ajax( url, method, options, params ) {
   let bytes = '';
   switch (link[3]) {
     case 'coffee' :
-    if (localStorage.getItem('coffee') ){
-      bytes  = CryptoJS.AES.decrypt(localStorage.getItem('coffee'), config.key);
-    }
-    break;
-    case 'i' :
-    if (localStorage.getItem('token')) {
-     bytes  = CryptoJS.AES.decrypt(localStorage.getItem('token'), config.key);
-    }
+      if (localStorage.getItem('coffee') ){
+        bytes  = CryptoJS.AES.decrypt(localStorage.getItem('coffee'), config.key);
+      }
+      break;
+    default :
+      if (localStorage.getItem('token')) {
+       bytes  = CryptoJS.AES.decrypt(localStorage.getItem('token'), config.key);
+      }
+  }
+
+  if (bytes.sigBytes < 0 ) {
+    localStorage.removeItem(link[3]);
+    window.location = window.location.origin + "/" + (link[3] == 'token' ? "i" : link[3]) + "/login";
   }
 
   if (bytes) {
