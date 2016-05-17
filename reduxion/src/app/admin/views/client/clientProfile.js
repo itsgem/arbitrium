@@ -2,6 +2,7 @@ import React from 'react';
 import ClientProfile from 'admin/components/client/clientProfile';
 import DocTitle from 'common/components/docTitle';
 import { Link } from 'react-router';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass( {
   contextTypes: {
@@ -44,7 +45,6 @@ export default React.createClass( {
       })
     }
 
-
     // Displaying and Updating Client
     if (!nextProps.loading && nextProps.clientProfileSuccess) {
       this.setState({clientInfo: nextProps.clientProfileSuccess.get('data')});
@@ -56,13 +56,18 @@ export default React.createClass( {
       this.setState({updateCompleted: nextProps.updateCompleted});
     }
   },
+  loadingRender () {
+    openLoading();
+    return (
+      <div className="loading"></div>
+    );
+  },
   render() {
     if (this.state.clientInfo) {
+      closeLoading();
       return this.renderAdminInfo();
     } else {
-       return (
-        <div id="client" className="inner_content"></div>
-      );
+       return this.loadingRender();
     }
   },
   renderAdminInfo() {
