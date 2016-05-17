@@ -65,7 +65,7 @@ class ClientSubscription extends Subscription
     {
         if ($name)
         {
-            return $query->where('name', 'LIKE', "%$name%");
+            return $query->like('name', $name);
         }
     }
 
@@ -90,7 +90,7 @@ class ClientSubscription extends Subscription
         if ($company_name)
         {
             return $query->whereHas('client', function($query) use ($company_name){
-                $query->where('company_name', 'LIKE', "%$company_name%");
+                $query->like('company_name', $company_name);
             });
         }
     }
