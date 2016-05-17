@@ -2,6 +2,24 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default React.createClass( {
+  componentWillReceiveProps(nextProps) {
+    this.activeNav();
+  },
+  activeNav () {
+    let isActive = document.querySelector('nav .is-active');
+    if (isActive) {
+      isActive.classList.remove('is-active');
+    }
+    let link = window.location.href.split("/");
+    let menu = (link[4] == undefined ? '.menu-dashboard' : '.menu-' + link[4]);
+    let isActiveMenu = document.querySelector(menu);
+    if (isActiveMenu) {
+      isActiveMenu.classList.add("is-active");
+    }
+  },
+  componentDidMount () {
+    this.activeNav();
+  },
   render() {
     return (
       <header className="mdl-layout__header header-bg">
@@ -15,10 +33,10 @@ export default React.createClass( {
             <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
               <div className="mdl-tabs__tab-bar tab">
                 <nav className="mdl-navigation">
-                  <Link className="mdl-layout__tab" to="/coffee">Dashboard</Link>
+                  <Link className="menu-dashboard mdl-layout__tab" to="/coffee">Dashboard</Link>
                   <div className="container">
                     <button id="demo-menu-client"
-                      className="mdl-button mdl-js-button">Clients</button>
+                      className="menu-client mdl-button mdl-js-button mdl-layout__tab" >Clients</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-client">
                       <li className="mdl-menu__item"><Link to="/coffee/client/">Client List</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/client/new">Add New Client</Link></li>
@@ -26,24 +44,24 @@ export default React.createClass( {
                   </div>
                   <div className="container">
                     <button id="demo-menu-api"
-                      className="mdl-button mdl-js-button">API</button>
+                      className="menu-api mdl-button mdl-js-button mdl-layout__tab">API</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-api">
                       <li className="mdl-menu__item"><Link to="/coffee/api/">API List</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API</Link></li>
                     </ul>
                   </div>
-                  <Link className="mdl-layout__tab" to="/coffee">Pricing</Link>
+                  <Link className="menu-pricing mdl-layout__tab" to="/coffee">Pricing</Link>
                   <div className="container">
                     <button id="demo-menu-account"
-                      className="mdl-button mdl-js-button">Admin Accounts</button>
+                      className="menu-account mdl-button mdl-js-button mdl-layout__tab">Admin Accounts</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-account">
                       <li className="mdl-menu__item"><Link to="/coffee/account/">Admin List</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
                     </ul>
                   </div>
-                  <a className="mdl-layout__tab" href="/coffee">Logs</a>
+                  <Link className="menu-logs mdl-layout__tab" to="/coffee">Logs</Link>
                 </nav>
                 <div className="icon-profile inner-profile">
                   <button id="menu" className="mdl-button mdl-js-button mdl-button--icon">

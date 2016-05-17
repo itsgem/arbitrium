@@ -10,7 +10,6 @@ export default React.createClass( {
     this.props.logout();
   },
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps)
     if(!nextProps.authenticated){
       localStorage.removeItem('token');
       this.context.router.push(`/i/login`);

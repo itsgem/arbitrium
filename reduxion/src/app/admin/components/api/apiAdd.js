@@ -32,7 +32,7 @@ class ApiAdd extends React.Component {
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-              <div className={this.formClassNames('client_id', errors)}>
+              <div id="searchClient" className={this.formClassNames('client_id', errors)}>
                 <input className="dropList mdl-textfield__input font-input"
                   ref="client_id"
                   type="text"
@@ -132,6 +132,7 @@ class ApiAdd extends React.Component {
   }
   selectedCompany ( e, id, companyName ) {
     this.refs.client_id.value = companyName;
+    document.getElementById('searchClient').classList.add("is-dirty");;
     this.setState( {
       client_id: id,
     } );
