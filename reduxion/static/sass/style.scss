@@ -13,6 +13,14 @@ html{
 
 // ******************** START HEADER ********************
 
+.right{
+  float: right !important;
+}
+
+.left{
+  float: left !important;
+}
+
 .body-bg{
   background: #e9eaed;
 
@@ -409,8 +417,17 @@ html{
 
 .box-container{
   border: 1px solid #e2e2e2;
-  width: 1200px;
-  height: auto;
+  min-height: 372px;
+
+  .mdl-cell--10-col, .mdl-cell--9-col, .mdl-cell--6-col, .mdl-cell--3-col, .mdl-cell--2-col{
+    @extend .mdl-cell--12-col;
+  }
+
+  .total{
+    border-top: 1px solid #e2e2e2;
+    padding:10px 0px 0px 0px;
+    width: 100%;
+  }
 }
 
 // ******************** END SECTION-CLIENT-LIST ********************
