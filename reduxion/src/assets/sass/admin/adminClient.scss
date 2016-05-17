@@ -1,233 +1,246 @@
+div#application .coffee {
+/* ******************** START HEADER ******************** */
 
-// ******************** START HEADER ********************
+  .body-bg{
+    background: #e9eaed;
+    
+    .header-bg{
+      background: #0e3192;
+      min-height: 48px;
 
-.body-bg{
-  background: #e9eaed;
-  
-  .header-bg{
-    background: #0e3192;
-    min-height: 48px;
-
-    .header-container{
-      height: 48px;
-      max-width: 1200px;
-      padding: 0px;
-
-      .main-header{
-        background: none;
+      .header-container{
         height: 48px;
+        max-width: 1200px;
         padding: 0px;
-        margin: 0 auto;
-        width: 1200px;
-        max-width: 100%;
 
-        .logo{
+        .main-header{
+          background: none;
+          height: 48px;
+          padding: 0px;
+          margin: 0 auto;
+          width: 1200px;
+          max-width: 100%;
 
-          img{
-            height: 40px;
+          .logo{
+
+            img{
+              height: 40px;
+            }
+
           }
 
-        }
+  /* ******************** START NAVIGATION ******************** */
 
-// ******************** START NAVIGATION ********************
+          .nav{
+            background: none;
+            width: 1030px;
 
-        .nav{
-          background: none;
-          width: 1030px;
+            .mdl-navigation {
+              float: right;
 
-          .mdl-navigation {
-            float: right;
-
-            .mdl-navigation__link {
-              text-transform: uppercase;
+              .mdl-navigation__link {
+                text-transform: uppercase;
+              }
+              
+              .mdl-menu__item {
+                padding: 0;
+              }
             }
 
             .icon-profile {
-              position: relative;
+                position: relative;
 
-              .mdl-menu {
-                .mdl-menu__item {
-                  height: auto;
-                  padding: 10px 15px;
-                  line-height: normal;
-                  
-                  .mdl-navigation__link {
-                    display: block;
+                .mdl-menu {
+
+                  .mdl-menu__item {
                     padding: 0;
-                    line-height: normal;
-                    color: #424242;
+                    transition: background-color 0.3s ease-in;
+                    &:hover {
+                      background-color: #ffccaa;
+                    }
+                    a {
+                      line-height: 35px;
+                      /*color: #777 !important;*/
+                      /*text-align: left !important;*/
+                    }
+                    .mdl-navigation__link {
+                      display: block;
+                      padding: 0;
+                      line-height: normal;
+                      color: #424242;
+                    }
                   }
                 }
               }
+
+            .tab{
+              border-bottom: none;
+              float: right;
+
+              a {
+                color: #fff;
+                font-weight: 400;
+                padding: 0px 18px;
+              }
+
+              a:hover{
+                background: rgba(255,255,255,0.05);
+              }
+
+              .is-active{
+                color: #fff;
+              }
+
+              .is-active:after{
+                background: #ff6600;
+              }
+
+              .icon-profile{
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+              }
+
             }
+
           }
 
-          .tab{
-            border-bottom: none;
-            float: right;
+  /* ******************** END NAVIGATION ******************** */
 
-            a {
-              color: #fff;
-              font-weight: 400;
-              padding: 0px 18px;
-            }
+        }
+      }
+    }
 
-            a:hover{
-              background: rgba(255,255,255,0.05);
-            }
+  /* ******************** END HEADER ******************** */
 
-            .is-active{
-              color: #fff;
-            }
+  /* ******************** START SECTION-CLIENT-LIST ******************** */
 
-            .is-active:after{
-              background: #ff6600;
-            }
+    .client-list{
+      padding: 50px 0 0 0;
+      width: 1200px;
 
-            .icon-profile{
+      .client-tab{
+        background: #0e3192;
+        height: 48px;
+        padding: 0px;
+        width: 1200px;
+
+        a {
+          color: #fff;
+          font-weight: 400;
+
+          i {
+            &.add{
+              padding-left: 6px;
               position: relative;
-              top: 50%;
+              top: 40%;
               transform: translateY(-50%);
             }
-
-          }
-
-        }
-
-// ******************** END NAVIGATION ********************
-
-      }
-    }
-  }
-
-// ******************** END HEADER ********************
-
-// ******************** START SECTION-CLIENT-LIST ********************
-
-  .client-list{
-    padding: 50px 0 0 0;
-    width: 1200px;
-
-    .client-tab{
-      background: #0e3192;
-      height: 48px;
-      padding: 0px;
-      width: 1200px;
-
-      a {
-        color: #fff;
-        font-weight: 400;
-
-        i {
-          &.add{
-            padding-left: 6px;
-            position: relative;
-            top: 40%;
-            transform: translateY(-50%);
           }
         }
-      }
 
-      a:hover{
-        background: rgba(255,255,255,0.05);
-      }
+        a:hover{
+          background: rgba(255,255,255,0.05);
+        }
 
-      .is-active:after{
-        background: #ff6600 !important;
-      }
-
-    }
-
-    .filter-search{
-      background: #fff;
-      height: auto;
-      min-height: 130px;
-      width: 1200px;
-
-      p{
-        font-weight: 400;
-        padding: 20px 0px 0px 20px;
-        margin: 0px;
-      }
-
-      form{
-        margin-bottom: 0px;
-      }
-
-      .filter-search-bar{
-        list-style: none;
-        padding: 0px 12px 0px 12px;
-
-        .search-cta{
-          text-align: right;
-
-          .mdl-button--accent{
-            background: #ff6600;
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: 400;
-            margin-right: 16px;
-
-          }
-
-          .mdl-button--raised{
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: 400;
-          }
-
+        .is-active:after{
+          background: #ff6600 !important;
         }
 
       }
 
-    }
+      .filter-search{
+        background: #fff;
+        height: auto;
+        min-height: 130px;
+        width: 1200px;
 
-    .table-client-list{
-      width:100%;
-
-      thead{
-
-        tr{
-          background: #e3ecf5;
-
-          th {
-            font-weight: 700;
-          }
-
+        p{
+          font-weight: 400;
+          padding: 20px 0px 0px 20px;
+          margin: 0px;
         }
 
-      }
+        form{
+          margin-bottom: 0px;
+        }
 
-      tbody{
+        .filter-search-bar{
+          list-style: none;
+          padding: 0px 12px 0px 12px;
 
-        tr{
+          .search-cta{
+            text-align: right;
 
-          &.bg-dark{
-            background: #f5fafe;
-
-            td{
-              border: 0px;
-            }
-
-          }
-
-          &.bg-light{
-            background: #fbfeff;
-
-            td{
-              border: 0px;
-
-            }
-
-          }
-
-          td{
-
-            .btn-view-edit{
+            .mdl-button--accent{
               background: #ff6600;
-              margin-right: 6px;
+              font-family: 'Roboto Condensed', sans-serif;
+              font-weight: 400;
+              margin-right: 16px;
+
             }
 
-            .btn-delete{
-              background: #ff4a4a;
+            .mdl-button--raised{
+              font-family: 'Roboto Condensed', sans-serif;
+              font-weight: 400;
+            }
+
+          }
+
+        }
+
+      }
+
+      .table-client-list{
+        width:100%;
+
+        thead{
+
+          tr{
+            background: #e3ecf5;
+
+            th {
+              font-weight: 700;
+            }
+
+          }
+
+        }
+
+        tbody{
+
+          tr{
+
+            &.bg-dark{
+              background: #f5fafe;
+
+              td{
+                border: 0px;
+              }
+
+            }
+
+            &.bg-light{
+              background: #fbfeff;
+
+              td{
+                border: 0px;
+
+              }
+
+            }
+
+            td{
+
+              .btn-view-edit{
+                background: #ff6600;
+                margin-right: 6px;
+              }
+
+              .btn-delete{
+                background: #ff4a4a;
+              }
+
             }
 
           }
@@ -237,67 +250,60 @@
       }
 
     }
-
-  }
-}
-
-.form-group-flag-icon {
-  .mdl-button, .mdl-icon {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .mdl-icon {
-    margin: 10px;
-    font-size: 24px;
-    line-height: normal;
-    color: #e0e0e0;
-    height: 23px;
-
-    &.mdl-icon-danger {color: #D50000}
-    &.mdl-icon-success {color: #228b22}
-  }
-}
-
-.status-content {
-
-  .status-col {
-    display:flex;
-    margin-left: 0;
-    overflow: auto;
-    width: 100%;
-
-    .mg-lf {
-      margin-left: 0;
-    }
-    .float-lft{
-      float: left;
-      align-self: center;
-    }
   }
 
-  .status-btn{
-    height: 29px !important;
-    line-height: 10px !important;
-    min-width: 50px !important;
-    margin-left: 10px;
-    .icon-con {
-      display: inline-table;
-      line-height: 0;
-      padding-bottom: 3px;
-      padding-left: 10px;
+  .form-group-flag-icon {
+    .mdl-button, .mdl-icon {
+      display: inline-block;
       vertical-align: middle;
     }
+    .mdl-icon {
+      margin: 10px;
+      font-size: 24px;
+      line-height: normal;
+      color: #e0e0e0;
+      height: 23px;
+
+      &.mdl-icon-danger {color: #D50000}
+      &.mdl-icon-success {color: #228b22}
+    }
+  }
+
+  .status-content {
+
+    .status-col {
+      display:flex;
+      margin-left: 0;
+      overflow: auto;
+      width: 100%;
+
+      .mg-lf {
+        margin-left: 0;
+      }
+      .float-lft{
+        float: left;
+        align-self: center;
+      }
+    }
+
+    .status-btn{
+      height: 29px !important;
+      line-height: 10px !important;
+      min-width: 50px !important;
+      margin-left: 10px;
+      .icon-con {
+        display: inline-table;
+        line-height: 0;
+        padding-bottom: 3px;
+        padding-left: 10px;
+        vertical-align: middle;
+      }
+    }
   }
 }
+/* ******************** END SECTION-CLIENT-LIST ******************** */
 
-.logout-text {
-  color: #777 !important;
-  padding: 0 !important;
-  text-align: left !important;
-}
-// ******************** END SECTION-CLIENT-LIST ********************
-
-// ******************** START FOOTER ********************
+/* ******************** START FOOTER ******************** */
 
 
-// ******************** END FOOTER ********************
+/* ******************** END FOOTER ******************** */

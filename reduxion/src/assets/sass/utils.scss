@@ -124,6 +124,26 @@
   text-align: center;
 }
 
-
+.mdl-switch.is-checked .mdl-switch__track {
+  background: rgba(0,0,0,.26);
+}
+.mdl-switch.is-checked .mdl-switch__thumb {
+  background: #fafafa;
+}
+.mdl-switch__track {
+  background: rgba(63,81,181,.5);
+}
+.mdl-switch__thumb {
+  background: #3f51b5;
+}
+.mdl-menu__container ul {
+  min-width: 200px;
+}
+div#application {
+  .mdl-menu__item{
+    line-height: 35px;
+    height: auto;
+  }
+}
 
 

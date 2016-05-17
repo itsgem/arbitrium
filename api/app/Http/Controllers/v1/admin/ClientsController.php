@@ -99,6 +99,9 @@ class ClientsController extends ApiController
      *     ),
      *     @SWG\Parameter(name="client_id", in="query", description="FILTER by client_id", required=false, type="integer", default=""),
      *     @SWG\Parameter(name="subscription_id", in="query", description="FILTER by subscription_id", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="name", in="query", description="FILTER by subscription package name (Free Trial|Basic|Standard|Business|Premium)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="type", in="query", description="FILTER by subscription type (plan|trial)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
      *     @SWG\Parameter(name="valid_from", in="query", description="FILTER by valid_from (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
      *     @SWG\Parameter(name="valid_to", in="query", description="FILTER by valid_to (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
      *     @SWG\Parameter(name="valid_range_from", in="query", description="FILTER by valid_range_from (YYYY-MM-DD) (not exact specific)", required=false, type="string", format="date", default=""),
@@ -131,7 +134,7 @@ class ClientsController extends ApiController
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", description="Data", ref="#/definitions/ClientSubscriptionResponse")
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionResponse"))
      *         )
      *     ),
      *     @SWG\Response(response="403", description="Authentication Failed",
@@ -151,6 +154,9 @@ class ClientsController extends ApiController
      *     ),
      *     @SWG\Parameter(name="client_id", in="query", description="FILTER by client_id", required=false, type="integer", default=""),
      *     @SWG\Parameter(name="subscription_id", in="query", description="FILTER by subscription_id", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="name", in="query", description="FILTER by subscription package name (Free Trial|Basic|Standard|Business|Premium)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="type", in="query", description="FILTER by subscription type (plan|trial)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
      *     @SWG\Parameter(name="valid_from", in="query", description="FILTER by valid_from (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
      *     @SWG\Parameter(name="valid_to", in="query", description="FILTER by valid_to (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
      *     @SWG\Parameter(name="valid_range_from", in="query", description="FILTER by valid_range_from (YYYY-MM-DD) (not exact specific)", required=false, type="string", format="date", default=""),

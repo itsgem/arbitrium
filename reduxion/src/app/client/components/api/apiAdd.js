@@ -129,13 +129,12 @@ class ApiAdd extends React.Component {
     } );
 
     let ipAddresses = this.refs.ip_addresses.value;
-    ipAddresses = ipAddresses.split(',');
+    ipAddresses = ipAddresses.split('\n');
     ipAddresses = ipAddresses.map(function(obj){
        let rObj = {};
        rObj = {ip_address: obj.trim()};
        return rObj;
     });
-    console.log('permissions', permissions);
     let payload = {
       description: this.refs.description.value,
       ip_addresses: ipAddresses,

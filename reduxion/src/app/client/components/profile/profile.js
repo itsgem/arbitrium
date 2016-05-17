@@ -388,7 +388,7 @@ class ClientProfile extends React.Component {
                             defaultValue={client.rep_phone_number}
 
                             />
-                          <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
+                          <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone Number</label>
                           {errors && errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
                       </div>
                   </div>
@@ -540,7 +540,7 @@ class ClientProfile extends React.Component {
                             defaultValue={client.alt_phone_number}
 
                             />
-                          <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone no.</label>
+                          <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone Number</label>
                           {errors && errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
                       </div>
                   </div>

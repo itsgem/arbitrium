@@ -29,7 +29,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Delete(
      *     path="/admin/subscription/{subscription}",
-     *     tags={"Admin - Subscription"},
+     *     tags={"Admin - Subscription Packages"},
      *     summary="Delete Subscription",
      *     description="Delete subscription package details.",
      *     @SWG\Response(response="200", description="Success",
@@ -80,7 +80,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Get(
      *     path="/admin/subscription",
-     *     tags={"Admin - Subscription"},
+     *     tags={"Admin - Subscription Packages"},
      *     summary="Subscriptions List",
      *     description="Get all subscription packages.",
      *     @SWG\Response(response="200", description="Success",
@@ -121,7 +121,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Get(
      *     path="/admin/subscription/{subscription}",
-     *     tags={"Admin - Subscription"},
+     *     tags={"Admin - Subscription Packages"},
      *     summary="Single Subscription",
      *     description="Get single subscription package.",
      *     @SWG\Response(response="200", description="Success",
@@ -172,7 +172,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Post(
      *     path="/admin/subscription",
-     *     tags={"Admin - Subscription"},
+     *     tags={"Admin - Subscription Packages"},
      *     summary="Add Subscription",
      *     description="Add new subscription package.",
      *     @SWG\Response(response="200", description="Success",
@@ -222,7 +222,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Put(
      *     path="/admin/subscription/{subscription}",
-     *     tags={"Admin - Subscription"},
+     *     tags={"Admin - Subscription Packages"},
      *     summary="Update Subscription",
      *     description="Edit subscription package details.",
      *     @SWG\Response(response="200", description="Success",
