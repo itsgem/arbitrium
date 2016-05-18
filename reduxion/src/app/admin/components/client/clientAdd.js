@@ -253,7 +253,7 @@ class ClientAdd extends React.Component {
                   id='rep_phone_number'
                   ref="rep_phone_number"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_phone_number">Telephone no.*</label>
+                <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone Number*</label>
                 {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
               </div>
             </div>
@@ -378,7 +378,7 @@ class ClientAdd extends React.Component {
                   id='alt_phone_number'
                   ref="alt_phone_number"
                   />
-                <label className="mdl-textfield__label" htmlFor="alt_phone_number">Telephone no.</label>
+                <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone Number</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
