@@ -26,6 +26,8 @@ import AdminUserManagementList from 'admin/containers/userManagement/userManagem
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
+import AdminProfile from 'admin/containers/userProfile/userProfile';
+
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
 import ClientTopPage from 'client/components/main';
@@ -139,6 +141,9 @@ export default () => (
           <IndexRoute component={AdminUserManagementList} onEnter={requireAuth}/>
           <Route component={AdminUserManagementAdd} path="new" onEnter={requireAuth}/>
           <Route component={AdminUserManagementUpdate} path=":id" onEnter={requireAuth}/>
+        </Route>
+        <Route path="profile" onEnter={requireAuth}>
+          <IndexRoute component={AdminProfile} onEnter={requireAuth}/>
         </Route>
       </Route>
     </Route>

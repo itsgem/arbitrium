@@ -145,6 +145,22 @@ export default {
     });
   },
   // Admin - User Management
+  adminProfile() {
+    return get('admin/my-profile?with-user=1');
+  },
+  adminProfileUpdate(payload) {
+    return put('admin/my-profile', {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
   adminUserManagementList(payload = {page: 1}) {
     return get('admin', {params: payload});
   },
