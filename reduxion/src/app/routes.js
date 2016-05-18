@@ -44,6 +44,7 @@ import ClientChangeEmail from 'client/containers/profile/changeEmail';
 import ClientApiList from 'client/containers/api/apiList';
 import ClientApiAdd from 'client/containers/api/apiAdd';
 import ClientApiUpdate from 'client/containers/api/apiUpdate';
+import ClientSubscriptionDetail from 'client/views/subscription/subscriptionDetail';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
@@ -156,6 +157,9 @@ export default () => (
         <IndexRoute component={ClientApiList} onEnter={requireAuth}/>
         <Route component={ClientApiAdd} path="new" onEnter={requireAuth}/>
         <Route component={ClientApiUpdate} path=":id" onEnter={requireAuth}/>
+      </Route>
+      <Route path="subscription" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientSubscriptionDetail} onEnter={requireAuth}/>
       </Route>
     </Route>
     <Route path="*" components={NoMatch} />
