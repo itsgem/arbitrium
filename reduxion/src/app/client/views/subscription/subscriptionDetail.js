@@ -6,6 +6,7 @@ import {openLoading, closeLoading} from 'common/components/modal'
 export default React.createClass({
   componentDidMount () {
     this.props.subscriptionList();
+    this.props.clientSubscription();
   },
   componentWillMount () {
   if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -19,7 +20,7 @@ export default React.createClass({
     );
   },
   render() {
-    if (Object.keys(this.props.listSubscription).length) {
+    if (Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length) {
       closeLoading();
       return this.renderSubscriptionDetail();
     } else {
@@ -35,6 +36,7 @@ export default React.createClass({
           </div>
           <SubscriptionDetail
             listSubscription={this.props.listSubscription}
+            currentSubscription={this.props.currentSubscription}
           />
         </div>
       </main>

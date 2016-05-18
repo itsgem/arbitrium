@@ -363,5 +363,8 @@ export default {
   },
   clientDeleteApiKey(id) {
     return del('client/api-key/' + id);
+  },
+  clientSubscription() {
+    return get('client/subscription/current');
   }
 };

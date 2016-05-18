@@ -22,6 +22,8 @@ class SubscriptionDetail extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     let listSubscription = this.props.listSubscription.data;
+    let currentSubscription = this.props.currentSubscription.data;
+    console.log('test', currentSubscription);
     return (
         <div className="mdl-cell mdl-cell--12-col">
           <div className="mdl-grid content">
@@ -78,7 +80,7 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--9-col">
               {
                 listSubscription.map(item => {
-                  return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
+                  return <table key={item.id} style={{'width': 'auto', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                     <thead>
                       <tr>
                         <th>{item.name}</th>
@@ -110,10 +112,16 @@ class SubscriptionDetail extends React.Component {
                         <td>{item.max_decisions == 0.00 ? '--' : item.max_decisions}</td>
                       </tr>
                       <tr>
-                        <td>{item.discounts == 0.00 ? '--' : item.discounts }</td>
+                        <td>{item.discounts == 0.00 ? '--' : item.discounts } </td>
                       </tr>
                       <tr>
-                        <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Subscribe Now</button></td>
+                        <td>
+                          { 
+                            currentSubscription.subscription_id == item.id ?
+                            <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                            : <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" onClick={(e) => this.subscribed(e)}>Upgrade</button>
+                          }
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -175,6 +183,9 @@ class SubscriptionDetail extends React.Component {
       'is-invalid is-dirty': errors[ field ],
       'has-success': errors && !(errors[ field ])
     } );
+  }
+  subscribed (e) {
+    alert();
   }
 };
 
