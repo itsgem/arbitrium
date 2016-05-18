@@ -300,6 +300,11 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         }
     }
 
+    public function getRoleIds()
+    {
+        return ($this->isAdmin()) ? array_pluck($this->roles, 'id') : null;
+    }
+
     public function sendChangeEmail($callback_url, $new_email_address)
     {
         $this->new_email_address = $new_email_address;
