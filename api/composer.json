@@ -13,7 +13,10 @@
         "barryvdh/laravel-cors": "0.7.x",
         "mandrill/mandrill": "1.0.*",
         "sendgrid/sendgrid": "~4.0",
-        "jlapp/swaggervel": "dev-master"
+        "jlapp/swaggervel": "dev-master",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "paypal/rest-api-sdk-php" : "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

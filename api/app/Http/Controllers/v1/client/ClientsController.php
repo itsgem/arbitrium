@@ -6,6 +6,7 @@ use App\Http\Requests\v1\Client\SubscriptionRequest;
 use App\Http\Requests\v1\ClientUserRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ClientServices;
+use App\Services\PaypalServices;
 
 class ClientsController extends ApiController
 {
@@ -249,5 +250,23 @@ class ClientsController extends ApiController
     public function update(ClientUserRequest $request, ClientServices $service)
     {
         return $service->update($request, get_logged_in_client_id());
+    }
+
+    public function payment(SubscriptionRequest $request, PaypalServices $service)
+    {
+        if ($request->get('subscription_id')) {
+            return $service->paymentRecurring($request, auth()->user()->client);
+        }
+
+        return $service->paymentOneTime($request, auth()->user()->client);
+    }
+
+    public function paymentStatus(SubscriptionRequest $request, PaypalServices $service)
+    {
+        if ($request->get('subscription_id')) {
+            return $service->paymentRecurringStatus($request, auth()->user()->client);
+        }
+
+        return $service->paymentOneTimeStatus($request, auth()->user()->client);
     }
 }
