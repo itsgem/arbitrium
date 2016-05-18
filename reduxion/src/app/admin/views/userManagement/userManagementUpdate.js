@@ -2,6 +2,7 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import UserManagementUpdate from 'admin/components/userManagement/userManagementUpdate';
 import { Link } from 'react-router';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass( {
   contextTypes: {
@@ -11,13 +12,18 @@ export default React.createClass( {
     this.props.listRoleAdmin();
     this.props.getAdminInfo(this.props.params.id);
   },
+  loadingRender () {
+    openLoading();
+    return (
+      <div className="loading"></div>
+    );
+  },
   render() {
     if (this.props.adminInfo.get("data")) {
+      closeLoading();
       return this.renderAdminInfo();
     } else {
-       return (
-        <div id="client" className="inner_content"></div>
-      );
+      return this.loadingRender();
     }
   },
   componentWillReceiveProps(nextProps) {

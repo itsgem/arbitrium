@@ -44,6 +44,7 @@ import ClientChangeEmail from 'client/containers/profile/changeEmail';
 import ClientApiList from 'client/containers/api/apiList';
 import ClientApiAdd from 'client/containers/api/apiAdd';
 import ClientApiUpdate from 'client/containers/api/apiUpdate';
+import ClientSubscriptionDetail from 'client/views/subscription/subscriptionDetail';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
@@ -74,6 +75,11 @@ function requireAuth(nextState, replace, cb) {
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
     let decryptedData ="";
+    if (bytes.sigBytes < 0 ) {
+      localStorage.removeItem(tokenName);
+      window.location = window.location.origin + "/" + (tokenName == 'token' ? "i" : tokenName) + "/login";
+    }
+
     if (JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
       decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     } else {
@@ -81,7 +87,7 @@ function requireAuth(nextState, replace, cb) {
       replace({
         pathname: "/" + (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
-      })
+      });
     }
 
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
@@ -89,7 +95,7 @@ function requireAuth(nextState, replace, cb) {
       replace({
         pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
-      })
+      });
     }
 
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
@@ -156,6 +162,9 @@ export default () => (
         <IndexRoute component={ClientApiList} onEnter={requireAuth}/>
         <Route component={ClientApiAdd} path="new" onEnter={requireAuth}/>
         <Route component={ClientApiUpdate} path=":id" onEnter={requireAuth}/>
+      </Route>
+      <Route path="subscription" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientSubscriptionDetail} onEnter={requireAuth}/>
       </Route>
     </Route>
     <Route path="*" components={NoMatch} />
