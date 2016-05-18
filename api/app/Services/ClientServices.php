@@ -154,13 +154,17 @@ class ClientServices extends NrbServices
             // Subscribe
             $subscription_id = $request->get('subscription_id');
 
-            if ($is_renew || $client->latest_subscription->subscription_id == $subscription_id)
+            // if client has subscribed before
+            if ($client->latest_subscription)
             {
-                $client->latest_subscription->renew();
-            }
-            else
-            {
-                $client->latest_subscription->upgrade();
+                if ($is_renew || $client->latest_subscription->subscription_id == $subscription_id)
+                {
+                    $client->latest_subscription->renew();
+                }
+                else
+                {
+                    $client->latest_subscription->upgrade();
+                }
             }
 
             $result = $client->purchaseSubscription($subscription_id, current_date_to_string(), $request->get('term'));
