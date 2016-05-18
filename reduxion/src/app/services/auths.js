@@ -135,7 +135,7 @@ export default {
         alt_phone_number: payload.alt_phone_number,
         alt_position: payload.alt_position,
         alt_department: payload.alt_department,
-        callback_url: window.location.origin + "/forgot"
+        callback_url: window.location.origin + "/coffee/forgot"
       }
     });
   },
