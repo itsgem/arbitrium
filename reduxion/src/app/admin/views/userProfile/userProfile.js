@@ -13,8 +13,6 @@ export default React.createClass( {
     this.props.adminProfile();
   },
   componentWillReceiveProps(nextProps) {
-    console.log('test', nextProps.adminUpdate);
-    console.log('test', nextProps.loading);
     if (nextProps.adminUpdate && !nextProps.loading) {
       this.props.adminProfile();
       $('.msg').html('Admin User Successfully Updated').addClass('bg-green');

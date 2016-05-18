@@ -103,10 +103,15 @@ function requireAuth(nextState, replace, cb) {
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
       let lifetime = decryptedData.lifetime;
       let expired = moment().add(lifetime,'minutes').valueOf();
+      let role = '';
+      if (decryptedData.role) {
+        role = decryptedData.role;
+      }
       let encryptToken = {
         token: decryptedData.token,
         expired: expired,
-        lifetime: lifetime
+        lifetime: lifetime,
+        role: role
       };
       localStorage.setItem(tokenName, CryptoJS.AES.encrypt(JSON.stringify(encryptToken), config.key));
     }
