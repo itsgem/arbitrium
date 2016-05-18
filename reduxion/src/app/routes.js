@@ -44,7 +44,7 @@ import ClientChangeEmail from 'client/containers/profile/changeEmail';
 import ClientApiList from 'client/containers/api/apiList';
 import ClientApiAdd from 'client/containers/api/apiAdd';
 import ClientApiUpdate from 'client/containers/api/apiUpdate';
-import ClientSubscriptionDetail from 'client/views/subscription/subscriptionDetail';
+import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");

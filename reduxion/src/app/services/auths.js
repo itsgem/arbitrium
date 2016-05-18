@@ -23,6 +23,9 @@ export default {
   logout() {
     return delete('auth/logout');
   },
+  subscriptionList() {
+    return get('subscription');
+  },
   // ------- ADMIN -------
   getCurrentUser() {
     return get('me');
