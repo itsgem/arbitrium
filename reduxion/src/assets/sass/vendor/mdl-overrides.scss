@@ -371,73 +371,99 @@ select {
   }
 }
 
-.table-client-list {
-  width: 100%;
 
-  thead {
-    .thead-title--key {
-      width: 30%;
+/*
+* Client - My Subscription
+*/
+.subscription-type {
+  .header-title {
+    background: $base-blue;
+    padding: 15px;
+
+    p {
+      color: #fff;
+      font-weight: 400;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
+  }
+
+  .table-list {
+    border: 0;
+    width: 100%;
+
+    thead {
+      tr {
+        background: #e3ecf5;
+        text-align: center;
+
+        th {
+          font-weight: 700;
+          text-align: center;
+        }
+      }
     }
 
-    .thead-title--action {
-      width: 17%;
-    }
+    tbody {
+      border: 0;
 
-    tr {
-      background: #e3ecf5;
+      tr {
+        background: #fbfeff;
 
-      th {
-        font-weight: 700;
-        font-size: 15px;
+        &:hover {
+          background-color: #f0f5fa;
+        }
+
+        &:nth-child(odd) {
+         background-color: #f5fafe;
+
+          &:hover {
+            background-color: #f0f5fa;
+          }
+        }
+
+        td {
+          border: 0;
+          text-align: center;
+
+          .switch {
+            width: 70%;
+          }
+        }
+      }
+
+      .material-icons {
+        color: $base-orange;
       }
     }
   }
 
-  tbody {
-    .btn-action {
-      .mdl-switch {
-        width: 23%;
-      }
-      button {
-        margin-left: 14px;
-      }
+  .footer-action {
+    padding-top: 30px;
+    padding-right: 20px;
+    text-align: right;
+
+    .mdl-button {
+      padding-left: 30px;
+      padding-right: 30px;
     }
+  }
+}
 
-    tr {
-      .mdl-button--fab {
-        height: 36px;
-        min-width: 36px;
-        width: 36px;
-      }
-      &.bg-dark{
-        background: #f5fafe;
+.arb-demo {
+  &.mdl-list {
+    padding: 46px 0 0 0;
 
-        td {
-          border: 0px;
-        }
-      }
+    .mdl-list__item {
+      letter-spacing: 0px;
+      font-size: 15px;
 
-      &.bg-light{
-        background: #fbfeff;
-
-        td {
-          border: 0px;
-        }
-      }
-      .mdl-switch {
-        width: 60%;
-      }
-      td {
-        .btn-view-edit{
-          background: #ff6600;
-          margin-right: 6px;
-        }
-
-        .btn-delete{
-          background: #ff4a4a;
-        }
+      .mdl-list__item-primary-content {
+        display: block;
+        text-align: right;
       }
     }
   }
 }
+
 

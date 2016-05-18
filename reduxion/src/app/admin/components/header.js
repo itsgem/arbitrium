@@ -44,11 +44,11 @@ export default React.createClass( {
                   </div>
                   <div className="container">
                     <button id="demo-menu-api"
-                      className="menu-api mdl-button mdl-js-button mdl-layout__tab">API</button>
+                      className="menu-api mdl-button mdl-js-button mdl-layout__tab">API KEYS</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-api">
-                      <li className="mdl-menu__item"><Link to="/coffee/api/">API List</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/api/">API Keys List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API Key</Link></li>
                     </ul>
                   </div>
                   <Link className="menu-pricing mdl-layout__tab" to="/coffee">Pricing</Link>
