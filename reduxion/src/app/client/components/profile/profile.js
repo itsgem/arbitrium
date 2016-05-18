@@ -6,6 +6,7 @@ import Country from 'client/components/country';
 
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 class ClientProfile extends React.Component {
 
@@ -93,6 +94,13 @@ class ClientProfile extends React.Component {
     }
   }
 
+  loadingRender () {
+    openLoading();
+    return (
+      <div className="loading"></div>
+    );
+  }
+
   render() {
     if(this.props.success){
       let message = null;
@@ -108,7 +116,9 @@ class ClientProfile extends React.Component {
     }
 
     if (!this.props.user || !this.state.client || !Object.keys(this.props.country ).length) {
-      return (<div className="mdl-grid">LOADING</div>);
+      return this.loadingRender();
+    } else {
+      closeLoading();
     }
 
     let client = this.state.client;
