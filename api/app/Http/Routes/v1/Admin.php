@@ -5,6 +5,9 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
 {
     Route::group(['prefix' => 'admin'], function()
     {
+        Route::get('my-profile',    ['uses' => 'AdminsController@showMyProfile']);
+        Route::put('my-profile',    ['uses' => 'AdminsController@updateMyProfile']);
+
         //-- API
         Route::group(['namespace' => 'api'], function()
         {
