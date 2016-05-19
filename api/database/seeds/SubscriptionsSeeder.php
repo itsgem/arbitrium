@@ -19,6 +19,7 @@ class SubscriptionsSeeder extends Seeder
         $data = [
             [
                 'name'                    => 'Trial',
+                'description'             => 'Trial',
                 'type'                    => Subscription::TYPE_TRIAL,
                 'country_id'              => 202,
                 'fee_monthly'             => 0,
@@ -37,6 +38,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Basic',
+                'description'             => 'Basic',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 20,
@@ -55,6 +57,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Standard',
+                'description'             => 'Standard',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 40,
@@ -73,6 +76,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Business',
+                'description'             => 'Business',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 60,
@@ -91,6 +95,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Premium',
+                'description'             => 'Premium',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 80,

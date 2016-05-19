@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1\Client;
 
 use App\Http\Requests\v1\Client\SubscriptionRequest;
 use App\Http\Requests\v1\ClientUserRequest;
+use App\Http\Requests\v1\PaypalRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ClientServices;
 use App\Services\PaypalServices;
@@ -252,7 +253,22 @@ class ClientsController extends ApiController
         return $service->update($request, get_logged_in_client_id());
     }
 
-    public function payment(SubscriptionRequest $request, PaypalServices $service)
+    public function createPlan(PaypalRequest $request, PaypalServices $service)
+    {
+        return $service->createPlan($request, auth()->user()->client);
+    }
+
+    public function subscribe(PaypalRequest $request, PaypalServices $service)
+    {
+        return $service->subscribe($request, auth()->user()->client);
+    }
+
+    public function executeAgreement(PaypalRequest $request, PaypalServices $service)
+    {
+        return $service->executeAgreement($request, auth()->user()->client);
+    }
+
+    public function payment(PaypalRequest $request, PaypalServices $service)
     {
         if ($request->get('subscription_id')) {
             return $service->paymentRecurring($request, auth()->user()->client);
@@ -261,7 +277,7 @@ class ClientsController extends ApiController
         return $service->paymentOneTime($request, auth()->user()->client);
     }
 
-    public function paymentStatus(SubscriptionRequest $request, PaypalServices $service)
+    public function paymentStatus(PaypalRequest $request, PaypalServices $service)
     {
         if ($request->get('subscription_id')) {
             return $service->paymentRecurringStatus($request, auth()->user()->client);

@@ -41,8 +41,12 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
             Route::patch('cancel',          ['uses' => 'ClientsController@cancelSubscription']);
 
             // Payments
-            Route::post('payment',              ['uses' => 'ClientsController@payment']);
-            Route::get('payment/status',        ['uses' => 'ClientsController@paymentStatus']);
+            Route::post('plan',             ['uses' => 'ClientsController@createPlan']);
+            Route::get('subscribe',         ['uses' => 'ClientsController@subscribe']);
+            Route::get('confirm',           ['uses' => 'ClientsController@executeAgreement']);
+
+            Route::post('payment',          ['uses' => 'ClientsController@payment']);
+            Route::get('payment/status',    ['uses' => 'ClientsController@paymentStatus']);
         });
     });
 });

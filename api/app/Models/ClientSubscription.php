@@ -21,6 +21,14 @@ class ClientSubscription extends Subscription
 
     protected $dates = ['valid_from', 'valid_to'];
 
+    protected $fillable = [
+        'paypal_plan_id', 'paypal_profile_id', 'paypal_payment_id', 'paypal_payer_id',
+        'name', 'description', 'type', 'country_id',
+        'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
+        'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
+        'created_by', 'updated_by'
+    ];
+
     //---------- relationships
     public function client()
     {

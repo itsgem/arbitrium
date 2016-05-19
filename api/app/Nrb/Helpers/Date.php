@@ -11,6 +11,12 @@ function current_datetime()
     return Carbon::now();
 }
 
+function current_datetime_iso8601($timezone='Asia/Singapore')
+{
+    $date = new DateTime("now", new DateTimeZone($timezone));
+    return $date->format('c');
+}
+
 function current_date()
 {
     return Carbon::today();

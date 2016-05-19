@@ -11,8 +11,9 @@ use App\Nrb\NrbModel;
  *
  * @SWG\Definition(
  *     definition="Subscription",
- *     required={"name", "type", "country_id", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts"},
+ *     required={"name", "description", "type", "country_id", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts"},
  *     @SWG\Property(property="name", type="string", description="Subscription package name", default="Basic"),
+ *     @SWG\Property(property="description", type="string", description="Subscription description", default="Basic Plan"),
  *     @SWG\Property(property="type", type="string", description="Trial|Plan", default="Plan"),
  *     @SWG\Property(property="country_id", type="integer", format="int64", description="Currency code by Country ID", default="202"),
  *     @SWG\Property(property="fee_monthly", type="integer", format="int64", description="Monthly fee", default="20.00"),
@@ -28,9 +29,10 @@ use App\Nrb\NrbModel;
  *
  * @SWG\Definition(
  *     definition="SubscriptionResponse",
- *     required={"id", "name", "type", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts", "total", "currency"},
+ *     required={"id", "name", "description", "type", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts", "total", "currency"},
  *     @SWG\Property(property="id", type="integer", format="int64", description="Subscription ID", default="1"),
  *     @SWG\Property(property="name", type="string", description="Subscription package name", default="Basic"),
+ *     @SWG\Property(property="description", type="string", description="Subscription description", default="Basic Plan"),
  *     @SWG\Property(property="type", type="string", description="Trial|Plan", default="Plan"),
  *     @SWG\Property(property="fee_monthly", type="integer", format="int64", description="Monthly fee", default="20.00"),
  *     @SWG\Property(property="fee_monthly_maintenance", type="integer", format="int64", description="Monthly maintenance fee", default="12.00"),
@@ -57,7 +59,7 @@ use App\Nrb\NrbModel;
  *
  * @SWG\Definition(
  *     definition="ClientSubscriptionResponse",
- *     required={"id", "name", "type", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts", "total", "currency"},
+ *     required={"id", "name", "description", "type", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts", "total", "currency"},
  *     @SWG\Property(property="id", type="integer", format="int64", description="ClientSubscription ID", default="1"),
  *     @SWG\Property(property="client_id", type="integer", format="int64", description="Client ID", default="1"),
  *     @SWG\Property(property="subscription_id", type="integer", format="int64", description="Subscription ID", default="1"),
@@ -69,6 +71,7 @@ use App\Nrb\NrbModel;
  *     @SWG\Property(property="status", type="string", description="Active|Inactive", default="Active"),
  *     @SWG\Property(property="status_end", type="string", description="Cancelled|Upgraded|Renewed", default=""),
  *     @SWG\Property(property="name", type="string", description="Subscription package name", default="Basic"),
+ *     @SWG\Property(property="description", type="string", description="Subscription description", default="Basic Plan"),
  *     @SWG\Property(property="type", type="string", description="Trial|Plan", default="Plan"),
  *     @SWG\Property(property="fee_monthly", type="integer", format="int64", description="Monthly fee", default="20.00"),
  *     @SWG\Property(property="fee_monthly_maintenance", type="integer", format="int64", description="Monthly maintenance fee", default="12.00"),
@@ -105,7 +108,8 @@ class Subscription extends NrbModel
     protected $dates = [];
 
     protected $fillable = [
-        'name', 'type', 'country_id', 'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
+        'paypal_plan_id_monthly', 'paypal_plan_id_yearly', 'name', 'description', 'type', 'country_id',
+        'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
     ];
