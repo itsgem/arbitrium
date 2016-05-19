@@ -180,8 +180,17 @@ export default React.createClass({
 
             </div>
             <div className="mdl-grid mdl-grid--no-spacing">
-              <div className="mdl-cell mdl-cell--12-col footer-action">
-                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Pay</button>
+              <div className="mdl-cell mdl-cell--4-col"></div>
+              <div className="mdl-cell mdl-cell--8-col footer-action">
+                <span>
+                  <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
+                    <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
+                    <span className="mdl-checkbox__label">I agree to the Terms and Conditions</span>
+                  </label>
+                </span>
+                <span>
+                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Pay via Paypal</button>
+                </span>
               </div>
             </div>
 
