@@ -13,6 +13,9 @@ export const getAdminInfo = createActionAsync('GET_ADMIN_INFO', auth.getAdminInf
 export const listRoleAdmin = createActionAsync('LIST_ROLE_ADMIN', auth.listRoleAdmin);
 export const adminUnlock = createActionAsync('ADMIN_USER_UNLOCK', user.clientUnlock);
 
+export const adminProfile = createActionAsync('ADMIN_PROFILE', auth.adminProfile);
+export const adminProfileUpdate = createActionAsync('ADMIN_PROFILE_UPDATE', auth.adminProfileUpdate);
+
 export const validateUsername = createActionAsync('CHECK_USERNAME', auth.validateUsername);
 
 const initialState = Immutable.fromJS({
@@ -26,7 +29,8 @@ const initialState = Immutable.fromJS({
   deleteSuccess: false,
   loading: false,
   validateCompleted: false,
-  adminUnlockSuccess: false
+  adminUnlockSuccess: false,
+  adminProfileInfo: {}
 });
 
 export default createReducer({
@@ -85,9 +89,17 @@ export default createReducer({
   [adminUserManagementUpdate.request]: (state) => state.merge({
     adminUpdate: false,
     loading: true}),
+  [adminProfileUpdate.ok]: (state) => state.merge({
+    adminUpdate: true,
+    loading: false,}),
+  [adminProfileUpdate.request]: (state) => state.merge({
+    adminUpdate: false,
+    loading: true}),
   [validateUsername.ok]: (state) => state.merge({validateCompleted: true}),
   [validateUsername.request]: (state) => state.merge({validateCompleted: false}),
   [validateUsername.error]: (state) => state.merge({validateCompleted: false}),
   [adminUnlock.ok]: (state) => state.merge({adminUnlockSuccess: true, loading: false}),
-  [adminUnlock.request]: (state) => state.merge({adminUnlockSuccess: false, loading: true})
+  [adminUnlock.request]: (state) => state.merge({adminUnlockSuccess: false, loading: true}),
+  [adminProfile.ok]: (state, payload) => state.merge({adminProfileInfo: payload, loading: false, adminUpdate: false}),
+  [adminProfile.request]: (state) => state.merge({loading: true, adminUpdate: false})
 }, initialState);

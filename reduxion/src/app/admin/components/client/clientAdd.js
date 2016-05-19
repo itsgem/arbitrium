@@ -346,6 +346,7 @@ class ClientAdd extends React.Component {
                   ref="alt_mobile_code"
                   />
                 <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Country Code</label>
+                {errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
@@ -357,6 +358,7 @@ class ClientAdd extends React.Component {
                   ref="alt_mobile_number"
                   />
                 <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
+                {errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
@@ -368,6 +370,7 @@ class ClientAdd extends React.Component {
                   ref="alt_phone_code"
                   />
                 <label className="mdl-textfield__label" htmlFor="alt_phone_code">Country Code</label>
+                {errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
@@ -379,6 +382,7 @@ class ClientAdd extends React.Component {
                   ref="alt_phone_number"
                   />
                 <label className="mdl-textfield__label" htmlFor="alt_phone_number">Phone Number</label>
+                {errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
