@@ -20,10 +20,12 @@ const initialState = Immutable.fromJS({
 export default createReducer({
   [subscriptionList.ok]: (state, payload) => state.merge({
     listSubscription: payload,
-    loading: false
+    loading: false,
+    purchaseSuccess: false
   }),
   [subscriptionList.request]: (state) => state.merge({
-    loading: true
+    loading: true,
+    purchaseSuccess: false
   }),
   [clientSubscription.ok]: (state, payload) => state.merge({
     currentSubscription: payload,
@@ -33,18 +35,20 @@ export default createReducer({
     loading: true
   }),
   [clientPurchaseSubscription.ok]: (state) => state.merge({
-    loading: false,
-    purchaseSuccess: true
+    purchaseSuccess: true,
+    loading: false
   }),
   [clientPurchaseSubscription.request]: (state) => state.merge({
-    loading: true,
-    purchaseSuccess: false
+    purchaseSuccess: false,
+    loading: true
   }),
   [getSubscriptionItem.ok]: (state, payload) => state.merge({
     loading: false,
-    subscriptionItem: payload
+    subscriptionItem: payload,
+    purchaseSuccess: false
   }),
   [getSubscriptionItem.request]: (state) => state.merge({
-    loading: false
+    loading: false,
+    purchaseSuccess: false
   })
 }, initialState);

@@ -4,6 +4,9 @@ import SubscriptionPayment from 'client/components/subscription/subscriptionPaym
 import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   componentDidMount () {
     let id = this.props.params.id;
     this.props.getSubscriptionItem(id);
@@ -21,15 +24,12 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
-    if (this.props.purchaseSuccess) {
+    if (nextProps.purchaseSuccess) {
       let notification = document.querySelector('.mdl-snackbar');
-      message = success.message;
-      if(message){
-        notification.MaterialSnackbar.showSnackbar( {
-            message: message,
-            timeout: 1000
-        });
-      }
+      notification.MaterialSnackbar.showSnackbar( {
+          message: 'Subscription success',
+          timeout: 3000
+      });
       this.context.router.push('/i/subscription');
     }
   },

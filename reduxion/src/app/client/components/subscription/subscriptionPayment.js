@@ -19,8 +19,10 @@ class SubscriptionPayment extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-  render () {
+  componentDidMount () {
     this.dateValid();
+  }
+  render () {
     let subscriptionItem = this.props.subscriptionItem.data;
     return (
       <div className="mdl-cell mdl-cell--12-col">
@@ -40,7 +42,7 @@ class SubscriptionPayment extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-focused is-upgraded full-width">
-                <select ref="term" className="mdl-textfield__input">
+                <select onChange={(e) => this.dateValid()} ref="term" className="mdl-textfield__input">
                   <option>Annually</option>
                   <option>Monthly</option>
                 </select>
@@ -49,12 +51,12 @@ class SubscriptionPayment extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="valid-from" value="10/14/2015" disabled/><label className="mdl-textfield__label" htmlFor="sample1">Valid From...</label>
+                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" disabled/><label className="mdl-textfield__label" htmlFor="sample1">Valid From...</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="valid-to" value="10/14/2016" disabled/> <label className="mdl-textfield__label" htmlFor="sample1">To...</label>
+                <input className="mdl-textfield__input font-input" type="text" ref="validTo" disabled/> <label className="mdl-textfield__label" htmlFor="sample1">To...</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -189,11 +191,23 @@ class SubscriptionPayment extends React.Component {
     );
   }
   dateValid() {
-    let myDate = new Date();
-    let isFrom = (myDate.getMonth() + 1) + '/' + myDate.getDate() + '/' +  myDate.getFullYear();
-    //alert((myDate.getMonth() + 1) + '/' + myDate.getDate() + '/' +  myDate.getFullYear());
-    //myDate.setFullYear(myDate.getFullYear() + 5);
-    let isTo = (myDate.getMonth() + 1) + '/' + myDate.getDate() + '/' +  (myDate.getFullYear() + 1);
+    let term = this.refs.term ? this.refs.term.value : "Annually";
+    let dateToday = new Date();
+    let isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
+    let newDate = '';
+    let isTo = '';
+    switch (term) {
+      case 'Annually':
+        newDate = new Date(dateToday.getFullYear() + 1, dateToday.getMonth(), dateToday.getDate() + 29);
+        isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
+        break;
+      case 'Monthly':
+        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate());
+        isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
+        break;
+    }
+    this.refs.validFrom.value = isFrom;
+    this.refs.validTo.value = isTo;
   }
   termConditions(e) {
     if (e.target.checked) {
@@ -211,7 +225,6 @@ class SubscriptionPayment extends React.Component {
         subscription_id: this.props.params.id,
         term: (this.refs.isTerm.checked ? this.refs.term.value : '')
       };
-      //console.log(payload);
       this.props.clientPurchaseSubscription(payload);
     }
   }

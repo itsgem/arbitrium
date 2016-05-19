@@ -23,7 +23,6 @@ class SubscriptionDetail extends React.Component {
     let {errors, errorServer} = this.state ? this.state :'';
     let listSubscription = this.props.listSubscription.data;
     let currentSubscription = this.props.currentSubscription.data;
-    console.log('test', currentSubscription);
     return (
         <div className="mdl-cell mdl-cell--12-col">
           <div className="mdl-grid content">

@@ -9,8 +9,8 @@ const strMapToObj=(strMap) => {
 
 const mapStateToProps = (state) => ({
   loading: state.get('AdminSubscription').get('loading'),
-  purchaseSuccess: state.get('AdminSubscription').get('purchaseSuccess'),
-  subscriptionItem: strMapToObj(state.get('AdminSubscription').get('subscriptionItem'))
+  subscriptionItem: strMapToObj(state.get('AdminSubscription').get('subscriptionItem')),
+  purchaseSuccess: strMapToObj(state.get('AdminSubscription').get('purchaseSuccess'))
 });
 
 export default connect((mapStateToProps), {
