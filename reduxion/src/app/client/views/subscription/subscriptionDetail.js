@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import SubscriptionDetail from 'client/components/subscription/SubscriptionDetail';
+import SubscriptionDetail from 'client/components/subscription/subscriptionDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass({
