@@ -155,6 +155,13 @@ div#application {
   top: 45%;
 }
 .mdl-switch.is-upgraded {
-    width: 120px;
+    width: 110px;
 }
+.layout-align-end-end {
+  text-align: right;
+  padding: 10px;
 
+  .flex-order-gt-md-2 {
+    display: inline-block;
+  }
+}
