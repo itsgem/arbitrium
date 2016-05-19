@@ -112,6 +112,9 @@ button, select, html, textarea, input, legend {
   .modal-cancel:hover {
     background-color: rgba(158, 158, 158, 0.2);
   }
+  .mdl-button--fab.mdl-button--mini-fab {
+    margin-left: 6px;
+  }
 } 
 
 main {

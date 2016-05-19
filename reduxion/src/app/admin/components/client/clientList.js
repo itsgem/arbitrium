@@ -19,14 +19,14 @@ class UserManagementList extends React.Component {
   userDisplay (data, alter) {
     return (
        <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-          <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.company_name}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.rep_last_name}, {data.rep_first_name} </td>
-          <td className="mdl-data-table__cell--non-numeric">{data.user.email_address}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.rep_phone_code} {data.rep_phone_number}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.rep_mobile_code} {data.rep_mobile_number}</td>
-          <td className="mdl-data-table__cell--non-numeric">{data.approval_status}</td>
-          <td className="mdl-data-table__cell--non-numeric">
+          <td className="mdl-data-table__cell--non-numeric" width="112">{data.id}</td>
+          <td className="mdl-data-table__cell--non-numeric" width="114">{data.company_name}</td>
+          <td className="mdl-data-table__cell--non-numeric" width="248">{data.rep_last_name}, {data.rep_first_name} </td>
+          <td className="mdl-data-table__cell--non-numeric" width="195">{data.user.email_address}</td>
+          <td className="mdl-data-table__cell--non-numeric" width="139">{data.rep_phone_code} {data.rep_phone_number}</td>
+          <td className="mdl-data-table__cell--non-numeric" width="113">{data.rep_mobile_code} {data.rep_mobile_number}</td>
+          <td className="mdl-data-table__cell--non-numeric" width="103">{data.approval_status}</td>
+          <td className="mdl-data-table__cell--non-numeric" width="135">
             <Link
             className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
             to={"/coffee/client/" + data.id}><i className="material-icons">open_in_new</i></Link>
@@ -238,9 +238,7 @@ class UserManagementList extends React.Component {
     this.selectPageNumber(pageNum);
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
-
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalConfirm (e, id, company) {
     document.querySelector('.msg-box p label').innerHTML = company;

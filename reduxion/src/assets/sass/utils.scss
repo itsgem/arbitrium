@@ -154,5 +154,19 @@ div#application {
   margin: 0 auto;
   top: 45%;
 }
+.mdl-switch.is-upgraded {
+    width: 110px;
+}
+.layout-align-end-end {
+  text-align: right;
+  padding: 10px;
 
-
+  .flex-order-gt-md-2 {
+    display: inline-block;
+  }
+}
+.mdl-textfield.is-invalid {
+  .mdl-textfield__error {
+    font-size: 12px;
+  }
+}
