@@ -95,7 +95,8 @@ class AuthController extends ApiController
                         'token'     => $user->access_token->token,
                         'lifetime'  => get_sesssion_lifetime(),
                         'timezone'  => $user->timezone,
-                        'username'  => $user->username
+                        'username'  => $user->username,
+                        'role_id'  => $user->getRoleIds()
                     ];
                     return $this->respondWithSuccess($data);
                 }
@@ -138,7 +139,8 @@ class AuthController extends ApiController
                     'token'     => $user->access_token->token,
                     'lifetime'  => get_sesssion_lifetime(),
                     'timezone'  => $user->timezone,
-                    'username'  => $user->username
+                    'username'  => $user->username,
+                    'role_id'  => $user->getRoleIds()
                 ]);
     }
 

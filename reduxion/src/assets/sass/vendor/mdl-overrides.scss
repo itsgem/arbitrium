@@ -371,73 +371,125 @@ select {
   }
 }
 
-.table-client-list {
-  width: 100%;
 
-  thead {
-    .thead-title--key {
-      width: 30%;
-    }
+/*
+* Client - My Subscription
+*/
+.subscription-type {
+  .header-title {
+    background: $base-blue;
+    padding: 15px;
 
-    .thead-title--action {
-      width: 17%;
-    }
-
-    tr {
-      background: #e3ecf5;
-
-      th {
-        font-weight: 700;
-        font-size: 15px;
-      }
+    p {
+      color: #fff;
+      font-weight: 400;
+      margin-bottom: 0;
+      text-transform: uppercase;
     }
   }
 
-  tbody {
-    .btn-action {
-      .mdl-switch {
-        width: 23%;
-      }
-      button {
-        margin-left: 14px;
+  .table-list {
+    border: 0;
+    width: 100%;
+
+    thead {
+      tr {
+        background: #e3ecf5;
+        text-align: center;
+
+        th {
+          font-weight: 700;
+          text-align: center;
+        }
       }
     }
 
-    tr {
-      .mdl-button--fab {
-        height: 36px;
-        min-width: 36px;
-        width: 36px;
-      }
-      &.bg-dark{
-        background: #f5fafe;
+    tbody {
+      border: 0;
 
-        td {
-          border: 0px;
-        }
-      }
-
-      &.bg-light{
+      tr {
         background: #fbfeff;
 
+        &:hover {
+          background-color: #f0f5fa;
+        }
+
+        &:nth-child(odd) {
+         background-color: #f5fafe;
+
+          &:hover {
+            background-color: #f0f5fa;
+          }
+        }
+
         td {
-          border: 0px;
+          border: 0;
+          text-align: center;
+
+          .switch {
+            width: 70%;
+          }
         }
       }
-      .mdl-switch {
-        width: 60%;
+
+      .material-icons {
+        color: $base-orange;
       }
+
       td {
-        .btn-view-edit{
+        .btn-view-edit {
           background: #ff6600;
           margin-right: 6px;
         }
 
-        .btn-delete{
+        .btn-delete {
           background: #ff4a4a;
         }
       }
     }
   }
+
+  .footer-action {
+    padding: 50px 20px 20px 0;
+    text-align: right;
+
+    .mdl-checkbox {
+      width: auto;
+    }
+
+    .mdl-button {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+
+  .box-container {
+    border: 1px solid #e2e2e2;
+    min-height: 372px;
+
+    .total {
+      border-top: 1px solid #e2e2e2;
+      padding: 10px 0 0 0;
+      width: 100%;
+    }
+  }
 }
+
+.arb-demo {
+  &.mdl-list {
+    padding: 46px 0 0 0;
+
+    .mdl-list__item {
+      letter-spacing: 0px;
+      font-size: 15px;
+
+      .mdl-list__item-primary-content {
+        display: block;
+        text-align: right;
+      }
+    }
+  }
+}
+
+
 

@@ -44,9 +44,6 @@ div#application .client{
     white-space: normal;
   }
 
-  .table-api th{
-    width: 25%;
-  }
   .table-api td{
     word-wrap: break-word;
     word-break: break-all;
@@ -54,6 +51,7 @@ div#application .client{
 
   .mdl-button-group {
     margin: 0 5px;
+    text-align: right;
 
     .mdl-button {
       margin: 0 5px;

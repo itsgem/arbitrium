@@ -16,11 +16,13 @@ class AdminsController extends ApiController
     protected function getMethods()
     {
         return [
-            'destroy'   => 'Delete Admin User',
-            'index'     => 'Admin User List',
-            'show'      => 'Retrieve Admin User',
-            'store'     => 'Add Admin User',
-            'update'    => 'Update Admin User'
+            'destroy'         => 'Delete Admin User',
+            'index'           => 'Admin User List',
+            'show'            => 'Retrieve Admin User',
+            'showMyProfile'   => 'Retrieve Current Logged in Admin User',
+            'store'           => 'Add Admin User',
+            'update'          => 'Update Admin User',
+            'updateMyProfile' => 'Update Current Logged in Admin User'
         ];
     }
 
@@ -39,6 +41,11 @@ class AdminsController extends ApiController
         return $service->show($this->request, $id);
     }
 
+    public function showMyProfile(AdminUserServices $service)
+    {
+        return $service->show($this->request, get_logged_in_admin_id());
+    }
+
     public function store(AdminUserRequest $request, AdminUserServices $service)
     {
         return $service->store($request);
@@ -47,5 +54,10 @@ class AdminsController extends ApiController
     public function update(AdminUserRequest $request, $id, AdminUserServices $service)
     {
         return $service->update($request, $id);
+    }
+
+    public function updateMyProfile(AdminUserRequest $request, AdminUserServices $service)
+    {
+        return $service->update($request, get_logged_in_admin_id());
     }
 }

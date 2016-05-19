@@ -29,6 +29,8 @@ import AdminUserManagementList from 'admin/containers/userManagement/userManagem
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
+import AdminProfile from 'admin/containers/userProfile/userProfile';
+
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
 import ClientTopPage from 'client/components/main';
@@ -47,6 +49,9 @@ import ClientChangeEmail from 'client/containers/profile/changeEmail';
 import ClientApiList from 'client/containers/api/apiList';
 import ClientApiAdd from 'client/containers/api/apiAdd';
 import ClientApiUpdate from 'client/containers/api/apiUpdate';
+
+import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
+import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
@@ -77,6 +82,11 @@ function requireAuth(nextState, replace, cb) {
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
     let decryptedData ="";
+    if (bytes.sigBytes < 0 ) {
+      localStorage.removeItem(tokenName);
+      window.location = window.location.origin + "/" + (tokenName == 'token' ? "i" : tokenName) + "/login";
+    }
+
     if (JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
       decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     } else {
@@ -84,7 +94,7 @@ function requireAuth(nextState, replace, cb) {
       replace({
         pathname: "/" + (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
-      })
+      });
     }
 
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
@@ -92,16 +102,21 @@ function requireAuth(nextState, replace, cb) {
       replace({
         pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
         state: { nextPathname: nextState.location.pathname }
-      })
+      });
     }
 
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
       let lifetime = decryptedData.lifetime;
       let expired = moment().add(lifetime,'minutes').valueOf();
+      let role = '';
+      if (decryptedData.role) {
+        role = decryptedData.role;
+      }
       let encryptToken = {
         token: decryptedData.token,
         expired: expired,
-        lifetime: lifetime
+        lifetime: lifetime,
+        role: role
       };
       localStorage.setItem(tokenName, CryptoJS.AES.encrypt(JSON.stringify(encryptToken), config.key));
     }
@@ -142,6 +157,9 @@ export default () => (
           <Route component={AdminUserManagementAdd} path="new" onEnter={requireAuth}/>
           <Route component={AdminUserManagementUpdate} path=":id" onEnter={requireAuth}/>
         </Route>
+        <Route path="profile" onEnter={requireAuth}>
+          <IndexRoute component={AdminProfile} onEnter={requireAuth}/>
+        </Route>
       </Route>
     </Route>
 
@@ -164,6 +182,10 @@ export default () => (
         <IndexRoute component={ClientApiList} onEnter={requireAuth}/>
         <Route component={ClientApiAdd} path="new" onEnter={requireAuth}/>
         <Route component={ClientApiUpdate} path=":id" onEnter={requireAuth}/>
+      </Route>
+      <Route path="subscription" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientSubscriptionDetail} onEnter={requireAuth}/>
+        <Route component={ClientSubscriptionPayment} path=":id" onEnter={requireAuth} />
       </Route>
     </Route>
     <Route path="*" components={NoMatch} />

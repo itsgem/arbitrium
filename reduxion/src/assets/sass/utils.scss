@@ -33,6 +33,9 @@
 .margin-bottom-10 {
   margin-bottom: 10px !important;
 }
+.margin-right-10 {
+  margin-right: 10px !important;
+}
 
 .margin-top-10 {
   margin-top: 10px !important;
@@ -93,22 +96,25 @@
   background-color: #ffccbc !important;
   transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
 }
-.dialog-box {
+.dialog-box, .loading-box {
   position: fixed;
   background-color: #000;
   top: 0;
   left: 0;
-  opacity: 0.4;
-  filter: alpha(opacity=40);
+  opacity: 0.2;
+  filter: alpha(opacity=20);
   display: none;
   z-index: 100;
 }
-.dialog-content{
+.dialog-content, .loading-content{
   position: fixed;
   display: none;
   z-index: 200;
   top: 0;
   left: 0;
+}
+.loading-box, .loading-content {
+  display: block;
 }
 .dialog-inner{
   position: relative;
@@ -145,5 +151,55 @@ div#application {
     height: auto;
   }
 }
+.mdl-spinner {
+  z-index: 200;
+  display: block;
+  margin: 0 auto;
+  top: 45%;
+}
+.mdl-switch.is-upgraded {
+    width: 110px;
+}
+.layout-align-end-end {
+  text-align: right;
+  padding: 10px;
 
-
+  .flex-order-gt-md-2 {
+    display: inline-block;
+  }
+}
+.mdl-textfield.is-invalid {
+  .mdl-textfield__error {
+    font-size: 12px;
+  }
+}
+.mdl-data-table thead tr {
+  background: #e3ecf5;
+}
+.mdl-data-table thead tr th {
+  font-weight: 700;
+}
+.mdl-data-table tbody tr td {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.mdl-data-table tbody tr.bg-dark {
+  background: #f5fafe;
+}
+.mdl-data-table tbody tr.bg-dark td {
+  border: 0px;
+}
+.mdl-data-table tbody tr.bg-light {
+  background: #fbfeff;
+}
+.mdl-data-table tbody tr.bg-light td {
+ border: 0px;
+}
+.mdl-data-table tbody tr td .btn-view-edit {
+  background: #ff6600;
+  margin-right: 6px;
+}
+.mdl-data-table tbody tr td .btn-delete {
+  background: #ff4a4a;
+}

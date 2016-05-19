@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
+import config from 'config';
+import CryptoJS from 'crypto-js';
 
 export default React.createClass( {
   componentWillReceiveProps(nextProps) {
@@ -21,6 +23,17 @@ export default React.createClass( {
     this.activeNav();
   },
   render() {
+
+    let token = localStorage.getItem('coffee');
+    let bytes = '';
+    if (localStorage.getItem('coffee') ){
+      bytes  = CryptoJS.AES.decrypt(localStorage.getItem('coffee'), config.key);
+    }
+
+    let decryptedData ="";
+    decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    let role = decryptedData.role == 1 ? true : false;
+
     return (
       <header className="mdl-layout__header header-bg">
         <div className="mdl-grid header-container">
@@ -44,11 +57,11 @@ export default React.createClass( {
                   </div>
                   <div className="container">
                     <button id="demo-menu-api"
-                      className="menu-api mdl-button mdl-js-button mdl-layout__tab">API</button>
+                      className="menu-api mdl-button mdl-js-button mdl-layout__tab">API KEYS</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-api">
-                      <li className="mdl-menu__item"><Link to="/coffee/api/">API List</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/api/">API Keys List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API Key</Link></li>
                     </ul>
                   </div>
                   <div className="container">
@@ -75,6 +88,7 @@ export default React.createClass( {
                     <i className="material-icons">account_circle</i>
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/profile"><i className="material-icons">person</i>My Profile</Link></li>
                     <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee"><i className="material-icons">settings</i>Settings</Link></li>
                     <li className="mdl-menu__item"><a className="logout-text" href ="/coffee/logout"><i className="material-icons">exit_to_app</i>Logout</a></li>
                   </ul>

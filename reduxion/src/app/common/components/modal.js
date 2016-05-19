@@ -3,12 +3,44 @@ export const modal =  function () {
   window.onresize = resize;
 }
 export const openModal = function () {
-  document.querySelector('.dialog-box').style.display = 'block';
-  document.querySelector('.dialog-content').style.display = 'block';
+  if(document.querySelector('.dialog-box')) {
+    document.querySelector('.dialog-box').style.display = 'block';
+  }
+  if(document.querySelector('.dialog-content')) {
+    document.querySelector('.dialog-content').style.display = 'block';
+  }
 }
 export const closeModal = function () {
-  document.querySelector('.dialog-box').style.display = 'none';
-  document.querySelector('.dialog-content').style.display = 'none';
+  if(document.querySelector('.dialog-box')) {
+    document.querySelector('.dialog-box').style.display = 'none';
+  }
+  if(document.querySelector('.dialog-content')) {
+    document.querySelector('.dialog-content').style.display = 'none';
+  }
+}
+export const openLoading = function () {
+  if(document.querySelector('.loading-box')) {
+    document.querySelector('.loading-box').style.display = 'block';
+  }
+
+  let loading = '<div class="loading-box"></div>' +
+      '<div class="loading-content">' +
+        '<div class="mdl-spinner mdl-js-spinner is-active"></div>' +
+      '</div>';
+
+  if (document.querySelector('.loading')) {
+    document.querySelector('.loading').innerHTML = loading;
+  }
+  modal();
+}
+export const closeLoading = function () {
+  if(document.querySelector('.loading-box')) {
+    document.querySelector('.loading-box').style.display = 'none';
+  }
+
+  if(document.querySelector('.loading-content')) {
+    document.querySelector('.loading-content').style.display = 'none';
+  }
 }
 
 function resize() {
@@ -31,10 +63,22 @@ function resize() {
   }
   let dialogBox = document.querySelector(".dialog-box");
   let dialogContent = document.querySelector(".dialog-content");
-  if (dialogBox && dialogContent) {
+  let loadingBox = document.querySelector(".loading-box");
+  let loadingContent = document.querySelector(".loading-content");
+  if (dialogBox) {
     dialogBox.style.height = myHeight + "px";
     dialogBox.style.width = myWidth + "px";
+  }
+  if (dialogContent) {
     dialogContent.style.height = myHeight + "px";
     dialogContent.style.width = myWidth + "px";
+  }
+  if (loadingBox) {
+    loadingBox.style.height = myHeight + "px";
+    loadingBox.style.width = myWidth + "px";
+  }
+  if (loadingContent) {
+    loadingContent.style.height = myHeight + "px";
+    loadingContent.style.width = myWidth + "px";
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ApiUpdate from 'admin/components/api/apiUpdate';
 import { Link } from 'react-router';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass( {
   contextTypes: {
@@ -24,9 +25,22 @@ export default React.createClass( {
       nextProps.clientProfile(nextProps.getApiInfo.data.client_id);
     }
   },
+  loadingRender () {
+    openLoading();
+    return (
+      <div className="loading"></div>
+    );
+  },
   render() {
     if (Object.keys(this.props.getApiInfo).length && Object.keys(this.props.clientProfileSuccess).length) {
-      return (
+      closeLoading();
+      return this.renderApiInfo();
+    } else {
+       return this.loadingRender();
+    }
+  },
+  renderApiInfo () {
+    return (
         <div id="client_add" className="auth-view">
           <DocTitle
             title="View API KEY"
@@ -48,10 +62,5 @@ export default React.createClass( {
           />
         </div>
       );
-    } else {
-       return (
-        <div id="client" className="inner_content">LOADING</div>
-      );
-    }
   }
 } );
