@@ -1,0 +1,381 @@
+/*
+* Form styles: global, shared and specific styling for Client or Admin(coffee)
+*/
+#application {
+  input {
+    &[type="text"],
+    &[type="password"],
+    &[type="email"],
+    &[type="number"] {
+      outline: none;
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .forgot-footer {
+    text-align: left;
+  }
+
+  .login-view {
+    .login-header {
+      border-radius: 3px 3px 0 0;
+      background: #fff;
+      min-height: 50px;
+      text-align: center;
+      padding: 25px 0;
+
+      img {
+        height: 50px;
+      }
+    }
+  }
+}
+
+/*
+* Admin (coffee)
+*/
+#application {
+  .coffee {
+
+    .login-view {
+      width: 312px;
+    }
+
+    #forgot {
+      text-align: center;
+
+      .login-view {
+        legend {
+          display: inline-block;
+          padding-bottom: 20px;
+        }
+      }
+    }
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      max-width: 312px;
+
+      .background {
+        background-color: #fff;
+        border-radius: 0 0 3px 3px;
+
+        .forgot-legend {
+          color: #555;
+          display: block;
+          font-size: 13px;
+          padding: 20px 20px 0px 20px;
+        }
+
+        .forgot-step-two {
+          color: #555;
+          display: block;
+          font-size: 13px;
+          font-weight: 300;
+          line-height: 18px;
+          padding: 10px;
+          text-align: center;
+        }
+
+        .step-two-content {
+          height:auto;
+          overflow: auto;
+          padding: 16px;
+        }
+      }
+
+      .forgot-text {
+        color: #555;
+        display: block;
+        font-weight: 300;
+        line-height: 18px;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .bar {
+        background: #0e3192;
+        box-sizing: border-box;
+        border-radius: 5px 5px 0 0;
+        color: white;
+        height: auto;
+        padding: 20px;
+        width: 100%;
+
+        .bar-title {
+          color: #eceff1;
+          font-size: 20px;
+          font-weight: 700;
+          height: 26px;
+          padding-top: 2px;
+        }
+      }
+    }
+
+    @mixin error-container {
+      background: rgba(255, 79, 34, 0.57);
+      box-shadow: 0 0 3px rgba(0,0,0,0.2);
+      color: #FFE0E0;
+    }
+
+    .alert {
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 300;
+      line-height: 14px;
+      margin-bottom: 12px;
+      padding: 16px;
+
+      &.alert-danger {
+        @include error-container;
+      }
+    }
+
+    .mdl-textfield--floating-label {
+      &.is-focused, &.is-dirty {
+        .mdl-textfield__label {
+          font-size: 11px;
+        }
+      }
+    }
+
+    div.auth-view {
+      form {
+        background: #fff;
+        border-radius: 0 0 3px 3px;
+        display: block;
+        margin: auto;
+        padding: 16px;
+        width: 280px;
+
+        h2, p {
+          color: #555;
+        }
+      }
+
+      .callout {
+        margin-bottom: 16px;
+        h2 {
+          margin: 0 0 6px;
+        }
+      }
+
+      .signup-links {
+        margin: 11px auto;
+        width: 312px;
+
+        a {
+          color: #fff;
+        }
+      }
+
+      .auth-button {
+        box-sizing: border-box;
+        border-radius: 2px;
+        margin-top: 12px;
+        width: 100%;
+
+        &:not(:disabled) {
+          &.primary {
+            background: #ff6600;
+          }
+
+          &.secondary {
+            background: #0e3192;
+          }
+        }
+      }
+
+      .error-snack {
+        @include error-container;
+      }
+    }
+
+    .forgot-footer {
+      max-width: 312px;
+    }
+  }
+}
+
+@mixin error-container {
+  background: rgba(255, 79, 34, 0.57);
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  color: #FFE0E0;
+}
+
+.alert {
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 14px;
+  margin-bottom: 12px;
+  padding: 16px;
+
+  &.alert-danger {
+    @include error-container;
+  }
+}
+
+.mdl-textfield--floating-label {
+  &.is-focused, &.is-dirty {
+    .mdl-textfield__label {
+      font-size: 11px;
+    }
+  }
+}
+
+small.mdl-textfield__error {
+  font-size: 10.5px;
+  line-height: 10px;
+}
+
+.mdl-button-group .mdl-button {
+  margin: 0 10px;
+  min-width: 100px;
+}
+
+/*
+* Client
+*/
+#application {
+  .client {
+    main {
+      #forgot,
+      #login {
+        width: 450px;
+
+        .container {
+          .bar {
+            background: #fff;
+            box-sizing: border-box;
+            border-radius: 5px 5px 0 0;
+            color: #333;
+            height: auto;
+            padding: 20px;
+            width: 100%;
+            border-bottom: 1px solid #efefef;
+
+              .bar-title {
+                color: #333;
+                font-size: 20px;
+                font-weight: 700;
+                height: 26px;
+                padding-top: 2px;
+              }
+          }
+
+          .background {
+            background: #fff;
+            border-radius: 0 0 5px 5px;
+          }
+        }
+      }
+
+      #signup {
+        width: 78%;
+        margin: 20px auto;
+      }
+    }
+
+    #forgot {
+      text-align: center;
+
+      .login-view {
+        legend {
+          display: inline-block;
+          padding-bottom: 20px;
+        }
+      }
+    }
+
+    .container {
+      max-width: auto;
+
+      .forgot-text {
+        color: #555;
+        display: block;
+        font-weight: 300;
+        line-height: 18px;
+        padding: 10px;
+        text-align: center;
+      }
+    }
+
+    .login-view {
+      width: auto;
+    }
+
+    .mdl-data-table {
+      white-space: normal;
+    }
+
+    .table-api td {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .mdl-button-group {
+      margin: 0 5px;
+      text-align: right;
+
+      .mdl-button {
+        margin: 0 5px;
+        min-width: 100px;
+      }
+    }
+
+    div.auth-view {
+
+      form {
+        background: #fff;
+        border-radius: 0 0 3px 3px;
+        display: block;
+        margin: auto;
+        padding: 23px;
+
+        h2, p {
+          color: #555;
+        }
+      }
+
+      .mdl-button {
+        margin-top: 15px;
+      }
+
+      .callout {
+        margin-bottom: 16px;
+
+        h2 {
+          margin: 0 0 6px;
+        }
+      }
+
+      .signup-links {
+        margin: 11px auto;
+        width: 312px;
+
+        a {
+          color: #fff;
+        }
+      }
+
+      .error-snack {
+        @include error-container;
+      }
+    }
+  }
+}
