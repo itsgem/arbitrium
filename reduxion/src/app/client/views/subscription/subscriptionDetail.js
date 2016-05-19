@@ -183,8 +183,8 @@ export default React.createClass({
               <div className="mdl-cell mdl-cell--4-col"></div>
               <div className="mdl-cell mdl-cell--8-col footer-action">
                 <span>
-                  <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-                    <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
+                  <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="termsAgree">
+                    <input type="checkbox" id="termsAgree" className="mdl-checkbox__input" />
                     <span className="mdl-checkbox__label">I agree to the Terms and Conditions</span>
                   </label>
                 </span>
