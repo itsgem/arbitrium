@@ -462,6 +462,17 @@ select {
       padding-right: 30px;
     }
   }
+
+  .box-container {
+    border: 1px solid #e2e2e2;
+    min-height: 372px;
+
+    .total {
+      border-top: 1px solid #e2e2e2;
+      padding: 10px 0 0 0;
+      width: 100%;
+    }
+  }
 }
 
 .arb-demo {
@@ -479,5 +490,6 @@ select {
     }
   }
 }
+
 
 
