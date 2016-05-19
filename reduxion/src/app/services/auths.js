@@ -26,6 +26,9 @@ export default {
   subscriptionList() {
     return get('subscription');
   },
+  getSubscriptionItem(id) {
+    return get('subscription/' + id);
+  },
   // ------- ADMIN -------
   getCurrentUser() {
     return get('me');
@@ -382,5 +385,13 @@ export default {
   },
   clientSubscription() {
     return get('client/subscription/current');
+  },
+  clientPurchaseSubscription(payload) {
+    return post('client/subscription', {
+      params: {
+        subscription_id: payload.subscription_id,
+        term: payload.term
+      }
+    });
   }
 };

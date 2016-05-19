@@ -119,7 +119,7 @@ class SubscriptionDetail extends React.Component {
                           { 
                             currentSubscription.subscription_id == item.id ?
                             <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                            : <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" onClick={(e) => this.subscribed(e)}>Upgrade</button>
+                            : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Upgrade</Link>
                           }
                         </td>
                       </tr>
@@ -170,7 +170,7 @@ class SubscriptionDetail extends React.Component {
                 </table>*/}
               </div>
           </div>
-        <div className="mdl-grid mdl-grid--no-spacing">
+        {/*<div className="mdl-grid mdl-grid--no-spacing">
           <div className="mdl-cell mdl-cell--4-col"></div>
           <div className="mdl-cell mdl-cell--8-col footer-action">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot margin-right-10" htmlFor="checkbox-2">
@@ -179,7 +179,7 @@ class SubscriptionDetail extends React.Component {
               </label>
               <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Pay via Paypal</button>
           </div>
-        </div>
+        </div>*/}
       </div>
     );
   }
@@ -188,18 +188,6 @@ class SubscriptionDetail extends React.Component {
       'is-invalid is-dirty': errors[ field ],
       'has-success': errors && !(errors[ field ])
     } );
-  }
-  subscribed (e) {
-    alert();
-  }
-  termConditions(e) {
-    if (e.target.checked) {
-      document.querySelector('.btn-paypal').classList.add('mdl-button--accent');
-      document.querySelector('.btn-paypal').classList.remove('mdl-button--disabled');
-    } else {
-      document.querySelector('.btn-paypal').classList.remove('mdl-button--accent');
-      document.querySelector('.btn-paypal').classList.add('mdl-button--disabled');
-    }
   }
 };
 

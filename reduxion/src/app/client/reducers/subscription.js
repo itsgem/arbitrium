@@ -6,10 +6,14 @@ import auth from 'services/auths';
 
 export const subscriptionList = createActionAsync('CLIENT_SUBSCRIPTION_LIST', auth.subscriptionList);
 export const clientSubscription = createActionAsync('CLIENT_SUBSCRIPTION', auth.clientSubscription);
+export const clientPurchaseSubscription = createActionAsync('CLIENT_PURCHASE_SUBSCRIPTION', auth.clientPurchaseSubscription);
+export const getSubscriptionItem = createActionAsync('CLIENT_SINGLE_SUBSCRIPTION', auth.getSubscriptionItem);
 
 const initialState = Immutable.fromJS({
   listSubscription: {},
+  subscriptionItem: {},
   currentSubscription: {},
+  purchaseSuccess: false,
   loading: false
 });
 
@@ -28,4 +32,19 @@ export default createReducer({
   [clientSubscription.request]: (state) => state.merge({
     loading: true
   }),
+  [clientPurchaseSubscription.ok]: (state) => state.merge({
+    loading: false,
+    purchaseSuccess: true
+  }),
+  [clientPurchaseSubscription.request]: (state) => state.merge({
+    loading: true,
+    purchaseSuccess: false
+  }),
+  [getSubscriptionItem.ok]: (state, payload) => state.merge({
+    loading: false,
+    subscriptionItem: payload
+  }),
+  [getSubscriptionItem.request]: (state) => state.merge({
+    loading: false
+  })
 }, initialState);
