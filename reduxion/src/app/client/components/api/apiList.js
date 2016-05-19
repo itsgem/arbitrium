@@ -139,10 +139,10 @@ class ApiList extends React.Component {
         <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th className="mdl-data-table__cell--non-numeric">Description</th>
-              <th className="mdl-data-table__cell--non-numeric">Key</th>
-              <th className="mdl-data-table__cell--non-numeric">Date Created</th>
-              <th className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">Description</th>
+              <th width="500" className="mdl-data-table__cell--non-numeric">Key</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">Action</th>
             </tr>
           </thead>
           <tbody>

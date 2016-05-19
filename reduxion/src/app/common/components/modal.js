@@ -37,7 +37,7 @@ export const closeLoading = function () {
   if(document.querySelector('.loading-box')) {
     document.querySelector('.loading-box').style.display = 'none';
   }
-  console.log('test', document.querySelector('.loading-content'));
+
   if(document.querySelector('.loading-content')) {
     document.querySelector('.loading-content').style.display = 'none';
   }

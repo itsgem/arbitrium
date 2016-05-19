@@ -247,9 +247,7 @@ class ApiList extends React.Component {
     this.selectPageNumber(pageNum);
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
-
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalConfirm (e, id, description) {
     openModal();
