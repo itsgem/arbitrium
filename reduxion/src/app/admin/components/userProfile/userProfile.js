@@ -171,7 +171,7 @@ class UserProfile extends React.Component {
                     id='btnClientApproval'
                     type='button'
                     className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
-                    onClick={(e) => this.adminUnlock(e, userInfo.user.id)}>
+                    onClick={(e) => this.adminUnlock(e)}>
                       <span>Unlock </span>
                       <span className="ion-unlocked icon-con"></span>
                   </button>
@@ -181,18 +181,18 @@ class UserProfile extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <div className="layout-gt-md-row layout-align-end-end btn">
                 <div className="flex-order-gt-md-2 pd-10">
-                  <Link
+                  <button
                     className="mdl-button mdl-js-button mdl-button--colored"
                     id='btn-cancel'
-                    to="/coffee/account/"
-                    >CANCEL</Link>
+                    onClick={(e) => this.cancel(e)}
+                    >CANCEL</button>
                 </div>
                 <div className="flex-order-gt-md-2">
                   <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     id='btn-save'
                     type='button'
-                    onClick={(e) => this.update(e, userInfo.id)}>UPDATE</button>
+                    onClick={(e) => this.update(e)}>UPDATE</button>
                 </div>
               </div>
             </div>
@@ -217,7 +217,13 @@ class UserProfile extends React.Component {
       this.refs.checkUser.value = "not-disabled";
     }
   }
-  update ( e, id ) {
+  cancel( e ) {
+    e.preventDefault();
+    this.refs.password.value = "";
+    this.refs.password_confirmation.value = "";
+    this.props.adminProfile();
+  }
+  update ( e ) {
     e.preventDefault();
     this.setState( {
       loading: true,
@@ -227,7 +233,6 @@ class UserProfile extends React.Component {
     let {username, email_address, password, rep_last_name, password_confirmation, first_name, last_name, role_id} = this.refs;
 
     let payload = {
-      id: id,
       username: username.value,
       email_address: email_address.value,
       password: password.value,

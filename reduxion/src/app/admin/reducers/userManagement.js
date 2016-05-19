@@ -101,5 +101,5 @@ export default createReducer({
   [adminUnlock.ok]: (state) => state.merge({adminUnlockSuccess: true, loading: false}),
   [adminUnlock.request]: (state) => state.merge({adminUnlockSuccess: false, loading: true}),
   [adminProfile.ok]: (state, payload) => state.merge({adminProfileInfo: payload, loading: false, adminUpdate: false}),
-  [adminProfile.request]: (state) => state.merge({loading: true, adminUpdate: false})
+  [adminProfile.request]: (state) => state.merge({adminProfileInfo: {}, loading: true, adminUpdate: false})
 }, initialState);
