@@ -223,7 +223,7 @@ class SubscriptionPayment extends React.Component {
     if (this.refs.is_api_call_restricted.checked) {
       let payload = {
         subscription_id: this.props.params.id,
-        term: (this.refs.isTerm.checked ? this.refs.term.value : '')
+        term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly')
       };
       this.props.clientPurchaseSubscription(payload);
     }
