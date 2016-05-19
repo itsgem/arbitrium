@@ -28,7 +28,7 @@ class AdminUserRequest extends NrbRequest
             $password_rule = with(new PasswordRequest())->rules()['password'];
             if ($method == 'PUT')
             {
-                $admin_id = last($this->segments());
+                $admin_id = ((int) last($this->segments()) != 0) ? last($this->segments()) : get_logged_in_admin_id();
                 $id = Admin::findOrFail($admin_id)->user_id;
                 $username_rule = str_replace('id,NULL', 'id,'.$id, $username_rule);
                 $password_rule = str_replace('required', 'sometimes', $password_rule);
