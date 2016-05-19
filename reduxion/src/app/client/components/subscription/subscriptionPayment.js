@@ -175,14 +175,14 @@ class SubscriptionPayment extends React.Component {
           <div className="mdl-grid mdl-grid--no-spacing">
             <div className="mdl-cell mdl-cell--4-col"></div>
             <div className="mdl-cell mdl-cell--8-col footer-action">
-              <span>
+              {/*<span>
                 <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect margin-right-10" htmlhtmlFor="termsAgree">
                   <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" onClick={(e) => this.termConditions(e)}/>
                   <span className="mdl-checkbox__label">I agree to the Terms and Conditions</span>
                 </label>
-              </span>
+              </span>*/}
               <span>
-                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled"  onClick={(e) => this.subscribe(e)}>Pay via Paypal</button>
+                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"  onClick={(e) => this.subscribe(e)}>Pay via Paypal</button>
               </span>
             </div>
           </div>
@@ -220,13 +220,13 @@ class SubscriptionPayment extends React.Component {
   }
   subscribe (e) {
     e.preventDefault();
-    if (this.refs.is_api_call_restricted.checked) {
-      let payload = {
-        subscription_id: this.props.params.id,
-        term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly')
-      };
-      this.props.clientPurchaseSubscription(payload);
-    }
+    //if (this.refs.is_api_call_restricted.checked) {
+    let payload = {
+      subscription_id: this.props.params.id,
+      term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly')
+    };
+    this.props.clientPurchaseSubscription(payload);
+    //}
   }
 };
 
