@@ -165,3 +165,8 @@ div#application {
     display: inline-block;
   }
 }
+.mdl-textfield.is-invalid {
+  .mdl-textfield__error {
+    font-size: 12px;
+  }
+}
