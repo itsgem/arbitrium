@@ -218,7 +218,7 @@ export default React.createClass({
                 <div className="mdl-cell mdl-cell--3-col">
                   <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
                     <input type="checkbox" id="checkbox-2" className="mdl-checkbox__input"/>
-                    <span className="mdl-checkbox__label"><Auto-></Auto->Auto-Renew</span>
+                    <span className="mdl-checkbox__label">Auto-Renew</span>
                   </label>
                 </div>
               </div>
