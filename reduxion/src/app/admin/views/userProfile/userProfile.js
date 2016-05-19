@@ -46,6 +46,7 @@ export default React.createClass( {
           <a className="mdl-layout__tab is-active">Admin Profile</a>
         </div>
         <UserProfile
+          adminProfile={this.props.adminProfile}
           adminProfileInfo={this.props.adminProfileInfo}
           validateUsername={this.props.validateUsername}
           role={this.props.role}
