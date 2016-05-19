@@ -171,8 +171,13 @@ class SubscriptionDetail extends React.Component {
               </div>
           </div>
         <div className="mdl-grid mdl-grid--no-spacing">
-          <div className="mdl-cell mdl-cell--12-col footer-action">
-            <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Pay</button>
+          <div className="mdl-cell mdl-cell--4-col"></div>
+          <div className="mdl-cell mdl-cell--8-col footer-action">
+              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot margin-right-10" htmlFor="checkbox-2">
+                <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" onClick={(e) => this.termConditions(e)}/>
+                <span className="mdl-checkbox__label" >I agree to the Terms and Conditions</span>
+              </label>
+              <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Pay via Paypal</button>
           </div>
         </div>
       </div>
@@ -186,6 +191,15 @@ class SubscriptionDetail extends React.Component {
   }
   subscribed (e) {
     alert();
+  }
+  termConditions(e) {
+    if (e.target.checked) {
+      document.querySelector('.btn-paypal').classList.add('mdl-button--accent');
+      document.querySelector('.btn-paypal').classList.remove('mdl-button--disabled');
+    } else {
+      document.querySelector('.btn-paypal').classList.remove('mdl-button--accent');
+      document.querySelector('.btn-paypal').classList.add('mdl-button--disabled');
+    }
   }
 };
 
