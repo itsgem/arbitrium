@@ -81,36 +81,36 @@ class SubscriptionDetail extends React.Component {
                   return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                     <thead>
                       <tr>
-                        <th>{item.name}</th>
+                        <th>{item.name == 'Trial' ? "Free Trial" : item.name}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{item.fee_monthly == 0.00 ? '--' : item.fee_monthly}</td>
+                        <td>{item.fee_monthly == 0.00 ? '--' : "$" + item.fee_monthly}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_yearly == 0.00 ? '--' : item.fee_yearly}</td>
+                        <td>{item.fee_yearly == 0.00 ? '--' : "$" + item.fee_yearly}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_yearly_license == 0.00 ? '--' : item.fee_yearly_license}</td>
+                        <td>{item.fee_yearly_license == 0.00 ? '--' : "$" + item.fee_yearly_license}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_initial_setup == 0.00 ? '--' : item.fee_initial_setup }</td>
+                        <td>{item.fee_initial_setup == 0.00 ? '--' : "$" + item.fee_initial_setup }</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_monthly_maintenance == 0.00 ? '--' : item.fee_monthly_maintenance}</td>
+                        <td>{item.fee_monthly_maintenance == 0.00 ? '--' : "$" + item.fee_monthly_maintenance}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_yearly_maintenance == 0.00 ? '--' : item.fee_yearly_maintenance}</td>
+                        <td>{item.fee_yearly_maintenance == 0.00 ? '--' : "$" + item.fee_yearly_maintenance}</td>
                       </tr>
                       <tr>
-                        <td>{item.max_api_calls == 0.00 ? '--' : item.max_api_calls}</td>
+                        <td>{item.max_api_calls == 0.00 ? '--' : "$" + item.max_api_calls}</td>
                       </tr>
                       <tr>
-                        <td>{item.max_decisions == 0.00 ? '--' : item.max_decisions}</td>
+                        <td>{item.max_decisions == 0.00 ? '--' : "$" + item.max_decisions}</td>
                       </tr>
                       <tr>
-                        <td>{item.discounts == 0.00 ? '--' : item.discounts } </td>
+                        <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
                       </tr>
                       <tr>
                         <td>
