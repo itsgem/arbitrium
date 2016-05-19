@@ -450,9 +450,12 @@ select {
   }
 
   .footer-action {
-    padding-top: 30px;
-    padding-right: 20px;
+    padding: 50px 20px 20px 0;
     text-align: right;
+
+    .mdl-checkbox {
+      width: auto;
+    }
 
     .mdl-button {
       padding-left: 30px;
