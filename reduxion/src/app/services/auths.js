@@ -196,8 +196,18 @@ export default {
   getAdminSubscriptionList(payload = {page: 1, per_page: 10}) {
     return get('admin/client/subscription/current', {params: payload});
   },
-  getSubscriptionInfo(id) {
-    return get('admin/' + id, {
+  getClientSubscriptionInfo(id) {
+    return get('admin/client/' + id + '/subscription/current', {
+      params: {
+        'with-user': 1
+      }
+    });
+  },
+  getAllSubscriptions(payload = {page: 1, per_page: 10}) {
+    return get('subscription', {params: payload});
+  },
+  getSelectedSubscriptionInfo(id) {
+    return get('subscription/' + id, {
       params: {
         'with-user': 1
       }

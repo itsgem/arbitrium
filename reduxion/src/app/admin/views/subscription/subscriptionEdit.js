@@ -8,49 +8,33 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.listRoleAdmin();
-    this.props.getSubscriptionInfo(this.props.params.id);
+    this.props.allSubscriptions();
   },
   render() {
-    if (this.props.subscriptionInfo.get("data")) {
-      return this.renderSubscriptionInfo();
+    if (this.props.subscriptions.data) {
+      return this.renderSubscriptions();
     } else {
        return (
         <div id="subscription" className="inner_content"></div>
       );
     }
   },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.subscriptionEdit && !nextProps.loading) {
-      $('.msg').html('Subscription Successfully Updated').addClass('bg-green');
-      $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(2000);
-      });
-      this.context.router.push('/coffee/subscription');
-    }
-  },
-  renderSubscriptionInfo() {
+  renderSubscriptions() {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title="Subscription Add"
+          title="Subscription Detail"
         />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/subscription/">Subscription List</Link> 
-          <Link
-              className='mdl-layout__tab'
-              to="/coffee/subscription/new">Add New Subscription<i className="material-icons add">add</i></Link>
-          <a className="mdl-layout__tab is-active" >VIEW SUBSCRIPTION<i className="material-icons add">edit</i></a>
+            to="/coffee/subscription/">Subscriptions List</Link>
+          <a className="mdl-layout__tab is-active" >VIEW SUBSCRIPTIONS<i className="material-icons add">edit</i></a>
         </div>
         <SubscriptionEdit
-          validateUsername={this.props.validateUsername}
-          subscriptionInfo={this.props.subscriptionInfo}
-          adminSubscriptionEdit={this.props.adminSubscriptionEdit}
+          allSubscriptions={this.props.subscriptions}
           validateCompleted={this.props.validateCompleted}
-          subscriptionEdit={this.props.subscriptionEdit}
-          role={this.props.role}
+          clientSubscriptionInfo={this.props.clientSubscriptionInfo}
           />
       </div>
     );

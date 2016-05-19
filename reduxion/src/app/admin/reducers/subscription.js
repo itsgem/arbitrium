@@ -5,17 +5,15 @@ import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
 
 export const adminSubscriptionList = createActionAsync('ADMIN_SUBSCRIPTION_LIST', auth.getAdminSubscriptionList);
-export const adminSubscriptionEdit = createActionAsync('ADMIN_SUBSCRIPTION_EDIT', auth.adminSubscriptionEdit);
-export const getSubscriptionInfo = createActionAsync('GET_SUBSCRIPTION_INFO', auth.getSubscriptionInfo);
+export const allSubscriptions = createActionAsync('ADMIN_SUBSCRIPTION_EDIT', auth.getAllSubscriptions);
+export const clientSubscriptionInfo = createActionAsync('ADMIN_CLIENT_SUBSCRIPTION_INFO', auth.getClientSubscriptionInfo);
+export const selectedSubscriptionInfo = createActionAsync('ADMIN_SELECTED_SUBSCRIPTION_INFO', auth.getSelectedSubscriptionInfo);
 
 const initialState = Immutable.fromJS({
   subscriptionList: {},
-  subscriptionAdd: {},
-  subscriptionEdit: false,
-  subscriptionInfo: {},
-  role: {},
-  registerCompleted: false,
-  deleteSuccess: false,
+  subscriptions: {},
+  subscriptionInfoClient: {},
+  subscriptionInfoSelected: {},
   loading: false,
   validateCompleted: false
 });
@@ -23,31 +21,38 @@ const initialState = Immutable.fromJS({
 export default createReducer({
   [adminSubscriptionList.ok]: (state, payload) => state.merge({
     subscriptionList: state.concat(payload),
-    subscriptionAdd: {},
-    subscriptionEdit: false,
-    subscriptionInfo: {},
-    role: {},
-    registerCompleted: false,
-    deleteSuccess: false,
+    subscriptionInfoClient: {},
     loading: false,
     validateCompleted: false }),
   [adminSubscriptionList.request]: (state) => state.merge({
-    subscriptionAdd: {},
-    subscriptionEdit: false,
-    subscriptionInfo: {},
-    role: {},
-    registerCompleted: false,
-    deleteSuccess: false,
+    subscriptions: {},
+    subscriptionInfoClient: {},
     loading: true,
     validateCompleted: false }),
-  [getSubscriptionInfo.ok]: (state, payload) => state.merge({
-    subscriptionInfo: payload,
-    registerCompleted: false,
-    subscriptionEdit: false,
+  [allSubscriptions.ok]: (state, payload) => state.merge({
+    subscriptions: state.concat(payload),
+    subscriptionInfoClient: payload,
     loading: false}),
-  [getSubscriptionInfo.request]: (state, payload) => state.merge({
-    loading: true,
-    registerCompleted: false,
-    subscriptionEdit: false,
+  [allSubscriptions.request]: (state, payload) => state.merge({
+    subscriptions: {},
+    subscriptionInfoClient: {},
+    subscriptionInfoSelected: {},
     loading: true}),
+  [clientSubscriptionInfo.ok]: (state, payload) => state.merge({
+    subscriptions: state.concat(payload),
+    subscriptionInfoClient: payload,
+    loading: false}),
+  [clientSubscriptionInfo.request]: (state, payload) => state.merge({
+    subscriptions: {},
+    subscriptionInfoClient: {},
+    subscriptionInfoSelected: {},
+    loading: true}),
+  [selectedSubscriptionInfo.ok]: (state, payload) => state.merge({
+    subscriptionInfoClient: {},
+    subscriptionInfoSelected: {},
+    loading: false}),
+  [selectedSubscriptionInfo.request]: (state, payload) => state.merge({
+    subscriptionInfoClient: {},
+    subscriptionInfoSelected: {},
+    loading: true})
 }, initialState);

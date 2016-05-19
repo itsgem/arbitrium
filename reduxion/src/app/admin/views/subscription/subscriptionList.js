@@ -17,7 +17,7 @@ export default React.createClass( {
           title="Subscriptions"
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">View Subscriptions</label>
+          <label className="mdl-layout__tab is-active">Subscriptions List</label>
         </div>
         <SubscriptionList
           subscriptionList={this.props.subscriptionList}
