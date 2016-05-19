@@ -43,10 +43,7 @@ export default React.createClass( {
           title="My Profile"
         />
         <div className="client-tab">
-          <Link
-            className='mdl-layout__tab'
-            to="/coffee/account/">Admin List</Link>
-          <a className="mdl-layout__tab is-active">Add New Admin<i className="material-icons add">add</i></a>
+          <a className="mdl-layout__tab is-active">Admin Profile</a>
         </div>
         <UserProfile
           adminProfileInfo={this.props.adminProfileInfo}

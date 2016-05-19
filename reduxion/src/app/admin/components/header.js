@@ -23,7 +23,7 @@ export default React.createClass( {
     this.activeNav();
   },
   render() {
-    
+
     let token = localStorage.getItem('coffee');
     let bytes = '';
     if (localStorage.getItem('coffee') ){
