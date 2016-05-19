@@ -23,6 +23,12 @@ export default {
   logout() {
     return delete('auth/logout');
   },
+  subscriptionList() {
+    return get('subscription');
+  },
+  getSubscriptionItem(id) {
+    return get('subscription/' + id);
+  },
   // ------- ADMIN -------
   getCurrentUser() {
     return get('me');
@@ -376,5 +382,16 @@ export default {
   },
   clientDeleteApiKey(id) {
     return del('client/api-key/' + id);
+  },
+  clientSubscription() {
+    return get('client/subscription/current');
+  },
+  clientPurchaseSubscription(payload) {
+    return post('client/subscription', {
+      params: {
+        subscription_id: payload.subscription_id,
+        term: payload.term
+      }
+    });
   }
 };
