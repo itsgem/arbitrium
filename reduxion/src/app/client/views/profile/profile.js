@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ClientProfile from 'client/components/profile/profile';
+import {createError} from 'utils/error';
 
 export default React.createClass({
 
   componentDidMount() {
-    this.props.clientProfile();
-    this.props.countryProfile();
+    this.props.clientProfile().catch(createError);
+    this.props.countryProfile().catch(createError);
 
     if ( typeof(window.componentHandler) != 'undefined' )
     {

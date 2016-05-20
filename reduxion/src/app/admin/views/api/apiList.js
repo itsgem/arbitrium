@@ -1,6 +1,7 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ApiList from 'admin/components/api/apiList';
+import {createError} from 'utils/error';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -8,11 +9,11 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.apiList({per_page: 10});
+    this.props.apiList({per_page: 10}).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if ((nextProps.deleteApiKeySuccess || nextProps.activeApiKey) && !nextProps.loading) {
-      this.props.apiList({per_page: 10});
+      this.props.apiList({per_page: 10}).catch(createError);
     }
   },
   render() {

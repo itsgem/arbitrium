@@ -3,14 +3,15 @@ import DocTitle from 'common/components/docTitle';
 import UserManagementUpdate from 'admin/components/userManagement/userManagementUpdate';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.listRoleAdmin();
-    this.props.getAdminInfo(this.props.params.id);
+    this.props.listRoleAdmin().catch(createError);
+    this.props.getAdminInfo(this.props.params.id).catch(createError);
   },
   loadingRender () {
     openLoading();
@@ -39,7 +40,7 @@ export default React.createClass( {
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
-      this.props.getAdminInfo(this.props.params.id);
+      this.props.getAdminInfo(this.props.params.id).catch(createError);
     }
   },
   renderAdminInfo() {

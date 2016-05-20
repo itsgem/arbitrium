@@ -3,6 +3,7 @@ import DocTitle from 'common/components/docTitle';
 import ApiUpdate from 'admin/components/api/apiUpdate';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 export default React.createClass( {
   contextTypes: {
@@ -10,8 +11,8 @@ export default React.createClass( {
   },
   componentWillMount(){
     let id = this.props.params.id;
-    this.props.getApiKey(id);
-    this.props.getApiPermission();
+    this.props.getApiKey(id).catch(createError);
+    this.props.getApiPermission().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {
@@ -22,7 +23,7 @@ export default React.createClass( {
       this.context.router.push('/coffee/api/');
     }
     if (!Object.keys(nextProps.clientProfileSuccess).length && Object.keys(nextProps.getApiInfo).length && !nextProps.loadingCLient && !nextProps.loading) {
-      nextProps.clientProfile(nextProps.getApiInfo.data.client_id);
+      nextProps.clientProfile(nextProps.getApiInfo.data.client_id).catch(createError);
     }
   },
   loadingRender () {

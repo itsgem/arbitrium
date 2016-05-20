@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ApiList from 'client/components/api/apiList';
+import {createError} from 'utils/error';
 
 export default React.createClass({
   componentWillMount () {
-    this.props.clietApiKeys();
+    this.props.clietApiKeys().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if ((nextProps.activeApiKey || nextProps.deleteApiKeySuccess) && !nextProps.loading) {
-      this.props.clietApiKeys({per_page: 10});
+      this.props.clietApiKeys({per_page: 10}).catch(createError);
     }
   },
   render () {

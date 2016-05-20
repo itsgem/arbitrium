@@ -3,10 +3,11 @@ import { Link } from 'react-router';
 import ClientHeader from 'client/components/header';
 import ClientSidebar from 'client/components/sidebar';
 import ClientChangePassword from 'client/components/profile/changePassword';
+import {createError} from 'utils/error';
 
 export default React.createClass({
   componentDidMount () {
-    this.props.clientProfilePassword();
+    this.props.clientProfilePassword().catch(createError);
 
     if ( typeof(window.componentHandler) != 'undefined' )
     {
