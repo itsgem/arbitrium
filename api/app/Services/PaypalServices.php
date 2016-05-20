@@ -171,6 +171,43 @@ class PaypalServices extends NrbServices
         ]);
     }
 
+    public function showPlan($id)
+    {
+        try {
+            $plan = Plan::get($id, $this->_api_context);
+        } catch (Exception $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'data' => $ex->getMessage()
+            ]);
+        }
+
+        return json_decode($plan, true);
+    }
+
+    public function getPlans($request)
+    {
+        // PayPal pagination is 0 based
+        $page = (int) $request->get('page');
+        $page = ($page > 0) ? ($page - 1) : 0;
+
+        try {
+            $params = [
+                'page_size' => $request->get('per_page', 20),
+                'page'      => $page,
+                'status'    => $request->get('status', 'ACTIVE'),
+            ];
+            $planList = Plan::all($params, $this->_api_context);
+        } catch (Exception $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'data' => $ex->getMessage()
+            ]);
+        }
+
+        return json_decode($planList, true);
+    }
+
     public function subscribe($request, $client)
     {
         $client_id = $client->id;
@@ -256,73 +293,10 @@ class PaypalServices extends NrbServices
         ]);
     }
 
-    public function paymentRecurring($request, $client)
+    public function showAgreement($id)
     {
-        $client_id = 999000001;
-        $subscription_name = 'Basic Subscription Package';
-        $subscription_description = 'Basic Subscription Package Description';
-        $subscription_type = 'fixed';
-        $subscription_currency = 'SGD';
-        $subscription_price = 50;
-        $subscription_setup_fee = 10;
-        $subscription_callback = 'http://dev.w3.arbitriumgroup.com/i/subscription/';
-        $subscription_max_fail_attempts = 3;
-
-        $plan = new Plan();
-
-        $plan->setName($subscription_name)
-            ->setDescription($subscription_description)
-            ->setType($subscription_type);
-
-        $paymentDefinition = new PaymentDefinition();
-
-        $paymentDefinition->setName('Monthly Payments')
-            ->setType('REGULAR')
-            ->setFrequency('Month')
-            ->setFrequencyInterval("1")
-            ->setCycles("12")
-            ->setAmount(new Currency(['value' => $subscription_price, 'currency' => $subscription_currency]));
-
-        $chargeModel = new ChargeModel();
-        $chargeModel->setType('SHIPPING')
-            ->setAmount(new Currency(['value' => 10, 'currency' => $subscription_currency]));
-
-        $paymentDefinition->setChargeModels([$chargeModel]);
-
-        $merchantPreferences = new MerchantPreferences();
-
-        $merchantPreferences->setReturnUrl($subscription_callback."?success=true")
-            ->setCancelUrl($subscription_callback."?success=false")
-            ->setAutoBillAmount("yes")
-            ->setInitialFailAmountAction("CONTINUE")
-            ->setMaxFailAttempts($subscription_max_fail_attempts)
-            ->setSetupFee(new Currency(['value' => $subscription_setup_fee, 'currency' => $subscription_currency]));
-
-        $plan->setPaymentDefinitions([$paymentDefinition]);
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        $request = clone $plan;
-
-        $this->paypal_information = [
-            'client_id'   => $client_id,
-            'description' => $subscription_description,
-            'price'       => $subscription_price
-        ];
-
-        if (env('PAYPAL_BYPASS'))
-        {
-            // @TODO-Arbitrium
-            // return $this->bypassSetup($redirect_urls);
-        }
-
         try {
-            $output = $plan->create($this->_api_context);
-        } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => $ex->getMessage()
-            ]);
+            $agreement = Agreement::get($id, $this->_api_context);
         } catch (Exception $ex) {
             return $this->respondWithData([
                 'status' => 'error',
@@ -330,40 +304,7 @@ class PaypalServices extends NrbServices
             ]);
         }
 
-        //ResultPrinter::printResult("Created Plan", "Plan", $output->getId(), $request, $output);
-
-        // add payment ID to session
-        $this->paypal_information['paypal_plan_id'] = $output->getId();
-        $this->paypal_information['request'] = $request;
-        DB::transaction(function ()
-        {
-            // @TODO-Arbitrium
-            // Payments::addPayment($this->paypal_information);
-        });
-
-        //Activate Plan
-        $createdPlan = $output;
-
-        $patch = new Patch();
-
-        $value = new PayPalModel('{
-		       "state":"ACTIVE"
-		     }');
-
-        $patch->setOp('replace')
-            ->setPath('/')
-            ->setValue($value);
-        $patchRequest = new PatchRequest();
-        $patchRequest->addPatch($patch);
-
-        $createdPlan->update($patchRequest, $this->_api_context);
-
-        $planResponse = Plan::get($createdPlan->getId(), $this->_api_context);
-
-        return $this->respondWithSuccess([
-            'status' => 'success',
-            'paypal_information' => $this->paypal_information
-        ]);
+        return json_decode($agreement, true);
     }
 
     public function paymentOneTime($request, $client)
@@ -424,10 +365,12 @@ class PaypalServices extends NrbServices
 
         try {
             $payment->create($this->_api_context);
-        } catch (\PayPal\Exception\PPConnectionException $ex) {
+        } catch (PayPalConnectionException $ex) {
             return $this->respondWithData([
                 'status' => 'error',
-                'data' => $ex->getMessage()
+                'status_code' => $ex->getCode(),
+                'data' => json_decode($ex->getData(), true),
+                'message' => $ex->getMessage(),
             ]);
         }
 
@@ -510,7 +453,14 @@ class PaypalServices extends NrbServices
                 'data' => ['message' => 'Payment failed']
             ]);
 
-        }catch(\Exception $ex){
+        } catch (PayPalConnectionException $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'status_code' => $ex->getCode(),
+                'data' => json_decode($ex->getData(), true),
+                'message' => $ex->getMessage(),
+            ]);
+        }catch(Exception $ex){
             return $this->respondWithData([
                 'status' => 'error',
                 'data' => $ex->getMessage()]);

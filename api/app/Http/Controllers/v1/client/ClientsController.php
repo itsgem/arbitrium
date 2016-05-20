@@ -258,6 +258,16 @@ class ClientsController extends ApiController
         return $service->createPlan($request, auth()->user()->client);
     }
 
+    public function showPlan($id, PaypalServices $service)
+    {
+        return $service->showPlan($id);
+    }
+
+    public function getPlans(PaypalServices $service)
+    {
+        return $service->getPlans($this->request);
+    }
+
     public function subscribe(PaypalRequest $request, PaypalServices $service)
     {
         return $service->subscribe($request, auth()->user()->client);
@@ -268,10 +278,15 @@ class ClientsController extends ApiController
         return $service->executeAgreement($request, auth()->user()->client);
     }
 
+    public function showAgreement($id, PaypalServices $service)
+    {
+        return $service->showAgreement($id);
+    }
+
     public function payment(PaypalRequest $request, PaypalServices $service)
     {
         if ($request->get('subscription_id')) {
-            return $service->paymentRecurring($request, auth()->user()->client);
+            return $service->subscribe($request, auth()->user()->client);
         }
 
         return $service->paymentOneTime($request, auth()->user()->client);
