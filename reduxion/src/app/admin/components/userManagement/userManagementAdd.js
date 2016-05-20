@@ -219,12 +219,6 @@ class UserManagementAdd extends React.Component {
 
 };
 
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
-}
-
 function validateRegister ( payload) {
   let rules = new Checkit( {
     username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],

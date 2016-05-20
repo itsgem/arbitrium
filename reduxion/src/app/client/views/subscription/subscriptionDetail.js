@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import SubscriptionDetail from 'client/components/subscription/subscriptionDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 export default React.createClass({
   componentDidMount () {
-    this.props.subscriptionList();
-    this.props.clientSubscription();
+    this.props.subscriptionList().catch(createError);
+    this.props.clientSubscription().catch(createError);
   },
   componentWillMount () {
   if ( typeof(window.componentHandler) != 'undefined' ) {

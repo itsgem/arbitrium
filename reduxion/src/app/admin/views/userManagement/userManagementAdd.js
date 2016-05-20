@@ -2,13 +2,14 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import UserManagementAdd from 'admin/components/userManagement/userManagementAdd';
 import { Link } from 'react-router';
+import {createError} from 'utils/error';
 
 export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.listRoleAdmin();
+    this.props.listRoleAdmin().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.registerCompleted && !nextProps.loading) {

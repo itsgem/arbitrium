@@ -1,6 +1,5 @@
 import React from 'react';
 import Checkit from 'checkit';
-import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';

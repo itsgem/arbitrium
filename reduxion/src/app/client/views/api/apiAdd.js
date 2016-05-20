@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ApiAdd from 'client/components/api/apiAdd';
+import {createError} from 'utils/error';
 
 export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount () {
-    this.props.getApiPermission();
+    this.props.getApiPermission().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.registerApiSuccess && !nextProps.loading) {

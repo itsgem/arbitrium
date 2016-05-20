@@ -274,12 +274,6 @@ class UserProfile extends React.Component {
 
 };
 
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
-}
-
 function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],

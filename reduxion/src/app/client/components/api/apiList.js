@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -169,7 +170,7 @@ class ApiList extends React.Component {
     );
   }
   deleteItem () {
-    this.props.clientDeleteApiKey(this.state.id);
+    this.props.clientDeleteApiKey(this.state.id).catch(createError);
     this.modalClose();
   }
   changeActive (e, id, status) {
@@ -177,7 +178,7 @@ class ApiList extends React.Component {
       id: id,
       is_active: ((status == 1) ? 0 : 1)
     };
-    this.props.isActiveApiKey(payload);
+    this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
@@ -235,7 +236,7 @@ class ApiList extends React.Component {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
     };
-    this.props.clietApiKeys(payload);
+    this.props.clietApiKeys(payload).catch(createError);
   }
 };
 
