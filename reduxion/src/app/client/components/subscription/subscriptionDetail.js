@@ -117,7 +117,7 @@ class SubscriptionDetail extends React.Component {
                           {
                             currentSubscription.subscription_id == item.id ?
                             <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                            : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Upgrade</Link>
+                            : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribed'}</Link>
                           }
                         </td>
                       </tr>
@@ -125,59 +125,8 @@ class SubscriptionDetail extends React.Component {
                   </table>
                 } )
               }
-                {/*<table className="mdl-data-table mdl-js-data-table table-list">
-                  <thead>
-                    <tr>
-                      <th>Free Trial</th>
-                      <th>Basic</th>
-                      <th>Standard</th>
-                      <th>Business</th>
-                      <th>Premium</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>30 days</td>
-                      <td>$20.00</td>
-                      <td>$40.00</td>
-                      <td>$60.00</td>
-                      <td>$80.00</td>
-                    </tr>
-                    <tr>
-                      <td>----</td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                    </tr>
-                    <tr>
-                      <td>----</td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                    </tr>
-                    <tr>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Subscribe Now</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                    </tr>
-                  </tbody>
-                </table>*/}
-              </div>
+            </div>
           </div>
-        {/*<div className="mdl-grid mdl-grid--no-spacing">
-          <div className="mdl-cell mdl-cell--4-col"></div>
-          <div className="mdl-cell mdl-cell--8-col footer-action">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot margin-right-10" htmlFor="checkbox-2">
-                <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" onClick={(e) => this.termConditions(e)}/>
-                <span className="mdl-checkbox__label" >I agree to the Terms and Conditions</span>
-              </label>
-              <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Pay via Paypal</button>
-          </div>
-        </div>*/}
       </div>
     );
   }
