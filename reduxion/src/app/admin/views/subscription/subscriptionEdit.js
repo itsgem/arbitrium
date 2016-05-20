@@ -9,9 +9,10 @@ export default React.createClass( {
   },
   componentWillMount(){
     this.props.allSubscriptions();
+    this.props.clientSubscriptionInfo(this.props.params.id);
   },
   render() {
-    if (this.props.subscriptions.data) {
+    if (Object.keys(this.props.subscriptions).length && Object.keys(this.props.subscriptionInfoClient).length) {
       return this.renderSubscriptions();
     } else {
        return (
@@ -33,8 +34,7 @@ export default React.createClass( {
         </div>
         <SubscriptionEdit
           allSubscriptions={this.props.subscriptions}
-          validateCompleted={this.props.validateCompleted}
-          clientSubscriptionInfo={this.props.clientSubscriptionInfo}
+          clientSubscriptionInfo={this.props.subscriptionInfoClient}
           />
       </div>
     );

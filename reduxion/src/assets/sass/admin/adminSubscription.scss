@@ -19,11 +19,11 @@
 .content-container{
   background-color: #fff;
   width: 1200px;
-  padding: 0px;
+  padding: 2px;
 
   .content{
     .mdl-cell--3-col {
-      width: calc(25% - 65px);
+      width: calc(25% - 25px);
     }
 
     .subscription-type{
@@ -55,7 +55,7 @@
 
     .mdl-list__item{
       letter-spacing: 0px;
-      padding: 16px 0;
+      padding: 16px;
 
       .mdl-list__item-primary-content{
         display: block;

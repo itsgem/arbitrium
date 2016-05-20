@@ -12,8 +12,7 @@ const mapStateToProps = (state) => {
   	subscriptions: strMapToObj(state.get('adminSubscription').get('subscriptions')),
     subscriptionInfoClient: strMapToObj(state.get('adminSubscription').get('subscriptionInfoClient')),
     subscriptionInfoSelected: strMapToObj(state.get('adminSubscription').get('subscriptionInfoSelected')),
-    loading: state.get('adminSubscription').get('loading'),
-    validateCompleted: state.get('adminSubscription').get('validateCompleted')
+    loading: state.get('adminSubscription').get('loading')
   };
 }
 

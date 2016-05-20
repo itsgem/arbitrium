@@ -20,16 +20,16 @@ class SubscriptionEdit extends React.Component {
   }
   render() {
     let subscriptions = {};
+    let clientSubscriptionInfo = {};
     subscriptions = this.props.allSubscriptions.data;
+    clientSubscriptionInfo = this.props.clientSubscriptionInfo.data;
 
     return (
       <main className="mdl-layout__content mdl-js-layout">
         <div className="mdl-grid table-list-container">
-          <div className="header-title-container">
-            <p className="header-title">SUBSCRIPTION DETAIL</p>
-          </div>
           <div className="mdl-layout__panel is-active" id="#">
-              <div className="content-container">
+            <div className="content-container">
+              <div className="mdl-cell mdl-cell--12-col">
                 <div className="mdl-grid content">
                   <div className="mdl-cell mdl-cell--3-col">
                     <ul className="arb-demo mdl-list">
@@ -78,118 +78,61 @@ class SubscriptionEdit extends React.Component {
                           Discounts/Free Transactions
                         </span>
                       </li>
-                      <li className="mdl-list__item">
-                        <span className="mdl-list__item-primary-content">
-                          Testing
-                        </span>
-                      </li>
-                      <li className="mdl-list__item">
-                        <span className="mdl-list__item-primary-content">
-                          Testing
-                        </span>
-                      </li>
                     </ul>
                   </div>
-                <div className="mdl-cell mdl-cell--9-col">
-                    <table className="mdl-data-table mdl-js-data-table subscription-type">
-                      <thead>
-                        <tr>
-                          <th>Free Trial</th>
-                          <th>Basic</th>
-                          <th>Standard</th>
-                          <th>Business</th>
-                          <th>Premium</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>30 days</td>
-                          <td>$20.00</td>
-                          <td>$40.00</td>
-                          <td>$60.00</td>
-                          <td>$80.00</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td>$80.00</td>
-                          <td>$100.00</td>
-                          <td>$120.00</td>
-                          <td>$140.00</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td>$30.00</td>
-                          <td>$40.00</td>
-                          <td>$50.00</td>
-                          <td>$60.00</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td>$40.00</td>
-                          <td>$40.00</td>
-                          <td>$40.00</td>
-                          <td>$40.00</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td>$12.00</td>
-                          <td>$40.00</td>
-                          <td>$50.00</td>
-                          <td>$80.00</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td>$30.00</td>
-                          <td>$40.00</td>
-                          <td>$50.00</td>
-                          <td>$60.00</td>
-                        </tr>
-                        <tr>
-                          <td>10</td>
-                          <td>50</td>
-                          <td>100</td>
-                          <td>150</td>
-                          <td>200</td>
-                        </tr>
-                        <tr>
-                          <td>10</td>
-                          <td>50</td>
-                          <td>100</td>
-                          <td>150</td>
-                          <td>200</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td>$5.00</td>
-                          <td>$6.00</td>
-                          <td>$7.00</td>
-                          <td>$8.00</td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td><i className="material-icons check">done</i></td>
-                          <td><i className="material-icons check">done</i></td>
-                          <td><i className="material-icons check">done</i></td>
-                          <td><i className="material-icons check">done</i></td>
-                        </tr>
-                        <tr>
-                          <td>----</td>
-                          <td><i className="material-icons check">done</i></td>
-                          <td><i className="material-icons check">done</i></td>
-                          <td><i className="material-icons check">done</i></td>
-                          <td><i className="material-icons check">done</i></td>
-                        </tr>
-                        <tr>
-                          <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Subscribe Now</button></td>
-                          <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button></td>
-                          <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                          <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                          <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                        </tr>
-                      </tbody>
-                      </table>
-                    </div>
+                  <div className="mdl-cell mdl-cell--9-col">
+                    {
+                      subscriptions.map(item => {
+                        return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
+                          <thead>
+                            <tr>
+                              <th>{item.name == 'Trial' ? "Free Trial" : item.name}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{item.fee_monthly == 0.00 ? '--' : "$" + item.fee_monthly}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.fee_yearly == 0.00 ? '--' : "$" + item.fee_yearly}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.fee_yearly_license == 0.00 ? '--' : "$" + item.fee_yearly_license}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.fee_initial_setup == 0.00 ? '--' : "$" + item.fee_initial_setup }</td>
+                            </tr>
+                            <tr>
+                              <td>{item.fee_monthly_maintenance == 0.00 ? '--' : "$" + item.fee_monthly_maintenance}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.fee_yearly_maintenance == 0.00 ? '--' : "$" + item.fee_yearly_maintenance}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.max_api_calls == 0.00 ? '--' : "$" + item.max_api_calls}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.max_decisions == 0.00 ? '--' : "$" + item.max_decisions}</td>
+                            </tr>
+                            <tr>
+                              <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                {
+                                  clientSubscriptionInfo.subscription_id == item.id ?
+                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/" + item.id}>{clientSubscriptionInfo.subscription_id ? 'Upgrade' : 'Subscribed'}</Link>
+                                }
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      } )
+                    }
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>

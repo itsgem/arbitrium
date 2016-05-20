@@ -28,7 +28,7 @@ class SubscriptionList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/subscription/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/subscription/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
