@@ -21,6 +21,8 @@ class ClientSubscription extends Subscription
 
     protected $dates = ['valid_from', 'valid_to'];
 
+    protected $appends = ['total', 'currency', 'can_avail_trial'];
+
     //---------- relationships
     public function client()
     {
@@ -35,6 +37,12 @@ class ClientSubscription extends Subscription
     public function subscription()
     {
         return $this->belongsTo(Subscription::class);
+    }
+
+    //---------- appends
+    public function getCanAvailTrialAttribute()
+    {
+        return $this->canAvailFreeTrial();
     }
 
     //---------- scopes
