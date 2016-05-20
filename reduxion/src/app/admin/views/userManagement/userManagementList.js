@@ -2,17 +2,18 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import UserManagementList from 'admin/components/userManagement/userManagementList';
 import { Link } from 'react-router';
+import {createError} from 'utils/error';
 
 export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.adminUserManagementList({per_page: 10});
+    this.props.adminUserManagementList({per_page: 10}).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.adminDelete) {
-      nextProps.adminUserManagementList({per_page: 10});
+      nextProps.adminUserManagementList({per_page: 10}).catch(createError);
     }
   },
   render() {

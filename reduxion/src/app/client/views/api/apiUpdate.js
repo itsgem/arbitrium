@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ApiEdit from 'client/components/api/apiUpdate';
+import {createError} from 'utils/error';
 
 export default React.createClass({
   contextTypes: {
@@ -8,8 +9,8 @@ export default React.createClass({
   },
   componentWillMount () {
     let id = this.props.params.id;
-    this.props.getApiPermission();
-    this.props.clientGetApiKey(id);
+    this.props.getApiPermission().catch(createError);
+    this.props.clientGetApiKey(id).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {

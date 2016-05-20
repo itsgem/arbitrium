@@ -11,10 +11,9 @@
 @import './mixins';
 @import './transitions';
 @import './colors';
+@import './form';
 
 /* Admin */
-@import './admin/form';
-@import './admin/forgot';
 @import './admin/application';
 @import './admin/_input-dropdown';
 @import './admin/adminClient';
@@ -23,12 +22,10 @@
 @import './admin/login';
 @import './admin/adminSubscription';
 
-
 /* Client */
 @import './client/application';
 @import './client/client-profile';
 @import './client/signup';
-@import './client/form';
 @import './client/common';
 
 /* error */

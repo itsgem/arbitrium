@@ -28,16 +28,6 @@ div#application {
 
   @media (min-width: 1200px) {
     #signup {
-      .signup-view {
-        -webkit-flex: 0 0 70%;
-        -ms-flex: 0 0 70%;
-        flex: 0 0 70%;
-        max-width: 70%;
-        max-height: 100%;
-        box-sizing: border-box;
-        margin: auto;
-      }
-
       form {
         width: auto!important;
       }

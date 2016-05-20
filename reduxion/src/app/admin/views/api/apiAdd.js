@@ -1,6 +1,7 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ApiAdd from 'admin/components/api/apiAdd';
+import {createError} from 'utils/error';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -8,7 +9,7 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.getApiPermission();
+    this.props.getApiPermission().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.registerApiSuccess && !nextProps.loading) {

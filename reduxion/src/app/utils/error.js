@@ -9,6 +9,12 @@ Convert from various errors: Checkit and ajax
 Suitable to update the component state.
 */
 export function createError(errorIn) {
+  if (errorIn == "Error: Network Error") {
+    let link = window.location.href.split("/");
+    localStorage.removeItem(link[3]);
+    window.location = window.location.origin + "/" + (link[3] == 'token' ? "i" : link[3]) + "/login";
+  }
+
   debug("setErrors in: ", errorIn);
   if ( errorIn instanceof Checkit.Error ) { //local validation
     return {

@@ -193,12 +193,6 @@ function setErrors( e ) {
   this.setState(createError(e));
 }
 
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
-}
-
 ApiUpdate.mixins = [LinkedStateMixin];
 ApiUpdate.defaultProps = {
     errors: []

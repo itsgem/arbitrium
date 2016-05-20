@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 class UserManagementList extends React.Component {
   constructor(props) {
@@ -251,7 +252,7 @@ class UserManagementList extends React.Component {
       email_address: this.refs.email_address.value,
       name: this.refs.name.value
     };
-    this.props.adminUserManagementList(payload);
+    this.props.adminUserManagementList(payload).catch(createError);
   }
   page(e, pageNumber) {
     e.preventDefault();
@@ -261,7 +262,7 @@ class UserManagementList extends React.Component {
       email_address: this.refs.email_address.value,
       name: this.refs.name.value
     };
-    this.props.adminUserManagementList(payload);
+    this.props.adminUserManagementList(payload).catch(createError);
   }
   deleteItem () {
     this.setState( {
@@ -274,7 +275,7 @@ class UserManagementList extends React.Component {
       $(this).fadeOut(2000);
     });
     this.modalClose();
-    this.props.deleteAdminAccount(this.state.id)
+    this.props.deleteAdminAccount(this.state.id).catch(createError);
   }
 
 };

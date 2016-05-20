@@ -3,6 +3,7 @@ import ClientProfile from 'admin/components/client/clientProfile';
 import DocTitle from 'common/components/docTitle';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 export default React.createClass( {
   contextTypes: {
@@ -17,7 +18,7 @@ export default React.createClass( {
   },
   componentDidMount(){
     let id = this.props.params.id;
-    this.props.clientProfile(id);
+    this.props.clientProfile(id).catch(createError);
     this.props.country();
   },
   componentWillReceiveProps(nextProps) {
@@ -30,15 +31,15 @@ export default React.createClass( {
     }
     // Disapprove/Approve Client
     if (!nextProps.loading && (nextProps.clientDisapproveSuccess || nextProps.clientApproveSuccess)) {
-      nextProps.clientProfile(nextProps.params.id);
+      nextProps.clientProfile(nextProps.params.id).catch(createError);
     }
     if (!nextProps.loading && (nextProps.clientActivateSuccess || nextProps.clientDeactivateSuccess)) {
-      nextProps.clientProfile(nextProps.params.id);
+      nextProps.clientProfile(nextProps.params.id).catch(createError);
     }
 
     // Unlock Client
     if (!nextProps.loading && nextProps.clientUnlockSuccess ) {
-      nextProps.clientProfile(nextProps.params.id);
+      nextProps.clientProfile(nextProps.params.id).catch(createError);
       $('.msg').html('Client Successfully Unlocked').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);

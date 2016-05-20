@@ -81,43 +81,43 @@ class SubscriptionDetail extends React.Component {
                   return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                     <thead>
                       <tr>
-                        <th>{item.name}</th>
+                        <th>{item.name == 'Trial' ? "Free Trial" : item.name}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{item.fee_monthly == 0.00 ? '--' : item.fee_monthly}</td>
+                        <td>{item.fee_monthly == 0.00 ? '--' : "$" + item.fee_monthly}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_yearly == 0.00 ? '--' : item.fee_yearly}</td>
+                        <td>{item.fee_yearly == 0.00 ? '--' : "$" + item.fee_yearly}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_yearly_license == 0.00 ? '--' : item.fee_yearly_license}</td>
+                        <td>{item.fee_yearly_license == 0.00 ? '--' : "$" + item.fee_yearly_license}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_initial_setup == 0.00 ? '--' : item.fee_initial_setup }</td>
+                        <td>{item.fee_initial_setup == 0.00 ? '--' : "$" + item.fee_initial_setup }</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_monthly_maintenance == 0.00 ? '--' : item.fee_monthly_maintenance}</td>
+                        <td>{item.fee_monthly_maintenance == 0.00 ? '--' : "$" + item.fee_monthly_maintenance}</td>
                       </tr>
                       <tr>
-                        <td>{item.fee_yearly_maintenance == 0.00 ? '--' : item.fee_yearly_maintenance}</td>
+                        <td>{item.fee_yearly_maintenance == 0.00 ? '--' : "$" + item.fee_yearly_maintenance}</td>
                       </tr>
                       <tr>
-                        <td>{item.max_api_calls == 0.00 ? '--' : item.max_api_calls}</td>
+                        <td>{item.max_api_calls == 0.00 ? '--' : "$" + item.max_api_calls}</td>
                       </tr>
                       <tr>
-                        <td>{item.max_decisions == 0.00 ? '--' : item.max_decisions}</td>
+                        <td>{item.max_decisions == 0.00 ? '--' : "$" + item.max_decisions}</td>
                       </tr>
                       <tr>
-                        <td>{item.discounts == 0.00 ? '--' : item.discounts } </td>
+                        <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
                       </tr>
                       <tr>
                         <td>
                           {
                             currentSubscription.subscription_id == item.id ?
                             <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                            : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Upgrade</Link>
+                            : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribed'}</Link>
                           }
                         </td>
                       </tr>
@@ -125,59 +125,8 @@ class SubscriptionDetail extends React.Component {
                   </table>
                 } )
               }
-                {/*<table className="mdl-data-table mdl-js-data-table table-list">
-                  <thead>
-                    <tr>
-                      <th>Free Trial</th>
-                      <th>Basic</th>
-                      <th>Standard</th>
-                      <th>Business</th>
-                      <th>Premium</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>30 days</td>
-                      <td>$20.00</td>
-                      <td>$40.00</td>
-                      <td>$60.00</td>
-                      <td>$80.00</td>
-                    </tr>
-                    <tr>
-                      <td>----</td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                    </tr>
-                    <tr>
-                      <td>----</td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                      <td><i className="material-icons check">done</i></td>
-                    </tr>
-                    <tr>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Subscribe Now</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                      <td><button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">Upgrade Now</button></td>
-                    </tr>
-                  </tbody>
-                </table>*/}
-              </div>
+            </div>
           </div>
-        {/*<div className="mdl-grid mdl-grid--no-spacing">
-          <div className="mdl-cell mdl-cell--4-col"></div>
-          <div className="mdl-cell mdl-cell--8-col footer-action">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot margin-right-10" htmlFor="checkbox-2">
-                <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" onClick={(e) => this.termConditions(e)}/>
-                <span className="mdl-checkbox__label" >I agree to the Terms and Conditions</span>
-              </label>
-              <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Pay via Paypal</button>
-          </div>
-        </div>*/}
       </div>
     );
   }

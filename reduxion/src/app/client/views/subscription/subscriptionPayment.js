@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import SubscriptionPayment from 'client/components/subscription/subscriptionPayment';
 import {openLoading, closeLoading} from 'common/components/modal'
+import {createError} from 'utils/error';
 
 export default React.createClass({
   contextTypes: {
@@ -9,8 +10,7 @@ export default React.createClass({
   },
   componentDidMount () {
     let id = this.props.params.id;
-    this.props.getSubscriptionItem(id);
-    // this.props.clientSubscription();
+    this.props.getSubscriptionItem(id).catch(createError);
   },
   componentWillMount () {
   if ( typeof(window.componentHandler) != 'undefined' ) {
