@@ -50,6 +50,37 @@ import ClientApiUpdate from 'client/containers/api/apiUpdate';
 import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
+function startTimer(duration, tokenName) {
+    let start = Date.now();
+    let diff = 0;
+    let minutes = 0;
+    let seconds  = 0;
+    function timer() {
+        // get the number of seconds that have elapsed since
+        // startTimer() was called
+        diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        if (minutes == 0 && seconds == 0) {
+          localStorage.removeItem(tokenName);
+          window.location = window.location.origin + "/" + (tokenName == 'token' ? "i" : tokenName) + "/login";
+        }
+        if (diff <= 0) {
+            // add one second so that the count down starts at the full duration
+            start = Date.now() + 1000;
+        }
+    };
+    // we don't want to wait a full second before the timer starts
+    timer();
+    setInterval(timer, 1000);
+}
+
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
   let bytes ='';
@@ -115,6 +146,10 @@ function requireAuth(nextState, replace, cb) {
         lifetime: lifetime,
         role: role
       };
+
+      let timeLimit = 60 * lifetime;
+      //let timeLimit = 5;
+      startTimer(timeLimit, tokenName);
       localStorage.setItem(tokenName, CryptoJS.AES.encrypt(JSON.stringify(encryptToken), config.key));
     }
   }

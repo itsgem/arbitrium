@@ -19,6 +19,9 @@ export const clientUpdateProfile = createActionAsync('CLIENT_UPDATE', auth.admin
 export const adminClientDelete = createActionAsync('CLIENT_DELETE', auth.clientDelete);
 export const adminClientList = createActionAsync('CLIENT_LIST', auth.clientList);
 
+export const adminClientSubscription = createActionAsync('ADMIN_CURRENT_CLIENT_SUBSCRIPTION', auth.adminClientSubscription);
+export const adminClientSubscriptionCancel = createActionAsync('ADMIN_CLIENT_CANCEL_SUBSCRIPTION', auth.adminClientSubscriptionCancel);
+
 export const country = createActionAsync('COUNTRY', auth.listCountries);
 
 const initialState = Immutable.fromJS({
@@ -35,6 +38,8 @@ const initialState = Immutable.fromJS({
   validateCompleted: false,
   clientList: {},
   countryList: {},
+  currentClientSubscription: {},
+  cancelSubscription: false
 });
 
 export default createReducer({
@@ -57,7 +62,8 @@ export default createReducer({
     updateCompleted: false,
     loading: true,
     validateCompleted: false,
-    clientUnlockSuccess: false }),
+    clientUnlockSuccess: false
+  }),
   [clientApprove.ok]: (state) => state.merge({clientApproveSuccess: true, loading: false}),
   [clientApprove.request]: (state) => state.merge({
     clientApproveSuccess: false,
@@ -92,19 +98,28 @@ export default createReducer({
     registerCompleted: false,
     loading: false,
     updateCompleted: false,
-    validateCompleted: false}),
+    validateCompleted: false,
+    currentClientSubscription: {},
+    cancelSubscription: false
+  }),
   [adminClientList.request]: (state) => state.merge({
     clientDeleteSuccess: false,
     registerCompleted: false,
     loading: true,
     updateCompleted: false,
-    validateCompleted: false
+    validateCompleted: false,
+    currentClientSubscription: {},
+    cancelSubscription: false
   }),
   [adminClientDelete.ok]: (state) => state.merge({clientDeleteSuccess: true, loading: false}),
   [adminClientDelete.request]: (state) => state.merge({clientDeleteSuccess: false, loading: true}),
   [country.ok]: (state, payload) => state.merge({countryList: payload, validateCompleted: false}),
   [country.request]: (state) => state.merge({validateCompleted: false}),
   [clientUnlock.ok]: (state) => state.merge({clientUnlockSuccess: true, loading: false}),
-  [clientUnlock.request]: (state) => state.merge({clientUnlockSuccess: false, loading: true})
+  [clientUnlock.request]: (state) => state.merge({clientUnlockSuccess: false, loading: true}),
+  [adminClientSubscription.ok]: (state, payload) => state.merge({currentClientSubscription: payload, loading: false}),
+  [adminClientSubscription.request]: (state) => state.merge({currentClientSubscription: {}, loading: true}),
+  [adminClientSubscriptionCancel.ok]: (state, payload) => state.merge({cancelSubscription: true, loading: false}),
+  [adminClientSubscriptionCancel.request]: (state) => state.merge({cancelSubscription: false, loading: true})
 
 }, initialState);

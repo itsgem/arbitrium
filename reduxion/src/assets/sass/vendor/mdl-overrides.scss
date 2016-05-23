@@ -371,23 +371,22 @@ select {
   }
 }
 
+.header-title {
+  background: $base-blue;
+  padding: 15px;
+
+  p {
+    color: #fff!important;
+    font-weight: 400;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+}
 
 /*
 * Client - My Subscription
 */
-.subscription-type {
-  .header-title {
-    background: $base-blue;
-    padding: 15px;
-
-    p {
-      color: #fff;
-      font-weight: 400;
-      margin-bottom: 0;
-      text-transform: uppercase;
-    }
-  }
-
+.client {
   .table-list {
     border: 0;
     width: 100%;

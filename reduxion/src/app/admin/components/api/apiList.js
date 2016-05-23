@@ -27,7 +27,7 @@ class ApiList extends React.Component {
         <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id, data.is_active)} />
+            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
@@ -203,11 +203,12 @@ class ApiList extends React.Component {
       $(this).fadeOut(2000);
     });
   }
-  changeActive (e, id, status) {
+  changeActive (e, id) {
     let payload = {
       id: id,
-      is_active: ((status == 1) ? 0 : 1)
+      is_active: ((e.target.checked == true) ? 0 : 1)
     };
+
     this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber (pageNum) {

@@ -12,6 +12,8 @@ export const retrieveEmailChangeToken = createActionAsync('RETRIEVE_EMAIL_CHANGE
 export const verifyEmailChange = createActionAsync('VERIFY_EMAIL_CHANGE_TOKEN', auth.verifyEmailChange);
 export const countryProfile = createActionAsync('COUNTRY_PROFILE', auth.listCountries);
 
+export const clientSubscriptionCancel = createActionAsync('CLIENT_CANCEL_SUBSCRIPTION', auth.clientSubscriptionCancel);
+
 export const initialState = Immutable.fromJS({
   countryList: {},
   user: {},
@@ -32,7 +34,7 @@ export default createReducer({
     isUsernameAvailable: null,
     success: {},
     isProfileSuccess: true,
-    user: state.concat(payload)
+    user: state.concat(payload),
   }),
   [clientProfile.request]: (state, payload) => state.merge({
     loading: true,
@@ -99,5 +101,13 @@ export default createReducer({
   [verifyEmailChange.error]: (state, payload) => state.merge({
     loading: false,
     errors: state.concat(payload)
+  }),
+  [clientSubscriptionCancel.ok]: (state, payload) => state.merge({
+    loading: false,
+    success: payload
+  }),
+  [clientSubscriptionCancel.request]: (state) => state.merge({
+    loading: true,
+    success: {}
   })
 }, initialState);
