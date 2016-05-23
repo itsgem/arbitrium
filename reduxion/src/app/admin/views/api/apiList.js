@@ -12,7 +12,7 @@ export default React.createClass( {
     this.props.apiList({per_page: 10}).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
-    if ((nextProps.deleteApiKeySuccess || nextProps.activeApiKey) && !nextProps.loading) {
+    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
       this.props.apiList({per_page: 10}).catch(createError);
     }
   },
