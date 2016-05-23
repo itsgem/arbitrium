@@ -45,7 +45,7 @@ export default React.createClass( {
             </div>
             <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
               <div className="mdl-tabs__tab-bar tab">
-                <nav className="mdl-navigation">
+                <nav className="arb-navigation mdl-navigation">
                   <Link className="menu-dashboard mdl-layout__tab" to="/coffee">Dashboard</Link>
                   <div className="container">
                     <button id="demo-menu-client"
