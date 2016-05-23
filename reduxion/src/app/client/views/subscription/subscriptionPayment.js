@@ -27,7 +27,7 @@ export default React.createClass({
     if (nextProps.purchaseSuccess) {
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-          message: 'Subscription success',
+          message: 'Subscription Success',
           timeout: 3000
       });
       this.context.router.push('/i/subscription');

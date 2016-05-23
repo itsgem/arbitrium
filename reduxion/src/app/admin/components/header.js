@@ -64,7 +64,7 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API Key</Link></li>
                     </ul>
                   </div>
-                  <Link className="menu-pricing mdl-layout__tab" to="/coffee">Pricing</Link>
+                  <Link className="menu-pricing mdl-layout__tab" to="/coffee">Subscription</Link>
                   { role &&
                         <div className="container">
                           <button id="demo-menu-account"

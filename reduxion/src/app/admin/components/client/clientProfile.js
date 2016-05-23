@@ -692,7 +692,6 @@ class ClientProfile extends React.Component {
   // --- Actions
   activeStatus(e, status) {
     if (this.state.subscriptionCancel) {
-      //console.log(document.querySelector('.msg-box p'));
       this.cancelSubscription(e);
     } else {
       if (status) {
@@ -784,7 +783,6 @@ class ClientProfile extends React.Component {
       .catch(setErrors);
   }
   modalConfirm (e, client) {
-    console.log(client);
     document.querySelector('.msg-box p').innerHTML = "Are you sure you want to " + (client.user.activated_at ? 'deactivate' : 'activate') + " this account?<br />This cannot be undone.";
     openModal();
   }
