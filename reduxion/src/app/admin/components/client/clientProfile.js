@@ -630,7 +630,7 @@ class ClientProfile extends React.Component {
           <div className="mdl-layout__panel" id="#">
             <div className="mdl-grid content">
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>SUBSRIPTION</h6>
+                <h6>SUBSCRIPTION</h6>
                 <p>{currentSubscription.name}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
@@ -638,7 +638,7 @@ class ClientProfile extends React.Component {
                 <p>{currentSubscription.valid_from}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>TERMS OF SUBSRIPTION</h6>
+                <h6>TERMS OF SUBSCRIPTION</h6>
                 <p>{currentSubscription.term}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
