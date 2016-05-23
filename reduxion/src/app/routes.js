@@ -56,7 +56,7 @@ function startTimer(duration, tokenName) {
     let minutes = 0;
     let seconds  = 0;
     function timer() {
-        // get the number of seconds that have elapsed since 
+        // get the number of seconds that have elapsed since
         // startTimer() was called
         diff = duration - (((Date.now() - start) / 1000) | 0);
 
