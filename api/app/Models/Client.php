@@ -118,6 +118,8 @@ class Client extends NrbModel
         'created_by', 'updated_by'
     ];
 
+    protected $appends = ['can_avail_trial'];
+
 
     public static function boot()
     {
@@ -179,6 +181,12 @@ class Client extends NrbModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    //---------- appends
+    public function getCanAvailTrialAttribute()
+    {
+        return $this->canAvailFreeTrial();
     }
 
     //---------- scopes
@@ -259,7 +267,7 @@ class Client extends NrbModel
 
         if ($subscription->isTrial())
         {
-            if (!$client_subscription->canAvailFreeTrial($client_id))
+            if (!$this->canAvailFreeTrial($client_id))
             {
                 return false;
             }
@@ -276,5 +284,21 @@ class Client extends NrbModel
         $client_subscription->save();
 
         return $client_subscription;
+    }
+
+    public function canAvailFreeTrial($client_id = null)
+    {
+        $client_id = ($client_id) ? $client_id : $this->client_id;
+
+        $trial_count = ClientSubscription::clientId($client_id)->type(ClientSubscription::TYPE_TRIAL)->count();
+
+        // Once a free trial is used, even if its valid_from is not yet due or,
+        // the user can no longer avail
+        if ($trial_count)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
