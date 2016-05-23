@@ -12,7 +12,7 @@ export default React.createClass( {
   componentWillReceiveProps(nextProps) {
     if(!nextProps.authenticated){
       localStorage.removeItem('token');
-      this.context.router.push(`/i/login`);
+      window.location = window.location.origin + "/i/login";
     }
   },
 

@@ -1,5 +1,12 @@
 import { connect } from 'react-redux';
-import {countryProfile, clientProfile, updateClientProfile, getAvailableUsername, retrieveEmailChangeToken, verifyEmailChange } from 'client/reducers/profile/profile';
+import {countryProfile,
+  clientProfile,
+  updateClientProfile,
+  getAvailableUsername,
+  retrieveEmailChangeToken,
+  verifyEmailChange,
+  clientSubscriptionCancel } from 'client/reducers/profile/profile';
+import { clientSubscription } from 'client/reducers/subscription';
 import { country } from 'client/reducers/country';
 import ClientProfile from 'client/views/profile/profile';
 
@@ -20,6 +27,7 @@ const mapStateToProps = (state) => {
     loading: state.get('clientProfile').get('loading'),
     success: strMapToObj(state.get('clientProfile').get('success')),
     isProfileSuccess: state.get('clientProfile').get('isProfileSuccess'),
+    currentSubscription: strMapToObj(state.get('AdminSubscription').get('currentSubscription')),
     errors: state.get('clientProfile').get('errors')
   };
 }
@@ -30,5 +38,7 @@ export default connect(mapStateToProps, {
   updateClientProfile,
   getAvailableUsername,
   verifyEmailChange,
-  retrieveEmailChangeToken
+  retrieveEmailChangeToken,
+  clientSubscription,
+  clientSubscriptionCancel
 })(ClientProfile)

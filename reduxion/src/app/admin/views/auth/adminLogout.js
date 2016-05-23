@@ -12,8 +12,7 @@ export default React.createClass( {
   componentWillReceiveProps(nextProps) {
     if(!nextProps.authenticated){
       localStorage.removeItem('coffee');
-      this.context.router.push(`/coffee/login`);
-
+      window.location = window.location.origin + "/coffee/login";
     }
   },
   render() {
