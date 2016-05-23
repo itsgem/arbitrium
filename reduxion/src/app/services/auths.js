@@ -261,6 +261,12 @@ export default {
   adminDeleteApiKey(id) {
     return del('admin/api-key/' + id);
   },
+  adminClientSubscription(id) {
+    return get('admin/client/' + id + '/subscription/current');
+  },
+  adminClientSubscriptionCancel(id) {
+    return patch('admin/client/' + id + '/subscription/cancel');
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {
@@ -393,5 +399,8 @@ export default {
         term: payload.term
       }
     });
+  },
+  clientSubscriptionCancel() {
+    return patch('client/subscription/cancel');
   }
 };
