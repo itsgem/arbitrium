@@ -41,8 +41,6 @@ use PayPal\Rest\ApiContext;
 class PaypalServices extends NrbServices
 {
     private $_api_context;
-    private $paypal_information;
-    private $paypal_status_information;
 
     public function __construct()
     {
@@ -52,10 +50,10 @@ class PaypalServices extends NrbServices
         $this->_api_context->setConfig($paypal_conf['settings']);
     }
 
+    //----- Recurring
+
     public function createPlan($request)
     {
-        //$client_id = $client->id;
-
         $data = [];
         $data['term']        = ($request->get('term')) ? $request->get('term') : ClientSubscription::TERM_MONTHLY;
 
@@ -63,10 +61,9 @@ class PaypalServices extends NrbServices
         $data['name']        = $subscription->name;
         $data['description'] = (string) $subscription->description.' ('.$data['term'].')';
         $data['currency']    = $subscription->currency;
-        $data['price']       = $subscription->total[strtolower($data['term'])];
+        $data['price']       = $subscription->total[$data['term']];
         $data['setup_fee']   = $subscription->fee_initial_setup;
         $data['callback']    = $request->get('callback_url');
-        //$data['callback']    = 'http://arbitrium-api.dev/api/v1/client/subscription/confirm';
 
         //----- Create Plan
 
@@ -221,8 +218,7 @@ class PaypalServices extends NrbServices
         $data['description'] = $subscription->description;
         $data['plan_id']     = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? $subscription->paypal_plan_id_yearly : $subscription->paypal_plan_id_monthly;
 
-        $start_date = date('c',strtotime(date('Y-m-d') . "+1 days"));
-        dd([$start_date, date('c',strtotime(date('Y-m-d H:i:s') . "+1 days"))]);
+        $start_date = current_datetime_iso8601(1);
 
         //SubscribeCustomer
         $agreement = new Agreement();
@@ -306,34 +302,45 @@ class PaypalServices extends NrbServices
         return json_decode($agreement, true);
     }
 
+    //----- One-Time
+
     public function subscribeOneTime($request)
     {
+        // $client_id = $client->id;
         $client_id = 999000001;
-        $subscription_name = 'Basic Subscription Package';
-        $subscription_description = 'Basic Subscription Package Description';
-        $subscription_currency = 'USD';
-        $subscription_qty = 1;
-        $subscription_price = 50;
-        $subscription_callback = 'http://dev.w3.arbitriumgroup.com/i/subscription/';
+
+        $subscription = Subscription::findOrFail($request->get('subscription_id'));
+        $subscription_fees = $subscription->getFees($request->get('term'));
+        $subscription_total = $subscription->calculateTotal($request->get('term').'_With_Setup');
+
+        $subscription_name = $subscription->name;
+        $subscription_description = $subscription->description;
+        $subscription_currency = config('paypal.currency');
+        $subscription_callback = $request->get('callback_url');
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
 
-        $item_1 = new Item();
-        $item_1->setName($subscription_name)
-            ->setCurrency($subscription_currency)
-            ->setQuantity($subscription_qty)
-            ->setPrice($subscription_price);
+        $items = [];
+        $cnt = 0;
+        foreach($subscription_fees as $fee)
+        {
+            $items[$cnt] = new Item();
+            $items[$cnt]->setName($fee['name'])
+                ->setCurrency($subscription_currency)
+                ->setQuantity(1)
+                ->setPrice($fee['amount']);
+
+            $cnt++;
+        }
 
         // add item to list
         $item_list = new ItemList();
-        $item_list->setItems([$item_1]);
-
-        $total = $subscription_price * $subscription_qty;
+        $item_list->setItems($items);
 
         $amount = new Amount();
         $amount->setCurrency($subscription_currency)
-            ->setTotal($total);
+            ->setTotal($subscription_total);
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)
@@ -344,10 +351,10 @@ class PaypalServices extends NrbServices
         $redirect_urls->setReturnUrl($subscription_callback)
             ->setCancelUrl($subscription_callback);
 
-        $this->paypal_information = [
-            'client_id'   => $client_id,
-            'description' => $subscription_description,
-            'total_amount' => $total
+        $paypal_information = [
+            'client_id'    => $client_id,
+            'description'  => $subscription_description,
+            'total_amount' => $subscription_total
         ];
 
         if (env('PAYPAL_BYPASS'))
@@ -381,10 +388,10 @@ class PaypalServices extends NrbServices
         }
 
         // add payment ID to session
-        $this->paypal_information['paypal_payment_id'] = $payment->getId();
+        $paypal_information['paypal_payment_id'] = $payment->getId();
         DB::transaction(function ()
         {
-            //Payments::addPayment($this->paypal_information);
+            //Payments::addPayment($paypal_information);
         });
 
         if(isset($redirect_url)) {
@@ -404,11 +411,13 @@ class PaypalServices extends NrbServices
     public function executeAgreementOneTime($request)
     {
         // Get the payment ID before session clear
-        $data['payment_id'] = $request->get('paymentId');
-        $data['payer_id']   = $request->get('PayerID');
-        $data['token']      = $request->get('token');
+        $data = (object) [
+            'payment_id' => $request->get('paymentId'),
+            'payer_id'   => $request->get('PayerID'),
+            'token'      => $request->get('token'),
+        ];
 
-        if (empty($data['payer_id']) || empty($data['token'])) {
+        if (empty($data->payer_id) || empty($data->token)) {
             return $this->respondWithData([
                 'status' => 'error',
                 'message' => 'Payment failed'
@@ -421,14 +430,14 @@ class PaypalServices extends NrbServices
             // return $this->bypassFakePaypalStatus();
         }
 
-        $payment = Payment::get($data['payment_id'], $this->_api_context);
+        $payment = Payment::get($data->payment_id, $this->_api_context);
 
         // PaymentExecution object includes information necessary
         // to execute a PayPal account payment.
         // The payer_id is added to the request query parameters
         // when the user is redirected from paypal back to your site
         $execution = new PaymentExecution();
-        $execution->setPayerId($data['payer_id']);
+        $execution->setPayerId($data->payer_id);
 
         //Execute the payment
         try{
@@ -441,10 +450,9 @@ class PaypalServices extends NrbServices
                     // @TODO-Arbitrium: Invoice
 
                     return $this->respondWithSuccess([
-                        'message' => 'Payment success',
-                        'payment_id' => $data['payment_id'],
-                        'payer_id' => $data['payer_id'],
-                        'token' => $data['token'],
+                        'message'    => 'Payment success',
+                        'payment_id' => $data->payment_id,
+                        'payer_id'   => $data->payer_id,
                     ]);
                 });
             }

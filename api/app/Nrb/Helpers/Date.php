@@ -11,10 +11,12 @@ function current_datetime()
     return Carbon::now();
 }
 
-function current_datetime_iso8601($timezone='Asia/Singapore')
+function current_datetime_iso8601($offset_days = '0', $timezone = 'Asia/Singapore')
 {
-    $date = new DateTime("now", new DateTimeZone($timezone));
+    $date = new DateTime("now + ".$offset_days." days", new DateTimeZone($timezone));
     return $date->format('c');
+
+    //return date('c',strtotime(date('Y-m-d H:i:s') . "+".$offset_days." days"));
 }
 
 function current_date()

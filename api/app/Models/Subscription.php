@@ -156,6 +156,53 @@ class Subscription extends NrbModel
         return $this->type == self::TYPE_TRIAL;
     }
 
+    public function getFees($term = null)
+    {
+        $monthly = [
+            'regular' => [
+                'amount'      => $this->fee_monthly,
+                'name' => 'Monthly Fee',
+            ],
+            'maintenance' => [
+                'amount'      => $this->fee_monthly_maintenance,
+                'name' => 'Monthly Maintenance Fee',
+            ],
+            'initial' => [
+                'amount'      => $this->fee_initial_setup,
+                'name' => 'Initial Setup Fee',
+            ],
+        ];
+        $annually = [
+            'regular' => [
+                'amount'      => $this->fee_yearly,
+                'name' => 'Annual Fee',
+            ],
+            'license' => [
+                'amount'      => $this->fee_yearly_license,
+                'name' => 'Annual License Fee',
+            ],
+            'maintenance' => [
+                'amount'      => $this->fee_yearly_maintenance,
+                'name' => 'Annual Maintenance Fee',
+            ],
+            'initial' => [
+                'amount'      => $this->fee_initial_setup,
+                'name' => 'Initial Setup Fee',
+            ],
+        ];
+
+        $fees = [
+            ClientSubscription::TERM_MONTHLY  => $monthly,
+            ClientSubscription::TERM_ANNUALLY => $annually,
+        ];
+
+        if ($term) {
+            return $fees[$term];
+        }
+
+        return $fees;
+    }
+
     public function calculateTotal($term = null)
     {
         $monthly = array_sum([
@@ -169,15 +216,15 @@ class Subscription extends NrbModel
         ]);
 
         $total = [
-            'monthly'  => format_money($monthly),
-            'annually' => format_money($annually),
-            'monthly_with_setup'  => format_money(
+            ClientSubscription::TERM_MONTHLY  => format_money($monthly),
+            ClientSubscription::TERM_ANNUALLY => format_money($annually),
+            ClientSubscription::TERM_MONTHLY.'_With_Setup'  => format_money(
                 array_sum([
                     $monthly,
                     $this->fee_initial_setup
                 ])
             ),
-            'annually_with_setup' => format_money(
+            ClientSubscription::TERM_ANNUALLY.'_With_Setup' => format_money(
                 array_sum([
                     $annually,
                     $this->fee_initial_setup
