@@ -475,19 +475,29 @@ select {
   }
 }
 
+.mdl-cell.check-test-key {
+  width: 9%;
+}
+
 .arb-demo {
   &.mdl-list {
     padding: 46px 0 0 0;
 
     .mdl-list__item {
       letter-spacing: 0px;
-      font-size: 15px;
+      font-size: 16px;
 
       .mdl-list__item-primary-content {
         display: block;
         text-align: right;
       }
     }
+  }
+}
+
+.arb-navigation.mdl-navigation {
+  .mdl-layout__tab {
+    font-size: 15px;
   }
 }
 

@@ -93,13 +93,13 @@ class ApiAdd extends React.Component {
             }
         </div>
           <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--1-col check-test-key">
+            <div className="mdl-cell mdl-cell--2-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
                 <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input"/>
                 <span className="mdl-checkbox__label">Test Key</span>
               </label>
             </div>
-            <div className="mdl-cell mdl-cell--1-col check-test-key">
+            <div className="mdl-cell mdl-cell--3-col check-test-key">
               <div id="tt4" className="icon material-icons">help</div>
                 <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
                   You can use a test key to experiment
