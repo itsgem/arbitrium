@@ -3,7 +3,13 @@ import 'assets/sass/base';
 
 export default React.createClass({
   render() {
-    let baseUrl = window.location.origin+"/coffee";
+    let link = window.location.href.split("/");
+    let baseUrl
+    if (link[4] == "coffee") {
+      baseUrl = window.location.origin+"/coffee";
+    } else {
+      baseUrl = window.location.origin+"/i";
+    }
     return (
       <section className="mdl-grid section-error">
         <div className='mdl-cell mdl-cell--6-col mdl-cell--3-offset error-content'>

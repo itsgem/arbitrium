@@ -196,7 +196,7 @@ class ApiList extends React.Component {
     );
   }
   deleteItem () {
-    this.props.adminDeleteApiKey(this.state.id);
+    this.props.adminDeleteApiKey(this.state.id).catch(createError);
     this.modalClose();
     $('.msg').html('Successfully deleted').addClass('bg-green');
     $('.msg').fadeIn(1000, function() {
@@ -208,7 +208,7 @@ class ApiList extends React.Component {
       id: id,
       is_active: ((status == 1) ? 0 : 1)
     };
-    this.props.isActiveApiKey(payload);
+    this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
@@ -247,9 +247,7 @@ class ApiList extends React.Component {
     this.selectPageNumber(pageNum);
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
-
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalConfirm (e, id, description) {
     openModal();
@@ -275,7 +273,7 @@ class ApiList extends React.Component {
       key: this.refs.api_key.value,
       date_created: this.refs.created_at.value
     };
-    this.props.apiList(payload);
+    this.props.apiList(payload).catch(createError);
   }
   page(e, pageNumber) {
     e.preventDefault();
@@ -286,7 +284,7 @@ class ApiList extends React.Component {
       key: this.refs.api_key.value,
       date_created: this.refs.created_at.value
     };
-    this.props.apiList(payload);
+    this.props.apiList(payload).catch(createError);
   }
 };
 

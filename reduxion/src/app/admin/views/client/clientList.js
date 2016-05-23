@@ -1,6 +1,7 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ClientList from 'admin/components/client/clientList';
+import {createError} from 'utils/error';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -8,11 +9,11 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-   this.props.adminClientList({per_page: 10});
+   this.props.adminClientList({per_page: 10}).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.clientDeleteSuccess) {
-      nextProps.adminClientList({per_page: 10});
+      nextProps.adminClientList({per_page: 10}).catch(createError);
     }
   },
   render() {

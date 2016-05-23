@@ -661,24 +661,24 @@ class ClientProfile extends React.Component {
 
   changeApprovalStatus (e) {
     e.preventDefault();
-    this.props.client.clientApprove(this.props.client.clientInfo.id);
+    this.props.client.clientApprove(this.props.client.clientInfo.id).catch(createError);
   }
   clientDisapproveStatus (e) {
     e.preventDefault();
-    this.props.client.clientDisapprove(this.props.client.clientInfo.id);
+    this.props.client.clientDisapprove(this.props.client.clientInfo.id).catch(createError);
   }
 
   clienActivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientActivate(this.props.client.clientInfo.user.id);
+    this.props.client.clientActivate(this.props.client.clientInfo.user.id).catch(createError);
   }
   clientDeactivateStatus (e) {
     e.preventDefault();
-    this.props.client.clientDeactivate(this.props.client.clientInfo.user.id);
+    this.props.client.clientDeactivate(this.props.client.clientInfo.user.id).catch(createError);
   }
   clientUnlock (e) {
     e.preventDefault();
-    this.props.client.clientUnlock(this.props.client.clientInfo.user.id);
+    this.props.client.clientUnlock(this.props.client.clientInfo.user.id).catch(createError);
   }
 
 

@@ -144,7 +144,7 @@ class ApiAdd extends React.Component {
     let payload = {
       company_name: this.refs.client_id.value,
     }
-    this.props.adminClientList(payload);
+    this.props.adminClientList(payload).catch(createError);
   }
   register ( e ) {
     let chkArr =  document.getElementsByName("chkRights[]");
@@ -213,12 +213,6 @@ function registerApi (payload) {
 
 function setErrors( e ) {
   this.setState(createError(e));
-}
-
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
 }
 
 ApiAdd.mixins = [LinkedStateMixin];

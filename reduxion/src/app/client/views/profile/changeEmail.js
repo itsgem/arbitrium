@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ClientChangeEmail from 'client/components/profile/changeEmail';
+import {createError} from 'utils/error';
 
 export default React.createClass({
   componentDidMount () {
-    this.props.clientProfileEmail();
+    this.props.clientProfileEmail().catch(createError);
 
     if ( typeof(window.componentHandler) != 'undefined' )
     {

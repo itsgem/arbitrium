@@ -5,7 +5,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 
-class UserManagementUpdate extends React.Component {
+class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +19,6 @@ class UserManagementUpdate extends React.Component {
     }
   }
   render() {
-    let role = this.props.role.toArray();
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, errorServer.response, {password_confirmation: []});
@@ -35,9 +34,10 @@ class UserManagementUpdate extends React.Component {
       }
     }
     let userInfo = {};
-    userInfo = this.props.adminInfo.get('data');
-    let userRole = userInfo.get('user').get("roles").toArray();
-    userRole = userRole.map(item => { return item.get("id"); });
+
+    userInfo = this.props.adminProfileInfo.data;
+    let userRole = userInfo.user.roles;
+    userRole = userRole.map(item => { return item.id; });
     return (
       <form>
         <div className="required">Required fields</div>
@@ -50,8 +50,8 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='username'
                   ref="username"
-                  onChange={(e) => this.notUsername(e, userInfo.get("user").get("username"))}
-                  defaultValue={userInfo.get("user").get("username")}
+                  onChange={(e) => this.notUsername(e, userInfo.user.username)}
+                  defaultValue={userInfo.user.username}
                   />
                 <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
@@ -77,7 +77,7 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='email_address'
                   ref="email_address"
-                  defaultValue={userInfo.get("user").get("email_address")}
+                  defaultValue={userInfo.user.email_address}
                   />
                 <label className="mdl-textfield__label" htmlFor="email_address">E-mail Address*</label>
                 {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
@@ -90,11 +90,12 @@ class UserManagementUpdate extends React.Component {
                     id="role_id"
                     name="role_id"
                     ref="role_id"
+                    disabled
                     defaultValue={userRole.toString()}>
                     <option value=""></option>
-                    {role.map(item =>
+                    {this.props.role.map(item =>
                       {
-                        return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>
+                        return <option key={item.id} value={item.id}>{item.display_name}</option>
                       }
                     )}
                   </select>
@@ -141,7 +142,7 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='first_name'
                   ref="first_name"
-                  defaultValue={userInfo.get("first_name")}
+                  defaultValue={userInfo.first_name}
                   />
                 <label className="mdl-textfield__label" htmlFor="first_name">First name *</label>
                 {errors.first_name && <small className="mdl-textfield__error shown">{errors.first_name[0]}</small>}
@@ -154,7 +155,7 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='last_name'
                   ref="last_name"
-                  defaultValue={userInfo.get("last_name")}
+                  defaultValue={userInfo.last_name}
                   />
                 <label className="mdl-textfield__label" htmlFor="last_name">Last name *</label>
                 {errors.last_name && <small className="mdl-textfield__error shown">{errors.last_name[0]}</small>}
@@ -165,12 +166,12 @@ class UserManagementUpdate extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               {
-                userInfo.get('user').get("locked_at")?
+                userInfo.user.locked_at?
                   <button
                     id='btnClientApproval'
                     type='button'
                     className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
-                    onClick={(e) => this.adminUnlock(e, userInfo.get("user").get("id"))}>
+                    onClick={(e) => this.adminUnlock(e)}>
                       <span>Unlock </span>
                       <span className="ion-unlocked icon-con"></span>
                   </button>
@@ -180,18 +181,18 @@ class UserManagementUpdate extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <div className="layout-gt-md-row layout-align-end-end btn">
                 <div className="flex-order-gt-md-2 pd-10">
-                  <Link
+                  <button
                     className="mdl-button mdl-js-button mdl-button--colored"
                     id='btn-cancel'
-                    to="/coffee/account/"
-                    >CANCEL</Link>
+                    onClick={(e) => this.cancel(e)}
+                    >CANCEL</button>
                 </div>
                 <div className="flex-order-gt-md-2">
                   <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     id='btn-save'
                     type='button'
-                    onClick={(e) => this.update(e, userInfo.get("id"))}>UPDATE</button>
+                    onClick={(e) => this.update(e)}>UPDATE</button>
                 </div>
               </div>
             </div>
@@ -216,7 +217,13 @@ class UserManagementUpdate extends React.Component {
       this.refs.checkUser.value = "not-disabled";
     }
   }
-  update ( e, id ) {
+  cancel( e ) {
+    e.preventDefault();
+    this.refs.password.value = "";
+    this.refs.password_confirmation.value = "";
+    this.props.adminProfile();
+  }
+  update ( e ) {
     e.preventDefault();
     this.setState( {
       loading: true,
@@ -226,7 +233,6 @@ class UserManagementUpdate extends React.Component {
     let {username, email_address, password, rep_last_name, password_confirmation, first_name, last_name, role_id} = this.refs;
 
     let payload = {
-      id: id,
       username: username.value,
       email_address: email_address.value,
       password: password.value,
@@ -282,7 +288,7 @@ function validateUpdate ( payload) {
     return rules.run( payload );
 }
 function updateAdmin (payload) {
-  return this.props.adminUserManagementUpdate(payload);
+  return this.props.adminProfileUpdate(payload);
 }
 
 function validateUsername( payload ) {
@@ -299,8 +305,8 @@ function setErrors( e ) {
   this.setState(createError(e));
 }
 
-UserManagementUpdate.mixins = [LinkedStateMixin];
-UserManagementUpdate.defaultProps = {
+UserProfile.mixins = [LinkedStateMixin];
+UserProfile.defaultProps = {
     errors: []
 };
-export default UserManagementUpdate;
+export default UserProfile;

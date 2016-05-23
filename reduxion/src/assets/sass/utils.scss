@@ -33,6 +33,9 @@
 .margin-bottom-10 {
   margin-bottom: 10px !important;
 }
+.margin-right-10 {
+  margin-right: 10px !important;
+}
 
 .margin-top-10 {
   margin-top: 10px !important;
@@ -154,5 +157,49 @@ div#application {
   margin: 0 auto;
   top: 45%;
 }
+.mdl-switch.is-upgraded {
+    width: 110px;
+}
+.layout-align-end-end {
+  text-align: right;
+  padding: 10px;
 
-
+  .flex-order-gt-md-2 {
+    display: inline-block;
+  }
+}
+.mdl-textfield.is-invalid {
+  .mdl-textfield__error {
+    font-size: 12px;
+  }
+}
+.mdl-data-table thead tr {
+  background: #e3ecf5;
+}
+.mdl-data-table thead tr th {
+  font-weight: 700;
+}
+.mdl-data-table tbody tr td {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.mdl-data-table tbody tr.bg-dark {
+  background: #f5fafe;
+}
+.mdl-data-table tbody tr.bg-dark td {
+  border: 0px;
+}
+.mdl-data-table tbody tr.bg-light {
+  background: #fbfeff;
+}
+.mdl-data-table tbody tr.bg-light td {
+ border: 0px;
+}
+.mdl-data-table tbody tr td .btn-view-edit {
+  background: #ff6600;
+  margin-right: 6px;
+}
+.mdl-data-table tbody tr td .btn-delete {
+  background: #ff4a4a;
+}

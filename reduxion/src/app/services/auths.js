@@ -23,6 +23,12 @@ export default {
   logout() {
     return delete('auth/logout');
   },
+  subscriptionList() {
+    return get('subscription');
+  },
+  getSubscriptionItem(id) {
+    return get('subscription/' + id);
+  },
   // ------- ADMIN -------
   getCurrentUser() {
     return get('me');
@@ -135,7 +141,7 @@ export default {
         alt_phone_number: payload.alt_phone_number,
         alt_position: payload.alt_position,
         alt_department: payload.alt_department,
-        callback_url: window.location.origin + "/coffee/forgot"
+        callback_url: window.location.origin + "/i/forgot"
       }
     });
   },
@@ -145,6 +151,22 @@ export default {
     });
   },
   // Admin - User Management
+  adminProfile() {
+    return get('admin/my-profile?with-user=1');
+  },
+  adminProfileUpdate(payload) {
+    return put('admin/my-profile', {
+      params: {
+        username: payload.username,
+        email_address: payload.email_address,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        role_id: payload.role_id,
+        password: payload.password,
+        password_confirmation: payload.password_confirmation
+      }
+    });
+  },
   adminUserManagementList(payload = {page: 1}) {
     return get('admin', {params: payload});
   },
@@ -360,5 +382,16 @@ export default {
   },
   clientDeleteApiKey(id) {
     return del('client/api-key/' + id);
+  },
+  clientSubscription() {
+    return get('client/subscription/current');
+  },
+  clientPurchaseSubscription(payload) {
+    return post('client/subscription', {
+      params: {
+        subscription_id: payload.subscription_id,
+        term: payload.term
+      }
+    });
   }
 };
