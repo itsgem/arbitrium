@@ -267,7 +267,7 @@ class Client extends NrbModel
 
         if ($subscription->isTrial())
         {
-            if (!$this->canAvailFreeTrial($client_id))
+            if (!$this->canAvailFreeTrial())
             {
                 return false;
             }
@@ -288,12 +288,12 @@ class Client extends NrbModel
 
     public function canAvailFreeTrial($client_id = null)
     {
-        $client_id = ($client_id) ? $client_id : $this->client_id;
+        $client_id = ($client_id) ? $client_id : $this->id;
 
         $trial_count = ClientSubscription::clientId($client_id)->type(ClientSubscription::TYPE_TRIAL)->count();
 
-        // Once a free trial is used, even if its valid_from is not yet due or,
-        // the user can no longer avail
+        // Once a free trial is used, even if its valid_to is not yet due,
+        // the user can no longer avail another trial subscription
         if ($trial_count)
         {
             return false;
