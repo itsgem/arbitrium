@@ -23,7 +23,7 @@ class PaypalRequest extends NrbRequest
             $rules = [
                 'subscription_id' => 'required|exists:subscriptions,id,deleted_at,NULL',
                 'term'            => 'in:'.ClientSubscription::TERM_MONTHLY.','.ClientSubscription::TERM_ANNUALLY,
-                //'callback_url'    => 'required'
+                'callback_url'    => 'required'
             ];
         }
 

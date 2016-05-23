@@ -169,9 +169,9 @@ class ClientServices extends NrbServices
 
             $result = $client->purchaseSubscription($subscription_id, current_date_to_string(), $request->get('term'));
 
-            // @TODO: Pay via PayPal
+            // @TODO-Arbitrium: Pay via PayPal
 
-            // @TODO: Send Invoice
+            // @TODO-Arbitrium: Send Invoice
 
             if ($result)
             {

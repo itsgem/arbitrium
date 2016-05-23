@@ -29,4 +29,16 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     Route::get('subscription',                  ['uses' => 'SubscriptionsController@index']);
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);
 
+
+    Route::get('client/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
+    Route::post('client/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
+    Route::get('client/subscription/plan/{plan}',       ['uses' => 'Client\ClientsController@showPlan']);
+
+    Route::get('client/subscription/subscribe',         ['uses' => 'Client\ClientsController@subscribe']);
+    Route::get('client/subscription/confirm',           ['uses' => 'Client\ClientsController@executeAgreement']);
+
+    Route::get('client/subscription/subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);
+    Route::get('client/subscription/confirm-onetime',   ['uses' => 'Client\ClientsController@executeAgreementOneTime']);
+
+    Route::get('client/subscription/{subscription}',    ['uses' => 'Client\ClientsController@showAgreement']);
 });

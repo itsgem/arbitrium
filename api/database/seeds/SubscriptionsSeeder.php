@@ -19,7 +19,7 @@ class SubscriptionsSeeder extends Seeder
         $data = [
             [
                 'name'                    => 'Trial',
-                'description'             => 'Trial',
+                'description'             => 'Trial Package Plan',
                 'type'                    => Subscription::TYPE_TRIAL,
                 'country_id'              => 202,
                 'fee_monthly'             => 0,
@@ -38,7 +38,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Basic',
-                'description'             => 'Basic',
+                'description'             => 'Basic Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 20,
@@ -57,7 +57,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Standard',
-                'description'             => 'Standard',
+                'description'             => 'Standard Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 40,
@@ -76,7 +76,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Business',
-                'description'             => 'Business',
+                'description'             => 'Business Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 60,
@@ -95,7 +95,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'name'                    => 'Premium',
-                'description'             => 'Premium',
+                'description'             => 'Premium Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
                 'country_id'              => 202,
                 'fee_monthly'             => 80,
@@ -117,5 +117,8 @@ class SubscriptionsSeeder extends Seeder
         DB::table('subscriptions')->insert($data);
 
         DB::statement("SET FOREIGN_KEY_CHECKS = 1");
+
+        // @TODO-Arbitrium
+        // Register Subscription Plans to PayPal
     }
 }

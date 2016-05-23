@@ -253,9 +253,10 @@ class ClientsController extends ApiController
         return $service->update($request, get_logged_in_client_id());
     }
 
+    //----- ADMIN
     public function createPlan(PaypalRequest $request, PaypalServices $service)
     {
-        return $service->createPlan($request, auth()->user()->client);
+        return $service->createPlan($request);
     }
 
     public function showPlan($id, PaypalServices $service)
@@ -268,14 +269,16 @@ class ClientsController extends ApiController
         return $service->getPlans($this->request);
     }
 
+    //----- CLIENT
+    // Recurring
     public function subscribe(PaypalRequest $request, PaypalServices $service)
     {
-        return $service->subscribe($request, auth()->user()->client);
+        return $service->subscribe($request);
     }
 
     public function executeAgreement(PaypalRequest $request, PaypalServices $service)
     {
-        return $service->executeAgreement($request, auth()->user()->client);
+        return $service->executeAgreement($request);
     }
 
     public function showAgreement($id, PaypalServices $service)
@@ -283,21 +286,14 @@ class ClientsController extends ApiController
         return $service->showAgreement($id);
     }
 
-    public function payment(PaypalRequest $request, PaypalServices $service)
+    // One-Time
+    public function subscribeOneTime(PaypalRequest $request, PaypalServices $service)
     {
-        if ($request->get('subscription_id')) {
-            return $service->subscribe($request, auth()->user()->client);
-        }
-
-        return $service->paymentOneTime($request, auth()->user()->client);
+        return $service->subscribeOneTime($request);
     }
 
-    public function paymentStatus(PaypalRequest $request, PaypalServices $service)
+    public function executeAgreementOneTime(PaypalRequest $request, PaypalServices $service)
     {
-        if ($request->get('subscription_id')) {
-            return $service->paymentRecurringStatus($request, auth()->user()->client);
-        }
-
-        return $service->paymentOneTimeStatus($request, auth()->user()->client);
+        return $service->executeAgreementOneTime($request);
     }
 }

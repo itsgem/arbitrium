@@ -265,6 +265,8 @@ class Client extends NrbModel
 
         $client_subscription = new ClientSubscription($subscription->toArray());
 
+        $paypal_plan_id = ($term == $client_subscription::TERM_ANNUALLY) ? $subscription->paypal_plan_id_yearly : $subscription->paypal_plan_id_monthly;
+
         if ($subscription->isTrial())
         {
             if (!$this->canAvailFreeTrial())
@@ -272,12 +274,15 @@ class Client extends NrbModel
                 return false;
             }
 
+            $paypal_plan_id = null;
             $term = null;
         }
 
         $client_subscription->subscription_id   = $subscription->id;
         $client_subscription->client_id         = $client_id;
+        $client_subscription->paypal_plan_id    = $paypal_plan_id;
         $client_subscription->country_id        = $subscription->country_id;
+        $client_subscription->description       = $subscription->description;
         $client_subscription->status            = ClientSubscription::STATUS_ACTIVE;
         $client_subscription->term              = $term;
         $client_subscription->setValidity($start_date, $term);
