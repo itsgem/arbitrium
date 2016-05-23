@@ -237,7 +237,7 @@ class SubscriptionPayment extends React.Component {
       subscription_id: this.props.params.id,
       term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly')
     };
-    
+
     if (this.refs.isTerm.checked ) {
       return this.validateTerm.call(this, payload)
         .with(this)
@@ -246,7 +246,7 @@ class SubscriptionPayment extends React.Component {
     } else {
       this.validSubscribe(payload);
     }
-    
+
     //}
   }
   validateTerm(payload) {
