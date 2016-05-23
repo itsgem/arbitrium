@@ -23,39 +23,45 @@ class SubscriptionPayment extends React.Component {
   }
   render () {
     let subscriptionItem = this.props.subscriptionItem.data;
+    let {errors, errorServer} = this.state ? this.state :'';
+    if (errorServer) {
+      errors = Object.assign({}, errorServer.response);
+    }
     return (
       <div className="mdl-cell mdl-cell--12-col">
         <form>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.name} disabled/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Subscription...</label>
+                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.name} readOnly/>
+                <label className="mdl-textfield__label" htmlFor="sample1">Subscription Name</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="currency" value="SGD" disabled/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Currency...</label>
+                <input className="mdl-textfield__input font-input" type="text" id="currency" value="USD" readOnly/>
+                <label className="mdl-textfield__label" htmlFor="sample1">Currency</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-focused is-upgraded full-width">
+              <div className={this.formClassNames('term', errors)}>
                 <select onChange={(e) => this.dateValid()} ref="term" className="mdl-textfield__input">
+                  <option></option>
                   <option>Annually</option>
                   <option>Monthly</option>
                 </select>
                 <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
+                {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" disabled/><label className="mdl-textfield__label" htmlFor="sample1">Valid From...</label>
+                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/><label className="mdl-textfield__label" htmlFor="sample1">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validTo" disabled/> <label className="mdl-textfield__label" htmlFor="sample1">To...</label>
+                <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/> <label className="mdl-textfield__label" htmlFor="sample1">To</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -189,12 +195,19 @@ class SubscriptionPayment extends React.Component {
       </div>
     );
   }
+  formClassNames( field, errors ) {
+    return cx('mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
+      'is-invalid is-dirty': errors[ field ],
+      'has-success': errors && !(errors[ field ])
+    });
+  }
+
   dateValid() {
     let term = this.refs.term ? this.refs.term.value : "Annually";
     let dateToday = new Date();
     let isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
-    let newDate = '';
-    let isTo = '';
+    let newDate = ' ';
+    let isTo = ' ';
     switch (term) {
       case 'Annually':
         newDate = new Date(dateToday.getFullYear() + 1, dateToday.getMonth(), dateToday.getDate() + 29);
@@ -224,8 +237,33 @@ class SubscriptionPayment extends React.Component {
       subscription_id: this.props.params.id,
       term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly')
     };
-    this.props.clientPurchaseSubscription(payload);
+    
+    if (this.refs.isTerm.checked ) {
+      return this.validateTerm.call(this, payload)
+        .with(this)
+        .then(this.validSubscribe)
+        .catch(this.setErrors);
+    } else {
+      this.validSubscribe(payload);
+    }
+    
     //}
+  }
+  validateTerm(payload) {
+    let rules = new Checkit({
+      subscription_id: [],
+      term: [{ rule: 'required', label: 'term of subscription' }]
+    });
+
+    return rules.run(payload);
+  }
+
+  validSubscribe(payload) {
+    this.props.clientPurchaseSubscription(payload);
+  }
+
+  setErrors(e) {
+    this.setState(createError(e));
   }
 };
 
