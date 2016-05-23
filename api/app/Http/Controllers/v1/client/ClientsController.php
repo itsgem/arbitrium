@@ -281,9 +281,24 @@ class ClientsController extends ApiController
         return $service->executeAgreement($request);
     }
 
+    public function getTransactions($id, PaypalServices $service)
+    {
+        return $service->getTransactions($id);
+    }
+
     public function showAgreement($id, PaypalServices $service)
     {
         return $service->showAgreement($id);
+    }
+
+    public function suspendAgreement($id, PaypalServices $service)
+    {
+        return $service->suspendAgreement($id);
+    }
+
+    public function reactivateAgreement($id, PaypalServices $service)
+    {
+        return $service->reactivateAgreement($id);
     }
 
     // One-Time

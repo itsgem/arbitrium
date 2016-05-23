@@ -16,6 +16,7 @@ use App\User;
 
 use Exception;
 use PayPal\Api\Agreement;
+use PayPal\Api\AgreementStateDescriptor;
 use PayPal\Api\Amount;
 use PayPal\Api\Currency;
 use PayPal\Api\ChargeModel;
@@ -288,10 +289,112 @@ class PaypalServices extends NrbServices
         ]);
     }
 
-    public function showAgreement($id)
+    public function getTransactions($id)
     {
+        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
+
+        $params = [
+            'start_date' => date('Y-m-d', strtotime('-15 years')),
+            'end_date'   => date('Y-m-d', strtotime('+5 days'))
+        ];
+
+        try {
+            $result = Agreement::searchTransactions($id, $params, $this->_api_context);
+        } catch (PayPalConnectionException $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'status_code' => $ex->getCode(),
+                'data' => json_decode($ex->getData(), true),
+                'message' => $ex->getMessage(),
+            ]);
+        } catch (Exception $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'data' => $ex->getMessage()
+            ]);
+        }
+
+        return json_decode($result, true);
+    }
+
+    public function showAgreement($id, $return_object = false)
+    {
+        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
+
         try {
             $agreement = Agreement::get($id, $this->_api_context);
+        } catch (PayPalConnectionException $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'status_code' => $ex->getCode(),
+                'data' => json_decode($ex->getData(), true),
+                'message' => $ex->getMessage(),
+            ]);
+        } catch (Exception $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'data' => $ex->getMessage()
+            ]);
+        }
+
+        if ($return_object)
+        {
+            return $agreement;
+        }
+
+        return json_decode($agreement, true);
+    }
+
+    public function suspendAgreement($id)
+    {
+        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
+
+        $createdAgreement = $this->showAgreement($id, true);
+
+        //Create an Agreement State Descriptor, explaining the reason to suspend.
+        $agreementStateDescriptor = new AgreementStateDescriptor();
+        $agreementStateDescriptor->setNote("Suspending the agreement");
+
+        try {
+            $createdAgreement->suspend($agreementStateDescriptor, $this->_api_context);
+            $agreement = Agreement::get($createdAgreement->getId(), $this->_api_context);
+        } catch (PayPalConnectionException $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'status_code' => $ex->getCode(),
+                'data' => json_decode($ex->getData(), true),
+                'message' => $ex->getMessage(),
+            ]);
+        } catch (Exception $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'data' => $ex->getMessage()
+            ]);
+        }
+
+        return json_decode($agreement, true);
+    }
+
+    public function reactivateAgreement($id)
+    {
+        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
+
+        $suspendedAgreement = $this->showAgreement($id, true);
+
+        //Create an Agreement State Descriptor, explaining the reason to suspend.
+        $agreementStateDescriptor = new AgreementStateDescriptor();
+        $agreementStateDescriptor->setNote("Reactivating the agreement");
+
+        try {
+            $suspendedAgreement->reActivate($agreementStateDescriptor, $this->_api_context);
+            $agreement = Agreement::get($suspendedAgreement->getId(), $this->_api_context);
+        } catch (PayPalConnectionException $ex) {
+            return $this->respondWithData([
+                'status' => 'error',
+                'status_code' => $ex->getCode(),
+                'data' => json_decode($ex->getData(), true),
+                'message' => $ex->getMessage(),
+            ]);
         } catch (Exception $ex) {
             return $this->respondWithData([
                 'status' => 'error',

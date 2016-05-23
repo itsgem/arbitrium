@@ -32,13 +32,24 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
 
     Route::get('client/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
     Route::post('client/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
-    Route::get('client/subscription/plan/{plan}',       ['uses' => 'Client\ClientsController@showPlan']);
+    //sRoute::get('admin/client/{client}/subscription/{subscription}/plan', ['uses' => 'Client\ClientsController@showPlan']);
 
-    Route::get('client/subscription/subscribe',         ['uses' => 'Client\ClientsController@subscribe']);
-    Route::get('client/subscription/confirm',           ['uses' => 'Client\ClientsController@executeAgreement']);
+    Route::group(['prefix' => 'client/subscription'], function()
+    {
+        Route::get('plan/{plan}',        ['uses' => 'Client\ClientsController@showPlan']);
 
-    Route::post('client/subscription/subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);
-    Route::get('client/subscription/confirm-onetime',   ['uses' => 'Client\ClientsController@executeAgreementOneTime']);
+        Route::get('subscribe',          ['uses' => 'Client\ClientsController@subscribe']);
+        Route::get('confirm',            ['uses' => 'Client\ClientsController@executeAgreement']);
 
-    Route::get('client/subscription/{subscription}',    ['uses' => 'Client\ClientsController@showAgreement']);
+        Route::post('subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);
+        Route::get('confirm-onetime',    ['uses' => 'Client\ClientsController@executeAgreementOneTime']);
+
+        Route::group(['prefix' => '{subscription}'], function()
+        {
+            Route::get('',             ['uses' => 'Client\ClientsController@showAgreement']);
+            Route::get('transactions', ['uses' => 'Client\ClientsController@getTransactions']);
+            Route::patch('suspend',    ['uses' => 'Client\ClientsController@suspendAgreement']);
+            Route::patch('reactivate', ['uses' => 'Client\ClientsController@reactivateAgreement']);
+        });
+    });
 });
