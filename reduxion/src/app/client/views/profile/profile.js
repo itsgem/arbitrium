@@ -60,22 +60,22 @@ export default React.createClass({
             <p>My Profile</p>
           </div>
           <div className="page-content">
-              <ClientProfile
-                  clientSubscriptionCancel={this.props.clientSubscriptionCancel}
-                  clientInfo={this.props.clientInfo}
-                  countryList={this.props.countryList}
-                  locationQuery={this.props.location.query}
-                  currentSubscription={this.props.currentSubscription}
-                  updateClientProfile={this.props.updateClientProfile}
-                  getAvailableUsername={this.props.getAvailableUsername}
-                  validateCompleted={this.props.validateCompleted}
-                  retrieveEmailChangeToken={this.props.retrieveEmailChangeToken}
-                  isRetrieveEmailChangeTokenSuccess={this.props.isRetrieveEmailChangeTokenSuccess}
-                  emailChangeToken={this.props.emailChangeToken}
-                  verifyEmailChange={this.props.verifyEmailChange}
-                  isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
-                  loading={this.props.loading}
-              />
+            <ClientProfile
+              clientSubscriptionCancel={this.props.clientSubscriptionCancel}
+              clientInfo={this.props.clientInfo}
+              countryList={this.props.countryList}
+              locationQuery={this.props.location.query}
+              currentSubscription={this.props.currentSubscription}
+              updateClientProfile={this.props.updateClientProfile}
+              getAvailableUsername={this.props.getAvailableUsername}
+              validateCompleted={this.props.validateCompleted}
+              retrieveEmailChangeToken={this.props.retrieveEmailChangeToken}
+              isRetrieveEmailChangeTokenSuccess={this.props.isRetrieveEmailChangeTokenSuccess}
+              emailChangeToken={this.props.emailChangeToken}
+              verifyEmailChange={this.props.verifyEmailChange}
+              isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
+              loading={this.props.loading}
+            />
             <div className="mdl-tabs__panel" id="change_password"></div>
             <div className="mdl-tabs__panel" id="change_email"></div>
           </div>
