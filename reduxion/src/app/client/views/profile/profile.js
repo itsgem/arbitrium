@@ -34,7 +34,6 @@ export default React.createClass({
             <p>My Profile</p>
           </div>
           <div className="page-content">
-              <div className="mdl-tabs__panel is-active" id="profile">
                 <ClientProfile
                   user={user}
                   country={countryList}
@@ -55,7 +54,6 @@ export default React.createClass({
                   currentSubscription ={this.props.currentSubscription}
                   clientSubscriptionCancel ={this.props.clientSubscriptionCancel}
                   />
-              </div>
               <div className="mdl-tabs__panel" id="change_password">
               </div>
               <div className="mdl-tabs__panel" id="change_email">

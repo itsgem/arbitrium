@@ -115,6 +115,12 @@ button, select, html, textarea, input, legend {
   .mdl-button--fab.mdl-button--mini-fab {
     margin-left: 6px;
   }
+  .page-content {
+    width: 100%;
+  }
+  .subscription-detail .table-list tbody tr td{
+    padding: 0px;
+  }
 } 
 
 main {

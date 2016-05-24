@@ -130,6 +130,7 @@ class ClientProfile extends React.Component {
 
     return (
       <div>
+      <div className="mdl-tabs__panel is-active" id="profile">
         { this.renderError() }
         <form>
           <legend>Login Information</legend>
@@ -595,7 +596,8 @@ class ClientProfile extends React.Component {
             </button>
           </div>
         </form>
-        {currentSubscription && this.subscriptionPlan(currentSubscription)}
+      </div>
+      {currentSubscription && this.subscriptionPlan(currentSubscription)}
       </div>
     );
   }
@@ -614,16 +616,8 @@ class ClientProfile extends React.Component {
                 <p>{currentSubscription.name}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>START DATE</h6>
-                <p>{currentSubscription.valid_from}</p>
-              </div>
-              <div className="mdl-cell mdl-cell--6-col">
                 <h6>TERMS OF SUBSCRIPTION</h6>
                 <p>{currentSubscription.term}</p>
-              </div>
-              <div className="mdl-cell mdl-cell--6-col">
-                <h6>END DATE</h6>
-                <p>{currentSubscription.valid_to}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col bottom-margin">
                 <h6>AUTO-RENEW</h6>
