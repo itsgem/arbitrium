@@ -16,68 +16,37 @@ export const clientSubscriptionCancel = createActionAsync('CLIENT_CANCEL_SUBSCRI
 
 export const initialState = Immutable.fromJS({
   countryList: {},
-  user: {},
-  isUsernameAvailable: null,
+  clientInfo: {},
+  updateSuccess: false,
+  validateCompleted: false,
+  cancelSubscriptionSuccess: false,
   isRetrieveEmailChangeTokenSuccess: false,
   isVerifyEmailChangeSuccess: false,
-  isProfileSuccess: false,
   emailChangeToken: {},
-  success: {},
   errors: {},
-  loading: false
+  loading: false,
 });
 
 export default createReducer({
-  [countryProfile.ok]: (state, payload) => state.merge({countryList: payload}),
+  [countryProfile.ok]: (state, payload) => state.merge({countryList: payload, cancelSubscriptionSuccess: false}),
+  [countryProfile.request]: (state) => state.merge({updateSuccess: false, cancelSubscriptionSuccess: false}),
   [clientProfile.ok]: (state, payload) => state.merge({
     loading: false,
-    isUsernameAvailable: null,
-    success: {},
-    isProfileSuccess: true,
-    user: state.concat(payload),
+    clientInfo: payload,
+    updateSuccess: false,
+    cancelSubscriptionSuccess: false
   }),
-  [clientProfile.request]: (state, payload) => state.merge({
+  [clientProfile.request]: (state) => state.merge({
     loading: true,
-    isUsernameAvailable: null,
-    success: {},
-    user: {}
+    updateSuccess: false,
+    cancelSubscriptionSuccess: false
   }),
-
-  [updateClientProfile.ok]: (state, payload) => state.merge({
-    loading: false,
-    isUsernameAvailable: null,
-    success: state.concat(payload),
-    isProfileSuccess: true,
+  [updateClientProfile.ok]: (state) => state.merge({
+    updateSuccess: true
   }),
-  [updateClientProfile.request]: (state, payload) => state.merge({
-    loading: true,
-    isUsernameAvailable: null,
-    success: {}
+  [updateClientProfile.request]: (state) => state.merge({
+    updateSuccess: false
   }),
-  [updateClientProfile.error]: (state, payload) => state.merge({
-    loading: false,
-    isUsernameAvailable: null,
-    success: {},
-    errors: state.concat(payload)
-  }),
-
-  [getAvailableUsername.ok]: (state, payload) => state.merge({
-    loading: false,
-    isUsernameAvailable: true,
-    success: {}
-  }),
-  [getAvailableUsername.request]: (state, payload) => state.merge({
-    loading: true,
-    isUsernameAvailable: 'loading',
-    success: {}
-  }),
-  [getAvailableUsername.error]: (state, payload) => state.merge({
-    loading: false,
-    isUsernameAvailable: false,
-    success: {},
-    errors: state.concat(payload)
-  }),
-
   [retrieveEmailChangeToken.ok]: (state, payload) => state.merge({
     loading: false,
     isRetrieveEmailChangeTokenSuccess: true,
@@ -102,12 +71,9 @@ export default createReducer({
     loading: false,
     errors: state.concat(payload)
   }),
-  [clientSubscriptionCancel.ok]: (state, payload) => state.merge({
-    loading: false,
-    success: payload
-  }),
-  [clientSubscriptionCancel.request]: (state) => state.merge({
-    loading: true,
-    success: {}
-  })
+  [getAvailableUsername.ok]: (state) => state.merge({ validateCompleted: true, loading: false }),
+  [getAvailableUsername.request]: (state) => state.merge({ validateCompleted: false, loading: true }),
+  [getAvailableUsername.error]: (state) => state.merge({ validateCompleted: 'error', loading: false }),
+  [clientSubscriptionCancel.ok]: (state) => state.merge({ loading: false, cancelSubscriptionSuccess: true }),
+  [clientSubscriptionCancel.request]: (state) => state.merge({ loading: true, cancelSubscriptionSuccess: false })
 }, initialState);
