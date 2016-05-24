@@ -122,7 +122,7 @@ class ApiList extends React.Component {
       <div className="filter-search">
         <div className="mdl-grid">
           <div className="mdl-cell">
-            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--accent">New API Key</Link>
+            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">New API Key</Link>
           </div>
         </div>
         <div className="dialog-box"></div>
