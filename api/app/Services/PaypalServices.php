@@ -218,19 +218,30 @@ class PaypalServices extends NrbServices
         return json_decode($planList, true);
     }
 
-    public function subscribe($request)
+    public function subscribe($request, $client)
     {
-        //$client_id = $client->id;
-
         $data = [];
-        $data['term'] = ($request->get('term')) ? $request->get('term') : ClientSubscription::TERM_MONTHLY;
 
-        $subscription        = Subscription::findOrFail($request->get('subscription_id'));
+        $data['subscription_id'] = $request->get('subscription_id');
+        $data['term']            = $request->get('term');
+        $data['is_auto_renew']   = $request->get('is_auto_renew');
+
+        $subscription        = Subscription::findOrFail($data['subscription_id']);
         $data['name']        = $subscription->name;
         $data['description'] = $subscription->description;
-        $data['plan_id']     = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? $subscription->paypal_plan_id_yearly : $subscription->paypal_plan_id_monthly;
 
-        $start_date = current_datetime_iso8601(1);
+        if ($data['term'] == ClientSubscription::TERM_ANNUALLY)
+        {
+            $data['plan_id'] = $subscription->paypal_plan_id_yearly;
+            $start_date_offset = "365";
+        }
+        else
+        {
+            $data['plan_id'] = $subscription->paypal_plan_id_monthly;
+            $start_date_offset = "30";
+        }
+
+        $start_date = current_datetime_iso8601($start_date_offset);
 
         //SubscribeCustomer
         $agreement = new Agreement();
@@ -247,24 +258,43 @@ class PaypalServices extends NrbServices
         $payer->setPaymentMethod('paypal');
         $agreement->setPayer($payer);
 
-        try {
-            $agreement = $agreement->create($this->_api_context);
-            $approvalUrl = $agreement->getApprovalLink();
-        } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
-        } catch (Exception $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
-            ]);
+        $approvalUrl = null;
+
+        if (!$subscription->isTrial())
+        {
+            try {
+                $agreement = $agreement->create($this->_api_context);
+                $approvalUrl = $agreement->getApprovalLink();
+            } catch (PayPalConnectionException $ex) {
+                return $this->respondWithData([
+                    'status'      => 'error',
+                    'status_code' => $ex->getCode(),
+                    'data'        => json_decode($ex->getData(), true),
+                    'message'     => $ex->getMessage(),
+                ]);
+            } catch (Exception $ex) {
+                return $this->respondWithData([
+                    'status' => 'error',
+                    'data'   => $ex->getMessage()
+                ]);
+            }
         }
 
-        return $this->respondWithSuccess([
+        $result = DB::transaction(function () use ($client, $data, $approvalUrl)
+        {
+            $data['token'] = ($approvalUrl) ? get_str_url_query_params($approvalUrl, 'token') : null;
+            $result = $client->tempSubscription($data['subscription_id'], current_date_to_string(), $data);
+
+            return $result;
+        });
+
+        if (!$result)
+        {
+            return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
+        }
+
+        return $this->respondWithData([
+            'status'       => 'success',
             'approval_url' => $approvalUrl
         ]);
     }
@@ -284,13 +314,16 @@ class PaypalServices extends NrbServices
 
             $agreement_id = $agreement->getId();
 
-            DB::transaction(function () use ($agreement_id)
+            DB::transaction(function () use ($agreement_id, $token)
             {
-                //ClientSubscription::findOrFail(999000042)->update(['paypal_profile_id' => $agreement_id]);
+                ClientSubscription::paypalTokenId($token)->update([
+                    'paypal_agreement_id' => $agreement_id
+                ]);
             });
 
-            return $this->respondWithSuccess([
-                'profile_id' => $agreement_id
+            return $this->respondWithData([
+                'status'     => 'success',
+                'agreement_id' => $agreement_id
             ]);
         }
 
@@ -383,7 +416,10 @@ class PaypalServices extends NrbServices
             ]);
         }
 
-        return json_decode($agreement, true);
+        return $this->respondWithData([
+            'status' => 'success',
+            'data' => json_decode($agreement, true)
+        ]);
     }
 
     public function reactivateAgreement($id)

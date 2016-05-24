@@ -24,26 +24,6 @@ class ClientServices extends NrbServices
         });
     }
 
-    // Admin\ClientsController::cancelSubscription
-    // Client\ClientsController::cancelSubscription
-    public function cancelSubscription($client)
-    {
-        if (!($client instanceof Client))
-        {
-            $client = Client::findOrFail($client);
-        }
-
-        return DB::transaction(function () use ($client)
-        {
-            if ($client->latest_subscription)
-            {
-                $client->latest_subscription->cancel();
-            }
-
-            return $this->respondWithSuccess();
-        });
-    }
-
     // Admin\ClientsController::destroy
     public function destroy($id)
     {
@@ -57,67 +37,6 @@ class ClientServices extends NrbServices
             }
             return $this->respondWithError(Errors::CANNOT_DELETE, ['str_replace' => ['model' => 'client']]);
         });
-    }
-
-    // Admin\ClientsController::getSubscription
-    // Client\ClientsController::getSubscription
-    public function getSubscription($request, $client_id = null)
-    {
-        // If user is client
-        if ($client_id)
-        {
-            $current_subscription = Client::findOrFail($client_id)->subscription;
-            return $this->respondWithSuccess($current_subscription);
-        }
-
-        $current_subscription = ClientSubscription::clientId($request->get('client_id'))
-            ->current()
-            ->with(['client.user' => function($query){
-                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-            }])
-            ->subscriptionId($request->get('subscription_id'))
-            ->name($request->get('name'))
-            ->type($request->get('type'))
-            ->companyName($request->get('company_name'))
-            ->validFrom($request->get('valid_from'))
-            ->validTo($request->get('valid_to'))
-            ->dateFrom('valid_from', $request->get('valid_range_from'))
-            ->dateTo('valid_to', $request->get('valid_range_to'))
-            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
-            ->paginate($request->get('per_page'));
-
-        return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
-    }
-
-    // Admin\ClientsController::getSubscriptionHistory
-    // Client\ClientsController::getSubscriptionHistory
-    public function getSubscriptionHistory($request, $client_id = null)
-    {
-        $subscriptions = new ClientSubscription;
-
-        // If non-client
-        if (!$client_id)
-        {
-            $subscriptions = $subscriptions->with(['client.user' => function($query){
-                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-            }]);
-
-            $client_id = $request->get('client_id', '');
-        }
-
-        $subscriptions = $subscriptions->clientId($client_id)
-            ->subscriptionId($request->get('subscription_id'))
-            ->name($request->get('name'))
-            ->type($request->get('type'))
-            ->companyName($request->get('company_name'))
-            ->validFrom($request->get('valid_from'))
-            ->validTo($request->get('valid_to'))
-            ->dateFrom('valid_from', $request->get('valid_range_from'))
-            ->dateTo('valid_to', $request->get('valid_range_to'))
-            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
-            ->paginate($request->get('per_page'));
-
-        return $this->respondWithData($subscriptions, $request->get('max_pagination_links'));
     }
 
     // Admin\ClientsController::index
@@ -138,48 +57,6 @@ class ClientServices extends NrbServices
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );
-    }
-
-    // Admin\ClientsController::purchaseSubscription
-    // Client\ClientsController::purchaseSubscription
-    public function purchaseSubscription($request, $client, $is_renew = false)
-    {
-        if (!($client instanceof Client))
-        {
-            $client = Client::findOrFail($client);
-        }
-
-        return DB::transaction(function () use ($request, $client, $is_renew)
-        {
-            // Subscribe
-            $subscription_id = $request->get('subscription_id');
-
-            // if client has subscribed before
-            if ($client->latest_subscription)
-            {
-                if ($is_renew || $client->latest_subscription->subscription_id == $subscription_id)
-                {
-                    $client->latest_subscription->renew();
-                }
-                else
-                {
-                    $client->latest_subscription->upgrade();
-                }
-            }
-
-            $result = $client->purchaseSubscription($subscription_id, current_date_to_string(), $request->get('term'));
-
-            // @TODO-Arbitrium: Pay via PayPal
-
-            // @TODO-Arbitrium: Send Invoice
-
-            if ($result)
-            {
-                return $this->respondWithSuccess($result);
-            }
-
-            return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
-        });
     }
 
     // UsersController::registerClient
@@ -245,6 +122,152 @@ class ClientServices extends NrbServices
                 $client->user()->update($request->only('username', 'items_per_page', 'timezone'));
             }
             return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
+        });
+    }
+
+    //----- SUBSCRIPTIONS
+
+    // Client\ClientsController::subscribe
+    public function subscribe($request, $client)
+    {
+        if (!($client instanceof Client))
+        {
+            $client = Client::findOrFail($client);
+        }
+
+        $paypal = new PaypalServices();
+        $result = $paypal->subscribe($request, $client)->getData();
+
+        return $this->respondWithData($result);
+    }
+
+    // Admin\ClientsController::changeSubscription
+    // Client\ClientsController::subscribeConfirm
+    public function subscribeConfirm($request)
+    {
+        $paypal = new PaypalServices();
+        $result = $paypal->executeAgreement($request)->getData();
+
+        if ($result->status == 'error')
+        {
+            return $this->respondWithData($result);
+        }
+
+        $client_subscription = ClientSubscription::paypalAgreementId($result->agreement_id)->first();
+        $client = Client::findOrFail($client_subscription->client_id);
+
+        $subscription_id = $client_subscription->subscription_id;
+
+        // if client has subscribed before
+        if ($latest_subscription = $client->latest_subscription)
+        {
+            // Suspend last agreement
+            $paypal = new PaypalServices();
+            $result = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
+
+            if ($latest_subscription->subscription_id == $subscription_id)
+            {
+                $latest_subscription->renew();
+            }
+            else
+            {
+                $latest_subscription->upgrade();
+            }
+        }
+
+        return DB::transaction(function () use ($client_subscription, $client)
+        {
+            $result = $client->finalizeSubscription($client_subscription, current_date_to_string());
+
+            if ($result)
+            {
+                return $this->respondWithSuccess($result);
+            }
+
+            return $this->respondWithData([
+                'status' => 'error'
+            ]);
+        });
+    }
+
+    // Admin\ClientsController::getSubscriptionHistory
+    // Client\ClientsController::getSubscriptionHistory
+    public function getSubscriptionHistory($request, $client_id = null)
+    {
+        $subscriptions = new ClientSubscription;
+
+        // If non-client
+        if (!$client_id)
+        {
+            $subscriptions = $subscriptions->with(['client.user' => function($query){
+                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+            }]);
+
+            $client_id = $request->get('client_id', '');
+        }
+
+        $subscriptions = $subscriptions->clientId($client_id)
+            ->subscriptionId($request->get('subscription_id'))
+            ->name($request->get('name'))
+            ->type($request->get('type'))
+            ->companyName($request->get('company_name'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($subscriptions, $request->get('max_pagination_links'));
+    }
+
+    // Admin\ClientsController::getSubscription
+    // Client\ClientsController::getSubscription
+    public function getSubscription($request, $client_id = null)
+    {
+        // If user is client
+        if ($client_id)
+        {
+            $current_subscription = Client::findOrFail($client_id)->subscription;
+            return $this->respondWithSuccess($current_subscription);
+        }
+
+        $current_subscription = ClientSubscription::clientId($request->get('client_id'))
+            ->current()
+            ->with(['client.user' => function($query){
+                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+            }])
+            ->subscriptionId($request->get('subscription_id'))
+            ->name($request->get('name'))
+            ->type($request->get('type'))
+            ->companyName($request->get('company_name'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
+    }
+
+    // Admin\ClientsController::cancelSubscription
+    // Client\ClientsController::cancelSubscription
+    public function cancelSubscription($client)
+    {
+        if (!($client instanceof Client))
+        {
+            $client = Client::findOrFail($client);
+        }
+
+        return DB::transaction(function () use ($client)
+        {
+            if ($client->latest_subscription)
+            {
+                $client->latest_subscription->cancel();
+            }
+
+            return $this->respondWithSuccess();
         });
     }
 }

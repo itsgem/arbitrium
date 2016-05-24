@@ -22,7 +22,7 @@ class ClientSubscription extends Subscription
     protected $dates = ['valid_from', 'valid_to'];
 
     protected $fillable = [
-        'paypal_plan_id', 'paypal_profile_id', 'paypal_payment_id', 'paypal_payer_id',
+        'paypal_plan_id', 'paypal_agreement_id', 'paypal_payment_id', 'paypal_payer_id', 'paypal_token_id',
         'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
@@ -71,6 +71,30 @@ class ClientSubscription extends Subscription
         }
     }
 
+    public function scopePaypalPlanId($query, $paypal_plan_id)
+    {
+        if ($paypal_plan_id)
+        {
+            return $query->where('paypal_plan_id', $paypal_plan_id);
+        }
+    }
+
+    public function scopePaypalAgreementId($query, $paypal_agreement_id)
+    {
+        if ($paypal_agreement_id)
+        {
+            return $query->where('paypal_agreement_id', $paypal_agreement_id);
+        }
+    }
+
+    public function scopePaypalTokenId($query, $paypal_token_id)
+    {
+        if ($paypal_token_id)
+        {
+            return $query->where('paypal_token_id', $paypal_token_id);
+        }
+    }
+
     public function scopeName($query, $name)
     {
         if ($name)
@@ -84,6 +108,22 @@ class ClientSubscription extends Subscription
         if ($type)
         {
             return $query->where('type', $type);
+        }
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        if ($status)
+        {
+            return $query->where('status', $status);
+        }
+    }
+
+    public function scopeActive($query, $is_active = self::STATUS_ACTIVE)
+    {
+        if ($is_active)
+        {
+            return $query->where('status', $is_active);
         }
     }
 

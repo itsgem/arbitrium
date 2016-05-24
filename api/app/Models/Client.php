@@ -170,7 +170,7 @@ class Client extends NrbModel
 
     public function latest_subscription()
     {
-        return $this->hasOne(ClientSubscription::class)->latest();
+        return $this->hasOne(ClientSubscription::class)->active()->latest();
     }
 
     public function subscriptions()
@@ -253,19 +253,24 @@ class Client extends NrbModel
         return $this->approval_status == self::PENDING;
     }
 
-    public function purchaseSubscription($subscription, $start_date, $term)
+    public function tempSubscription($subscription, $start_date, $data)
     {
-        $client_subscription = NULL;
         if (!($subscription instanceof Subscription))
         {
             $subscription = Subscription::findOrFail($subscription);
         }
 
-        $client_id = $this->id;
-
         $client_subscription = new ClientSubscription($subscription->toArray());
 
-        $paypal_plan_id = ($term == $client_subscription::TERM_ANNUALLY) ? $subscription->paypal_plan_id_yearly : $subscription->paypal_plan_id_monthly;
+        $data['paypal_plan_id'] = ($data['term'] == $client_subscription::TERM_ANNUALLY) ? $subscription->paypal_plan_id_yearly : $subscription->paypal_plan_id_monthly;
+
+        $client_subscription->subscription_id   = $subscription->id;
+        $client_subscription->client_id         = $this->id;
+        $client_subscription->paypal_token_id   = $data['token'];
+        $client_subscription->country_id        = $subscription->country_id;
+        $client_subscription->description       = $subscription->description;
+        $client_subscription->status            = ClientSubscription::STATUS_INACTIVE;
+        $client_subscription->status_end        = null;
 
         if ($subscription->isTrial())
         {
@@ -274,18 +279,32 @@ class Client extends NrbModel
                 return false;
             }
 
-            $paypal_plan_id = null;
-            $term = null;
+            $data['paypal_plan_id'] = null;
+            $data['term']           = null;
+            $data['is_auto_renew']  = false;
+
+            $client_subscription->status        = ClientSubscription::STATUS_ACTIVE;
+            $client_subscription->setValidity($start_date);
         }
 
-        $client_subscription->subscription_id   = $subscription->id;
-        $client_subscription->client_id         = $client_id;
-        $client_subscription->paypal_plan_id    = $paypal_plan_id;
-        $client_subscription->country_id        = $subscription->country_id;
-        $client_subscription->description       = $subscription->description;
-        $client_subscription->status            = ClientSubscription::STATUS_ACTIVE;
-        $client_subscription->term              = $term;
-        $client_subscription->setValidity($start_date, $term);
+        $client_subscription->paypal_plan_id    = $data['paypal_plan_id'];
+        $client_subscription->term              = $data['term'];
+        $client_subscription->is_auto_renew     = $data['is_auto_renew'];
+
+        $client_subscription->save();
+
+        return $client_subscription;
+    }
+
+    public function finalizeSubscription($client_subscription, $start_date)
+    {
+        if (!($client_subscription instanceof ClientSubscription))
+        {
+            $client_subscription = ClientSubscription::findOrFail($client_subscription);
+        }
+
+        $client_subscription->status = ClientSubscription::STATUS_ACTIVE;
+        $client_subscription->setValidity($start_date, $client_subscription->term);
         $client_subscription->save();
 
         return $client_subscription;

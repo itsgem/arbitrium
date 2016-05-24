@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1\Client;
 
 use App\Http\Requests\v1\Client\SubscriptionRequest;
+use App\Http\Requests\v1\Client\SubscriptionConfirmRequest;
 use App\Http\Requests\v1\ClientUserRequest;
 use App\Http\Requests\v1\PaypalRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
@@ -29,25 +30,18 @@ class ClientsController extends ApiController
     }
 
     /**
-     * Cancel Client Subscription
+     * Get authenticated client profile
      *
-     * @SWG\Patch(
-     *     path="/client/subscription/cancel",
-     *     tags={"Client - Client Subscription"},
-     *     summary="Cancel Subscription",
-     *     description="Cancel Client Subscription.",
+     * @SWG\Get(
+     *     path="/client/profile",
+     *     tags={"Clients"},
+     *     summary="My Profile",
+     *     description="Get authenticated client profile",
      *     @SWG\Response(response="200", description="Success",
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", description="Data")
-     *         )
-     *     ),
-     *     @SWG\Response(response="403", description="Authentication Failed",
-     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
-     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
-     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
-     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *             @SWG\Property(property="data", description="Data", ref="#/definitions/ClientProfileResponse")
      *         )
      *     ),
      *     @SWG\Parameter(
@@ -64,10 +58,17 @@ class ClientsController extends ApiController
      *
      * @return mixed
      */
-    public function cancelSubscription(ClientServices $service)
+    public function show(ClientServices $service)
     {
-        return $service->cancelSubscription(auth()->user()->client);
+        return $service->show($this->request, get_logged_in_client_id());
     }
+
+    public function update(ClientUserRequest $request, ClientServices $service)
+    {
+        return $service->update($request, get_logged_in_client_id());
+    }
+
+    //----- SUBSCRIPTIONS
 
     /**
      * Get current client subscription details
@@ -209,24 +210,36 @@ class ClientsController extends ApiController
      *
      * @return mixed
      */
-    public function purchaseSubscription(SubscriptionRequest $request, ClientServices $service)
+    public function subscribe(SubscriptionRequest $request, ClientServices $service)
     {
-        return $service->purchaseSubscription($request, auth()->user()->client);
+        return $service->subscribe($request, auth()->user()->client);
+    }
+
+    public function subscribeConfirm(SubscriptionConfirmRequest $request, ClientServices $service)
+    {
+        return $service->subscribeConfirm($request);
     }
 
     /**
-     * Get authenticated client profile
+     * Cancel Client Subscription
      *
-     * @SWG\Get(
-     *     path="/client/profile",
-     *     tags={"Clients"},
-     *     summary="My Profile",
-     *     description="Get authenticated client profile",
+     * @SWG\Patch(
+     *     path="/client/subscription/cancel",
+     *     tags={"Client - Client Subscription"},
+     *     summary="Cancel Subscription",
+     *     description="Cancel Client Subscription.",
      *     @SWG\Response(response="200", description="Success",
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", description="Data", ref="#/definitions/ClientProfileResponse")
+     *             @SWG\Property(property="data", description="Data")
+     *         )
+     *     ),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
      *         )
      *     ),
      *     @SWG\Parameter(
@@ -243,14 +256,9 @@ class ClientsController extends ApiController
      *
      * @return mixed
      */
-    public function show(ClientServices $service)
+    public function cancelSubscription(ClientServices $service)
     {
-        return $service->show($this->request, get_logged_in_client_id());
-    }
-
-    public function update(ClientUserRequest $request, ClientServices $service)
-    {
-        return $service->update($request, get_logged_in_client_id());
+        return $service->cancelSubscription(auth()->user()->client);
     }
 
     //----- ADMIN
@@ -271,10 +279,10 @@ class ClientsController extends ApiController
 
     //----- CLIENT
     // Recurring
-    public function subscribe(PaypalRequest $request, PaypalServices $service)
-    {
-        return $service->subscribe($request);
-    }
+//    public function subscribe(PaypalRequest $request, PaypalServices $service)
+//    {
+//        return $service->subscribe($request);
+//    }
 
     public function executeAgreement(PaypalRequest $request, PaypalServices $service)
     {
