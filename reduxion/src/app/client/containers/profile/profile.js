@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import {countryProfile,
+import {
+  countryProfile,
   clientProfile,
   updateClientProfile,
   getAvailableUsername,
@@ -19,16 +20,16 @@ const mapStateToProps = (state) => {
 
   return {
     countryList: strMapToObj(state.get('clientProfile').get('countryList')),
-    user: state.get('clientProfile').get('user'),
-    isUsernameAvailable: state.get('clientProfile').get('isUsernameAvailable'),
     isRetrieveEmailChangeTokenSuccess: state.get('clientProfile').get('isRetrieveEmailChangeTokenSuccess'),
     isVerifyEmailChangeSuccess: state.get('clientProfile').get('isVerifyEmailChangeSuccess'),
     emailChangeToken: state.get('clientProfile').get('emailChangeToken'),
-    loading: state.get('clientProfile').get('loading'),
-    success: strMapToObj(state.get('clientProfile').get('success')),
-    isProfileSuccess: state.get('clientProfile').get('isProfileSuccess'),
     currentSubscription: strMapToObj(state.get('AdminSubscription').get('currentSubscription')),
-    errors: state.get('clientProfile').get('errors')
+    cancelSubscriptionSuccess: strMapToObj(state.get('clientProfile').get('cancelSubscriptionSuccess')),
+    clientInfo: strMapToObj(state.get('clientProfile').get('clientInfo')),
+    updateSuccess: strMapToObj(state.get('clientProfile').get('updateSuccess')),
+    validateCompleted: strMapToObj(state.get('clientProfile').get('validateCompleted')),
+    errors: state.get('clientProfile').get('errors'),
+    loading: state.get('clientProfile').get('loading')
   };
 }
 

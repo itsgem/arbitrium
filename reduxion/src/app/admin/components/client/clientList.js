@@ -20,14 +20,14 @@ class UserManagementList extends React.Component {
   userDisplay (data, alter) {
     return (
        <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-          <td className="mdl-data-table__cell--non-numeric" width="112">{data.id}</td>
-          <td className="mdl-data-table__cell--non-numeric" width="114">{data.company_name}</td>
-          <td className="mdl-data-table__cell--non-numeric" width="248">{data.rep_last_name}, {data.rep_first_name} </td>
-          <td className="mdl-data-table__cell--non-numeric" width="195">{data.user.email_address}</td>
-          <td className="mdl-data-table__cell--non-numeric" width="139">{data.rep_phone_code} {data.rep_phone_number}</td>
-          <td className="mdl-data-table__cell--non-numeric" width="113">{data.rep_mobile_code} {data.rep_mobile_number}</td>
-          <td className="mdl-data-table__cell--non-numeric" width="103">{data.approval_status}</td>
-          <td className="mdl-data-table__cell--non-numeric" width="135">
+          <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.company_name}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_last_name}, {data.rep_first_name} </td>
+          <td className="mdl-data-table__cell--non-numeric">{data.user.email_address}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_phone_code} {data.rep_phone_number}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.rep_mobile_code} {data.rep_mobile_number}</td>
+          <td className="mdl-data-table__cell--non-numeric">{data.approval_status}</td>
+          <td className="mdl-data-table__cell--non-numeric">
             <Link
             className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
             to={"/coffee/client/" + data.id}><i className="material-icons">open_in_new</i></Link>
@@ -169,14 +169,14 @@ class UserManagementList extends React.Component {
           <table className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th className="mdl-data-table__cell--non-numeric">ID</th>
-                <th className="mdl-data-table__cell--non-numeric">Company Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Email Address</th>
-                <th className="mdl-data-table__cell--non-numeric">Phone Number</th>
-                <th className="mdl-data-table__cell--non-numeric">Mobile No.</th>
-                <th className="mdl-data-table__cell--non-numeric">Status</th>
-                <th className="mdl-data-table__cell--non-numeric">Action</th>
+                <th className="mdl-data-table__cell--non-numeric" width="112">ID</th>
+                <th className="mdl-data-table__cell--non-numeric" width="114">Company Name</th>
+                <th className="mdl-data-table__cell--non-numeric" width="248">Representative Name</th>
+                <th className="mdl-data-table__cell--non-numeric" width="195">Email Address</th>
+                <th className="mdl-data-table__cell--non-numeric" width="139">Phone Number</th>
+                <th className="mdl-data-table__cell--non-numeric" width="139">Mobile No.</th>
+                <th className="mdl-data-table__cell--non-numeric" width="103">Status</th>
+                <th className="mdl-data-table__cell--non-numeric" width="135">Action</th>
               </tr>
             </thead>
             <tbody>

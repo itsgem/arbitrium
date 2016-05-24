@@ -218,8 +218,7 @@ class ApiList extends React.Component {
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalConfirm (e, id, company) {
     openModal();

@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
   loading: state.get('AdminSubscription').get('loading'),
   listSubscription: strMapToObj(state.get('AdminSubscription').get('listSubscription')),
   currentSubscription: strMapToObj(state.get('AdminSubscription').get('currentSubscription')),
-  user: strMapToObj(state.get('clientProfile').get('user'))
+  user: strMapToObj(state.get('clientProfile').get('clientInfo'))
 });
 
 export default connect((mapStateToProps), {
