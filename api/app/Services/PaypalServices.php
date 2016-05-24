@@ -2,18 +2,13 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
-use DB;
-use DateTime;
-use DateTimeZone;
-
 use App\Errors;
 use App\Models\Client;
 use App\Models\ClientSubscription;
 use App\Models\Subscription;
 use App\Nrb\NrbServices;
 use App\User;
-
+use DB;
 use Exception;
 use PayPal\Api\Agreement;
 use PayPal\Api\AgreementStateDescriptor;
@@ -53,18 +48,34 @@ class PaypalServices extends NrbServices
 
     //----- Recurring
 
+    // ClientsController
+    // SubscriptionSeeder
     public function createPlan($request)
     {
-        $data = [];
-        $data['term']        = ($request->get('term')) ? $request->get('term') : ClientSubscription::TERM_MONTHLY;
+        // if accessed by PaypalServices instance
+        if (is_array($request))
+        {
+            $term            = $request['term'];
+            $subscription_id = $request['subscription_id'];
+            $callback_url    = $request['callback_url'];
+        }
+        else
+        {
+            $term            = $request->get('term');
+            $subscription_id = $request->get('subscription_id');
+            $callback_url    = $request->get('callback_url');
+        }
 
-        $subscription        = Subscription::findOrFail($request->get('subscription_id'));
+        $data = [];
+        $data['term']        = ($term) ? $term : ClientSubscription::TERM_MONTHLY;
+
+        $subscription        = Subscription::findOrFail($subscription_id);
         $data['name']        = $subscription->name;
         $data['description'] = (string) $subscription->description.' ('.$data['term'].')';
         $data['currency']    = $subscription->currency;
         $data['price']       = $subscription->total[$data['term']];
-        $data['setup_fee']   = $subscription->fee_initial_setup;
-        $data['callback']    = $request->get('callback_url');
+        $data['initial_payment'] = $subscription->total[$data['term'].'_With_Setup'];
+        $data['callback']    = $callback_url;
 
         //----- Create Plan
 
@@ -92,7 +103,7 @@ class PaypalServices extends NrbServices
             ->setAutoBillAmount("yes")
             ->setInitialFailAmountAction("CONTINUE")
             ->setMaxFailAttempts(3)
-            ->setSetupFee(new Currency(['value' => $data['setup_fee'], 'currency' => $data['currency']]));
+            ->setSetupFee(new Currency(['value' => $data['initial_payment'], 'currency' => $data['currency']]));
 
         $plan->setPaymentDefinitions([$paymentDefinition]);
         $plan->setMerchantPreferences($merchantPreferences);

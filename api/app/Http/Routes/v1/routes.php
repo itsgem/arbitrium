@@ -32,7 +32,7 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
 
     Route::get('client/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
     Route::post('client/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
-    //sRoute::get('admin/client/{client}/subscription/{subscription}/plan', ['uses' => 'Client\ClientsController@showPlan']);
+    //Route::get('admin/client/{client}/subscription/{subscription}/plan', ['uses' => 'Client\ClientsController@showPlan']);
 
     Route::group(['prefix' => 'client/subscription'], function()
     {

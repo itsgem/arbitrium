@@ -5,6 +5,10 @@ return [
     'secret'    => env('PAYPAL_SECRET', 'EFnC-noUR6uD90U16a5wKZzOGuuJfWijueknjRFUSvYpImh_G_Sir-ipWLDIT7F8q9rR7Tmb9nyM3oXN'),
     'currency' => env('PAYPAL_CURRENCY', 'USD'),
 
+    'callback_urls' => [
+        'subscriptions' => 'http://dev.w3.arbitriumgroup.com/i/subscription'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | SDK configuration

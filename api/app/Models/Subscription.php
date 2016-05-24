@@ -209,6 +209,7 @@ class Subscription extends NrbModel
             $this->fee_monthly,
             $this->fee_monthly_maintenance
         ]);
+
         $annually = array_sum([
             $this->fee_yearly,
             $this->fee_yearly_license,
