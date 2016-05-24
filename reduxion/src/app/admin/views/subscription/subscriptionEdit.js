@@ -30,7 +30,7 @@ export default React.createClass( {
           <Link
             className='mdl-layout__tab'
             to="/coffee/subscription/">Subscriptions List</Link>
-          <a className="mdl-layout__tab is-active" >VIEW SUBSCRIPTIONS<i className="material-icons add">edit</i></a>
+          <a className="mdl-layout__tab is-active" >SUBSCRIPTION DETAIL<i className="material-icons add">edit</i></a>
         </div>
         <SubscriptionEdit
           allSubscriptions={this.props.subscriptions}

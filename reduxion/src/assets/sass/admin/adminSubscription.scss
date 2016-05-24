@@ -45,6 +45,20 @@
       }
     }
   }
+
+  .mdl-data-table {
+    th {
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+  }
+
+  .mdl-button {
+    padding: 0 13px;
+  }
 }
 
 .arb-demo{
