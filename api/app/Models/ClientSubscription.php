@@ -21,6 +21,8 @@ class ClientSubscription extends Subscription
 
     protected $dates = ['valid_from', 'valid_to'];
 
+    protected $appends = ['total', 'currency'];
+
     //---------- relationships
     public function client()
     {
@@ -131,22 +133,6 @@ class ClientSubscription extends Subscription
         $this->status = self::STATUS_INACTIVE;
         $this->status_end = self::STATUS_END_UPGRADED;
         $this->save();
-    }
-
-    public function canAvailFreeTrial($client_id = null)
-    {
-        $client_id = ($client_id) ? $client_id : $this->client_id;
-
-        $trial_count = self::clientId($client_id)->type(self::TYPE_TRIAL)->count();
-
-        // Once a free trial is used, even if its valid_from is not yet due or,
-        // the user can no longer avail
-        if ($trial_count)
-        {
-            return false;
-        }
-
-        return true;
     }
 
     public function generateInvoice()

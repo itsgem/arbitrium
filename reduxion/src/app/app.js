@@ -50,6 +50,10 @@ function App() {
     });
   };
   function render() {
+    let link = window.location.href.split("/");
+    if (!link[3]) {
+      window.location = window.location.origin + '/i';
+    }
     debug("render");
     let mountEl = document.getElementById('application');
     ReactDOM.render(

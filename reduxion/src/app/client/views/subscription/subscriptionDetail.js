@@ -8,6 +8,7 @@ export default React.createClass({
   componentDidMount () {
     this.props.subscriptionList().catch(createError);
     this.props.clientSubscription().catch(createError);
+    this.props.clientProfile().catch(createError);
   },
   componentWillMount () {
   if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -21,7 +22,7 @@ export default React.createClass({
     );
   },
   render() {
-    if (Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length) {
+    if (Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length && Object.keys(this.props.user).length) {
       closeLoading();
       return this.renderSubscriptionDetail();
     } else {
@@ -38,6 +39,7 @@ export default React.createClass({
           <SubscriptionDetail
             listSubscription={this.props.listSubscription}
             currentSubscription={this.props.currentSubscription}
+            clientInfo={this.props.user}
           />
         </div>
       </main>

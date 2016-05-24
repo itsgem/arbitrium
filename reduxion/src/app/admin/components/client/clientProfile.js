@@ -16,8 +16,8 @@ class ClientProfile extends React.Component {
       errorServer:null,
       client: null,
       updateCompleted: false,
-      addClass: null
-
+      addClass: null,
+      subscriptionCancel: false
     };
   }
   componentDidMount() {
@@ -84,6 +84,7 @@ class ClientProfile extends React.Component {
     }
 
     let client = this.props.client.clientInfo;
+    let currentClientSubscription = this.props.client.currentClientSubscription.data.length == 0 ? false: this.props.client.currentClientSubscription.data ;
     let status = client.approval_status == 'Pending' ? true : false;
     return (
       <form onSubmit={(e) => this.onSubmitClientProfile(e)}>
@@ -91,7 +92,7 @@ class ClientProfile extends React.Component {
         <div className="dialog-content">
           <div className="dialog-inner">
             <div className="msg-box mdl-shadow--2dp">
-              <p>Are you sure you want to {client.user.activated_at ? 'deactivate' : 'activate'} this account?<br />This cannot be undone.</p>
+              <p></p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
                 <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
@@ -195,7 +196,7 @@ class ClientProfile extends React.Component {
                         id='btnClientDisapproval'
                         type='button'
                         className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent status-btn'
-                        onClick={(e) => this.modalConfirm(e)}>
+                        onClick={(e) => this.modalConfirm(e, client)}>
                           <span>Deactivate</span>
                           <span className="ion-flash-off icon-con"></span>
                       </button>
@@ -206,7 +207,7 @@ class ClientProfile extends React.Component {
                         id='btnClientApproval'
                         type='button'
                         className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
-                        onClick={(e) => this.modalConfirm(e)}>
+                        onClick={(e) => this.modalConfirm(e, client)}>
                           <span>Activate </span>
                           <span className="ion-power icon-con"></span>
                       </button>
@@ -615,9 +616,48 @@ class ClientProfile extends React.Component {
             </div>
           </div>
         </div>
+        { currentClientSubscription && this.subscriptionPlan(currentClientSubscription) }
       </form>
     );
   }
+
+  subscriptionPlan(currentSubscription){
+    return (
+      <div className="margin-top-20">
+          <div className="header-title">
+            <p>SUBSCRIPTION PLAN</p>
+          </div>
+          <div className="mdl-layout__panel" id="#">
+            <div className="mdl-grid content">
+              <div className="mdl-cell mdl-cell--6-col">
+                <h6>SUBSCRIPTION</h6>
+                <p>{currentSubscription.name}</p>
+              </div>
+              <div className="mdl-cell mdl-cell--6-col">
+                <h6>START DATE</h6>
+                <p>{currentSubscription.valid_from}</p>
+              </div>
+              <div className="mdl-cell mdl-cell--6-col">
+                <h6>TERMS OF SUBSCRIPTION</h6>
+                <p>{currentSubscription.term}</p>
+              </div>
+              <div className="mdl-cell mdl-cell--6-col">
+                <h6>END DATE</h6>
+                <p>{currentSubscription.valid_to}</p>
+              </div>
+              <div className="mdl-cell mdl-cell--6-col bottom-margin">
+                <h6>AUTO-RENEW</h6>
+                <p>{currentSubscription.is_auto_renew == 1 ? 'Enabled' : 'Disabled'}</p>
+              </div>
+            </div>
+             <div className="layout-gt-md-row layout-align-end-end btn">
+                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent right" onClick={(e) => this.modalSubscription(e) }>CANCEL SUBSCRIPTION</button>
+              </div>
+          </div>
+        </div>
+    );
+  }
+
   notUsername (e, id) {
     if (id == e.target.value) {
       this.setState({addClass: 'disabled'});
@@ -651,14 +691,22 @@ class ClientProfile extends React.Component {
 
   // --- Actions
   activeStatus(e, status) {
-    if (status) {
-      this.clientDeactivateStatus(e);
+    if (this.state.subscriptionCancel) {
+      this.cancelSubscription(e);
     } else {
-      this.clienActivateStatus(e);
+      if (status) {
+        this.clientDeactivateStatus(e);
+      } else {
+        this.clienActivateStatus(e);
+      }
     }
     closeModal();
   }
 
+  cancelSubscription (e) {
+    e.preventDefault();
+    this.props.client.adminClientSubscriptionCancel(this.props.client.clientInfo.id).catch(createError);
+  }
   changeApprovalStatus (e) {
     e.preventDefault();
     this.props.client.clientApprove(this.props.client.clientInfo.id).catch(createError);
@@ -734,7 +782,17 @@ class ClientProfile extends React.Component {
       .then(updateClientProfile)
       .catch(setErrors);
   }
-  modalConfirm (e) {
+  modalConfirm (e, client) {
+    document.querySelector('.msg-box p').innerHTML = "Are you sure you want to " + (client.user.activated_at ? 'deactivate' : 'activate') + " this account?<br />This cannot be undone.";
+    openModal();
+  }
+
+  modalSubscription (e) {
+    document.querySelector('.msg-box p').innerHTML = "Are you sure you want to cancel this subscription?<br />This cannot be undone.";
+    e.preventDefault();
+    this.setState( {
+      subscriptionCancel: true
+    } );
     openModal();
   }
   modalClose () {

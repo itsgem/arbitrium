@@ -141,7 +141,7 @@ export default {
         alt_phone_number: payload.alt_phone_number,
         alt_position: payload.alt_position,
         alt_department: payload.alt_department,
-        callback_url: window.location.origin + "/i/forgot"
+        callback_url: window.location.origin + "/i/resetPassword"
       }
     });
   },
@@ -266,6 +266,12 @@ export default {
   },
   adminDeleteApiKey(id) {
     return del('admin/api-key/' + id);
+  },
+  adminClientSubscription(id) {
+    return get('admin/client/' + id + '/subscription/current');
+  },
+  adminClientSubscriptionCancel(id) {
+    return patch('admin/client/' + id + '/subscription/cancel');
   },
 
   // ------- CLIENT -------
@@ -399,5 +405,8 @@ export default {
         term: payload.term
       }
     });
+  },
+  clientSubscriptionCancel() {
+    return patch('client/subscription/cancel');
   }
 };

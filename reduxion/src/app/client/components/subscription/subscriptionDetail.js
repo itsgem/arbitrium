@@ -23,6 +23,7 @@ class SubscriptionDetail extends React.Component {
     let {errors, errorServer} = this.state ? this.state :'';
     let listSubscription = this.props.listSubscription.data;
     let currentSubscription = this.props.currentSubscription.data;
+    let clientInfo = this.props.clientInfo.data;
     return (
         <div className="mdl-cell mdl-cell--12-col">
           <div className="mdl-grid content">
@@ -110,14 +111,17 @@ class SubscriptionDetail extends React.Component {
                         <td>{item.max_decisions == 0.00 ? '--' : "$" + item.max_decisions}</td>
                       </tr>
                       <tr>
-                        <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
+                        <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts }</td>
                       </tr>
                       <tr>
                         <td>
                           {
-                            currentSubscription.subscription_id == item.id ?
-                            <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                            : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribed'}</Link>
+                            item.name == 'Trial' ? (clientInfo.can_avail_trial == false ?
+                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                                : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribed'}</Link> )
+                            : currentSubscription.subscription_id == item.id ?
+                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribed'}</Link>
                           }
                         </td>
                       </tr>

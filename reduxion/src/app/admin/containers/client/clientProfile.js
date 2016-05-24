@@ -9,11 +9,18 @@ import {
   clientActivate,
   clientDeactivate,
   country,
-  clientUnlock
+  clientUnlock,
+  adminClientSubscription,
+  adminClientSubscriptionCancel
 } from 'admin/reducers/clientProfile'
 
-//import { country } from '../../auth/reducers/country'
 import AdminClientProfile from 'admin/views/client/clientProfile';
+
+const strMapToObj=(strMap) => {
+  let obj = JSON.parse(JSON.stringify(strMap));
+  return obj;
+}
+
 
 const mapStateToProps = (state) => {
   return {
@@ -29,6 +36,10 @@ const mapStateToProps = (state) => {
     updateCompleted: state.get('clientadmin').get('updateCompleted'),
     validateCompleted: state.get('clientadmin').get('validateCompleted'),
     registerCompleted: state.get('clientadmin').get('registerCompleted'),
+
+    currentClientSubscription: strMapToObj(state.get('clientadmin').get('currentClientSubscription')),
+    cancelSubscription: strMapToObj(state.get('clientadmin').get('cancelSubscription')),
+
     loading: state.get('clientadmin').get('loading')
   };
 }
@@ -43,6 +54,7 @@ export default connect(mapStateToProps, {
   validateUsername,
   clientActivate,
   clientDeactivate,
-  clientUnlock
-
+  clientUnlock,
+  adminClientSubscription,
+  adminClientSubscriptionCancel
 })(AdminClientProfile)

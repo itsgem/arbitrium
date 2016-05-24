@@ -19,11 +19,20 @@ export default React.createClass( {
   componentDidMount(){
     let id = this.props.params.id;
     this.props.clientProfile(id).catch(createError);
+    this.props.adminClientSubscription(id).catch(createError);
     this.props.country();
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.updateCompleted && !nextProps.loading) {
       $('.msg').html('Client Successfully Updated').addClass('bg-green');
+      $('.msg').fadeIn(1000, function() {
+        $(this).fadeOut(2000);
+      });
+      this.context.router.push('/coffee/client/');
+    }
+
+    if (nextProps.cancelSubscription && !nextProps.loading) {
+      $('.msg').html('Client Successfully cancel subscription').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
@@ -64,7 +73,7 @@ export default React.createClass( {
     );
   },
   render() {
-    if (this.state.clientInfo) {
+    if (this.state.clientInfo && Object.keys(this.props.currentClientSubscription).length ) {
       closeLoading();
       return this.renderAdminInfo();
     } else {
@@ -81,7 +90,9 @@ export default React.createClass( {
       clientUpdateProfile: this.state.clientUpdateProfile,
       updateCompleted: this.state.updateCompleted,
       validateUsername: this.props.validateUsername,
-      clientUnlock: this.props.clientUnlock
+      clientUnlock: this.props.clientUnlock,
+      currentClientSubscription: this.props.currentClientSubscription,
+      adminClientSubscriptionCancel: this.props.adminClientSubscriptionCancel
     };
     let countryList = this.props.countryList;
     return (
