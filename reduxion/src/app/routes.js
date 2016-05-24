@@ -66,7 +66,6 @@ function startTimer(duration, tokenName) {
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-
         if (minutes == 0 && seconds == 0) {
           localStorage.removeItem(tokenName);
           window.location = window.location.origin + "/" + (tokenName == 'token' ? "i" : tokenName) + "/login";
@@ -124,7 +123,6 @@ function validateToken(tokenName) {
       };
 
       let timeLimit = 60 * lifetime;
-      //let timeLimit = 5;
       startTimer(timeLimit, tokenName);
       localStorage.setItem(tokenName, CryptoJS.AES.encrypt(JSON.stringify(encryptToken), config.key));
       return true;
@@ -218,7 +216,7 @@ export default () => (
     </Route>
 
     <Route name="home" path="i" >
-      <IndexRoute component={ClientTopPage} />
+      <IndexRoute component={ClientTopPage} onEnter={requireAuth}/>
       <Route component={ClientLogin} name="login" path="login" onEnter={islogin} />
       <Route component={Signup} path="signup" onEnter={islogin} />
       <Route component={ClientLogout} path="logout"/>
