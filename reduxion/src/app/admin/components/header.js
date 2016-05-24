@@ -64,18 +64,23 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/api/new/">Add New API Key</Link></li>
                     </ul>
                   </div>
-                  <Link className="menu-pricing mdl-layout__tab" to="/coffee">Subscription</Link>
-                  { role &&
-                        <div className="container">
-                          <button id="demo-menu-account"
-                            className="menu-account mdl-button mdl-js-button mdl-layout__tab">Admin Accounts</button>
-                          <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                              htmlFor="demo-menu-account">
-                            <li className="mdl-menu__item"><Link to="/coffee/account/">Admin List</Link></li>
-                            <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
-                          </ul>
-                        </div>
-                  }
+                  <div className="container">
+                    <button id="demo-menu-subscription"
+                      className="mdl-button mdl-js-button">Subscriptions</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-subscription">
+                      <li className="mdl-menu__item"><Link to="/coffee/subscription/">Subscriptions List</Link></li>
+                    </ul>
+                  </div>
+                  <div className="container">
+                    <button id="demo-menu-account"
+                      className="menu-account mdl-button mdl-js-button mdl-layout__tab">Admin Accounts</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-account">
+                      <li className="mdl-menu__item"><Link to="/coffee/account/">Admin List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
+                    </ul>
+                  </div>
                   <Link className="menu-logs mdl-layout__tab" to="/coffee">Logs</Link>
                 </nav>
                 <div className="icon-profile inner-profile">

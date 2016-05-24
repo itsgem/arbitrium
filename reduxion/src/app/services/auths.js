@@ -215,6 +215,12 @@ export default {
       params: payload
     });
   },
+  getAdminSubscriptionList(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/subscription/current', {params: payload});
+  },
+  getClientSubscriptionInfo(id) {
+    return get('admin/client/' + id + '/subscription/current');
+  },
   isActiveApiKey(payload) {
     return patch('admin/api-key/' + payload.id + "/activate", {
       params: {
