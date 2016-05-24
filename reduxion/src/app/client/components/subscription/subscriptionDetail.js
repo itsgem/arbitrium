@@ -25,7 +25,7 @@ class SubscriptionDetail extends React.Component {
     let currentSubscription = this.props.currentSubscription.data;
     let clientInfo = this.props.clientInfo.data;
     return (
-        <div className="mdl-cell mdl-cell--12-col">
+        <div className="mdl-cell mdl-cell--12-col subscription-detail">
           <div className="mdl-grid content">
             <div className="mdl-cell mdl-cell--3-col">
               <ul className="arb-demo mdl-list">
