@@ -108,7 +108,7 @@ class ClientChangeEmail extends React.Component {
           </div>
           <div className="mdl-button-group">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
               type="submit"
               >
               Request Reset Email

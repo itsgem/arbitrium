@@ -187,7 +187,7 @@ class SubscriptionPayment extends React.Component {
                 </label>
               </span>*/}
               <span>
-                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"  onClick={(e) => this.subscribe(e)}>Pay via Paypal</button>
+                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"  onClick={(e) => this.subscribe(e)}>Pay via Paypal</button>
               </span>
             </div>
           </div>
@@ -223,10 +223,10 @@ class SubscriptionPayment extends React.Component {
   }
   termConditions(e) {
     if (e.target.checked) {
-      document.querySelector('.btn-paypal').classList.add('mdl-button--accent');
+      document.querySelector('.btn-paypal').classList.add('mdl-button--blue');
       document.querySelector('.btn-paypal').classList.remove('mdl-button--disabled');
     } else {
-      document.querySelector('.btn-paypal').classList.remove('mdl-button--accent');
+      document.querySelector('.btn-paypal').classList.remove('mdl-button--blue');
       document.querySelector('.btn-paypal').classList.add('mdl-button--disabled');
     }
   }

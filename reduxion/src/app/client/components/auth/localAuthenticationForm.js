@@ -50,17 +50,32 @@ class LocalAuthenticationForm extends React.Component {
           </div>
 
           <button
-            className='mdl-button mdl-js-button mdl-button--accent mdl-button--fullwidth mdl-js-ripple-effect'
+            className='mdl-button this-is-a-test mdl-js-button mdl-button--blue mdl-button--fullwidth mdl-js-ripple-effect'
             id='btn-login'
             type='button'
             onClick={(e) => this.login(e)}>{ this.props.buttonCaption }</button>
 
           { this.props.showLogin &&
             <Link
-            className='auth-button secondary mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect'
+            className='auth-button secondary mdl-button mdl-js-button mdl-button--raised mdl-button--blue mdl-js-ripple-effect'
             id='btn-signup'
             to="/login">{ tr.t('login') }</Link>
           }
+
+          <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
+            <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-left">
+              <Link
+                to="/i/forgot"
+              >{tr.t('forgotPassword')}</Link>
+            </div>
+
+            <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
+              <Link
+                to="/i/signup"
+              >{tr.t('sign_up')}</Link>
+            </div>
+          </div>
+
         </form>
       </div>
     );

@@ -31,10 +31,11 @@
   .login-view {
     .login-header {
       border-radius: 3px 3px 0 0;
-      background: #fff;
+      // background: #fff;
+      background: $base-blue;
       min-height: 50px;
       text-align: center;
-      padding: 25px 0;
+      padding: 12px 0;
 
       img {
         height: 50px;
@@ -256,21 +257,21 @@ small.mdl-textfield__error {
     main {
       #forgot,
       #login {
-        width: 450px;
+        width: 370px;
 
         .container {
           .bar {
-            background: #fff;
+            background: $base-blue;
             box-sizing: border-box;
             border-radius: 5px 5px 0 0;
-            color: #333;
+            color: #fff;
             height: auto;
             padding: 20px;
             width: 100%;
             border-bottom: 1px solid #efefef;
 
               .bar-title {
-                color: #333;
+                color: #fff;
                 font-size: 20px;
                 font-weight: 700;
                 height: 26px;
@@ -300,6 +301,17 @@ small.mdl-textfield__error {
           padding-bottom: 20px;
         }
       }
+    }
+
+    #login {
+        #other-links {
+          padding-top: 25px;
+
+          a {
+            color: $base-blue;
+            text-shadow: none;
+          }
+        }
     }
 
     .container {

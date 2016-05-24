@@ -154,7 +154,7 @@ class ClientProfile extends React.Component {
                 <button
                   id="check_availability"
                   type="button"
-                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
                   onClick={this.onClickGetAvailableUsername.bind(this)}
                   >
                   Check availability
@@ -588,7 +588,7 @@ class ClientProfile extends React.Component {
               >Cancel
             </a>
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
               type="submit"
               onClick = { this.onSubmitProfile.bind(this) }
               >Save
@@ -631,7 +631,7 @@ class ClientProfile extends React.Component {
               </div>
             </div>
              <div className="mdl-button-group">
-                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent right" onClick={(e) => this.modalConfirm(e) }>CANCEL SUBSCRIPTION</button>
+                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue right" onClick={(e) => this.modalConfirm(e) }>CANCEL SUBSCRIPTION</button>
               </div>
           </div>
         </div>
