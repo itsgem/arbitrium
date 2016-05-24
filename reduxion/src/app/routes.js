@@ -192,7 +192,7 @@ export default () => (
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
       <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
-        <Route path="client"> 
+        <Route path="client">
           <IndexRoute component={AdminClientList} />
           <Route component={AdminClientAdd} path="new"/>
           <Route component={AdminClientProfile} path=":id"/>

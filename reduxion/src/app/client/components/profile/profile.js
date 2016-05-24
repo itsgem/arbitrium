@@ -72,7 +72,6 @@ class ClientProfile extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
     }
-    
     let currentSubscription = this.props.currentSubscription.data.length == 0  ? false : this.props.currentSubscription.data;
 
     return (
