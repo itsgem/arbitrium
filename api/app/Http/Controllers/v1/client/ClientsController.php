@@ -166,13 +166,13 @@ class ClientsController extends ApiController
     }
 
     /**
-     * Purchase / Renew Client Subscription
+     * Subscribe to a package plan
      *
      * @SWG\Post(
      *     path="/client/subscription",
      *     tags={"Client - Client Subscription"},
-     *     summary="Purchase / Renew Subscription",
-     *     description="Purchase / Renew Client Subscription.",
+     *     summary="Subscribe",
+     *     description="Subscribe to a package plan.",
      *     @SWG\Response(response="200", description="Success",
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
@@ -215,6 +215,51 @@ class ClientsController extends ApiController
         return $service->subscribe($request, auth()->user()->client);
     }
 
+    /**
+     * Confirm Client Subscription with Payment
+     *
+     * @SWG\Post(
+     *     path="/client/subscription",
+     *     tags={"Client - Client Subscription"},
+     *     summary="Confirm Subscription with Payment",
+     *     description="Confirm Client Subscription with Payment.",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", description="Data", ref="#/definitions/ClientSubscriptionConfirmResponse")
+     *         )
+     *     ),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="X-Token",
+     *         in="header",
+     *         description="X-Token",
+     *         required=true,
+     *         type="string",
+     *         default=""
+     *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Subscription",
+     *         required=true,
+     *         type="object",
+     *         @SWG\Schema(title="data", type="object", ref="#/definitions/ClientSubscriptionConfirm"))
+     *     )
+     * )
+     *
+     * @param SubscriptionConfirmRequest $request
+     * @param ClientServices $service
+     *
+     * @return mixed
+     */
     public function subscribeConfirm(SubscriptionConfirmRequest $request, ClientServices $service)
     {
         return $service->subscribeConfirm($request);

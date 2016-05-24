@@ -255,6 +255,9 @@ class Client extends NrbModel
 
     public function tempSubscription($subscription, $start_date, $data)
     {
+        // Clear existing unfinished temp subscriptions
+        $this->clearUnfinishedTempSubscriptions();
+
         if (!($subscription instanceof Subscription))
         {
             $subscription = Subscription::findOrFail($subscription);
@@ -324,5 +327,31 @@ class Client extends NrbModel
         }
 
         return true;
+    }
+
+    public function hasUnfinishedTempSubscriptions($client_id = null)
+    {
+        $client_id = ($client_id) ? $client_id : $this->id;
+
+        $unfinished_temp_subscriptions = ClientSubscription::unfinishedTempSubscription($client_id)->count();
+
+        if ($unfinished_temp_subscriptions)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function clearUnfinishedTempSubscriptions($client_id = null)
+    {
+        $client_id = ($client_id) ? $client_id : $this->id;
+
+        $unfinished_temp_subscriptions= $this->hasUnfinishedTempSubscriptions();
+
+        if ($unfinished_temp_subscriptions)
+        {
+            ClientSubscription::unfinishedTempSubscription($client_id)->delete();
+        }
     }
 }

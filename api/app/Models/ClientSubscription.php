@@ -79,11 +79,18 @@ class ClientSubscription extends Subscription
         }
     }
 
-    public function scopePaypalAgreementId($query, $paypal_agreement_id)
+    public function scopePaypalAgreementId($query, $paypal_agreement_id, $client_id = null)
     {
         if ($paypal_agreement_id)
         {
-            return $query->where('paypal_agreement_id', $paypal_agreement_id);
+            $query = $query->where('paypal_agreement_id', $paypal_agreement_id);
+
+            if ($client_id)
+            {
+                $query = $query->where('client_id', $client_id);
+            }
+
+            return $query;
         }
     }
 
@@ -125,6 +132,21 @@ class ClientSubscription extends Subscription
         {
             return $query->where('status', $is_active);
         }
+    }
+
+    public function scopeUnfinishedTempSubscription($query, $client_id = null)
+    {
+        $query = $query->where('status', self::STATUS_INACTIVE)
+            ->where('status_end', null)
+            ->where('valid_from', null)
+            ->where('valid_to', null);
+
+        if ($client_id)
+        {
+            $query = $query->where('client_id', $client_id);
+        }
+
+        return $query;
     }
 
     public function scopeIsAutoRenew($query, $flag = false)

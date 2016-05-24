@@ -30,25 +30,25 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);
 
 
-//    Route::get('client/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
-//    Route::post('client/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
-//    Route::get('client/subscription/plan/{plan}',       ['uses' => 'Client\ClientsController@showPlan']);
-//    //Route::get('admin/subscription/{subscription}/plan', ['uses' => 'Client\ClientsController@showPlan']);
-//
-//    Route::group(['prefix' => 'client/subscription'], function()
-//    {
-//        Route::get('subscribe',          ['uses' => 'Client\ClientsController@subscribe']);
-//        Route::get('confirm',            ['uses' => 'Client\ClientsController@executeAgreement']);
-//
-//        Route::post('subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);
-//        Route::get('confirm-onetime',    ['uses' => 'Client\ClientsController@executeAgreementOneTime']);
-//
-//        Route::group(['prefix' => '{subscription}'], function()
-//        {
-//            Route::get('',             ['uses' => 'Client\ClientsController@showAgreement']);
-//            Route::get('transactions', ['uses' => 'Client\ClientsController@getTransactions']);
-//            Route::patch('suspend',    ['uses' => 'Client\ClientsController@suspendAgreement']);
-//            Route::patch('reactivate', ['uses' => 'Client\ClientsController@reactivateAgreement']);
-//        });
-//    });
+    Route::get('paypal/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
+    Route::post('paypal/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
+    Route::get('paypal/subscription/plan/{plan}',       ['uses' => 'Client\ClientsController@showPlan']);
+    //Route::get('admin/subscription/{subscription}/plan', ['uses' => 'Client\ClientsController@showPlan']);
+
+    Route::group(['prefix' => 'paypal/subscription'], function()
+    {
+        Route::get('subscribe',          ['uses' => 'Client\ClientsController@subscribe']);
+        Route::get('confirm',            ['uses' => 'Client\ClientsController@executeAgreement']);
+
+        Route::post('subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);
+        Route::get('confirm-onetime',    ['uses' => 'Client\ClientsController@executeAgreementOneTime']);
+
+        Route::group(['prefix' => '{subscription}'], function()
+        {
+            Route::get('',             ['uses' => 'Client\ClientsController@showAgreement']);
+            Route::get('transactions', ['uses' => 'Client\ClientsController@getTransactions']);
+            Route::patch('suspend',    ['uses' => 'Client\ClientsController@suspendAgreement']);
+            Route::patch('reactivate', ['uses' => 'Client\ClientsController@reactivateAgreement']);
+        });
+    });
 });

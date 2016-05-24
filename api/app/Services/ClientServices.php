@@ -148,12 +148,12 @@ class ClientServices extends NrbServices
         $paypal = new PaypalServices();
         $result = $paypal->executeAgreement($request)->getData();
 
-        if ($result->status == 'error')
+        if ($result->success == false)
         {
             return $this->respondWithData($result);
         }
 
-        $client_subscription = ClientSubscription::paypalAgreementId($result->agreement_id)->first();
+        $client_subscription = ClientSubscription::paypalAgreementId($result->data->agreement_id)->first();
         $client = Client::findOrFail($client_subscription->client_id);
 
         $subscription_id = $client_subscription->subscription_id;
@@ -229,7 +229,29 @@ class ClientServices extends NrbServices
         if ($client_id)
         {
             $current_subscription = Client::findOrFail($client_id)->subscription;
-            return $this->respondWithSuccess($current_subscription);
+
+            if (!$current_subscription)
+            {
+                return $this->respondWithSuccess($current_subscription);
+            }
+
+            $additional_data = [];
+
+            if ($request->get('with-paypal') == 1)
+            {
+                $paypal = new PaypalServices();
+
+                $plan = $paypal->showPlan($current_subscription->paypal_plan_id)->getData();
+                $transactions = $paypal->getTransactions($current_subscription->paypal_agreement_id)->getData();
+
+                $additional_data = [
+                    'plan' => $plan->data,
+                    'transactions' => $transactions->data
+                ];
+            }
+
+            $this->addResponseData($current_subscription);
+            return $this->respondWithSuccess($additional_data);
         }
 
         $current_subscription = ClientSubscription::clientId($request->get('client_id'))
@@ -262,9 +284,13 @@ class ClientServices extends NrbServices
 
         return DB::transaction(function () use ($client)
         {
-            if ($client->latest_subscription)
+            if ($latest_subscription = $client->latest_subscription)
             {
-                $client->latest_subscription->cancel();
+                // Suspend last agreement
+                $paypal = new PaypalServices();
+                $result = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
+
+                $latest_subscription->cancel();
             }
 
             return $this->respondWithSuccess();
