@@ -237,7 +237,7 @@ class ClientServices extends NrbServices
 
             $additional_data = [];
 
-            if ($request->get('with-paypal') == 1)
+            if ($current_subscription->hasPaypal() && $request->get('with-paypal') == 1)
             {
                 $paypal = new PaypalServices();
 

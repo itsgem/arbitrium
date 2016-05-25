@@ -240,4 +240,9 @@ class ClientSubscription extends Subscription
             $this->valid_to = $this->valid_from->addDays(29);
         }
     }
+
+    public function hasPaypal()
+    {
+        return $this->paypal_plan_id && $this->paypal_agreement_id;
+    }
 }

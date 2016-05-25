@@ -221,8 +221,8 @@ class ClientsController extends ApiController
      * @SWG\Post(
      *     path="/client/subscription",
      *     tags={"Client - Client Subscription"},
-     *     summary="Confirm Subscription with Payment",
-     *     description="Confirm Client Subscription with Payment.",
+     *     summary="(For non-trial) Confirm Subscription with Payment",
+     *     description="(For non-trial) Confirm Client Subscription with Payment.",
      *     @SWG\Response(response="200", description="Success",
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),

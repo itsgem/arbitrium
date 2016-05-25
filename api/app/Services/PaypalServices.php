@@ -227,7 +227,7 @@ class PaypalServices extends NrbServices
         $data = [];
 
         $data['subscription_id'] = $request->get('subscription_id');
-        $data['term']            = $request->get('term');
+        $data['term']            = $request->get('term', ClientSubscription::TERM_MONTHLY);
         $data['is_auto_renew']   = $request->get('is_auto_renew');
 
         $subscription        = Subscription::findOrFail($data['subscription_id']);
@@ -417,7 +417,10 @@ class PaypalServices extends NrbServices
         // If no agreement id, such as trial
         if (!$id)
         {
-            return true;
+            return $this->respondWithData([
+                'success' => true,
+                'message' => 'Success'
+            ]);
         }
 
         $createdAgreement = $this->showAgreement($id, true);
@@ -431,21 +434,23 @@ class PaypalServices extends NrbServices
             $agreement = Agreement::get($createdAgreement->getId(), $this->_api_context);
         } catch (PayPalConnectionException $ex) {
             return $this->respondWithData([
-                'status' => 'error',
+                'success'     => false,
                 'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
+                'message'     => $ex->getMessage(),
+                'data'        => json_decode($ex->getData(), true),
             ]);
         } catch (Exception $ex) {
             return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
+                'success' => false,
+                'message' => 'Error',
+                'data'    => $ex->getMessage()
             ]);
         }
 
         return $this->respondWithData([
-            'status' => 'success',
-            'data' => json_decode($agreement, true)
+            'success' => true,
+            'message' => 'Success',
+            'data'    => json_decode($agreement, true)
         ]);
     }
 

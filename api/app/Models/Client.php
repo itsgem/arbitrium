@@ -282,6 +282,8 @@ class Client extends NrbModel
                 return false;
             }
 
+            $this->latest_subscription->upgrade();
+
             $data['paypal_plan_id'] = null;
             $data['term']           = null;
             $data['is_auto_renew']  = false;
