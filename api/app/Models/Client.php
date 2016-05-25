@@ -265,8 +265,6 @@ class Client extends NrbModel
 
         $client_subscription = new ClientSubscription($subscription->toArray());
 
-        $data['paypal_plan_id'] = ($data['term'] == $client_subscription::TERM_ANNUALLY) ? $subscription->paypal_plan_id_yearly : $subscription->paypal_plan_id_monthly;
-
         $client_subscription->subscription_id   = $subscription->id;
         $client_subscription->client_id         = $this->id;
         $client_subscription->paypal_token_id   = $data['token'];
@@ -284,7 +282,6 @@ class Client extends NrbModel
 
             $this->latest_subscription->upgrade();
 
-            $data['paypal_plan_id'] = null;
             $data['term']           = null;
             $data['is_auto_renew']  = false;
 

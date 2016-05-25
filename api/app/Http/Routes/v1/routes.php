@@ -30,14 +30,14 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);
 
 
+    // For immediate paypal testing
     Route::get('paypal/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
     Route::post('paypal/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
     Route::get('paypal/subscription/plan/{plan}',       ['uses' => 'Client\ClientsController@showPlan']);
-    //Route::get('admin/subscription/{subscription}/plan', ['uses' => 'Client\ClientsController@showPlan']);
 
     Route::group(['prefix' => 'paypal/subscription'], function()
     {
-        Route::get('subscribe',          ['uses' => 'Client\ClientsController@subscribe']);
+        Route::get('subscribe',          ['uses' => 'Client\ClientsController@subscribePaypal']);
         Route::get('confirm',            ['uses' => 'Client\ClientsController@executeAgreement']);
 
         Route::post('subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);

@@ -129,7 +129,7 @@ class Subscription extends NrbModel
     protected $dates = [];
 
     protected $fillable = [
-        'paypal_plan_id_monthly', 'paypal_plan_id_yearly', 'name', 'description', 'type', 'country_id',
+        'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'

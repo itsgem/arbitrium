@@ -162,8 +162,12 @@ class ClientServices extends NrbServices
         if ($latest_subscription = $client->latest_subscription)
         {
             // Suspend last agreement
-            $paypal = new PaypalServices();
-            $result = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
+            $suspended_sub = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
+
+            if (!$suspended_sub->success)
+            {
+                return $this->respondWithData($suspended_sub);
+            }
 
             if ($latest_subscription->subscription_id == $subscription_id)
             {
@@ -185,7 +189,8 @@ class ClientServices extends NrbServices
             }
 
             return $this->respondWithData([
-                'status' => 'error'
+                'success' => false,
+                'message' => 'Error'
             ]);
         });
     }
@@ -289,6 +294,11 @@ class ClientServices extends NrbServices
                 // Suspend last agreement
                 $paypal = new PaypalServices();
                 $result = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
+
+                if (!$result->success)
+                {
+                    return $this->respondWithData($result);
+                }
 
                 $latest_subscription->cancel();
             }

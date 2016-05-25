@@ -22,7 +22,7 @@ class SubscriptionRequest extends NrbRequest
             $rules = [
                 'subscription_id' => 'required|exists:subscriptions,id,deleted_at,NULL',
                 'term'            => 'required|in:'.ClientSubscription::TERM_MONTHLY.','.ClientSubscription::TERM_ANNUALLY,
-                'is_auto_renew'   => 'required|boolean'
+                'is_auto_renew'   => 'required|boolean',
             ];
         }
 

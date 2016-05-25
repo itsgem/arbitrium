@@ -49,43 +49,39 @@ class PaypalServices extends NrbServices
     //----- Recurring
 
     // ClientsController
-    // SubscriptionSeeder
     public function createPlan($request)
     {
-        // if accessed by PaypalServices instance
-        if (is_array($request))
-        {
-            $term            = $request['term'];
-            $subscription_id = $request['subscription_id'];
-            $callback_url    = $request['callback_url'];
-        }
-        else
-        {
-            $term            = $request->get('term');
-            $subscription_id = $request->get('subscription_id');
-            $callback_url    = $request->get('callback_url');
-        }
-
         $data = [];
-        $data['term']        = ($term) ? $term : ClientSubscription::TERM_MONTHLY;
 
-        $subscription        = Subscription::findOrFail($subscription_id);
-        $data['name']        = $subscription->name;
-        $data['description'] = (string) $subscription->description.' ('.$data['term'].')';
-        $data['currency']    = $subscription->currency;
-        $data['price']       = $subscription->total[$data['term']];
+        $data['term']            = $request->get('term');
+        $data['is_auto_renew']   = $request->get('is_auto_renew');
+        $data['callback']        = $request->get('callback_url');
+
+        $subscription            = Subscription::findOrFail($request->get('subscription_id'));
+        $data['name']            = $subscription->name;
+        $data['description']     = (string) $subscription->description.' ('.$data['term'].')';
+        $data['currency']        = $subscription->currency;
+        $data['price']           = $subscription->total[$data['term']];
         $data['initial_payment'] = $subscription->total[$data['term'].'_With_Setup'];
-        $data['callback']    = $callback_url;
 
         //----- Create Plan
 
         $plan = new Plan();
 
+        $plan_type = 'INFINITE';
+        $plan_cycles = "0";
+
+        if (!$data['is_auto_renew'])
+        {
+            $plan_type = 'FIXED';
+            $plan_cycles = "1";
+        }
+
         $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? "365" : "30";
 
         $plan->setName($data['name'])
             ->setDescription($data['description'])
-            ->setType('INFINITE');
+            ->setType($plan_type);
 
         $paymentDefinition = new PaymentDefinition();
 
@@ -93,7 +89,7 @@ class PaypalServices extends NrbServices
             ->setType('REGULAR')
             ->setFrequency('Day')
             ->setFrequencyInterval($plan_frequency_interval)
-            ->setCycles("0")
+            ->setCycles($plan_cycles)
             ->setAmount(new Currency(['value' => $data['price'], 'currency' => $data['currency']]));
 
         $merchantPreferences = new MerchantPreferences();
@@ -163,21 +159,10 @@ class PaypalServices extends NrbServices
             ]);
         }
 
-        $planId = $planResponse->getId();
-
-        DB::transaction(function () use ($subscription, $data, $planId)
-        {
-            $column = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? 'paypal_plan_id_yearly' : 'paypal_plan_id_monthly';
-            $saved = $subscription->update([$column => $planId]);
-
-            if (!$saved)
-            {
-                return $this->respondWithError(Errors::CANNOT_EDIT);
-            }
-        });
+        $plan_id = $planResponse->getId();
 
         return $this->respondWithSuccess([
-            'paypal_plan_id' => $planId
+            'paypal_plan_id' => $plan_id
         ]);
     }
 
@@ -227,28 +212,28 @@ class PaypalServices extends NrbServices
         $data = [];
 
         $data['subscription_id'] = $request->get('subscription_id');
-        $data['term']            = $request->get('term', ClientSubscription::TERM_MONTHLY);
+        $data['term']            = $request->get('term');
         $data['is_auto_renew']   = $request->get('is_auto_renew');
 
         $subscription        = Subscription::findOrFail($data['subscription_id']);
         $data['name']        = $subscription->name;
         $data['description'] = $subscription->description;
 
-        if ($data['term'] == ClientSubscription::TERM_ANNUALLY)
+        $data['paypal_plan_id'] = null;
+
+        // Create plan
+        if (!$subscription->isTrial())
         {
-            $data['plan_id'] = $subscription->paypal_plan_id_yearly;
-            $start_date_offset = "365";
-        }
-        else
-        {
-            $data['plan_id'] = $subscription->paypal_plan_id_monthly;
-            $start_date_offset = "30";
+            $result = $this->createPlan($request, $client)->getData();
+
+            $data['paypal_plan_id'] = $result->data->paypal_plan_id;
         }
 
-        $start_date = current_datetime_iso8601($start_date_offset);
+        $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? "365" : "30";
+
         $start_date = current_datetime_iso8601(1);
 
-        //SubscribeCustomer
+        // SubscribeCustomer
         $agreement = new Agreement();
 
         $agreement->setName($data['name']. '('.$data['term'].')')
@@ -256,7 +241,7 @@ class PaypalServices extends NrbServices
             ->setStartDate($start_date);
 
         $plan = new Plan();
-        $plan->setId($data['plan_id']);
+        $plan->setId($data['paypal_plan_id']);
         $agreement->setPlan($plan);
 
         $payer = new Payer();
@@ -285,28 +270,25 @@ class PaypalServices extends NrbServices
             }
         }
 
-        return DB::transaction(function () use ($client, $data, $approvalUrl)
+        return DB::transaction(function () use ($client, $subscription, $data, $approvalUrl)
         {
             $data['token'] = ($approvalUrl) ? get_str_url_query_params($approvalUrl, 'token') : null;
-            $result = $client->tempSubscription($data['subscription_id'], current_date_to_string(), $data);
+            $result = $client->tempSubscription($subscription, current_date_to_string(), $data);
 
             if (!$result)
             {
                 return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
             }
 
-            return $this->respondWithData([
-                'status'       => 'success',
-                'approval_url' => $approvalUrl
+            return $this->respondWithSuccess([
+                'approval_url' => $approvalUrl,
             ]);
         });
     }
 
     public function executeAgreement($request)
     {
-        //$client_id = $client->id;
-
-        $token = $request->get('token');
+        $token   = $request->get('token');
         $success = $request->get('success');
 
         $agreement = new Agreement();
@@ -325,9 +307,8 @@ class PaypalServices extends NrbServices
                     ]);
                 });
 
-                return $this->respondWithData([
-                    'success' => 'success',
-                    'data'    => ['agreement_id' => $agreement_id]
+                return $this->respondWithSuccess([
+                    'agreement_id' => $agreement_id
                 ]);
             } catch (PayPalConnectionException $ex) {
                 return $this->respondWithData([
@@ -352,8 +333,6 @@ class PaypalServices extends NrbServices
 
     public function getTransactions($id)
     {
-        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
-
         $params = [
             'start_date' => date('Y-m-d', strtotime('-15 years')),
             'end_date'   => date('Y-m-d', strtotime('+5 days'))
@@ -375,17 +354,11 @@ class PaypalServices extends NrbServices
             ]);
         }
 
-        return $this->respondWithData([
-            'success' => true,
-            'message' => 'Success',
-            'data'    => json_decode($result, true)
-        ]);
+        return $this->respondWithSuccess(json_decode($result, true));
     }
 
     public function showAgreement($id, $return_object = false)
     {
-        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
-
         try {
             $agreement = Agreement::get($id, $this->_api_context);
         } catch (PayPalConnectionException $ex) {
@@ -412,15 +385,10 @@ class PaypalServices extends NrbServices
 
     public function suspendAgreement($id)
     {
-        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
-
         // If no agreement id, such as trial
         if (!$id)
         {
-            return $this->respondWithData([
-                'success' => true,
-                'message' => 'Success'
-            ]);
+            return $this->respondWithSuccess();
         }
 
         $createdAgreement = $this->showAgreement($id, true);
@@ -447,17 +415,11 @@ class PaypalServices extends NrbServices
             ]);
         }
 
-        return $this->respondWithData([
-            'success' => true,
-            'message' => 'Success',
-            'data'    => json_decode($agreement, true)
-        ]);
+        return $this->respondWithSuccess(json_decode($agreement, true));
     }
 
     public function reactivateAgreement($id)
     {
-        // @TODO-Arbitrium: Get Agreement/Profile ID by ClientSubscription ID
-
         $suspendedAgreement = $this->showAgreement($id, true);
 
         //Create an Agreement State Descriptor, explaining the reason to suspend.
@@ -482,179 +444,5 @@ class PaypalServices extends NrbServices
         }
 
         return json_decode($agreement, true);
-    }
-
-    //----- One-Time
-
-    public function subscribeOneTime($request)
-    {
-        // $client_id = $client->id;
-        $client_id = 999000001;
-
-        $subscription = Subscription::findOrFail($request->get('subscription_id'));
-        $subscription_fees = $subscription->getFees($request->get('term'));
-        $subscription_total = $subscription->calculateTotal($request->get('term').'_With_Setup');
-
-        $subscription_name = $subscription->name;
-        $subscription_description = $subscription->description;
-        $subscription_currency = config('paypal.currency');
-        $subscription_callback = $request->get('callback_url');
-
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-
-        $items = [];
-        $cnt = 0;
-        foreach($subscription_fees as $fee)
-        {
-            $items[$cnt] = new Item();
-            $items[$cnt]->setName($fee['name'])
-                ->setCurrency($subscription_currency)
-                ->setQuantity(1)
-                ->setPrice($fee['amount']);
-
-            $cnt++;
-        }
-
-        // add item to list
-        $item_list = new ItemList();
-        $item_list->setItems($items);
-
-        $amount = new Amount();
-        $amount->setCurrency($subscription_currency)
-            ->setTotal($subscription_total);
-
-        $transaction = new Transaction();
-        $transaction->setAmount($amount)
-            ->setItemList($item_list)
-            ->setDescription($subscription_description);
-
-        $redirect_urls = new RedirectUrls();
-        $redirect_urls->setReturnUrl($subscription_callback)
-            ->setCancelUrl($subscription_callback);
-
-        $paypal_information = [
-            'client_id'    => $client_id,
-            'description'  => $subscription_description,
-            'total_amount' => $subscription_total
-        ];
-
-        if (env('PAYPAL_BYPASS'))
-        {
-            // @TODO-Arbitrium
-            // return $this->bypassSetup($redirect_urls);
-        }
-
-        $payment = new Payment();
-        $payment->setIntent('Sale')
-            ->setPayer($payer)
-            ->setRedirectUrls($redirect_urls)
-            ->setTransactions([$transaction]);
-
-        try {
-            $payment->create($this->_api_context);
-        } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
-        }
-
-        foreach($payment->getLinks() as $link) {
-            if($link->getRel() == 'approval_url') {
-                $redirect_url = $link->getHref();
-                break;
-            }
-        }
-
-        // add payment ID to session
-        $paypal_information['paypal_payment_id'] = $payment->getId();
-        DB::transaction(function ()
-        {
-            //Payments::addPayment($paypal_information);
-        });
-
-        if(isset($redirect_url)) {
-            return $this->respondWithSuccess([
-                'status' => 'success',
-                'paypal_payment_id' => $payment->getId(),
-                'callback_url' => $redirect_url
-            ]);
-        }
-
-        return $this->respondWithData([
-            'status' => 'error',
-            'data' => 'Unknown error occurred'
-        ]);
-    }
-
-    public function executeAgreementOneTime($request)
-    {
-        // Get the payment ID before session clear
-        $data = (object) [
-            'payment_id' => $request->get('paymentId'),
-            'payer_id'   => $request->get('PayerID'),
-            'token'      => $request->get('token'),
-        ];
-
-        if (empty($data->payer_id) || empty($data->token)) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'message' => 'Payment failed'
-            ]);
-        }
-
-        if (env('PAYPAL_BYPASS'))
-        {
-            // @TODO-Arbitrium
-            // return $this->bypassFakePaypalStatus();
-        }
-
-        $payment = Payment::get($data->payment_id, $this->_api_context);
-
-        // PaymentExecution object includes information necessary
-        // to execute a PayPal account payment.
-        // The payer_id is added to the request query parameters
-        // when the user is redirected from paypal back to your site
-        $execution = new PaymentExecution();
-        $execution->setPayerId($data->payer_id);
-
-        //Execute the payment
-        try{
-            $result = $payment->execute($execution, $this->_api_context);
-
-            if ($result->getState() == 'approved') { // payment made
-                //purchase credit
-                return DB::transaction(function ($data)
-                {
-                    // @TODO-Arbitrium: Invoice
-
-                    return $this->respondWithSuccess([
-                        'message'    => 'Payment success',
-                        'payment_id' => $data->payment_id,
-                        'payer_id'   => $data->payer_id,
-                    ]);
-                });
-            }
-
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => ['message' => 'Payment failed']
-            ]);
-
-        } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
-        }catch(Exception $ex){
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()]);
-        }
     }
 }

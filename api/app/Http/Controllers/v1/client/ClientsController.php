@@ -324,10 +324,10 @@ class ClientsController extends ApiController
 
     //----- CLIENT
     // Recurring
-//    public function subscribe(PaypalRequest $request, PaypalServices $service)
-//    {
-//        return $service->subscribe($request);
-//    }
+    public function subscribePaypal(PaypalRequest $request, PaypalServices $service)
+    {
+        return $service->subscribe($request, auth()->user()->client);
+    }
 
     public function executeAgreement(PaypalRequest $request, PaypalServices $service)
     {

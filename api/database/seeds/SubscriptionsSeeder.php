@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\Subscription;
-use App\Models\ClientSubscription;
-use App\Services\PaypalServices;
 use Illuminate\Database\Seeder;
 
 class SubscriptionsSeeder extends Seeder
@@ -124,27 +122,5 @@ class SubscriptionsSeeder extends Seeder
         DB::table('subscriptions')->insert($data);
 
         DB::statement("SET FOREIGN_KEY_CHECKS = 1");
-
-        // Register Subscription Plans to PayPal
-        $terms = [
-            ClientSubscription::TERM_MONTHLY,
-            ClientSubscription::TERM_ANNUALLY
-        ];
-        foreach ($terms as $term)
-        {
-            foreach ($data as $subscription)
-            {
-                if ($subscription['type'] != Subscription::TYPE_TRIAL)
-                {
-                    $pp = new PaypalServices();
-                    $request = [
-                        'subscription_id' => $subscription['id'],
-                        'term'            => $term,
-                        'callback_url'    => config('paypal.callback_urls.subscriptions'),
-                    ];
-                    $pp->createPlan($request);
-                }
-            }
-        }
     }
 }
