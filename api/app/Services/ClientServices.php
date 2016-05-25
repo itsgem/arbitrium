@@ -143,7 +143,7 @@ class ClientServices extends NrbServices
 
     // Admin\ClientsController::changeSubscription
     // Client\ClientsController::subscribeConfirm
-    public function subscribeConfirm($request)
+    public function subscribeConfirm($request, $client_id = null)
     {
         $paypal = new PaypalServices();
         $result = $paypal->executeAgreement($request)->getData();
@@ -153,7 +153,7 @@ class ClientServices extends NrbServices
             return $this->respondWithData($result);
         }
 
-        $client_subscription = ClientSubscription::paypalAgreementId($result->data->agreement_id)->first();
+        $client_subscription = ClientSubscription::paypalAgreementId($result->data->agreement_id, $client_id)->first();
         $client = Client::findOrFail($client_subscription->client_id);
 
         $subscription_id = $client_subscription->subscription_id;

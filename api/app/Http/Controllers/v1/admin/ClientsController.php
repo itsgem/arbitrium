@@ -336,6 +336,11 @@ class ClientsController extends ApiController
      */
     public function changeSubscription(SubscriptionRequest $request, $id, ClientServices $service)
     {
-        return $service->changeSubscription($request, $id);
+        return $service->subscribe($request, $id);
+    }
+
+    public function changeConfirmSubscription(SubscriptionRequest $request, $id, ClientServices $service)
+    {
+        return $service->subscribeConfirm($request, $id);
     }
 }

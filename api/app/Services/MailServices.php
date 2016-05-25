@@ -84,6 +84,18 @@ class MailServices extends NrbServices
         ], $user);
     }
 
+    public function subscriptionChangeConfirmation($user, $link, $subscription, $term)
+    {
+        $this->sendMail('email.subscription_change_confirmation', [
+            'name'  => $user->first_name,
+            'username'  => $user->username,
+            'link'  => $link,
+            'email' => $user->email_address,
+            'subscription_name' => $subscription->name.' ('.$term.')',
+            'email_category' => EmailLog::CHANGE_SUBSCRIPTION
+        ], $user);
+    }
+
     public function sendInvoice($user, $url)
     {
         $this->sendMail('email.invoice', [

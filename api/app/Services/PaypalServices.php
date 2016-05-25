@@ -55,7 +55,7 @@ class PaypalServices extends NrbServices
 
         $data['term']            = $request->get('term');
         $data['is_auto_renew']   = $request->get('is_auto_renew');
-        $data['callback']        = $request->get('callback_url');
+        $data['callback']        = config('paypal.callback_urls.subscriptions');
 
         $subscription            = Subscription::findOrFail($request->get('subscription_id'));
         $data['name']            = $subscription->name;
@@ -278,6 +278,11 @@ class PaypalServices extends NrbServices
             if (!$result)
             {
                 return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
+            }
+
+            if (is_admin_user_logged_in())
+            {
+                $client->sendApprovalLink($approvalUrl, $subscription, $data['term']);
             }
 
             return $this->respondWithSuccess([

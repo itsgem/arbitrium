@@ -21,6 +21,7 @@ class EmailLog extends NrbLogModel
     const CLIENT_VERIFIED       = 'Client Account Verification';
     const INVOICE               = 'Invoice';
     const RENEW_SUBSCRIPTION    = 'Subscription Renewal';
+    const CHANGE_SUBSCRIPTION   = 'Admin Subscription Change Approval';
     const ADMINISTER_SURVEY     = 'Administer Survey';
     const SURVEY_INVITATION     = 'Survey Invitation';
 

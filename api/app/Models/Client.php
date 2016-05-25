@@ -353,4 +353,9 @@ class Client extends NrbModel
             ClientSubscription::unfinishedTempSubscription($client_id)->delete();
         }
     }
+
+    public function sendApprovalLink($link, $subscription, $term)
+    {
+        with(new MailServices())->subscriptionChangeConfirmation($this, $link, $subscription, $term);
+    }
 }
