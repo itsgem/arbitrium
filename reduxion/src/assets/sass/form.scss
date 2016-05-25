@@ -31,7 +31,6 @@
   .login-view {
     .login-header {
       border-radius: 3px 3px 0 0;
-      // background: #fff;
       background: $base-blue;
       min-height: 50px;
       text-align: center;
@@ -261,6 +260,7 @@ small.mdl-textfield__error {
 
         .container {
           .bar {
+            border-bottom: 1px solid #efefef;
             background: $base-blue;
             box-sizing: border-box;
             border-radius: 5px 5px 0 0;
@@ -268,7 +268,6 @@ small.mdl-textfield__error {
             height: auto;
             padding: 20px;
             width: 100%;
-            border-bottom: 1px solid #efefef;
 
               .bar-title {
                 color: #fff;
@@ -287,8 +286,8 @@ small.mdl-textfield__error {
       }
 
       #signup {
-        width: 78%;
         margin: 20px auto;
+        width: 78%;
       }
     }
 
