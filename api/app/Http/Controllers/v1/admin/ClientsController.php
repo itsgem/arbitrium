@@ -334,8 +334,8 @@ class ClientsController extends ApiController
      *
      * @return mixed
      */
-    public function purchaseSubscription(SubscriptionRequest $request, $id, ClientServices $service)
+    public function changeSubscription(SubscriptionRequest $request, $id, ClientServices $service)
     {
-        return $service->purchaseSubscription($request, $id);
+        return $service->changeSubscription($request, $id);
     }
 }
