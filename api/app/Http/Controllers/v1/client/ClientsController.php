@@ -82,7 +82,7 @@ class ClientsController extends ApiController
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", description="Data", ref="#/definitions/ClientSubscriptionResponse")
+     *             @SWG\Property(property="data", description="Data", ref="#/definitions/ClientSubscriptionConfirmResponse")
      *         )
      *     ),
      *     @SWG\Response(response="403", description="Authentication Failed",
@@ -123,7 +123,7 @@ class ClientsController extends ApiController
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionResponse"))
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionConfirmResponse"))
      *         )
      *     ),
      *     @SWG\Response(response="403", description="Authentication Failed",
@@ -219,7 +219,7 @@ class ClientsController extends ApiController
      * Confirm Client Subscription with Payment
      *
      * @SWG\Post(
-     *     path="/client/subscription",
+     *     path="/client/subscription/confirm",
      *     tags={"Client - Client Subscription"},
      *     summary="(For non-trial) Confirm Subscription with Payment",
      *     description="(For non-trial) Confirm Client Subscription with Payment.",

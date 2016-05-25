@@ -43,7 +43,7 @@ use App\Nrb\NrbModel;
  *     @SWG\Property(property="max_api_calls", type="integer", format="int64", description="Maximum number of times a client can call the core API", default="50"),
  *     @SWG\Property(property="max_decisions", type="integer", format="int64", description="Maximum number of decisions the core API can give", default="50"),
  *     @SWG\Property(property="discounts", type="integer", format="int64", description="Package Discount", default="5.00"),
- *     @SWG\Property(property="total", type="object", description="Package total fee", required={"monthly", "annually"},
+ *     @SWG\Property(property="total", type="object", description="Package total fee", required={"Monthly", "Annually", "Monthly_With_Setup", "Annually_With_Setup"},
  *         @SWG\Property(property="Monthly", type="integer", format="int64", description="Monthly total fee (without setup fee)", default="32.00"),
  *         @SWG\Property(property="Annually", type="integer", format="int64", description="Annual total fee (without setup fee)", default="140.00"),
  *         @SWG\Property(property="Monthly_With_Setup", type="integer", format="int64", description="Monthly total fee (with setup fee)", default="72.00"),
@@ -55,7 +55,7 @@ use App\Nrb\NrbModel;
  * @SWG\Definition(
  *     definition="ClientSubscription",
  *     required={"subscription_id", "term", "is_auto_renew"},
- *     @SWG\Property(property="subscription_id", type="integer", format="int64", description="Subscription ID (Refer to GET /subscription for the list)", default="1"),
+ *     @SWG\Property(property="subscription_id", type="integer", format="int64", description="Subscription ID (Refer to GET /subscription for the list)", default="2"),
  *     @SWG\Property(property="term", type="string", description="Monthly|Annually", default="Monthly"),
  *     @SWG\Property(property="is_auto_renew", type="integer", format="int64", description="0 => No, 1 => Yes", default="1"),
  * )
@@ -70,12 +70,12 @@ use App\Nrb\NrbModel;
  *     definition="ClientSubscriptionConfirm",
  *     required={"success", "token"},
  *     @SWG\Property(property="success", type="string", description="true|false", default="true"),
- *     @SWG\Property(property="token", type="string", description="Paypal Token ID returned from subscribing", default="Monthly"),
+ *     @SWG\Property(property="token", type="string", description="Paypal Token ID returned from subscribing", default="EC-0GW092283X244145E"),
  * )
  *
  * @SWG\Definition(
  *     definition="ClientSubscriptionConfirmResponse",
- *     required={"id", "name", "description", "type", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts", "total", "currency"},
+ *     required={"id", "client_id", "subscription_id", "invoice_id", "paypal_plan_id", "paypal_agreement_id", "paypal_token_id", "term", "valid_from", "valid_to", "is_auto_renew", "status", "status_end", "name", "description", "type", "fee_monthly", "fee_monthly_maintenance", "fee_yearly", "fee_yearly_license", "fee_yearly_maintenance", "fee_initial_setup", "max_api_calls", "max_decisions", "discounts", "total", "currency"},
  *     @SWG\Property(property="id", type="integer", format="int64", description="ClientSubscription ID", default="1"),
  *     @SWG\Property(property="client_id", type="integer", format="int64", description="Client ID", default="1"),
  *     @SWG\Property(property="subscription_id", type="integer", format="int64", description="Subscription ID", default="1"),
@@ -101,7 +101,7 @@ use App\Nrb\NrbModel;
  *     @SWG\Property(property="max_api_calls", type="integer", format="int64", description="Maximum number of times a client can call the core API", default="50"),
  *     @SWG\Property(property="max_decisions", type="integer", format="int64", description="Maximum number of decisions the core API can give", default="50"),
  *     @SWG\Property(property="discounts", type="integer", format="int64", description="Package Discount", default="5.00"),
- *     @SWG\Property(property="total", type="object", description="Package total fee", required={"monthly", "annually"},
+ *     @SWG\Property(property="total", type="object", description="Package total fee", required={"Monthly", "Annually", "Monthly_With_Setup", "Annually_With_Setup"},
  *         @SWG\Property(property="Monthly", type="integer", format="int64", description="Monthly total fee (without setup fee)", default="32.00"),
  *         @SWG\Property(property="Annually", type="integer", format="int64", description="Annual total fee (without setup fee)", default="140.00"),
  *         @SWG\Property(property="Monthly_With_Setup", type="integer", format="int64", description="Monthly total fee (with setup fee)", default="72.00"),
