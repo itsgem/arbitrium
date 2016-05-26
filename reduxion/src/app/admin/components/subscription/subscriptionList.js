@@ -28,7 +28,7 @@ class SubscriptionList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/subscription/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/subscription/client/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -115,63 +115,54 @@ class SubscriptionList extends React.Component {
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
-        <dialog className="mdl-dialog">
-          <p>
-            Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.
-          </p>
-          <div className="mdl-dialog__actions">
-            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
-          </div>
-        </dialog>
-          <div className="mdl-grid filter-search-bar">
-            <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
-                <label className="mdl-textfield__label">Company</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
-                <label className="mdl-textfield__label">Subscription</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="type" ref="type" />
-                <label className="mdl-textfield__label">Plan Type</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col search-cta">
-              <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
-              <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+        <div className="mdl-grid filter-search-bar">
+          <div className="mdl-cell mdl-cell--3-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
+              <label className="mdl-textfield__label">Company</label>
             </div>
           </div>
-          <table className="mdl-data-table mdl-js-data-table table-client-list">
-            <thead>
-              <tr>
-                <th className="mdl-data-table__cell--non-numeric">ID</th>
-                <th className="mdl-data-table__cell--non-numeric">Company Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Email Address</th>
-                <th className="mdl-data-table__cell--non-numeric">Subscription</th>
-                <th className="mdl-data-table__cell--non-numeric">Plan Type</th>
-                <th className="mdl-data-table__cell--non-numeric">Status</th>
-                <th className="mdl-data-table__cell--non-numeric">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {counter && subscription.map(item => {
-                alter = alter ? false : true;
-                return this.subscriptionDisplay(item, alter); })}
-            </tbody>
-          </table>
-          {/* <!-- Pagination -->*/}
+          <div className="mdl-cell mdl-cell--3-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
+              <label className="mdl-textfield__label">Subscription</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--3-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="type" ref="type" />
+              <label className="mdl-textfield__label">Plan Type</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--3-col search-cta">
+            <button
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+            <button
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+          </div>
+        </div>
+        <table className="mdl-data-table mdl-js-data-table table-client-list">
+          <thead>
+            <tr>
+              <th className="mdl-data-table__cell--non-numeric">ID</th>
+              <th className="mdl-data-table__cell--non-numeric">Company Name</th>
+              <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
+              <th className="mdl-data-table__cell--non-numeric">Email Address</th>
+              <th className="mdl-data-table__cell--non-numeric">Subscription</th>
+              <th className="mdl-data-table__cell--non-numeric">Plan Type</th>
+              <th className="mdl-data-table__cell--non-numeric">Status</th>
+              <th className="mdl-data-table__cell--non-numeric">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {counter && subscription.map(item => {
+              alter = alter ? false : true;
+              return this.subscriptionDisplay(item, alter); })}
+          </tbody>
+        </table>
+        {/* <!-- Pagination -->*/}
         <div className="mdl-grid pagination">
           <div className="mdl-cell mdl-cell--3-col"></div>
           <div className="mdl-cell mdl-cell--6-col">

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { allSubscriptions, clientSubscriptionInfo, selectedSubscriptionInfo} from 'admin/reducers/subscription'
+import { clientProfile, allSubscriptions, clientSubscriptionInfo, selectedSubscriptionInfo} from 'admin/reducers/subscription'
 import ViewSubscriptionEdit from 'admin/views/subscription/subscriptionEdit';
 
 const strMapToObj=(strMap) => {
@@ -9,6 +9,7 @@ const strMapToObj=(strMap) => {
 
 const mapStateToProps = (state) => {
   return {
+  	clientInfo: strMapToObj(state.get('adminSubscription').get('clientInfo')),
   	subscriptions: strMapToObj(state.get('adminSubscription').get('subscriptions')),
     subscriptionInfoClient: strMapToObj(state.get('adminSubscription').get('subscriptionInfoClient')),
     subscriptionInfoSelected: strMapToObj(state.get('adminSubscription').get('subscriptionInfoSelected')),
@@ -17,5 +18,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-  allSubscriptions, clientSubscriptionInfo, selectedSubscriptionInfo
+  clientProfile, allSubscriptions, clientSubscriptionInfo, selectedSubscriptionInfo
 })(ViewSubscriptionEdit)
