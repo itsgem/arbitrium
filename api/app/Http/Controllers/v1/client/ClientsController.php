@@ -343,7 +343,7 @@ class ClientsController extends ApiController
 
     public function getTransactions($id, PaypalServices $service)
     {
-        return $service->getTransactions($id);
+        return $service->getTransactions($this->request, $id);
     }
 
     public function showAgreement($id, PaypalServices $service)

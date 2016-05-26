@@ -77,7 +77,7 @@ class PaypalServices extends NrbServices
             $plan_cycles = "1";
         }
 
-        $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? "365" : "30";
+        $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
 
         $plan->setName($data['name'])
             ->setDescription($data['description'])
@@ -115,17 +115,9 @@ class PaypalServices extends NrbServices
         try {
             $createdPlan = $plan->create($this->_api_context);
         } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         //----- Activate Plan
@@ -146,17 +138,9 @@ class PaypalServices extends NrbServices
 
             $planResponse = Plan::get($createdPlan->getId(), $this->_api_context);
         } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         $plan_id = $planResponse->getId();
@@ -171,17 +155,10 @@ class PaypalServices extends NrbServices
         try {
             $plan = Plan::get($id, $this->_api_context);
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'success' => false,
-                'message' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
-        return $this->respondWithData([
-            'success' => true,
-            'message' => 'Success',
-            'data'    => json_decode($plan, true)
-        ]);
+        return $this->respondWithSuccess(json_decode($plan, true));
     }
 
     public function getPlans($request)
@@ -198,10 +175,7 @@ class PaypalServices extends NrbServices
             ];
             $planList = Plan::all($params, $this->_api_context);
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         return json_decode($planList, true);
@@ -228,7 +202,7 @@ class PaypalServices extends NrbServices
 
             $data['paypal_plan_id'] = $result->data->paypal_plan_id;
 
-            $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? "365" : "30";
+            $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
 
             $start_date = current_datetime_iso8601($start_date_offset);
 
@@ -253,17 +227,9 @@ class PaypalServices extends NrbServices
                 $agreement = $agreement->create($this->_api_context);
                 $approvalUrl = $agreement->getApprovalLink();
             } catch (PayPalConnectionException $ex) {
-                return $this->respondWithData([
-                    'status'      => 'error',
-                    'status_code' => $ex->getCode(),
-                    'data'        => json_decode($ex->getData(), true),
-                    'message'     => $ex->getMessage(),
-                ]);
+                return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
             } catch (Exception $ex) {
-                return $this->respondWithData([
-                    'status' => 'error',
-                    'data'   => $ex->getMessage()
-                ]);
+                return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
             }
         }
 
@@ -314,47 +280,28 @@ class PaypalServices extends NrbServices
                     'agreement_id' => $agreement_id
                 ]);
             } catch (PayPalConnectionException $ex) {
-                return $this->respondWithData([
-                    'success'      => false,
-                    'status_code' => $ex->getCode(),
-                    'message'     => $ex->getMessage(),
-                    'data'        => json_decode($ex->getData(), true),
-                ]);
+                return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
             } catch (Exception $ex) {
-                return $this->respondWithData([
-                    'success' => false,
-                    'message' => $ex->getMessage()
-                ]);
+                return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
             }
         }
 
-        return $this->respondWithData([
-            'success' => false,
-            'message' => 'User cancelled'
-        ]);
+        return $this->respondWithError(Errors::PAYPAL_CANCELLED);
     }
 
-    public function getTransactions($id)
+    public function getTransactions($request, $id)
     {
         $params = [
-            'start_date' => date('Y-m-d', strtotime('-15 years')),
-            'end_date'   => date('Y-m-d', strtotime('+5 days'))
+            'start_date' => $request->get('start_date', current_date_sub_days(60)),
+            'end_date'   => $request->get('end_date', current_date_add_days(5))
         ];
 
         try {
             $result = Agreement::searchTransactions($id, $params, $this->_api_context);
         } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'success' => false,
-                'status_code' => $ex->getCode(),
-                'message' => $ex->getMessage(),
-                'data' => json_decode($ex->getData(), true),
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'success' => false,
-                'message' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         return $this->respondWithSuccess(json_decode($result, true));
@@ -365,17 +312,9 @@ class PaypalServices extends NrbServices
         try {
             $agreement = Agreement::get($id, $this->_api_context);
         } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         if ($return_object)
@@ -404,18 +343,9 @@ class PaypalServices extends NrbServices
             $createdAgreement->suspend($agreementStateDescriptor, $this->_api_context);
             $agreement = Agreement::get($createdAgreement->getId(), $this->_api_context);
         } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'success'     => false,
-                'status_code' => $ex->getCode(),
-                'message'     => $ex->getMessage(),
-                'data'        => json_decode($ex->getData(), true),
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'success' => false,
-                'message' => 'Error',
-                'data'    => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         return $this->respondWithSuccess(json_decode($agreement, true));
@@ -433,17 +363,9 @@ class PaypalServices extends NrbServices
             $suspendedAgreement->reActivate($agreementStateDescriptor, $this->_api_context);
             $agreement = Agreement::get($suspendedAgreement->getId(), $this->_api_context);
         } catch (PayPalConnectionException $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'status_code' => $ex->getCode(),
-                'data' => json_decode($ex->getData(), true),
-                'message' => $ex->getMessage(),
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
-            return $this->respondWithData([
-                'status' => 'error',
-                'data' => $ex->getMessage()
-            ]);
+            return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
 
         return json_decode($agreement, true);

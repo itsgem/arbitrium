@@ -186,7 +186,7 @@ class SubscriptionServices extends NrbServices
                 $paypal = new PaypalServices();
 
                 $plan = $paypal->showPlan($current_subscription->paypal_plan_id)->getData();
-                $transactions = $paypal->getTransactions($current_subscription->paypal_agreement_id)->getData();
+                $transactions = $paypal->getTransactions($request, $current_subscription->paypal_agreement_id)->getData();
 
                 $additional_data = [
                     'plan' => $plan->data,

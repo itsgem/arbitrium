@@ -89,7 +89,7 @@ class MailServices extends NrbServices
         $this->sendMail('email.subscription_change_confirmation', [
             'name'  => $user->first_name,
             'link'  => $subscription->paypal_approval_url,
-            'subscription_name' => $subscription->name.' ('.$subscription->term.')',
+            'subscription_name' => $subscription->getSubscriptionName(),
             'email_category' => EmailLog::CHANGE_SUBSCRIPTION
         ], $user);
     }
