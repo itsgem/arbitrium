@@ -88,7 +88,7 @@ class MailServices extends NrbServices
     {
         $this->sendMail('email.subscription_change_confirmation', [
             'name'  => $user->first_name,
-            'link'  => $subscription->paypal_approval_url,
+            'link'  => config('paypal.callback_urls.subscriptions'),
             'subscription_name' => $subscription->getSubscriptionName(),
             'email_category' => EmailLog::CHANGE_SUBSCRIPTION
         ], $user);

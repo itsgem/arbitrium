@@ -11,7 +11,7 @@ return [
     ],
 
     'callback_urls' => [
-        'subscriptions' => 'http://dev.w3.arbitriumgroup.com/i/subscription'
+        'subscriptions' => env('PAYPAL_CALLBACK_SUBSCRIPTIONS', 'http://dev.w3.arbitriumgroup.com/i/subscription'),
     ],
 
     /*
