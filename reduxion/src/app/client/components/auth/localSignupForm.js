@@ -49,6 +49,12 @@ class LocalSignupForm extends React.Component {
 
     return (
       <div className="local-signup-form">
+        <div className="alert alert-warning">
+          <i className="material-icons"></i>
+          <div className="content">
+            Please fill in the following required fields below.
+          </div>
+        </div>
         <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
           <div className="mdl-snackbar__text"></div>
           <button type="button" className="mdl-snackbar__action"></button>

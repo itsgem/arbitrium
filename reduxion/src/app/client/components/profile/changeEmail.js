@@ -72,6 +72,12 @@ class ClientChangeEmail extends React.Component {
       <div>
         { this.renderError() }
         <form onSubmit={ this.onSubmitProfile.bind(this) }>
+          <div className="alert alert-warning">
+            <i className="material-icons"></i>
+            <div className="content">
+              Oops!, Please fill in the required field.
+            </div>
+          </div>
           <legend>Change Email Address</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
