@@ -5,6 +5,14 @@
   height: 27px;
 }
 
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    border: none;
+}
+
 .mdl-textfield__input {
   font-size: inherit;
 }
@@ -48,21 +56,21 @@ select:focus {
 }
 
 /* Hide label */
-.mdl-selectfield label {
+/*.mdl-selectfield label {
   display: none;
 }
-
+*/
 /* Use custom arrow */
 .mdl-selectfield select {
   appearance: none
 }
 
 .mdl-selectfield {
-  position: relative;
+  /*position: relative;*/
 
   &:after {
     position: absolute;
-    top: 0.75em;
+    top: 50%;
     right: 0.5em;
     /* Styling the down arrow */
     width: 0;

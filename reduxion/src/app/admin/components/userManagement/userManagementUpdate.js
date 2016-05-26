@@ -17,6 +17,20 @@ class UserManagementUpdate extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
   }
   render() {
     let role = this.props.role.toArray();
@@ -84,8 +98,8 @@ class UserManagementUpdate extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className={this.formClassNames('role_id', errors)}>
-                <div>
+              <div id="role_id-opt" className={this.formClassNames('role_id', errors)}>
+                <div className="mdl-selectfield">
                   <select className="mdl-textfield__input"
                     id="role_id"
                     name="role_id"

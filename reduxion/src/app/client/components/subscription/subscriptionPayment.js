@@ -34,34 +34,38 @@ class SubscriptionPayment extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                 <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.name} readOnly/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Subscription Name</label>
+                <label className="mdl-textfield__label" htmlFor="subscription">Subscription Name</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                 <input className="mdl-textfield__input font-input" type="text" id="currency" value="USD" readOnly/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Currency</label>
+                <label className="mdl-textfield__label" htmlFor="currency">Currency</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <div className={this.formClassNames('term', errors)}>
-                <select onChange={(e) => this.dateValid()} ref="term" className="mdl-textfield__input">
-                  <option></option>
-                  <option>Annually</option>
-                  <option>Monthly</option>
-                </select>
-                <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
-                {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
+              <div id="term-opt" className={this.formClassNames('term', errors)}>
+                <div className="mdl-selectfield">
+                  <select onChange={(e) => this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
+                    <option></option>
+                    <option>Annually</option>
+                    <option>Monthly</option>
+                  </select>
+                  <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
+                  {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
+                </div>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/><label className="mdl-textfield__label" htmlFor="sample1">Valid From</label>
+                <input className="mdl-textfield__input font-input" id="validFrom" type="text" ref="validFrom" readOnly/>
+                <label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/> <label className="mdl-textfield__label" htmlFor="sample1">To</label>
+                <input className="mdl-textfield__input font-input" id="validTo" type="text" ref="validTo" readOnly/>
+                <label className="mdl-textfield__label" htmlFor="validTo">To</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -203,21 +207,34 @@ class SubscriptionPayment extends React.Component {
   }
 
   dateValid() {
-    let term = this.refs.term ? this.refs.term.value : "Annually";
+    let term = this.refs.term.value;
     let dateToday = new Date();
-    let isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
+    let isFrom = ' ';
     let newDate = ' ';
     let isTo = ' ';
     switch (term) {
       case 'Annually':
+        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
         newDate = new Date(dateToday.getFullYear() + 1, dateToday.getMonth(), dateToday.getDate() + 29);
         isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
         break;
       case 'Monthly':
+        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
         newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate());
         isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
         break;
     }
+    console.log('term', term);
+
+    let target = this.refs.term.id + "-opt";
+    if (this.refs.term.value) {
+      if (document.getElementById(target)) {
+        document.getElementById(target).classList.add('is-dirty');
+      } else {
+        document.getElementById(target).classList.remove('is-dirty');
+      }
+    }
+
     this.refs.validFrom.value = isFrom;
     this.refs.validTo.value = isTo;
   }

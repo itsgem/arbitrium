@@ -162,7 +162,7 @@ this.scrolltop(errors);
               </div>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
-              <div className={this.formClassNames('country_id', errors)}>
+              <div id="country-opt" className={this.formClassNames('country_id', errors)}>
                 <Country
                   country = { this.props.countryList }
                 />
@@ -221,17 +221,19 @@ this.scrolltop(errors);
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className={this.formClassNames('rep_gender', errors)}>
-                <select
-                  className="mdl-textfield__input"
-                  id='rep_gender'
-                  ref="rep_gender" >
-                  <option value=""></option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-                <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
-                {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+              <div id="rep_gender-opt" className={this.formClassNames('rep_gender', errors)}>
+                <div className="mdl-selectfield">
+                  <select
+                    className="mdl-textfield__input"
+                    id='rep_gender'
+                    ref="rep_gender" >
+                    <option value=""></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                  <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+                  {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                </div>
               </div>
             </div>
           </div>
@@ -352,16 +354,18 @@ this.scrolltop(errors);
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <div className={this.formClassNames('alt_gender', errors)}>
-                <select
-                  className="mdl-textfield__input"
-                  id='alt_gender'
-                  ref="alt_gender" >
-                  <option value=""></option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-                <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+              <div id="alt_gender-opt" className={this.formClassNames('alt_gender', errors)}>
+                <div className="mdl-selectfield">
+                  <select
+                    className="mdl-textfield__input"
+                    id='alt_gender'
+                    ref="alt_gender" >
+                    <option value=""></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                  <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+                </div>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">

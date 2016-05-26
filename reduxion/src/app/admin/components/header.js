@@ -6,6 +6,20 @@ import CryptoJS from 'crypto-js';
 export default React.createClass( {
   componentWillReceiveProps(nextProps) {
     this.activeNav();
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
   },
   activeNav () {
     let isActive = document.querySelector('nav .is-active');
@@ -72,7 +86,7 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/subscription/">Subscriptions List</Link></li>
                     </ul>
                   </div>
-                  <div className="container">
+                  {role && <div className="container">
                     <button id="demo-menu-account"
                       className="menu-account mdl-button mdl-js-button mdl-layout__tab">Admin Accounts</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
@@ -80,7 +94,7 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/account/">Admin List</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
                     </ul>
-                  </div>
+                  </div>}
                   <Link className="menu-logs mdl-layout__tab" to="/coffee">Logs</Link>
                 </nav>
                 <div className="icon-profile inner-profile">
