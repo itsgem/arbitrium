@@ -49,6 +49,12 @@ class LocalSignupForm extends React.Component {
 
     return (
       <div className="local-signup-form">
+        <div className="alert alert-warning">
+          <i className="material-icons"></i>
+          <div className="content">
+            Please fill in the following required fields below.
+          </div>
+        </div>
         <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
           <div className="mdl-snackbar__text"></div>
           <button type="button" className="mdl-snackbar__action"></button>
@@ -117,10 +123,9 @@ function validateSignup( payload ) {
     rep_position: { rule: 'required', label: 'position' },
     rep_department: { rule: 'required', label: 'department' },
     password_confirmation: {rule: 'required', label: 'confirm password'},
-    password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
+    password: [ 'required', 'required', 'minLength:8', 'maxLength:64' ],
     email_address:  [{ rule: 'required', label: 'Email address' }, { rule: 'email', label: 'Email address' }],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
-    password: [ 'required', 'alphaDash', 'minLength:6', 'maxLength:64' ]
+    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
   } );
   return rules.run( payload );
 }

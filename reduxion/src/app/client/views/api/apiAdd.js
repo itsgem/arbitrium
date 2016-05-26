@@ -23,6 +23,12 @@ export default React.createClass({
   render () {
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <div className="alert alert-warning">
+          <i className="material-icons"></i>
+          <div className="content">
+            Oops! Please fill in the required field below.
+          </div>
+        </div>
         <div className="page-content">
           <ApiAdd
             clientRegisterApi={this.props.clientRegisterApi}

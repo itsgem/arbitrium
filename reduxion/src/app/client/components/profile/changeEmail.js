@@ -72,6 +72,12 @@ class ClientChangeEmail extends React.Component {
       <div>
         { this.renderError() }
         <form onSubmit={ this.onSubmitProfile.bind(this) }>
+          <div className="alert alert-warning">
+            <i className="material-icons"></i>
+            <div className="content">
+              Oops!, Please fill in the required field.
+            </div>
+          </div>
           <legend>Change Email Address</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
@@ -108,7 +114,7 @@ class ClientChangeEmail extends React.Component {
           </div>
           <div className="mdl-button-group">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
               type="submit"
               >
               Request Reset Email

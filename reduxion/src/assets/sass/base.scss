@@ -1,17 +1,19 @@
 @import './reset';
 @import './variables';
+@import './mixins';
 
 @import './vendor/ionicons';
 @import './vendor/mdl-overrides';
+
+// Components
+@import './alerts';
 @import './drawer';
 @import './pagination';
-
-@import './utils';
 @import './typography';
-@import './mixins';
 @import './transitions';
 @import './colors';
 @import './form';
+@import './utils';
 
 /* Admin */
 @import './admin/application';

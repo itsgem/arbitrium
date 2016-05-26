@@ -61,10 +61,17 @@ class ClientChangePassword extends React.Component {
     return (
       <div>
         <form>
+          <div className="alert alert-warning">
+            <i className="material-icons"></i>
+            <div className="content">
+              The password must have small letters, capital letters and numbers.
+            </div>
+          </div>
           <legend>Change password</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
+
                 <div className={this.formClassNames('current_password', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -108,7 +115,7 @@ class ClientChangePassword extends React.Component {
           </div>
           <div className="mdl-button-group padding-15">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
               type="submit"
               onClick={(e) => this.onSubmitChangePassword(e) }
               >

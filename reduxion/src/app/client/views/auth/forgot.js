@@ -121,7 +121,7 @@ export default React.createClass( {
             </div>
             <div className="spacer">
               <button type="button"
-              className='auth-button primary mdl-button mdl-js-button mdl-button--fullwidth mdl-button--accent mdl-js-ripple-effect'
+              className='auth-button primary mdl-button mdl-js-button mdl-button--fullwidth mdl-button--blue mdl-js-ripple-effect'
               onClick={(e)=>this.requestReset(e)}>
                 Send Reset Email
               </button>
