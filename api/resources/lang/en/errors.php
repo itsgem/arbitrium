@@ -36,6 +36,7 @@ return [
     Errors::EXISTING_API_KEY_PERMISSION     => 'You have an existing API Key Permission.',
     Errors::UNAUTHORIZED_API_KEY_IP_ADDRESS => 'You do not own this API Key IP Address.',
     Errors::EXISTING_TRIAL_SUBSCRIPTION     => 'A Trial Subscription already exist.',
-    Errors::PAYPAL_ERROR            => 'Unable to process PayPal Request.',
-    Errors::PAYPAL_CANCELLED        => 'User cancelled PayPal transaction.',
+    Errors::PAYPAL_ERROR                => 'Unable to process PayPal Request.',
+    Errors::PAYPAL_CANCELLED            => 'User cancelled PayPal transaction.',
+    Errors::UNAUTHORIZED_PAYPAL_TOKEN   => 'Unauthorized PayPal token.',
 ];
