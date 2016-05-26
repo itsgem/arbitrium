@@ -39,20 +39,6 @@ class Login extends React.Component {
         <div className="login-view">
           <LocalLoginForm login={this.props.login}/>
 
-          <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
-            <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-              <Link
-                to="/i/forgot"
-              >{tr.t('forgotPassword')}</Link>
-            </div>
-
-            <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
-              <Link
-                to="/i/signup"
-              >{tr.t('sign_up')}</Link>
-            </div>
-          </div>
-
         </div>
 
       </div>

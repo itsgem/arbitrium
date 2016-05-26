@@ -22,6 +22,9 @@ import AdminApiList from 'admin/containers/api/apiList';
 import AdminApiAdd from 'admin/containers/api/apiAdd';
 import AdminApiUpdate from 'admin/containers/api/apiUpdate';
 
+import AdminSubscriptionList from 'admin/containers/subscription/subscriptionList';
+import AdminSubscriptionEdit from 'admin/containers/subscription/subscriptionEdit';
+
 import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
@@ -202,6 +205,11 @@ export default () => (
           <IndexRoute component={AdminApiList}/>
           <Route component={AdminApiAdd} path="new"/>
           <Route component={AdminApiUpdate} path=":id"/>
+        </Route>
+
+        <Route path="subscription" onEnter={requireAuth}>
+          <IndexRoute component={AdminSubscriptionList} onEnter={requireAuth}/>
+          <Route component={AdminSubscriptionEdit} path=":id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account">

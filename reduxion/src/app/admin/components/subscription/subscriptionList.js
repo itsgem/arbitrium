@@ -1,41 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router';
-import {modal, openModal, closeModal} from 'common/components/modal'
-import {createError} from 'utils/error';
 
-class ApiList extends React.Component {
+class SubscriptionList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null,
-      id: null
-    };  }
-  componentWillReceiveProps(nextProps) {
+      errorServer: null
+    };
+  }
+  componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-    modal();
   }
-  userDisplay (data, alter) {
+
+  subscriptionDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.client.company_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.client.rep_last_name}, {data.client.rep_first_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.client.user.email_address}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.type}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
-          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
-            <span className="mdl-switch__label">On / Off</span>
-            </label>
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/i/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
-          <button
-              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
-            <i className="material-icons">delete</i>
-          </button>
+          to={"/coffee/subscription/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -99,59 +92,85 @@ class ApiList extends React.Component {
       </div>
     );
   }
+
   render() {
     let counter = false;
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let apiList = {last_page: 1};
-    let users = {};
-    if (Object.keys(this.props.listApiKeys).length) {
+    let subscriptionList = {last_page: 1};
+    let subscription = {};
+    if (Object.keys(this.props.subscriptionList).length) {
       let i=0;
       counter = true;
-      apiList = this.props.listApiKeys;
-      users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-      for (i = 1; i <= apiList.last_page; i++) {
-        pagination[i] = this.pagination(i, apiList.current_page);
+      subscriptionList = this.props.subscriptionList;
+      subscription = subscriptionList.data;
+      pagination[i] = this.prevPage(i, (subscriptionList.current_page > 1 ? (subscriptionList.current_page - 1): false));
+      for (i = 1; i <= subscriptionList.last_page; i++) {
+        pagination[i] = this.pagination(i, subscriptionList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-      perPage = apiList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((subscriptionList.current_page == subscriptionList.last_page)|| subscriptionList.last_page == 0 ? false : (subscriptionList.current_page + 1 )), subscriptionList.last_page );
+      perPage = subscriptionList.per_page;
     }
     return (
       <div className="filter-search">
-        <div className="mdl-grid">
-          <div className="mdl-cell">
-            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">New API Key</Link>
+        <p>Filter / Search</p>
+        <dialog className="mdl-dialog">
+          <p>
+            Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.
+          </p>
+          <div className="mdl-dialog__actions">
+            <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+            <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
           </div>
-        </div>
-        <div className="dialog-box"></div>
-        <div className="dialog-content">
-          <div className="dialog-inner">
-            <div className="msg-box mdl-shadow--2dp">
-               <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
-              <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        </dialog>
+          <div className="mdl-grid filter-search-bar">
+            <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
+                <label className="mdl-textfield__label">Company</label>
               </div>
             </div>
+            <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
+                <label className="mdl-textfield__label">Subscription</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input className="mdl-textfield__input" type="text" id="type" ref="type" />
+                <label className="mdl-textfield__label">Plan Type</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--3-col search-cta">
+              <button
+                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+              <button
+                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+            </div>
           </div>
-        </div>
-        <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
-          <thead>
-            <tr>
-              <th width="300" className="mdl-data-table__cell--non-numeric">Description</th>
-              <th width="500" className="mdl-data-table__cell--non-numeric">Key</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {counter && users.map(item => {
-              alter = alter ? false : true;
-              return this.userDisplay(item, alter); })}
-          </tbody>
-        </table>
+          <table className="mdl-data-table mdl-js-data-table table-client-list">
+            <thead>
+              <tr>
+                <th className="mdl-data-table__cell--non-numeric">ID</th>
+                <th className="mdl-data-table__cell--non-numeric">Company Name</th>
+                <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
+                <th className="mdl-data-table__cell--non-numeric">Email Address</th>
+                <th className="mdl-data-table__cell--non-numeric">Subscription</th>
+                <th className="mdl-data-table__cell--non-numeric">Plan Type</th>
+                <th className="mdl-data-table__cell--non-numeric">Status</th>
+                <th className="mdl-data-table__cell--non-numeric">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {counter && subscription.map(item => {
+                alter = alter ? false : true;
+                return this.subscriptionDisplay(item, alter); })}
+            </tbody>
+          </table>
           {/* <!-- Pagination -->*/}
         <div className="mdl-grid pagination">
           <div className="mdl-cell mdl-cell--3-col"></div>
@@ -168,17 +187,6 @@ class ApiList extends React.Component {
         </div>
       </div>
     );
-  }
-  deleteItem () {
-    this.props.clientDeleteApiKey(this.state.id).catch(createError);
-    this.modalClose();
-  }
-  changeActive (e, id, status) {
-    let payload = {
-      id: id,
-      is_active: ((e.target.checked == true) ? 0 : 1)
-    };
-    this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
@@ -218,25 +226,54 @@ class ApiList extends React.Component {
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
-    this.page(e, 1);
-  }
-  modalConfirm (e, id, company) {
-    openModal();
-    this.setState( {
-      id: id
-    } );
+    let currentPage = this.refs.currentpage.value;
+    this.page(e, currentPage);
   }
   modalClose () {
-    closeModal();
+    let dialog = document.querySelector('dialog');
+    dialog.close();
+  }
+  clearSearch(e) {
+    e.preventDefault();
+    this.refs.company_name.value = "";
+    this.refs.name.value = "";
+    this.refs.type.value = "";
+    this.searchList(e);
+  }
+  searchList(e) {
+    e.preventDefault();
+    let payload = {
+      company_name: this.refs.company_name.value,
+      name: this.refs.name.value,
+      type: this.refs.type.value
+    };
+    this.props.adminSubscriptionList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
+      company_name: this.refs.company_name.value,
+      name: this.refs.name.value,
+      type: this.refs.type.value
     };
-    this.props.clietApiKeys(payload).catch(createError);
+    this.props.adminSubscriptionList(payload);
   }
+  deleteItem () {
+    this.setState( {
+      loading: true,
+      errors: {},
+      errorServer: null
+    } );
+    $('.msg').html('Successfully deleted').addClass('bg-green');
+    $('.msg').fadeIn(1000, function() {
+      $(this).fadeOut(2000);
+    });
+    this.modalClose();
+    this.props.deleteAdminAccount(this.state.id)
+  }
+
 };
 
-export default ApiList;
+export default SubscriptionList;

@@ -96,7 +96,7 @@ class ApiAdd extends React.Component {
           </div>
           <div className="flex-order-gt-md-2" >
             <button id="btn-save"
-              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
               onClick={(e) => this.register(e)}>Create API Key</button>
           </div>
         </div>

@@ -91,6 +91,14 @@ select:focus {
   background: $base-orange;
 }
 
+.mdl-button--blue.mdl-button--raised,
+.mdl-button--blue.mdl-button--fab,
+.mdl-button.mdl-button--blue,
+.mdl-button--blue {
+  color: #fff;
+  background: $base-blue;
+}
+
 .mdl-button.mdl-button--fullwidth {
   width: 100%;
 }
