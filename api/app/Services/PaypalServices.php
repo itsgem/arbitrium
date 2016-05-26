@@ -189,11 +189,12 @@ class PaypalServices extends NrbServices
         $data['term']            = $request->get('term');
         $data['is_auto_renew']   = $request->get('is_auto_renew');
 
-        $subscription        = Subscription::findOrFail($data['subscription_id']);
-        $data['name']        = $subscription->name;
-        $data['description'] = $subscription->description;
+        $subscription            = Subscription::findOrFail($data['subscription_id']);
+        $data['name']            = $subscription->name;
+        $data['description']     = $subscription->description;
 
-        $data['paypal_plan_id'] = null;
+        $data['paypal_plan_id']  = null;
+        $approvalUrl             = null;
 
         // Create plan
         if (!$subscription->isTrial())
@@ -220,8 +221,6 @@ class PaypalServices extends NrbServices
             $payer = new Payer();
             $payer->setPaymentMethod('paypal');
             $agreement->setPayer($payer);
-
-            $approvalUrl = null;
 
             try {
                 $agreement = $agreement->create($this->_api_context);
