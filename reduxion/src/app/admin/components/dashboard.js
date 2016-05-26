@@ -9,6 +9,9 @@ class Dashboard extends React.Component {
     errorServer:null
     };
   }
+  componentWillReceiveProps(nextProps) {
+   document.querySelector('.alert').style.display = 'none';
+  }
   componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -20,7 +23,13 @@ class Dashboard extends React.Component {
         <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header body-bg">
           <AdminHeader />
           <div className="mdl-layout__content">
-            <div className="mdl-grid client-list">
+            <div id="top" className="mdl-grid client-list">
+            <div className="alert alert-warning">
+              <i className="material-icons"></i>
+              <div className="content">
+                Please fill in the following required fields below.
+              </div>
+            </div>
             {this.props.children}
             </div>
           </div>

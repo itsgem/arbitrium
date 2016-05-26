@@ -4,7 +4,6 @@
   color: $text-color;
   display: table;
   font-size: 21px;
-  height: 50px;
   padding: 0 !important;
   width: 100%;
   @include alert-variant( $base-blue, $border, $text-color );
