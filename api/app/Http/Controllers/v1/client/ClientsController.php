@@ -20,12 +20,14 @@ class ClientsController extends ApiController
     protected function getMethods()
     {
         return [
-            'cancelSubscription'     => 'Cancel Client Subscription',
-            'getSubscription'        => 'Get Client Current Subscription',
-            'getSubscriptionHistory' => 'Get Client Subscription History',
-            'purchaseSubscription'   => 'Purchase / Renew Client Subscription',
             'show'                   => 'Show Client Profile',
-            'update'                 => 'Update Client Profile'
+            'update'                 => 'Update Client Profile',
+            'getSubscription'        => 'Get Client Current Subscription',
+            'getPendingSubscription' => 'Get Client Pending Subscription',
+            'getSubscriptionHistory' => 'Get Client Subscription History',
+            'subscribe'              => 'Purchase / Renew Client Subscription',
+            'subscribeConfirm'       => 'Confirm Subscription Agreement',
+            'cancelSubscription'     => 'Cancel Client Subscription',
         ];
     }
 
@@ -109,6 +111,11 @@ class ClientsController extends ApiController
     public function getSubscription(ClientServices $service)
     {
         return $service->getSubscription($this->request, get_logged_in_client_id());
+    }
+
+    public function getPendingSubscription(ClientServices $service)
+    {
+        return $service->getPendingSubscription($this->request, get_logged_in_client_id());
     }
 
     /**
@@ -306,7 +313,8 @@ class ClientsController extends ApiController
         return $service->cancelSubscription(auth()->user()->client);
     }
 
-    //----- ADMIN
+    // @TODO-Arbitrium: For immediate paypal testing
+
     public function createPlan(PaypalRequest $request, PaypalServices $service)
     {
         return $service->createPlan($request);
@@ -322,8 +330,6 @@ class ClientsController extends ApiController
         return $service->getPlans($this->request);
     }
 
-    //----- CLIENT
-    // Recurring
     public function subscribePaypal(PaypalRequest $request, PaypalServices $service)
     {
         return $service->subscribe($request, auth()->user()->client);
@@ -352,16 +358,5 @@ class ClientsController extends ApiController
     public function reactivateAgreement($id, PaypalServices $service)
     {
         return $service->reactivateAgreement($id);
-    }
-
-    // One-Time
-    public function subscribeOneTime(PaypalRequest $request, PaypalServices $service)
-    {
-        return $service->subscribeOneTime($request);
-    }
-
-    public function executeAgreementOneTime(PaypalRequest $request, PaypalServices $service)
-    {
-        return $service->executeAgreementOneTime($request);
     }
 }

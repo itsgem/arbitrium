@@ -8,10 +8,11 @@
 
     <div>
         <div>Your subscription has been changed to <strong>{{ $subscription_name }}</strong>.<div>
-        <div>To confirm the subscription change, click on the link provided below.</div>
+
+        <br/><div>To confirm the subscription change, please make sure your <strong>Arbitrium account is logged in</strong> and then click on the PayPal link provided below.</div>
         <div>Link: <a href="{{ $link }}">{{ $link }}</a></div>
 
-        <div>Regards,</div><br/>
+        <br/><div>Regards,</div><br/>
         <div>{{ trans('email.sender') }}</div>
     </div>
 

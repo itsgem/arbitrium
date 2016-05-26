@@ -35,6 +35,7 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
         //-- SUBSCRIPTION
         Route::group(['prefix' => 'subscription'], function()
         {
+            Route::get('pending',           ['uses' => 'ClientsController@getPendingSubscription']);
             Route::get('current',           ['uses' => 'ClientsController@getSubscription']);
             Route::get('',                  ['uses' => 'ClientsController@getSubscriptionHistory']);
             Route::post('',                 ['uses' => 'ClientsController@subscribe']);

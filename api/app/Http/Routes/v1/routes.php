@@ -30,25 +30,32 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);
 
 
-    // For immediate paypal testing
-    Route::get('paypal/subscription/plan',              ['uses' => 'Client\ClientsController@getPlans']);
-    Route::post('paypal/subscription/plan',             ['uses' => 'Client\ClientsController@createPlan']);
-    Route::get('paypal/subscription/plan/{plan}',       ['uses' => 'Client\ClientsController@showPlan']);
+    // @TODO-Arbitrium: For immediate paypal testing
 
-    Route::group(['prefix' => 'paypal/subscription'], function()
+    Route::group(['prefix' => 'paypal', 'namespace' => 'Client'], function()
     {
-        Route::get('subscribe',          ['uses' => 'Client\ClientsController@subscribePaypal']);
-        Route::get('confirm',            ['uses' => 'Client\ClientsController@executeAgreement']);
-
-        Route::post('subscribe-onetime', ['uses' => 'Client\ClientsController@subscribeOneTime']);
-        Route::get('confirm-onetime',    ['uses' => 'Client\ClientsController@executeAgreementOneTime']);
-
-        Route::group(['prefix' => '{subscription}'], function()
+        Route::group(['prefix' => 'subscription'], function()
         {
-            Route::get('',             ['uses' => 'Client\ClientsController@showAgreement']);
-            Route::get('transactions', ['uses' => 'Client\ClientsController@getTransactions']);
-            Route::patch('suspend',    ['uses' => 'Client\ClientsController@suspendAgreement']);
-            Route::patch('reactivate', ['uses' => 'Client\ClientsController@reactivateAgreement']);
+            Route::get('subscribe',          ['uses' => 'ClientsController@subscribePaypal']);
+            Route::get('confirm',            ['uses' => 'ClientsController@executeAgreement']);
+
+            Route::post('subscribe-onetime', ['uses' => 'ClientsController@subscribeOneTime']);
+            Route::get('confirm-onetime',    ['uses' => 'ClientsController@executeAgreementOneTime']);
+
+            Route::group(['prefix' => 'plan'], function()
+            {
+                Route::get('',              ['uses' => 'ClientsController@getPlans']);
+                Route::post('',             ['uses' => 'ClientsController@createPlan']);
+                Route::get('{plan}',       ['uses' => 'ClientsController@showPlan']);
+            });
+
+            Route::group(['prefix' => '{subscription}'], function()
+            {
+                Route::get('',             ['uses' => 'ClientsController@showAgreement']);
+                Route::get('transactions', ['uses' => 'ClientsController@getTransactions']);
+                Route::patch('suspend',    ['uses' => 'ClientsController@suspendAgreement']);
+                Route::patch('reactivate', ['uses' => 'ClientsController@reactivateAgreement']);
+            });
         });
     });
 });

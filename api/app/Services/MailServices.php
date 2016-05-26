@@ -84,14 +84,12 @@ class MailServices extends NrbServices
         ], $user);
     }
 
-    public function subscriptionChangeConfirmation($user, $link, $subscription, $term)
+    public function subscriptionChangeConfirmation($user, $subscription)
     {
         $this->sendMail('email.subscription_change_confirmation', [
             'name'  => $user->first_name,
-            'username'  => $user->username,
-            'link'  => $link,
-            'email' => $user->email_address,
-            'subscription_name' => $subscription->name.' ('.$term.')',
+            'link'  => $subscription->paypal_approval_url,
+            'subscription_name' => $subscription->name.' ('.$subscription->term.')',
             'email_category' => EmailLog::CHANGE_SUBSCRIPTION
         ], $user);
     }

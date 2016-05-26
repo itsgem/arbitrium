@@ -278,6 +278,53 @@ class ClientServices extends NrbServices
         return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
     }
 
+    // Admin\ClientsController::getPendingSubscriptionSingle
+    // Client\ClientsController::getPendingSubscription
+    public function getPendingSubscription($request, $client_id = null)
+    {
+        // If user is client
+        if ($client_id)
+        {
+            $pending_subscription = Client::findOrFail($client_id)->pending_subscription;
+
+            return $this->respondWithSuccess($pending_subscription);
+        }
+
+        $current_subscription = ClientSubscription::clientId($request->get('client_id'))
+            ->unfinishedTempSubscription()
+            ->with(['client.user' => function($query){
+                $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
+            }])
+            ->subscriptionId($request->get('subscription_id'))
+            ->name($request->get('name'))
+            ->type($request->get('type'))
+            ->companyName($request->get('company_name'))
+            ->validFrom($request->get('valid_from'))
+            ->validTo($request->get('valid_to'))
+            ->dateFrom('valid_from', $request->get('valid_range_from'))
+            ->dateTo('valid_to', $request->get('valid_range_to'))
+            ->orderBy($request->get('sort_by', 'created_at'), $request->get('sort_dir', 'desc'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($current_subscription, $request->get('max_pagination_links'));
+    }
+
+    // Admin\ClientsController::resendSubscriptionChangeApprovalLink
+    public function resendSubscriptionChangeApprovalLink($client_id)
+    {
+        $client = Client::findOrFail($client_id);
+        $pending_subscription = $client->pending_subscription;
+
+        if (!$pending_subscription)
+        {
+            return $this->respondWithError(Errors::NO_CONTENT);
+        }
+
+        $client->sendApprovalLink($pending_subscription);
+
+        return $this->respondWithSuccess();
+    }
+
     // Admin\ClientsController::cancelSubscription
     // Client\ClientsController::cancelSubscription
     public function cancelSubscription($client)

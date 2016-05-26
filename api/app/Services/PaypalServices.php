@@ -272,6 +272,7 @@ class PaypalServices extends NrbServices
 
         return DB::transaction(function () use ($client, $subscription, $data, $approvalUrl)
         {
+            $data['approval_url'] = ($approvalUrl) ? $approvalUrl : null;
             $data['token'] = ($approvalUrl) ? get_str_url_query_params($approvalUrl, 'token') : null;
             $result = $client->tempSubscription($subscription, current_date_to_string(), $data);
 
@@ -282,7 +283,7 @@ class PaypalServices extends NrbServices
 
             if (is_admin_user_logged_in())
             {
-                $client->sendApprovalLink($approvalUrl, $subscription, $data['term']);
+                $client->sendApprovalLink($result);
             }
 
             return $this->respondWithSuccess([

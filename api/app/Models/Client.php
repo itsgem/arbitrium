@@ -173,6 +173,11 @@ class Client extends NrbModel
         return $this->hasOne(ClientSubscription::class)->active()->latest();
     }
 
+    public function pending_subscription()
+    {
+        return $this->hasOne(ClientSubscription::class)->unfinishedTempSubscription($this->id)->latest();
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(ClientSubscription::class);
@@ -268,6 +273,7 @@ class Client extends NrbModel
         $client_subscription->subscription_id   = $subscription->id;
         $client_subscription->client_id         = $this->id;
         $client_subscription->paypal_token_id   = $data['token'];
+        $client_subscription->paypal_approval_url = $data['approval_url'];
         $client_subscription->country_id        = $subscription->country_id;
         $client_subscription->description       = $subscription->description;
         $client_subscription->status            = ClientSubscription::STATUS_INACTIVE;
@@ -354,8 +360,8 @@ class Client extends NrbModel
         }
     }
 
-    public function sendApprovalLink($link, $subscription, $term)
+    public function sendApprovalLink($pending_subscription)
     {
-        with(new MailServices())->subscriptionChangeConfirmation($this, $link, $subscription, $term);
+        with(new MailServices())->subscriptionChangeConfirmation($this->user, $pending_subscription);
     }
 }

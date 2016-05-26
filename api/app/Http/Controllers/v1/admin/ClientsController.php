@@ -25,10 +25,13 @@ class ClientsController extends ApiController
             'show'                   => 'Retrieve Client',
             'store'                  => 'Add Client',
             'update'                 => 'Update Client',
-            'getSubscriptionHistory' => 'Client Subscriptions History List',
-            'getSubscription'        => 'Clients Current Subscription List',
-            'cancelSubscription'     => 'Cancel Client Subscription',
-            'purchaseSubscription'   => 'Purchase / Change Client Subscription',
+            'getSubscriptionHistory' => 'Get All Client Subscriptions History List',
+            'getSubscription'        => 'Get All Client Current Subscription List',
+            'getSubscriptionSingle'  => 'Get Single Client Current Subscription',
+            'getPendingSubscriptionSingle'         => 'Get Single Client Pending Subscription',
+            'resendSubscriptionChangeApprovalLink' => 'Resend Client Subscription Change Approval Link',
+            'cancelSubscription'     => 'Cancel Single Client Subscription',
+            'changeSubscription'     => 'Change Single Client Subscription',
         ];
     }
 
@@ -66,6 +69,8 @@ class ClientsController extends ApiController
     {
         return $service->update($request, $id);
     }
+
+    //----- SUBSCRIPTIONS
 
     /**
      * Get all client subscription history
@@ -228,6 +233,16 @@ class ClientsController extends ApiController
         return $service->getSubscription($this->request, $id);
     }
 
+    public function getPendingSubscriptionSingle($id, ClientServices $service)
+    {
+        return $service->getPendingSubscription($this->request, $id);
+    }
+
+    public function resendSubscriptionChangeApprovalLink($id, ClientServices $service)
+    {
+        return $service->resendSubscriptionChangeApprovalLink($id);
+    }
+
     /**
      * Cancel Client Subscription
      *
@@ -337,10 +352,5 @@ class ClientsController extends ApiController
     public function changeSubscription(SubscriptionRequest $request, $id, ClientServices $service)
     {
         return $service->subscribe($request, $id);
-    }
-
-    public function changeConfirmSubscription(SubscriptionRequest $request, $id, ClientServices $service)
-    {
-        return $service->subscribeConfirm($request, $id);
     }
 }
