@@ -121,6 +121,10 @@ button, select, html, textarea, input, legend {
   .subscription-detail .table-list tbody tr td{
     padding: 0px;
   }
+  .filter-search-bar, .pagination {
+    width: 100%;
+  }
+
 } 
 
 main {

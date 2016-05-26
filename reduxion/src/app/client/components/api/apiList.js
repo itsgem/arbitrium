@@ -125,50 +125,101 @@ class ApiList extends React.Component {
             <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">New API Key</Link>
           </div>
         </div>
-        <div className="dialog-box"></div>
-        <div className="dialog-content">
-          <div className="dialog-inner">
-            <div className="msg-box mdl-shadow--2dp">
-               <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
-              <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+        <div className="mdl-grid mdl-grid--no-spacing table-list-container">
+          <div className="dialog-box"></div>
+          <div className="dialog-content">
+            <div className="dialog-inner">
+              <div className="msg-box mdl-shadow--2dp">
+                 <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
+                <div className="mdl-dialog__actions">
+                  <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
+                  <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
-          <thead>
-            <tr>
-              <th width="300" className="mdl-data-table__cell--non-numeric">Description</th>
-              <th width="500" className="mdl-data-table__cell--non-numeric">Key</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {counter && users.map(item => {
-              alter = alter ? false : true;
-              return this.userDisplay(item, alter); })}
-          </tbody>
-        </table>
-          {/* <!-- Pagination -->*/}
-        <div className="mdl-grid pagination">
-          <div className="mdl-cell mdl-cell--3-col"></div>
-          <div className="mdl-cell mdl-cell--6-col">
-            {counter && pagination}
-          </div>
-          <div className="mdl-cell mdl-cell--3-col tooltipBox">
-            <span className="tooltiptext">Items to show per page</span>
-            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
-            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+          <div className="mdl-cell mdl-cell--12-col header-title"><p>Api key list</p></div>
+          <div className="mdl-grid filter-search-bar">
+              <div className="mdl-cell mdl-cell--3-col">
+                <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                  <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
+                  <label className="mdl-textfield__label">Description</label>
+                </div>
+              </div>
+              <div className="mdl-cell mdl-cell--3-col">
+                <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                  <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
+                  <label className="mdl-textfield__label">API Key</label>
+                </div>
+              </div>
+              <div className="mdl-cell mdl-cell--3-col">
+                <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                  <input className="mdl-textfield__input" type="text" id="created_at" ref="created_at" />
+                  <label className="mdl-textfield__label">Date created</label>
+                </div>
+              </div>
+              <div className="mdl-cell mdl-cell--3-col search-cta margin-top-20">
+                <button
+                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
+                  onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+                <button
+                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                  onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+              </div>
+            </div>
+          <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
+            <thead>
+              <tr>
+                <th width="300" className="mdl-data-table__cell--non-numeric">Description</th>
+                <th width="500" className="mdl-data-table__cell--non-numeric">Key</th>
+                <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
+                <th width="300" className="mdl-data-table__cell--non-numeric">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {counter && users.map(item => {
+                alter = alter ? false : true;
+                return this.userDisplay(item, alter); })}
+            </tbody>
+          </table>
+            {/* <!-- Pagination -->*/}
+          <div className="mdl-grid pagination">
+            <div className="mdl-cell mdl-cell--3-col"></div>
+            <div className="mdl-cell mdl-cell--6-col">
+              {counter && pagination}
+            </div>
+            <div className="mdl-cell mdl-cell--3-col tooltipBox">
+              <span className="tooltiptext">Items to show per page</span>
+              <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+            </div>
           </div>
         </div>
       </div>
     );
   }
+
+  clearSearch(e) {
+    e.preventDefault();
+    this.refs.description.value = "";
+    this.refs.api_key.value = "";
+    this.refs.created_at.value = "";
+    this.searchList(e, 10);
+  }
+
+  searchList(e, pageNum = null) {
+    e.preventDefault();
+    let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
+      description: this.refs.description.value,
+      key: this.refs.api_key.value,
+      date_created: this.refs.created_at.value
+    };
+    this.props.clietApiKeys(payload).catch(createError);
+  }
+
   deleteItem () {
     this.props.clientDeleteApiKey(this.state.id).catch(createError);
     this.modalClose();
