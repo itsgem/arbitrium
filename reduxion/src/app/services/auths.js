@@ -221,6 +221,14 @@ export default {
   getClientSubscriptionInfo(id) {
     return get('admin/client/' + id + '/subscription/current');
   },
+  changePurchaseSubscription(payload) {
+    return post('admin/client/' + payload.client_id + '/subscription', {
+      params: {
+        subscription_id: payload.subscription_id,
+        term: payload.term
+      }
+    });
+  },
   isActiveApiKey(payload) {
     return patch('admin/api-key/' + payload.id + "/activate", {
       params: {

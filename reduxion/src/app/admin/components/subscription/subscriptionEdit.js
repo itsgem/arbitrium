@@ -10,7 +10,8 @@ class SubscriptionEdit extends React.Component {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null
+      errorServer:null,
+      permissions: {}
     };
   }
   componentDidMount() {
@@ -21,8 +22,10 @@ class SubscriptionEdit extends React.Component {
   render() {
     let subscriptions = {};
     let clientSubscriptionInfo = {};
+    let clientInfo = {};
     subscriptions = this.props.allSubscriptions.data;
     clientSubscriptionInfo = this.props.clientSubscriptionInfo.data;
+    clientInfo = this.props.clientProfile.data;
 
     return (
       <main className="mdl-layout__content mdl-js-layout">
@@ -120,9 +123,12 @@ class SubscriptionEdit extends React.Component {
                             <tr>
                               <td>
                                 {
-                                  clientSubscriptionInfo.subscription_id == item.id ?
-                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/" + item.id}>{clientSubscriptionInfo.subscription_id ? 'Upgrade' : 'Subscribed'}</Link>
+                                  item.name == 'Trial' ? (clientInfo.can_avail_trial == false ?
+                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Trial' ? 'Subscribe' : 'Upgrade') : 'Subscribed'}</Link> )
+                                  : clientSubscriptionInfo.subscription_id == item.id ?
+                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Trial' ? 'Subscribe' : 'Upgrade') : 'Subscribed'}</Link>
                                 }
                               </td>
                             </tr>
