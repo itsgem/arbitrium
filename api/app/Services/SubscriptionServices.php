@@ -5,6 +5,8 @@ namespace App\Services;
 use DB;
 use App\Errors;
 use App\Nrb\NrbServices;
+use App\Models\Client;
+use App\Models\ClientSubscription;
 use App\Models\Subscription;
 
 class SubscriptionServices extends NrbServices

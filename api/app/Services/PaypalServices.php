@@ -227,31 +227,28 @@ class PaypalServices extends NrbServices
             $result = $this->createPlan($request, $client)->getData();
 
             $data['paypal_plan_id'] = $result->data->paypal_plan_id;
-        }
 
-        $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? "365" : "30";
+            $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? "365" : "30";
 
-        $start_date = current_datetime_iso8601(1);
+            $start_date = current_datetime_iso8601($start_date_offset);
 
-        // SubscribeCustomer
-        $agreement = new Agreement();
+            // SubscribeCustomer
+            $agreement = new Agreement();
 
-        $agreement->setName($data['name']. '('.$data['term'].')')
-            ->setDescription($data['description'])
-            ->setStartDate($start_date);
+            $agreement->setName($data['name']. '('.$data['term'].')')
+                ->setDescription($data['description'])
+                ->setStartDate($start_date);
 
-        $plan = new Plan();
-        $plan->setId($data['paypal_plan_id']);
-        $agreement->setPlan($plan);
+            $plan = new Plan();
+            $plan->setId($data['paypal_plan_id']);
+            $agreement->setPlan($plan);
 
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-        $agreement->setPayer($payer);
+            $payer = new Payer();
+            $payer->setPaymentMethod('paypal');
+            $agreement->setPayer($payer);
 
-        $approvalUrl = null;
+            $approvalUrl = null;
 
-        if (!$subscription->isTrial())
-        {
             try {
                 $agreement = $agreement->create($this->_api_context);
                 $approvalUrl = $agreement->getApprovalLink();
