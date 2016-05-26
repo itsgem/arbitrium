@@ -24,6 +24,7 @@ import AdminApiUpdate from 'admin/containers/api/apiUpdate';
 
 import AdminSubscriptionList from 'admin/containers/subscription/subscriptionList';
 import AdminSubscriptionEdit from 'admin/containers/subscription/subscriptionEdit';
+import AdminSubscriptionDetail from 'admin/containers/subscription/subscriptionDetail';
 
 import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
@@ -209,7 +210,8 @@ export default () => (
 
         <Route path="subscription" onEnter={requireAuth}>
           <IndexRoute component={AdminSubscriptionList} onEnter={requireAuth}/>
-          <Route component={AdminSubscriptionEdit} path=":id" onEnter={requireAuth}/>
+          <Route component={AdminSubscriptionEdit} path="client/:client_id" onEnter={requireAuth}/>
+          <Route component={AdminSubscriptionDetail} path="client/:client_id/detail/:subscription_id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account">

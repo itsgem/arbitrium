@@ -9,10 +9,11 @@ export default React.createClass( {
   },
   componentWillMount(){
     this.props.allSubscriptions();
-    this.props.clientSubscriptionInfo(this.props.params.id);
+    this.props.clientSubscriptionInfo(this.props.params.client_id);
+    this.props.clientProfile(this.props.params.client_id);
   },
   render() {
-    if (Object.keys(this.props.subscriptions).length && Object.keys(this.props.subscriptionInfoClient).length) {
+    if (Object.keys(this.props.subscriptions).length && Object.keys(this.props.subscriptionInfoClient).length && Object.keys(this.props.clientInfo).length) {
       return this.renderSubscriptions();
     } else {
        return (
@@ -35,8 +36,9 @@ export default React.createClass( {
         <SubscriptionEdit
           allSubscriptions={this.props.subscriptions}
           clientSubscriptionInfo={this.props.subscriptionInfoClient}
+          clientProfile={this.props.clientInfo}
           />
       </div>
     );
   }
-} );
+});
