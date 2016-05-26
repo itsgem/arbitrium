@@ -8,6 +8,7 @@ use App\Http\Requests\v1\ClientUserRequest;
 use App\Http\Requests\v1\PaypalRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ClientServices;
+use App\Services\SubscriptionServices;
 use App\Services\PaypalServices;
 
 class ClientsController extends ApiController
@@ -104,16 +105,16 @@ class ClientsController extends ApiController
      *     )
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscription(ClientServices $service)
+    public function getSubscription(SubscriptionServices $service)
     {
         return $service->getSubscription($this->request, get_logged_in_client_id());
     }
 
-    public function getPendingSubscription(ClientServices $service)
+    public function getPendingSubscription(SubscriptionServices $service)
     {
         return $service->getPendingSubscription($this->request, get_logged_in_client_id());
     }
@@ -163,11 +164,11 @@ class ClientsController extends ApiController
      *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscriptionHistory(ClientServices $service)
+    public function getSubscriptionHistory(SubscriptionServices $service)
     {
         return $service->getSubscriptionHistory($this->request, get_logged_in_client_id());
     }
@@ -213,11 +214,11 @@ class ClientsController extends ApiController
      * )
      *
      * @param SubscriptionRequest $request
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function subscribe(SubscriptionRequest $request, ClientServices $service)
+    public function subscribe(SubscriptionRequest $request, SubscriptionServices $service)
     {
         return $service->subscribe($request, auth()->user()->client);
     }
@@ -263,11 +264,11 @@ class ClientsController extends ApiController
      * )
      *
      * @param SubscriptionConfirmRequest $request
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function subscribeConfirm(SubscriptionConfirmRequest $request, ClientServices $service)
+    public function subscribeConfirm(SubscriptionConfirmRequest $request, SubscriptionServices $service)
     {
         return $service->subscribeConfirm($request);
     }
@@ -304,11 +305,11 @@ class ClientsController extends ApiController
      *     )
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function cancelSubscription(ClientServices $service)
+    public function cancelSubscription(SubscriptionServices $service)
     {
         return $service->cancelSubscription(auth()->user()->client);
     }

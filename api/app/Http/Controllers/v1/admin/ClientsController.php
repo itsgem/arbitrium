@@ -7,6 +7,7 @@ use App\Http\Requests\v1\ClientUserRequest;
 use App\Http\Requests\v1\Client\SubscriptionRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ClientServices;
+use App\Services\SubscriptionServices;
 
 class ClientsController extends ApiController
 {
@@ -118,11 +119,11 @@ class ClientsController extends ApiController
      *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscriptionHistory(ClientServices $service)
+    public function getSubscriptionHistory(SubscriptionServices $service)
     {
         return $service->getSubscriptionHistory($this->request);
     }
@@ -173,11 +174,11 @@ class ClientsController extends ApiController
      *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscription(ClientServices $service)
+    public function getSubscription(SubscriptionServices $service)
     {
         return $service->getSubscription($this->request);
     }
@@ -224,21 +225,21 @@ class ClientsController extends ApiController
      * )
      *
      * @param $id
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscriptionSingle($id, ClientServices $service)
+    public function getSubscriptionSingle($id, SubscriptionServices $service)
     {
         return $service->getSubscription($this->request, $id);
     }
 
-    public function getPendingSubscriptionSingle($id, ClientServices $service)
+    public function getPendingSubscriptionSingle($id, SubscriptionServices $service)
     {
         return $service->getPendingSubscription($this->request, $id);
     }
 
-    public function resendSubscriptionChangeApprovalLink($id, ClientServices $service)
+    public function resendSubscriptionChangeApprovalLink($id, SubscriptionServices $service)
     {
         return $service->resendSubscriptionChangeApprovalLink($id);
     }
@@ -285,11 +286,11 @@ class ClientsController extends ApiController
      * )
      *
      * @param $id
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function cancelSubscription($id, ClientServices $service)
+    public function cancelSubscription($id, SubscriptionServices $service)
     {
         return $service->cancelSubscription($id);
     }
@@ -345,11 +346,11 @@ class ClientsController extends ApiController
      *
      * @param SubscriptionRequest $request
      * @param $id
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function changeSubscription(SubscriptionRequest $request, $id, ClientServices $service)
+    public function changeSubscription(SubscriptionRequest $request, $id, SubscriptionServices $service)
     {
         return $service->subscribe($request, $id);
     }
