@@ -52,7 +52,7 @@ class ClientSubscription extends Subscription
     {
         $date = current_date_to_string();
         return $query->whereRaw("'{$date}' BETWEEN valid_from and valid_to ")
-            ->where('status', self::STATUS_ACTIVE);
+            ->status(self::STATUS_ACTIVE);
     }
 
     public function scopeSubscriptionId($query, $id)
@@ -122,16 +122,16 @@ class ClientSubscription extends Subscription
 
     public function scopeActive($query, $is_active = self::STATUS_ACTIVE)
     {
-        return $query->where('status', $is_active);
+        return $query->status($is_active);
     }
 
     public function scopeUnfinishedTempSubscription($query, $client_id = null)
     {
         return $query->clientId($client_id)
-            ->where('status', self::STATUS_INACTIVE)
-            ->where('status_end', null)
-            ->where('valid_from', null)
-            ->where('valid_to', null);
+            ->status(self::STATUS_INACTIVE)
+            ->whereNull('status_end')
+            ->whereNull('valid_from')
+            ->whereNull('valid_to');
     }
 
     public function scopeIsAutoRenew($query, $flag = false)
