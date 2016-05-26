@@ -22,7 +22,8 @@ class SubscriptionRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'name'                    => 'required',
+                'name'                    => 'required|max:120',
+                'description'             => 'required|max:120',
                 'type'                    => 'required|in:'.Subscription::TYPE_TRIAL.','.Subscription::TYPE_PLAN,
                 'country_id'              => 'required|exists:countries,id',
                 'fee_monthly'             => 'required|money',

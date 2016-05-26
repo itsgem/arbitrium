@@ -170,7 +170,12 @@ class Client extends NrbModel
 
     public function latest_subscription()
     {
-        return $this->hasOne(ClientSubscription::class)->latest();
+        return $this->hasOne(ClientSubscription::class)->active()->latest();
+    }
+
+    public function pending_subscription()
+    {
+        return $this->hasOne(ClientSubscription::class)->unfinishedTempSubscription($this->id)->latest();
     }
 
     public function subscriptions()
@@ -253,17 +258,26 @@ class Client extends NrbModel
         return $this->approval_status == self::PENDING;
     }
 
-    public function purchaseSubscription($subscription, $start_date, $term)
+    public function tempSubscription($subscription, $start_date, $data)
     {
-        $client_subscription = NULL;
+        // Clear existing unfinished temp subscriptions
+        $this->clearUnfinishedTempSubscriptions();
+
         if (!($subscription instanceof Subscription))
         {
             $subscription = Subscription::findOrFail($subscription);
         }
 
-        $client_id = $this->id;
-
         $client_subscription = new ClientSubscription($subscription->toArray());
+
+        $client_subscription->subscription_id   = $subscription->id;
+        $client_subscription->client_id         = $this->id;
+        $client_subscription->paypal_token_id   = $data['token'];
+        $client_subscription->paypal_approval_url = $data['approval_url'];
+        $client_subscription->country_id        = $subscription->country_id;
+        $client_subscription->description       = $subscription->description;
+        $client_subscription->status            = ClientSubscription::STATUS_INACTIVE;
+        $client_subscription->status_end        = null;
 
         if ($subscription->isTrial())
         {
@@ -272,15 +286,33 @@ class Client extends NrbModel
                 return false;
             }
 
-            $term = null;
+            $this->latest_subscription->upgrade();
+
+            $data['term']           = null;
+            $data['is_auto_renew']  = false;
+
+            $client_subscription->status        = ClientSubscription::STATUS_ACTIVE;
+            $client_subscription->setValidity($start_date);
         }
 
-        $client_subscription->subscription_id   = $subscription->id;
-        $client_subscription->client_id         = $client_id;
-        $client_subscription->country_id        = $subscription->country_id;
-        $client_subscription->status            = ClientSubscription::STATUS_ACTIVE;
-        $client_subscription->term              = $term;
-        $client_subscription->setValidity($start_date, $term);
+        $client_subscription->paypal_plan_id    = $data['paypal_plan_id'];
+        $client_subscription->term              = $data['term'];
+        $client_subscription->is_auto_renew     = $data['is_auto_renew'];
+
+        $client_subscription->save();
+
+        return $client_subscription;
+    }
+
+    public function finalizeSubscription($client_subscription, $start_date)
+    {
+        if (!($client_subscription instanceof ClientSubscription))
+        {
+            $client_subscription = ClientSubscription::findOrFail($client_subscription);
+        }
+
+        $client_subscription->status = ClientSubscription::STATUS_ACTIVE;
+        $client_subscription->setValidity($start_date, $client_subscription->term);
         $client_subscription->save();
 
         return $client_subscription;
@@ -300,5 +332,36 @@ class Client extends NrbModel
         }
 
         return true;
+    }
+
+    public function hasUnfinishedTempSubscriptions($client_id = null)
+    {
+        $client_id = ($client_id) ? $client_id : $this->id;
+
+        $unfinished_temp_subscriptions = ClientSubscription::unfinishedTempSubscription($client_id)->count();
+
+        if ($unfinished_temp_subscriptions)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function clearUnfinishedTempSubscriptions($client_id = null)
+    {
+        $client_id = ($client_id) ? $client_id : $this->id;
+
+        $unfinished_temp_subscriptions= $this->hasUnfinishedTempSubscriptions();
+
+        if ($unfinished_temp_subscriptions)
+        {
+            ClientSubscription::unfinishedTempSubscription($client_id)->delete();
+        }
+    }
+
+    public function sendApprovalLink($pending_subscription)
+    {
+        with(new MailServices())->subscriptionChangeConfirmation($this->user, $pending_subscription);
     }
 }

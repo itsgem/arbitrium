@@ -52,6 +52,10 @@ class Errors
     // Subscriptions
     const EXISTING_TRIAL_SUBSCRIPTION = 70001;
 
+    // Paypal
+    const PAYPAL_ERROR     = 80001;
+    const PAYPAL_CANCELLED = 80002;
+
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
         self::UNAUTHORIZED          => Response::HTTP_UNAUTHORIZED,

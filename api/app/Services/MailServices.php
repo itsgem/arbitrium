@@ -84,6 +84,16 @@ class MailServices extends NrbServices
         ], $user);
     }
 
+    public function subscriptionChangeConfirmation($user, $subscription)
+    {
+        $this->sendMail('email.subscription_change_confirmation', [
+            'name'  => $user->first_name,
+            'link'  => config('paypal.callback_urls.subscriptions'),
+            'subscription_name' => $subscription->getSubscriptionName(),
+            'email_category' => EmailLog::CHANGE_SUBSCRIPTION
+        ], $user);
+    }
+
     public function sendInvoice($user, $url)
     {
         $this->sendMail('email.invoice', [

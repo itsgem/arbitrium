@@ -21,6 +21,14 @@ class ClientSubscription extends Subscription
 
     protected $dates = ['valid_from', 'valid_to'];
 
+    protected $fillable = [
+        'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
+        'name', 'description', 'type', 'country_id',
+        'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
+        'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
+        'created_by', 'updated_by'
+    ];
+
     protected $appends = ['total', 'currency'];
 
     //---------- relationships
@@ -44,7 +52,7 @@ class ClientSubscription extends Subscription
     {
         $date = current_date_to_string();
         return $query->whereRaw("'{$date}' BETWEEN valid_from and valid_to ")
-            ->where('status', self::STATUS_ACTIVE);
+            ->status(self::STATUS_ACTIVE);
     }
 
     public function scopeSubscriptionId($query, $id)
@@ -63,6 +71,31 @@ class ClientSubscription extends Subscription
         }
     }
 
+    public function scopePaypalPlanId($query, $paypal_plan_id)
+    {
+        if ($paypal_plan_id)
+        {
+            return $query->where('paypal_plan_id', $paypal_plan_id);
+        }
+    }
+
+    public function scopePaypalAgreementId($query, $paypal_agreement_id, $client_id = null)
+    {
+        if ($paypal_agreement_id)
+        {
+            return $query->clientId($client_id)
+                ->where('paypal_agreement_id', $paypal_agreement_id);
+        }
+    }
+
+    public function scopePaypalTokenId($query, $paypal_token_id)
+    {
+        if ($paypal_token_id)
+        {
+            return $query->where('paypal_token_id', $paypal_token_id);
+        }
+    }
+
     public function scopeName($query, $name)
     {
         if ($name)
@@ -77,6 +110,28 @@ class ClientSubscription extends Subscription
         {
             return $query->where('type', $type);
         }
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        if ($status)
+        {
+            return $query->where('status', $status);
+        }
+    }
+
+    public function scopeActive($query, $is_active = self::STATUS_ACTIVE)
+    {
+        return $query->status($is_active);
+    }
+
+    public function scopeUnfinishedTempSubscription($query, $client_id = null)
+    {
+        return $query->clientId($client_id)
+            ->status(self::STATUS_INACTIVE)
+            ->whereNull('status_end')
+            ->whereNull('valid_from')
+            ->whereNull('valid_to');
     }
 
     public function scopeIsAutoRenew($query, $flag = false)
@@ -169,5 +224,10 @@ class ClientSubscription extends Subscription
             // Monthly and Trial
             $this->valid_to = $this->valid_from->addDays(29);
         }
+    }
+
+    public function hasPaypal()
+    {
+        return $this->paypal_plan_id && $this->paypal_agreement_id;
     }
 }

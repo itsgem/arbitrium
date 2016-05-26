@@ -48,3 +48,16 @@ function format_money($num)
 {
     return number_format($num, 2);
 }
+
+function get_str_url_query_params($url, $query = null)
+{
+    $query_str = parse_url($url, PHP_URL_QUERY);
+    parse_str($query_str, $query_params);
+
+    if ($query)
+    {
+        return $query_params[$query];
+    }
+
+    return $query_params;
+}
