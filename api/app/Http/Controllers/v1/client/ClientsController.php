@@ -270,7 +270,7 @@ class ClientsController extends ApiController
      */
     public function subscribeConfirm(SubscriptionConfirmRequest $request, SubscriptionServices $service)
     {
-        return $service->subscribeConfirm($request);
+        return $service->subscribeConfirm($request, get_logged_in_client_id());
     }
 
     /**

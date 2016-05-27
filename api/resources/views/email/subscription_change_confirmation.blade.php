@@ -7,12 +7,14 @@
     <div>Hi {{ $name }},</div><br/>
 
     <div>
-        <div>Your subscription has been changed to <strong>{{ $subscription_name }}</strong>.<div>
+        <div>Your subscription has been initially changed to <strong>{{ $subscription_name }}</strong>.<div>
 
-        <br/><div>To confirm the subscription change, please make sure your <strong>Arbitrium account is logged in</strong> and then click on the PayPal link provided below.</div>
+        <br/><div>To confirm the subscription change, please make sure your Arbitrium account is logged in and then click on the link provided below.</div>
         <div>Link: <a href="{{ $link }}">{{ $link }}</a></div>
 
-        <br/><div>Regards,</div><br/>
+        <br/><div>Your current subscription will not be changed until you confirm this subscription change.</div>
+
+        <br/><br/><div>Regards,</div><br/>
         <div>{{ trans('email.sender') }}</div>
     </div>
 

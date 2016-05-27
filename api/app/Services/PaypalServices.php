@@ -250,10 +250,8 @@ class PaypalServices extends NrbServices
                 return $this->respondWithError(Errors::EXISTING_TRIAL_SUBSCRIPTION);
             }
 
-            if (is_admin_user_logged_in())
-            {
-                $client->sendApprovalLink($result);
-            }
+            // Send email notification
+            $client->sendApprovalLink($result);
 
             return $this->respondWithSuccess([
                 'approval_url' => $approvalUrl,
@@ -339,6 +337,15 @@ class PaypalServices extends NrbServices
             return $this->respondWithSuccess();
         }
 
+        $client_subscription = ClientSubscription::paypalAgreementId($id)->first();
+
+        if (!$client_subscription)
+        {
+            return $this->respondWithError(Errors::NO_CONTENT);
+        }
+
+        $client = $client_subscription->client;
+
         $createdAgreement = $this->showAgreement($id, true);
 
         //Create an Agreement State Descriptor, explaining the reason to suspend.
@@ -353,6 +360,9 @@ class PaypalServices extends NrbServices
         } catch (Exception $ex) {
             return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
+
+        // Send email notification
+        $client->sendSubscriptionCancellation($client_subscription);
 
         return $this->respondWithSuccess(json_decode($agreement, true));
     }

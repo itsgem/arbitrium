@@ -94,6 +94,25 @@ class MailServices extends NrbServices
         ], $user);
     }
 
+    public function subscriptionChangeSuccess($user, $subscription)
+    {
+        $this->sendMail('email.subscription_change_success', [
+            'name'  => $user->first_name,
+            'subscription_name' => $subscription->getSubscriptionName(),
+            'subscription_validity' => $subscription->getSubscriptionValidity(),
+            'email_category' => EmailLog::CHANGE_SUBSCRIPTION_SUCCESS
+        ], $user);
+    }
+
+    public function subscriptionCancellation($user, $subscription)
+    {
+        $this->sendMail('email.subscription_cancellation', [
+            'name'  => $user->first_name,
+            'subscription_name' => $subscription->getSubscriptionName(),
+            'email_category' => EmailLog::CANCEL_SUBSCRIPTION
+        ], $user);
+    }
+
     public function sendInvoice($user, $url)
     {
         $this->sendMail('email.invoice', [

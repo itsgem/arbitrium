@@ -6,6 +6,8 @@ class ClientSubscription extends Subscription
 {
     const TERM_MONTHLY         = 'Monthly';
     const TERM_ANNUALLY        = 'Annually';
+    const TERM_ANNUAL          = '1 Year';
+    const TERM_MONTH           = '1 Month';
 
     const TYPE_TRIAL           = 'Trial';
     const TYPE_PLAN            = 'Plan';
@@ -208,6 +210,40 @@ class ClientSubscription extends Subscription
         if ($invoice)
         {
             $this->invoice_id = $invoice->id;
+        }
+    }
+
+    public function getSubscriptionName()
+    {
+        $name = $this->name;
+
+        if ($this->term)
+        {
+            $term = $this->term;
+
+            if (!$this->is_auto_renew)
+            {
+                if ($term == self::TERM_ANNUALLY)
+                {
+                    $term = self::TERM_ANNUAL;
+                }
+                else
+                {
+                    $term = self::TERM_MONTH;
+                }
+            }
+
+            $name .= ' ('.$term.')';
+        }
+
+        return $name;
+    }
+
+    public function getSubscriptionValidity()
+    {
+        if ($this->valid_from && $this->valid_to)
+        {
+            return $this->valid_from->toDateString().' to '.$this->valid_to->toDateString();
         }
     }
 

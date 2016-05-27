@@ -286,7 +286,11 @@ class Client extends NrbModel
                 return false;
             }
 
-            $this->latest_subscription->upgrade();
+            // if has existing subscription, change status to upgraded
+            if ($this->latest_subscription)
+            {
+                $this->latest_subscription->upgrade();
+            }
 
             $data['term']           = null;
             $data['is_auto_renew']  = false;
@@ -363,5 +367,15 @@ class Client extends NrbModel
     public function sendApprovalLink($pending_subscription)
     {
         with(new MailServices())->subscriptionChangeConfirmation($this->user, $pending_subscription);
+    }
+
+    public function sendSubscriptionChangeSuccess($subscription)
+    {
+        with(new MailServices())->subscriptionChangeSuccess($this->user, $subscription);
+    }
+
+    public function sendSubscriptionCancellation($subscription)
+    {
+        with(new MailServices())->subscriptionCancellation($this->user, $subscription);
     }
 }
