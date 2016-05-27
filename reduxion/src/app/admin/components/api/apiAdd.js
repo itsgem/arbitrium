@@ -57,7 +57,7 @@ class ApiAdd extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address});
+      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
     let clientList = this.props.clientList.data;
     let permissions = this.props.apiPermissions.data;
@@ -200,12 +200,16 @@ class ApiAdd extends React.Component {
     } );
 
     let ipAddresses = this.refs.ip_addresses.value;
-    ipAddresses = ipAddresses.split('\n');
-    ipAddresses = ipAddresses.map(function(obj){
-       let rObj = {};
-       rObj = {ip_address: obj.trim()};
-       return rObj;
-    });
+    if (ipAddresses) {
+      ipAddresses = ipAddresses.split('\n');
+      ipAddresses = ipAddresses.map(function(obj){
+         let rObj = {};
+         rObj = {ip_address: obj.trim()};
+         return rObj;
+      });
+    } else {
+      ipAddresses = [];
+    }
     let payload = {
       client_id: this.state.client_id,
       description: this.refs.description.value,
