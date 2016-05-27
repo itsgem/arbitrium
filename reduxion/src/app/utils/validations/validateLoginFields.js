@@ -8,7 +8,11 @@ export default class {
 
   execute() {
     let rules = new Checkit( {
-      email: [ 'required', 'minLength:3', 'maxLength:64' ],
+      email: [
+        { rule: 'required', label: 'email/username' },
+        { rule: 'minLength:3', label: 'email/username' },
+        { rule: 'maxLength:64', label: 'email/username' }
+      ],
       password: [ 'required', 'minLength:6', 'maxLength:64' ]
     } );
 
