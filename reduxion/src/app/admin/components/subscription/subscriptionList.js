@@ -22,7 +22,7 @@ class SubscriptionList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{data.client.company_name}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.client.rep_last_name}, {data.client.rep_first_name}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.client.user.email_address}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.name == 'Trial' ? 'Free Trial' : data.name}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.type}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
