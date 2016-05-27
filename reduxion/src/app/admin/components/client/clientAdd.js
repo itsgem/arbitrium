@@ -162,7 +162,7 @@ this.scrolltop(errors);
               </div>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
-              <div id="country-opt" className={this.formClassNames('country_id', errors)}>
+              <div id="country_id-opt" className={this.formClassNames('country_id', errors)}>
                 <Country
                   country = { this.props.countryList }
                 />

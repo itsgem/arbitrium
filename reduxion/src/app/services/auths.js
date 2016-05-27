@@ -410,7 +410,16 @@ export default {
     return post('client/subscription', {
       params: {
         subscription_id: payload.subscription_id,
-        term: payload.term
+        term: payload.term,
+        is_auto_renew: payload.is_auto_renew
+      }
+    });
+  },
+  clientPurchaseSubscriptionConfirm(payload) {
+    return post('client/subscription/confirm', {
+      params: {
+        success: payload.success,
+        token: payload.token
       }
     });
   },

@@ -5,16 +5,38 @@ import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
 
 export default React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   componentDidMount () {
     this.props.subscriptionList().catch(createError);
     this.props.clientSubscription().catch(createError);
     this.props.clientProfile().catch(createError);
   },
   componentWillMount () {
-  if ( typeof(window.componentHandler) != 'undefined' ) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+
+    let query = this.props.location.query;
+    if (query.success && query.token) {
+      let payload = {
+        success: query.success == 'true' ? true : false,
+        token: query.token
+      };
+      this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
+      this.context.router.push('/i/subscription');
+    }
   },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.purchaseSuccessConfirm) {
+      this.props.subscriptionList().catch(createError);
+      this.props.clientSubscription().catch(createError);
+      this.props.clientProfile().catch(createError);
+    }
+  },
+
   loadingRender () {
     openLoading();
     return (
@@ -22,7 +44,14 @@ export default React.createClass({
     );
   },
   render() {
-    if (Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length && Object.keys(this.props.user).length) {
+    if (Object.keys(this.props.error).length){
+      let notification = document.querySelector('.mdl-snackbar');
+      notification.MaterialSnackbar.showSnackbar( {
+          message: this.props.error.data.errors.token,
+          timeout: 3000
+      });
+    }
+    if (!this.props.loading && Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length && Object.keys(this.props.user).length) {
       closeLoading();
       return this.renderSubscriptionDetail();
     } else {

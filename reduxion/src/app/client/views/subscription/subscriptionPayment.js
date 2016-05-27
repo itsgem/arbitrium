@@ -8,15 +8,14 @@ export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  componentDidMount () {
+  componentWillMount () {
     let id = this.props.params.id;
     this.props.getSubscriptionItem(id).catch(createError);
-  },
-  componentWillMount () {
-  if ( typeof(window.componentHandler) != 'undefined' ) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   },
+
   loadingRender () {
     openLoading();
     return (
@@ -24,18 +23,28 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.purchaseSuccess) {
+    if (nextProps.purchaseSuccess.data) {
+      if (nextProps.purchaseSuccess.data.approval_url) {
+        window.location = nextProps.purchaseSuccess.data.approval_url;
+      } else {
+        this.context.router.push('/i/subscription');
+      }
+
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-          message: 'Subscription Success',
+          message: 'Redirecting to PayPal',
           timeout: 3000
       });
-      this.context.router.push('/i/subscription');
     }
   },
   render() {
-    if (Object.keys(this.props.subscriptionItem).length && !this.props.loading) {
-      closeLoading();
+
+    if (Object.keys(this.props.subscriptionItem).length) {
+      if (!this.props.loading) {
+        closeLoading();
+      } else {
+        openLoading();
+      }
       return this.renderSubscriptionPayment();
     } else {
       return this.loadingRender();

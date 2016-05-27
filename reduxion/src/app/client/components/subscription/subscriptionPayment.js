@@ -3,6 +3,7 @@ import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 class SubscriptionPayment extends React.Component {
   constructor(props) {
@@ -21,6 +22,11 @@ class SubscriptionPayment extends React.Component {
   componentDidMount () {
     this.dateValid();
   }
+  loadingRender () {
+    return (
+      <div className="loading"></div>
+    );
+  }
   render () {
     let subscriptionItem = this.props.subscriptionItem.data;
     let {errors, errorServer} = this.state ? this.state :'';
@@ -29,6 +35,7 @@ class SubscriptionPayment extends React.Component {
     }
     return (
       <div className="mdl-cell mdl-cell--12-col">
+        { this.loadingRender() }
         <form>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
@@ -224,7 +231,6 @@ class SubscriptionPayment extends React.Component {
         isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
         break;
     }
-    console.log('term', term);
 
     let target = this.refs.term.id + "-opt";
     if (this.refs.term.value) {
@@ -249,33 +255,28 @@ class SubscriptionPayment extends React.Component {
   }
   subscribe (e) {
     e.preventDefault();
-    //if (this.refs.is_api_call_restricted.checked) {
     let payload = {
       subscription_id: this.props.params.id,
-      term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly')
+      term: this.refs.term.value,
+      is_auto_renew: this.refs.isTerm.checked
     };
-
-    if (this.refs.isTerm.checked ) {
-      return this.validateTerm.call(this, payload)
+    return this.validateTerm.call(this, payload)
         .with(this)
         .then(this.validSubscribe)
         .catch(this.setErrors);
-    } else {
-      this.validSubscribe(payload);
-    }
-
-    //}
   }
   validateTerm(payload) {
     let rules = new Checkit({
       subscription_id: [],
-      term: [{ rule: 'required', label: 'term of subscription' }]
+      term: [{ rule: 'required', label: 'term of subscription' }],
+      is_auto_renew: []
     });
 
     return rules.run(payload);
   }
 
   validSubscribe(payload) {
+    openLoading();
     this.props.clientPurchaseSubscription(payload);
   }
 

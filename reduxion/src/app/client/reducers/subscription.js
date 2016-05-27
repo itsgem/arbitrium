@@ -8,24 +8,29 @@ export const subscriptionList = createActionAsync('CLIENT_SUBSCRIPTION_LIST', au
 export const clientSubscription = createActionAsync('CLIENT_SUBSCRIPTION', auth.clientSubscription);
 export const clientPurchaseSubscription = createActionAsync('CLIENT_PURCHASE_SUBSCRIPTION', auth.clientPurchaseSubscription);
 export const getSubscriptionItem = createActionAsync('CLIENT_SINGLE_SUBSCRIPTION', auth.getSubscriptionItem);
+export const clientPurchaseSubscriptionConfirm = createActionAsync('CLIENT_PURCHASE_SUBSCRIPTION_CONFIRM', auth.clientPurchaseSubscriptionConfirm);
 
 const initialState = Immutable.fromJS({
   listSubscription: {},
   subscriptionItem: {},
   currentSubscription: {},
-  purchaseSuccess: false,
-  loading: false
+  purchaseSuccess: {},
+  purchaseSuccessConfirm: false,
+  loading: false,
+  error: {}
 });
 
 export default createReducer({
   [subscriptionList.ok]: (state, payload) => state.merge({
     listSubscription: payload,
     loading: false,
-    purchaseSuccess: false
+    purchaseSuccessConfirm: false,
+    error: {}
   }),
   [subscriptionList.request]: (state) => state.merge({
     loading: true,
-    purchaseSuccess: false
+    purchaseSuccessConfirm: false,
+    error: {}
   }),
   [clientSubscription.ok]: (state, payload) => state.merge({
     currentSubscription: payload,
@@ -34,21 +39,33 @@ export default createReducer({
   [clientSubscription.request]: (state) => state.merge({
     loading: true
   }),
-  [clientPurchaseSubscription.ok]: (state) => state.merge({
-    purchaseSuccess: true,
+  [clientPurchaseSubscription.ok]: (state, payload) => state.merge({
+    purchaseSuccess: payload,
     loading: false
   }),
   [clientPurchaseSubscription.request]: (state) => state.merge({
-    purchaseSuccess: false,
+    purchaseSuccess: {},
     loading: true
   }),
   [getSubscriptionItem.ok]: (state, payload) => state.merge({
     loading: false,
     subscriptionItem: payload,
-    purchaseSuccess: false
+    purchaseSuccessConfirm: false
   }),
   [getSubscriptionItem.request]: (state) => state.merge({
     loading: false,
-    purchaseSuccess: false
+    purchaseSuccessConfirm: false
+  }),
+  [clientPurchaseSubscriptionConfirm.ok]: (state) => state.merge({
+    loading: false,
+    purchaseSuccessConfirm: true
+  }),
+  [clientPurchaseSubscriptionConfirm.request]: (state) => state.merge({
+    loading: true,
+    purchaseSuccessConfirm: false
+  }),
+  [clientPurchaseSubscriptionConfirm.error]: (state, payload) => state.merge({
+    error: payload,
+    loading: false
   })
 }, initialState);
