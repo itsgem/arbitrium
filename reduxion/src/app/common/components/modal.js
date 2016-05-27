@@ -34,11 +34,13 @@ export const openLoading = function () {
 }
 export const closeLoading = function () {
   if(document.querySelector('.loading-box')) {
-    document.querySelector('.loading-box').style.display = 'none';
+    let loadingBox = document.querySelector('.loading-box');
+    loadingBox.remove();
   }
 
   if(document.querySelector('.loading-content')) {
-    document.querySelector('.loading-content').style.display = 'none';
+    let loadingContent = document.querySelector('.loading-content');
+    loadingContent.remove();
   }
 }
 
