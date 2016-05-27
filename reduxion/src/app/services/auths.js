@@ -429,5 +429,8 @@ export default {
   },
   clientSubscriptionPending() {
     return get('client/subscription/pending');
+  },
+  clientSubscriptionCancelPending() {
+    return patch('client/subscription/cancel-confirm');
   }
 };

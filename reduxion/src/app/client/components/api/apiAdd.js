@@ -22,7 +22,7 @@ class ApiAdd extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address});
+      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
     let permissions = this.props.apiPermissions.data;
     return (
@@ -129,12 +129,16 @@ class ApiAdd extends React.Component {
     } );
 
     let ipAddresses = this.refs.ip_addresses.value;
-    ipAddresses = ipAddresses.split('\n');
-    ipAddresses = ipAddresses.map(function(obj){
-       let rObj = {};
-       rObj = {ip_address: obj.trim()};
-       return rObj;
-    });
+    if (ipAddresses) {
+      ipAddresses = ipAddresses.split('\n');
+      ipAddresses = ipAddresses.map(function(obj){
+         let rObj = {};
+         rObj = {ip_address: obj.trim()};
+         return rObj;
+      });
+    } else {
+      ipAddresses = [];
+    }
     let payload = {
       description: this.refs.description.value,
       ip_addresses: ipAddresses,
