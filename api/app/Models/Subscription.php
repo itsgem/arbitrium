@@ -177,18 +177,6 @@ class Subscription extends NrbModel
         return $this->type == self::TYPE_TRIAL;
     }
 
-    public function getSubscriptionName()
-    {
-        $name = $this->name;
-
-        if ($this->term)
-        {
-            $name .= ' ('.$this->term.')';
-        }
-
-        return $name;
-    }
-
     public function getFees($term = null)
     {
         $monthly = [

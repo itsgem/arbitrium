@@ -6,6 +6,8 @@ class ClientSubscription extends Subscription
 {
     const TERM_MONTHLY         = 'Monthly';
     const TERM_ANNUALLY        = 'Annually';
+    const TERM_ANNUAL          = '1 Year';
+    const TERM_MONTH           = '1 Month';
 
     const TYPE_TRIAL           = 'Trial';
     const TYPE_PLAN            = 'Plan';
@@ -211,6 +213,40 @@ class ClientSubscription extends Subscription
         }
     }
 
+    public function getSubscriptionName()
+    {
+        $name = $this->name;
+
+        if ($this->term)
+        {
+            $term = $this->term;
+
+            if (!$this->is_auto_renew)
+            {
+                if ($term == self::TERM_ANNUALLY)
+                {
+                    $term = self::TERM_ANNUAL;
+                }
+                else
+                {
+                    $term = self::TERM_MONTH;
+                }
+            }
+
+            $name .= ' ('.$term.')';
+        }
+
+        return $name;
+    }
+
+    public function getSubscriptionValidity()
+    {
+        if ($this->valid_from && $this->valid_to)
+        {
+            return $this->valid_from->toDateString().' to '.$this->valid_to->toDateString();
+        }
+    }
+
     public function setValidity($date, $term = '')
     {
         $this->valid_from = $date;
@@ -229,5 +265,15 @@ class ClientSubscription extends Subscription
     public function hasPaypal()
     {
         return $this->paypal_plan_id && $this->paypal_agreement_id;
+    }
+
+    public function isOwnedByClientId($client_id)
+    {
+        if ($client_id)
+        {
+            return $this->client_id == $client_id;
+        }
+
+        return false;
     }
 }
