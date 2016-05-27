@@ -55,13 +55,6 @@ export default React.createClass( {
       })
     }
 
-    // Displaying and Updating Client
-    if (!nextProps.loading && nextProps.clientProfileSuccess) {
-      this.setState({clientInfo: nextProps.clientProfileSuccess.get('data')});
-    }
-    if (!nextProps.loading && nextProps.clientUpdateProfile) {
-      this.setState({clientUpdateProfile: nextProps.clientUpdateProfile});
-    }
     if (!nextProps.loading && nextProps.updateCompleted) {
       this.setState({updateCompleted: nextProps.updateCompleted});
     }
@@ -73,7 +66,7 @@ export default React.createClass( {
     );
   },
   render() {
-    if (this.state.clientInfo && Object.keys(this.props.currentClientSubscription).length ) {
+    if (Object.keys(this.props.clientProfileSuccess).length && Object.keys(this.props.currentClientSubscription).length ) {
       closeLoading();
       return this.renderAdminInfo();
     } else {
@@ -82,12 +75,12 @@ export default React.createClass( {
   },
   renderAdminInfo() {
     let client = {
-      clientInfo: this.state.clientInfo,
+      clientInfo: this.props.clientProfileSuccess.data,
       clientApprove: this.props.clientApprove,
       clientDisapprove: this.props.clientDisapprove,
       clientActivate: this.props.clientActivate,
       clientDeactivate: this.props.clientDeactivate,
-      clientUpdateProfile: this.state.clientUpdateProfile,
+      clientUpdateProfile: this.props.clientUpdateProfile,
       updateCompleted: this.state.updateCompleted,
       validateUsername: this.props.validateUsername,
       clientUnlock: this.props.clientUnlock,

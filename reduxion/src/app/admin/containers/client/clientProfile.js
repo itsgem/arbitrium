@@ -25,7 +25,7 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
     countryList: state.get('clientadmin').get('countryList'),
-    clientProfileSuccess: state.get('clientadmin').get('clientProfileSuccess'),
+    clientProfileSuccess: strMapToObj(state.get('clientadmin').get('clientProfileSuccess')),
     clientApproveSuccess: state.get('clientadmin').get('clientApproveSuccess'),
     clientDisapproveSuccess: state.get('clientadmin').get('clientDisapproveSuccess'),
     clientUnlockSuccess: state.get('clientadmin').get('clientUnlockSuccess'),
