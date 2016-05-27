@@ -286,7 +286,11 @@ class Client extends NrbModel
                 return false;
             }
 
-            $this->latest_subscription->upgrade();
+            // if has existing subscription, change status to upgraded
+            if ($this->latest_subscription)
+            {
+                $this->latest_subscription->upgrade();
+            }
 
             $data['term']           = null;
             $data['is_auto_renew']  = false;
