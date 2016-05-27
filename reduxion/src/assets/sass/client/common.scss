@@ -65,6 +65,13 @@ button, select, html, textarea, input, legend {
   min-height: 20px;
 }
 .client {
+  .clientContent {
+    .alert {
+      margin: 15px;
+      width: auto;
+      display: none;
+    }
+  }
   .mdl-layout__content {
     z-index: initial;
   }
