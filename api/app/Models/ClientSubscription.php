@@ -230,4 +230,14 @@ class ClientSubscription extends Subscription
     {
         return $this->paypal_plan_id && $this->paypal_agreement_id;
     }
+
+    public function isOwnedByClientId($client_id)
+    {
+        if ($client_id)
+        {
+            return $this->client_id == $client_id;
+        }
+
+        return false;
+    }
 }

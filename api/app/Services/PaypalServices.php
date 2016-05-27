@@ -69,12 +69,14 @@ class PaypalServices extends NrbServices
         $plan = new Plan();
 
         $plan_type = 'INFINITE';
-        $plan_cycles = "0";
+        $plan_cycles = '0';
 
         if (!$data['is_auto_renew'])
         {
-            $plan_type = 'FIXED';
-            $plan_cycles = "1";
+            $plan_type               = 'FIXED';
+            $plan_cycles             = '1';
+            $data['initial_payment'] = $data['initial_payment'] - 1;
+            $data['price']           = 1;
         }
 
         $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
@@ -189,11 +191,12 @@ class PaypalServices extends NrbServices
         $data['term']            = $request->get('term');
         $data['is_auto_renew']   = $request->get('is_auto_renew');
 
-        $subscription        = Subscription::findOrFail($data['subscription_id']);
-        $data['name']        = $subscription->name;
-        $data['description'] = $subscription->description;
+        $subscription            = Subscription::findOrFail($data['subscription_id']);
+        $data['name']            = $subscription->name;
+        $data['description']     = $subscription->description;
 
-        $data['paypal_plan_id'] = null;
+        $data['paypal_plan_id']  = null;
+        $approvalUrl             = null;
 
         // Create plan
         if (!$subscription->isTrial())
@@ -203,6 +206,11 @@ class PaypalServices extends NrbServices
             $data['paypal_plan_id'] = $result->data->paypal_plan_id;
 
             $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
+
+            if (!$data['is_auto_renew'])
+            {
+                $start_date_offset = 1;
+            }
 
             $start_date = current_datetime_iso8601($start_date_offset);
 
@@ -220,8 +228,6 @@ class PaypalServices extends NrbServices
             $payer = new Payer();
             $payer->setPaymentMethod('paypal');
             $agreement->setPayer($payer);
-
-            $approvalUrl = null;
 
             try {
                 $agreement = $agreement->create($this->_api_context);
