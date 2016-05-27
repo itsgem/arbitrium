@@ -222,10 +222,11 @@ export default {
     return get('admin/client/' + id + '/subscription/current');
   },
   changePurchaseSubscription(payload) {
-    return post('admin/client/' + payload.client_id + '/subscription', {
+    return post('admin/client/' + payload.client_id + '/subscription/change', {
       params: {
         subscription_id: payload.subscription_id,
-        term: payload.term
+        term: payload.term,
+        is_auto_renew: payload.is_auto_renew
       }
     });
   },
@@ -425,5 +426,8 @@ export default {
   },
   clientSubscriptionCancel() {
     return patch('client/subscription/cancel');
+  },
+  clientSubscriptionPending() {
+    return get('client/subscription/pending');
   }
 };

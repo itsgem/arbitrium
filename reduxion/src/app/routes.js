@@ -190,9 +190,9 @@ export default () => (
   <Route component={AdminApplication} name="home" path="/">
     <Route component={AdminApplication} name="home" path="coffee" >
       <IndexRoute component={AdminDashboard} onEnter={requireAuth} />
-      <Route component={AdminLogin} path="login" onEnter={islogin} />
+      <Route component={AdminLogin} path="login"/>
       <Route component={AdminLogout} path="logout"/>
-      <Route component={AdminForgot} path="forgot" onEnter={islogin} />
+      <Route component={AdminForgot} path="forgot"/>
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
       <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
@@ -227,12 +227,12 @@ export default () => (
 
     <Route name="home" path="i" >
       <IndexRoute component={ClientTopPage} onEnter={requireAuth}/>
-      <Route component={ClientLogin} name="login" path="login" onEnter={islogin} />
-      <Route component={Signup} path="signup" onEnter={islogin} />
+      <Route component={ClientLogin} name="login" path="login"/>
+      <Route component={Signup} path="signup"/>
       <Route component={ClientLogout} path="logout"/>
-      <Route component={ClientForgot} path="forgot" onEnter={islogin} />
-      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin} />
-      <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail" onEnter={islogin} />
+      <Route component={ClientForgot} path="forgot"/>
+      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
+      <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail"/>
 
       <Route path="client" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientProfile}/>

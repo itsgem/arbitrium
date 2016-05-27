@@ -2,6 +2,7 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import SubscriptionEdit from 'admin/components/subscription/subscriptionEdit';
 import { Link } from 'react-router';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass( {
   contextTypes: {
@@ -14,12 +15,17 @@ export default React.createClass( {
   },
   render() {
     if (Object.keys(this.props.subscriptions).length && Object.keys(this.props.subscriptionInfoClient).length && Object.keys(this.props.clientInfo).length) {
+      closeLoading();
       return this.renderSubscriptions();
     } else {
-       return (
-        <div id="subscription" className="inner_content"></div>
-      );
+      return this.loadingRender();
     }
+  },
+  loadingRender () {
+    openLoading();
+    return (
+      <div className="loading"></div>
+    );
   },
   renderSubscriptions() {
     return (
