@@ -75,9 +75,11 @@ function resize() {
   if (loadingBox) {
     loadingBox.style.height = myHeight + "px";
     loadingBox.style.width = myWidth + "px";
+    loadingBox.style.display = 'block';
   }
   if (loadingContent) {
     loadingContent.style.height = myHeight + "px";
     loadingContent.style.width = myWidth + "px";
+    loadingContent.style.display = 'block';
   }
 }

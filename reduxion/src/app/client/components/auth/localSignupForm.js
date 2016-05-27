@@ -30,7 +30,7 @@ class LocalSignupForm extends React.Component {
     //let arr = Object.keys(error.response).map(function (key) {return error.response[key]});
     let results = error.response;
     return (
-      <div className="alert alert-danger text-center animate bounceIn" role="alert">
+      <div className="msg-server alert alert-danger text-center animate bounceIn" role="alert">
         {mapObject(results, function (key, value) {
           return <div key={key}>{value}</div>;
         })}
@@ -59,13 +59,14 @@ class LocalSignupForm extends React.Component {
           <div className="mdl-snackbar__text"></div>
           <button type="button" className="mdl-snackbar__action"></button>
         </div>
-        { this.renderError()}
+        { this.renderError() }
         <LocalAuthenticationFormSignup
-          showLogin={true}
-          country= {this.props.country}
-          buttonCaption={this.props.buttonCaption || 'Create an account' }
-          errors={ this.state.errors }
-          onButtonClick={(payload) => {this.signup(payload)}}
+          showLogin = {true}
+          errorServer = {this.state.errorServer}
+          country = {this.props.country}
+          buttonCaption = {this.props.buttonCaption || 'Create an account' }
+          errors = { this.state.errors }
+          onButtonClick = {(payload) => {this.signup(payload)}}
           />
 
       </div>

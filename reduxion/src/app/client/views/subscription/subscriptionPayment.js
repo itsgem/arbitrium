@@ -24,17 +24,20 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.purchaseSuccess.data) {
+      let id = this.props.params.id;
       if (nextProps.purchaseSuccess.data.approval_url) {
         window.location = nextProps.purchaseSuccess.data.approval_url;
       } else {
         this.context.router.push('/i/subscription');
       }
 
-      let notification = document.querySelector('.mdl-snackbar');
-      notification.MaterialSnackbar.showSnackbar( {
-          message: 'Redirecting to PayPal',
-          timeout: 3000
-      });
+      if (id != 1) {
+        let notification = document.querySelector('.mdl-snackbar');
+        notification.MaterialSnackbar.showSnackbar( {
+            message: 'Redirecting to PayPal',
+            timeout: 3000
+        });
+      }
     }
   },
   render() {

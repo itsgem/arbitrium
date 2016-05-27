@@ -14,6 +14,22 @@ class LocalAuthenticationFormSignup extends React.Component {
       loading:false
     }
   }
+  componentDidMount() {
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
+  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -33,10 +49,43 @@ class LocalAuthenticationFormSignup extends React.Component {
       }
     }
   }
+  scrolltop (errors, errorServer) {
+    if (!document.querySelector('.alert')) {
+      return false;
+    }
+
+    if (Object.keys(errors).length || errorServer) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
+    }
+  }
   render() {
-    let {errors} = this.props;
+    let {errors, errorServer} = this.props;
+    this.scrolltop(errors, errorServer);
     return (
-      <div id="top" className="local-signin-form login-frame">
+      <div className="local-signin-form login-frame">
         <div className="sign-top">
             <h3 className="mdl-typography--headline">Sign up</h3>
             <p>Fields with asterisks are required.</p>
@@ -121,10 +170,12 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('country_id', errors)}>
-                  <Country
-                    country = { this.props.country }
-                  />
+                <div id="country_id-opt" className={this.formClassNames('country_id', errors)}>
+                  <div className="mdl-selectfield">
+                    <Country
+                      country = { this.props.country }
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -324,7 +375,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--blue"
                 id='btn-login'
                 type='button'
-                onClick={(e) => this.signup(e, document.getElementById('top'))}>{ this.props.buttonCaption }</button>
+                onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
             </div>
           </footer>
         </form>
@@ -338,31 +389,7 @@ class LocalAuthenticationFormSignup extends React.Component {
       'has-success': this.state[ field ] && !(this.props.errors[ field ])
     } );
   }
-  scrolltop (target) {
-    let scrollContainer = target;
-      do { //find scroll container
-          scrollContainer = scrollContainer.parentNode;
-          if (!scrollContainer) return;
-          scrollContainer.scrollTop += 1;
-      } while (scrollContainer.scrollTop == 0);
-
-      let targetY = 0;
-      do { //find the top of target relatively to the container
-          if (target == scrollContainer) break;
-          targetY += target.offsetTop;
-      } while (target = target.offsetParent);
-
-      scroll = function(c, a, b, i) {
-          i++; if (i > 30) return;
-          c.scrollTop = a + (b - a) / 30 * i;
-          setTimeout(function(){ scroll(c, a, b, i); }, 20);
-      }
-      // start scrolling
-      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
-  }
-  signup( e, target ) {
-    this.scrolltop(target);
-
+  signup( e ) {
     this.setState( {
       loading: true,
     } );

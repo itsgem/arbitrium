@@ -26,7 +26,7 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.purchaseSuccess) {
-      $('.msg').html('Subscription successfully changed.').addClass('bg-green');
+      $('.msg').html('Successfully sent approval URL to client to complete the subscription change.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
@@ -34,7 +34,7 @@ export default React.createClass({
     }
   },
   render() {
-    if (Object.keys(this.props.subscriptionInfoSelected).length && !this.props.loading) {
+    if (Object.keys(this.props.subscriptionInfoSelected).length && Object.keys(this.props.subscriptionInfoClient).length && !this.props.loading) {
       closeLoading();
       return this.renderSubscriptionDetail();
     } else {
