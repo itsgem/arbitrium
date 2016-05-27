@@ -27,7 +27,6 @@ export const openLoading = function () {
       '<div class="loading-content">' +
         '<div class="mdl-spinner mdl-js-spinner is-active"></div>' +
       '</div>';
-
   if (document.querySelector('.loading')) {
     document.querySelector('.loading').innerHTML = loading;
   }

@@ -56,7 +56,7 @@ class ApiAdd extends React.Component {
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
-          {/*
+          {
             permissions  && permissions.map(item => {
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
                       <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
@@ -70,7 +70,7 @@ class ApiAdd extends React.Component {
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
                     </div>; })
-            */}
+            }
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--1-col check-test-key">

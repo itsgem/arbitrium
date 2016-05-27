@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { clientProfile } from 'client/reducers/profile/profile';
-import { subscriptionList, clientSubscription } from 'client/reducers/subscription'
+import { subscriptionList, clientSubscription, clientPurchaseSubscriptionConfirm } from 'client/reducers/subscription'
 import SubscriptionDetail from 'client/views/subscription/subscriptionDetail';
 
 const strMapToObj=(strMap) => {
@@ -12,9 +12,11 @@ const mapStateToProps = (state) => ({
   loading: state.get('AdminSubscription').get('loading'),
   listSubscription: strMapToObj(state.get('AdminSubscription').get('listSubscription')),
   currentSubscription: strMapToObj(state.get('AdminSubscription').get('currentSubscription')),
-  user: strMapToObj(state.get('clientProfile').get('clientInfo'))
+  user: strMapToObj(state.get('clientProfile').get('clientInfo')),
+  purchaseSuccessConfirm: strMapToObj(state.get('AdminSubscription').get('purchaseSuccessConfirm')),
+  error: strMapToObj(state.get('AdminSubscription').get('error'))
 });
 
 export default connect((mapStateToProps), {
- subscriptionList, clientSubscription, clientProfile
+ subscriptionList, clientSubscription, clientProfile, clientPurchaseSubscriptionConfirm
 })(SubscriptionDetail)
