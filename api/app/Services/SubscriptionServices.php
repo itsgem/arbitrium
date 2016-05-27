@@ -125,13 +125,17 @@ class SubscriptionServices extends NrbServices
             $client_subscription = ClientSubscription::paypalAgreementId($result->data->agreement_id, $client_id)->first();
             $subscription_id = $client_subscription->subscription_id;
 
-            if ($latest_subscription->subscription_id == $subscription_id)
+            // if client has subscribed before
+            if ($latest_subscription)
             {
-                $latest_subscription->renew();
-            }
-            else
-            {
-                $latest_subscription->upgrade();
+                if ($latest_subscription->subscription_id == $subscription_id)
+                {
+                    $latest_subscription->renew();
+                }
+                else
+                {
+                    $latest_subscription->upgrade();
+                }
             }
 
             return DB::transaction(function () use ($client_subscription, $client)
@@ -140,6 +144,8 @@ class SubscriptionServices extends NrbServices
 
                 if ($result)
                 {
+                    $client->sendSubscriptionChangeSuccess($client_subscription);
+
                     return $this->respondWithSuccess($result);
                 }
 
@@ -294,7 +300,9 @@ class SubscriptionServices extends NrbServices
 
         return DB::transaction(function () use ($client)
         {
-            if ($latest_subscription = $client->latest_subscription)
+            $latest_subscription = $client->latest_subscription;
+
+            if ($latest_subscription)
             {
                 // Suspend last agreement
                 $paypal = new PaypalServices();
@@ -308,7 +316,7 @@ class SubscriptionServices extends NrbServices
                 $latest_subscription->cancel();
             }
 
-            return $this->respondWithSuccess();
+            return $this->respondWithSuccess($latest_subscription);
         });
     }
 }

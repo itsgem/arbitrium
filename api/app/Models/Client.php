@@ -368,4 +368,14 @@ class Client extends NrbModel
     {
         with(new MailServices())->subscriptionChangeConfirmation($this->user, $pending_subscription);
     }
+
+    public function sendSubscriptionChangeSuccess($subscription)
+    {
+        with(new MailServices())->subscriptionChangeSuccess($this->user, $subscription);
+    }
+
+    public function sendSubscriptionCancellation($subscription)
+    {
+        with(new MailServices())->subscriptionCancellation($this->user, $subscription);
+    }
 }
