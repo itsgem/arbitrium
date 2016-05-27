@@ -7,6 +7,7 @@ use App\Http\Requests\v1\ClientUserRequest;
 use App\Http\Requests\v1\Client\SubscriptionRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ClientServices;
+use App\Services\SubscriptionServices;
 
 class ClientsController extends ApiController
 {
@@ -25,10 +26,13 @@ class ClientsController extends ApiController
             'show'                   => 'Retrieve Client',
             'store'                  => 'Add Client',
             'update'                 => 'Update Client',
-            'getSubscriptionHistory' => 'Client Subscriptions History List',
-            'getSubscription'        => 'Clients Current Subscription List',
-            'cancelSubscription'     => 'Cancel Client Subscription',
-            'purchaseSubscription'   => 'Purchase / Change Client Subscription',
+            'getSubscriptionHistory' => 'Get All Client Subscriptions History List',
+            'getSubscription'        => 'Get All Client Current Subscription List',
+            'getSubscriptionSingle'  => 'Get Single Client Current Subscription',
+            'getPendingSubscriptionSingle'         => 'Get Single Client Pending Subscription',
+            'resendSubscriptionChangeApprovalLink' => 'Resend Client Subscription Change Approval Link',
+            'cancelSubscription'     => 'Cancel Single Client Subscription',
+            'changeSubscription'     => 'Change Single Client Subscription',
         ];
     }
 
@@ -66,6 +70,8 @@ class ClientsController extends ApiController
     {
         return $service->update($request, $id);
     }
+
+    //----- SUBSCRIPTIONS
 
     /**
      * Get all client subscription history
@@ -113,11 +119,11 @@ class ClientsController extends ApiController
      *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscriptionHistory(ClientServices $service)
+    public function getSubscriptionHistory(SubscriptionServices $service)
     {
         return $service->getSubscriptionHistory($this->request);
     }
@@ -168,11 +174,11 @@ class ClientsController extends ApiController
      *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
      * )
      *
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscription(ClientServices $service)
+    public function getSubscription(SubscriptionServices $service)
     {
         return $service->getSubscription($this->request);
     }
@@ -219,13 +225,23 @@ class ClientsController extends ApiController
      * )
      *
      * @param $id
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function getSubscriptionSingle($id, ClientServices $service)
+    public function getSubscriptionSingle($id, SubscriptionServices $service)
     {
         return $service->getSubscription($this->request, $id);
+    }
+
+    public function getPendingSubscriptionSingle($id, SubscriptionServices $service)
+    {
+        return $service->getPendingSubscription($this->request, $id);
+    }
+
+    public function resendSubscriptionChangeApprovalLink($id, SubscriptionServices $service)
+    {
+        return $service->resendSubscriptionChangeApprovalLink($id);
     }
 
     /**
@@ -270,11 +286,11 @@ class ClientsController extends ApiController
      * )
      *
      * @param $id
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function cancelSubscription($id, ClientServices $service)
+    public function cancelSubscription($id, SubscriptionServices $service)
     {
         return $service->cancelSubscription($id);
     }
@@ -330,12 +346,12 @@ class ClientsController extends ApiController
      *
      * @param SubscriptionRequest $request
      * @param $id
-     * @param ClientServices $service
+     * @param SubscriptionServices $service
      *
      * @return mixed
      */
-    public function purchaseSubscription(SubscriptionRequest $request, $id, ClientServices $service)
+    public function changeSubscription(SubscriptionRequest $request, $id, SubscriptionServices $service)
     {
-        return $service->purchaseSubscription($request, $id);
+        return $service->subscribe($request, $id);
     }
 }
