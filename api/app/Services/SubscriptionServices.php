@@ -168,6 +168,12 @@ class SubscriptionServices extends NrbServices
         }
 
         $pending_subscription = $client->pending_subscription;
+
+        if (!$pending_subscription)
+        {
+            return $this->respondWithSuccess();
+        }
+
         $deleted_subscription = $pending_subscription->toArray();
 
         $deleted_subscription_name = $pending_subscription->getSubscriptionName();
