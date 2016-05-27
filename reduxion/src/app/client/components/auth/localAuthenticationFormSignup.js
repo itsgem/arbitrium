@@ -18,6 +18,20 @@ class LocalAuthenticationFormSignup extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
   }
   render() {
     let {errors} = this.props;
@@ -143,17 +157,19 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col">
-                <div className={this.formClassNames('rep_gender')}>
-                    <select
-                      className="mdl-textfield__input"
-                      id='rep_gender'
-                      ref="rep_gender" >
-                      <option value=""></option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                    </select>
-                    <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
-                    {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                <div id="rep_gender-opt" className={this.formClassNames('rep_gender')}>
+                  <div className="mdl-selectfield">
+                      <select
+                        className="mdl-textfield__input"
+                        id='rep_gender'
+                        ref="rep_gender" >
+                        <option value=""></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                      <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+                      {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                  </div>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col">

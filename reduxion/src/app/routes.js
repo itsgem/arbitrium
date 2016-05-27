@@ -132,7 +132,6 @@ function validateToken(tokenName) {
       return true;
     }
   }
-  return false;
 }
 
 function requireAuth(nextState, replace, cb) {
@@ -160,7 +159,7 @@ function requireAuth(nextState, replace, cb) {
         }
         tokenName = 'token';
   }
-  validateToken(tokenName);
+  let isValidate = validateToken(tokenName);
   return cb();
 }
 
@@ -176,8 +175,9 @@ function islogin(nextState, replace, cb) {
       default :
         tokenName = 'token';
   }
-  let isToken = validateToken(tokenName);
-  if (isToken) {
+  let isValidate = validateToken(tokenName);
+  console.log("isLogin", isValidate);
+  if (isValidate) {
     replace({
       pathname: '/' + link[3],
       state: { nextPathname: nextState.location.pathname }

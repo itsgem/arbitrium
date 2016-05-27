@@ -37,6 +37,21 @@ class ClientProfile extends React.Component {
         .then(this.callEmailChangeToken)
         .catch(this.setErrors)
     }
+
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -219,9 +234,11 @@ class ClientProfile extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('country_id', errors)}>
-                  { this.renderCountry(clientInfo.country_id) }
-                  {errors && errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
+                <div id="country_id-opt" className={this.formClassNames('country_id', errors)}>
+                  <div className="mdl-selectfield">
+                    { this.renderCountry(clientInfo.country_id) }
+                    {errors && errors.country_id && <small className="mdl-textfield__error shown">{errors.country_id[0]}</small>}
+                  </div>
                 </div>
               </div>
             </div>
@@ -273,19 +290,21 @@ class ClientProfile extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('rep_gender', errors)}>
-                  <select
-                    className="mdl-select__input"
-                    id="rep_gender"
-                    ref="rep_gender"
-                    defaultValue={clientInfo.rep_gender}
-                    >
-                    <option value=""></option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
-                  <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
-                  {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                <div id="rep_gender-opt" className={this.formClassNames('rep_gender', errors)}>
+                  <div className="mdl-selectfield">
+                    <select
+                      className="mdl-textfield__input"
+                      id="rep_gender"
+                      ref="rep_gender"
+                      defaultValue={clientInfo.rep_gender}
+                      >
+                      <option value=""></option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
+                    {errors && errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
+                  </div>
                 </div>
               </div>
             </div>
@@ -617,7 +636,7 @@ class ClientProfile extends React.Component {
     let countries = this.props.countryList;
     return (
      <div>
-        <select className="mdl-select__input" id="country_id" name="country_id" ref="country_id" defaultValue={countryId}>
+        <select className="mdl-textfield__input" id="country_id" name="country_id" ref="country_id" defaultValue={countryId}>
           <option value=""></option>
           {countries.map(item =>
             {return <option key={item.id} value={item.id}>{item.name}</option>}

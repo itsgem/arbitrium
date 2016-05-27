@@ -147,7 +147,7 @@ class UserManagementList extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <div id="status-opt" className="mdl-selectfield mdl-textfield mdl-block mdl-js-selectfield mdl-textfield--floating-label">
                 <select className="selectBox mdl-textfield__input" id="status" ref="status">
                   <option value=""></option>
                   <option value="Pending">Pending</option>
@@ -202,6 +202,7 @@ class UserManagementList extends React.Component {
       </div>
     );
   }
+
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");

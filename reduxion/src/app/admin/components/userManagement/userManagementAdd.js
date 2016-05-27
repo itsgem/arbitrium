@@ -114,15 +114,17 @@ class UserManagementAdd extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className={this.formClassNames('role_id', errors)}>
-                <select className="mdl-textfield__input" ref="role_id">
-                  <option></option>
-                  {role.map(item =>
-                    {return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>}
-                  )}
-                </select>
-                <label className="mdl-textfield__label" htmlFor="email_address">Role*</label>
-                {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
+              <div id="role_id-opt" className={this.formClassNames('role_id', errors)}>
+                <div className="mdl-selectfield">
+                  <select className="mdl-textfield__input" id="role_id" ref="role_id">
+                    <option></option>
+                    {role.map(item =>
+                      {return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>}
+                    )}
+                  </select>
+                  <label className="mdl-textfield__label" htmlFor="email_address">Role*</label>
+                  {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
+                </div>
               </div>
             </div>
           </div>
