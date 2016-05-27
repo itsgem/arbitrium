@@ -40,6 +40,7 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
             Route::get('',                  ['uses' => 'ClientsController@getSubscriptionHistory']);
             Route::post('',                 ['uses' => 'ClientsController@subscribe']);
             Route::post('confirm',          ['uses' => 'ClientsController@subscribeConfirm']);
+            Route::patch('cancel-confirm',  ['uses' => 'ClientsController@subscribeCancelConfirm']);
             Route::patch('cancel',          ['uses' => 'ClientsController@cancelSubscription']);
         });
     });

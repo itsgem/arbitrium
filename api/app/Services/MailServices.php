@@ -113,6 +113,15 @@ class MailServices extends NrbServices
         ], $user);
     }
 
+    public function pendingSubscriptionCancellation($user, $subscription_name)
+    {
+        $this->sendMail('email.pending_subscription_cancellation', [
+            'name'  => $user->first_name,
+            'subscription_name' => $subscription_name,
+            'email_category' => EmailLog::CANCEL_SUBSCRIPTION
+        ], $user);
+    }
+
     public function sendInvoice($user, $url)
     {
         $this->sendMail('email.invoice', [

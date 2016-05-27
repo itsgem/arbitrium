@@ -273,6 +273,11 @@ class ClientsController extends ApiController
         return $service->subscribeConfirm($request, get_logged_in_client_id());
     }
 
+    public function subscribeCancelConfirm(SubscriptionConfirmRequest $request, SubscriptionServices $service)
+    {
+        return $service->subscribeCancelConfirm(get_logged_in_client_id());
+    }
+
     /**
      * Cancel Client Subscription
      *
