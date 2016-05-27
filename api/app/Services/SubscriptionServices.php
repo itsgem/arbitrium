@@ -159,6 +159,32 @@ class SubscriptionServices extends NrbServices
         return $this->respondWithError(Errors::PAYPAL_CANCELLED);
     }
 
+    // Client\ClientsController::subscribe
+    public function subscribeCancelConfirm($client)
+    {
+        if (!($client instanceof Client))
+        {
+            $client = Client::findOrFail($client);
+        }
+
+        $pending_subscription = $client->pending_subscription;
+        $deleted_subscription = $pending_subscription->toArray();
+
+        $deleted_subscription_name = $pending_subscription->getSubscriptionName();
+
+        $is_deleted = $pending_subscription->delete();
+
+        if ($is_deleted)
+        {
+            // Send email notification
+            $client->sendPendingSubscriptionCancellation($deleted_subscription_name);
+
+            return $this->respondWithSuccess($deleted_subscription);
+        }
+
+        return $this->respondWithError(Errors::CANNOT_CANCEL_PENDING_SUBSCRIPTION);
+    }
+
     // Admin\ClientsController::getSubscriptionHistory
     // Client\ClientsController::getSubscriptionHistory
     public function getSubscriptionHistory($request, $client_id = null)

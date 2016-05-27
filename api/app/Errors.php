@@ -50,7 +50,8 @@ class Errors
     const UNAUTHORIZED_API_KEY_IP_ADDRESS  = 60004;
 
     // Subscriptions
-    const EXISTING_TRIAL_SUBSCRIPTION = 70001;
+    const EXISTING_TRIAL_SUBSCRIPTION        = 70001;
+    const CANNOT_CANCEL_PENDING_SUBSCRIPTION = 70002;
 
     // Paypal
     const PAYPAL_ERROR              = 80001;
