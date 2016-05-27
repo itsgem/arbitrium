@@ -8,7 +8,7 @@ class Country extends React.Component {
 
     return (
       <div className="mdl-selectfield">
-        <select className="mdl-textfield__input" id="country" name="country_id" ref="country_id" defaultValue={selected}>
+        <select className="mdl-textfield__input" id="country_id" name="country_id" ref="country_id" defaultValue={selected}>
           <option value=""></option>
           {countries.map(item =>
             {return <option key={item.get('id')} value={item.get('id')}>{item.get('name')}</option>}

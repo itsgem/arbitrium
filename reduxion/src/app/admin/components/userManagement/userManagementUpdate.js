@@ -32,6 +32,38 @@ class UserManagementUpdate extends React.Component {
       }
     }
   }
+  scrolltop (errors) {
+    if (!document.querySelector('.alert')) {
+      return false;
+    }
+
+    if (Object.keys(errors).length) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      let scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
+    }
+  }
   render() {
     let role = this.props.role.toArray();
     let {errors, errorServer} = this.state ? this.state :'';
@@ -48,6 +80,7 @@ class UserManagementUpdate extends React.Component {
         errors.password_confirmation[0] = errorServer.response.password[1];
       }
     }
+    this.scrolltop(errors);
     let userInfo = {};
     userInfo = this.props.adminInfo.get('data');
     let userRole = userInfo.get('user').get("roles").toArray();

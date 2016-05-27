@@ -25,7 +25,7 @@ export default React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.purchaseSuccess.data) {
       if (nextProps.purchaseSuccess.data.approval_url) {
-        window.location = nextProps.purchaseSuccess.data.approval_url;  
+        window.location = nextProps.purchaseSuccess.data.approval_url;
       } else {
         this.context.router.push('/i/subscription');
       }
@@ -41,7 +41,7 @@ export default React.createClass({
 
     if (Object.keys(this.props.subscriptionItem).length) {
       if (!this.props.loading) {
-        closeLoading();  
+        closeLoading();
       } else {
         openLoading();
       }
