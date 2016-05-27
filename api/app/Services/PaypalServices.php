@@ -75,8 +75,7 @@ class PaypalServices extends NrbServices
         {
             $plan_type               = 'FIXED';
             $plan_cycles             = '1';
-            $data['initial_payment'] = $data['initial_payment'] - 1;
-            $data['price']           = 1;
+            $data['initial_payment'] = $subscription->fee_initial_setup;
         }
 
         $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');

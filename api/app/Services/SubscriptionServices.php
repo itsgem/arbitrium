@@ -173,7 +173,7 @@ class SubscriptionServices extends NrbServices
         {
             return $this->respondWithSuccess();
         }
-        
+
         $deleted_subscription = $pending_subscription->toArray();
 
         $deleted_subscription_name = $pending_subscription->getSubscriptionName();
