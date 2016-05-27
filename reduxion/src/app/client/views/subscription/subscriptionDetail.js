@@ -31,7 +31,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.purchaseSuccessConfirm) {
+    if (nextProps.purchaseSuccessConfirm || nextProps.paypalPendingCancel) {
       this.props.subscriptionList().catch(createError);
       this.props.clientSubscription().catch(createError);
       this.props.clientProfile().catch(createError);
@@ -62,16 +62,21 @@ export default React.createClass({
   },
   renderSubscriptionDetail () {
     //let subscription = this.props.paypalPending.data.length ? true : false;
-    let subscription = false;
+    let subscription = {};
+    let isSubscription = false;
+    let paypalPendingCancel = {};
     if (Object.keys(this.props.paypalPending).length) {
-      subscription = Object.keys(this.props.paypalPending.data).length ? true : false;
-    }
+      isSubscription = Object.keys(this.props.paypalPending.data).length ? true : false;
+      subscription = this.props.paypalPending.data;
+      paypalPendingCancel = this.props.paypalPendingCancel.data;
 
+    }
     return (
       <main className="mdl-layout__content subscription-type">
-        { subscription && <div className="bs-callout bs-callout-info">
+        { isSubscription && <div className="bs-callout bs-callout-info">
           <p>You have a pending subscription change to { subscription.name } { (subscription.term) ? ' (' + subscription.term + ')' : '' }.<br />To confirm, please click on the confirmation button.</p>
-          <a href={ subscription.paypal_approval_url }>Confirm</a>
+          <a className="margin-right-10" href={ subscription.paypal_approval_url }>Confirm</a>
+          <a href="#" onClick={(e) => {this.cancelPendingSubscription(e)}}>Cancel</a>
         </div>}
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
           <div className="mdl-cell mdl-cell--12-col header-title">
@@ -85,5 +90,9 @@ export default React.createClass({
         </div>
       </main>
     );
+  },
+  cancelPendingSubscription(e) {
+    e.preventDefault();
+    this.props.clientSubscriptionCancelPending().catch(createError);
   }
 });
