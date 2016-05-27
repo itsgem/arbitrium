@@ -43,12 +43,14 @@ class SubscriptionConfirmRequest extends NrbRequest
         {
             if (is_client_user_logged_in())
             {
-                // Validate if IP address accessing is owned by user
+                // Validate if Token is owned by client
                 if ($this->get('token'))
                 {
                     $subscription = ClientSubscription::paypalTokenId($this->get('token'))->first();
 
-                    if (!$subscription->isOwnedByClientId(get_logged_in_client_id()))
+                    // Send error if there is no matching token id or
+                    // there is a matching token id but is not owned by client
+                    if (!$subscription || !$subscription->isOwnedByClientId(get_logged_in_client_id()))
                     {
                         $errors['token'] = trans('errors.'.Errors::UNAUTHORIZED_PAYPAL_TOKEN);
                     }
