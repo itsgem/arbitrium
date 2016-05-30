@@ -338,6 +338,14 @@ small.mdl-textfield__error {
     .table-api td {
       word-wrap: break-word;
       word-break: break-all;
+
+      &:last-child {
+        display: flex;
+
+        .mdl-switch.is-upgraded {
+          margin-top: 10px;
+        }
+      }
     }
 
     .mdl-button-group {
