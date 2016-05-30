@@ -131,7 +131,18 @@ button, select, html, textarea, input, legend {
   .filter-search-bar, .pagination {
     width: 100%;
   }
+  .search-cta {
+    display: flex;
 
+    button {
+      font-size: 13px;
+
+      .material-icons {
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
 } 
 
 main {

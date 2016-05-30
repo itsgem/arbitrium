@@ -17,12 +17,25 @@ export default React.createClass( {
   componentDidMount(){
     debug("componentDidMount", this.props.params);
     let code = window.location.search.split('?token=')[1];
-    this.props.verifyEmailCode(code);
+    // let payload = {
+    //   token: code,
+    //   user_id: user_id 
+    // }
+    this.props.verifyEmailCodeToken(code);
   },
 
   componentWillReceiveProps(nextProps) {
-    debug("componentWillReceiveProps next: ", nextProps);
-    debug("componentWillReceiveProps ", this.props);
+    //console.log('test', Object.keys(nextProps.clientInfo).length);
+    if (Object.keys(nextProps.clientInfo).length) {
+      let clientInfo = nextProps.clientInfo.data;
+      let payload = {
+        token: clientInfo.token,
+        user_id: clientInfo.client_id
+      }
+      console.log('test', payload);
+      this.props.verifyEmailCode(payload);
+    }
+
     if (nextProps.emailCodeVerified) {
       debug("componentWillReceiveProps router ", this.context.router);
       let path = '/i/login';

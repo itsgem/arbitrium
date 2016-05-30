@@ -36,11 +36,20 @@ export default {
   listCountries() {
     return get('list/countries');
   },
-  verifyEmailCode(code) {
-    return patch('user/register/verify', {
+  verifyEmailCodeToken(code) {
+    return get('user/register/token', {
       params: {
         token: code,
-        callback_url: window.location.origin
+        user_type: 2
+      }
+    });
+  },
+  verifyEmailCode(payload) {
+    console.log('payload', payload)
+    return patch('user/register/verify', {
+      params: {
+        token: payload.token,
+        callback_url: window.location.origin + "/coffee/client/" + payload.user_id
       }
     });
   },

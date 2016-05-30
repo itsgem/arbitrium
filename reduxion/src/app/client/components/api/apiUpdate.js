@@ -44,7 +44,7 @@ class ApiUpdate extends React.Component {
             </div>
             <p>Add a description to your API key to allow you to filter by key</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
-              <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_whitelist ? true : false} />
+              <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_whitelist == 1 ? true : false} />
               <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
             </label>
           </div>
@@ -58,7 +58,7 @@ class ApiUpdate extends React.Component {
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_api_call_restricted ? true : false}/>
+              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_api_call_restricted == 1 ? true : false}/>
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
@@ -89,7 +89,7 @@ class ApiUpdate extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
-                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_test_key ? true : false}/>
+                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_test_key  == 1 ? true : false}/>
                 <span className="mdl-checkbox__label">Test Key</span>
               </label>
             </div>
