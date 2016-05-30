@@ -183,15 +183,31 @@ class UserServices extends NrbServices
 
     private function getResetToken($field, $request)
     {
+        $user_type = $request->get('user_type');
         $reset_token = ResetToken::codeOrToken($field, $request->get('token'))
-                        ->notExpired($field)
-                        ->whereHas('user', function($query) use ($request)
-                        {
-                            $query->userType($request->get('user_type'));
-                        })->first();
+            ->notExpired($field)
+            ->whereHas('user', function($query) use ($user_type)
+            {
+                $query->userType($user_type);
+            })->first();
+        
         if ($reset_token)
         {
-            return $this->respondWithSuccess(['token' => $reset_token->getTokenField($field)]);
+            $data = ['token' => $reset_token->getTokenField($field)];
+
+            // if client, append client_id
+            if($client = $reset_token->user->client)
+            {
+                $data['client_id'] = $client->id;
+            }
+
+            // if admin, append admin_id
+            if($admin = $reset_token->user->admin)
+            {
+                $data['admin_id'] = $admin->id;
+            }
+
+            return $this->respondWithSuccess($data);
         }
         return $this->respondWithError(Errors::EXPIRED_TOKEN);
     }
