@@ -17,15 +17,10 @@ export default React.createClass( {
   componentDidMount(){
     debug("componentDidMount", this.props.params);
     let code = window.location.search.split('?token=')[1];
-    // let payload = {
-    //   token: code,
-    //   user_id: user_id 
-    // }
     this.props.verifyEmailCodeToken(code);
   },
 
   componentWillReceiveProps(nextProps) {
-    //console.log('test', Object.keys(nextProps.clientInfo).length);
     if (Object.keys(nextProps.clientInfo).length) {
       let clientInfo = nextProps.clientInfo.data;
       let payload = {
