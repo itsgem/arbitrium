@@ -84,6 +84,9 @@ class LocalAuthenticationFormSignup extends React.Component {
   render() {
     let {errors, errorServer} = this.props;
     this.scrolltop(errors, errorServer);
+    if (errorServer) {
+      errors = Object.assign({}, errorServer.response);
+    }
     return (
       <div className="local-signin-form login-frame">
         <div className="sign-top">
@@ -95,7 +98,7 @@ class LocalAuthenticationFormSignup extends React.Component {
           <div className="mdl-layout__content">
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--full-col">
-                <div className={this.formClassNames('company_name')}>
+                <div className={this.formClassNames('company_name', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -108,7 +111,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--6-col">
-                <div className={this.formClassNames('street_address_1')}>
+                <div className={this.formClassNames('street_address_1', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -120,7 +123,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <div className={this.formClassNames('street_address_2')}>
+                <div className={this.formClassNames('street_address_2', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -133,7 +136,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('city')}>
+                <div className={this.formClassNames('city', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -146,7 +149,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('state')}>
+                <div className={this.formClassNames('state', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -158,7 +161,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('postal_code')}>
+                <div className={this.formClassNames('postal_code', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -184,7 +187,7 @@ class LocalAuthenticationFormSignup extends React.Component {
           <div className="mdl-layout__content">
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--4-col">
-                <div className={this.formClassNames('rep_first_name')}>
+                <div className={this.formClassNames('rep_first_name', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -196,7 +199,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col">
-                <div className={this.formClassNames('rep_last_name')}>
+                <div className={this.formClassNames('rep_last_name', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -208,7 +211,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col">
-                <div id="rep_gender-opt" className={this.formClassNames('rep_gender')}>
+                <div id="rep_gender-opt" className={this.formClassNames('rep_gender', errors)}>
                   <div className="mdl-selectfield">
                       <select
                         className="mdl-textfield__input"
@@ -224,7 +227,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col">
-                <div className={this.formClassNames('rep_email_address')}>
+                <div className={this.formClassNames('rep_email_address', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -236,7 +239,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--1-col">
-                <div className={this.formClassNames('rep_mobile_code')}>
+                <div className={this.formClassNames('rep_mobile_code', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -248,7 +251,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('rep_mobile_number')}>
+                <div className={this.formClassNames('rep_mobile_number', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -261,7 +264,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--1-col">
-                <div className={this.formClassNames('rep_phone_code')}>
+                <div className={this.formClassNames('rep_phone_code', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -273,7 +276,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('rep_phone_number')}>
+                <div className={this.formClassNames('rep_phone_number', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -286,7 +289,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--4-col">
-                <div className={this.formClassNames('rep_position')}>
+                <div className={this.formClassNames('rep_position', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -299,7 +302,7 @@ class LocalAuthenticationFormSignup extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--4-col">
-                <div className={this.formClassNames('rep_department')}>
+                <div className={this.formClassNames('rep_department', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -316,7 +319,7 @@ class LocalAuthenticationFormSignup extends React.Component {
           <div className="mdl-layout__content">
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('email_address')}>
+                <div className={this.formClassNames('email_address', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="email"
@@ -328,7 +331,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('username')}>
+                <div className={this.formClassNames('username', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="text"
@@ -340,7 +343,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('password')}>
+                <div className={this.formClassNames('password', errors)}>
                   <input
                     className="mdl-textfield__input"
                     id='password'
@@ -352,7 +355,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('password_confirmation')}>
+                <div className={this.formClassNames('password_confirmation', errors)}>
                   <input
                     className="mdl-textfield__input"
                     type="password"
@@ -383,10 +386,10 @@ class LocalAuthenticationFormSignup extends React.Component {
     );
   }
 
-  formClassNames( field ) {
+  formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
-      'is-invalid is-dirty': this.props.errors[ field ],
-      'has-success': this.state[ field ] && !(this.props.errors[ field ])
+      'is-invalid is-dirty': errors[ field ],
+      'has-success': errors && !(errors[ field ])
     } );
   }
   signup( e ) {
