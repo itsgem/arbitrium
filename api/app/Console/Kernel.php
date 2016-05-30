@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\RenewSubscription::class,
-        \App\Console\Commands\RenewSubscriptionReminder::class
+        \App\Console\Commands\RenewSubscriptionReminder::class,
+        \App\Console\Commands\UpdateSubscriptionStatus::class
     ];
 
     /**
@@ -25,6 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('subscription:update_status')->daily();
+
         // TODO-GEM: current implementation is using basic package, enable these when subscription will be enabled
         // $schedule->command('renew:subscription')->daily();
         // $schedule->command('renew:subscription-reminder')->daily();

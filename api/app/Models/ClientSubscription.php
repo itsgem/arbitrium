@@ -18,6 +18,7 @@ class ClientSubscription extends Subscription
     const STATUS_END_CANCELLED = 'Cancelled';
     const STATUS_END_UPGRADED  = 'Upgraded';
     const STATUS_END_RENEWED   = 'Renewed';
+    const STATUS_END_EXPIRED   = 'Expired';
 
     protected $table = 'client_subscriptions';
 
@@ -189,6 +190,13 @@ class ClientSubscription extends Subscription
     {
         $this->status = self::STATUS_INACTIVE;
         $this->status_end = self::STATUS_END_UPGRADED;
+        $this->save();
+    }
+
+    public function expire()
+    {
+        $this->status = self::STATUS_INACTIVE;
+        $this->status_end = self::STATUS_END_EXPIRED;
         $this->save();
     }
 
