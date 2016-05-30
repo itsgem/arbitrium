@@ -53,7 +53,6 @@ class UpdateSubscriptionStatus extends Command
             foreach($client_subscriptions as $client_subscription)
             {
                 $client_subscription->expire();
-                $client_subscription = ClientSubscription::find($client_subscription->id);
 
                 $message = ' Inactivated Client Subscription #'.$client_subscription->id;
 
