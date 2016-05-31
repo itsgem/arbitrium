@@ -19,8 +19,8 @@ class SubscriptionsSeeder extends Seeder
         $data = [
             [
                 'id'                      => 1,
-                'name'                    => 'Trial',
-                'description'             => 'Trial Package Plan',
+                'name'                    => 'Free Trial',
+                'description'             => 'Free Trial Package Plan',
                 'type'                    => Subscription::TYPE_TRIAL,
                 'country_id'              => 240,
                 'fee_monthly'             => 0,
