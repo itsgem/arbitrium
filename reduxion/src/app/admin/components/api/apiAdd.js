@@ -179,7 +179,7 @@ class ApiAdd extends React.Component {
     } );
     if (clientList) {
       clientList.map(item => {
-        if (item.company_name == e.target.value) {
+        if (item.company_name.toLowerCase() == e.target.value.toLowerCase()) {
           this.setState( {
             client_id: item.id
           } );
