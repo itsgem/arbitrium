@@ -250,7 +250,14 @@ class PaypalServices extends NrbServices
             }
 
             // Send email notification
-            $client->sendApprovalLink($result);
+            if (!$subscription->isTrial())
+            {
+                $client->sendApprovalLink($result);
+            }
+            else
+            {
+                $client->sendSubscriptionChangeSuccess($result);
+            }
 
             return $this->respondWithSuccess([
                 'approval_url' => $approvalUrl,
