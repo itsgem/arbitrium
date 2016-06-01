@@ -24,20 +24,28 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.purchaseSuccess.data) {
-      let id = this.props.params.id;
+
+      //if (id != 1) {
+        let id = this.props.params.id;
+        let notification = document.querySelector('.mdl-snackbar');
+        notification.MaterialSnackbar.showSnackbar( {
+            message: (id == 1 ? 'Successfully subscribe the Free Trial' : 'Redirecting to PayPal'),
+            timeout: 3000
+        });
+      //}
+      
       if (nextProps.purchaseSuccess.data.approval_url) {
         window.location = nextProps.purchaseSuccess.data.approval_url;
       } else {
         this.context.router.push('/i/subscription');
       }
-
-      if (id != 1) {
-        let notification = document.querySelector('.mdl-snackbar');
-        notification.MaterialSnackbar.showSnackbar( {
-            message: 'Redirecting to PayPal',
-            timeout: 3000
-        });
-      }
+    }
+    if (nextProps.purchaseSuccess.errors) {
+      let notification = document.querySelector('.mdl-snackbar');
+      notification.MaterialSnackbar.showSnackbar( {
+          message: nextProps.purchaseSuccess.errors,
+          timeout: 3000
+      });
     }
   },
   render() {

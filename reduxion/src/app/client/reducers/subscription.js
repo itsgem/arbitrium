@@ -64,6 +64,7 @@ export default createReducer({
     purchaseSuccessConfirm: false
   }),
   [getSubscriptionItem.request]: (state) => state.merge({
+    subscriptionItem: {},
     loading: false,
     purchaseSuccessConfirm: false
   }),
