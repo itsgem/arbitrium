@@ -4,6 +4,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 class SubscriptionDetail extends React.Component {
   constructor(props) {
@@ -22,6 +23,42 @@ class SubscriptionDetail extends React.Component {
   componentDidMount () {
     this.dateValid();
   }
+  loadingRender () {
+    return (
+      <div className="loading"></div>
+    );
+  }
+  scrolltop (errors) {
+    if (!document.querySelector('.alert')) {
+      return false;
+    }
+    if (Object.keys(errors).length) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      let scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
+    }
+  }
   render () {
     let clientSubscriptionInfo = this.props.clientSubscriptionInfo.data;
     let selectedSubscriptionInfo = this.props.selectedSubscriptionInfo.data;
@@ -29,46 +66,59 @@ class SubscriptionDetail extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
     }
+    this.scrolltop(errors);
+
     return (
       <div className="mdl-cell mdl-cell--12-col subscription-detail">
+        { this.loadingRender() }
         <form>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                 <input className="mdl-textfield__input font-input" type="text" id="subscription" value={selectedSubscriptionInfo.name} readOnly/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Subscription Name</label>
+                <label className="mdl-textfield__label" htmlFor="subscription">Subscription Name</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                 <input className="mdl-textfield__input font-input" type="text" id="currency" value="USD" readOnly/>
-                <label className="mdl-textfield__label" htmlFor="sample1">Currency</label>
+                <label className="mdl-textfield__label" htmlFor="currency">Currency</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <div className={this.formClassNames('term', errors)}>
-                <select onChange={(e) => this.dateValid()} ref="term" className="mdl-textfield__input">
-                  <option></option>
-                  <option>Annually</option>
-                  <option>Monthly</option>
-                </select>
-                <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
-                {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
+              { selectedSubscriptionInfo.type == "Trial" ?
+                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                    <input className="mdl-textfield__input font-input" type="text" id="term" value="30 days" readOnly/>
+                    <input type="hidden" ref="term" value="Monthly" readOnly/>
+                    <label className="mdl-textfield__label" htmlFor="term">Subscription Name</label>
+                </div>
+                :
+                <div id="term-opt" className={this.formClassNames('term', errors)}>
+                  <div className="mdl-selectfield">
+                    <select onChange={(e) => this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
+                      <option></option>
+                      <option>Annually</option>
+                      <option>Monthly</option>
+                    </select>
+                    <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
+                    {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
+                  </div>
+                </div>
+              }
+            </div>
+            <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/><label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/><label className="mdl-textfield__label" htmlFor="sample1">Valid From</label>
+                <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/> <label className="mdl-textfield__label" htmlFor="validTo">To</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/> <label className="mdl-textfield__label" htmlFor="sample1">To</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-                <input type="checkbox" id="checkbox-2" ref="isTerm" className="mdl-checkbox__input"/>
+              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox_2">
+                <input type="checkbox" id="checkbox_2" ref="isTerm" className="mdl-checkbox__input" disabled={this.props.params.subscription_id == 1 ? true : false}/>
                 <span className="mdl-checkbox__label">Auto-Renew</span>
               </label>
             </div>
@@ -87,32 +137,32 @@ class SubscriptionDetail extends React.Component {
                   <p>ANNUAL SUBSCRIPTION</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$140</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>ANNUAL LICENSE FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$60</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>INITIAL SETUP FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$60</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>ANNUAL MAINTENANCE FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$50</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>SUB TOTAL</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">$50</p>
+                    <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
                   </div>
                 </div>
               </div>
@@ -126,20 +176,20 @@ class SubscriptionDetail extends React.Component {
                   <p>SUB TOTAL PRICE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$140</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>TAX PERCENTAGE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">7%</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '0%' : '7%'}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>COMPUTED TAX</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">$50</p>
+                    <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
                   </div>
                 </div>
               </div>
@@ -153,26 +203,26 @@ class SubscriptionDetail extends React.Component {
                   <p>SUBTOTAL PRICE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$140</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>CREDITS</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$8</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$8'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>TAX</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$60</p>
+                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>TOTAL PRICE</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">$50</p>
+                    <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
                   </div>
                 </div>
               </div>
@@ -200,21 +250,34 @@ class SubscriptionDetail extends React.Component {
   }
 
   dateValid() {
-    let term = this.refs.term ? this.refs.term.value : "Annually";
+    let subscriptionItem = this.props.selectedSubscriptionInfo.data;
+    let term = subscriptionItem.type == "Trial" ?  "Monthly" : this.refs.term.value;
     let dateToday = new Date();
-    let isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
+    let isFrom = ' ';
     let newDate = ' ';
     let isTo = ' ';
     switch (term) {
       case 'Annually':
+        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
         newDate = new Date(dateToday.getFullYear() + 1, dateToday.getMonth(), dateToday.getDate() + 29);
         isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
         break;
       case 'Monthly':
+        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
         newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate());
         isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
         break;
     }
+
+    let target = this.refs.term.id + "-opt";
+    if (subscriptionItem.type != "Trial" && this.refs.term.value) {
+      if (document.getElementById(target)) {
+        document.getElementById(target).classList.add('is-dirty');
+      } else {
+        document.getElementById(target).classList.remove('is-dirty');
+      }
+    }
+
     this.refs.validFrom.value = isFrom;
     this.refs.validTo.value = isTo;
   }
@@ -256,6 +319,13 @@ class SubscriptionDetail extends React.Component {
   }
 
   validSubscribe(payload) {
+    openLoading();
+    let errors = {};
+    this.setState({
+      errors: {},
+      errorServer:null}
+    );
+    this.scrolltop(errors);
     this.props.adminChangeSubscription(payload);
   }
 

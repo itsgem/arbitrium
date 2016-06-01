@@ -86,7 +86,7 @@ class SubscriptionPayment extends React.Component {
                 { subscriptionItem.type == "Trial" ?
                   <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                     <input className="mdl-textfield__input font-input" type="text" id="term" value="30 days" readOnly/>
-                    <input type="hidden" ref="term" value="Annually" readOnly/>
+                    <input type="hidden" ref="term" value="Monthly" readOnly/>
                     <label className="mdl-textfield__label" htmlFor="term">Subscription Name</label>
                   </div>
                   :
@@ -255,7 +255,7 @@ class SubscriptionPayment extends React.Component {
 
   dateValid() {
     let subscriptionItem = this.props.subscriptionItem.data;
-    let term = subscriptionItem.type == "Trial" ?  "Annually" : this.refs.term.value;
+    let term = subscriptionItem.type == "Trial" ?  "Monthly" : this.refs.term.value;
     let dateToday = new Date();
     let isFrom = ' ';
     let newDate = ' ';
