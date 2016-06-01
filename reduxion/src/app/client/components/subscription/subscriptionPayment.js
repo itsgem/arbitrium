@@ -72,7 +72,7 @@ class SubscriptionPayment extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.name == "Trial" ? "Free Trial" : subscriptionItem.name} readOnly/>
+                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.type == "Trial" ? "Free Trial" : subscriptionItem.type} readOnly/>
                 <label className="mdl-textfield__label" htmlFor="subscription">Subscription Name</label>
               </div>
             </div>
@@ -83,7 +83,7 @@ class SubscriptionPayment extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-                { subscriptionItem.name == "Trial" ?
+                { subscriptionItem.type == "Trial" ?
                   <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                     <input className="mdl-textfield__input font-input" type="text" id="term" value="30 days" readOnly/>
                     <input type="hidden" ref="term" value="Annually" readOnly/>
@@ -117,7 +117,7 @@ class SubscriptionPayment extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-                <input type="checkbox" id="checkbox-2" ref="isTerm" className="mdl-checkbox__input" disabled={subscriptionItem.name == "Trial" ? true : false}/>
+                <input type="checkbox" id="checkbox-2" ref="isTerm" className="mdl-checkbox__input" disabled={subscriptionItem.type == "Trial" ? true : false}/>
                 <span className="mdl-checkbox__label">Auto-Renew</span>
               </label>
             </div>
@@ -136,32 +136,32 @@ class SubscriptionPayment extends React.Component {
                   <p>ANNUAL SUBSCRIPTION</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$140"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$140"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>ANNUAL LICENSE FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>INITIAL SETUP FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>ANNUAL MAINTENANCE FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>SUB TOTAL</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
+                    <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
                   </div>
                 </div>
               </div>
@@ -175,20 +175,20 @@ class SubscriptionPayment extends React.Component {
                   <p>SUB TOTAL PRICE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>TAX PERCENTAGE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "7%"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "7%"}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>COMPUTED TAX</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
+                    <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
                   </div>
                 </div>
               </div>
@@ -202,26 +202,26 @@ class SubscriptionPayment extends React.Component {
                   <p>SUBTOTAL PRICE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$140"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$140"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>CREDITS</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$8"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$8"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>TAX</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>TOTAL PRICE</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
+                    <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
                   </div>
                 </div>
               </div>
@@ -255,7 +255,7 @@ class SubscriptionPayment extends React.Component {
 
   dateValid() {
     let subscriptionItem = this.props.subscriptionItem.data;
-    let term = subscriptionItem.name == "Trial" ?  "Annually" : this.refs.term.value;
+    let term = subscriptionItem.type == "Trial" ?  "Annually" : this.refs.term.value;
     let dateToday = new Date();
     let isFrom = ' ';
     let newDate = ' ';
@@ -274,7 +274,7 @@ class SubscriptionPayment extends React.Component {
     }
 
     let target = this.refs.term.id + "-opt";
-    if (subscriptionItem.name != "Trial" && this.refs.term.value) {
+    if (subscriptionItem.type != "Trial" && this.refs.term.value) {
       if (document.getElementById(target)) {
         document.getElementById(target).classList.add('is-dirty');
       } else {
