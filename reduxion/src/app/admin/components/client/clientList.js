@@ -148,7 +148,7 @@ class UserManagementList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div id="status-opt" className="mdl-selectfield mdl-textfield mdl-block mdl-js-selectfield mdl-textfield--floating-label">
-                <select className="selectBox mdl-textfield__input" id="status" ref="status">
+                <select onKeyPress={(e) => this.isPress(e)} className="selectBox mdl-textfield__input" id="status" ref="status">
                   <option value=""></option>
                   <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>
@@ -201,6 +201,9 @@ class UserManagementList extends React.Component {
         </div>
       </div>
     );
+  }
+  isPress(e) {
+    document.getElementById("status-opt").classList.add('is-dirty');
   }
 
   selectPageNumber (pageNum) {

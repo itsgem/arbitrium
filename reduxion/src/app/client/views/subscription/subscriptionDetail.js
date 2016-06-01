@@ -53,7 +53,7 @@ export default React.createClass({
           timeout: 3000
       });
     }
-    if (!this.props.loading && Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length && Object.keys(this.props.user).length) {
+    if (!this.props.loading && !this.props.purchaseProcessingConfirm && !this.props.purchaseSuccessConfirm && Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length && Object.keys(this.props.user).length) {
       closeLoading();
       return this.renderSubscriptionDetail();
     } else {
