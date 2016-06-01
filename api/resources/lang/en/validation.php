@@ -91,6 +91,12 @@ return [
         'pets' => [
             'required_if' => 'The :attribute field is required.'
         ],
+        'permissions' => [
+            'required_if' => 'The :attribute field is required.'
+        ],
+        'ip_addresses' => [
+            'required_if' => 'The :attribute field is required.'
+        ],
         'username' => [
             'unique' => trans('errors.'.Errors::USERNAME_TAKEN),
         ],
