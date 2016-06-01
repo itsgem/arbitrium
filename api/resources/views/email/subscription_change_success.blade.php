@@ -9,7 +9,7 @@
     <div>
         <div>Thank you for subscribing!<div>
 
-        <br/><div>Your subscription has been successfully changed to <strong>{{ $subscription_name }}</strong> valid from <strong>{{ $subscription_validity }}</strong>.</div>
+        <br/><div>Your subscription has been successfully {{ $subscription_action_past }} to <strong>{{ $subscription_name }}</strong> valid from <strong>{{ $subscription_validity }}</strong>.</div>
 
         <br/><br/><div>Regards,</div><br/>
         <div>{{ trans('email.sender') }}</div>

@@ -284,4 +284,14 @@ class ClientSubscription extends Subscription
 
         return false;
     }
+
+    public function isFirstSubscription()
+    {
+        if (ClientSubscription::clientId($this->client_id)->count() == 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

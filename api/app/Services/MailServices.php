@@ -86,19 +86,24 @@ class MailServices extends NrbServices
 
     public function subscriptionChangeConfirmation($user, $subscription)
     {
+        $subscription_action = $this->getSubscriptionAction($subscription->isFirstSubscription());
         $this->sendMail('email.subscription_change_confirmation', [
             'name'  => $user->first_name,
             'link'  => config('paypal.callback_urls.subscriptions'),
             'subscription_name' => $subscription->getSubscriptionName(),
+            'subscription_action_noun' => $subscription_action['noun'],
+            'subscription_action_past' => $subscription_action['past'],
             'email_category' => EmailLog::CHANGE_SUBSCRIPTION
         ], $user);
     }
 
     public function subscriptionChangeSuccess($user, $subscription)
     {
+        $subscription_action = $this->getSubscriptionAction($subscription->isFirstSubscription());
         $this->sendMail('email.subscription_change_success', [
             'name'  => $user->first_name,
             'subscription_name' => $subscription->getSubscriptionName(),
+            'subscription_action_past' => $subscription_action['past'],
             'subscription_validity' => $subscription->getSubscriptionValidity(),
             'email_category' => EmailLog::CHANGE_SUBSCRIPTION_SUCCESS
         ], $user);
@@ -165,6 +170,23 @@ class MailServices extends NrbServices
             $this->send((new MailDetailsBuilder())->buildFromEmailLog($log));
         }
         return $this->respondWithSuccess();
+    }
+
+    // Helper
+    public function getSubscriptionAction($is_first_subscription)
+    {
+        if ($is_first_subscription)
+        {
+            return [
+                'noun' => 'registration',
+                'past' => 'registered',
+            ];
+        }
+
+        return [
+            'noun' => 'change',
+            'past' => 'changed',
+        ];
     }
 
     // Mail WebHook Listener
