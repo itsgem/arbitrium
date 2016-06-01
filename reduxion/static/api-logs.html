@@ -1,0 +1,270 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arbitrium</title>
+  <link href="https://assets.idearobin.com/mdl/material.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script defer type="text/javascript" src="https://assets.idearobin.com/mdl/material.js"></script>
+</head>
+
+<body>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header body-bg">
+
+  <header class="mdl-layout__header header-bg">
+    <div class="mdl-grid header-container">
+
+      <div class="mdl-layout__header-row main-header">
+        <!-- LOGO -->
+        <div class="logo">
+          <img src="./img/logo-arbitrium.png"></img>
+        </div>
+        <!-- NAVIGATION -->
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
+          <div class="mdl-tabs__tab-bar tab">
+              <a href="#dashboard-panel" class="mdl-tabs__tab">DASHBOARD</a>
+              <a href="client.html" class="mdl-tabs__tab">CLIENTS</a>
+              <a href="api.html" class="mdl-tabs__tab is-active">API</a>
+              <a href="#pricing-panel" class="mdl-tabs__tab">PRICING</a>
+              <a href="#admin-accounts-panel" class="mdl-tabs__tab">ADMIN ACCOUNTS</a>
+              <a href="#logs-panel" class="mdl-tabs__tab">LOGS</a>
+
+              <div class="icon-profile">
+                <!-- Right aligned menu below button -->
+                <button id="menu" class="mdl-button mdl-js-button mdl-button--icon">
+                  <i class="material-icons">account_circle</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu">
+                  <li class="mdl-menu__item">Settings</li>
+                  <li class="mdl-menu__item">Logout</li>
+                </ul>
+
+              </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-js-layout">
+    <div class="mdl-grid table-list-container">
+
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect table-tab">
+        <a href="#" class="mdl-layout__tab is-active">List of API Keys</a>
+        <a href="#" class="mdl-layout__tab">Add New Api Key<i class="material-icons add">add</i></a>
+      </div>
+
+      <div class="mdl-layout__panel is-active" id="#">
+        <div class="filter-search">
+          <p>Filter / Search</p>
+          <!-- Textfield with Floating Label -->
+          <form action="#">
+
+            <div class="mdl-grid filter-search-bar">
+              <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input font-input" type="text" id="method">
+                  <label class="mdl-textfield__label" for="sample1">Method...</label>
+                </div>
+              </div>
+
+              <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="status-code">
+                  <label class="mdl-textfield__label" for="sample2">Status Code...</label>
+                </div>
+              </div>
+
+              <div class="mdl-cell mdl-cell--2-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="date-created">
+                  <label class="mdl-textfield__label" for="sample3">Date created...</label>
+                </div>
+              </div>
+
+              <div class="mdl-cell mdl-cell--4-col search-cta">
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i class="material-icons">search</i>Search</button>
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i class="material-icons">clear</i>Clear</button>
+              </div>
+            </div>
+
+          </form>
+          <!-- Api List Table -->
+          <table class="mdl-data-table mdl-js-data-table table-list">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Method</th>
+                <th class="mdl-data-table__cell--non-numeric">Status Code</th>
+                <th class="mdl-data-table__cell--non-numeric">URL</th>
+                <th class="mdl-data-table__cell--non-numeric">Parameter</th>
+                <th class="mdl-data-table__cell--non-numeric">Date Created</th>
+                <th class="mdl-data-table__cell--non-numeric">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">PUT</td>
+                <td class="mdl-data-table__cell--non-numeric">200</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.testinggrounds.com/api</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric api-col-action">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">GET</td>
+                <td class="mdl-data-table__cell--non-numeric">500</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.loremipsumgroup.com/test</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">DELETE</td>
+                <td class="mdl-data-table__cell--non-numeric">401</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.thisisatest.com/logs</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">POST</td>
+                <td class="mdl-data-table__cell--non-numeric">401</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.lorem.com/api</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">POST</td>
+                <td class="mdl-data-table__cell--non-numeric">500</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.apitest.com/logs</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">GET</td>
+                <td class="mdl-data-table__cell--non-numeric">200</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.testingapi.com/test</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">PUT</td>
+                <td class="mdl-data-table__cell--non-numeric">400</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.loremlogs.com/api</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">DELETE</td>
+                <td class="mdl-data-table__cell--non-numeric">400</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.loremipsumapitests.com/logs</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">POST</td>
+                <td class="mdl-data-table__cell--non-numeric">200</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.apitestlogs.com/test</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric">PUT</td>
+                <td class="mdl-data-table__cell--non-numeric">500</td>
+                <td class="mdl-data-table__cell--non-numeric">http://www.testing.com/test</td>
+                <td class="mdl-data-table__cell--non-numeric">{"clientid":"test1","token":"1234567890","name":"clientOne","description","desc...</td>
+                <td class="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                    <i class="material-icons">open_in_new</i>
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="mdl-grid pagination">
+            <div class="mdl-cell mdl-cell--3-col">
+
+            </div>
+            <div class="mdl-cell mdl-cell--6-col">
+              <button disabled class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
+              <button disabled class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">
+                <i class="material-icons">keyboard_arrow_left</i>
+              </button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-active">1</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">2</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">3</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">4</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-normal">5</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue">LAST</button>
+            </div>
+            <div class="mdl-cell mdl-cell--3-col">
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page">10</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
