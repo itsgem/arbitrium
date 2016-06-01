@@ -82,7 +82,7 @@ class SubscriptionDetail extends React.Component {
                   return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                     <thead>
                       <tr>
-                        <th>{item.name == 'Trial' ? "Free Trial" : item.name}</th>
+                        <th>{item.type == 'Trial' ? "Free Trial" : item.name}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -116,7 +116,7 @@ class SubscriptionDetail extends React.Component {
                       <tr>
                         <td>
                           {
-                            item.name == 'Trial' ? (clientInfo.can_avail_trial == false ?
+                            item.type == 'Trial' ? (clientInfo.can_avail_trial == false ?
                                   <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
                                 : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Subscribe</Link> )
                             : currentSubscription.subscription_id == item.id ?
