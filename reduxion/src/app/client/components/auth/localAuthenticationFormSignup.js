@@ -90,7 +90,6 @@ class LocalAuthenticationFormSignup extends React.Component {
         errors.password_confirmation = errors.password;
         errors.password = "";
       }
-      
     }
     return (
       <div className="local-signin-form login-frame">
