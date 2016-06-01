@@ -86,7 +86,7 @@ class MailServices extends NrbServices
 
     public function subscriptionChangeConfirmation($user, $subscription)
     {
-        $subscription_action = $this->getSubscriptionAction($subscription->isFirstSubscription());
+        $subscription_action = $subscription->getAction();
         $this->sendMail('email.subscription_change_confirmation', [
             'name'  => $user->first_name,
             'link'  => config('paypal.callback_urls.subscriptions'),
@@ -99,7 +99,7 @@ class MailServices extends NrbServices
 
     public function subscriptionChangeSuccess($user, $subscription)
     {
-        $subscription_action = $this->getSubscriptionAction($subscription->isFirstSubscription());
+        $subscription_action = $subscription->getAction();
         $this->sendMail('email.subscription_change_success', [
             'name'  => $user->first_name,
             'subscription_name' => $subscription->getSubscriptionName(),
@@ -170,23 +170,6 @@ class MailServices extends NrbServices
             $this->send((new MailDetailsBuilder())->buildFromEmailLog($log));
         }
         return $this->respondWithSuccess();
-    }
-
-    // Helper
-    public function getSubscriptionAction($is_first_subscription)
-    {
-        if ($is_first_subscription)
-        {
-            return [
-                'noun' => 'registration',
-                'past' => 'registered',
-            ];
-        }
-
-        return [
-            'noun' => 'change',
-            'past' => 'changed',
-        ];
     }
 
     // Mail WebHook Listener

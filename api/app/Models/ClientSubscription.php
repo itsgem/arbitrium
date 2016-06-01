@@ -294,4 +294,20 @@ class ClientSubscription extends Subscription
 
         return false;
     }
+
+    public function getAction()
+    {
+        if ($this->isFirstSubscription())
+        {
+            return [
+                'noun' => 'registration',
+                'past' => 'registered',
+            ];
+        }
+
+        return [
+            'noun' => 'change',
+            'past' => 'changed',
+        ];
+    }
 }
