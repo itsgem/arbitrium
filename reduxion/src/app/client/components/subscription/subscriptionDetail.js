@@ -118,7 +118,7 @@ class SubscriptionDetail extends React.Component {
                           {
                             item.name == 'Trial' ? (clientInfo.can_avail_trial == false ?
                                   <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                                : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribe'}</Link> )
+                                : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Subscribe</Link> )
                             : currentSubscription.subscription_id == item.id ?
                                 <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
                               : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribe'}</Link>
