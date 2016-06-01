@@ -89,7 +89,7 @@ class SubscriptionEdit extends React.Component {
                         return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                           <thead>
                             <tr>
-                              <th>{item.name == 'Trial' ? "Free Trial" : item.name}</th>
+                              <th>{item.name}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -112,10 +112,10 @@ class SubscriptionEdit extends React.Component {
                               <td>{item.fee_yearly_maintenance == 0.00 ? '--' : "$" + item.fee_yearly_maintenance}</td>
                             </tr>
                             <tr>
-                              <td>{item.max_api_calls == 0.00 ? '--' : "$" + item.max_api_calls}</td>
+                              <td>{item.max_api_calls == 0.00 ? '--' : item.max_api_calls}</td>
                             </tr>
                             <tr>
-                              <td>{item.max_decisions == 0.00 ? '--' : "$" + item.max_decisions}</td>
+                              <td>{item.max_decisions == 0.00 ? '--' : item.max_decisions}</td>
                             </tr>
                             <tr>
                               <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
@@ -123,12 +123,12 @@ class SubscriptionEdit extends React.Component {
                             <tr>
                               <td>
                                 {
-                                  item.name == 'Trial' ? (clientInfo.can_avail_trial == false ?
+                                  item.name == 'Free Trial' ? (clientInfo.can_avail_trial == false ?
                                     <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Trial' ? 'Subscribe' : 'Upgrade') : 'Subscribed'}</Link> )
+                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>Subscribe</Link> )
                                   : clientSubscriptionInfo.subscription_id == item.id ?
                                     <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Trial' ? 'Subscribe' : 'Upgrade') : 'Subscribed'}</Link>
+                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Free Trial' ? 'Subscribe' : 'Upgrade') : 'Subscribed'}</Link>
                                 }
                               </td>
                             </tr>

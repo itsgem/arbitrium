@@ -14,7 +14,7 @@ export default React.createClass({
     this.props.selectedSubscriptionInfo(id).catch(createError);
   },
   componentWillMount () {
-  if ( typeof(window.componentHandler) != 'undefined' ) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   },
@@ -28,14 +28,18 @@ export default React.createClass({
     if (nextProps.purchaseSuccess) {
       $('.msg').html('Successfully sent approval URL to client to complete the subscription change.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(2000);
+        $(this).fadeOut(5000);
       });
       this.context.router.push('/coffee/subscription');
     }
   },
   render() {
-    if (Object.keys(this.props.subscriptionInfoSelected).length && Object.keys(this.props.subscriptionInfoClient).length && !this.props.loading) {
-      closeLoading();
+    if (Object.keys(this.props.subscriptionInfoSelected).length && Object.keys(this.props.subscriptionInfoClient).length) {
+      if (!this.props.loading) {
+        closeLoading();
+      } else {
+        openLoading();
+      }
       return this.renderSubscriptionDetail();
     } else {
       return this.loadingRender();
