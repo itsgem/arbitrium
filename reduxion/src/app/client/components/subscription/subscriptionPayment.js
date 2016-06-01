@@ -31,7 +31,6 @@ class SubscriptionPayment extends React.Component {
     if (!document.querySelector('.alert')) {
       return false;
     }
-
     if (Object.keys(errors).length) {
       document.querySelector('.alert').style.display = 'block';
       let target = document.getElementById('top');
@@ -73,7 +72,7 @@ class SubscriptionPayment extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.name} readOnly/>
+                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.name == "Trial" ? "Free Trial" : subscriptionItem.name} readOnly/>
                 <label className="mdl-textfield__label" htmlFor="subscription">Subscription Name</label>
               </div>
             </div>
@@ -84,17 +83,25 @@ class SubscriptionPayment extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <div id="term-opt" className={this.formClassNames('term', errors)}>
-                <div className="mdl-selectfield">
-                  <select onChange={(e) => this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
-                    <option></option>
-                    <option>Annually</option>
-                    <option>Monthly</option>
-                  </select>
-                  <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
-                  {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
-                </div>
-              </div>
+                { subscriptionItem.name == "Trial" ?
+                  <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                    <input className="mdl-textfield__input font-input" type="text" id="term" value="30 days" readOnly/>
+                    <input type="hidden" ref="term" value="Annually" readOnly/>
+                    <label className="mdl-textfield__label" htmlFor="term">Subscription Name</label>
+                  </div>
+                  :
+                  <div id="term-opt" className={this.formClassNames('term', errors)}>
+                    <div className="mdl-selectfield">
+                      <select onChange={(e) => this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
+                        <option></option>
+                        <option>Annually</option>
+                        <option>Monthly</option>
+                      </select>
+                    <label className="mdl-textfield__label" htmlFor="term">Terms of Subscription</label>
+                    {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
+                    </div>
+                  </div>
+                }
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
@@ -110,7 +117,7 @@ class SubscriptionPayment extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-                <input type="checkbox" id="checkbox-2" ref="isTerm" className="mdl-checkbox__input"/>
+                <input type="checkbox" id="checkbox-2" ref="isTerm" className="mdl-checkbox__input" disabled={subscriptionItem.name == "Trial" ? true : false}/>
                 <span className="mdl-checkbox__label">Auto-Renew</span>
               </label>
             </div>
@@ -129,32 +136,32 @@ class SubscriptionPayment extends React.Component {
                   <p>ANNUAL SUBSCRIPTION</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$140</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$140"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>ANNUAL LICENSE FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$60</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>INITIAL SETUP FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$60</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>ANNUAL MAINTENANCE FEE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$50</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>SUB TOTAL</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">$50</p>
+                    <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
                   </div>
                 </div>
               </div>
@@ -168,20 +175,20 @@ class SubscriptionPayment extends React.Component {
                   <p>SUB TOTAL PRICE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$140</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>TAX PERCENTAGE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">7%</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "7%"}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>COMPUTED TAX</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">$50</p>
+                    <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
                   </div>
                 </div>
               </div>
@@ -195,26 +202,26 @@ class SubscriptionPayment extends React.Component {
                   <p>SUBTOTAL PRICE</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$140</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$140"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>CREDITS</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$8</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$8"}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>TAX</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">$60</p>
+                  <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$60"}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>TOTAL PRICE</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">$50</p>
+                    <p className="right">{subscriptionItem.name == "Trial" ? "0" : "$50"}</p>
                   </div>
                 </div>
               </div>
@@ -247,7 +254,8 @@ class SubscriptionPayment extends React.Component {
   }
 
   dateValid() {
-    let term = this.refs.term.value;
+    let subscriptionItem = this.props.subscriptionItem.data;
+    let term = subscriptionItem.name == "Trial" ?  "Annually" : this.refs.term.value;
     let dateToday = new Date();
     let isFrom = ' ';
     let newDate = ' ';
@@ -266,7 +274,7 @@ class SubscriptionPayment extends React.Component {
     }
 
     let target = this.refs.term.id + "-opt";
-    if (this.refs.term.value) {
+    if (subscriptionItem.name != "Trial" && this.refs.term.value) {
       if (document.getElementById(target)) {
         document.getElementById(target).classList.add('is-dirty');
       } else {
@@ -310,6 +318,12 @@ class SubscriptionPayment extends React.Component {
 
   validSubscribe(payload) {
     openLoading();
+    let errors = {};
+    this.setState({
+      errors: {},
+      errorServer:null}
+    );
+    this.scrolltop(errors);
     this.props.clientPurchaseSubscription(payload);
   }
 
