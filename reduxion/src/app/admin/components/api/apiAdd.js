@@ -168,6 +168,7 @@ class ApiAdd extends React.Component {
   selectedCompany ( e, id, companyName ) {
     this.refs.client_id.value = companyName;
     document.getElementById('searchClient').classList.add("is-dirty");;
+    document.getElementById('searchClient').classList.remove("is-invalid");;
     this.setState( {
       client_id: id,
     } );
