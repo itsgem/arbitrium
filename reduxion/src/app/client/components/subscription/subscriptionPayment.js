@@ -83,7 +83,6 @@ class SubscriptionPayment extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              
                 { subscriptionItem.name == "Trial" ?
                   <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                     <input className="mdl-textfield__input font-input" type="text" id="term" value="30 days" readOnly/>
@@ -98,13 +97,11 @@ class SubscriptionPayment extends React.Component {
                         <option>Annually</option>
                         <option>Monthly</option>
                       </select>
-                    
                     <label className="mdl-textfield__label" htmlFor="term">Terms of Subscription</label>
                     {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
                     </div>
                   </div>
                 }
-              
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">

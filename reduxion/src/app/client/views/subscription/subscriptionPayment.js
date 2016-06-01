@@ -24,16 +24,12 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.purchaseSuccess.data) {
-
-      //if (id != 1) {
         let id = this.props.params.id;
         let notification = document.querySelector('.mdl-snackbar');
         notification.MaterialSnackbar.showSnackbar( {
             message: (id == 1 ? 'Successfully subscribe the Free Trial' : 'Redirecting to PayPal'),
             timeout: 3000
         });
-      //}
-      
       if (nextProps.purchaseSuccess.data.approval_url) {
         window.location = nextProps.purchaseSuccess.data.approval_url;
       } else {
