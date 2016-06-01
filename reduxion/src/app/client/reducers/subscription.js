@@ -18,6 +18,7 @@ const initialState = Immutable.fromJS({
   currentSubscription: {},
   purchaseSuccess: {},
   purchaseSuccessConfirm: false,
+  purchaseProcessingConfirm: false,
   loading: false,
   paypalPending: {},
   paypalPendingCancel: false,
@@ -68,15 +69,18 @@ export default createReducer({
   }),
   [clientPurchaseSubscriptionConfirm.ok]: (state) => state.merge({
     loading: false,
-    purchaseSuccessConfirm: true
+    purchaseSuccessConfirm: true,
+    purchaseProcessingConfirm: false
   }),
   [clientPurchaseSubscriptionConfirm.request]: (state) => state.merge({
     loading: true,
-    purchaseSuccessConfirm: false
+    purchaseSuccessConfirm: false,
+    purchaseProcessingConfirm: true
   }),
   [clientPurchaseSubscriptionConfirm.error]: (state, payload) => state.merge({
     error: payload,
-    loading: false
+    loading: false,
+    purchaseProcessingConfirm: false
   }),
   [clientSubscriptionPending.ok]: (state, payload) => state.merge({
     paypalPending: payload,

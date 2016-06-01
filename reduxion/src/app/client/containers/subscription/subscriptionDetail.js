@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
   currentSubscription: strMapToObj(state.get('AdminSubscription').get('currentSubscription')),
   user: strMapToObj(state.get('clientProfile').get('clientInfo')),
   purchaseSuccessConfirm: strMapToObj(state.get('AdminSubscription').get('purchaseSuccessConfirm')),
+  purchaseProcessingConfirm: strMapToObj(state.get('AdminSubscription').get('purchaseProcessingConfirm')),
   paypalPending: strMapToObj(state.get('AdminSubscription').get('paypalPending')),
   paypalPendingCancel: strMapToObj(state.get('AdminSubscription').get('paypalPendingCancel')),
   error: strMapToObj(state.get('AdminSubscription').get('error'))
