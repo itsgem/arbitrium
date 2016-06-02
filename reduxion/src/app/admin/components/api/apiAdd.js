@@ -73,7 +73,7 @@ class ApiAdd extends React.Component {
                   type="text"
                   id="client_id"
                   autoComplete="off"
-                  onChange={(e) => this.searchClient(e)}/>
+                  onChange={(e) => this.searchClient(e, clientList)}/>
                 <ul className="dropDownList">
                   {
                     clientList  && clientList.map(item => {
@@ -168,14 +168,24 @@ class ApiAdd extends React.Component {
   selectedCompany ( e, id, companyName ) {
     this.refs.client_id.value = companyName;
     document.getElementById('searchClient').classList.add("is-dirty");;
+    document.getElementById('searchClient').classList.remove("is-invalid");;
     this.setState( {
       client_id: id,
     } );
   }
-  searchClient( e ) {
+  searchClient( e, clientList ) {
     this.setState( {
-      client_id: null,
+      client_id: null
     } );
+    if (clientList) {
+      clientList.map(item => {
+        if (item.company_name.toLowerCase() == e.target.value.toLowerCase()) {
+          this.setState( {
+            client_id: item.id
+          } );
+        }
+      });
+    }
     let payload = {
       company_name: this.refs.client_id.value,
     }

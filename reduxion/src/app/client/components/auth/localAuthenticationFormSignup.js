@@ -85,7 +85,11 @@ class LocalAuthenticationFormSignup extends React.Component {
     let {errors, errorServer} = this.props;
     this.scrolltop(errors, errorServer);
     if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
+      errors = Object.assign({}, errorServer.response, {password_confirmation: []});
+      if (errors.password == 'The password confirmation does not match.') {
+        errors.password_confirmation = errors.password;
+        errors.password = "";
+      }
     }
     return (
       <div className="local-signin-form login-frame">
@@ -245,6 +249,8 @@ class LocalAuthenticationFormSignup extends React.Component {
                     type="text"
                     id='rep_mobile_code'
                     ref="rep_mobile_code"
+                    maxLength="3"
+                    onKeyPress={(e) => this.isNumberKey(e)}
                     />
                   <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Code</label>
                   {errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
@@ -257,6 +263,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                     type="text"
                     id='rep_mobile_number'
                     ref="rep_mobile_number"
+                    onKeyPress={(e) => this.isNumberKey(e)}
                     />
                   <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.</label>
                   {errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
@@ -270,6 +277,8 @@ class LocalAuthenticationFormSignup extends React.Component {
                     type="text"
                     id='rep_phone_code'
                     ref="rep_phone_code"
+                    maxLength="3"
+                    onKeyPress={(e) => this.isNumberKey(e)}
                     />
                   <label className="mdl-textfield__label" htmlFor="rep_phone_code">Code</label>
                   {errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
@@ -282,6 +291,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                     type="text"
                     id='rep_phone_number'
                     ref="rep_phone_number"
+                    onKeyPress={(e) => this.isNumberKey(e)}
                     />
                   <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone no.</label>
                   {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
@@ -385,7 +395,12 @@ class LocalAuthenticationFormSignup extends React.Component {
       </div>
     );
   }
-
+  isNumberKey(evt){
+    let charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)){
+        evt.preventDefault();
+    }
+  }
   formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
