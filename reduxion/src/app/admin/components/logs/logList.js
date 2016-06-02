@@ -119,19 +119,19 @@ class LogList extends React.Component {
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
-              <label className="mdl-textfield__label">Company</label>
+              <label className="mdl-textfield__label">Username</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
-              <label className="mdl-textfield__label">Subscription</label>
+              <label className="mdl-textfield__label">Status Code</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="type" ref="type" />
-              <label className="mdl-textfield__label">Plan Type</label>
+              <label className="mdl-textfield__label">Date Created</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col search-cta">
@@ -146,13 +146,13 @@ class LogList extends React.Component {
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th className="mdl-data-table__cell--non-numeric">ID</th>
-              <th className="mdl-data-table__cell--non-numeric">Company Name</th>
-              <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
-              <th className="mdl-data-table__cell--non-numeric">Email Address</th>
-              <th className="mdl-data-table__cell--non-numeric">Subscription</th>
-              <th className="mdl-data-table__cell--non-numeric">Plan Type</th>
-              <th className="mdl-data-table__cell--non-numeric">Status</th>
+              <th className="mdl-data-table__cell--non-numeric">Username</th>
+              <th className="mdl-data-table__cell--non-numeric">User ID</th>
+              <th className="mdl-data-table__cell--non-numeric">IP Address</th>
+              <th className="mdl-data-table__cell--non-numeric">Status Code</th>
+              <th className="mdl-data-table__cell--non-numeric">URL</th>
+              <th className="mdl-data-table__cell--non-numeric">Parameter</th>
+              <th className="mdl-data-table__cell--non-numeric">Date Created</th>
               <th className="mdl-data-table__cell--non-numeric">Action</th>
             </tr>
           </thead>

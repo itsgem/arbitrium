@@ -100,7 +100,7 @@ export default React.createClass( {
                       className="mdl-button mdl-js-button">Logs</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-logs">
-                      <li className="mdl-menu__item"><Link to="/coffee/logs/">Logs List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/">API Logs List</Link></li>
                     </ul>
                   </div>
                 </nav>

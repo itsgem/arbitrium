@@ -17,7 +17,7 @@ export default React.createClass( {
           title="Logs"
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">Logs List</label>
+          <label className="mdl-layout__tab is-active">API Logs List</label>
         </div>
         <LogList
           logList={this.props.logList}
