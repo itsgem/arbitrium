@@ -238,7 +238,7 @@ class SubscriptionPayment extends React.Component {
                 </label>
               </span>*/}
               <span>
-                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"  onClick={(e) => this.subscribe(e)}>Pay via Paypal</button>
+                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"  onClick={(e) => this.subscribe(e)}>{subscriptionItem.type == "Trial" ? 'Try in Now' : 'Pay via Paypal'}</button>
               </span>
             </div>
           </div>
