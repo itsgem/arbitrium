@@ -219,6 +219,10 @@ html{
           td{
             border: 0px;
 
+            &.narrow-col{
+              width: 100px;
+            }
+
             span{
               font-size: 1rem;
             }
