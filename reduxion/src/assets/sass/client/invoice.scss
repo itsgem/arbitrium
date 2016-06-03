@@ -1,0 +1,17 @@
+.filter-search-bar {
+  .search-cta {
+    .mdl-button {
+      margin: 0 10px;
+    }
+
+    .mdl-button.mdl-button--default {
+      .material-icons {
+        color: #333 !important;
+      }
+    }
+  }
+
+  .material-icons {
+    color: #fff;
+  }
+}

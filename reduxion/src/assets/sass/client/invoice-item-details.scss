@@ -1,0 +1,17 @@
+.invoice-details {
+  .row {
+    .left {
+      width: 50%;
+      float: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .right {
+      width: 50%;
+      float: right;
+      position: relative;
+      overflow: hidden;
+    }
+  }
+}

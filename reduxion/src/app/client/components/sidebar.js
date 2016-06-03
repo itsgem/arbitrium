@@ -22,6 +22,7 @@ class ClientSidebar extends React.Component {
           <Link className="mdl-navigation__link" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>My Profile</Link>
           <Link className="mdl-navigation__link" to="/i/api"><i className="material-icons" role="presentation">group_work</i>Api Keys</Link>
           <Link className="mdl-navigation__link" to="/i/subscription"><i className="material-icons" role="presentation">redeem</i>My Subscription</Link>
+          <Link className="mdl-navigation__link" to="/i/invoice"><i className="material-icons" role="presentation">redeem</i>Invoice</Link>
           <div className="mdl-layout-spacer"></div>
           <Link className="mdl-navigation__link" to="/i/logout"><i className="material-icons" role="presentation">exit_to_app</i>Logout</Link>
         </nav>
