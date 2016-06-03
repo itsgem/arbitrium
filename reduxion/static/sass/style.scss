@@ -21,6 +21,42 @@ html{
   float: left !important;
 }
 
+.right-align{
+  text-align: right !important;
+}
+
+.left-align{
+  text-align: left !important;
+}
+.note{
+  color: red;
+}
+
+.top-margin20{
+  margin-top: 20px;
+}
+
+.no-padding{
+  padding: 0px !important;
+}
+
+.no-margin{
+  margin: 0px !important;
+}
+
+.invoice-value{
+  color: #000;
+  font-weight: 400;
+}
+
+.cta-bottom{
+  text-align: right;
+}
+
+.btn-margin-right{
+  margin-right: 20px;
+}
+
 .body-bg{
   background: #e9eaed;
 
@@ -391,6 +427,10 @@ html{
 
   .content{
     padding: 20px;
+
+    p{
+      margin-bottom: 0px;
+    }
 
     .subscription-type{
       @extend .table-list;
