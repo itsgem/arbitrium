@@ -61,42 +61,90 @@
         <p class="header-title">INVOICE DETAIL</p>
       </div>
       <div class="mdl-layout__panel is-active" id="#">
-          <div class="content-container">
-            <div class="mdl-grid content">
-
+        <div class="content-container">
+          <div class="mdl-grid content">
             <div class="mdl-cell mdl-cell--12-col">
-                <table class="mdl-data-table mdl-js-data-table table-list">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Discount</th>
-                      <th>Subtotal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Subsription-Standard</td>
-                      <td>Subsription</td>
-                      <td>1</td>
-                      <td>$100.00</td>
-                      <td>$5.00</td>
-                      <td>$95.00</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>OVERALL TOTAL</td>
-                      <td>USD $95.00</td>
-                    </tr>
-                  </tbody>
-                  </table>
-                </div>
+              <h6 class="right-align">BILLING INVOICE</h6>
+              <br>
+              <br>
+              <p class="right-align">Arbitrium Group</p>
+              <p class="right-align">1234 Lorem Street, Ipsum City, NM 123456</p>
+              <br>
+              <br>
+              <h6>Other Information:</h6>
+              <br>
+              <p>Johnny Doe</p>
+              <p>Client Company</p>
+              <p>4321 Client Ave., Client City, NM 123456</p>
+              <br>
+              <br>
+              <br>
             </div>
+            <div class="mdl-cell mdl-cell--4-col">
+              <p>Invoice No.: <span class="invoice-value">000000000001</span></p>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col">
+              <p>Invoice Date: <span class="invoice-value">07/02/2016</span></p>
+              <br>
+              <br>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+              <h6>PRODUCTS AND SERVICES PURCHASED</h6>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+              <table class="mdl-data-table mdl-js-data-table table-list">
+                <thead>
+                  <tr>
+                    <th class="left-align">Name</th>
+                    <th class="left-align">Type</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="left-align">Subsription-Standard</td>
+                    <td class="left-align">Subsription</td>
+                    <td>1</td>
+                    <td>$100.00</td>
+                    <td>$5.00</td>
+                    <td>$95.00</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><h6 class="no-margin">OVERALL TOTAL</h6></td>
+                    <td><h6>USD $95.00<h6></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+              <p><i class="note">This is an Electronic invoice. No signature is required.</i></p>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col top-margin20">
+              <h6>Banking Details:</h6>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+              <p>Account Name: <span class="invoice-value">Johnny Doe</span></p>
+              <p>Bank: <span class="invoice-value">Bank of Lorem</span></p>
+              <p>Account No.: <span class="invoice-value">000123456789</span></p>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col">
+              <p>Bank Code: <span class="invoice-value">7171</span></p>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col">
+              <p>Branch Code: <span class="invoice-value">081</span></p>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col cta-bottom">
+              <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i class="material-icons">description</i>GENERATE PDF</button>
+              <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i class="material-icons">mail</i>SEND TO EMAIL</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
