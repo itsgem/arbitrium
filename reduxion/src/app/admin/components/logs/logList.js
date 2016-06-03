@@ -18,17 +18,17 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.client.company_name}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.client.rep_last_name}, {data.client.rep_first_name}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.client.user.email_address}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.name == 'Trial' ? 'Free Trial' : data.name}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.type}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.username}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.userid}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.ipAddress}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.statusCode}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/logs/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/logs/" + data.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -118,19 +118,19 @@ class LogList extends React.Component {
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
+              <input className="mdl-textfield__input" type="text" id="username" ref="username" />
               <label className="mdl-textfield__label">Username</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
+              <input className="mdl-textfield__input" type="text" id="statusCode" ref="statusCode"/>
               <label className="mdl-textfield__label">Status Code</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="type" ref="type" />
+              <input className="mdl-textfield__input" type="text" id="created" ref="created" />
               <label className="mdl-textfield__label">Date Created</label>
             </div>
           </div>
@@ -226,17 +226,17 @@ class LogList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.company_name.value = "";
-    this.refs.name.value = "";
-    this.refs.type.value = "";
+    this.refs.username.value = "";
+    this.refs.statusCode.value = "";
+    this.refs.created.value = "";
     this.searchList(e);
   }
   searchList(e) {
     e.preventDefault();
     let payload = {
-      company_name: this.refs.company_name.value,
-      name: this.refs.name.value,
-      type: this.refs.type.value
+      username: this.refs.username.value,
+      statusCode: this.refs.statusCode.value,
+      created: this.refs.created.value
     };
     this.props.adminLogList(payload);
   }
@@ -245,26 +245,12 @@ class LogList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      company_name: this.refs.company_name.value,
-      name: this.refs.name.value,
-      type: this.refs.type.value
+      username: this.refs.username.value,
+      statusCode: this.refs.statusCode.value,
+      created: this.refs.created.value
     };
     this.props.adminLogList(payload);
   }
-  deleteItem () {
-    this.setState( {
-      loading: true,
-      errors: {},
-      errorServer: null
-    } );
-    $('.msg').html('Successfully deleted').addClass('bg-green');
-    $('.msg').fadeIn(1000, function() {
-      $(this).fadeOut(2000);
-    });
-    this.modalClose();
-    this.props.deleteAdminAccount(this.state.id)
-  }
-
 };
 
 export default LogList;
