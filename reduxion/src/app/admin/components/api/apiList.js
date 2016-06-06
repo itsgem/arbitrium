@@ -21,21 +21,21 @@ class ApiList extends React.Component {
   }
   userDisplay (data, alter) {
     return (
-      <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+      <tr key={data._id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
         <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
-          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
+          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data._id}>
+            <input type="checkbox" id={"switch-" + data._id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data._id)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/api/" + data._id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+              onClick={(e) => this.modalConfirm(e, data._id, data.description)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -106,19 +106,20 @@ class ApiList extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let apiList = {last_page: 1};
+    let apiList = {lastPage: 1};
     let users = {};
+    console.log('test', this.props.ListApiSuccess);
     if (Object.keys(this.props.ListApiSuccess).length) {
       let i=0;
       counter = true;
       apiList = this.props.ListApiSuccess;
       users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-      for (i = 1; i <= apiList.last_page; i++) {
-        pagination[i] = this.pagination(i, apiList.current_page);
+      pagination[i] = this.prevPage(i, (apiList.currentPage > 1 ? (apiList.currentPage - 1): false));
+      for (i = 1; i <= apiList.lastPage; i++) {
+        pagination[i] = this.pagination(i, apiList.currentPage);
       }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-      perPage = apiList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((apiList.currentPage == apiList.lastPage)|| apiList.lastPage == 0 ? false : (apiList.currentPage + 1 )), apiList.lastPage );
+      perPage = apiList.perPage;
     }
     return (
       <div className="filter-search">
@@ -269,7 +270,7 @@ class ApiList extends React.Component {
   searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
-      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
+      perPage: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
       key: this.refs.api_key.value,
       date_created: this.refs.created_at.value
@@ -280,7 +281,7 @@ class ApiList extends React.Component {
     e.preventDefault();
     let payload = {
       page: pageNumber,
-      per_page: this.refs.pageNum.value,
+      perPage: this.refs.pageNum.value,
       description: this.refs.description.value,
       key: this.refs.api_key.value,
       date_created: this.refs.created_at.value

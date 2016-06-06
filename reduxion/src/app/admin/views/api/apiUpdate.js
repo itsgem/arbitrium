@@ -1,6 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
-import ApiUpdate from 'admin/components/api/apiUpdate';
+//import ApiUpdate from 'admin/components/api/apiUpdate';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -11,8 +11,8 @@ export default React.createClass( {
   },
   componentWillMount(){
     let id = this.props.params.id;
-    this.props.getApiKey(id).catch(createError);
-    this.props.getApiPermission().catch(createError);
+    // this.props.getApiKey(id).catch(createError);
+    // this.props.getApiPermission().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {
@@ -22,9 +22,9 @@ export default React.createClass( {
       });
       this.context.router.push('/coffee/api/');
     }
-    if (!Object.keys(nextProps.clientProfileSuccess).length && Object.keys(nextProps.getApiInfo).length && !nextProps.loadingCLient && !nextProps.loading) {
-      nextProps.clientProfile(nextProps.getApiInfo.data.client_id).catch(createError);
-    }
+    // if (!Object.keys(nextProps.clientProfileSuccess).length && Object.keys(nextProps.getApiInfo).length && !nextProps.loadingCLient && !nextProps.loading) {
+    //   nextProps.clientProfile(nextProps.getApiInfo.data.client_id).catch(createError);
+    // }
   },
   loadingRender () {
     openLoading();
@@ -55,12 +55,12 @@ export default React.createClass( {
               to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
             <a className="mdl-layout__tab is-active" >VIEW API key<i className="material-icons add">edit</i></a>
           </div>
-          <ApiUpdate
+          {/*<ApiUpdate
             getApiInfo={this.props.getApiInfo}
             apiPermissions={this.props.apiPermissions}
             clientProfileSuccess={this.props.clientProfileSuccess}
             updateApiKey={this.props.updateApiKey}
-          />
+          />*/}
         </div>
       );
   }

@@ -45,7 +45,6 @@ export default {
     });
   },
   verifyEmailCode(payload) {
-    console.log('payload', payload)
     return patch('user/register/verify', {
       params: {
         token: payload.token,
@@ -249,15 +248,15 @@ export default {
   registerApi(payload) {
     return post('admin/api-key',{
       params: {
-        client_id: payload.client_id,
+        clientId: payload.clientId,
         name: payload.description,
         description: payload.description,
-        ip_addresses: payload.ip_addresses,
-        is_whitelist: payload.is_whitelist,
+        ipAddresses: payload.ipAddresses,
+        isWhitelist: payload.isWhitelist,
         permissions: payload.permissions,
-        is_api_call_restricted: payload.is_api_call_restricted,
-        is_test_key: payload.is_test_key,
-        token: 'sample'
+        isApiCallRestricted: payload.isApiCallRestricted,
+        isTestKey: payload.isTestKey,
+ //       token: 'sample'
       }
     });
   },
