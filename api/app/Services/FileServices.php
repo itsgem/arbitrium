@@ -16,6 +16,11 @@ class FileServices extends NrbServices
 
     private $auto_dl = false;
 
+    public function __construct()
+    {
+        $this->storage_path = config('arbitrium.temp_storage');
+    }
+
     public function addData($data)
     {
         if (!empty($data))

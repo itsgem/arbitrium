@@ -9,17 +9,12 @@ class InvoicesController extends ApiController
 {
     protected function excludeMethodsInLog()
     {
-        return ['getCategoryList', 'getStatusList'];
+        return ['getStatusList'];
     }
 
     protected function getMethods()
     {
         return [];
-    }
-
-    public function getCategoryList(InvoiceServices $service)
-    {
-        return $service->getCategoryList();
     }
 
     public function getStatusList(InvoiceServices $service)

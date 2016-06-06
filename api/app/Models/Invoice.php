@@ -17,11 +17,6 @@ class Invoice extends NrbModel
     const PAID      = 'Paid';
     const UNPAID    = 'Unpaid';
 
-    const PURCHASE_CREDIT       = 'Purchase Credit';
-    const CREDIT_ADJUSTMENT     = 'Credit Adjustment';
-    const PURCHASE_PACKAGE      = 'Purchase Package';
-    const PURCHASE_SUBSCRIPTION = 'Purchase Subscription';
-
     use SoftDeletes;
 
     protected $table = 'invoices';
@@ -31,8 +26,7 @@ class Invoice extends NrbModel
     protected $dates = ['invoiced_at', 'paid_at'];
 
     protected $fillable = [
-        'client_id', 'order_id',
-        'category', 'total_amount_in_credit', 'description',
+        'client_id', 'total_amount', 'description',
         'created_by', 'updated_by'
     ];
 
@@ -84,17 +78,7 @@ class Invoice extends NrbModel
         return $this->belongsTo(User::class);
     }
 
-    //---------- mutators
-
     //---------- scopes
-    public function scopeCategory($query, $category)
-    {
-        if ($category)
-        {
-            return $query->where('category', $category);
-        }
-    }
-
     public function scopeClientNameLike($query, $name)
     {
         if (!empty($name))
@@ -155,52 +139,35 @@ class Invoice extends NrbModel
         $this->save();
     }
 
-    public static function addCredit($data = [])
+    public function paid()
     {
-        $invoice                = Invoice::create($data);
-        $price_per_credit       = PriceSetting::getPricePerCredit();
-        $invoice->total_amount  = $price_per_credit * $invoice->total_amount_in_credit;
-        $invoice->balance_in_credit = $invoice->client->credit_balance + $invoice->total_amount_in_credit;
-        $invoice->save();
-        $invoice->invoice_details()->save(new InvoiceDetail([
-            'product_name'      => $invoice->category,
-            'amount_in_credit'  => $invoice->total_amount_in_credit,
-            'price_per_credit'  => $price_per_credit
-        ]));
-        $invoice->paid();
-        $invoice->client->increment('credit_balance', $invoice->total_amount_in_credit);
-        with(new MailServices())->sendInvoice($invoice->user, $invoice->url);
-        return $invoice;
+        if (!$this->isPaid())
+        {
+            $this->status = self::PAID;
+            $this->load('user', 'invoice_details');
+            $this->url = with(new FileServices())->generateInvoicePDF($this);
+            $this->save();
+        }
     }
 
-    public static function subtractCredit($data, $price_per_credit = NULL, $invoice_details = [])
+    public static function generate($data, $invoice_details = [])
     {
         $invoice = new Invoice($data);
-        if ($invoice->client->credit_balance >= $invoice->total_amount_in_credit)
+        $invoice->save();
+
+        if ($invoice_details)
         {
-            $price_per_credit       = $price_per_credit ? $price_per_credit : PriceSetting::getPricePerCredit();
-            $invoice->total_amount  = $price_per_credit * $invoice->total_amount_in_credit;
-            $invoice->balance_in_credit = $invoice->client->credit_balance - $invoice->total_amount_in_credit;
-            $invoice->save();
-            if ($invoice_details)
-            {
-                $invoice->invoice_details()->saveMany($invoice_details);
-            }
-            else
-            {
-                $invoice->invoice_details()->save(new InvoiceDetail([
-                    'product_name'      => isset($data['name']) ? $data['name'] : $invoice->category,
-                    'amount_in_credit'  => $invoice->total_amount_in_credit,
-                    'price_per_credit'  => $price_per_credit
-                ]));
-            }
-            $invoice->paid();
-            $invoice->client->decrement('credit_balance', $invoice->total_amount_in_credit);
+            $invoice->invoice_details()->saveMany($invoice_details);
         }
         else
         {
-            $invoice = NULL;
+            $invoice->invoice_details()->save(new InvoiceDetail([
+                'name'   => $data['name'],
+                'amount' => $invoice->total_amount,
+            ]));
         }
+        $invoice->paid();
+
         return $invoice;
     }
 
@@ -211,18 +178,8 @@ class Invoice extends NrbModel
 
     public function generatePoNo()
     {
-        $post_fix = isset($this->order_id) ? $this->order_id : generate_code(6);
+        $post_fix = generate_code(6);
         return current_datetime()->year.'-'.str_pad($this->client_id, 6, '0', STR_PAD_LEFT).'-'.str_pad($post_fix, 6, '0', STR_PAD_LEFT);
-    }
-
-    public static function getCategoryList()
-    {
-        return self::getListFromArray([
-            self::PURCHASE_CREDIT,
-            self::CREDIT_ADJUSTMENT,
-            self::PURCHASE_PACKAGE,
-            self::PURCHASE_SUBSCRIPTION
-        ]);
     }
 
     public static function getStatusList()
@@ -237,26 +194,5 @@ class Invoice extends NrbModel
     public function isPaid()
     {
         return $this->status == self::PAID;
-    }
-
-    public function isPurchasePackage()
-    {
-        return $this->category == self::PURCHASE_PACKAGE;
-    }
-
-    public function isPurchaseSubscription()
-    {
-        return $this->category == self::PURCHASE_SUBSCRIPTION;
-    }
-
-    public function paid()
-    {
-        if (!$this->isPaid())
-        {
-            $this->status = self::PAID;
-            $this->load('user', 'invoice_details');
-            $this->url = with(new FileServices())->generateInvoicePDF($this);
-            $this->save();
-        }
     }
 }

@@ -202,18 +202,25 @@ class ClientSubscription extends Subscription
 
     public function generateInvoice()
     {
-        $invoice = Invoice::subtractCredit([
-            'category'      => Invoice::PURCHASE_SUBSCRIPTION,
-            'client_id'     => $this->client_id,
-            'name'          => $this->name.
+        $subscription_fees = $this->getFees($this->term);
+        $invoice_details = [];
+        foreach ($subscription_fees as $fees)
+        {
+            $invoice_details[] = new InvoiceDetail($fees);
+        }
+
+        $invoice = Invoice::generate([
+            'client_id'    => $this->client_id,
+            'name'         => $this->name.
                                 ' <'.
                                 convert_to_string($this->valid_from, 'F j').
                                 ' - '.
                                 convert_to_string($this->valid_to, 'F j, Y').
                                 '> ',
-            'description'   => '-',
-            'total_amount_in_credit' => $this->price_in_credit,
-        ]);
+            'description'  => $this->description,
+            'discounts'    => $this->discounts,
+            'total_amount' => $this->calculateTotal(self::TERM_ANNUALLY.'_With_Setup'),
+        ], $invoice_details);
 
         if ($invoice)
         {

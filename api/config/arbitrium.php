@@ -6,4 +6,6 @@ return [
     'default_timezone'      => 'Asia/Singapore',
 
     'subscription_email_reminder' => 5, // in days
+
+    'temp_storage'  => storage_path().'/temp/',
 ];
