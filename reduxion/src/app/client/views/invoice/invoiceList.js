@@ -119,9 +119,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000001</td>
                 <td className="mdl-data-table__cell--non-numeric">Paid</td>
                 <td className="mdl-data-table__cell--non-numeric narrow-col">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                 <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                 </Link>
                 </td>
               </tr>
               <tr>
@@ -129,9 +129,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000002</td>
                 <td className="mdl-data-table__cell--non-numeric">Cancelled</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                 <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                 </Link>
                 </td>
               </tr>
               <tr>
@@ -139,9 +139,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000003</td>
                 <td className="mdl-data-table__cell--non-numeric">Pending</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                 <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                 </Link>
                 </td>
               </tr>
               <tr>
@@ -149,9 +149,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000004</td>
                 <td className="mdl-data-table__cell--non-numeric">Paid</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                 <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                 </Link>
                 </td>
               </tr>
               <tr>
@@ -159,9 +159,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000005</td>
                 <td className="mdl-data-table__cell--non-numeric">Cancelled</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                  <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                  </Link>
                 </td>
               </tr>
               <tr>
@@ -169,9 +169,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000006</td>
                 <td className="mdl-data-table__cell--non-numeric">Pending</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                  <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                  </Link>
                 </td>
               </tr>
               <tr>
@@ -179,9 +179,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000007</td>
                 <td className="mdl-data-table__cell--non-numeric">Pending</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                  <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                  </Link>
                 </td>
               </tr>
               <tr>
@@ -189,9 +189,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000008</td>
                 <td className="mdl-data-table__cell--non-numeric">Cancelled</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                  <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                  </Link>
                 </td>
               </tr>
               <tr>
@@ -199,9 +199,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000009</td>
                 <td className="mdl-data-table__cell--non-numeric">Paid</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                  <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                  </Link>
                 </td>
               </tr>
               <tr>
@@ -209,9 +209,9 @@ export default React.createClass({
                 <td className="mdl-data-table__cell--non-numeric">000000000010</td>
                 <td className="mdl-data-table__cell--non-numeric">Pending</td>
                 <td className="mdl-data-table__cell--non-numeric">
-                  <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                  <Link to="/i/invoice/121" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                     <i className="material-icons">open_in_new</i>
-                  </button>
+                  </Link>
                 </td>
               </tr>
             </tbody>

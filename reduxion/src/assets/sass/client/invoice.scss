@@ -15,3 +15,27 @@
     color: #fff;
   }
 }
+
+.client .table-list {
+  tbody {
+    .material-icons {
+      color: #fff;
+    }    
+  }
+}
+
+.table-invoice {
+  .invoice-value{
+    color: #000;
+    font-weight: 400;
+  }
+  .note{
+    color: red;
+  }
+
+  .cta-bottom {
+    .mdl-button--default {
+      margin-left: 15px;
+    }
+  }
+}
