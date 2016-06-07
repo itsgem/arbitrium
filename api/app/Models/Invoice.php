@@ -205,7 +205,7 @@ class Invoice extends NrbModel
     public static function generate($data, $invoice_details = [])
     {
         $invoice = new Invoice($data);
-        $invoice->save();
+        $invoice->paid();
 
         if ($invoice_details)
         {
@@ -218,7 +218,6 @@ class Invoice extends NrbModel
                 'amount' => $invoice->total_amount,
             ]));
         }
-        $invoice->paid();
 
         return $invoice;
     }
