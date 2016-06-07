@@ -27,13 +27,30 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::destroy
     public function destroy($id, $client_id = null)
     {
-        return DB::transaction(function () use ($id, $client_id)
-        {
-            $api_key = ApiKey::clientId($client_id)->findOrFail($id);
-            $api_key->delete();
+        try {
+            $client = new Client();
+            $req = [];
+            $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+            $arr['data'] = json_decode($res->getBody()->getContents());
+            $arr['status'] = $res->getStatusCode();
+            $arr['header'] = $res->getHeader('content-type');
+            $api = $client->request('delete', 'http://localhost:1337/api/apiKeys/' . $id,
+                ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ]]);
+            $data = json_decode($api->getBody()->getContents(), true);
+            return $this->respondWithSuccess();
 
-            return $this->respondWithSuccess($api_key);
-        });
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
+        // return DB::transaction(function () use ($id, $client_id)
+        // {
+        //     $api_key = ApiKey::clientId($client_id)->findOrFail($id);
+        //     $api_key->delete();
+
+        //     return $this->respondWithSuccess($api_key);
+        // });
     }
 
     // Admin\Api\ApiKeyController::index
@@ -45,12 +62,12 @@ class ApiKeyServices extends NrbServices
         $arr = [];
         try {
             $client = new Client();
-            $res = $client->request('POST', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+            $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
             $arr['data'] = json_decode($res->getBody()->getContents());
             $arr['status'] = $res->getStatusCode();
             $arr['header'] = $res->getHeader('content-type');
             $token = $arr['data'];
-            $api = $client->request('GET', 'http://localhost:1337/api/apiKeys',
+            $api = $client->request('get', 'http://localhost:1337/api/apiKeys',
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
                 'query' => $request->all()]);
             $data =  json_decode($api->getBody()->getContents());
@@ -87,7 +104,7 @@ class ApiKeyServices extends NrbServices
 
     // Admin\Api\ApiKeyController::show
     // Client\Api\ApiKeyController::show
-    public function show($request, $id, $client_id = null)
+    public function show($request, $id, $clientId = null)
     {
         // $api_key = ApiKey::with(['client.user', 'permissions', 'ip_addresses']);
         // $api_key = $api_key->clientId($client_id)->findOrFail($id);
@@ -100,7 +117,6 @@ class ApiKeyServices extends NrbServices
             $arr['data'] = json_decode($res->getBody()->getContents());
             $arr['status'] = $res->getStatusCode();
             $arr['header'] = $res->getHeader('content-type');
-            $token = $arr['data'];
             $api = $client->request('GET', 'http://localhost:1337/api/apiKeys/' . $id,
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ]]);
             $data = json_decode($api->getBody()->getContents(), true);
@@ -123,13 +139,13 @@ class ApiKeyServices extends NrbServices
         try {
             $client = new Client();
             $req = [];
-            $res = $client->request('POST', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+            $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
             $arr['data'] = json_decode($res->getBody()->getContents());
             $arr['status'] = $res->getStatusCode();
             $arr['header'] = $res->getHeader('content-type');
             $request = json_decode($request->getContent());
             $request->token = $token;
-            $api = $client->request('POST', 'http://localhost:1337/api/apiKeys/',
+            $api = $client->request('post', 'http://localhost:1337/api/apiKeys/',
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
                 'form_params' => ['data' => json_encode($request) ] ]);
             return $this->respondWithSuccess();
@@ -169,33 +185,57 @@ class ApiKeyServices extends NrbServices
 
     // Admin\Api\ApiKeyController::update
     // Client\Api\ApiKeyController::update
-    public function update($request, $id, $client_id = null)
+    public function update($request, $id, $clientId = null)
     {
-        // Transform payload to eloquent format, set defaults
-        $payload = $request->except('token');
-        $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
-        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
-        $payload['permissions'] = get_val($payload, 'permissions', []);
-
-        return DB::transaction(function () use ($payload, $id, $client_id)
-        {
-            $api_key = ApiKey::clientId($client_id)->findOrFail($id);
-            $api_key->update($payload);
-
-            ApiKeyPermission::apiKeyId($id)->delete();
-            foreach($payload['permissions'] as $permission)
-            {
-                $api_key->permissions()->save(new ApiKeyPermission($permission));
-            }
-
-            ApiIpAddress::apiKeyId($id)->delete();
-            foreach($payload['ip_addresses'] as $ip_address)
-            {
-                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
-            }
-
+        try {
+            $client = new Client();
+            $req = [];
+            $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+            $arr['data'] = json_decode($res->getBody()->getContents());
+            $arr['status'] = $res->getStatusCode();
+            $arr['header'] = $res->getHeader('content-type');
+            $request = json_decode($request->getContent());
+            $api = $client->request('put', 'http://localhost:1337/api/apiKeys/' . $id,
+                ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
+                'form_params' => ['data' => json_encode($request) ] ]);
             return $this->respondWithSuccess();
-        });
+
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
+
+
+
+
+
+
+        // Transform payload to eloquent format, set defaults
+        // $payload = $request->except('token');
+        // $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
+        // $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
+        // $payload['permissions'] = get_val($payload, 'permissions', []);
+
+        // return DB::transaction(function () use ($payload, $id, $client_id)
+        // {
+        //     $api_key = ApiKey::clientId($client_id)->findOrFail($id);
+        //     $api_key->update($payload);
+
+        //     ApiKeyPermission::apiKeyId($id)->delete();
+        //     foreach($payload['permissions'] as $permission)
+        //     {
+        //         $api_key->permissions()->save(new ApiKeyPermission($permission));
+        //     }
+
+        //     ApiIpAddress::apiKeyId($id)->delete();
+        //     foreach($payload['ip_addresses'] as $ip_address)
+        //     {
+        //         $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
+        //     }
+
+        //     return $this->respondWithSuccess();
+        // });
     }
 
     // Admin\Api\ApiKeyController::generate
@@ -212,12 +252,31 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::activate
     public function activate($request, $id)
     {
-        return DB::transaction(function () use ($request, $id)
-        {
-            ApiKey::findOrFail($id)->update($request->only('is_active'));
-
+        try {
+            $client = new Client();
+            $req = [];
+            $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+            $arr['data'] = json_decode($res->getBody()->getContents());
+            $arr['status'] = $res->getStatusCode();
+            $arr['header'] = $res->getHeader('content-type');
+            $request = json_decode($request->getContent());
+            $api = $client->request('patch', 'http://localhost:1337/api/apiKeys/' . $id . "/activate",
+                ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
+                'form_params' => $request ]);
+            $data = json_decode($api->getBody()->getContents(), true);
             return $this->respondWithSuccess();
-        });
+
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
+        // return DB::transaction(function () use ($request, $id)
+        // {
+        //     ApiKey::findOrFail($id)->update($request->only('is_active'));
+
+        //     return $this->respondWithSuccess();
+        // });
     }
 
     // Admin\Api\ApiKeyController::addPermission

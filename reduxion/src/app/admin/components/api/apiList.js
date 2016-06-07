@@ -27,7 +27,7 @@ class ApiList extends React.Component {
         <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data._id}>
-            <input type="checkbox" id={"switch-" + data._id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data._id)} />
+            <input type="checkbox" id={"switch-" + data._id} className="mdl-switch__input" defaultChecked={(data.isActive == 1) ? false : true} onChange={(e) => this.changeActive(e, data._id)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
@@ -35,7 +35,7 @@ class ApiList extends React.Component {
           to={"/coffee/api/" + data._id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data._id, data.description)}>
+              onClick={(e) => this.modalConfirm(e, data._id)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -251,7 +251,7 @@ class ApiList extends React.Component {
     thisEvent.value = pageNum;
     this.page(e, 1);
   }
-  modalConfirm (e, id, description) {
+  modalConfirm (e, id) {
     openModal();
     this.setState( {
       id: id

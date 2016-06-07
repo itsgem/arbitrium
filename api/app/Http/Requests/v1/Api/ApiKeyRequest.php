@@ -19,7 +19,7 @@ class ApiKeyRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'clientId'               => 'exists:clients,id',
+                'clientId'               => '',
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
                 'permissions'            => 'required_if:isApiCallRestricted,1|array',

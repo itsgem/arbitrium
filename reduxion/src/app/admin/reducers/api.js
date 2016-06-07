@@ -60,7 +60,7 @@ export default createReducer({
   }),
   [getApiKey.ok]: (state, payload) => state.merge({
     loading: false,
-    getApiInfo: state.concat(payload),
+    getApiInfo: payload,
   }),
   [getApiKey.request]: (state) => state.merge({
     loading: false,
