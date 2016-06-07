@@ -9,7 +9,16 @@ class SystemSetting extends NrbModel
     const DEFAULT_TOKEN_EXPIRY      = 14400;
     const DEFAULT_ADMIN_EMAIL       = 'no-reply@arbitrium.com';
 
+    const SEGMENT_GENERAL           = 'general';
+    const SEGMENT_BILLING           = 'billing';
+
     protected $table = 'system_settings';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name', 'value', 'segment',
+    ];
 
     //---------- relationships
 
