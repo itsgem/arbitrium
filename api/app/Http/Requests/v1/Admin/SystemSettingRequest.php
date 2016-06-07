@@ -23,7 +23,7 @@ class SystemSettingRequest extends NrbRequest
         if ($method == 'POST')
         {
             $rules = [
-                'name'    => 'required|slug|max:255',
+                'name'    => 'required|slug|max:255|unique:system_settings,name',
                 'value'   => 'required|max:255',
                 'segment' => 'required|slug|max:255|in:'.SystemSetting::SEGMENT_GENERAL.','.SystemSetting::SEGMENT_BILLING,
             ];
