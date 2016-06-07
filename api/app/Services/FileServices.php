@@ -16,6 +16,11 @@ class FileServices extends NrbServices
 
     private $auto_dl = false;
 
+    public function __construct()
+    {
+        $this->storage_path = config('arbitrium.temp_storage');
+    }
+
     public function addData($data)
     {
         if (!empty($data))
@@ -60,16 +65,22 @@ class FileServices extends NrbServices
     public function setFilename($value)
     {
         $this->filename = $value;
+
+        return $this;
     }
 
     public function setStoragePath($value)
     {
         $this->storage_path = $value;
+
+        return $this;
     }
 
     public function setTemplate($value)
     {
         $this->template = $value;
+
+        return $this;
     }
 
     private function createDownloadHeaders($filename, $fileType)
