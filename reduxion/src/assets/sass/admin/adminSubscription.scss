@@ -39,6 +39,10 @@
       width: calc(25% - 25px);
     }
 
+    p{
+      margin-bottom: 0px;
+    }
+
     .subscription-type{
       @extend .table-list;
 
