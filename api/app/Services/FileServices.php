@@ -65,16 +65,22 @@ class FileServices extends NrbServices
     public function setFilename($value)
     {
         $this->filename = $value;
+
+        return $this;
     }
 
     public function setStoragePath($value)
     {
         $this->storage_path = $value;
+
+        return $this;
     }
 
     public function setTemplate($value)
     {
         $this->template = $value;
+
+        return $this;
     }
 
     private function createDownloadHeaders($filename, $fileType)

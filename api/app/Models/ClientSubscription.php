@@ -220,6 +220,7 @@ class ClientSubscription extends Subscription
             'description'  => $this->description,
             'discounts'    => $this->discounts,
             'total_amount' => $this->calculateTotal(self::TERM_ANNUALLY.'_With_Setup'),
+            'payment_method' => Invoice::PAYMENT_METHOD_PAYPAL,
         ], $invoice_details);
 
         if ($invoice)

@@ -22,7 +22,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Get(
      *     path="/subscription",
-     *     tags={"Public - Subscription"},
+     *     tags={"Public - Subscription Packages"},
      *     summary="Subscriptions List",
      *     description="Get all subscription packages.",
      *     @SWG\Response(response="200", description="Success",
@@ -63,7 +63,7 @@ class SubscriptionsController extends ApiController
      *
      * @SWG\Get(
      *     path="/subscription/{subscription}",
-     *     tags={"Public - Subscription"},
+     *     tags={"Public - Subscription Packages"},
      *     summary="Single Subscription",
      *     description="Get single subscription package.",
      *     @SWG\Response(response="200", description="Success",
