@@ -3,6 +3,34 @@ namespace App\Models;
 
 use App\Nrb\NrbModel;
 
+/**
+ * Class SystemSetting
+ *
+ * @SWG\Definition(
+ *     definition="SystemSetting",
+ *     required={"name", "value", "segment"},
+ *     @SWG\Property(property="name", type="string", description="Slug-format name. No spaces, special characters. Must start with alphabet.", default="email_greeting"),
+ *     @SWG\Property(property="value", type="string", description="Setting value", default="Hello!"),
+ *     @SWG\Property(property="segment", type="string", description="Setting Category (general|billing)", default="general"),
+ * )
+ *
+ * @SWG\Definition(
+ *     definition="SystemSettingUpdate",
+ *     required={"value"},
+ *     @SWG\Property(property="value", type="string", description="Setting value", default="Hello!"),
+ * )
+ *
+ * @SWG\Definition(
+ *     definition="SystemSettingResponse",
+ *     required={"id", "name", "value", "segment"},
+ *     @SWG\Property(property="id", type="integer", format="int64", description="System Setting ID", default="1"),
+ *     @SWG\Property(property="name", type="string", description="Slug-format name. No spaces, special characters. Must start with alphabet.", default="email_greeting"),
+ *     @SWG\Property(property="value", type="string", description="Setting value", default="Hello!"),
+ *     @SWG\Property(property="segment", type="string", description="Setting Category (general|billing)", default="general"),
+ * )
+ *
+ * @package App\Models
+ */
 class SystemSetting extends NrbModel
 {
     const DEFAULT_ITEMS_PER_PAGE    = 10;
