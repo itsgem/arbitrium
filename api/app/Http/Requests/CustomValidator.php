@@ -242,6 +242,11 @@ class CustomValidator extends Validator
         return $value || $this->getValue($parameters[0]);
     }
 
+    public function validateSlug($attribute, $value)
+    {
+        return preg_match("/^[a-z]+(?:_[a-z0-9]+)*$/", $value);
+    }
+
     /**
      * Validate the uniqueness of username.
      * If username belongs to a client, and the approval_status is disapproved,

@@ -86,7 +86,11 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         Route::resource('subscription', 'SubscriptionsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
          //-- SYSTEM SETTINGS
-        Route::get('system-setting/{segment}',  ['uses' => 'SystemSettingsController@get']);
+        Route::group(['prefix' => 'system-setting'], function()
+        {
+            Route::get('segment/{segment}',     ['uses' => 'SystemSettingsController@getSegment']);
+        });
+        Route::resource('system-setting', 'SystemSettingsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
     });
 
     //-- SUPER ADMIN ONLY
