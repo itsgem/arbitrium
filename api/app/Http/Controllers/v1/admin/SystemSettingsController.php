@@ -20,15 +20,9 @@ class SystemSettingsController extends ApiController
     protected function getMethods()
     {
         return [
-            'destroy',
             'store',
             'update',
         ];
-    }
-
-    public function destroy($id, SystemSettingServices $service)
-    {
-        return $service->destroy($id);
     }
 
     public function index(SystemSettingServices $service)
