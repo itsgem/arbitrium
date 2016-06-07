@@ -22,7 +22,7 @@ class ApiKeyRequest extends NrbRequest
                 'clientId'               => '',
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
-                'permissions'            => 'required_if:isApiCallRestricted,1|array',
+                'permissions'            => 'array',
                 'ipAddresses'            => 'required_if:isWhitelist,1|array',
                 'isApiCallRestricted'    => 'boolean',
                 'isWhitelist'            => 'boolean',
