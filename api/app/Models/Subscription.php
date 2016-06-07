@@ -180,35 +180,35 @@ class Subscription extends NrbModel
     public function getFees($term = null)
     {
         $monthly = [
-            'regular' => [
-                'amount'      => $this->fee_monthly,
-                'name' => 'Monthly Fee',
+            'initial' => [
+                'amount' => $this->fee_initial_setup,
+                'name'   => 'Initial Setup Fee',
             ],
             'maintenance' => [
-                'amount'      => $this->fee_monthly_maintenance,
-                'name' => 'Monthly Maintenance Fee',
+                'amount' => $this->fee_monthly_maintenance,
+                'name'   => 'Monthly Maintenance Fee',
             ],
-            'initial' => [
-                'amount'      => $this->fee_initial_setup,
-                'name' => 'Initial Setup Fee',
+            'regular' => [
+                'amount' => $this->fee_monthly,
+                'name'   => 'Monthly Fee',
             ],
         ];
         $annually = [
-            'regular' => [
-                'amount'      => $this->fee_yearly,
-                'name' => 'Annual Fee',
-            ],
-            'license' => [
-                'amount'      => $this->fee_yearly_license,
-                'name' => 'Annual License Fee',
+            'initial' => [
+                'amount' => $this->fee_initial_setup,
+                'name'   => 'Initial Setup Fee',
             ],
             'maintenance' => [
-                'amount'      => $this->fee_yearly_maintenance,
-                'name' => 'Annual Maintenance Fee',
+                'amount' => $this->fee_yearly_maintenance,
+                'name'   => 'Annual Maintenance Fee',
             ],
-            'initial' => [
-                'amount'      => $this->fee_initial_setup,
-                'name' => 'Initial Setup Fee',
+            'license' => [
+                'amount' => $this->fee_yearly_license,
+                'name'   => 'Annual License Fee',
+            ],
+            'regular' => [
+                'amount' => $this->fee_yearly,
+                'name'   => 'Annual Fee',
             ],
         ];
 

@@ -18,7 +18,6 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
         Route::get('countries',                 ['uses' => 'CountriesController@getList']);
         Route::group(['prefix' => 'invoice'], function()
         {
-            Route::get('categories',            ['uses' => 'InvoicesController@getCategoryList']);
             Route::get('status',                ['uses' => 'InvoicesController@getStatusList']);
         });
         Route::get('role/admin',                ['uses' => 'RolesController@getAdminRoles']);

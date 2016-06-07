@@ -9,12 +9,6 @@ use App\Nrb\NrbServices;
 
 class InvoiceServices extends NrbServices
 {
-    // InvoicesController::getCategoryList
-    public function getCategoryList()
-    {
-        return $this->respondWithData(Invoice::getCategoryList());
-    }
-
     // InvoicesController::getStatusList
     public function getStatusList()
     {
@@ -31,16 +25,19 @@ class InvoiceServices extends NrbServices
     }
 
     // Admin\InvoicesController::index
-    public function index($request)
+    // Client\ClientsController::listInvoice
+    public function index($request, $client_id = null)
     {
+        $client_id = ($client_id) ? $client_id : $request->get('client_id');
+
+        $this->addResponseData(['search_params' => $request->all()]);
         return $this->respondWithData(
             Invoice::invoiceDateFrom($request->get('date_from'))
             ->invoiceDateTo($request->get('date_to'))
             ->invoiceNoLike($request->get('invoice_no'))
-            ->clientId($request->get('client_id'))
+            ->clientId($client_id)
             ->poNoLike($request->get('po_no'))
             ->companyNameLike($request->get('company_name'))
-            ->category($request->get('category'))
             ->status($request->get('status'))
             ->latest()
             ->paginate($request->get('per_page')),
@@ -71,15 +68,17 @@ class InvoiceServices extends NrbServices
     }
 
     // Admin\InvoicesController::show
-    public function show($request, $id)
+    // Client\ClientsController::showInvoice
+    public function show($request, $id, $client_id = null)
     {
         $invoice = new Invoice();
         if ($request->get('with-details'))
         {
             $invoice = $invoice->with('invoice_details');
         }
+        $invoice = $invoice->clientId($client_id)->findOrFail($id);
 
-        return $this->respondWithSuccess($invoice->findOrFail($id));
+        return $this->respondWithSuccess($invoice);
     }
 
     // Admin\InvoicesController::showDetails

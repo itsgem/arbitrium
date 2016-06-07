@@ -18,22 +18,9 @@ class InvoiceDetail extends NrbModel
     protected $dates = [];
 
     protected $fillable = [
-        'invoice_id', 'product_name',
-        'amount_in_credit', 'price_per_credit',
+        'invoice_id', 'name', 'amount',
         'created_by', 'updated_by'
     ];
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::created(function($detail)
-        {
-            $detail->amount = $detail->price_per_credit * $detail->amount_in_credit;
-            $detail->save();
-            return true;
-        });
-    }
 
     //---------- relationships
     public function invoice()
