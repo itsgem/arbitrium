@@ -1,0 +1,49 @@
+.filter-search-bar {
+  .search-cta {
+    .mdl-button {
+      margin: 0 10px;
+    }
+
+    .mdl-button.mdl-button--default {
+      .material-icons {
+        color: #333 !important;
+      }
+    }
+  }
+
+  .material-icons {
+    color: #fff;
+  }
+}
+
+.client .table-list {
+  tbody {
+    .material-icons {
+      color: #fff;
+    }    
+  }
+}
+
+.table-invoice {
+  .invoice-value{
+    color: #000;
+    font-weight: 400;
+  }
+  .note{
+    color: red;
+  }
+
+  .cta-bottom {
+    .mdl-button--default {
+      margin-left: 15px;
+    }
+  }
+}
+
+.search-cta {
+  .mdl-button--default {
+    .material-icons {
+      color: #222;
+    }
+  }
+}

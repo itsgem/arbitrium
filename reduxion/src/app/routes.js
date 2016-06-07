@@ -58,6 +58,11 @@ import ClientApiUpdate from 'client/containers/api/apiUpdate';
 import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
+import ClientInvoice from 'client/views/invoice/invoiceList';
+import ClientInvoiceListDetails from 'client/views/invoice/invoiceListDetails';
+import ClientApiLogs from 'client/views/apilogs/apilogs';
+//import ClientInvoice from 'client/containers/invoice/invoiceList';
+
 function startTimer(duration, tokenName) {
     let start = Date.now();
     let diff = 0;
@@ -258,6 +263,13 @@ export default () => (
       <Route path="subscription" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientSubscriptionDetail}/>
         <Route component={ClientSubscriptionPayment} path=":id" />
+      </Route>
+      <Route path="invoice" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientInvoice}/>
+        <Route component={ClientInvoiceListDetails} path=":id" />
+      </Route>
+      <Route path="apilogs" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientApiLogs}/>
       </Route>
     </Route>
     <Route path="*" components={NoMatch} />
