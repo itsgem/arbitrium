@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use DB;
 use App\Nrb\NrbServices;
 use App\Models\SystemSetting;
 
@@ -36,8 +37,22 @@ class SystemSettingServices extends NrbServices
     // Admin\SystemSettingsController::store
     public function store($request)
     {
-        $system_setting = SystemSetting::findOrFail($id);
+        return DB::transaction(function () use ($request)
+        {
+            $system_setting = SystemSetting::create($request->all());
 
-        return $this->respondWithSuccess($system_setting);
+            return $this->respondWithSuccess($system_setting);
+        });
+    }
+
+    // Admin\SystemSettingsController::update
+    public function update($request, $id)
+    {
+        return DB::transaction(function () use ($request, $id)
+        {
+            SystemSetting::findOrFail($id)->update($request->only('value'));
+
+            return $this->respondWithSuccess();
+        });
     }
 }

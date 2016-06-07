@@ -237,6 +237,7 @@ return [
     'greater_than_equal'    => 'The :attribute should be greater than or equal the :other.',
     'hex'               => 'The :attribute is invalid.',
     'money'             => 'The :attribute must be a valid money format. (No commas and unit)',
+    'slug'              => 'The :attribute must be a slug format. (No spaces, special characters, and must start with alphabet)',
     'password'          => 'The :attribute must have small letters, capital letters and numbers.',
     'past_date'         => 'The :attribute must be a date before the current date.',
     'unique_username'   => trans('errors.'.Errors::USERNAME_TAKEN),

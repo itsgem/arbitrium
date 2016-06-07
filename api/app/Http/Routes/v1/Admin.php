@@ -90,7 +90,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         {
             Route::get('segment/{segment}',     ['uses' => 'SystemSettingsController@getSegment']);
         });
-        Route::resource('system-setting', 'SystemSettingsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+        Route::resource('system-setting', 'SystemSettingsController', ['only' => ['index', 'show', 'store', 'update']]);
     });
 
     //-- SUPER ADMIN ONLY

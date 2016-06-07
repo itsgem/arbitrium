@@ -14,6 +14,12 @@ class SystemSetting extends NrbModel
 
     protected $table = 'system_settings';
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name', 'value', 'segment',
+    ];
+
     //---------- relationships
 
     //---------- mutators
