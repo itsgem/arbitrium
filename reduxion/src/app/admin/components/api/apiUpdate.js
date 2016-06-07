@@ -77,7 +77,7 @@ class ApiUpdate extends React.Component {
             permissions  && permissions.map(item => {
               let getCk = false;
               for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].api_permission_id == item.id && getApiInfo.permissions[i].value == 1) {
+                if (getApiInfo.permissions[i].apiPermissionId == item.id) {
                   getCk = true;
                   break;
                 }

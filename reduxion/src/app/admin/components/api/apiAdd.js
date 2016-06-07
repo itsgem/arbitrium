@@ -197,8 +197,6 @@ class ApiAdd extends React.Component {
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
         permissions[k] = {apiPermissionId: chkArr[k].value, value: 1};
-      } else {
-        permissions[k] = {apiPermissionId: chkArr[k].value, value: 0};
       }
     }
 

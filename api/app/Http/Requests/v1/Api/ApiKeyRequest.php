@@ -50,34 +50,34 @@ class ApiKeyRequest extends NrbRequest
         }
         else
         {
-            // Validate Permissions
-            $rules_permissions = [
-                'apiPermissionId'   => ['required', 'exists:api_permissions,id'],
-                'value'             => ['required', 'boolean'],
-            ];
-            if ($this->get('permissions'))
-            {
-                foreach ($this->get('permissions') as $permission)
-                {
-                    //dd($permission);
-                    $validation = Validator::make(
-                        [
-                            'apiPermissionId' => get_val($permission, 'apiPermissionId', ''),
-                            'value'             => get_val($permission, 'value', ''),
-                        ],
-                        $rules_permissions
-                    );
-                    if ($validation->fails())
-                    {
-                        $errors['permissions'][] = $validation->messages()->toArray();
-                    }
-                }
-            }
+            // // Validate Permissions
+            // $rules_permissions = [
+            //     'apiPermissionId'   => ['required', 'exists:api_permissions,id'],
+            //     'value'             => ['required', 'boolean'],
+            // ];
+            // if ($this->get('permissions'))
+            // {
+            //     foreach ($this->get('permissions') as $permission)
+            //     {
+            //         //dd($permission);
+            //         $validation = Validator::make(
+            //             [
+            //                 'apiPermissionId' => get_val($permission, 'apiPermissionId', ''),
+            //                 'value'             => get_val($permission, 'value', ''),
+            //             ],
+            //             $rules_permissions
+            //         );
+            //         if ($validation->fails())
+            //         {
+            //             $errors['permissions'][] = $validation->messages()->toArray();
+            //         }
+            //     }
+            // }
             // Validate IP Addresses
             $rules_ipAddresses = [
-                'api_key_id' => ['exists:api_keys,id'],
+                // 'api_key_id' => ['exists:api_keys,id'],
                 'ipAddress' => ['required', 'ip'],
-                'name'       => ['max:255']
+                // 'name'       => ['max:255']
             ];
             if ($this->get('ipAddresses'))
             {
@@ -85,9 +85,9 @@ class ApiKeyRequest extends NrbRequest
                 {
                     $validation = Validator::make(
                         [
-                            'api_key_id' => get_val($ip_address, 'api_key_id', ''),
+                            // 'api_key_id' => get_val($ip_address, 'api_key_id', ''),
                             'ipAddress' => get_val($ip_address, 'ipAddress', ''),
-                            'name'       => get_val($ip_address, 'name', ''),
+                            // 'name'       => get_val($ip_address, 'name', ''),
                         ],
                         $rules_ipAddresses
                     );
