@@ -317,6 +317,10 @@ class Client extends NrbModel
 
         $client_subscription->status = ClientSubscription::STATUS_ACTIVE;
         $client_subscription->setValidity($start_date, $client_subscription->term);
+
+        // Generate Invoice
+        $client_subscription->generateInvoice();
+
         $client_subscription->save();
 
         return $client_subscription;
