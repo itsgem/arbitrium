@@ -11,16 +11,54 @@ use App\Services\FileServices;
 use App\Services\MailServices;
 use App\User;
 
+/**
+ * Class Invoice
+ *
+ * @SWG\Definition(
+ *     definition="InvoiceResponse",
+ *     required={"id", "user_id", "client_id", "discounts", "total_amount", "invoice_no", "invoiced_at", "po_no", "description", "status", "payment_method", "paid_at", "company_name", "rep_first_name", "rep_last_name", "street_address_1", "street_address_2", "city", "state", "country", "postal_code", "url"},
+ *     @SWG\Property(property="id", type="integer", format="int64", description="Invoice ID", default="2"),
+ *     @SWG\Property(property="user_id", type="integer", format="int64", description="User ID", default="1"),
+ *     @SWG\Property(property="client_id", type="integer", format="int64", description="Client ID", default="1"),
+ *     @SWG\Property(property="discounts", type="integer", description="Discounted Amount", default="7.00"),
+ *     @SWG\Property(property="total_amount", type="integer", description="Total Amount", default="180.00"),
+ *     @SWG\Property(property="invoice_no", type="string", description="Invoice number", default="00000009"),
+ *     @SWG\Property(property="invoiced_at", type="string", description="Date invoiced", default="2016-06-07 02:51:12"),
+ *     @SWG\Property(property="po_no", type="string", description="Invoice PO Number", default="2016-999000007-384778"),
+ *     @SWG\Property(property="description", type="string", description="Invoice description", default="Basic Package Plan"),
+ *     @SWG\Property(property="status", type="string", description="Invoice status (Unpaid|Paid|Cancelled)", default="Paid"),
+ *     @SWG\Property(property="payment_method", type="string", description="Payment method (Paypal)", default="Paypal"),
+ *     @SWG\Property(property="paid_at", type="string", description="Date paid", default="2016-06-07 02:51:12"),
+ *     @SWG\Property(property="company_name", type="string", description="Company Name", default="XYZ Company"),
+ *     @SWG\Property(property="rep_first_name", type="string", description="Representative First Name", default="John"),
+ *     @SWG\Property(property="rep_last_name", type="string", description="Representative Last Name", default="Doe"),
+ *     @SWG\Property(property="street_address_1", type="string", description="Company street address 1", default="Apple St."),
+ *     @SWG\Property(property="street_address_2", type="string", description="Company street address 2", default="Orange County"),
+ *     @SWG\Property(property="city", type="string", description="Company city", default="New York"),
+ *     @SWG\Property(property="state", type="string", description="Company state", default="NY"),
+ *     @SWG\Property(property="country", type="string", description="Company country", default="USA"),
+ *     @SWG\Property(property="postal_code", type="string", description="Company postal code", default="92013"),
+ *     @SWG\Property(property="url", type="string", description="Representative Position", default="http://arbitrium-api.dev/invoices/00000009.pdf"),
+ * )
+ *
+ * @SWG\Definition(
+ *     definition="InvoiceDetailResponse",
+ *     required={"id", "invoice_id", "name", "amount"},
+ *     @SWG\Property(property="id", type="integer", format="int64", description="Invoice Detail ID", default="1"),
+ *     @SWG\Property(property="invoice_id", type="integer", format="int64", description="Invoice ID", default="1"),
+ *     @SWG\Property(property="name", type="string", description="Product/Service Name", default="Monthly Fee"),
+ *     @SWG\Property(property="amount", type="integer", description="Amount", default="140.00"),
+ * )
+ *
+ * @package App\Models
+ */
 class Invoice extends NrbModel
 {
     const CANCELLED = 'Cancelled';
     const PAID      = 'Paid';
     const UNPAID    = 'Unpaid';
 
-    const PURCHASE_CREDIT       = 'Purchase Credit';
-    const CREDIT_ADJUSTMENT     = 'Credit Adjustment';
-    const PURCHASE_PACKAGE      = 'Purchase Package';
-    const PURCHASE_SUBSCRIPTION = 'Purchase Subscription';
+    const PAYMENT_METHOD_PAYPAL = 'Paypal';
 
     use SoftDeletes;
 
@@ -31,8 +69,7 @@ class Invoice extends NrbModel
     protected $dates = ['invoiced_at', 'paid_at'];
 
     protected $fillable = [
-        'client_id', 'order_id',
-        'category', 'total_amount_in_credit', 'description',
+        'client_id', 'total_amount', 'description',
         'created_by', 'updated_by'
     ];
 
@@ -86,15 +123,13 @@ class Invoice extends NrbModel
 
     //---------- mutators
 
-    //---------- scopes
-    public function scopeCategory($query, $category)
+    public function getUrlAttribute($value)
     {
-        if ($category)
-        {
-            return $query->where('category', $category);
-        }
+        $value = config('arbitrium.invoice_url').'/'.basename($value);
+        return url($value);
     }
 
+    //---------- scopes
     public function scopeClientNameLike($query, $name)
     {
         if (!empty($name))
@@ -155,52 +190,35 @@ class Invoice extends NrbModel
         $this->save();
     }
 
-    public static function addCredit($data = [])
+    public function paid()
     {
-        $invoice                = Invoice::create($data);
-        $price_per_credit       = PriceSetting::getPricePerCredit();
-        $invoice->total_amount  = $price_per_credit * $invoice->total_amount_in_credit;
-        $invoice->balance_in_credit = $invoice->client->credit_balance + $invoice->total_amount_in_credit;
-        $invoice->save();
-        $invoice->invoice_details()->save(new InvoiceDetail([
-            'product_name'      => $invoice->category,
-            'amount_in_credit'  => $invoice->total_amount_in_credit,
-            'price_per_credit'  => $price_per_credit
-        ]));
-        $invoice->paid();
-        $invoice->client->increment('credit_balance', $invoice->total_amount_in_credit);
-        with(new MailServices())->sendInvoice($invoice->user, $invoice->url);
-        return $invoice;
+        if (!$this->isPaid())
+        {
+            $this->status = self::PAID;
+            $this->paid_at = current_datetime();
+            $this->load('user', 'invoice_details');
+            $this->url = with(new FileServices())->setStoragePath(config('arbitrium.invoice_path'))->generateInvoicePDF($this);
+            $this->save();
+        }
     }
 
-    public static function subtractCredit($data, $price_per_credit = NULL, $invoice_details = [])
+    public static function generate($data, $invoice_details = [])
     {
         $invoice = new Invoice($data);
-        if ($invoice->client->credit_balance >= $invoice->total_amount_in_credit)
+        $invoice->paid();
+
+        if ($invoice_details)
         {
-            $price_per_credit       = $price_per_credit ? $price_per_credit : PriceSetting::getPricePerCredit();
-            $invoice->total_amount  = $price_per_credit * $invoice->total_amount_in_credit;
-            $invoice->balance_in_credit = $invoice->client->credit_balance - $invoice->total_amount_in_credit;
-            $invoice->save();
-            if ($invoice_details)
-            {
-                $invoice->invoice_details()->saveMany($invoice_details);
-            }
-            else
-            {
-                $invoice->invoice_details()->save(new InvoiceDetail([
-                    'product_name'      => isset($data['name']) ? $data['name'] : $invoice->category,
-                    'amount_in_credit'  => $invoice->total_amount_in_credit,
-                    'price_per_credit'  => $price_per_credit
-                ]));
-            }
-            $invoice->paid();
-            $invoice->client->decrement('credit_balance', $invoice->total_amount_in_credit);
+            $invoice->invoice_details()->saveMany($invoice_details);
         }
         else
         {
-            $invoice = NULL;
+            $invoice->invoice_details()->save(new InvoiceDetail([
+                'name'   => $data['name'],
+                'amount' => $invoice->total_amount,
+            ]));
         }
+
         return $invoice;
     }
 
@@ -211,18 +229,8 @@ class Invoice extends NrbModel
 
     public function generatePoNo()
     {
-        $post_fix = isset($this->order_id) ? $this->order_id : generate_code(6);
+        $post_fix = generate_code(6);
         return current_datetime()->year.'-'.str_pad($this->client_id, 6, '0', STR_PAD_LEFT).'-'.str_pad($post_fix, 6, '0', STR_PAD_LEFT);
-    }
-
-    public static function getCategoryList()
-    {
-        return self::getListFromArray([
-            self::PURCHASE_CREDIT,
-            self::CREDIT_ADJUSTMENT,
-            self::PURCHASE_PACKAGE,
-            self::PURCHASE_SUBSCRIPTION
-        ]);
     }
 
     public static function getStatusList()
@@ -237,26 +245,5 @@ class Invoice extends NrbModel
     public function isPaid()
     {
         return $this->status == self::PAID;
-    }
-
-    public function isPurchasePackage()
-    {
-        return $this->category == self::PURCHASE_PACKAGE;
-    }
-
-    public function isPurchaseSubscription()
-    {
-        return $this->category == self::PURCHASE_SUBSCRIPTION;
-    }
-
-    public function paid()
-    {
-        if (!$this->isPaid())
-        {
-            $this->status = self::PAID;
-            $this->load('user', 'invoice_details');
-            $this->url = with(new FileServices())->generateInvoicePDF($this);
-            $this->save();
-        }
     }
 }

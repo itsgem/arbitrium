@@ -36,16 +36,21 @@
                 font-size: 18px;
             }
 
+            table {
+                width: 100%;
+                padding-bottom: 25px;
+                border-collapse: collapse;
+            }
+
             table td {
                 border-bottom: 0.1pt solid #aaa;
                 font-size: 14px;
                 text-align: left;
-                padding: 5px;
+                padding: 7px;
             }
 
-            table {
-                width: 100%;
-                padding-bottom: 25px;
+            table td.td-label {
+                width: 35%;
             }
 
             td b{
@@ -53,8 +58,12 @@
                 font-size: 14px;
             }
 
-            #header h2{
-                border-bottom: 0.1pt solid #aaa;
+            .th {
+                font-weight: bold;
+            }
+
+            .header-block table td {
+                border: none;
             }
 
             .thick-top-border {
@@ -70,6 +79,20 @@
                 text-decoration:none;
             }
 
+            .text-left {
+                text-align:left;
+                text-decoration:none;
+            }
+
+            .text-right {
+                text-align:right;
+                text-decoration:none;
+            }
+
+            #invoice-ids-block table {
+                width: 300px;
+            }
+
             #footer h2 {
                 color: 0.4pt #aaa;
             }
@@ -79,78 +102,86 @@
     <body>
         <div class="main-container">
             <div class="logo-container">
-                <h4 class="text-center">{{ $kcg_company_name }}</h3>
+                <h4 class="text-center">{{ $kcg_company_name }}</h4>
             </div>
-            <div id="header"><h2 class="text-center">Receipt</h2></div>
-            <div id="content">
-                <p>We received payment for your purchased products. Thanks for your business! Questions? Contact us anytime</p>
-                <h3>BILLING</h3>
-                <table>
+            <div id="header">
+                <h2 class="text-right">BILLING INVOICE</h2>
+            </div>
+            <div id="invoice-ids-block" class="header-block">
+                <table cellspacing="0" cellpadding="0" align="right">
                     <tr>
-                        <td style="width:20%">Invoice Date</td>
-                        <td>{{ $invoiced_at }}</td>
-                    </tr>
-                    <tr>
-                        <td>Invoice No.</td>
+                        <td class="td-label">Invoice No.</td>
                         <td>{{ $invoice_no }}</td>
                     </tr>
                     <tr>
-                        <td>Bill To</td>
-                        <td>{{ $company_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Attention</td>
-                        <td>{{ $rep_first_name }} {{ $rep_last_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Ref PO No.</td>
+                        <td class="td-label">Ref PO No.</td>
                         <td>{{ $po_no }}</td>
                     </tr>
                     <tr>
-                        <td>Amount</td>
-                        <td>{{ $total_amount }}</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>{{ $street_address_1 }}, {{ $city }} , {{ $state }}</td>
-                    </tr>
-                    <tr>
-                        <td>Remarks</td>
-                        <td>{{ $description }}</td>
+                        <td class="td-label">Invoice Date</td>
+                        <td>{{ $invoiced_at }}</td>
                     </tr>
                 </table>
+            </div>
+            <br />
+            <br />
+            <div id="address-block" class="header-block">
+                <table>
+                    <tr>
+                        <td>TO:</td>
+                    </tr>
+                    <tr>
+                        <td>{{ $rep_first_name }} {{ $rep_last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ $company_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ $street_address_1 }}, {{ $city }} , {{ $state }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="content">
                 <h3>PRODUCTS AND SERVICES PURCHASED</h3>
                 <table>
                     <tr>
-                        <td class="thick-bot-border">Name</td>
-                        <td class="thick-bot-border">No. of Credits</td>
-                        <td class="thick-bot-border">Price Per Credit (SGD)</td>
-                        <td class="thick-bot-border">Total (SGD)</td>
+                        <td class="th thick-bot-border">Name</td>
+                        <td class="th thick-bot-border">Type</td>
+                        <td class="th thick-bot-border">Price ({{ config('paypal.currency') }})</td>
+                        <td class="th thick-bot-border">Discount ({{ config('paypal.currency') }})</td>
+                        <td class="th thick-bot-border">Subtotal ({{ config('paypal.currency') }})</td>
                     </tr>
                     @foreach ($invoice_details as $detail)
                          <tr>
-                            <td>{{ $detail["product_name"] }}</td>
-                            <td>{{ $detail["amount_in_credit"] }}</td>
-                            <td>{{ $detail["price_per_credit"] }}</td>
+                            <td>{{ $detail["name"] }}</td>
+                            <td>Subscription</td>
+                            <td>{{ $detail["amount"] }}</td>
+                            <td>0.00</td>
                             <td>{{ $detail["amount"] }}</td>
                         </tr>
                     @endforeach
 
                     <tr>
-                        <td class="thick-top-border"><b>OVERALL TOTAL</b></td>
-                        <td class="thick-top-border">{{ $total_amount_in_credit }}</td>
-                        <td class="thick-top-border">&nbsp;</td>
-                        <td class="thick-top-border">{{ $total_amount }}</td>
+                        <td class="thick-top-border text-right" colspan="4"><b>OVERALL TOTAL</b></td>
+                        <td class="thick-top-border">{{ config('paypal.currency') }} {{ $total_amount }}</td>
                     </tr>
                 </table>
 
-                <span style="font-size: 10px;font-style: italic;">THIS IS AN ELECTRONIC INVOICE. NO SIGNATURE IS REQUIRED.</span><br />
-                <b>PAYMENT METHOD</b><br />
-                <b>Direct Credit to:</b>   {{ $kcg_credit_to }}<br />
+                <br /><br />
+
+                <table>
+                    <tr>
+                        <td class="td-label">Remarks</td>
+                        <td>{{ $description }}</td>
+                    </tr>
+                </table>
+
+                <br /><br />
+                <span>THIS IS AN ELECTRONIC INVOICE. NO SIGNATURE IS REQUIRED.</span><br /><br />
+                <b>BANK DETAILS</b><br />
+                <b>Account Name:</b>   {{ $kcg_credit_to }}<br />
                 <b>Bank Account:</b> {{ $kcg_bank_account }}<br />
-                <b>Bank Code:</b> {{ $kcg_bank_code }}<br />
-                <b>Branch Code:</b> {{ $kcg_branch_code }}<br />
-                <b>Swift Code: </b>{{ $kcg_swift_code }}
+                <b>Bank Code:</b> {{ $kcg_bank_code }}; <b>Branch Code:</b> {{ $kcg_branch_code }}<br />
             </div>
             <div id="footer">
                 <h2>Thank You.</h2>

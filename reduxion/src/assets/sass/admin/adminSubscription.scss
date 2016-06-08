@@ -4,7 +4,7 @@
     background: #fff;
     height: 48px;
     padding: 0px;
-    width: 1200px;
+    // width: 1200px;
 
   .header-title{
     color: #000;
@@ -18,18 +18,10 @@
 
 .content-container{
   background-color: #fff;
-  width: 1200px;
   padding: 2px;
 
   .bottom-margin{
     margin-bottom: 40px;
-  }
-
-  p{
-    color: #969896;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 1.142857143rem;
-    font-weight: 300;
   }
 
   .content{

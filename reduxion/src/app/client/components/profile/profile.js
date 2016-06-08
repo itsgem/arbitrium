@@ -614,8 +614,8 @@ class ClientProfile extends React.Component {
                 <p>{currentSubscription.valid_from}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                  <h6>TERMS OF SUBSCRIPTION</h6>
-                  <p>{currentSubscription.term}</p>
+                  <h6>{currentSubscription.subscription_id == 1 ? 'TERMS OF SUBSCRIPTION FOR FREE TRIAL PLAN' : 'TERMS OF SUBSCRIPTION'}</h6>
+                  <p>{currentSubscription.subscription_id == 1 ? '30 days' : currentSubscription.term}</p>
                 </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>END DATE</h6>
