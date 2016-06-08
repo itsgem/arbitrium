@@ -42,7 +42,11 @@ export default React.createClass({
         <div className="mdl-grid table-list-container">
           <div className="mdl-layout__panel is-active" id="#">
             <div className="filter-search">
-              <p>Filter / Search</p>
+              <div className="mdl-grid">
+                <div className="mdl-cell mdl-cell--12-col">
+                  <p>Filter / Search</p>
+                </div>
+              </div>         
               <form action="#">
                 <div className="mdl-grid filter-search-bar">
                   <div className="mdl-cell mdl-cell--3-col">
