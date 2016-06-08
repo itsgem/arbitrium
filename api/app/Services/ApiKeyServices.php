@@ -37,7 +37,7 @@ class ApiKeyServices extends NrbServices
             $api = $client->request('delete', 'http://localhost:1337/api/apiKeys/' . $id,
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ]]);
             $data = json_decode($api->getBody()->getContents(), true);
-            return $this->respondWithSuccess();
+            return $this->respondWithSuccess($data);
 
         } catch (RequestException $e) {
             $message = json_decode($e->getResponse()->getBody()->getContents(), true);

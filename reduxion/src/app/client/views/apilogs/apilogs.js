@@ -48,21 +48,21 @@ export default React.createClass({
                   <div className="mdl-cell mdl-cell--3-col">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input className="mdl-textfield__input font-input" type="text" id="username"/>
-                      <label className="mdl-textfield__label" for="sample1">Username...</label>
+                      <label className="mdl-textfield__label">Username...</label>
                     </div>
                   </div>
 
                   <div className="mdl-cell mdl-cell--3-col">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input className="mdl-textfield__input" type="text" id="status-code"/>
-                      <label className="mdl-textfield__label" for="sample2">Status Code...</label>
+                      <label className="mdl-textfield__label">Status Code...</label>
                     </div>
                   </div>
 
                   <div className="mdl-cell mdl-cell--2-col">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input className="mdl-textfield__input" type="text" id="date-created"/>
-                      <label className="mdl-textfield__label" for="sample3">Date created...</label>
+                      <label className="mdl-textfield__label">Date created...</label>
                     </div>
                   </div>
 

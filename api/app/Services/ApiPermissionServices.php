@@ -7,9 +7,20 @@ use DB;
 use App\Errors;
 use App\Models\ApiPermission;
 use App\Nrb\NrbServices;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 
 class ApiPermissionServices extends NrbServices
 {
+    private $arbitrium;
+
+    public function __construct()
+    {
+        // setup PayPal api context
+        $this->arbitrium = config('arbitrium.core');
+        //
+    }
     // ApiPermissionsController::destroy
     public function destroy($id)
     {
@@ -28,10 +39,27 @@ class ApiPermissionServices extends NrbServices
     // ApiPermissionsController::index
     public function index($request)
     {
-        return $this->respondWithData(
-            ApiPermission::paginate($request->get('per_page')),
-            $request->get('max_pagination_links')
-        );
+        try {
+            $client = new Client();
+            $req = [];
+            $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+            $arr['data'] = json_decode($res->getBody()->getContents());
+            $arr['status'] = $res->getStatusCode();
+            $arr['header'] = $res->getHeader('content-type');
+            $api = $client->request('get', 'http://localhost:1337/api/permission',
+                ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ]]);
+            $data = json_decode($api->getBody()->getContents(), true);
+            return $this->respondWithSuccess($data);
+
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
+        // return $this->respondWithData(
+        //     ApiPermission::paginate($request->get('per_page')),
+        //     $request->get('max_pagination_links')
+        // );
     }
 
     // ApiPermissionsController::show

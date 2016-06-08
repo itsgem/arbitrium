@@ -77,14 +77,14 @@ class ApiUpdate extends React.Component {
             permissions  && permissions.map(item => {
               let getCk = false;
               for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].apiPermissionId == item.id) {
+                if (getApiInfo.permissions[i].apiPermissionId == item._id) {
                   getCk = true;
                   break;
                 }
               }
 
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item._id}>
                         <input
                           type="checkbox"
                           className="mdl-checkbox__input"
