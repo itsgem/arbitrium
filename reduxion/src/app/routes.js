@@ -90,14 +90,17 @@ function startTimer(duration, tokenName) {
     setInterval(timer, 1000);
 }
 
-function validateToken(tokenName) {
+function validateToken(tokenName, nextState, replace) {
   let bytes ='';
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
     let decryptedData ="";
     if (bytes.sigBytes < 0 ) {
       localStorage.removeItem(tokenName);
-      window.location = window.location.origin + "/" + (tokenName == 'token' ? "i" : tokenName) + "/login";
+      replace({
+        pathname: "/" + (tokenName == 'token' ? "i" : tokenName) + "/login",
+        state: { nextPathname: nextState.location.pathname }
+      });
     }
 
     if (JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
@@ -138,6 +141,7 @@ function validateToken(tokenName) {
       return true;
     }
   }
+  return false;
 }
 
 function requireAuth(nextState, replace, cb) {
@@ -165,7 +169,7 @@ function requireAuth(nextState, replace, cb) {
         }
         tokenName = 'token';
   }
-  let isValidate = validateToken(tokenName);
+  validateToken(tokenName, nextState, replace);
   return cb();
 }
 
@@ -181,11 +185,12 @@ function islogin(nextState, replace, cb) {
       default :
         tokenName = 'token';
   }
-  let isValidate = validateToken(tokenName);
+  validateToken(tokenName);
+  let isValidate = validateToken(tokenName, nextState, replace);
   console.log("isLogin", isValidate);
   if (isValidate) {
     replace({
-      pathname: '/' + link[3],
+      pathname: '/' + (tokenName == 'token' ? "i" : tokenName),
       state: { nextPathname: nextState.location.pathname }
     })
   }
@@ -196,9 +201,9 @@ export default () => (
   <Route component={AdminApplication} name="home" path="/">
     <Route component={AdminApplication} name="home" path="coffee" >
       <IndexRoute component={AdminDashboard} onEnter={requireAuth} />
-      <Route component={AdminLogin} path="login"/>
+      <Route component={AdminLogin} path="login" onEnter={islogin}/>
       <Route component={AdminLogout} path="logout"/>
-      <Route component={AdminForgot} path="forgot"/>
+      <Route component={AdminForgot} path="forgot" onEnter={islogin}/>
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
       <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
@@ -233,12 +238,12 @@ export default () => (
 
     <Route name="home" path="i" >
       <IndexRoute component={ClientTopPage} onEnter={requireAuth}/>
-      <Route component={ClientLogin} name="login" path="login"/>
-      <Route component={Signup} path="signup"/>
+      <Route component={ClientLogin} name="login" path="login" onEnter={islogin}/>
+      <Route component={Signup} path="signup" onEnter={islogin}/>
       <Route component={ClientLogout} path="logout"/>
-      <Route component={ClientForgot} path="forgot"/>
-      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword"/>
-      <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail"/>
+      <Route component={ClientForgot} path="forgot" onEnter={islogin}/>
+      <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
+      <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail" onEnter={islogin}/>
 
       <Route path="client" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientProfile}/>
