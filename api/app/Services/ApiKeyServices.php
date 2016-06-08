@@ -66,7 +66,9 @@ class ApiKeyServices extends NrbServices
             $arr['data'] = json_decode($res->getBody()->getContents());
             $arr['status'] = $res->getStatusCode();
             $arr['header'] = $res->getHeader('content-type');
-            $token = $arr['data'];
+            if ($client_id) {
+                $request['clientId'] = $client_id;
+            }
             $api = $client->request('get', 'http://localhost:1337/api/apiKeys',
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
                 'query' => $request->all()]);
@@ -131,9 +133,8 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::store
     public function store($request, $client_id = null)
     {
-        $clientId = ($client_id) ? $client_id : $request->get('client_id');
+        $clientId = ($client_id) ? $client_id : $request->get('clientId');
         $token = generate_api_key_token($clientId);
-
         $data = [];
         $arr = [];
         try {
@@ -145,6 +146,7 @@ class ApiKeyServices extends NrbServices
             $arr['header'] = $res->getHeader('content-type');
             $request = json_decode($request->getContent());
             $request->token = $token;
+            $request->clientId = $clientId;
             $api = $client->request('post', 'http://localhost:1337/api/apiKeys/',
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
                 'form_params' => ['data' => json_encode($request) ] ]);
@@ -194,7 +196,9 @@ class ApiKeyServices extends NrbServices
             $arr['data'] = json_decode($res->getBody()->getContents());
             $arr['status'] = $res->getStatusCode();
             $arr['header'] = $res->getHeader('content-type');
+            // $request->clientId = $clientId;
             $request = json_decode($request->getContent());
+            $request->clientId = $clientId ? $clientId : $request->clientId;
             $api = $client->request('put', 'http://localhost:1337/api/apiKeys/' . $id,
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ],
                 'form_params' => ['data' => json_encode($request) ] ]);
