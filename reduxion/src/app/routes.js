@@ -58,7 +58,6 @@ import ClientInvoice from 'client/views/invoice/invoiceList';
 import ClientInvoiceListDetails from 'client/views/invoice/invoiceListDetails';
 import ClientApiLogs from 'client/views/apilogs/apilogs';
 import ClientSystemSettings from 'client/views/settings/systemsettings';
-//import ClientInvoice from 'client/containers/invoice/invoiceList';
 
 function startTimer(duration, tokenName) {
     let start = Date.now();

@@ -51,64 +51,64 @@ export default React.createClass({
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="Kosh Consulting Group (Asia) PTE. LTD."/>
-                  <label className="mdl-textfield__label" htmlFor="title">Company Name</label> 
+                  <label className="mdl-textfield__label">Company Name</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Billing Info</label> 
+                  <label className="mdl-textfield__label">Billing Info</label>
                 </div>
-              </div> 
+              </div>
             </div>
 
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="Cebu City"/>
-                  <label className="mdl-textfield__label" htmlFor="title">City</label> 
+                  <label className="mdl-textfield__label">City</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="#03-24 Far East Shooping Center"/>
-                  <label className="mdl-textfield__label" htmlFor="title">State</label> 
+                  <label className="mdl-textfield__label">State</label>
                 </div>
               </div>
 
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="Singapore"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Country</label> 
+                  <label className="mdl-textfield__label">Country</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="238882"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Postal Code</label> 
+                  <label className="mdl-textfield__label">Postal Code</label>
                 </div>
-              </div>                 
+              </div>
             </div>
 
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Admin Email</label> 
+                  <label className="mdl-textfield__label">Admin Email</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="14400"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Token Expiry</label> 
+                  <label className="mdl-textfield__label">Token Expiry</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title" value="10"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Items Per Page</label> 
+                  <label className="mdl-textfield__label">Items Per Page</label>
                 </div>
-              </div> 
+              </div>
             </div>
 
             <div className="mdl-grid">
@@ -116,13 +116,13 @@ export default React.createClass({
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <p>Other settings textfield 1</p>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Other settings 1</label> 
+                  <label className="mdl-textfield__label">Other settings 1</label>
                 </div>
-              </div> 
+              </div>
             </div>
 
             <div className="mdl-grid">
@@ -130,18 +130,18 @@ export default React.createClass({
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <p>Other settings textfield 2</p>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Other settings 2</label> 
+                  <label className="mdl-textfield__label">Other settings 2</label>
                 </div>
-              </div> 
+              </div>
             </div>
 
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--12-col">
-                <legend>Billing Information</legend>              
+                <legend>Billing Information</legend>
               </div>
               <div className="mdl-cell mdl-cell--12-col">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit</p>
@@ -152,35 +152,35 @@ export default React.createClass({
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Account Name</label> 
+                  <label className="mdl-textfield__label">Account Name</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Credit To</label> 
+                  <label className="mdl-textfield__label">Credit To</label>
                 </div>
-              </div> 
+              </div>
             </div>
 
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Bank Account</label> 
+                  <label className="mdl-textfield__label">Bank Account</label>
                 </div>
-              </div> 
+              </div>
               <div className="mdl-cell mdl-cell--4-col">
                 <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
                   <input className="mdl-textfield__input" type="text" id="title"/>
-                  <label className="mdl-textfield__label" htmlFor="title">Bank Account Code</label> 
+                  <label className="mdl-textfield__label">Bank Account Code</label>
                 </div>
-              </div> 
+              </div>
             </div>
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--4-col">  
+              <div className="mdl-cell mdl-cell--4-col">
                 <button className="mdl-button mdl-button--accent">Save</button>
-              </div> 
+              </div>
             </div>
           </form>
         </div>
