@@ -18,9 +18,15 @@ export default React.createClass( {
     }
     if (nextProps.activeApiKey) {
       let apiList = nextProps.ListApiSuccess;
+      let description = document.querySelector("#description");
+      let token = document.querySelector("#api_key");
+      let created = document.querySelector("#created_at");
       let payload = {
         page: apiList.currentPage,
-        perPage: apiList.perPage
+        perPage: apiList.perPage,
+        description: description.value,
+        token: token.value,
+        created: created.value
       };
       nextProps.apiList(payload).catch(createError);
     }
