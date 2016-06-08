@@ -89,6 +89,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         Route::group(['prefix' => 'system-setting'], function()
         {
             Route::get('segment/{segment}',     ['uses' => 'SystemSettingsController@getSegment']);
+            Route::patch('many',                ['uses' => 'SystemSettingsController@updateMany']);
         });
         Route::resource('system-setting', 'SystemSettingsController', ['only' => ['index', 'show', 'store', 'update']]);
     });

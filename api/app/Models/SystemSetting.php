@@ -21,6 +21,13 @@ use App\Nrb\NrbModel;
  * )
  *
  * @SWG\Definition(
+ *     definition="SystemSettingUpdateMany",
+ *     required={"value"},
+ *     @SWG\Property(property="name", type="string", description="Slug-format name. No spaces, special characters. Must start with alphabet.", default="email_greeting"),
+ *     @SWG\Property(property="value", type="string", description="Setting value", default="Hello!"),
+ * )
+ *
+ * @SWG\Definition(
  *     definition="SystemSettingResponse",
  *     required={"id", "name", "value", "segment"},
  *     @SWG\Property(property="id", type="integer", format="int64", description="System Setting ID", default="1"),
