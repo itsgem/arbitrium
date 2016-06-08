@@ -6,6 +6,7 @@ return [
     'default_timezone'      => 'Asia/Singapore',
 
     'subscription_email_reminder' => 5, // in days
+
     'core' => [
 	    'grant_type' => env('ARBITRIUM_GRANT_TYPE'),
 	    'client_id'    => env('ARBITRIUM_CLIENT_ID'),
