@@ -31,6 +31,7 @@ import AdminUserManagementAdd from 'admin/containers/userManagement/userManageme
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
 import AdminLogList from 'admin/containers/logs/logList';
+import AdminLogDetail from 'admin/containers/logs/logDetail';
 
 import AdminProfile from 'admin/containers/userProfile/userProfile';
 
@@ -229,6 +230,7 @@ export default () => (
 
         <Route path="logs" onEnter={requireAuth}>
           <IndexRoute component={AdminLogList} onEnter={requireAuth}/>
+          <Route component={AdminLogDetail} path=":client_id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="profile">

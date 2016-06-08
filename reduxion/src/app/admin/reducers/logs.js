@@ -5,10 +5,11 @@ import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
 
 export const adminLogList = createActionAsync('ADMIN_LOGS_LIST', auth.getAdminSubscriptionList);
+export const adminLogDetail = createActionAsync('ADMIN_LOG_DETAIL', auth.getAdminSubscriptionList);
 
 const initialState = Immutable.fromJS({
   logList: {},
-  logs: {},
+  logDetail: {},
   loading: false
 });
 
