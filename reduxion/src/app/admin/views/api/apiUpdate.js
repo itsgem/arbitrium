@@ -12,7 +12,6 @@ export default React.createClass( {
   componentWillMount(){
     let id = this.props.params.id;
     this.props.getApiKey(id).catch(createError);
-    this.props.getApiPermission().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {
@@ -24,6 +23,7 @@ export default React.createClass( {
     }
     if (!Object.keys(nextProps.clientProfileSuccess).length && Object.keys(nextProps.getApiInfo).length && !nextProps.loadingCLient && !nextProps.loading) {
       nextProps.clientProfile(nextProps.getApiInfo.data.clientId).catch(createError);
+      nextProps.getApiPermission().catch(createError);
     }
   },
   loadingRender () {
@@ -33,11 +33,11 @@ export default React.createClass( {
     );
   },
   render() {
-    if (Object.keys(this.props.getApiInfo).length && Object.keys(this.props.clientProfileSuccess).length) {
+    if (Object.keys(this.props.getApiInfo).length && Object.keys(this.props.clientProfileSuccess).length && Object.keys(this.props.apiPermissions).length) {
       closeLoading();
       return this.renderApiInfo();
     } else {
-       return this.loadingRender();
+      return this.loadingRender();
     }
   },
   renderApiInfo () {

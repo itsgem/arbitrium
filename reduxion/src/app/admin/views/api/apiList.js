@@ -3,6 +3,7 @@ import DocTitle from 'common/components/docTitle';
 import ApiList from 'admin/components/api/apiList';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 export default React.createClass( {
   contextTypes: {
@@ -15,6 +16,24 @@ export default React.createClass( {
     if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
       this.props.apiList({per_page: 10}).catch(createError);
     }
+    if (nextProps.activeApiKey) {
+      let apiList = nextProps.ListApiSuccess;
+      let payload = {
+        page: apiList.currentPage,
+        perPage: apiList.perPage
+      };
+      nextProps.apiList(payload).catch(createError);
+    }
+  },
+  loadingRender () {
+    if(this.props.loading){
+      openLoading();
+    } else {
+      closeLoading();
+    }
+    return (
+      <div className="loading"></div>
+    );
   },
   render() {
     return (
@@ -22,6 +41,7 @@ export default React.createClass( {
         <DocTitle
           title="API List"
         />
+        {this.loadingRender()}
         <div className="client-tab">
           <label className="mdl-layout__tab is-active">List of API keys</label>
           <Link

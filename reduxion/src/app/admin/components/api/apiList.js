@@ -24,7 +24,7 @@ class ApiList extends React.Component {
       <tr key={data._id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data._id}>
             <input type="checkbox" id={"switch-" + data._id} className="mdl-switch__input" defaultChecked={(data.isActive == 1) ? false : true} onChange={(e) => this.changeActive(e, data._id)} />
@@ -108,7 +108,6 @@ class ApiList extends React.Component {
     let perPage = 10;
     let apiList = {lastPage: 1};
     let users = {};
-    console.log('test', this.props.ListApiSuccess);
     if (Object.keys(this.props.ListApiSuccess).length) {
       let i=0;
       counter = true;
@@ -272,8 +271,8 @@ class ApiList extends React.Component {
     let payload = {
       perPage: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: this.refs.created_at.value
+      token: this.refs.api_key.value,
+      created: this.refs.created_at.value
     };
     this.props.apiList(payload).catch(createError);
   }
@@ -283,8 +282,8 @@ class ApiList extends React.Component {
       page: pageNumber,
       perPage: this.refs.pageNum.value,
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: this.refs.created_at.value
+      token: this.refs.api_key.value,
+      created: this.refs.created_at.value
     };
     this.props.apiList(payload).catch(createError);
   }

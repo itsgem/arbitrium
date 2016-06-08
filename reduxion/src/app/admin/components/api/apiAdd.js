@@ -113,14 +113,14 @@ class ApiAdd extends React.Component {
           </div>
           {
             permissions  && permissions.map(item => {
-              return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+              return <div key={item._id} className="mdl-cell mdl-cell--3-col">
+                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item._id}>
                         <input
                           type="checkbox"
                           className="mdl-checkbox__input"
-                          id={"checkbox-" + item.id}
+                          id={"checkbox-" + item._id}
                           name="chkRights[]"
-                          value={ item.id }
+                          value={ item._id }
                           onClick={(e) => this.ckPermissions(e)}/>
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
@@ -196,7 +196,7 @@ class ApiAdd extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {apiPermissionId: chkArr[k].value, value: 1};
+        permissions[k] = {apiPermissionId: chkArr[k].value};
       }
     }
 
