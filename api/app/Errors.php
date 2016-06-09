@@ -57,6 +57,8 @@ class Errors
     const PAYPAL_ERROR              = 80001;
     const PAYPAL_CANCELLED          = 80002;
     const UNAUTHORIZED_PAYPAL_TOKEN = 80003;
+    const PAYPAL_ALREADY_CONFIRMED  = 80004;
+    const PAYPAL_ALREADY_CANCELLED  = 80005;
 
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
