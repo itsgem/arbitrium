@@ -95,4 +95,10 @@ class SystemSetting extends NrbModel
         $system_setting = self::name('kcg_admin_email')->first();
         return isset($system_setting->value) ? $system_setting->value : self::DEFAULT_ADMIN_EMAIL;
     }
+
+    public static function getList($segment = null)
+    {
+        $settings = self::segment($segment)->get(['name', 'value']);
+        return array_pluck($settings, 'value', 'name');
+    }
 }

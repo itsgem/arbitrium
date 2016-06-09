@@ -272,6 +272,8 @@ class InvoicesController extends ApiController
      *         type="string",
      *         default="1"
      *     ),
+     *     @SWG\Parameter(name="with-details", in="query", description="Include Data: Invoice Details (0|1)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="with-settings", in="query", description="Include Data: System Settings (0|1)", required=false, type="string", default=""),
      * )
      *
      * @param $id
