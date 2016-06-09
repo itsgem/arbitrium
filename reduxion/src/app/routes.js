@@ -60,6 +60,7 @@ import ClientSubscriptionPayment from 'client/containers/subscription/subscripti
 import ClientInvoice from 'client/views/invoice/invoiceList';
 import ClientInvoiceListDetails from 'client/views/invoice/invoiceListDetails';
 import ClientApiLogs from 'client/views/apilogs/apilogs';
+import ClientSystemSettings from 'client/views/settings/systemsettings';
 
 function startTimer(duration, tokenName) {
     let start = Date.now();
@@ -273,6 +274,9 @@ export default () => (
       </Route>
       <Route path="apilogs" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientApiLogs}/>
+      </Route>
+      <Route path="systemsettings" component={ClientDashboard} onEnter={requireAuth}>
+        <IndexRoute component={ClientSystemSettings}/>
       </Route>
     </Route>
     <Route path="*" components={NoMatch} />

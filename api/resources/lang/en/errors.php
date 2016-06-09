@@ -40,4 +40,6 @@ return [
     Errors::PAYPAL_ERROR                => 'Unable to process PayPal Request.',
     Errors::PAYPAL_CANCELLED            => 'User cancelled PayPal transaction.',
     Errors::UNAUTHORIZED_PAYPAL_TOKEN   => 'Unauthorized PayPal token.',
+    Errors::PAYPAL_ALREADY_CONFIRMED    => 'User already confirmed this token with Agreement :id.',
+    Errors::PAYPAL_ALREADY_CANCELLED    => 'User already cancelled this token with Agreement :id.',
 ];

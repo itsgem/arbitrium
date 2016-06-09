@@ -200,6 +200,26 @@ class ClientSubscription extends Subscription
         $this->save();
     }
 
+    public function isCancelled()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_CANCELLED;
+    }
+
+    public function isRenewed()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_RENEWED;
+    }
+
+    public function isUpgraded()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_UPGRADED;
+    }
+
+    public function isExpired()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_EXPIRED;
+    }
+
     public function generateInvoice()
     {
         $subscription_fees = $this->getFees($this->term);
@@ -281,6 +301,11 @@ class ClientSubscription extends Subscription
     public function hasPaypal()
     {
         return $this->paypal_plan_id && $this->paypal_agreement_id;
+    }
+
+    public function hasAlreadyConfirmed()
+    {
+        return !is_null($this->paypal_agreement_id);
     }
 
     public function isOwnedByClientId($client_id)

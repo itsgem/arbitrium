@@ -22,7 +22,7 @@ class SubscriptionConfirmRequest extends NrbRequest
         {
             $rules = [
                 'success' => 'required|boolean',
-                'token'   => 'required'
+                'token'   => 'required|exists:client_subscriptions,paypal_token_id'
             ];
         }
 
@@ -43,14 +43,26 @@ class SubscriptionConfirmRequest extends NrbRequest
         {
             if (is_client_user_logged_in())
             {
-                // Validate if Token is owned by client
                 if ($this->get('token'))
                 {
                     $subscription = ClientSubscription::paypalTokenId($this->get('token'))->first();
+                    $is_owned_by_client = $subscription->isOwnedByClientId(get_logged_in_client_id());
 
-                    // Send error if there is no matching token id or
-                    // there is a matching token id but is not owned by client
-                    if (!$subscription || !$subscription->isOwnedByClientId(get_logged_in_client_id()))
+                    // Validate if token is owned by client
+                    if ($is_owned_by_client)
+                    {
+                        // Validate if token already used for confirming an agreement
+                        if ($subscription->hasAlreadyConfirmed())
+                        {
+                            $errors['token'] = trans('errors.'.Errors::PAYPAL_ALREADY_CONFIRMED, ['id' => $subscription->paypal_agreement_id]);
+                        }
+                        // Validate if subscription already cancelled
+                        if ($subscription->isCancelled())
+                        {
+                            $errors['token'] = trans('errors.'.Errors::PAYPAL_ALREADY_CANCELLED, ['id' => $subscription->paypal_agreement_id]);
+                        }
+                    }
+                    else
                     {
                         $errors['token'] = trans('errors.'.Errors::UNAUTHORIZED_PAYPAL_TOKEN);
                     }

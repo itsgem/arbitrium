@@ -12,6 +12,9 @@ html{
 }
 
 // ******************** START HEADER ********************
+.full-width{
+  width: 100%;
+}
 
 .right{
   float: right !important;
@@ -55,6 +58,12 @@ html{
 
 .btn-margin-right{
   margin-right: 20px;
+}
+
+.script-box-container{
+  border: 1px solid #e2e2e2;
+  min-height: 200px;
+  padding: 20px;
 }
 
 .body-bg{
@@ -356,10 +365,6 @@ html{
 
     .mdl-cell--12-col{
 
-      .full-width{
-        width: 100%;
-      }
-
       .padding-bot{
         padding-bottom: 60px;
       }
@@ -427,6 +432,17 @@ html{
 
   .content{
     padding: 20px;
+
+    pre{
+
+      &.script{
+        color: #969896;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1.142857143rem;
+        font-weight: 300;
+        line-height: 1.5rem;
+      }
+    }
 
     p{
       margin-bottom: 0px;
