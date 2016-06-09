@@ -73,7 +73,7 @@ class ClientsController extends ApiController
         return $service->update($request, get_logged_in_client_id());
     }
 
-    //----- SUBSCRIPTIONS
+    //----- CLIENT SUBSCRIPTIONS
 
     /**
      * Get current client subscription details
@@ -311,6 +311,13 @@ class ClientsController extends ApiController
         return $service->subscribeConfirm($request, get_logged_in_client_id());
     }
 
+    /**
+     * Cancel initially subscribed (pending) subscription
+     *
+     * @param SubscriptionConfirmRequest $request
+     * @param SubscriptionServices $service
+     * @return mixed
+     */
     public function subscribeCancelConfirm(SubscriptionConfirmRequest $request, SubscriptionServices $service)
     {
         return $service->subscribeCancelConfirm(get_logged_in_client_id());
@@ -499,6 +506,8 @@ class ClientsController extends ApiController
      *         type="string",
      *         default="1"
      *     ),
+     *     @SWG\Parameter(name="with-details", in="query", description="Include Data: Invoice Details (0|1)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="with-settings", in="query", description="Include Data: System Settings (0|1)", required=false, type="string", default=""),
      * )
      *
      * @param $id
