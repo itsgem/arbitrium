@@ -98,7 +98,6 @@ class SystemSetting extends NrbModel
 
     public static function getList($segment = null)
     {
-        $settings = self::segment($segment)->get(['name', 'value']);
-        return array_pluck($settings, 'value', 'name');
+        return self::segment($segment)->lists('value', 'name');
     }
 }
