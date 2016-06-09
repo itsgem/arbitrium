@@ -52,6 +52,7 @@ class Errors
     // Subscriptions
     const EXISTING_TRIAL_SUBSCRIPTION        = 70001;
     const CANNOT_CANCEL_PENDING_SUBSCRIPTION = 70002;
+    const SUBSCRIPTION_CONFIRMATION_ERROR    = 70003;
 
     // Paypal
     const PAYPAL_ERROR              = 80001;
