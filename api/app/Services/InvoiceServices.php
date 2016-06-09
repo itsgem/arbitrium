@@ -78,6 +78,11 @@ class InvoiceServices extends NrbServices
         }
         $invoice = $invoice->clientId($client_id)->findOrFail($id);
 
+        if ($request->get('with-settings'))
+        {
+            $invoice['system_settings'] = SystemSetting::getList();
+        }
+
         return $this->respondWithSuccess($invoice);
     }
 

@@ -1284,3 +1284,7 @@
     font-size: smaller;
     color: #919191;
 }
+
+
+/* Custom */
+.swagger-section .swagger-ui-wrap .model-signature .propOptKey {color: #FF00C6;}

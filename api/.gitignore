@@ -5,3 +5,4 @@ Homestead.yaml
 composer.lock
 storage/temp/
 storage/docs/
+public/invoices/
