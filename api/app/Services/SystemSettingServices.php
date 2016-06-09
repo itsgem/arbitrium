@@ -46,13 +46,29 @@ class SystemSettingServices extends NrbServices
     }
 
     // Admin\SystemSettingsController::update
-    public function update($request, $id)
+    public function update($request, $id = null)
     {
         return DB::transaction(function () use ($request, $id)
         {
-            SystemSetting::findOrFail($id)->update($request->only('value'));
+            // If no id passed, update in bulk
+            if (!$id)
+            {
+                $settings = $request->get('system_setting');
+                foreach ($settings as $setting)
+                {
+                    SystemSetting::name($setting['name'])->update([
+                        'value' => $setting['value']
+                    ]);
+                }
+                $result = SystemSetting::whereIn('name', array_pluck($settings, 'name'))->get();
+            }
+            else
+            {
+                SystemSetting::findOrFail($id)->update($request->only('value'));
+                $result = SystemSetting::findOrFail($id);
+            }
 
-            return $this->respondWithSuccess();
+            return $this->respondWithSuccess($result);
         });
     }
 }
