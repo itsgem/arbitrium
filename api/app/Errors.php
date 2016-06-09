@@ -60,6 +60,9 @@ class Errors
     const PAYPAL_ALREADY_CONFIRMED  = 80004;
     const PAYPAL_ALREADY_CANCELLED  = 80005;
 
+    // Invoices
+    const INVOICE_STILL_UNPAID      = 90001;
+
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
         self::UNAUTHORIZED          => Response::HTTP_UNAUTHORIZED,
