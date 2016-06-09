@@ -9,6 +9,8 @@ return [
 
     'temp_storage'  => storage_path().'/temp/',
 
-    'invoice_path'  => public_path().'/invoices/',
-    'invoice_url'   => env('APP_URL').'/invoices/',
+    'invoice' => [
+        'path' => public_path().'/invoices/',
+        'url'  => env('APP_URL').'/invoices/',
+    ],
 ];

@@ -131,7 +131,7 @@ class Invoice extends NrbModel
 
     public function getUrlAttribute($value)
     {
-        $value = config('arbitrium.invoice_url').basename($value);
+        $value = config('arbitrium.invoice.url').basename($value);
         return url($value);
     }
 
@@ -203,7 +203,7 @@ class Invoice extends NrbModel
             $this->status = self::PAID;
             $this->paid_at = current_datetime();
             $this->load('user', 'invoice_details');
-            $this->url = with(new FileServices())->setStoragePath(config('arbitrium.invoice_path'))->generateInvoicePDF($this);
+            $this->url = with(new FileServices())->setStoragePath(config('arbitrium.invoice.path'))->generateInvoicePDF($this);
             $this->save();
         }
     }
