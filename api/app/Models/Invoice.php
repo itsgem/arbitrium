@@ -39,6 +39,12 @@ use App\User;
  *     @SWG\Property(property="country", type="string", description="Company country", default="USA"),
  *     @SWG\Property(property="postal_code", type="string", description="Company postal code", default="92013"),
  *     @SWG\Property(property="url", type="string", description="Representative Position", default="http://arbitrium-api.dev/invoices/00000009.pdf"),
+ *     @SWG\Property(property="invoice_details", type="array", description="Optional: Invoice Details (For)", items=@SWG\Property(ref="#/definitions/InvoiceDetailResponse")),
+ *     @SWG\Property(property="system_settings", description="Optional: System Settings",
+ *         @SWG\Property(property="<setting_1>", type="string", description="setting_1 value", default="<setting_1_value>"),
+ *         @SWG\Property(property="<setting_2>", type="string", description="setting_2 value", default="<setting_2_value>"),
+ *         @SWG\Property(property="<setting_3>", type="string", description="setting_3 value", default="<setting_3_value>"),
+ *     ),
  * )
  *
  * @SWG\Definition(
@@ -125,7 +131,7 @@ class Invoice extends NrbModel
 
     public function getUrlAttribute($value)
     {
-        $value = config('arbitrium.invoice_url').'/'.basename($value);
+        $value = config('arbitrium.invoice_url').basename($value);
         return url($value);
     }
 
@@ -205,7 +211,7 @@ class Invoice extends NrbModel
     public static function generate($data, $invoice_details = [])
     {
         $invoice = new Invoice($data);
-        $invoice->paid();
+        $invoice->save();
 
         if ($invoice_details)
         {
@@ -245,5 +251,17 @@ class Invoice extends NrbModel
     public function isPaid()
     {
         return $this->status == self::PAID;
+    }
+
+    public function sendInvoice()
+    {
+        if ($this->isPaid())
+        {
+            with(new MailServices())->sendInvoice($this->user, $this->url);
+
+            return true;
+        }
+
+        return false;
     }
 }

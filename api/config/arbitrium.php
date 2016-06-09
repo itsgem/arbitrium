@@ -10,5 +10,5 @@ return [
     'temp_storage'  => storage_path().'/temp/',
 
     'invoice_path'  => public_path().'/invoices/',
-    'invoice_url'   => url('invoices'),
+    'invoice_url'   => env('APP_URL').'/invoices/',
 ];

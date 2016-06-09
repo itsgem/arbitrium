@@ -61,13 +61,10 @@ class InvoiceServices extends NrbServices
     public function sendInvoice($id, $client_id = null)
     {
         $invoice = Invoice::clientId($client_id)->findOrFail($id);
-        if ($invoice->isPaid())
+        if ($invoice->sendInvoice())
         {
-            with(new MailServices())->sendInvoice($invoice->user, $invoice->url);
-
             return $this->respondWithSuccess();
         }
-
         return $this->respondWithError(Errors::INVOICE_STILL_UNPAID);
     }
 
