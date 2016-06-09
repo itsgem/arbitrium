@@ -42,4 +42,5 @@ return [
     Errors::UNAUTHORIZED_PAYPAL_TOKEN   => 'Unauthorized PayPal token.',
     Errors::PAYPAL_ALREADY_CONFIRMED    => 'User already confirmed this token with Agreement :id.',
     Errors::PAYPAL_ALREADY_CANCELLED    => 'User already cancelled this token with Agreement :id.',
+    Errors::INVOICE_STILL_UNPAID    => 'Invoice is still unpaid.',
 ];

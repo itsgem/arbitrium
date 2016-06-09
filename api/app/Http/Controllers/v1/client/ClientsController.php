@@ -519,4 +519,55 @@ class ClientsController extends ApiController
     {
         return $service->show($this->request, $id, get_logged_in_client_id());
     }
+
+    /**
+     * Send invoice to client
+     *
+     * @SWG\Get(
+     *     path="/client/invoice/{invoice}/send",
+     *     tags={"Client - Invoice"},
+     *     summary="Send Invoice",
+     *     description="Send invoice to client.",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", type="array")
+     *         )
+     *     ),
+     *     @SWG\Response(response="204", description="No matches or no allowed matches found"),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="X-Token",
+     *         in="header",
+     *         description="X-Token",
+     *         required=true,
+     *         type="string",
+     *         default=""
+     *     ),
+     *     @SWG\Parameter(
+     *         name="invoice",
+     *         in="path",
+     *         description="Invoice ID",
+     *         required=true,
+     *         type="string",
+     *         default="1"
+     *     ),
+     * )
+     *
+     * @param $id
+     * @param InvoiceServices $service
+     *
+     * @return mixed
+     */
+    public function sendInvoice($id, InvoiceServices $service)
+    {
+        return $service->sendInvoice($id, get_logged_in_client_id());
+    }
 }
