@@ -366,7 +366,6 @@ class SubscriptionServices extends NrbServices
                 DB::transaction(function () use ($latest_subscription)
                 {
                     $latest_subscription->cancel();
-                    $latest_subscription->invoice->cancel();
                 });
             }
         }

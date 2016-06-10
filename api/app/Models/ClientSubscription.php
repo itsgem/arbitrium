@@ -185,6 +185,8 @@ class ClientSubscription extends Subscription
         $this->status_end = self::STATUS_END_CANCELLED;
         $this->cancelled_at = current_datetime();
         $this->save();
+
+        $this->invoice->cancel();
     }
 
     public function renew()
