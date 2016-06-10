@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
+import {openLoading, closeLoading} from 'common/components/modal'
 
 class invoiceDetails extends React.Component {
   constructor(props) {
@@ -17,6 +18,19 @@ class invoiceDetails extends React.Component {
     }
     modal();
   }
+  loadingRender () {
+    if (!this.props.loading && this.props.successMailSent) {
+      let notification = document.querySelector('.mdl-snackbar');
+      notification.MaterialSnackbar.showSnackbar( {
+        message: "Successfully sent invoice to your email ",
+        timeout: 3000
+      });
+      closeLoading();
+    }
+    return (
+      <div className="loading"></div>
+    );
+  }
   render() {
     let invoiceInfo = this.props.invoiceInfo.data;
     let invoiceDetails = invoiceInfo.invoice_details;
@@ -25,6 +39,7 @@ class invoiceDetails extends React.Component {
     let subtotal = '0.00';
     return (
       <div className="mdl-grid mdl-grid--no-spacing table-list-container">
+        {this.loadingRender()}
         <div className="mdl-cell mdl-cell--12-col header-title"><p>INVOICE DETAIL</p></div>
         <div className="mdl-grid content">
           <div className="mdl-cell mdl-cell--12-col">
@@ -106,11 +121,16 @@ class invoiceDetails extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--12-col cta-bottom text-right">
             <a href={invoiceInfo.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>GENERATE PDF</a>
-            <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>SEND TO EMAIL</button>
+            <button onClick={(e)=>this.invoiceSendMail(e, invoiceInfo.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>SEND TO EMAIL</button>
           </div>
         </div>
       </div>
     );
+  }
+  invoiceSendMail(e, id) {
+    e.preventDefault();
+    openLoading();
+    this.props.clientInvoiceSendMail(id);
   }
 };
 

@@ -37,6 +37,9 @@ export default React.createClass({
         <div className="mdl-grid mdl-grid--no-spacing table-list-container table-invoice">
           <InvoiceDetails
             invoiceInfo={this.props.invoiceInfo}
+            clientInvoiceSendMail={this.props.clientInvoiceSendMail}
+            successMailSent={this.props.successMailSent}
+            loading={this.props.loading}
           />
         </div>
       </main>

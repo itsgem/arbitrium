@@ -451,5 +451,8 @@ export default {
     return get('client/invoice/' + id, {
       params: {'with-details': 1, 'with-settings': 1}
     });
+  },
+  clientInvoiceSendMail(id)  {
+    return get('client/invoice/' + id + '/send');
   }
 };

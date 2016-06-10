@@ -6,11 +6,13 @@ import auth from 'services/auths';
 
 export const clientInvoiceList = createActionAsync('CLIENT_INVOICE_LIST', auth.clientInvoiceList);
 export const clientInvoiceDetails = createActionAsync('CLIENT_INVOICE_INFO', auth.clientInvoiceDetails);
+export const clientInvoiceSendMail = createActionAsync('CLIENT_INVOICE_MAIL_SEND', auth.clientInvoiceSendMail);
 
 const initialState = Immutable.fromJS({
   loading: false,
   listInvoice: {},
   invoiceInfo: {},
+  successMailSent: false
 });
 
 export default createReducer({
@@ -23,9 +25,19 @@ export default createReducer({
   }),
   [clientInvoiceDetails.ok]: (state, payload) => state.merge({
     loading: false,
-    invoiceInfo: payload
+    invoiceInfo: payload,
+    successMailSent: false
   }),
   [clientInvoiceDetails.request]: (state) => state.merge({
     loading: true,
+    successMailSent: false
+  }),
+  [clientInvoiceSendMail.ok]: (state) => state.merge({
+    loading: false,
+    successMailSent: true
+  }),
+  [clientInvoiceSendMail.request]: (state) => state.merge({
+    loading: true,
+    successMailSent: false
   }),
 }, initialState);
