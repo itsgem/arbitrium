@@ -475,19 +475,19 @@ class ClientProfile extends React.Component {
               </div>
 
               <div className="mdl-cell mdl-cell--3-col">
-                <div className={this.formClassNames('alt_gender', errors)}>
-                  <select
-                    className="mdl-select__input"
-                    id="alt_gender"
-                    ref="alt_gender"
-                    defaultValue={clientInfo.alt_gender}
-
-                    >
-                    <option value=""></option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
-                  <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+                <div id="alt_gender-opt" className={this.formClassNames('alt_gender', errors)}>
+                  <div className="mdl-selectfield">
+                    <select
+                      className="mdl-select__input"
+                      id="alt_gender"
+                      ref="alt_gender"
+                      defaultValue={clientInfo.alt_gender} >
+                      <option value=""></option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+                  </div>
                 </div>
               </div>
             </div>

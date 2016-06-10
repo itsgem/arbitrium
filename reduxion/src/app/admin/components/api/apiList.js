@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
-import {modal, openModal, closeModal} from 'common/components/modal'
+import {modal, openModal, closeModal} from 'common/components/modal';
+import DatePicker from 'react-datepicker';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class ApiList extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      id: null
+      id: null,
+      createdDate: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -101,6 +103,12 @@ class ApiList extends React.Component {
       </div>
     );
   }
+  selectedDate(date, selectedDate) {
+    let isDate = {};
+    isDate[selectedDate] = date;
+    this.setState( isDate );
+    document.getElementById(selectedDate).classList.add('is-dirty');
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -149,8 +157,12 @@ class ApiList extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="created_at" ref="created_at" />
+              <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <DatePicker
+                    selected={this.state.createdDate}
+                    dateFormat="YYYY-MM-DD"
+                    onChange={(e) => this.selectedDate(e, 'createdDate')}
+                    className="mdl-textfield__input font-input" id="created_at" readOnly/>
                 <label className="mdl-textfield__label">Date created</label>
               </div>
             </div>
@@ -263,7 +275,13 @@ class ApiList extends React.Component {
     e.preventDefault();
     this.refs.description.value = "";
     this.refs.api_key.value = "";
-    this.refs.created_at.value = "";
+    document.getElementById('created_at').value = '';
+    this.setState( {
+      createdDate: null
+    } );
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
     this.searchList(e, 10);
   }
   searchList(e, pageNum = null) {
@@ -271,8 +289,8 @@ class ApiList extends React.Component {
     let payload = {
       perPage: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      token: this.refs.api_key.value,
-      created: this.refs.created_at.value
+      key: this.refs.api_key.value,
+      date_created: document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }
@@ -282,8 +300,8 @@ class ApiList extends React.Component {
       page: pageNumber,
       perPage: this.refs.pageNum.value,
       description: this.refs.description.value,
-      token: this.refs.api_key.value,
-      created: this.refs.created_at.value
+      key: this.refs.api_key.value,
+      date_created: document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }

@@ -4,7 +4,7 @@ import { createReducer } from 'redux-act';
 import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
 
-export const clietApiKeys = createActionAsync('CLIENT_API_KEYS', auth.clietApiKeys);
+export const clientApiKeys = createActionAsync('CLIENT_API_KEYS', auth.clientApiKeys);
 export const isActiveApiKey = createActionAsync('CLIENT_ACTIVATE_API_KEY', auth.clientIsActiveApiKey);
 export const getApiPermission = createActionAsync('CLIENT_API_PERMISSION', auth.getApiPermission);
 export const clientRegisterApi = createActionAsync('CLIENT_REGISTER_API', auth.clientRegisterApi);
@@ -24,14 +24,14 @@ const initialState = Immutable.fromJS({
 });
 
 export default createReducer({
-  [clietApiKeys.ok]: (state, payload) => state.merge({
+  [clientApiKeys.ok]: (state, payload) => state.merge({
     loading: false,
     listApiKeys: payload,
     apiUpdateSuccess: false,
     deleteApiKeySuccess: false,
     activeApiKey: false
   }),
-  [clietApiKeys.request]: (state) => state.merge({
+  [clientApiKeys.request]: (state) => state.merge({
     loading: true,
     apiUpdateSuccess: false,
     deleteApiKeySuccess: false,
