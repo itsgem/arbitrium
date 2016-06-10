@@ -63,6 +63,9 @@ export default React.createClass({
                   <div className="mdl-cell mdl-cell--4-col search-cta">
                     <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i className="material-icons">search</i>Search</button>
                     <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">clear</i>Clear</button>
+                    <Link to="/i/apilogs/222" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue">
+                      Download Logs
+                    </Link>
                   </div>
                 </div>
 
@@ -91,9 +94,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric api-col-action">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogsdetails/" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>

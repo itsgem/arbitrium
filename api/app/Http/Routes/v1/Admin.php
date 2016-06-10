@@ -49,7 +49,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
                     Route::patch('cancel',      ['uses' => 'ClientsController@cancelSubscription']);
                 });
 
-                Route::get('{invoice}',     ['uses' => 'InvoicesController@listByClient']);
+                Route::get('invoice',  ['uses' => 'InvoicesController@listByClient']);
             });
 
             Route::group(['prefix' => 'subscription'], function()
