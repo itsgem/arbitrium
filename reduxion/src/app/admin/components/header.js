@@ -103,6 +103,14 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
                     </ul>
                   </div>}
+                  <div className="container">
+                    <button id="demo-menu-systemsettings"
+                      className="mdl-button mdl-js-button">Reports</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-systemsettings">
+                      <li className="mdl-menu__item"><Link to="/coffee/systemsettings/">API Settings</Link></li>
+                    </ul>
+                  </div>
                   <Link className="menu-logs mdl-layout__tab" to="/coffee">Logs</Link>
                 </nav>
                 <div className="icon-profile inner-profile">

@@ -35,6 +35,7 @@ import AdminUserManagementAdd from 'admin/containers/userManagement/userManageme
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
 import AdminProfile from 'admin/containers/userProfile/userProfile';
+import AdminSystemSettings from 'admin/views/systemSettings/settings';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
@@ -241,6 +242,9 @@ export default () => (
         </Route>
         <Route path="profile">
           <IndexRoute component={AdminProfile}/>
+        </Route>
+        <Route path="systemsettings">
+          <IndexRoute component={AdminSystemSettings}/>
         </Route>
       </Route>
     </Route>

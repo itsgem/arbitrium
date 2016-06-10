@@ -52,6 +52,7 @@ class Errors
     // Subscriptions
     const EXISTING_TRIAL_SUBSCRIPTION        = 70001;
     const CANNOT_CANCEL_PENDING_SUBSCRIPTION = 70002;
+    const SUBSCRIPTION_CONFIRMATION_ERROR    = 70003;
 
     // Paypal
     const PAYPAL_ERROR              = 80001;
@@ -59,6 +60,9 @@ class Errors
     const UNAUTHORIZED_PAYPAL_TOKEN = 80003;
     const PAYPAL_ALREADY_CONFIRMED  = 80004;
     const PAYPAL_ALREADY_CANCELLED  = 80005;
+
+    // Invoices
+    const INVOICE_STILL_UNPAID      = 90001;
 
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
