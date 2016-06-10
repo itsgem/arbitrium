@@ -18,13 +18,13 @@ class AdminInvoiceList extends React.Component {
   invoiceListDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.username}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.userid}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.ipAddress}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoiced_at}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoice_no}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/invoice/client/" + data.id + "/invoice-detail/" + data.subscription_id }><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/invoice/client/" + data.client_id + "/invoice-detail/" + data.id }><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -114,25 +114,25 @@ class AdminInvoiceList extends React.Component {
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="username" ref="username" />
+              <input className="mdl-textfield__input" type="text" id="date_from" ref="date_from" />
               <label className="mdl-textfield__label">Invoice Date From</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="statusCode" ref="statusCode"/>
+              <input className="mdl-textfield__input" type="text" id="date_to" ref="date_to"/>
               <label className="mdl-textfield__label">Invoice Date To</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="created" ref="created" />
+              <input className="mdl-textfield__input" type="text" id="invoice_no" ref="invoice_no" />
               <label className="mdl-textfield__label">Invoice Number</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="created" ref="created" />
+              <input className="mdl-textfield__input" type="text" id="status" ref="status" />
               <label className="mdl-textfield__label">Invoice Status</label>
             </div>
           </div>
@@ -224,17 +224,19 @@ class AdminInvoiceList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.username.value = "";
-    this.refs.statusCode.value = "";
-    this.refs.created.value = "";
-    this.searchList(e);
+    this.refs.date_from.value = "";
+    this.refs.date_to.value = "";
+    this.refs.invoice_no.value = "";
+    this.refs.status.value = "";
+    this.searchList(e, 10);
   }
   searchList(e) {
     e.preventDefault();
     let payload = {
-      username: this.refs.username.value,
-      statusCode: this.refs.statusCode.value,
-      created: this.refs.created.value
+      date_from: this.refs.date_from.value,
+      date_to: this.refs.date_to.value,
+      invoice_no: this.refs.invoice_no.value,
+      status: this.refs.status.value
     };
     this.props.adminInvoiceList(payload);
   }
@@ -243,9 +245,10 @@ class AdminInvoiceList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      username: this.refs.username.value,
-      statusCode: this.refs.statusCode.value,
-      created: this.refs.created.value
+      date_from: this.refs.date_from.value,
+      date_to: this.refs.date_to.value,
+      invoice_no: this.refs.invoice_no.value,
+      status: this.refs.status.value
     };
     this.props.adminInvoiceList(payload);
   }

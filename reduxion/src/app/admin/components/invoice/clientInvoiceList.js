@@ -7,6 +7,7 @@ class AdminClientInvoiceList extends React.Component {
     this.state = {
       errors: {},
       errorServer: null
+      // invoiced_at: null
     };
   }
   componentDidMount() {
@@ -18,14 +19,14 @@ class AdminClientInvoiceList extends React.Component {
   clientInvoiceListDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.username}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.userid}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.ipAddress}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.statusCode}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.company_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.rep_last_name}, {data.rep_first_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoice_no}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/invoice/client/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/invoice/client/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -89,7 +90,12 @@ class AdminClientInvoiceList extends React.Component {
       </div>
     );
   }
-
+  // selectedDate(date, selectedDate) {
+  //   let isDate = {};
+  //   isDate[selectedDate] = date;
+  //   this.setState( isDate );
+  //   document.getElementById(selectedDate).classList.add('is-dirty');
+  // }
   render() {
     let counter = false;
     let alter = false;
@@ -115,19 +121,19 @@ class AdminClientInvoiceList extends React.Component {
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="username" ref="username" />
+              <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
               <label className="mdl-textfield__label">Company Name</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="statusCode" ref="statusCode"/>
+              <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
               <label className="mdl-textfield__label">Representative Name</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="created" ref="created" />
+              <input className="mdl-textfield__input" type="text" id="invoiced_at" ref="invoiced_at" />
               <label className="mdl-textfield__label">Invoice Date To</label>
             </div>
           </div>
@@ -220,28 +226,45 @@ class AdminClientInvoiceList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.username.value = "";
-    this.refs.statusCode.value = "";
-    this.refs.created.value = "";
-    this.searchList(e);
+    // this.setState( {
+    //   invoiced_at: null
+    // } );
+    // document.getElementById('invoiceDateTo').value = '';
+
+    this.refs.company_name.value = "";
+    this.refs.name.value = "";
+    this.refs.invoiced_at.value = "";
+
+    // for (let item of document.querySelectorAll('.is-dirty')) {
+    //   item.classList.remove('is-dirty');
+    // }
+
+    this.searchList(e, 10);
   }
   searchList(e) {
     e.preventDefault();
+    // let dateTo = document.getElementById('invoiceDateTo').value;
+
     let payload = {
-      username: this.refs.username.value,
-      statusCode: this.refs.statusCode.value,
-      created: this.refs.created.value
+      company_name: this.refs.company_name.value,
+      client_name: this.refs.name.value,
+      // invoiced_at: toDate
+      invoiced_at: this.refs.invoiced_at.value
     };
+
     this.props.adminClientInvoiceList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
+    // let dateTo = document.getElementById('invoiceDateTo').value;
+
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      username: this.refs.username.value,
-      statusCode: this.refs.statusCode.value,
-      created: this.refs.created.value
+      company_name: this.refs.company_name.value,
+      client_name: this.refs.name.value,
+      // invoiced_at: toDate
+      invoiced_at: this.refs.invoiced_at.value
     };
     this.props.adminClientInvoiceList(payload);
   }

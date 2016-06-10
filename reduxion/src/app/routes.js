@@ -228,7 +228,7 @@ export default () => (
         <Route path="invoice" onEnter={requireAuth}>
           <IndexRoute component={AdminClientInvoiceList} onEnter={requireAuth}/>
           <Route component={AdminInvoiceList} path="client/:client_id" onEnter={requireAuth}/>
-          <Route component={AdminInvoiceDetail} path="client/:client_id/invoice-detail/:subscription_id" onEnter={requireAuth}/>
+          <Route component={AdminInvoiceDetail} path="client/:client_id/invoice-detail/:id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account">

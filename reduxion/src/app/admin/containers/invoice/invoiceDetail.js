@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { adminInvoiceDetail } from 'admin/reducers/invoice'
+import { adminInvoiceDetail, adminInvoiceDetailSendEmail } from 'admin/reducers/invoice'
 import InvoiceDetail from 'admin/views/invoice/invoiceDetail';
 
 const strMapToObj=(strMap) => {
@@ -10,10 +10,11 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
   	invoiceDetail: strMapToObj(state.get('adminInvoice').get('invoiceDetail')),
-    loading: state.get('adminInvoice').get('loading')
+    loading: state.get('adminInvoice').get('loading'),
+    successMailSent: strMapToObj(state.get('adminInvoice').get('successMailSent'))
   };
 }
 
 export default connect((mapStateToProps), {
-  adminInvoiceDetail
+  adminInvoiceDetail, adminInvoiceDetailSendEmail
 })(InvoiceDetail)

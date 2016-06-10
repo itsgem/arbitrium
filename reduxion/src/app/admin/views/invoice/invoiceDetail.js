@@ -9,8 +9,8 @@ export default React.createClass({
     router: React.PropTypes.object.isRequired
   },
   componentDidMount () {
-    let id = this.props.params.subscription_id;
-    this.props.adminInvoiceDetail(this.props.params.client_id).catch(createError);
+    let id = this.props.params.id;
+    this.props.adminInvoiceDetail(id).catch(createError);
   },
   componentWillMount () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -24,8 +24,8 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.purchaseSuccess) {
-      $('.msg').html('Successfully sent approval URL to client to complete the subscription change.').addClass('bg-green');
+    if (nextProps.successMailSent) {
+      $('.msg').html('Successfully sent invoice to your email.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(5000);
       });
@@ -33,12 +33,16 @@ export default React.createClass({
     }
   },
   render() {
-    if (!this.props.loading) {
-      closeLoading();
+    if (Object.keys(this.props.invoiceDetail).length) {
+      if (!this.props.loading) {
+        closeLoading();
+      } else {
+        openLoading();
+      }
+      return this.renderInvoiceDetail();
     } else {
-      openLoading();
+      return this.loadingRender();
     }
-    return this.renderInvoiceDetail();
   },
   renderInvoiceDetail () {
     return (
@@ -55,6 +59,9 @@ export default React.createClass({
         <InvoiceDetail
           params = {this.props.params}
           adminInvoiceDetail = {this.props.invoiceDetail}
+          adminInvoiceDetailSendEmail = {this.props.adminInvoiceDetailSendEmail}
+          successMailSent={this.props.successMailSent}
+          loading={this.props.loading}
         />
       </div>
     );

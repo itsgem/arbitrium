@@ -291,6 +291,24 @@ export default {
   adminClientSubscriptionCancel(id) {
     return patch('admin/client/' + id + '/subscription/cancel');
   },
+  adminGetClientInvoices(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/invoice', {
+      params : payload
+    });
+  },
+  adminGetInvoicesPerClient(id, payload = {page: 1, per_page: 10}) {
+    return get('admin/client/' + id +'/invoice', {
+      params : payload
+    });
+  },
+  adminGetSelectedInvoice(id) {
+    return get('admin/invoice/' + id, {
+      params: {'with-details': 1, 'with-settings': 1}
+    });
+  },
+  adminInvoiceSendEmail(id) {
+    return get('admin/invoice/' + id + '/send');
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {
