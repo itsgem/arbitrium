@@ -121,7 +121,6 @@ class invoiceList extends React.Component {
       pagination[i+1] = this.nextPage(i+1, ((listInvoice.current_page == listInvoice.last_page)|| listInvoice.last_page == 0 ? false : (listInvoice.current_page + 1 )), listInvoice.last_page );
       perPage = listInvoice.per_page;
     }
-
     return (
       <div className="filter-search">
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
@@ -140,7 +139,7 @@ class invoiceList extends React.Component {
               <div className="mdl-cell mdl-cell--2-col">
                 <div id="dateTo" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                   <DatePicker
-                    selected={this.state.dateTo}
+                    selected={this.state.dateTo == null || (this.state.dateFrom < this.state.dateTo) ? this.state.dateTo : this.state.dateFrom}
                     dateFormat="YYYY-MM-DD"
                     minDate={this.state.dateFrom ? this.state.dateFrom : moment()}
                     onChange={(e) => this.selectedDate(e, 'dateTo')}
@@ -171,7 +170,7 @@ class invoiceList extends React.Component {
                   onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
               </div>
             </div>
-          <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
+          <table className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
                 <th width="300" className="mdl-data-table__cell--non-numeric">Invoice Date</th>

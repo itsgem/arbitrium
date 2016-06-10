@@ -43,7 +43,7 @@ class invoiceDetails extends React.Component {
         <div className="mdl-cell mdl-cell--12-col header-title"><p>INVOICE DETAIL</p></div>
         <div className="mdl-grid content">
           <div className="mdl-cell mdl-cell--12-col">
-            <center><h6>KOSH CONSULTING GROUP (ASIA) PTE. LTD.</h6></center>
+            <center><h6>{settings.kcg_company_name}</h6></center>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <legend className="to-right">

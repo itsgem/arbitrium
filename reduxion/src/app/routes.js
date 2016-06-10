@@ -90,7 +90,7 @@ function startTimer(duration, tokenName) {
     setInterval(timer, 1000);
 }
 
-function validateToken(tokenName, nextState, replace) {
+function validateToken(tokenName, nextState, replace, isLogin = false) {
   let bytes ='';
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
@@ -112,15 +112,13 @@ function validateToken(tokenName, nextState, replace) {
         state: { nextPathname: nextState.location.pathname }
       });
     }
-
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
       localStorage.removeItem(tokenName);
       replace({
-        pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
-        state: { nextPathname: nextState.location.pathname }
-      });
+          pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
+          state: { nextPathname: nextState.location.pathname }
+        });
     }
-
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
       let lifetime = decryptedData.lifetime;
       let expired = moment().add(lifetime,'minutes').valueOf();
@@ -185,9 +183,7 @@ function islogin(nextState, replace, cb) {
       default :
         tokenName = 'token';
   }
-  validateToken(tokenName);
-  let isValidate = validateToken(tokenName, nextState, replace);
-  console.log("isLogin", isValidate);
+  let isValidate = validateToken(tokenName, nextState, replace, true);
   if (isValidate) {
     replace({
       pathname: '/' + (tokenName == 'token' ? "i" : tokenName),
