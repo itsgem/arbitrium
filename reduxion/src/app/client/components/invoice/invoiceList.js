@@ -1,17 +1,20 @@
+import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-class ApiList extends React.Component {
+class invoiceList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
       errorServer:null,
       id: null,
-      createdDate: null
+      dateFrom: null,
+      dateTo: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -19,25 +22,16 @@ class ApiList extends React.Component {
     }
     modal();
   }
-  userDisplay (data, alter) {
+  invoiceDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoiced_at}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoice_no}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
-          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
-            <span className="mdl-switch__label">On / Off</span>
-            </label>
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/i/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
-          <button
-              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
-            <i className="material-icons">delete</i>
-          </button>
+          to={"/i/invoice/" + data.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -106,71 +100,69 @@ class ApiList extends React.Component {
     isDate[selectedDate] = date;
     this.setState( isDate );
     document.getElementById(selectedDate).classList.add('is-dirty');
+    console.log(date);
   }
   render() {
     let counter = false;
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let apiList = {last_page: 1};
-    let users = {};
-    if (Object.keys(this.props.listApiKeys).length) {
+    let listInvoice = {last_page: 1};
+    let invoiceData = {};
+    if (Object.keys(this.props.listInvoice).length) {
       let i=0;
       counter = true;
-      apiList = this.props.listApiKeys;
-      users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-      for (i = 1; i <= apiList.last_page; i++) {
-        pagination[i] = this.pagination(i, apiList.current_page);
+      listInvoice = this.props.listInvoice;
+      invoiceData = listInvoice.data;
+      pagination[i] = this.prevPage(i, (listInvoice.current_page > 1 ? (listInvoice.current_page - 1): false));
+      for (i = 1; i <= listInvoice.last_page; i++) {
+        pagination[i] = this.pagination(i, listInvoice.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-      perPage = apiList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((listInvoice.current_page == listInvoice.last_page)|| listInvoice.last_page == 0 ? false : (listInvoice.current_page + 1 )), listInvoice.last_page );
+      perPage = listInvoice.per_page;
     }
+
     return (
       <div className="filter-search">
-        <div className="mdl-grid">
-          <div className="mdl-cell">
-            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">New API Key</Link>
-          </div>
-        </div>
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
-          <div className="dialog-box"></div>
-          <div className="dialog-content">
-            <div className="dialog-inner">
-              <div className="msg-box mdl-shadow--2dp">
-                 <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
-                <div className="mdl-dialog__actions">
-                  <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-                  <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mdl-cell mdl-cell--12-col header-title"><p>Api key list</p></div>
+          <div className="mdl-cell mdl-cell--12-col header-title"><p>Invoice List</p></div>
           <div className="mdl-grid filter-search-bar">
-              <div className="mdl-cell mdl-cell--3-col">
-                <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                  <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
-                  <label className="mdl-textfield__label">Description</label>
-                </div>
-              </div>
-              <div className="mdl-cell mdl-cell--3-col">
-                <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                  <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
-                  <label className="mdl-textfield__label">API Key</label>
-                </div>
-              </div>
-              <div className="mdl-cell mdl-cell--3-col">
-                <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <div className="mdl-cell mdl-cell--2-col">
+                <div id="dateFrom" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                   <DatePicker
-                    selected={this.state.createdDate}
+                    selected={this.state.dateFrom}
                     dateFormat="YYYY-MM-DD"
-                    onChange={(e) => this.selectedDate(e, 'createdDate')}
-                    className="mdl-textfield__input font-input" id="created_at" readOnly/>
-                  <label className="mdl-textfield__label">Date created</label>
+                    onChange={(e) => this.selectedDate(e, 'dateFrom')}
+                    className="mdl-textfield__input font-input" id="invoiceDateFrom" readOnly/>
+                  <label className="mdl-textfield__label" htmlFor="invoiceDateFrom">Invoice Date From</label>
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col search-cta margin-top-20">
+              <div className="mdl-cell mdl-cell--2-col">
+                <div id="dateTo" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                  <DatePicker
+                    selected={this.state.dateTo}
+                    dateFormat="YYYY-MM-DD"
+                    minDate={this.state.dateFrom ? this.state.dateFrom : moment()}
+                    onChange={(e) => this.selectedDate(e, 'dateTo')}
+                    className="mdl-textfield__input font-input" id="invoiceDateTo" readOnly/>
+                  <label className="mdl-textfield__label" htmlFor="invoiceDateTo">Invoice Date To</label>
+                </div>
+              </div>
+
+              <div className="mdl-cell mdl-cell--2-col">
+                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input className="mdl-textfield__input font-input" id="invoice_no" ref="invoice_no"/>
+                  <label className="mdl-textfield__label" htmlFor="invoice_no">Invoice Number</label>
+                </div>
+              </div>
+
+              <div className="mdl-cell mdl-cell--2-col">
+                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                  <input className="mdl-textfield__input font-input" id="status" ref="status"/>
+                  <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+                </div>
+              </div>
+              <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
                   onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
@@ -182,16 +174,16 @@ class ApiList extends React.Component {
           <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th width="300" className="mdl-data-table__cell--non-numeric">Description</th>
-                <th width="500" className="mdl-data-table__cell--non-numeric">Key</th>
-                <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
+                <th width="300" className="mdl-data-table__cell--non-numeric">Invoice Date</th>
+                <th width="500" className="mdl-data-table__cell--non-numeric">Invoice Number</th>
+                <th width="200" className="mdl-data-table__cell--non-numeric">Invoice Status</th>
                 <th width="300" className="mdl-data-table__cell--non-numeric">Action</th>
               </tr>
             </thead>
             <tbody>
-              {counter && users.map(item => {
+              {counter && invoiceData.map(item => {
                 alter = alter ? false : true;
-                return this.userDisplay(item, alter); })}
+                return this.invoiceDisplay(item, alter); })}
             </tbody>
           </table>
             {/* <!-- Pagination -->*/}
@@ -215,12 +207,14 @@ class ApiList extends React.Component {
 
   clearSearch(e) {
     e.preventDefault();
-    this.refs.description.value = "";
-    this.refs.api_key.value = "";
-    document.getElementById('created_at').value = '';
     this.setState( {
-      createdDate: null
+      dateFrom: null,
+      dateTo: null
     } );
+    document.getElementById('invoiceDateFrom').value = '';
+    document.getElementById('invoiceDateFrom').value = '';
+    this.refs.invoice_no.value = "";
+    this.refs.status.value = "";
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
@@ -229,25 +223,22 @@ class ApiList extends React.Component {
 
   searchList(e, pageNum = null) {
     e.preventDefault();
+    let fromDate = document.getElementById('invoiceDateFrom').value;
+    let toDate = document.getElementById('invoiceDateTo').value;
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      date_from: fromDate,
+      date_to: toDate,
+      invoice_no: this.refs.invoice_no.value,
+      status: this.refs.status.value
     };
-    this.props.clientApiKeys(payload).catch(createError);
+    console.log(payload);
+    this.props.clientInvoiceList(payload).catch(createError);
   }
 
   deleteItem () {
     this.props.clientDeleteApiKey(this.state.id).catch(createError);
     this.modalClose();
-  }
-  changeActive (e, id, status) {
-    let payload = {
-      id: id,
-      is_active: ((e.target.checked == true) ? 0 : 1)
-    };
-    this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");
@@ -303,12 +294,13 @@ class ApiList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
     };
-    this.props.clientApiKeys(payload).catch(createError);
+    this.props.clientInvoiceList(payload).catch(createError);
   }
 };
 
-export default ApiList;
+// function getDate (date){
+//   console.log(this)
+// }
+
+export default invoiceList;

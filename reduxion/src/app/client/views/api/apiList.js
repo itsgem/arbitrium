@@ -5,11 +5,11 @@ import {createError} from 'utils/error';
 
 export default React.createClass({
   componentWillMount () {
-    this.props.clietApiKeys().catch(createError);
+    this.props.clientApiKeys().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
-      this.props.clietApiKeys({per_page: 10}).catch(createError);
+      this.props.clientApiKeys({per_page: 10}).catch(createError);
     }
   },
   render () {
@@ -18,7 +18,7 @@ export default React.createClass({
         <div className="page-content">
           <ApiList
             isActiveApiKey={this.props.isActiveApiKey}
-            clietApiKeys={this.props.clietApiKeys}
+            clientApiKeys={this.props.clientApiKeys}
             listApiKeys={this.props.listApiKeys}
             clientDeleteApiKey={this.props.clientDeleteApiKey}/>
         </div>

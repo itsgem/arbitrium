@@ -54,8 +54,8 @@ import ClientApiUpdate from 'client/containers/api/apiUpdate';
 import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
-import ClientInvoice from 'client/views/invoice/invoiceList';
-import ClientInvoiceListDetails from 'client/views/invoice/invoiceListDetails';
+import ClientInvoice from 'client/containers/invoice/invoiceList';
+import ClientInvoiceDetails from 'client/containers/invoice/invoiceDetails';
 import ClientApiLogs from 'client/views/apilogs/apilogs';
 import ClientSystemSettings from 'client/views/settings/systemsettings';
 
@@ -261,7 +261,7 @@ export default () => (
       </Route>
       <Route path="invoice" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientInvoice}/>
-        <Route component={ClientInvoiceListDetails} path=":id" />
+        <Route component={ClientInvoiceDetails} path=":id" />
       </Route>
       <Route path="apilogs" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientApiLogs}/>
