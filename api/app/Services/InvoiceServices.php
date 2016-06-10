@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Errors;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\SystemSetting;
@@ -25,12 +26,12 @@ class InvoiceServices extends NrbServices
     }
 
     // Admin\InvoicesController::index
+    // Admin\InvoicesController::listByClient
     // Client\ClientsController::listInvoice
     public function index($request, $client_id = null)
     {
         $client_id = ($client_id) ? $client_id : $request->get('client_id');
 
-        $this->addResponseData(['search_params' => $request->all()]);
         return $this->respondWithData(
             Invoice::invoiceDateFrom($request->get('date_from'))
             ->invoiceDateTo($request->get('date_to'))
@@ -38,11 +39,29 @@ class InvoiceServices extends NrbServices
             ->clientId($client_id)
             ->poNoLike($request->get('po_no'))
             ->companyNameLike($request->get('company_name'))
+            ->clientNameLike($request->get('client_name'))
             ->status($request->get('status'))
             ->latest()
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );
+    }
+
+    // Admin\InvoicesController::listDistinctByClient
+    public function listClientLatest($request)
+    {
+        $invoices = Invoice::clientLatest()
+            ->invoiceDateFrom($request->get('date_from'))
+            ->invoiceDateTo($request->get('date_to'))
+            ->invoiceNoLike($request->get('invoice_no'))
+            ->clientId($request->get('client_id'))
+            ->poNoLike($request->get('po_no'))
+            ->companyNameLike($request->get('company_name'))
+            ->clientNameLike($request->get('client_name'))
+            ->status($request->get('status'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($invoices, $request->get('max_pagination_links'));
     }
 
     // Admin\InvoicesController::paid
@@ -57,14 +76,14 @@ class InvoiceServices extends NrbServices
     }
 
     // Admin\InvoicesController::sendInvoice
-    public function sendInvoice($id)
+    public function sendInvoice($id, $client_id = null)
     {
-        $invoice = Invoice::findOrFail($id);
-        if ($invoice->isPaid())
+        $invoice = Invoice::clientId($client_id)->findOrFail($id);
+        if ($invoice->sendInvoice())
         {
-            with(new MailServices())->sendInvoice($invoice->user, $invoice->url);
+            return $this->respondWithSuccess();
         }
-        return $this->respondWithSuccess();
+        return $this->respondWithError(Errors::INVOICE_STILL_UNPAID);
     }
 
     // Admin\InvoicesController::show
@@ -77,6 +96,11 @@ class InvoiceServices extends NrbServices
             $invoice = $invoice->with('invoice_details');
         }
         $invoice = $invoice->clientId($client_id)->findOrFail($id);
+
+        if ($request->get('with-settings'))
+        {
+            $invoice['system_settings'] = SystemSetting::getList();
+        }
 
         return $this->respondWithSuccess($invoice);
     }

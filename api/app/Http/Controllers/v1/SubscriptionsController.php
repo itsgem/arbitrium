@@ -39,14 +39,6 @@ class SubscriptionsController extends ApiController
      *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
      *         )
      *     ),
-     *     @SWG\Parameter(
-     *         name="X-Token",
-     *         in="header",
-     *         description="X-Token",
-     *         required=true,
-     *         type="string",
-     *         default=""
-     *     )
      * )
      *
      * @param SubscriptionServices $service
@@ -82,21 +74,13 @@ class SubscriptionsController extends ApiController
      *         )
      *     ),
      *     @SWG\Parameter(
-     *         name="X-Token",
-     *         in="header",
-     *         description="X-Token",
-     *         required=true,
-     *         type="string",
-     *         default=""
-     *     ),
-     *     @SWG\Parameter(
      *         name="subscription",
      *         in="path",
      *         description="Subscription ID",
      *         required=true,
      *         type="string",
      *         default="1"
-     *     )
+     *     ),
      * )
      *
      * @param $id

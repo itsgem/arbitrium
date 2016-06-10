@@ -111,6 +111,7 @@ class InvoicesController extends ApiController
      *     @SWG\Parameter(name="po_no", in="query", description="FILTER by invoice PO number", required=false, type="string", default=""),
      *     @SWG\Parameter(name="type", in="query", description="FILTER by subscription type (plan|trial)", required=false, type="string", default=""),
      *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="client_name", in="query", description="FILTER by client name", required=false, type="string", default=""),
      *     @SWG\Parameter(name="status", in="query", description="FILTER by status (Unpaid|Paid|Cancelleds)", required=false, type="string", default=""),
      *     @SWG\Parameter(name="sort_by", in="query", description="Order by according to: created_at (default)", required=false, type="string", default=""),
      *     @SWG\Parameter(name="sort_dir", in="query", description="Order by direction: asc => ascending, desc (default) => descending", required=false, type="string", default=""),
@@ -127,6 +128,126 @@ class InvoicesController extends ApiController
     public function index(InvoiceListRequest $request, InvoiceServices $service)
     {
         return $service->index($request);
+    }
+
+    /**
+     * List all client's invoices
+     *
+     * @SWG\Get(
+     *     path="/admin/client/{client}/invoice",
+     *     tags={"Admin - Invoice"},
+     *     summary="Single Client Invoices",
+     *     description="List all client's invoices.",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/InvoiceResponse"))
+     *         )
+     *     ),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="X-Token",
+     *         in="header",
+     *         description="X-Token",
+     *         required=true,
+     *         type="string",
+     *         default=""
+     *     ),
+     *     @SWG\Parameter(
+     *         name="client",
+     *         in="path",
+     *         description="Client ID",
+     *         required=true,
+     *         type="string",
+     *         default="1"
+     *     ),
+     *     @SWG\Parameter(name="date_from", in="query", description="FILTER by invoiced date from (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
+     *     @SWG\Parameter(name="date_to", in="query", description="FILTER by invoiced date to (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
+     *     @SWG\Parameter(name="invoice_no", in="query", description="FILTER by invoice number", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="po_no", in="query", description="FILTER by invoice PO number", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="type", in="query", description="FILTER by subscription type (plan|trial)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="client_name", in="query", description="FILTER by client name", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="status", in="query", description="FILTER by status (Unpaid|Paid|Cancelleds)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="sort_by", in="query", description="Order by according to: created_at (default)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="sort_dir", in="query", description="Order by direction: asc => ascending, desc (default) => descending", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="per_page", in="query", description="for pagination, number of items to return per page", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="page", in="query", description="for pagination, show items belonging to page", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
+     * )
+     *
+     * @param InvoiceListRequest $request
+     * @param $id
+     * @param InvoiceServices $service
+     *
+     * @return mixed
+     */
+    public function listByClient(InvoiceListRequest $request, $id, InvoiceServices $service)
+    {
+        return $service->index($request, $id);
+    }
+
+    /**
+     * List all latest invoices of clients
+     *
+     * @SWG\Get(
+     *     path="/admin/client/invoice",
+     *     tags={"Admin - Invoice"},
+     *     summary="All Invoices Distinct by Client",
+     *     description="List all latest invoices of clients.",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/InvoiceResponse"))
+     *         )
+     *     ),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="X-Token",
+     *         in="header",
+     *         description="X-Token",
+     *         required=true,
+     *         type="string",
+     *         default=""
+     *     ),
+     *     @SWG\Parameter(name="date_from", in="query", description="FILTER by invoiced date from (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
+     *     @SWG\Parameter(name="date_to", in="query", description="FILTER by invoiced date to (YYYY-MM-DD)", required=false, type="string", format="date", default=""),
+     *     @SWG\Parameter(name="invoice_no", in="query", description="FILTER by invoice number", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="po_no", in="query", description="FILTER by invoice PO number", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="type", in="query", description="FILTER by subscription type (plan|trial)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="client_name", in="query", description="FILTER by client name", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="status", in="query", description="FILTER by status (Unpaid|Paid|Cancelleds)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="sort_by", in="query", description="Order by according to: created_at (default)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="sort_dir", in="query", description="Order by direction: asc => ascending, desc (default) => descending", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="per_page", in="query", description="for pagination, number of items to return per page", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="page", in="query", description="for pagination, show items belonging to page", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
+     * )
+     *
+     * @param InvoiceListRequest $request
+     * @param InvoiceServices $service
+     *
+     * @return mixed
+     *
+     */
+    public function listClientLatest(InvoiceListRequest $request, InvoiceServices $service)
+    {
+        return $service->listClientLatest($request);
     }
 
     /**
@@ -272,6 +393,8 @@ class InvoicesController extends ApiController
      *         type="string",
      *         default="1"
      *     ),
+     *     @SWG\Parameter(name="with-details", in="query", description="Include Data: Invoice Details (0|1)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="with-settings", in="query", description="Include Data: System Settings (0|1)", required=false, type="string", default=""),
      * )
      *
      * @param $id
