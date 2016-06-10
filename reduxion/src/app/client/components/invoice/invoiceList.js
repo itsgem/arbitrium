@@ -22,6 +22,22 @@ class invoiceList extends React.Component {
     }
     modal();
   }
+  componentDidMount() {
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
+  }
   invoiceDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
@@ -154,11 +170,20 @@ class invoiceList extends React.Component {
                   <label className="mdl-textfield__label" htmlFor="invoice_no">Invoice Number</label>
                 </div>
               </div>
-
               <div className="mdl-cell mdl-cell--2-col">
-                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                  <input className="mdl-textfield__input font-input" id="status" ref="status"/>
-                  <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+                <div id="status-opt" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                  <div className="mdl-selectfield">
+                    <select
+                      className="mdl-textfield__input"
+                      id="status"
+                      ref="status">
+                      <option value=""></option>
+                      <option value="Unpaid">Unpaid</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+                  </div>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
