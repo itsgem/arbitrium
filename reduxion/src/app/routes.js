@@ -31,7 +31,7 @@ import AdminUserManagementAdd from 'admin/containers/userManagement/userManageme
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
 import AdminProfile from 'admin/containers/userProfile/userProfile';
-import AdminSystemSettings from 'admin/views/systemSettings/settings';
+import AdminSystemSettings from 'admin/containers/systemSettings/settings';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';

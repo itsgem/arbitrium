@@ -291,6 +291,14 @@ export default {
   adminClientSubscriptionCancel(id) {
     return patch('admin/client/' + id + '/subscription/cancel');
   },
+  adminGetSystemSettings() {
+    return get('admin/system-setting');
+  },
+  saveAdminSystemSettings(payload) {
+    return patch('admin/system-setting/many', {
+      params: payload
+    });
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {
