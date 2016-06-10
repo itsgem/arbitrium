@@ -206,7 +206,7 @@ class Invoice extends NrbModel
         // WHERE i2.`invoiced_at` IS NULL;
 
         return $query->select($prefix.'.*')
-            ->leftJoin($prefix.' AS i2', function ($join) use ($prefix) {
+            ->leftJoin($this->table.' AS i2', function ($join) use ($prefix) {
                 $join->on($prefix.'.client_id', '=', 'i2.client_id');
                 $join->on($prefix.'.invoiced_at', '<', 'i2.invoiced_at');
             })
