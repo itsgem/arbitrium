@@ -48,6 +48,8 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
                     Route::get('resend-approval-link', ['uses' => 'ClientsController@resendSubscriptionChangeApprovalLink']);
                     Route::patch('cancel',      ['uses' => 'ClientsController@cancelSubscription']);
                 });
+
+                Route::get('{invoice}',     ['uses' => 'InvoicesController@listByClient']);
             });
 
             Route::group(['prefix' => 'subscription'], function()
@@ -61,6 +63,8 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
                 Route::post('adjust-credit',        ['uses' => 'ClientsController@adjustCredit']);
                 Route::post('purchase-credit',      ['uses' => 'ClientsController@purchaseCredit']);
             });
+
+            Route::get('invoice',       ['uses' => 'InvoicesController@listClientLatest']);
         });
         Route::resource('client', 'ClientsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
