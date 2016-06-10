@@ -26,12 +26,12 @@ class InvoiceServices extends NrbServices
     }
 
     // Admin\InvoicesController::index
+    // Admin\InvoicesController::listByClient
     // Client\ClientsController::listInvoice
     public function index($request, $client_id = null)
     {
         $client_id = ($client_id) ? $client_id : $request->get('client_id');
 
-        $this->addResponseData(['search_params' => $request->all()]);
         return $this->respondWithData(
             Invoice::invoiceDateFrom($request->get('date_from'))
             ->invoiceDateTo($request->get('date_to'))
@@ -39,11 +39,29 @@ class InvoiceServices extends NrbServices
             ->clientId($client_id)
             ->poNoLike($request->get('po_no'))
             ->companyNameLike($request->get('company_name'))
+            ->clientNameLike($request->get('client_name'))
             ->status($request->get('status'))
             ->latest()
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );
+    }
+
+    // Admin\InvoicesController::listDistinctByClient
+    public function listClientLatest($request)
+    {
+        $invoices = Invoice::clientLatest()
+            ->invoiceDateFrom($request->get('date_from'))
+            ->invoiceDateTo($request->get('date_to'))
+            ->invoiceNoLike($request->get('invoice_no'))
+            ->clientId($request->get('client_id'))
+            ->poNoLike($request->get('po_no'))
+            ->companyNameLike($request->get('company_name'))
+            ->clientNameLike($request->get('client_name'))
+            ->status($request->get('status'))
+            ->paginate($request->get('per_page'));
+
+        return $this->respondWithData($invoices, $request->get('max_pagination_links'));
     }
 
     // Admin\InvoicesController::paid
