@@ -44,7 +44,15 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
             Route::patch('cancel',          ['uses' => 'ClientsController@cancelSubscription']);
         });
 
-        Route::get('invoice',               ['uses' => 'ClientsController@listInvoice']);
-        Route::get('invoice/{invoice}',     ['uses' => 'ClientsController@showInvoice']);
+        //-- INVOICE
+        Route::group(['prefix' => 'invoice'], function()
+        {
+            Route::get('',                  ['uses' => 'ClientsController@listInvoice']);
+            Route::group(['prefix' => '{invoice}'], function()
+            {
+                Route::get('',              ['uses' => 'ClientsController@showInvoice']);
+                Route::get('send',          ['uses' => 'ClientsController@sendInvoice']);
+            });
+        });
     });
 });

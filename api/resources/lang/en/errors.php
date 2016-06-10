@@ -37,9 +37,11 @@ return [
     Errors::UNAUTHORIZED_API_KEY_IP_ADDRESS => 'You do not own this API Key IP Address.',
     Errors::EXISTING_TRIAL_SUBSCRIPTION     => 'Your trial subscription has already been availed.',
     Errors::CANNOT_CANCEL_PENDING_SUBSCRIPTION  => 'Unable to cancel pending subscription.',
+    Errors::SUBSCRIPTION_CONFIRMATION_ERROR => 'Unable to confirm your subscription.',
     Errors::PAYPAL_ERROR                => 'Unable to process PayPal Request.',
     Errors::PAYPAL_CANCELLED            => 'User cancelled PayPal transaction.',
     Errors::UNAUTHORIZED_PAYPAL_TOKEN   => 'Unauthorized PayPal token.',
     Errors::PAYPAL_ALREADY_CONFIRMED    => 'User already confirmed this token with Agreement :id.',
     Errors::PAYPAL_ALREADY_CANCELLED    => 'User already cancelled this token with Agreement :id.',
+    Errors::INVOICE_STILL_UNPAID    => 'Invoice is still unpaid.',
 ];

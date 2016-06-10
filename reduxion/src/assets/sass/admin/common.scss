@@ -563,6 +563,16 @@ div#application {
     }
   }
 }
+
+.page-content {
+  background: #fff;
+  margin-bottom: 30px;
+
+  form {
+    padding: 15px;
+  }
+}
+
 @media (min-width: 1200px) {
   div#application #client_add .mdl-cell--full-col {
       width: 100%;
