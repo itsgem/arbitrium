@@ -20,9 +20,16 @@ class ClientSubscription extends Subscription
     const STATUS_END_RENEWED   = 'Renewed';
     const STATUS_END_EXPIRED   = 'Expired';
 
+    const PAYPAL_STATE_ACTIVE     = 'Active';
+    const PAYPAL_STATE_PENDING    = 'Pending';
+    const PAYPAL_STATE_EXPIRED    = 'Expired';
+    const PAYPAL_STATE_SUSPENDED  = 'Suspended';
+    const PAYPAL_STATE_REACTIVATE = 'Reactivate';
+    const PAYPAL_STATE_CANCEL     = 'Cancel';
+
     protected $table = 'client_subscriptions';
 
-    protected $dates = ['valid_from', 'valid_to'];
+    protected $dates = ['valid_from', 'valid_to', 'cancelled_at'];
 
     protected $fillable = [
         'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
@@ -176,6 +183,7 @@ class ClientSubscription extends Subscription
     {
         $this->status = self::STATUS_INACTIVE;
         $this->status_end = self::STATUS_END_CANCELLED;
+        $this->cancelled_at = current_datetime();
         $this->save();
     }
 
