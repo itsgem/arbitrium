@@ -279,13 +279,6 @@ class PaypalServices extends NrbServices
 
                 $agreement_id = $agreement->getId();
 
-                DB::transaction(function () use ($agreement_id, $token)
-                {
-                    ClientSubscription::paypalTokenId($token)->update([
-                        'paypal_agreement_id' => $agreement_id
-                    ]);
-                });
-
                 return $this->respondWithSuccess([
                     'agreement_id' => $agreement_id
                 ]);
