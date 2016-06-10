@@ -8,24 +8,14 @@ export default React.createClass({
     router: React.PropTypes.object.isRequired
   },
   componentDidMount () {
-    this.props.subscriptionList().catch(createError);
-    this.props.clientSubscription().catch(createError);
-    this.props.clientProfile().catch(createError);
-    this.props.clientSubscriptionPending().catch(createError);
+    // this.props.subscriptionList().catch(createError);
+    // this.props.clientSubscription().catch(createError);
+    // this.props.clientProfile().catch(createError);
+    // this.props.clientSubscriptionPending().catch(createError);
   },
   componentWillMount () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    }
-
-    let query = this.props.location.query;
-    if (query.success && query.token) {
-      let payload = {
-        success: query.success == 'true' ? true : false,
-        token: query.token
-      };
-      this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
-      this.context.router.push('/i/subscription');
     }
   },
 

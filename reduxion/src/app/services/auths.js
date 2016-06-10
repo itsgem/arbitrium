@@ -368,7 +368,7 @@ export default {
       params: payload
     });
   },
-  clietApiKeys(payload = {page: 1, per_page: 10}) {
+  clientApiKeys(payload = {page: 1, per_page: 10}) {
     return get('client/api-key', {
       params : payload
     });
@@ -441,5 +441,18 @@ export default {
   },
   clientSubscriptionCancelPending() {
     return patch('client/subscription/cancel-confirm');
+  },
+  clientInvoiceList(payload = {page: 1, per_page: 10})  {
+    return get('client/invoice',{
+      params : payload
+    });
+  },
+  clientInvoiceDetails(id)  {
+    return get('client/invoice/' + id, {
+      params: {'with-details': 1, 'with-settings': 1}
+    });
+  },
+  clientInvoiceSendMail(id)  {
+    return get('client/invoice/' + id + '/send');
   }
 };

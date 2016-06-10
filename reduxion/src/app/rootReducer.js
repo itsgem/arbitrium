@@ -19,6 +19,7 @@ import clientChangePassword from 'client/reducers/profile/changePassword'
 import clientChangeEmail from 'client/reducers/profile/changeEmail'
 
 import ClientApi from 'client/reducers/api'
+import CLientInvoice from 'client/reducers/invoice'
 import AdminSubscription from 'client/reducers/subscription'
 
 export default combineReducers({
@@ -36,5 +37,6 @@ export default combineReducers({
   clientChangePassword,
   clientChangeEmail,
   ClientApi,
+  CLientInvoice,
   AdminSubscription
 })
