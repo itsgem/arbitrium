@@ -12,25 +12,6 @@ export default React.createClass( {
   componentWillMount(){
     this.props.apiList({per_page: 10}).catch(createError);
   },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
-      this.props.apiList({per_page: 10}).catch(createError);
-    }
-    if (nextProps.activeApiKey) {
-      let apiList = nextProps.ListApiSuccess;
-      let description = document.querySelector("#description");
-      let token = document.querySelector("#api_key");
-      let created = document.querySelector("#created_at");
-      let payload = {
-        page: apiList.currentPage,
-        perPage: apiList.perPage,
-        description: description.value,
-        token: token.value,
-        created: created.value
-      };
-      nextProps.apiList(payload).catch(createError);
-    }
-  },
   loadingRender () {
     if(this.props.loading){
       openLoading();
@@ -57,7 +38,9 @@ export default React.createClass( {
         <ApiList
           ListApiSuccess={this.props.ListApiSuccess}
           apiList={this.props.apiList}
+          activeApiKey={this.props.activeApiKey}
           isActiveApiKey={this.props.isActiveApiKey}
+          deleteApiKeySuccess={this.props.deleteApiKeySuccess}
           adminDeleteApiKey={this.props.adminDeleteApiKey}
           />
       </div>

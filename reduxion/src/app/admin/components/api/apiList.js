@@ -13,13 +13,30 @@ class ApiList extends React.Component {
       errors: {},
       errorServer:null,
       id: null,
-      createdDate: null
+      createdDate: null,
+      discription: null,
+      apiKey: null,
+      created: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
     modal();
+    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+      this.props.apiList({per_page: 10}).catch(createError);
+    }
+    if (nextProps.activeApiKey) {
+      let apiList = nextProps.ListApiSuccess;
+      let payload = {
+        page: apiList.currentPage,
+        perPage: apiList.perPage,
+        description: this.state.discription,
+        token: this.state.apiKey,
+        created: this.state.created
+      };
+      nextProps.apiList(payload).catch(createError);
+    }
   }
   userDisplay (data, alter) {
     return (
@@ -218,7 +235,7 @@ class ApiList extends React.Component {
   changeActive (e, id) {
     let payload = {
       id: id,
-      is_active: ((e.target.checked == true) ? 0 : 1)
+      is_active: ((e.target.checked == true) ? false : true)
     };
 
     this.props.isActiveApiKey(payload).catch(createError);
@@ -286,11 +303,16 @@ class ApiList extends React.Component {
   }
   searchList(e, pageNum = null) {
     e.preventDefault();
+    this.setState({
+      description: this.refs.description.value,
+      apiKey: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
+    });
     let payload = {
       perPage: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      token: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }
@@ -300,8 +322,8 @@ class ApiList extends React.Component {
       page: pageNumber,
       perPage: this.refs.pageNum.value,
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      token: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }
