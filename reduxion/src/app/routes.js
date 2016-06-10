@@ -34,6 +34,7 @@ import AdminLogList from 'admin/containers/logs/logList';
 import AdminLogDetail from 'admin/containers/logs/logDetail';
 
 import AdminProfile from 'admin/containers/userProfile/userProfile';
+import AdminSystemSettings from 'admin/views/systemSettings/settings';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
@@ -240,6 +241,9 @@ export default () => (
 
         <Route path="profile">
           <IndexRoute component={AdminProfile}/>
+        </Route>
+        <Route path="systemsettings">
+          <IndexRoute component={AdminSystemSettings}/>
         </Route>
       </Route>
     </Route>

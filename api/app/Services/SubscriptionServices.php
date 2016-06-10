@@ -111,18 +111,19 @@ class SubscriptionServices extends NrbServices
             }
 
             // Confirm the subscription agreement
-            $result = $paypal->executeAgreement($request)->getData();
+            $result = $paypal->executeAgreement($request);
+            $result_data = $result->getData();
 
-            if ($result->success == false)
+            if ($result_data->success == false)
             {
                 if ($latest_subscription)
                 {
                     $latest_subscription->cancel();
                 }
-                return $this->respondWithData($result);
+                return $result;
             }
 
-            $client_subscription = ClientSubscription::paypalAgreementId($result->data->agreement_id, $client_id)->first();
+            $client_subscription = ClientSubscription::paypalAgreementId($result_data->data->agreement_id, $client_id)->first();
             $subscription_id = $client_subscription->subscription_id;
 
             // if client has subscribed before
@@ -138,22 +139,29 @@ class SubscriptionServices extends NrbServices
                 }
             }
 
-            return DB::transaction(function () use ($client_subscription, $client)
+            $finalized_client = DB::transaction(function () use ($client_subscription, $client)
             {
-                $result = $client->finalizeSubscription($client_subscription, current_date_to_string());
-
-                if ($result)
-                {
-                    $client->sendSubscriptionChangeSuccess($client_subscription);
-
-                    return $this->respondWithSuccess($result);
-                }
-
-                return $this->respondWithData([
-                    'success' => false,
-                    'message' => 'Error'
-                ]);
+                return $client->finalizeSubscription($client_subscription, current_date_to_string());
             });
+
+            if ($finalized_client)
+            {
+                // Send client subscription change success email
+                $client->sendSubscriptionChangeSuccess($client_subscription);
+
+                return DB::transaction(function () use ($finalized_client)
+                {
+                    // Mark subscription as paid
+                    $finalized_client->invoice->paid();
+
+                    // Send client invoice details
+                    $finalized_client->invoice->sendInvoice();
+
+                    return $this->respondWithSuccess($finalized_client);
+                });
+            }
+
+            return $this->respondWithError(Errors::SUBSCRIPTION_CONFIRMATION_ERROR);
         }
 
         return $this->respondWithError(Errors::PAYPAL_CANCELLED);

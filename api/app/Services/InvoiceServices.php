@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Errors;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\SystemSetting;
@@ -57,14 +58,14 @@ class InvoiceServices extends NrbServices
     }
 
     // Admin\InvoicesController::sendInvoice
-    public function sendInvoice($id)
+    public function sendInvoice($id, $client_id = null)
     {
-        $invoice = Invoice::findOrFail($id);
-        if ($invoice->isPaid())
+        $invoice = Invoice::clientId($client_id)->findOrFail($id);
+        if ($invoice->sendInvoice())
         {
-            with(new MailServices())->sendInvoice($invoice->user, $invoice->url);
+            return $this->respondWithSuccess();
         }
-        return $this->respondWithSuccess();
+        return $this->respondWithError(Errors::INVOICE_STILL_UNPAID);
     }
 
     // Admin\InvoicesController::show
