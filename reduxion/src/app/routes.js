@@ -55,9 +55,10 @@ import ClientApiUpdate from 'client/containers/api/apiUpdate';
 import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
-import ClientInvoice from 'client/views/invoice/invoiceList';
-import ClientInvoiceListDetails from 'client/views/invoice/invoiceListDetails';
+import ClientInvoice from 'client/containers/invoice/invoiceList';
+import ClientInvoiceDetails from 'client/containers/invoice/invoiceDetails';
 import ClientApiLogs from 'client/views/apilogs/apilogs';
+import ClientApiLogsDetails from 'client/views/apilogs/apilogsDetails';
 import ClientSystemSettings from 'client/views/settings/systemsettings';
 
 function startTimer(duration, tokenName) {
@@ -90,7 +91,7 @@ function startTimer(duration, tokenName) {
     setInterval(timer, 1000);
 }
 
-function validateToken(tokenName, nextState, replace) {
+function validateToken(tokenName, nextState, replace, isLogin = false) {
   let bytes ='';
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
@@ -112,15 +113,13 @@ function validateToken(tokenName, nextState, replace) {
         state: { nextPathname: nextState.location.pathname }
       });
     }
-
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
       localStorage.removeItem(tokenName);
       replace({
-        pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
-        state: { nextPathname: nextState.location.pathname }
-      });
+          pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
+          state: { nextPathname: nextState.location.pathname }
+        });
     }
-
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
       let lifetime = decryptedData.lifetime;
       let expired = moment().add(lifetime,'minutes').valueOf();
@@ -185,9 +184,7 @@ function islogin(nextState, replace, cb) {
       default :
         tokenName = 'token';
   }
-  validateToken(tokenName);
-  let isValidate = validateToken(tokenName, nextState, replace);
-  console.log("isLogin", isValidate);
+  let isValidate = validateToken(tokenName, nextState, replace, true);
   if (isValidate) {
     replace({
       pathname: '/' + (tokenName == 'token' ? "i" : tokenName),
@@ -265,10 +262,11 @@ export default () => (
       </Route>
       <Route path="invoice" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientInvoice}/>
-        <Route component={ClientInvoiceListDetails} path=":id" />
+        <Route component={ClientInvoiceDetails} path=":id" />
       </Route>
       <Route path="apilogs" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientApiLogs}/>
+        <Route component={ClientApiLogsDetails} path=":id" />
       </Route>
       <Route path="systemsettings" component={ClientDashboard} onEnter={requireAuth}>
         <IndexRoute component={ClientSystemSettings}/>

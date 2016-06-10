@@ -8,6 +8,7 @@ use App\Nrb\NrbServices;
 use App\Models\Client;
 use App\Models\ClientSubscription;
 use App\Models\Subscription;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SubscriptionServices extends NrbServices
 {
@@ -75,9 +76,9 @@ class SubscriptionServices extends NrbServices
         }
 
         $paypal = new PaypalServices();
-        $result = $paypal->subscribe($request, $client)->getData();
+        $result = $paypal->subscribe($request, $client);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 
     // Admin\ClientsController::changeSubscription
@@ -94,39 +95,34 @@ class SubscriptionServices extends NrbServices
         {
             $client = Client::findOrFail($client_id);
 
-            $paypal = new PaypalServices();
-
-            $latest_subscription = $client->latest_subscription;
-
-            // if client has subscribed before
-            if ($latest_subscription)
-            {
-                // Suspend last subscription agreement
-                $suspended_sub = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
-
-                if (!$suspended_sub->success)
-                {
-                    return $this->respondWithData($suspended_sub);
-                }
-            }
-
             // Confirm the subscription agreement
+            $paypal = new PaypalServices();
             $result = $paypal->executeAgreement($request);
             $result_data = $result->getData();
 
             if ($result_data->success == false)
             {
-                if ($latest_subscription)
-                {
-                    $latest_subscription->cancel();
-                }
                 return $result;
             }
 
-            $client_subscription = ClientSubscription::paypalAgreementId($result_data->data->agreement_id, $client_id)->first();
+            // Suspend last subscription
+            $this->cancelSubscription($client, true);
+
+            $agreement_id = $result_data->data->agreement_id;
+            $token        = $request->get('token');
+
+            DB::transaction(function () use ($agreement_id, $token)
+            {
+                ClientSubscription::paypalTokenId($token)->update([
+                    'paypal_agreement_id' => $agreement_id
+                ]);
+            });
+
+            $client_subscription = ClientSubscription::paypalAgreementId($agreement_id, $client_id)->first();
             $subscription_id = $client_subscription->subscription_id;
 
             // if client has subscribed before
+            $latest_subscription = $client->latest_subscription;
             if ($latest_subscription)
             {
                 if ($latest_subscription->subscription_id == $subscription_id)
@@ -331,32 +327,49 @@ class SubscriptionServices extends NrbServices
 
     // Admin\ClientsController::cancelSubscription
     // Client\ClientsController::cancelSubscription
-    public function cancelSubscription($client)
+    public function cancelSubscription($client, $renew = null)
     {
         if (!($client instanceof Client))
         {
             $client = Client::findOrFail($client);
         }
 
-        return DB::transaction(function () use ($client)
+        $latest_subscription = $client->latest_subscription;
+
+        // if client has subscribed before, suspend it
+        if ($latest_subscription)
         {
-            $latest_subscription = $client->latest_subscription;
+            $paypal = new PaypalServices();
+            $agreement = $paypal->showAgreement($latest_subscription->paypal_agreement_id);
 
-            if ($latest_subscription)
+            if ($agreement instanceof JsonResponse)
             {
-                // Suspend last agreement
-                $paypal = new PaypalServices();
-                $result = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id)->getData();
-
-                if (!$result->success)
-                {
-                    return $this->respondWithData($result);
-                }
-
-                $latest_subscription->cancel();
+                return $agreement;
             }
 
-            return $this->respondWithSuccess($latest_subscription);
-        });
+            // Make sure the current subscription is still active in paypal
+            if ($agreement['state'] == ClientSubscription::PAYPAL_STATE_ACTIVE)
+            {
+                // Suspend last subscription agreement
+                $paypal = new PaypalServices();
+                $suspended_sub = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id);
+                $suspended_sub_data = $suspended_sub->getData();
+
+                if (!$suspended_sub_data->success)
+                {
+                    return $suspended_sub;
+                }
+            }
+
+            if (!$renew)
+            {
+                DB::transaction(function () use ($latest_subscription)
+                {
+                    $latest_subscription->cancel();
+                });
+            }
+        }
+
+        return $this->respondWithSuccess($latest_subscription);
     }
 }
