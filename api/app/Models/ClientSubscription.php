@@ -26,6 +26,7 @@ class ClientSubscription extends Subscription
     const PAYPAL_STATE_SUSPENDED  = 'Suspended';
     const PAYPAL_STATE_REACTIVATE = 'Reactivate';
     const PAYPAL_STATE_CANCEL     = 'Canceled';
+    const PAYPAL_STATE_COMPLETED  = 'Completed';
 
     const PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION = 'recurring_payment';
 
