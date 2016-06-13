@@ -296,8 +296,8 @@ export default {
       params : payload
     });
   },
-  adminGetInvoicesPerClient(id, payload = {page: 1, per_page: 10}) {
-    return get('admin/client/' + id +'/invoice', {
+  adminGetInvoicesPerClient(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/' + payload.id +'/invoice', {
       params : payload
     });
   },

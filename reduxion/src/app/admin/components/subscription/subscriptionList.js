@@ -229,6 +229,11 @@ class SubscriptionList extends React.Component {
     this.refs.company_name.value = "";
     this.refs.name.value = "";
     this.refs.type.value = "";
+
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
+
     this.searchList(e);
   }
   searchList(e) {

@@ -9,7 +9,7 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.adminInvoiceList(this.props.params.client_id, {per_page: 10});
+    this.props.adminInvoiceList({per_page: 10, id: this.props.params.client_id});
   },
   render() {
     if (Object.keys(this.props.invoiceList).length) {
@@ -38,6 +38,7 @@ export default React.createClass( {
           <a className="mdl-layout__tab is-active" >INVOICE LIST<i className="material-icons add">edit</i></a>
         </div>
         <InvoiceList
+          params = {this.props.params}
           invoiceList={this.props.invoiceList}
           adminInvoiceList={this.props.adminInvoiceList}
           />

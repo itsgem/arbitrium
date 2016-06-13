@@ -7,7 +7,6 @@ class AdminClientInvoiceList extends React.Component {
     this.state = {
       errors: {},
       errorServer: null
-      // invoiced_at: null
     };
   }
   componentDidMount() {
@@ -90,12 +89,6 @@ class AdminClientInvoiceList extends React.Component {
       </div>
     );
   }
-  // selectedDate(date, selectedDate) {
-  //   let isDate = {};
-  //   isDate[selectedDate] = date;
-  //   this.setState( isDate );
-  //   document.getElementById(selectedDate).classList.add('is-dirty');
-  // }
   render() {
     let counter = false;
     let alter = false;
@@ -132,9 +125,19 @@ class AdminClientInvoiceList extends React.Component {
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
-            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="invoiced_at" ref="invoiced_at" />
-              <label className="mdl-textfield__label">Invoice Date To</label>
+            <div id="status-opt" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+              <div className="mdl-selectfield">
+                <select
+                  className="mdl-textfield__input"
+                  id="status"
+                  ref="status">
+                  <option value=""></option>
+                  <option value="Unpaid">Unpaid</option>
+                  <option value="Paid">Paid</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+                <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+              </div>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--4-col search-cta">
@@ -149,11 +152,11 @@ class AdminClientInvoiceList extends React.Component {
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th className="mdl-data-table__cell--non-numeric">Company Name</th>
-              <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
-              <th className="mdl-data-table__cell--non-numeric">Invoice Number (Latest)</th>
-              <th className="mdl-data-table__cell--non-numeric">Invoice Status (Latest)</th>
-              <th className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">Company Name</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">Representative Name</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">Invoice Number (Latest)</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">Invoice Status (Latest)</th>
+              <th width="100" className="mdl-data-table__cell--non-numeric">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -226,45 +229,37 @@ class AdminClientInvoiceList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    // this.setState( {
-    //   invoiced_at: null
-    // } );
-    // document.getElementById('invoiceDateTo').value = '';
 
     this.refs.company_name.value = "";
     this.refs.name.value = "";
-    this.refs.invoiced_at.value = "";
+    this.refs.status.value = "";
 
-    // for (let item of document.querySelectorAll('.is-dirty')) {
-    //   item.classList.remove('is-dirty');
-    // }
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
 
     this.searchList(e, 10);
   }
   searchList(e) {
     e.preventDefault();
-    // let dateTo = document.getElementById('invoiceDateTo').value;
 
     let payload = {
       company_name: this.refs.company_name.value,
       client_name: this.refs.name.value,
-      // invoiced_at: toDate
-      invoiced_at: this.refs.invoiced_at.value
+      status: this.refs.status.value
     };
 
     this.props.adminClientInvoiceList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
-    // let dateTo = document.getElementById('invoiceDateTo').value;
 
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       company_name: this.refs.company_name.value,
       client_name: this.refs.name.value,
-      // invoiced_at: toDate
-      invoiced_at: this.refs.invoiced_at.value
+      status: this.refs.status.value
     };
     this.props.adminClientInvoiceList(payload);
   }

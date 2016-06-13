@@ -23,14 +23,6 @@ class InvoiceDetail extends React.Component {
     modal();
   }
   loadingRender () {
-    if (!this.props.loading && this.props.successMailSent) {
-      let notification = document.querySelector('.mdl-snackbar');
-      notification.MaterialSnackbar.showSnackbar( {
-        message: "Successfully sent invoice to your email ",
-        timeout: 3000
-      });
-      closeLoading();
-    }
     return (
       <div className="loading"></div>
     );
@@ -44,6 +36,7 @@ class InvoiceDetail extends React.Component {
 
     return (
       <div className="mdl-layout__content mdl-js-layout">
+        { this.loadingRender() }
         <div className="mdl-grid table-list-container">
           <div className="mdl-layout__panel is-active" id="#">
             <div className="content-container">
@@ -86,7 +79,7 @@ class InvoiceDetail extends React.Component {
                         {
                           invoiceDetail && invoiceDetail.map(item => {
                             overallTotal = parseFloat( parseFloat(overallTotal) + parseFloat(item.amount)).toFixed(2);
-                            subtotal = parseFloat( parseFloat(overallTotal) - parseFloat(adminInvoiceDetail.discounts)).toFixed(2);
+                            subtotal = parseFloat( parseFloat(item.amount) - parseFloat(adminInvoiceDetail.discounts)).toFixed(2);
                             return <tr key={item.id}><td className="text-left">{item.name}</td>
                             <td className="text-left">Subsription</td>
                             <td>{item.amount}</td>
@@ -111,9 +104,9 @@ class InvoiceDetail extends React.Component {
                   <h6>Banking Details:</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--12-col">
-                  <p>Account Name: <span className="invoice-value">{settings.kcg_credit_to}</span></p>
-                  <p>Bank: <span className="invoice-value">{settings.kcg_account_name}</span></p>
-                  <p>Account No.: <span className="invoice-value">{settings.kcg_bank_account}</span></p>
+                  <p>Account Name: <span className="invoice-value">{settings.kcg_account_name}</span></p>
+                  <p>Bank: <span className="invoice-value">{settings.kcg_bank_account}</span></p>
+                  <p>Account No.: <span className="invoice-value">{settings.kcg_credit_to}</span></p>
                 </div>
                 <div className="mdl-cell mdl-cell--4-col">
                   <p>Bank Code: <span className="invoice-value">{settings.kcg_bank_code}</span></p>
