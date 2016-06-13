@@ -393,6 +393,10 @@ class PaypalServices extends NrbServices
         Log::info("[IPN] Start");
 
         $paypal_ipn_response = json_encode($request->all());
+        $paypal_log = json_encode([
+            'header' => $request->header(),
+            'body'   => $request->all()
+        ]);
         Log::info("[IPN] Payload". $paypal_ipn_response);
 
         if ($request->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION)

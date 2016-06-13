@@ -54,6 +54,7 @@ class Errors
     const CANNOT_CANCEL_PENDING_SUBSCRIPTION = 70002;
     const SUBSCRIPTION_CONFIRMATION_ERROR    = 70003;
     const SUBSCRIPTION_RENEWAL_ERROR         = 70004;
+    const SUBSCRIPTION_INVALID               = 70005;
 
     // Paypal
     const PAYPAL_ERROR              = 80001;

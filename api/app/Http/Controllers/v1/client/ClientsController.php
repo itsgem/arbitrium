@@ -104,7 +104,8 @@ class ClientsController extends ApiController
      *         required=true,
      *         type="string",
      *         default=""
-     *     )
+     *     ),
+     *     @SWG\Parameter(name="with-paypal", in="query", description="Include Data: Paypal Plan Details and Transactions", required=false, type="string", default=""),
      * )
      *
      * @param SubscriptionServices $service

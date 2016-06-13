@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Http\Requests\v1\PaypalIpnRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\PaypalServices;
 
@@ -17,8 +18,8 @@ class PaypalIpnController extends ApiController
         return [];
     }
 
-    public function status(PaypalServices $service)
+    public function status(PaypalIpnRequest $request, PaypalServices $service)
     {
-        return $service->statusUpdate($this->request);
+        return $service->statusUpdate($request);
     }
 }
