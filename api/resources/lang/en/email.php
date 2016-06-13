@@ -13,7 +13,8 @@ return [
     'subscription_renewed'  => 'Arbitrium Successful Renewal of Subscription',
     'subscription_reminder' => 'Arbitrium Subscription Renewal',
     'subscription_change_confirmation' => 'Confirm Your New Arbitrium Subscription Plan',
-    'subscription_change_success'      => 'Arbitrium Subscription Plan Success',
+    'subscription_change_success'      => 'Arbitrium Subscription Plan Change Success',
+    'subscription_renewal_success'     => 'Arbitrium Subscription Plan Renewal Success',
     'subscription_cancellation'        => 'Arbitrium Subscription Plan Cancellation',
     'pending_subscription_cancellation' => 'Arbitrium Pending Subscription Plan Cancellation',
     'sender'                => 'Arbitrium Admin'

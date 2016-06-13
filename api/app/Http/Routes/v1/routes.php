@@ -24,6 +24,7 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     });
 
     Route::post('mail-webhook',                 ['uses' => 'MailWebHooksController@status']);
+    Route::post('paypal-ipn',                   ['uses' => 'PaypalIpnController@status']);
 
     Route::get('subscription',                  ['uses' => 'SubscriptionsController@index']);
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);

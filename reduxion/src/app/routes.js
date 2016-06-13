@@ -26,6 +26,10 @@ import AdminSubscriptionList from 'admin/containers/subscription/subscriptionLis
 import AdminSubscriptionEdit from 'admin/containers/subscription/subscriptionEdit';
 import AdminSubscriptionDetail from 'admin/containers/subscription/subscriptionDetail';
 
+import AdminClientInvoiceList from 'admin/containers/invoice/clientInvoiceList';
+import AdminInvoiceList from 'admin/containers/invoice/invoiceList';
+import AdminInvoiceDetail from 'admin/containers/invoice/invoiceDetail';
+
 import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
@@ -220,6 +224,12 @@ export default () => (
           <IndexRoute component={AdminSubscriptionList} onEnter={requireAuth}/>
           <Route component={AdminSubscriptionEdit} path="client/:client_id" onEnter={requireAuth}/>
           <Route component={AdminSubscriptionDetail} path="client/:client_id/detail/:subscription_id" onEnter={requireAuth}/>
+        </Route>
+
+        <Route path="invoice" onEnter={requireAuth}>
+          <IndexRoute component={AdminClientInvoiceList} onEnter={requireAuth}/>
+          <Route component={AdminInvoiceList} path="client/:client_id" onEnter={requireAuth}/>
+          <Route component={AdminInvoiceDetail} path="client/:client_id/invoice-detail/:id" onEnter={requireAuth}/>
         </Route>
 
         <Route path="account">

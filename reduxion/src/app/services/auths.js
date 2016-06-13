@@ -299,6 +299,24 @@ export default {
       params: payload
     });
   },
+  adminGetClientInvoices(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/invoice', {
+      params : payload
+    });
+  },
+  adminGetInvoicesPerClient(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/' + payload.id +'/invoice', {
+      params : payload
+    });
+  },
+  adminGetSelectedInvoice(id) {
+    return get('admin/invoice/' + id, {
+      params: {'with-details': 1, 'with-settings': 1}
+    });
+  },
+  adminInvoiceSendEmail(id) {
+    return get('admin/invoice/' + id + '/send');
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {
