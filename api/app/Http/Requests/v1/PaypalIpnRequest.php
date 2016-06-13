@@ -5,6 +5,7 @@ namespace App\Http\Requests\v1;
 use App\Errors;
 use App\Models\ClientSubscription;
 use App\Nrb\Http\v1\Requests\NrbRequest;
+use Illuminate\Support\Facades\Log;
 
 class PaypalIpnRequest extends NrbRequest
 {
@@ -25,9 +26,10 @@ class PaypalIpnRequest extends NrbRequest
     public function rules()
     {
         $rules = [
-            'recurring_payment_id' => 'required',
-            'payment_status'       => 'required|in:'.ClientSubscription::PAYPAL_STATE_COMPLETED,
-            'txn_id'               => 'required|unique:client_subscriptions,paypal_transaction_id',
+            'txn_type'             => 'required',
+            'txn_id'               => 'required_if:txn_type,'.ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT.'|unique:client_subscriptions,paypal_transaction_id',
+            'recurring_payment_id' => 'required_if:txn_type,'.ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT,
+            'payment_status'       => 'required_if:txn_type,'.ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT,
             'amount'               => 'required',
             'currency_code'        => 'required',
         ];
@@ -47,27 +49,31 @@ class PaypalIpnRequest extends NrbRequest
         }
         else
         {
-            $client_subscription = ClientSubscription::paypalAgreementId($this->get('recurring_payment_id'))->latest()->first();
-
-            // Check whether subscription exists
-            if (!$client_subscription)
+            //----- HOOK: Subscription Payment
+            if ($this->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT)
             {
-                $errors['recurring_payment_id'] = trans('errors.'.Errors::SUBSCRIPTION_INVALID);
-            }
-
-            // If Subscription Payment
-            if ($this->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION)
-            {
-                if ($this->get('amount') != (float) $client_subscription->calculateTotal($client_subscription->term)
-                    || $this->get('currency_code') != $client_subscription->currency)
+                $client_subscription = ClientSubscription::paypalAgreementId($this->get('recurring_payment_id'))->latest()->first();
+                // Check whether subscription exists
+                if ($client_subscription)
                 {
-                    $errors['subscription'] = trans('errors.'.Errors::INVALID_INPUT);
+                    // Check whether subscription payment match
+                    if ($this->get('amount') != (float) $client_subscription->calculateTotal($client_subscription->term)
+                        || $this->get('currency_code') != $client_subscription->currency)
+                    {
+                        $errors['subscription'] = trans('errors.'.Errors::INVALID_INPUT);
+                    }
+                }
+                else
+                {
+                    $errors['recurring_payment_id'] = trans('errors.'.Errors::SUBSCRIPTION_INVALID);
                 }
             }
         }
 
         if (!empty($errors))
         {
+            Log::error('[IPN] Request Validation Errors: '.json_encode($errors));
+
             $this->errors = $errors;
             $this->failedValidation($instance);
         }

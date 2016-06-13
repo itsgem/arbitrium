@@ -391,16 +391,21 @@ class PaypalServices extends NrbServices
     public function statusUpdate($request)
     {
         Log::info("[IPN] Start");
+        Log::info("[IPN] TRANSACTION: ". $request->get('txn_type'));
 
         $paypal_ipn_response = json_encode($request->all());
         $paypal_log = json_encode([
             'header' => $request->header(),
             'body'   => $request->all()
         ]);
-        Log::info("[IPN] Payload". $paypal_ipn_response);
+        Log::info("[IPN] PAYLOAD: ". $paypal_log);
 
-        if ($request->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION)
+        //----- HOOK: Subscription Payment
+        if ($request->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT
+            && $request->get('payment_status') == ClientSubscription::PAYPAL_STATE_COMPLETED)
         {
+            Log::info("[IPN] HOOK: Subscription Payment");
+
             // Get latest subscription
             $client_subscription = ClientSubscription::paypalAgreementId($request->get('recurring_payment_id'))->latest()->first();
 
@@ -440,14 +445,12 @@ class PaypalServices extends NrbServices
                 });
             }
 
-            Log::info("[IPN] ".Errors::SUBSCRIPTION_RENEWAL_ERROR);
+            Log::error("[IPN] ".Errors::SUBSCRIPTION_RENEWAL_ERROR);
             Log::info("[IPN] End");
 
             return $this->respondWithError(Errors::SUBSCRIPTION_RENEWAL_ERROR);
         }
 
         Log::info("[IPN] End");
-
-        return true;
     }
 }
