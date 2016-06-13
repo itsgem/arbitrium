@@ -27,6 +27,8 @@ class ClientSubscription extends Subscription
     const PAYPAL_STATE_REACTIVATE = 'Reactivate';
     const PAYPAL_STATE_CANCEL     = 'Canceled';
 
+    const PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION = 'recurring_payment';
+
     protected $table = 'client_subscriptions';
 
     protected $dates = ['valid_from', 'valid_to', 'cancelled_at'];

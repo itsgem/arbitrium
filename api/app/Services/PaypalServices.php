@@ -395,7 +395,7 @@ class PaypalServices extends NrbServices
         $paypal_ipn_response = json_encode($request->all());
         Log::info("[IPN] Payload". $paypal_ipn_response);
 
-        if ($request->get('txn_type') == 'recurring_payment')
+        if ($request->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION)
         {
             // Get latest subscription
             $client_subscription = ClientSubscription::paypalAgreementId($request->get('recurring_payment_id'))->latest()->first();
