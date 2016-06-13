@@ -70,7 +70,7 @@ class Invoice extends NrbModel
 
     protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
-    protected $dates = ['invoiced_at', 'paid_at'];
+    protected $dates = ['invoiced_at', 'paid_at', 'cancelled_at'];
 
     protected $fillable = [
         'client_id', 'total_amount', 'description',
@@ -217,6 +217,7 @@ class Invoice extends NrbModel
     public function cancel()
     {
         $this->status = self::CANCELLED;
+        $this->cancelled_at = current_datetime();
         $this->save();
     }
 
