@@ -9,6 +9,7 @@ use App\Models\Subscription;
 use App\Nrb\NrbServices;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Log;
 use Exception;
 use PayPal\Api\Agreement;
 use PayPal\Api\AgreementStateDescriptor;
@@ -384,5 +385,65 @@ class PaypalServices extends NrbServices
         }
 
         return json_decode($agreement, true);
+    }
+
+    //----- IPN Listener
+    public function statusUpdate($request)
+    {
+        Log::info("[IPN] Start");
+
+        $paypal_ipn_response = json_encode($request->all());
+        Log::info("[IPN] Payload". $paypal_ipn_response);
+
+        if ($request->get('txn_type') == 'recurring_payment')
+        {
+            // Get latest subscription
+            $client_subscription = ClientSubscription::paypalAgreementId($request->get('recurring_payment_id'))->latest()->first();
+
+            // Renew: Change latest subscription status to "Renewed"
+            DB::transaction(function() use($client_subscription)
+            {
+                $client_subscription->renew();
+                Log::info("[IPN] Set latest subscription status to renewed. ClientSubscription#".$client_subscription->id);
+            });
+
+            // Renew: Create new subscription after being renewed
+            $renewed_subscription = DB::transaction(function() use($client_subscription, $request, $paypal_ipn_response)
+            {
+                return $client_subscription->client->renewSubscription($client_subscription, current_date_to_string(), [
+                        'paypal_transaction_id' => $request->get('txn_id'),
+                        'paypal_ipn_response'   => $paypal_ipn_response,
+                    ]);
+            });
+
+            if ($renewed_subscription)
+            {
+                // Send client subscription renewal success email
+                $client_subscription->client->sendSubscriptionRenewalSuccess($renewed_subscription);
+                Log::info("[IPN] Sent client email on their renewed subscription. ClientSubscription#".$renewed_subscription->id);
+
+                return DB::transaction(function () use ($renewed_subscription)
+                {
+                    // Mark subscription as paid
+                    $renewed_subscription->invoice->paid();
+
+                    // Send client invoice details
+                    $renewed_subscription->invoice->sendInvoice();
+
+                    Log::info("[IPN] Sent client email on their renewed subscription invoice. Invoice#".$renewed_subscription->invoice->id);
+
+                    return $this->respondWithSuccess($renewed_subscription);
+                });
+            }
+
+            Log::info("[IPN] ".Errors::SUBSCRIPTION_RENEWAL_ERROR);
+            Log::info("[IPN] End");
+
+            return $this->respondWithError(Errors::SUBSCRIPTION_RENEWAL_ERROR);
+        }
+
+        Log::info("[IPN] End");
+
+        return true;
     }
 }

@@ -25,7 +25,7 @@ class ClientSubscription extends Subscription
     const PAYPAL_STATE_EXPIRED    = 'Expired';
     const PAYPAL_STATE_SUSPENDED  = 'Suspended';
     const PAYPAL_STATE_REACTIVATE = 'Reactivate';
-    const PAYPAL_STATE_CANCEL     = 'Cancel';
+    const PAYPAL_STATE_CANCEL     = 'Canceled';
 
     protected $table = 'client_subscriptions';
 
@@ -33,7 +33,7 @@ class ClientSubscription extends Subscription
 
     protected $fillable = [
         'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
-        'name', 'description', 'type', 'country_id',
+        'paypal_transaction_id', 'paypal_ipn_response', 'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
@@ -55,6 +55,13 @@ class ClientSubscription extends Subscription
     public function subscription()
     {
         return $this->belongsTo(Subscription::class);
+    }
+
+    //---------- mutators
+
+    public function getPaypalIpnResponseAttribute($value)
+    {
+        return json_decode($value);
     }
 
     //---------- scopes
@@ -176,6 +183,11 @@ class ClientSubscription extends Subscription
         {
             return $query->where('valid_to', $date);
         }
+    }
+
+    public function scopeIsEmailReminderSent($query, $sent = true)
+    {
+        return $query->where('is_email_reminder_sent', $sent);
     }
 
     //---------- helpers

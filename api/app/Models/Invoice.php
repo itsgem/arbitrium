@@ -73,7 +73,7 @@ class Invoice extends NrbModel
     protected $dates = ['invoiced_at', 'paid_at', 'cancelled_at'];
 
     protected $fillable = [
-        'client_id', 'total_amount', 'description',
+        'client_id', 'total_amount', 'description', 'payment_method',
         'created_by', 'updated_by'
     ];
 
