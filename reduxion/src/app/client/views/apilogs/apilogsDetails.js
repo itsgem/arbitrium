@@ -29,7 +29,51 @@ export default React.createClass({
   render() {
     return (
       <section>
-        This is API Log Detail template
+          <div className="mdl-grid content">
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>USERNAME</h6>
+              <p>juandelacruz1</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>USER ID</h6>
+              <p>001</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>IP ADDRESS</h6>
+              <p>192.168.1.1</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>STATUS CODE</h6>
+              <p>200</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col bottom-margin">
+              <h6>URL</h6>
+              <p>http://www.testinggrounds.com/api</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>DATE CREATED</h6>
+              <p>October 31, 2016 7:45 AM</p>
+            </div>
+            <div className="mdl-cell mdl-cell--12-col">
+              <h6>PARAMETER</h6>
+              <pre className="script script-box-container">
+                [API key]
+              </pre>
+            </div>
+            <div className="mdl-cell mdl-cell--12-col">
+              <h6>RESPONSE</h6>
+              <pre className="script script-box-container">
+                [API key]
+              </pre>
+            </div>
+          </div>
+          <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--12-col">
+              <Link to="/i/apilogs/222" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent">
+                Download Logs
+              </Link>
+            </div>
+          </div>
       </section>
     );
   },
