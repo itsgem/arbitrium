@@ -30,7 +30,7 @@ class SubscriptionEdit extends React.Component {
     return (
       <main className="mdl-layout__content mdl-js-layout">
         <div className="mdl-grid table-list-container">
-          <div className="mdl-layout__panel is-active" id="#">
+          <div className="mdl-layout__panel is-active subscription-detail" id="#">
             <div className="content-container">
               <div className="mdl-cell mdl-cell--12-col">
                 <div className="mdl-grid content">
