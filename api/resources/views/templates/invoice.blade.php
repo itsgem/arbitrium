@@ -179,8 +179,9 @@
                 <br /><br />
                 <span>THIS IS AN ELECTRONIC INVOICE. NO SIGNATURE IS REQUIRED.</span><br /><br />
                 <b>BANK DETAILS</b><br />
-                <b>Account Name:</b>   {{ $kcg_credit_to }}<br />
-                <b>Bank Account:</b> {{ $kcg_bank_account }}<br />
+                <b>Account Name:</b>   {{ $kcg_account_name }}<br />
+                <b>Bank:</b>   {{ $kcg_bank_account }}<br />
+                <b>Account Number:</b>   {{ $kcg_credit_to }}<br />
                 <b>Bank Code:</b> {{ $kcg_bank_code }}; <b>Branch Code:</b> {{ $kcg_branch_code }}<br />
             </div>
             <div id="footer">
