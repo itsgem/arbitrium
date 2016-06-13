@@ -13,10 +13,23 @@ class PaypalIpnRequest extends NrbRequest
         return true;
     }
 
+    /**
+     * Further Validations:
+     * - Check whether subscription exists
+     * - Check whether the payment_status is Completed
+     * - Check that txn_id has not been previously processed
+     * - Check that payment_amount/payment_currency are correct
+     *
+     * @return array
+     */
     public function rules()
     {
         $rules = [
             'recurring_payment_id' => 'required',
+            'payment_status'       => 'required|in:'.ClientSubscription::PAYPAL_STATE_COMPLETED,
+            'txn_id'               => 'required|unique:client_subscriptions,paypal_transaction_id',
+            'amount'               => 'required',
+            'currency_code'        => 'required',
         ];
 
         return $rules;
@@ -34,14 +47,21 @@ class PaypalIpnRequest extends NrbRequest
         }
         else
         {
-            if ($this->get('recurring_payment_id'))
-            {
-                $client_subscription = ClientSubscription::paypalAgreementId($this->get('recurring_payment_id'))->first();
+            $client_subscription = ClientSubscription::paypalAgreementId($this->get('recurring_payment_id'))->latest()->first();
 
-                // Validate if subscription exists
-                if (!$client_subscription)
+            // Check whether subscription exists
+            if (!$client_subscription)
+            {
+                $errors['recurring_payment_id'] = trans('errors.'.Errors::SUBSCRIPTION_INVALID);
+            }
+
+            // If Subscription Payment
+            if ($this->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION)
+            {
+                if ($this->get('amount') != (float) $client_subscription->calculateTotal($client_subscription->term)
+                    || $this->get('currency_code') != $client_subscription->currency)
                 {
-                    $errors['recurring_payment_id'] = trans('errors.'.Errors::SUBSCRIPTION_INVALID);
+                    $errors['subscription'] = trans('errors.'.Errors::INVALID_INPUT);
                 }
             }
         }
