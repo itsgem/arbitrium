@@ -35,7 +35,7 @@ class ClientSubscription extends Subscription
     protected $dates = ['valid_from', 'valid_to', 'cancelled_at'];
 
     protected $fillable = [
-        'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
+        'paypal_payer_id', 'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
         'paypal_transaction_id', 'paypal_ipn_response', 'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
@@ -264,7 +264,7 @@ class ClientSubscription extends Subscription
                                 '> ',
             'description'  => $this->description,
             'discounts'    => $this->discounts,
-            'total_amount' => $this->calculateTotal(self::TERM_ANNUALLY.'_With_Setup'),
+            'total_amount' => $this->calculateTotal($this->term.'_With_Setup'),
             'payment_method' => Invoice::PAYMENT_METHOD_PAYPAL,
         ], $invoice_details);
 
@@ -325,7 +325,7 @@ class ClientSubscription extends Subscription
 
     public function hasPaypal()
     {
-        return $this->paypal_plan_id && $this->paypal_agreement_id;
+        return $this->paypal_token_id && $this->paypal_agreement_id;
     }
 
     public function hasAlreadyConfirmed()

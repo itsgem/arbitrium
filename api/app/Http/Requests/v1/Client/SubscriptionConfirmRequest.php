@@ -5,6 +5,7 @@ namespace App\Http\Requests\v1\Client;
 use App\Errors;
 use App\Nrb\Http\v1\Requests\NrbRequest;
 use App\Models\ClientSubscription;
+use Illuminate\Support\Facades\Validator;
 
 // Client\ClientsController::subscribeConfirm
 class SubscriptionConfirmRequest extends NrbRequest
@@ -46,7 +47,28 @@ class SubscriptionConfirmRequest extends NrbRequest
                 if ($this->get('token'))
                 {
                     $subscription = ClientSubscription::paypalTokenId($this->get('token'))->first();
+                    $is_auto_renew = $subscription->is_auto_renew;
                     $is_owned_by_client = $subscription->isOwnedByClientId(get_logged_in_client_id());
+
+                    // Validate if subscription is one-time payment
+                    if (!$is_auto_renew)
+                    {
+                        $rules_permissions = [
+                            'payment_id' => ['required'],
+                            'payer_id'   => ['required'],
+                        ];
+                        $validation = Validator::make(
+                            [
+                                'payment_id' => $this->get('payment_id'),
+                                'payer_id'   => $this->get('payer_id'),
+                            ],
+                            $rules_permissions
+                        );
+                        if ($validation->fails())
+                        {
+                            $errors = $validation->messages()->toArray();
+                        }
+                    }
 
                     // Validate if token is owned by client
                     if ($is_owned_by_client)
