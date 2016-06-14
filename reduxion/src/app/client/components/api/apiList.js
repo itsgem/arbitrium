@@ -232,8 +232,8 @@ class ApiList extends React.Component {
     let payload = {
       perPage: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      token: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
     };
     this.props.clientApiKeys(payload).catch(createError);
   }
@@ -302,10 +302,10 @@ class ApiList extends React.Component {
     e.preventDefault();
     let payload = {
       page: pageNumber,
-      per_page: this.refs.pageNum.value,
+      perPage: this.refs.pageNum.value,
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      token: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
     };
     this.props.clientApiKeys(payload).catch(createError);
   }
