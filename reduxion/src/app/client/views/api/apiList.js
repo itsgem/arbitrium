@@ -25,7 +25,7 @@ export default React.createClass({
         created: created.value
       };
 
-      nextProps.clietApiKeys(payload).catch(createError);
+      nextProps.clientApiKeys(payload).catch(createError);
     }
   },
   loadingRender () {

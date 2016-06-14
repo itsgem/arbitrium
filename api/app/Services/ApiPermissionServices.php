@@ -49,7 +49,7 @@ class ApiPermissionServices extends NrbServices
             $api = $client->request('get', 'http://localhost:1337/api/permission',
                 ['headers' => ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ]]);
             $data = json_decode($api->getBody()->getContents(), true);
-            return $this->respondWithSuccess($data);
+            return $this->respondWithData($data);
 
         } catch (RequestException $e) {
             $message = json_decode($e->getResponse()->getBody()->getContents(), true);
