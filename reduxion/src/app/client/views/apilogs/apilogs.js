@@ -94,7 +94,7 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric api-col-action">
-                     <Link to="/i/apilogsdetails/" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/001" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
                       </Link>
                     </td>
@@ -108,9 +108,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/002" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -122,9 +122,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/003" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -136,9 +136,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/003" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -150,9 +150,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/004" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -164,9 +164,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric"></td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/005" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -178,9 +178,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/006" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -192,9 +192,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/007" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -206,9 +206,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/008" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
@@ -220,9 +220,9 @@ export default React.createClass({
                     <td className="mdl-data-table__cell--non-numeric">test</td>
                     <td className="mdl-data-table__cell--non-numeric">October 31, 2016 7:45 AM</td>
                     <td className="mdl-data-table__cell--non-numeric">
-                      <button className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
+                     <Link to="/i/apilogs/009" className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit">
                         <i className="material-icons">open_in_new</i>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
 

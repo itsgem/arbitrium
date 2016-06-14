@@ -1,12 +1,17 @@
+import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-class SubscriptionList extends React.Component {
+class AdminInvoiceList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
-      errorServer: null
+      errorServer: null,
+      invoiced_date_from: null,
+      invoiced_date_to: null
     };
   }
   componentDidMount() {
@@ -15,20 +20,16 @@ class SubscriptionList extends React.Component {
     }
   }
 
-  subscriptionDisplay (data, alter) {
+  invoiceListDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.id}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.client.company_name}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.client.rep_last_name}, {data.client.rep_first_name}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.client.user.email_address}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.name}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.type}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoiced_at}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.invoice_no}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/subscription/client/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/invoice/client/" + data.client_id + "/invoice-detail/" + data.id }><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -92,49 +93,79 @@ class SubscriptionList extends React.Component {
       </div>
     );
   }
-
+  selectedDate(date, selectedDate) {
+    let isDate = {};
+    isDate[selectedDate] = date;
+    this.setState( isDate );
+    document.getElementById(selectedDate).classList.add('is-dirty');
+  }
   render() {
     let counter = false;
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let subscriptionList = {last_page: 1};
-    let subscription = {};
-    if (Object.keys(this.props.subscriptionList).length) {
+    let invoiceList = {last_page: 1};
+    let log = {};
+    if (Object.keys(this.props.invoiceList).length) {
       let i=0;
       counter = true;
-      subscriptionList = this.props.subscriptionList;
-      subscription = subscriptionList.data;
-      pagination[i] = this.prevPage(i, (subscriptionList.current_page > 1 ? (subscriptionList.current_page - 1): false));
-      for (i = 1; i <= subscriptionList.last_page; i++) {
-        pagination[i] = this.pagination(i, subscriptionList.current_page);
+      invoiceList = this.props.invoiceList;
+      log = invoiceList.data;
+      pagination[i] = this.prevPage(i, (invoiceList.current_page > 1 ? (invoiceList.current_page - 1): false));
+      for (i = 1; i <= invoiceList.last_page; i++) {
+        pagination[i] = this.pagination(i, invoiceList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((subscriptionList.current_page == subscriptionList.last_page)|| subscriptionList.last_page == 0 ? false : (subscriptionList.current_page + 1 )), subscriptionList.last_page );
-      perPage = subscriptionList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((invoiceList.current_page == invoiceList.last_page)|| invoiceList.last_page == 0 ? false : (invoiceList.current_page + 1 )), invoiceList.last_page );
+      perPage = invoiceList.per_page;
     }
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
         <div className="mdl-grid filter-search-bar">
-          <div className="mdl-cell mdl-cell--3-col">
-            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
-              <label className="mdl-textfield__label">Company</label>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="invoiced_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <DatePicker
+                selected={this.state.invoiced_date_from}
+                dateFormat="YYYY-MM-DD"
+                onChange={(e) => this.selectedDate(e, 'invoiced_date_from')}
+                className="mdl-textfield__input font-input" id="date_from" readOnly/>
+              <label className="mdl-textfield__label">Invoice Date From</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
-            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
-              <label className="mdl-textfield__label">Subscription</label>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="invoiced_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <DatePicker
+                selected={this.state.invoiced_date_to == null || (this.state.invoiced_date_from < this.state.invoiced_date_to) ? this.state.invoiced_date_to : this.state.invoiced_date_from}
+                dateFormat="YYYY-MM-DD"
+                minDate={this.state.invoiced_date_from ? this.state.invoiced_date_from : moment()}
+                onChange={(e) => this.selectedDate(e, 'invoiced_date_to')}
+                className="mdl-textfield__input font-input" id="date_to" readOnly/>
+              <label className="mdl-textfield__label" htmlFor="date_to">Invoice Date To</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
+          <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="type" ref="type" />
-              <label className="mdl-textfield__label">Plan Type</label>
+              <input className="mdl-textfield__input" type="text" id="invoice_no" ref="invoice_no" />
+              <label className="mdl-textfield__label">Invoice Number</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col search-cta">
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="status-opt" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+              <div className="mdl-selectfield">
+                <select
+                  className="mdl-textfield__input"
+                  id="status"
+                  ref="status">
+                  <option value=""></option>
+                  <option value="Unpaid">Unpaid</option>
+                  <option value="Paid">Paid</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+                <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+              </div>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--4-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
@@ -146,20 +177,16 @@ class SubscriptionList extends React.Component {
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th className="mdl-data-table__cell--non-numeric">ID</th>
-              <th className="mdl-data-table__cell--non-numeric">Company Name</th>
-              <th className="mdl-data-table__cell--non-numeric">Representative Name</th>
-              <th className="mdl-data-table__cell--non-numeric">Email Address</th>
-              <th className="mdl-data-table__cell--non-numeric">Subscription</th>
-              <th className="mdl-data-table__cell--non-numeric">Plan Type</th>
-              <th className="mdl-data-table__cell--non-numeric">Status</th>
-              <th className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">Invoice Date</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">Invoice Number</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">Invoice Status</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">Action</th>
             </tr>
           </thead>
           <tbody>
-            {counter && subscription.map(item => {
+            {counter && log.map(item => {
               alter = alter ? false : true;
-              return this.subscriptionDisplay(item, alter); })}
+              return this.invoiceListDisplay(item, alter); })}
           </tbody>
         </table>
         {/* <!-- Pagination -->*/}
@@ -226,9 +253,15 @@ class SubscriptionList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.company_name.value = "";
-    this.refs.name.value = "";
-    this.refs.type.value = "";
+    this.refs.invoice_no.value = "";
+    this.refs.status.value = "";
+
+    document.getElementById('date_from').value = '';
+    document.getElementById('date_to').value = '';
+    this.setState({
+      invoiced_date_from: null,
+      invoiced_date_to: null
+    });
 
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
@@ -239,37 +272,27 @@ class SubscriptionList extends React.Component {
   searchList(e) {
     e.preventDefault();
     let payload = {
-      company_name: this.refs.company_name.value,
-      name: this.refs.name.value,
-      type: this.refs.type.value
+      date_from: document.getElementById('date_from').value,
+      date_to: document.getElementById('date_to').value,
+      invoice_no: this.refs.invoice_no.value,
+      status: this.refs.status.value,
+      id: this.props.params.client_id
     };
-    this.props.adminSubscriptionList(payload);
+    this.props.adminInvoiceList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      company_name: this.refs.company_name.value,
-      name: this.refs.name.value,
-      type: this.refs.type.value
+      date_from: document.getElementById('date_from').value,
+      date_to: document.getElementById('date_to').value,
+      invoice_no: this.refs.invoice_no.value,
+      status: this.refs.status.value,
+      id: this.props.params.client_id
     };
-    this.props.adminSubscriptionList(payload);
+    this.props.adminInvoiceList(payload);
   }
-  deleteItem () {
-    this.setState( {
-      loading: true,
-      errors: {},
-      errorServer: null
-    } );
-    $('.msg').html('Successfully deleted').addClass('bg-green');
-    $('.msg').fadeIn(1000, function() {
-      $(this).fadeOut(2000);
-    });
-    this.modalClose();
-    this.props.deleteAdminAccount(this.state.id)
-  }
-
 };
 
-export default SubscriptionList;
+export default AdminInvoiceList;

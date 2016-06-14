@@ -44,7 +44,7 @@ const initialState = Immutable.fromJS({
 
 export default createReducer({
   [clientProfile.ok]: (state, payload) => state.merge({
-    clientProfileSuccess: state.concat(payload),
+    clientProfileSuccess: payload,
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
     clientActivateSuccess: false,
@@ -55,6 +55,7 @@ export default createReducer({
     clientUnlockSuccess: false
   }),
   [clientProfile.request]: (state) => state.merge({
+    clientProfileSuccess: {},
     clientApproveSuccess: false,
     clientDisapproveSuccess: false,
     clientActivateSuccess: false,

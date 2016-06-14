@@ -326,6 +326,35 @@ class Client extends NrbModel
         return $client_subscription;
     }
 
+    public function renewSubscription($latest_subscription, $start_date, $data)
+    {
+        $subscription = Subscription::findOrFail($latest_subscription->subscription_id);
+        $client_subscription = new ClientSubscription($subscription->toArray());
+
+        $client_subscription->subscription_id       = $subscription->id;
+        $client_subscription->client_id             = $this->id;
+        $client_subscription->paypal_plan_id        = $latest_subscription->paypal_plan_id;
+        $client_subscription->paypal_agreement_id   = $latest_subscription->paypal_agreement_id;
+        $client_subscription->paypal_token_id       = $latest_subscription->paypal_token_id;
+        $client_subscription->paypal_approval_url   = $latest_subscription->paypal_approval_url;
+        $client_subscription->paypal_transaction_id = $data['paypal_transaction_id'];
+        $client_subscription->paypal_ipn_response   = $data['paypal_ipn_response'];
+        $client_subscription->term                  = $latest_subscription->term;
+        $client_subscription->is_auto_renew         = 1;
+        $client_subscription->status                = ClientSubscription::STATUS_ACTIVE;
+        $client_subscription->status_end            = null;
+        $client_subscription->country_id            = $subscription->country_id;
+        $client_subscription->description           = $subscription->description;
+        $client_subscription->setValidity($start_date, $latest_subscription->term);
+
+        // Generate Invoice
+        $client_subscription->generateInvoice();
+
+        $client_subscription->save();
+
+        return $client_subscription;
+    }
+
     public function canAvailFreeTrial($client_id = null)
     {
         $client_id = ($client_id) ? $client_id : $this->id;
@@ -376,6 +405,11 @@ class Client extends NrbModel
     public function sendSubscriptionChangeSuccess($subscription)
     {
         with(new MailServices())->subscriptionChangeSuccess($this->user, $subscription);
+    }
+
+    public function sendSubscriptionRenewalSuccess($subscription)
+    {
+        with(new MailServices())->subscriptionRenewalSuccess($this->user, $subscription);
     }
 
     public function sendSubscriptionCancellation($subscription)

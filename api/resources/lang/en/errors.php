@@ -38,6 +38,8 @@ return [
     Errors::EXISTING_TRIAL_SUBSCRIPTION     => 'Your trial subscription has already been availed.',
     Errors::CANNOT_CANCEL_PENDING_SUBSCRIPTION  => 'Unable to cancel pending subscription.',
     Errors::SUBSCRIPTION_CONFIRMATION_ERROR => 'Unable to confirm your subscription.',
+    Errors::SUBSCRIPTION_RENEWAL_ERROR  => 'Unable to save renewal of subscription.',
+    Errors::SUBSCRIPTION_INVALID        => 'Invalid subscription.',
     Errors::PAYPAL_ERROR                => 'Unable to process PayPal Request.',
     Errors::PAYPAL_CANCELLED            => 'User cancelled PayPal transaction.',
     Errors::UNAUTHORIZED_PAYPAL_TOKEN   => 'Unauthorized PayPal token.',

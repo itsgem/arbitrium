@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { getApiKey, getApiPermission, updateApiKey } from 'admin/reducers/api'
-import { clientProfile } from 'admin/reducers/clientProfile'
+import { getApiKey, getApiPermission, updateApiKey, clientProfile } from 'admin/reducers/api';
 import ApiUpdate from 'admin/views/api/apiUpdate';
 
 const strMapToObj=(strMap) => {
@@ -11,10 +10,9 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
     loading: state.get('AdminApi').get('loading'),
-    loadingCLient: state.get('clientadmin').get('loading'),
     apiPermissions: strMapToObj(state.get('AdminApi').get('apiPermissions')),
     getApiInfo: strMapToObj(state.get('AdminApi').get('getApiInfo')),
-    clientProfileSuccess: strMapToObj(state.get('clientadmin').get('clientProfileSuccess')),
+    clientProfileSuccess: strMapToObj(state.get('AdminApi').get('clientProfileSuccess')),
     apiUpdateSuccess: strMapToObj(state.get('AdminApi').get('apiUpdateSuccess'))
   };
 }
