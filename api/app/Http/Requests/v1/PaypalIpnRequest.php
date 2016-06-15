@@ -72,7 +72,11 @@ class PaypalIpnRequest extends NrbRequest
 
         if (!empty($errors))
         {
+            Log::error('[IPN] Start');
+            Log::error('[IPN] TRANSACTION: '.$this->get('txn_type'));
+            Log::error('[IPN] PAYLOAD: '.json_encode($this->all()));
             Log::error('[IPN] Request Validation Errors: '.json_encode($errors));
+            Log::error('[IPN] End');
 
             $this->errors = $errors;
             $this->failedValidation($instance);
