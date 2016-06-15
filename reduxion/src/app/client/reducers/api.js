@@ -26,7 +26,7 @@ const initialState = Immutable.fromJS({
 export default createReducer({
   [clientApiKeys.ok]: (state, payload) => state.merge({
     loading: false,
-    listApiKeys: state.concat(payload),
+    listApiKeys: payload,
     apiUpdateSuccess: false,
     deleteApiKeySuccess: false,
     activeApiKey: false

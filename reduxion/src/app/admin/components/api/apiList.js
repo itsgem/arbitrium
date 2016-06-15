@@ -13,31 +13,48 @@ class ApiList extends React.Component {
       errors: {},
       errorServer:null,
       id: null,
-      createdDate: null
+      createdDate: null,
+      discription: null,
+      apiKey: null,
+      created: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
     modal();
+    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
+      this.props.apiList({per_page: 10}).catch(createError);
+    }
+    if (nextProps.activeApiKey) {
+      let apiList = nextProps.ListApiSuccess;
+      let payload = {
+        page: apiList.currentPage,
+        perPage: apiList.perPage,
+        description: this.state.discription,
+        token: this.state.apiKey,
+        created: this.state.created
+      };
+      nextProps.apiList(payload).catch(createError);
+    }
   }
   userDisplay (data, alter) {
     return (
-      <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+      <tr key={data._id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
-          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
+          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data._id}>
+            <input type="checkbox" id={"switch-" + data._id} className="mdl-switch__input" defaultChecked={(data.isActive == 1) ? false : true} onChange={(e) => this.changeActive(e, data._id)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/api/" + data._id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+              onClick={(e) => this.modalConfirm(e, data._id)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -114,19 +131,19 @@ class ApiList extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let apiList = {last_page: 1};
+    let apiList = {lastPage: 1};
     let users = {};
     if (Object.keys(this.props.ListApiSuccess).length) {
       let i=0;
       counter = true;
       apiList = this.props.ListApiSuccess;
       users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-      for (i = 1; i <= apiList.last_page; i++) {
-        pagination[i] = this.pagination(i, apiList.current_page);
+      pagination[i] = this.prevPage(i, (apiList.currentPage > 1 ? (apiList.currentPage - 1): false));
+      for (i = 1; i <= apiList.lastPage; i++) {
+        pagination[i] = this.pagination(i, apiList.currentPage);
       }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-      perPage = apiList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((apiList.currentPage == apiList.lastPage)|| apiList.lastPage == 0 ? false : (apiList.currentPage + 1 )), apiList.lastPage );
+      perPage = apiList.perPage;
     }
     return (
       <div className="filter-search">
@@ -218,7 +235,7 @@ class ApiList extends React.Component {
   changeActive (e, id) {
     let payload = {
       id: id,
-      is_active: ((e.target.checked == true) ? 0 : 1)
+      is_active: ((e.target.checked == true) ? false : true)
     };
 
     this.props.isActiveApiKey(payload).catch(createError);
@@ -262,7 +279,7 @@ class ApiList extends React.Component {
     thisEvent.value = pageNum;
     this.page(e, 1);
   }
-  modalConfirm (e, id, description) {
+  modalConfirm (e, id) {
     openModal();
     this.setState( {
       id: id
@@ -286,11 +303,16 @@ class ApiList extends React.Component {
   }
   searchList(e, pageNum = null) {
     e.preventDefault();
-    let payload = {
-      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
+    this.setState({
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      apiKey: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
+    });
+    let payload = {
+      perPage: (pageNum ? pageNum : this.refs.pageNum.value),
+      description: this.refs.description.value,
+      token: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }
@@ -298,10 +320,10 @@ class ApiList extends React.Component {
     e.preventDefault();
     let payload = {
       page: pageNumber,
-      per_page: this.refs.pageNum.value,
+      perPage: this.refs.pageNum.value,
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      token: this.refs.api_key.value,
+      created: document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }

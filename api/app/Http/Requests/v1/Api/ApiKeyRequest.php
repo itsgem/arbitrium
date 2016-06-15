@@ -19,20 +19,20 @@ class ApiKeyRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'client_id'              => 'exists:clients,id',
+                'clientId'               => '',
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
-                'permissions'            => 'required_if:is_api_call_restricted,1|array',
-                'ip_addresses'           => 'required_if:is_whitelist,1|array',
-                'is_api_call_restricted' => 'boolean',
-                'is_whitelist'           => 'boolean',
-                'is_active'              => 'boolean',
-                'is_test_key'            => 'boolean'
+                'permissions'            => 'array',
+                'ipAddresses'            => 'required_if:isWhitelist,1|array',
+                'isApiCallRestricted'    => 'boolean',
+                'isWhitelist'            => 'boolean',
+                'isCctive'               => 'boolean',
+                'isTestKey'              => 'boolean'
             ];
 
             if (is_admin_user_logged_in())
             {
-                $rules['client_id'] .= '|required';
+                $rules['clientId'] .= '|required';
             }
         }
 
@@ -50,49 +50,50 @@ class ApiKeyRequest extends NrbRequest
         }
         else
         {
-            // Validate Permissions
-            $rules_permissions = [
-                'api_permission_id' => ['required', 'exists:api_permissions,id'],
-                'value'             => ['required', 'boolean'],
-            ];
-            if ($this->get('permissions'))
-            {
-                foreach ($this->get('permissions') as $permission)
-                {
-                    $validation = Validator::make(
-                        [
-                            'api_permission_id' => get_val($permission, 'api_permission_id', ''),
-                            'value'             => get_val($permission, 'value', ''),
-                        ],
-                        $rules_permissions
-                    );
-                    if ($validation->fails())
-                    {
-                        $errors['permissions'][] = $validation->messages()->toArray();
-                    }
-                }
-            }
+            // // Validate Permissions
+            // $rules_permissions = [
+            //     'apiPermissionId'   => ['required', 'exists:api_permissions,id'],
+            //     'value'             => ['required', 'boolean'],
+            // ];
+            // if ($this->get('permissions'))
+            // {
+            //     foreach ($this->get('permissions') as $permission)
+            //     {
+            //         //dd($permission);
+            //         $validation = Validator::make(
+            //             [
+            //                 'apiPermissionId' => get_val($permission, 'apiPermissionId', ''),
+            //                 'value'             => get_val($permission, 'value', ''),
+            //             ],
+            //             $rules_permissions
+            //         );
+            //         if ($validation->fails())
+            //         {
+            //             $errors['permissions'][] = $validation->messages()->toArray();
+            //         }
+            //     }
+            // }
             // Validate IP Addresses
-            $rules_ip_addresses = [
-                'api_key_id' => ['exists:api_keys,id'],
-                'ip_address' => ['required', 'ip'],
-                'name'       => ['max:255']
+            $rules_ipAddresses = [
+                // 'api_key_id' => ['exists:api_keys,id'],
+                'ipAddress' => ['required', 'ip'],
+                // 'name'       => ['max:255']
             ];
-            if ($this->get('ip_addresses'))
+            if ($this->get('ipAddresses'))
             {
-                foreach ($this->get('ip_addresses') as $ip_address)
+                foreach ($this->get('ipAddresses') as $ip_address)
                 {
                     $validation = Validator::make(
                         [
-                            'api_key_id' => get_val($ip_address, 'api_key_id', ''),
-                            'ip_address' => get_val($ip_address, 'ip_address', ''),
-                            'name'       => get_val($ip_address, 'name', ''),
+                            // 'api_key_id' => get_val($ip_address, 'api_key_id', ''),
+                            'ipAddress' => get_val($ip_address, 'ipAddress', ''),
+                            // 'name'       => get_val($ip_address, 'name', ''),
                         ],
-                        $rules_ip_addresses
+                        $rules_ipAddresses
                     );
                     if ($validation->fails())
                     {
-                        $errors['ip_addresses'][] = $validation->messages()->toArray();
+                        $errors['ipAddresses'][] = $validation->messages()->toArray();
                     }
                 }
             }

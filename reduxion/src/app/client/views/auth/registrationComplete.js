@@ -27,7 +27,6 @@ export default React.createClass( {
         token: clientInfo.token,
         user_id: clientInfo.client_id
       }
-      console.log('test', payload);
       this.props.verifyEmailCode(payload);
     }
 

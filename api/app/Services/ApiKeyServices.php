@@ -8,124 +8,139 @@ use App\Models\ApiIpAddress;
 use App\Models\ApiKey;
 use App\Models\ApiKeyPermission;
 use App\Nrb\NrbServices;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 
 class ApiKeyServices extends NrbServices
 {
+    private $arbitrium;
+
+    public function __construct()
+    {
+        // setup PayPal api context
+        $this->arbitrium = config('arbitrium.core');
+        $this->coreClient = new Client();
+        //
+    }
+    private $coreClient;
+    public function apiCoreLogin()
+    {
+        $client = $this->coreClient;
+        $res = $client->request('post', 'http://localhost:1337/api/oauth/token', ['form_params' => $this->arbitrium]);
+        $arr['data'] = json_decode($res->getBody()->getContents());
+        $arr['status'] = $res->getStatusCode();
+        $arr['header'] = $res->getHeader('content-type');
+        return $arr;
+    }
+
+    public function apiCore($payload, $type, $id = null)
+    {
+        $arr = $this->apiCoreLogin();
+        $client = new Client();
+        $method['headers'] = ['Authorization' => $arr['data']->token_type . " " . $arr['data']->access_token ];
+        if ($payload && $type == 'get') {
+            $method['query'] = $payload;
+        }
+
+        if ($payload && ($type == 'post' || $type == 'put' || $type == 'patch')) {
+            $method['json'] = $payload;
+        }
+
+        $ret = $client->request( $type, 'http://localhost:1337/api/apiKeys/' . $id, $method );
+        return $ret;
+    }
+
+
     // Admin\Api\ApiKeyController::destroy
     // Client\Api\ApiKeyController::destroy
     public function destroy($id, $client_id = null)
     {
-        return DB::transaction(function () use ($id, $client_id)
-        {
-            $api_key = ApiKey::clientId($client_id)->findOrFail($id);
-            $api_key->delete();
+        try {
+            $api = $this->apiCore(null, 'delete', $id);
+            $data = json_decode($api->getBody()->getContents(), true);
+            return $this->respondWithSuccess($data);
 
-            return $this->respondWithSuccess($api_key);
-        });
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
     }
 
     // Admin\Api\ApiKeyController::index
     // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
-        $api_keys = new ApiKey;
-
-        // If non-client
-        if (!$client_id)
-        {
-            $api_keys = $api_keys->with(['client.user' => function($query){
-                    $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
-                }]);
-
-            $client_id = $request->get('client_id', '');
+       // dd($request->all());
+        $data = [];
+        $arr = [];
+        try {
+            if ($client_id) {
+                $request['clientId'] = $client_id;
+            }
+            $payload = $request->all();
+            $api = $this->apiCore($payload, 'get');
+            $data =  json_decode($api->getBody()->getContents());
+        } catch (RequestException $e) {
+            $data['data'] = json_decode($e->getResponse()->getBody()->getContents());
         }
-
-        $api_keys = $api_keys->clientId($client_id)
-            ->id($request->get('id', ''))
-            ->like('name', $request->get('name', ''))
-            ->like('description', $request->get('description', ''))
-            ->like('token', $request->get('key', ''))
-            ->active($request->get('is_active', ''))
-            ->testKey($request->get('is_test_key', ''))
-            ->dateFrom('created_at', $request->get('date_created', ''), true)
-            ->dateTo('created_at', $request->get('date_created', ''), true)
-            ->paginate($request->get('per_page'));
-
-        return $this->respondWithData($api_keys, $request->get('max_pagination_links'));
+        return $this->respondWithData($data);
     }
 
     // Admin\Api\ApiKeyController::show
     // Client\Api\ApiKeyController::show
-    public function show($request, $id, $client_id = null)
+    public function show($request, $id, $clientId = null)
     {
-        $api_key = ApiKey::with(['client.user', 'permissions', 'ip_addresses']);
-        $api_key = $api_key->clientId($client_id)->findOrFail($id);
-
-        return $this->respondWithSuccess($api_key);
+        $data = [];
+        $arr = [];
+        try {
+            $payload = $request->all();
+            $api = $this->apiCore(null, 'get', $id);
+            $data = json_decode($api->getBody()->getContents(), true);
+            return $this->respondWithSuccess($data['apiKey']);
+        } catch (RequestException $e) {
+            $data['data'] = json_decode($e->getResponse()->getBody()->getContents(), true);
+        }
+        return $this->respondWithSuccess($data);
     }
 
     // Admin\Api\ApiKeyController::store
     // Client\Api\ApiKeyController::store
     public function store($request, $client_id = null)
     {
-        $client_id = ($client_id) ? $client_id : $request->get('client_id');
-        $token = generate_api_key_token($client_id);
+        $clientId = ($client_id) ? $client_id : $request->get('clientId');
+        $data = [];
+        try {
+            $request = json_decode($request->getContent());
+            $request->clientId = $clientId;
+            $api = $this->apiCore($request, 'post');
+            return $this->respondWithSuccess();
 
-        // Transform payload to eloquent format, set defaults
-        $payload = $request->except('token');
-        $payload['client_id'] = $client_id;
-        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
-        $payload['is_active'] = get_val($payload, 'is_active', true);
-        $payload['permissions'] = get_val($payload, 'permissions', []);
-        $payload['token'] = $token;
-
-        return DB::transaction(function () use ($payload)
-        {
-            $api_key = ApiKey::create($payload);
-
-            foreach($payload['permissions'] as $permission)
-            {
-                $api_key->permissions()->save(new ApiKeyPermission($permission));
-            }
-
-            foreach($payload['ip_addresses'] as $ip_address)
-            {
-                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
-            }
-
-            return $this->respondWithSuccess($api_key);
-        });
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
     }
 
     // Admin\Api\ApiKeyController::update
     // Client\Api\ApiKeyController::update
-    public function update($request, $id, $client_id = null)
+    public function update($request, $id, $clientId = null)
     {
-        // Transform payload to eloquent format, set defaults
-        $payload = $request->except('token');
-        $payload['client_id'] = ($client_id) ? $client_id : $request->get('client_id');
-        $payload['ip_addresses'] = get_val($payload, 'ip_addresses', []);
-        $payload['permissions'] = get_val($payload, 'permissions', []);
-
-        return DB::transaction(function () use ($payload, $id, $client_id)
-        {
-            $api_key = ApiKey::clientId($client_id)->findOrFail($id);
-            $api_key->update($payload);
-
-            ApiKeyPermission::apiKeyId($id)->delete();
-            foreach($payload['permissions'] as $permission)
-            {
-                $api_key->permissions()->save(new ApiKeyPermission($permission));
-            }
-
-            ApiIpAddress::apiKeyId($id)->delete();
-            foreach($payload['ip_addresses'] as $ip_address)
-            {
-                $api_key->ip_addresses()->save(new ApiIpAddress($ip_address));
-            }
-
+        try {
+            $client = new Client();
+            $req = [];
+            $request = json_decode($request->getContent());
+            $request->clientId = $clientId ? $clientId : $request->clientId;
+            $api = $this->apiCore($request, 'put', $id);
             return $this->respondWithSuccess();
-        });
+
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
     }
 
     // Admin\Api\ApiKeyController::generate
@@ -142,12 +157,17 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::activate
     public function activate($request, $id)
     {
-        return DB::transaction(function () use ($request, $id)
-        {
-            ApiKey::findOrFail($id)->update($request->only('is_active'));
+        try {
 
+            $request = json_decode($request->getContent());
+            $api = $this->apiCore($request, 'patch', $id. "/activate");
+            $data = json_decode($api->getBody()->getContents(), true);
             return $this->respondWithSuccess();
-        });
+        } catch (RequestException $e) {
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
+        }
     }
 
     // Admin\Api\ApiKeyController::addPermission
