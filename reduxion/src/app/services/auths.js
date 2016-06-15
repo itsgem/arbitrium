@@ -447,7 +447,9 @@ export default {
     return post('client/subscription/confirm', {
       params: {
         success: payload.success,
-        token: payload.token
+        token: payload.token,
+        payment_id: payload.payment_id ? payload.payment_id : '',
+        payer_id: payload.payer_id ? payload.payer_id : ''
       }
     });
   },
