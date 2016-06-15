@@ -19,7 +19,7 @@ class ApiKeyRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'clientId'               => '',
+                'clientId'               => 'required|exists:clients,id',
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
                 'permissions'            => 'array',
@@ -29,11 +29,6 @@ class ApiKeyRequest extends NrbRequest
                 'isCctive'               => 'boolean',
                 'isTestKey'              => 'boolean'
             ];
-
-            if (is_admin_user_logged_in())
-            {
-                $rules['clientId'] .= '|required';
-            }
         }
 
         return $rules;
@@ -50,34 +45,9 @@ class ApiKeyRequest extends NrbRequest
         }
         else
         {
-            // // Validate Permissions
-            // $rules_permissions = [
-            //     'apiPermissionId'   => ['required', 'exists:api_permissions,id'],
-            //     'value'             => ['required', 'boolean'],
-            // ];
-            // if ($this->get('permissions'))
-            // {
-            //     foreach ($this->get('permissions') as $permission)
-            //     {
-            //         //dd($permission);
-            //         $validation = Validator::make(
-            //             [
-            //                 'apiPermissionId' => get_val($permission, 'apiPermissionId', ''),
-            //                 'value'             => get_val($permission, 'value', ''),
-            //             ],
-            //             $rules_permissions
-            //         );
-            //         if ($validation->fails())
-            //         {
-            //             $errors['permissions'][] = $validation->messages()->toArray();
-            //         }
-            //     }
-            // }
             // Validate IP Addresses
             $rules_ipAddresses = [
-                // 'api_key_id' => ['exists:api_keys,id'],
                 'ipAddress' => ['required', 'ip'],
-                // 'name'       => ['max:255']
             ];
             if ($this->get('ipAddresses'))
             {

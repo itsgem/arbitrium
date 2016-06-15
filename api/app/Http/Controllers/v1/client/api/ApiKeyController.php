@@ -32,7 +32,7 @@ class ApiKeyController extends ApiController
 
     public function destroy($id, ApiKeyServices $service)
     {
-        return $service->destroy($id, get_logged_in_client_id());
+        return $service->destroy($id);
     }
 
     public function index(ApiKeyServices $service)

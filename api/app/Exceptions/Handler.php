@@ -4,9 +4,10 @@ namespace App\Exceptions;
 
 use Exception;
 use BadMethodCallException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -61,7 +62,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
         if ($e instanceof ModelNotFoundException)
         {
             return $this->respondWithError(Errors::NO_CONTENT);
@@ -85,6 +85,12 @@ class Handler extends ExceptionHandler
         if ($e instanceof BadMethodCallException)
         {
             return $this->respondWithError(Errors::NOT_FOUND);
+        }
+        if ($e instanceof GuzzleRequestException)
+        {
+            $errors = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $errors);
         }
         return parent::render($request, $e);
     }
