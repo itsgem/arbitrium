@@ -10,22 +10,26 @@ export const saveSystemSettings = createActionAsync('SAVE_ADMIN_SYSTEM_SETTINGS'
 
 const initialState = Immutable.fromJS({
   systemSettings: {},
-  loading: false
+  loading: false,
+  saveSuccess: false
 });
 
 export default createReducer({
   [adminSystemSettings.ok]: (state, payload) => state.merge({
     systemSettings: payload,
-    loading: false
+    loading: false,
+    saveSuccess: false
   }),
   [adminSystemSettings.request]: (state) => state.merge({
-    loading: true
+    loading: true,
+    saveSuccess: false
   }),
-  [saveSystemSettings.ok]: (state, payload) => state.merge({
-    systemSettings: payload,
-    loading: false
+  [saveSystemSettings.ok]: (state) => state.merge({
+    loading: false,
+    saveSuccess: true
   }),
   [saveSystemSettings.request]: (state) => state.merge({
-    loading: true
+    loading: true,
+    saveSuccess: false
   })
 }, initialState);

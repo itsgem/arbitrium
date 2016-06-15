@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { adminSystemSettings } from 'admin/reducers/settings'
+import { adminSystemSettings, saveSystemSettings } from 'admin/reducers/settings'
 import SystemSettings from 'admin/views/systemSettings/settings';
 
 const strMapToObj=(strMap) => {
@@ -10,10 +10,11 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
   	systemSettings: strMapToObj(state.get('adminSystemSettings').get('systemSettings')),
-    loading: state.get('adminSystemSettings').get('loading')
+    loading: state.get('adminSystemSettings').get('loading'),
+    saveSuccess: state.get('adminSystemSettings').get('saveSuccess')
   };
 }
 
 export default connect((mapStateToProps), {
-  adminSystemSettings
+  adminSystemSettings, saveSystemSettings
 })(SystemSettings)

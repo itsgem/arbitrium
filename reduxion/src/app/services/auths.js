@@ -292,11 +292,13 @@ export default {
     return patch('admin/client/' + id + '/subscription/cancel');
   },
   adminGetSystemSettings() {
-    return get('admin/system-setting');
+    return get('admin/system-setting?response-format=key-name');
   },
   saveAdminSystemSettings(payload) {
     return patch('admin/system-setting/many', {
-      params: payload
+      params: {
+        system_setting: payload.system_setting
+      }
     });
   },
   adminGetClientInvoices(payload = {page: 1, per_page: 10}) {

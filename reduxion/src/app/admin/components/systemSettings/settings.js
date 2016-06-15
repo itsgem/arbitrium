@@ -11,17 +11,13 @@ class SystemSettings extends React.Component {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null,
-      permissions: {}
+      errorServer:null
     };
   }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-  }
-  componentDidMount () {
-
   }
   loadingRender () {
     return (
@@ -73,7 +69,9 @@ class SystemSettings extends React.Component {
 
     return (
       <div className="page-content">
+        { this.loadingRender() }
         <form method="post">
+          <div className="required">Required fields</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
               <legend>General Information</legend>
@@ -84,14 +82,14 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="company_name" defaultValue={adminSystemSettings[0].value}/>
-                <label className="mdl-textfield__label">Company Name</label>
+                <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" defaultValue={adminSystemSettings.kcg_company_name.value}/>
+                <label className="mdl-textfield__label">Company Name *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="street_address" defaultValue={adminSystemSettings[1].value}/>
-                <label className="mdl-textfield__label">Billing Info</label>
+                <input className="mdl-textfield__input" type="text" id="street_address" ref="street_address" defaultValue={adminSystemSettings.kcg_street_address.value}/>
+                <label className="mdl-textfield__label">Billing Info *</label>
               </div>
             </div>
           </div>
@@ -99,27 +97,27 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="city" defaultValue={adminSystemSettings[2].value}/>
-                <label className="mdl-textfield__label">City</label>
+                <input className="mdl-textfield__input" type="text" id="city" ref="city" defaultValue={adminSystemSettings.kcg_city.value}/>
+                <label className="mdl-textfield__label">City *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="state" defaultValue={adminSystemSettings[3].value}/>
-                <label className="mdl-textfield__label">State</label>
+                <input className="mdl-textfield__input" type="text" id="state" ref="state" defaultValue={adminSystemSettings.kcg_state.value}/>
+                <label className="mdl-textfield__label">State *</label>
               </div>
             </div>
 
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="country" defaultValue={adminSystemSettings[4].value}/>
-                <label className="mdl-textfield__label">Country</label>
+                <input className="mdl-textfield__input" type="text" id="country" ref="country" defaultValue={adminSystemSettings.kcg_country.value}/>
+                <label className="mdl-textfield__label">Country *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="postal_code" defaultValue={adminSystemSettings[5].value}/>
-                <label className="mdl-textfield__label">Postal Code</label>
+                <input className="mdl-textfield__input" type="text" id="postal_code" ref="postal_code" defaultValue={adminSystemSettings.kcg_postal_code.value}/>
+                <label className="mdl-textfield__label">Postal Code *</label>
               </div>
             </div>
           </div>
@@ -127,20 +125,20 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="admin_email" defaultValue={adminSystemSettings[14].value}/>
-                <label className="mdl-textfield__label">Admin Email</label>
+                <input className="mdl-textfield__input" type="text" id="admin_email" ref="admin_email" defaultValue={adminSystemSettings.kcg_admin_email.value}/>
+                <label className="mdl-textfield__label">Admin Email *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="token_expiry" defaultValue={adminSystemSettings[13].value}/>
-                <label className="mdl-textfield__label">Token Expiry</label>
+                <input className="mdl-textfield__input" type="text" id="token_expiry" ref="token_expiry" defaultValue={adminSystemSettings.reset_token_expiry.value}/>
+                <label className="mdl-textfield__label">Token Expiry *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="items_per_page" defaultValue={adminSystemSettings[12].value}/>
-                <label className="mdl-textfield__label">Items Per Page</label>
+                <input className="mdl-textfield__input" type="text" id="items_per_page" ref="items_per_page" defaultValue={adminSystemSettings.items_per_page.value}/>
+                <label className="mdl-textfield__label">Items Per Page *</label>
               </div>
             </div>
           </div>
@@ -153,8 +151,8 @@ class SystemSettings extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="swift_code" defaultValue={adminSystemSettings[11].value}/>
-                <label className="mdl-textfield__label">Other settings 1</label>
+                <input className="mdl-textfield__input" type="text" id="swift_code" ref="swift_code" defaultValue={adminSystemSettings.kcg_swift_code.value}/>
+                <label className="mdl-textfield__label">Other settings 1 *</label>
               </div>
             </div>
           </div>
@@ -167,8 +165,8 @@ class SystemSettings extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="branch_code" defaultValue={adminSystemSettings[10].value}/>
-                <label className="mdl-textfield__label">Other settings 2</label>
+                <input className="mdl-textfield__input" type="text" id="branch_code" ref="branch_code" defaultValue={adminSystemSettings.kcg_branch_code.value}/>
+                <label className="mdl-textfield__label">Other settings 2 *</label>
               </div>
             </div>
           </div>
@@ -185,14 +183,14 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="account_name" defaultValue={adminSystemSettings[6].value}/>
-                <label className="mdl-textfield__label">Account Name</label>
+                <input className="mdl-textfield__input" type="text" id="account_name" ref="account_name" defaultValue={adminSystemSettings.kcg_account_name.value}/>
+                <label className="mdl-textfield__label">Account Name *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="credit_to" defaultValue={adminSystemSettings[7].value}/>
-                <label className="mdl-textfield__label">Credit To</label>
+                <input className="mdl-textfield__input" type="text" id="credit_to" ref="credit_to" defaultValue={adminSystemSettings.kcg_credit_to.value}/>
+                <label className="mdl-textfield__label">Credit To *</label>
               </div>
             </div>
           </div>
@@ -200,14 +198,14 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="bank_account" defaultValue={adminSystemSettings[8].value}/>
-                <label className="mdl-textfield__label">Bank Account</label>
+                <input className="mdl-textfield__input" type="text" id="bank_account" ref="bank_account" defaultValue={adminSystemSettings.kcg_bank_account.value}/>
+                <label className="mdl-textfield__label">Bank Account *</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty">
-                <input className="mdl-textfield__input" type="text" id="bank_code" defaultValue={adminSystemSettings[9].value}/>
-                <label className="mdl-textfield__label">Bank Account Code</label>
+                <input className="mdl-textfield__input" type="text" id="bank_code" ref="bank_code" defaultValue={adminSystemSettings.kcg_bank_code.value}/>
+                <label className="mdl-textfield__label">Bank Account Code *</label>
               </div>
             </div>
           </div>
@@ -226,52 +224,87 @@ class SystemSettings extends React.Component {
       'has-success': errors && !(errors[ field ])
     });
   }
+  save ( e ) {
+    e.preventDefault();
+    this.setState( {
+      errors: {},
+      errorServer: null
+    } );
+    let {company_name, street_address, city, state, country, postal_code, admin_email, token_expiry,
+      items_per_page, swift_code, branch_code, account_name, credit_to, bank_account, bank_code} = this.refs;
 
-  // save ( e ) {
-  //   e.preventDefault();
-  //   this.setState( {
-  //     loading: true,
-  //     errors: {},
-  //     errorServer: null
-  //   } );
-  //   let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code,
-  //       rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
-  //       rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department,
-  //       alt_first_name, alt_last_name, alt_gender, alt_email_address, alt_mobile_code,
-  //       alt_mobile_number, alt_phone_code, alt_phone_number, alt_position, alt_department} = this.refs;
+    let payload = {
+      system_setting: [{
+          "name": "kcg_company_name",
+          "value": company_name.value
+        }, {
+          "name": "kcg_street_address",
+          "value": street_address.value
+        }, {
+          "name": "kcg_city",
+          "value": city.value
+        }, {
+          "name": "kcg_state",
+          "value": state.value
+        }, {
+          "name": "kcg_country",
+          "value": country.value
+        }, {
+          "name": "kcg_postal_code",
+          "value": postal_code.value
+        }, {
+          "name": "kcg_admin_email",
+          "value": admin_email.value
+        }, {
+          "name": "reset_token_expiry",
+          "value": token_expiry.value
+        }, {
+          "name": "items_per_page",
+          "value": items_per_page.value
+        }, {
+          "name": "kcg_swift_code",
+          "value": swift_code.value
+        }, {
+          "name": "kcg_branch_code",
+          "value": branch_code.value
+        }, {
+          "name": "kcg_account_name",
+          "value": account_name.value
+        }, {
+          "name": "kcg_credit_to",
+          "value": credit_to.value
+        }, {
+          "name": "kcg_bank_account",
+          "value": bank_account.value
+        }, {
+          "name": "kcg_bank_code",
+          "value": bank_code.value
+        }
+      ]
+    }
+    window.componentHandler.upgradeDom();
+    return this.validateSave.call( this, payload )
+      .with( this )
+      .then( this.saveSettings )
+      .catch( this.setErrors );
+  }
+  validateSave ( payload) {
+    let rules = new Checkit( {
+      system_setting: []
+    } );
+    return rules.run( payload );
+  }
+  saveSettings (payload) {
+    openLoading();
+    let errors = {};
+    this.setState({
+      errors: {},
+      errorServer:null
+    });
+    this.scrolltop(errors);
 
-  //   let payload = {
-  //     company_name: company_name.value,
-  //     street_address_1: street_address_1.value,
-  //     street_address_2: street_address_2.value,
-  //     city: city.value,
-  //     state: state.value,
-  //     postal_code: postal_code.value,
-  //     country_id: country_id.value,
-  //     rep_first_name: rep_first_name.value,
-  //     rep_last_name: rep_last_name.value,
-  //     rep_gender: rep_gender.value
-  //   };
-
-  //   let payload = {
-  //     system_settings: [
-  //       {
-
-  //       }
-  //     ]
-  //   }
-
-  //   window.componentHandler.upgradeDom();
-  //   return validateRegister.call( this, payload )
-  //     .with( this )
-  //     .then( saveSettings )
-  //     .catch( setErrors );
-  // }
-
-  // function saveSettings (payload) {
-  //   return this.props.saveSystemSettings(payload);
-  // }
-
+    return this.props.saveSystemSettings(payload);
+  }
   setErrors(e) {
     this.setState(createError(e));
   }

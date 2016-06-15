@@ -23,21 +23,18 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.purchaseSuccess) {
+    if (nextProps.saveSuccess) {
+      nextProps.adminSystemSettings().catch(createError);
       $('.msg').html('Successfully saved system settings.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(5000);
+        $(this).fadeOut(3000);
       });
-      this.context.router.push('/coffee/systemSettings');
+      this.context.router.push('/coffee/systemsettings');
     }
   },
   render() {
     if (Object.keys(this.props.systemSettings).length) {
-      if (!this.props.loading) {
-        closeLoading();
-      } else {
-        openLoading();
-      }
+      closeLoading();
       return this.renderSystemSettings();
     } else {
       return this.loadingRender();
@@ -47,11 +44,11 @@ export default React.createClass({
     return (
       <div id="client_add" className="auth-view">
         <div className="client-tab">
-          <a className="mdl-layout__tab is-active" >API Settings<i className="material-icons add">edit</i></a>
+          <a className="mdl-layout__tab is-active">System Settings<i className="material-icons add">edit</i></a>
         </div>
         <SystemSettings
-          params = {this.props.params}
           adminSystemSettings = {this.props.systemSettings}
+          saveSystemSettings = {this.props.saveSystemSettings}
         />
       </div>
     );
