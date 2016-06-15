@@ -8,6 +8,11 @@ export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
+  getInitialState() {
+    return {
+      error: false
+    };
+  },
   componentDidMount () {
     this.props.subscriptionList().catch(createError);
     this.props.clientSubscription().catch(createError);
@@ -25,6 +30,12 @@ export default React.createClass({
         success: query.success == 'true' ? true : false,
         token: query.token
       };
+
+      if (query.paymentId && query.PayerID) {
+        payload.payment_id = query.paymentId;
+        payload.payer_id = query.PayerID;
+      }
+
       this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
       this.context.router.push('/i/subscription');
     }
@@ -46,12 +57,13 @@ export default React.createClass({
     );
   },
   render() {
-    if (Object.keys(this.props.error).length){
+    if (Object.keys(this.props.error).length && this.state.error == false){
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-          message: this.props.error.data.errors.token,
+          message: "Unable to confirm subscription plan.",
           timeout: 3000
       });
+      this.setState({error: true});
     }
     if (!this.props.loading && !this.props.purchaseProcessingConfirm && !this.props.purchaseSuccessConfirm && Object.keys(this.props.listSubscription).length && Object.keys(this.props.currentSubscription).length && Object.keys(this.props.user).length) {
       closeLoading();

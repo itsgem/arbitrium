@@ -108,13 +108,15 @@ class SubscriptionServices extends NrbServices
             // Suspend last subscription
             $this->cancelSubscription($client, true);
 
-            $agreement_id = $result_data->data->agreement_id;
+            $agreement_id = isset($result_data->data->agreement_id) ? $result_data->data->agreement_id : null;
+            $payer_id     = isset($result_data->data->payer_id) ? $result_data->data->payer_id : null;
             $token        = $request->get('token');
 
-            DB::transaction(function () use ($agreement_id, $token)
+            DB::transaction(function () use ($agreement_id, $payer_id, $token)
             {
                 ClientSubscription::paypalTokenId($token)->update([
-                    'paypal_agreement_id' => $agreement_id
+                    'paypal_agreement_id' => $agreement_id,
+                    'paypal_payer_id'     => $payer_id,
                 ]);
             });
 
@@ -244,13 +246,21 @@ class SubscriptionServices extends NrbServices
 
             if ($current_subscription->hasPaypal() && $request->get('with-paypal') == 1)
             {
-                $plan         = (new PaypalServices())->showPlan($current_subscription->paypal_plan_id)->getData();
-                $transactions = (new PaypalServices())->getTransactions($request, $current_subscription->paypal_agreement_id)->getData();
+                if (!$current_subscription->is_auto_renew)
+                {
+                    $plan = (new PaypalServices())->showPlan($current_subscription->paypal_agreement_id, false)->getData();
+                    $additional_data['plan'] = ($plan->success) ? $plan->data : null;
+                }
+                else
+                {
+                    $plan         = (new PaypalServices())->showPlan($current_subscription->paypal_plan_id)->getData();
+                    $transactions = (new PaypalServices())->getTransactions($request, $current_subscription->paypal_agreement_id)->getData();
 
-                $additional_data = [
-                    'plan'         => $plan->data,
-                    'transactions' => $transactions->data
-                ];
+                    $additional_data = [
+                        'plan'         => ($plan->success) ? $plan->data : null,
+                        'transactions' => ($transactions->success) ? $transactions->data : null,
+                    ];
+                }
             }
 
             $this->addResponseData($current_subscription);
