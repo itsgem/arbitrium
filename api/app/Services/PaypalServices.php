@@ -9,6 +9,7 @@ use App\Models\Subscription;
 use App\Nrb\NrbServices;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Log;
 use Exception;
 use PayPal\Api\Agreement;
 use PayPal\Api\AgreementStateDescriptor;
@@ -46,8 +47,6 @@ class PaypalServices extends NrbServices
         $this->_api_context->setConfig($paypal_conf['settings']);
     }
 
-    //----- Recurring
-
     // ClientsController
     public function createPlan($request)
     {
@@ -70,13 +69,6 @@ class PaypalServices extends NrbServices
 
         $plan_type = 'INFINITE';
         $plan_cycles = '0';
-
-        if (!$data['is_auto_renew'])
-        {
-            $plan_type               = 'FIXED';
-            $plan_cycles             = '1';
-            $data['initial_payment'] = $subscription->fee_initial_setup;
-        }
 
         $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
 
@@ -106,12 +98,6 @@ class PaypalServices extends NrbServices
         $plan->setMerchantPreferences($merchantPreferences);
 
         $request = clone $plan;
-
-        if (env('PAYPAL_BYPASS'))
-        {
-            // @TODO-Arbitrium
-            // return $this->bypassSetup($redirect_urls);
-        }
 
         try {
             $createdPlan = $plan->create($this->_api_context);
@@ -151,10 +137,19 @@ class PaypalServices extends NrbServices
         ]);
     }
 
-    public function showPlan($id)
+    public function showPlan($id, $is_auto_renew = true)
     {
         try {
-            $plan = Plan::get($id, $this->_api_context);
+            if (!$is_auto_renew)
+            {
+                $plan = Payment::get($id, $this->_api_context);
+            }
+            else
+            {
+                $plan = Plan::get($id, $this->_api_context);
+            }
+        } catch (PayPalConnectionException $ex) {
+            return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
         } catch (Exception $ex) {
             return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
         }
@@ -193,48 +188,108 @@ class PaypalServices extends NrbServices
         $subscription            = Subscription::findOrFail($data['subscription_id']);
         $data['name']            = $subscription->name;
         $data['description']     = $subscription->description;
+        $data['fees']            = $subscription->getFees($data['term']);
+        $data['total']           = $subscription->calculateTotal($data['term'].'_With_Setup');
+        $data['currency']        = config('paypal.currency');
+        $data['callback']        = config('paypal.callback_urls.subscriptions');
 
+        $data['paypal_agreement_id'] = null;
         $data['paypal_plan_id']  = null;
         $approvalUrl             = null;
 
         // Create plan
         if (!$subscription->isTrial())
         {
-            $result = $this->createPlan($request, $client)->getData();
-
-            $data['paypal_plan_id'] = $result->data->paypal_plan_id;
-
-            $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
-
-            if (!$data['is_auto_renew'])
-            {
-                $start_date_offset = 1;
-            }
-
-            $start_date = current_datetime_iso8601($start_date_offset);
-
-            // SubscribeCustomer
-            $agreement = new Agreement();
-
-            $agreement->setName($data['name']. '('.$data['term'].')')
-                ->setDescription($data['description'])
-                ->setStartDate($start_date);
-
-            $plan = new Plan();
-            $plan->setId($data['paypal_plan_id']);
-            $agreement->setPlan($plan);
-
             $payer = new Payer();
             $payer->setPaymentMethod('paypal');
-            $agreement->setPayer($payer);
 
-            try {
-                $agreement = $agreement->create($this->_api_context);
-                $approvalUrl = $agreement->getApprovalLink();
-            } catch (PayPalConnectionException $ex) {
-                return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
-            } catch (Exception $ex) {
-                return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
+            // Is one-time or recurring payment
+            if (!$data['is_auto_renew'])
+            {
+                $items = [];
+                $cnt = 0;
+                foreach($data['fees'] as $fee)
+                {
+                    $items[$cnt] = new Item();
+                    $items[$cnt]->setName($fee['name'])
+                        ->setCurrency($data['currency'])
+                        ->setQuantity(1)
+                        ->setPrice($fee['amount']);
+                    $cnt++;
+                }
+
+                // add item to list
+                $item_list = new ItemList();
+                $item_list->setItems($items);
+
+                $amount = new Amount();
+                $amount->setCurrency($data['currency'])
+                    ->setTotal($data['total']);
+
+                $transaction = new Transaction();
+                $transaction->setAmount($amount)
+                    ->setItemList($item_list)
+                    ->setDescription($data['description']);
+
+                $redirect_urls = new RedirectUrls();
+                $redirect_urls->setReturnUrl($data['callback']."?success=true")
+                    ->setCancelUrl($data['callback']."?success=false");
+
+                $payment = new Payment();
+                $payment->setIntent('Sale')
+                    ->setPayer($payer)
+                    ->setRedirectUrls($redirect_urls)
+                    ->setTransactions([$transaction]);
+
+                try {
+                    $payment->create($this->_api_context);
+                } catch (PayPalConnectionException $ex) {
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
+                }
+
+                foreach($payment->getLinks() as $link) {
+                    if($link->getRel() == 'approval_url') {
+                        $approvalUrl = $link->getHref();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                $result = $this->createPlan($request, $client);
+                $result_data = $result->getData();
+
+                if (!$result_data->success)
+                {
+                    return $result;
+                }
+
+                $data['paypal_plan_id'] = $result_data->data->paypal_plan_id;
+
+                $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
+                $start_date = current_datetime_iso8601($start_date_offset);
+
+                // Subscribe Customer
+                $agreement = new Agreement();
+
+                $agreement->setName($data['name']. '('.$data['term'].')')
+                    ->setDescription($data['description'])
+                    ->setStartDate($start_date);
+
+                $plan = new Plan();
+                $plan->setId($data['paypal_plan_id']);
+                $agreement->setPlan($plan);
+
+                $agreement->setPayer($payer);
+
+                try {
+                    $agreement = $agreement->create($this->_api_context);
+                    $approvalUrl = $agreement->getApprovalLink();
+                } catch (PayPalConnectionException $ex) {
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
+                } catch (Exception $ex) {
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
+                }
             }
         }
 
@@ -267,25 +322,64 @@ class PaypalServices extends NrbServices
 
     public function executeAgreement($request)
     {
-        $token   = $request->get('token');
-        $success = $request->get('success');
+        $token      = $request->get('token');
+        $success    = $request->get('success');
 
-        $agreement = new Agreement();
+        $payment_id = $request->get('payment_id');
+        $payer_id   = $request->get('payer_id');
 
-        if($success == true) {
-            try {
-                $agreement->execute($token, $this->_api_context);
-                $agreement = Agreement::get($agreement->getId(), $this->_api_context);
+        if($success == true)
+        {
+            // Is one-time or recurring payment
+            if ($payment_id && $payer_id)
+            {
+                //Execute the payment
+                try{
+                    $payment = Payment::get($payment_id, $this->_api_context);
 
-                $agreement_id = $agreement->getId();
+                    // PaymentExecution object includes information necessary
+                    // to execute a PayPal account payment.
+                    // The payer_id is added to the request query parameters
+                    // when the user is redirected from paypal back to your site
+                    $execution = new PaymentExecution();
+                    $execution->setPayerId($payer_id);
 
-                return $this->respondWithSuccess([
-                    'agreement_id' => $agreement_id
-                ]);
-            } catch (PayPalConnectionException $ex) {
-                return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
-            } catch (Exception $ex) {
-                return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
+                    $result = $payment->execute($execution, $this->_api_context);
+
+                    // payment made
+                    if ($result->getState() == 'approved')
+                    {
+                        return $this->respondWithSuccess([
+                            'agreement_id' => $payment_id,
+                            'payer_id'     => $payer_id,
+                        ]);
+                    }
+
+                    return $this->respondWithError(Errors::PAYPAL_ERROR);
+                } catch (PayPalConnectionException $ex) {
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
+                } catch(Exception $ex){
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
+                }
+            }
+            else
+            {
+                try {
+                    $agreement = new Agreement();
+
+                    $agreement->execute($token, $this->_api_context);
+                    $agreement = Agreement::get($agreement->getId(), $this->_api_context);
+
+                    $agreement_id = $agreement->getId();
+
+                    return $this->respondWithSuccess([
+                        'agreement_id' => $agreement_id
+                    ]);
+                } catch (PayPalConnectionException $ex) {
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, json_decode($ex->getData(), true));
+                } catch (Exception $ex) {
+                    return $this->respondWithError(Errors::PAYPAL_ERROR, [$ex->getMessage()]);
+                }
             }
         }
 
@@ -384,5 +478,73 @@ class PaypalServices extends NrbServices
         }
 
         return json_decode($agreement, true);
+    }
+
+    //----- IPN Listener
+
+    public function statusUpdate($request)
+    {
+        Log::info("[IPN] Start");
+        Log::info("[IPN] TRANSACTION: ". $request->get('txn_type'));
+
+        $paypal_ipn_response = json_encode($request->all());
+        $paypal_log = json_encode([
+            'header' => $request->header(),
+            'body'   => $request->all()
+        ]);
+        Log::info("[IPN] PAYLOAD: ". $paypal_log);
+
+        //----- HOOK: Subscription Payment
+        if ($request->get('txn_type') == ClientSubscription::PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT
+            && $request->get('payment_status') == ClientSubscription::PAYPAL_STATE_COMPLETED)
+        {
+            Log::info("[IPN] HOOK: Subscription Payment");
+
+            // Get latest subscription
+            $client_subscription = ClientSubscription::paypalAgreementId($request->get('recurring_payment_id'))->latest()->first();
+
+            // Renew: Change latest subscription status to "Renewed"
+            DB::transaction(function() use($client_subscription)
+            {
+                $client_subscription->renew();
+                Log::info("[IPN] Set latest subscription status to renewed. ClientSubscription#".$client_subscription->id);
+            });
+
+            // Renew: Create new subscription after being renewed
+            $renewed_subscription = DB::transaction(function() use($client_subscription, $request, $paypal_ipn_response)
+            {
+                return $client_subscription->client->renewSubscription($client_subscription, current_date_to_string(), [
+                        'paypal_transaction_id' => $request->get('txn_id'),
+                        'paypal_ipn_response'   => $paypal_ipn_response,
+                    ]);
+            });
+
+            if ($renewed_subscription)
+            {
+                // Send client subscription renewal success email
+                $client_subscription->client->sendSubscriptionRenewalSuccess($renewed_subscription);
+                Log::info("[IPN] Sent client email on their renewed subscription. ClientSubscription#".$renewed_subscription->id);
+
+                return DB::transaction(function () use ($renewed_subscription)
+                {
+                    // Mark subscription as paid
+                    $renewed_subscription->invoice->paid();
+
+                    // Send client invoice details
+                    $renewed_subscription->invoice->sendInvoice();
+
+                    Log::info("[IPN] Sent client email on their renewed subscription invoice. Invoice#".$renewed_subscription->invoice->id);
+
+                    return $this->respondWithSuccess($renewed_subscription);
+                });
+            }
+
+            Log::error("[IPN] ".Errors::SUBSCRIPTION_RENEWAL_ERROR);
+            Log::info("[IPN] End");
+
+            return $this->respondWithError(Errors::SUBSCRIPTION_RENEWAL_ERROR);
+        }
+
+        Log::info("[IPN] End");
     }
 }

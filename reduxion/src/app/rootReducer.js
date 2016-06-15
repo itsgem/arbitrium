@@ -9,6 +9,7 @@ import clientadmin from 'admin/reducers/clientProfile'
 import AdminApi from 'admin/reducers/api'
 import adminSubscription from 'admin/reducers/subscription'
 import adminLogs from 'admin/reducers/logs'
+import adminInvoice from 'admin/reducers/invoice'
 
 import ClientAuth from 'client/reducers/auth'
 import ClientSignup from 'client/reducers/signup'
@@ -30,6 +31,7 @@ export default combineReducers({
   AdminApi,
   adminSubscription,
   adminLogs,
+  adminInvoice,
   ClientAuth,
   ClientSignup,
   ClientCountry,

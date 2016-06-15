@@ -78,7 +78,7 @@ class invoiceDetails extends React.Component {
                   {
                     invoiceDetails && invoiceDetails.map(item => {
                       overallTotal = parseFloat( parseFloat(overallTotal) + parseFloat(item.amount)).toFixed(2);
-                      subtotal = parseFloat( parseFloat(overallTotal) - parseFloat(invoiceInfo.discounts)).toFixed(2);
+                      subtotal = parseFloat( parseFloat(item.amount) - parseFloat(invoiceInfo.discounts)).toFixed(2);
                       return <tr key={item.id}><td className="text-left">{item.name}</td>
                       <td>Subsription</td>
                       <td>{item.amount}</td>
