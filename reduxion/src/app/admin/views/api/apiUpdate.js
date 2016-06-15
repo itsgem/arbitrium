@@ -22,7 +22,10 @@ export default React.createClass( {
       this.context.router.push('/coffee/api/');
     }
     if (Object.keys(nextProps.getApiInfo).length && !Object.keys(nextProps.clientProfileSuccess).length && !nextProps.loading) {
-      nextProps.clientProfile(nextProps.getApiInfo.data.client_id).catch(createError);
+      nextProps.clientProfile(nextProps.getApiInfo.data.clientId).catch(createError);
+    }
+    if (!Object.keys(nextProps.apiPermissions).length && Object.keys(nextProps.clientProfileSuccess).length && !nextProps.loading) {
+      this.props.getApiPermission().catch(createError);
     }
   },
   loadingRender () {

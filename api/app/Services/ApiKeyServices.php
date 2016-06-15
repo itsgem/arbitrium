@@ -59,7 +59,7 @@ class ApiKeyServices extends NrbServices
         try {
             $api = $this->apiCore(null, 'delete', $id);
             $data = json_decode($api->getBody()->getContents(), true);
-            return $this->respondWithSuccess($data);
+            return $this->respondWithData($data);
 
         } catch (RequestException $e) {
             $message = json_decode($e->getResponse()->getBody()->getContents(), true);
@@ -72,7 +72,6 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
-       // dd($request->all());
         $data = [];
         $arr = [];
         try {
@@ -82,10 +81,12 @@ class ApiKeyServices extends NrbServices
             $payload = $request->all();
             $api = $this->apiCore($payload, 'get');
             $data =  json_decode($api->getBody()->getContents());
+            return $this->respondWithData($data);
         } catch (RequestException $e) {
-            $data['data'] = json_decode($e->getResponse()->getBody()->getContents());
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
         }
-        return $this->respondWithData($data);
     }
 
     // Admin\Api\ApiKeyController::show
@@ -98,11 +99,12 @@ class ApiKeyServices extends NrbServices
             $payload = $request->all();
             $api = $this->apiCore(null, 'get', $id);
             $data = json_decode($api->getBody()->getContents(), true);
-            return $this->respondWithSuccess($data['apiKey']);
+            return $this->respondWithData($data);
         } catch (RequestException $e) {
-            $data['data'] = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $message = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $status = $e->getResponse()->getStatusCode();
+            return $this->respondWithError($status, $message);
         }
-        return $this->respondWithSuccess($data);
     }
 
     // Admin\Api\ApiKeyController::store
@@ -135,7 +137,6 @@ class ApiKeyServices extends NrbServices
             $request->clientId = $clientId ? $clientId : $request->clientId;
             $api = $this->apiCore($request, 'put', $id);
             return $this->respondWithSuccess();
-
         } catch (RequestException $e) {
             $message = json_decode($e->getResponse()->getBody()->getContents(), true);
             $status = $e->getResponse()->getStatusCode();
