@@ -22,8 +22,6 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.username}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.userid}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.ipAddress}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.statusCode}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
@@ -127,8 +125,8 @@ class LogList extends React.Component {
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="username" ref="username" />
-              <label className="mdl-textfield__label">Username</label>
+              <input className="mdl-textfield__input" type="text" id="ipAddress" ref="ipAddress" />
+              <label className="mdl-textfield__label">IP Address</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
@@ -159,14 +157,12 @@ class LogList extends React.Component {
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th className="mdl-data-table__cell--non-numeric">Username</th>
-              <th className="mdl-data-table__cell--non-numeric">User ID</th>
-              <th className="mdl-data-table__cell--non-numeric">IP Address</th>
-              <th className="mdl-data-table__cell--non-numeric">Status Code</th>
-              <th className="mdl-data-table__cell--non-numeric">URL</th>
-              <th className="mdl-data-table__cell--non-numeric">Parameter</th>
-              <th className="mdl-data-table__cell--non-numeric">Date Created</th>
-              <th className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">IP Address</th>
+              <th width="100" className="mdl-data-table__cell--non-numeric">Status Code</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">URL</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">Parameter</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
+              <th width="100" className="mdl-data-table__cell--non-numeric">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -239,7 +235,7 @@ class LogList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.username.value = "";
+    this.refs.ipAddress.value = "";
     this.refs.statusCode.value = "";
 
     document.getElementById('created').value = '';
@@ -256,7 +252,7 @@ class LogList extends React.Component {
   searchList(e) {
     e.preventDefault();
     let payload = {
-      username: this.refs.username.value,
+      ipAddress: this.refs.ipAddress.value,
       statusCode: this.refs.statusCode.value,
       created: document.getElementById('created').value
     };
@@ -267,7 +263,7 @@ class LogList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      username: this.refs.username.value,
+      ipAddress: this.refs.ipAddress.value,
       statusCode: this.refs.statusCode.value,
       created: document.getElementById('created').value
     };
