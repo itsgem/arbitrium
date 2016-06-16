@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\v1\Client;
 
 use App\Http\Requests\v1\Api\ApiKeyRequest;
-use App\Http\Requests\v1\Api\ApiKeyPermissionRequest;
 use App\Http\Requests\v1\Api\ApiKeyActivateRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
 use App\Services\ApiKeyServices;

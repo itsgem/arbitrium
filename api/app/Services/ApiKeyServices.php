@@ -37,7 +37,7 @@ class ApiKeyServices extends NrbServices
         // Client ID usage:
         // - if admin, use it as filtering (get from request)
         // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
-        $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
+        $payload['clientId'] = $client_id ?: get_val($payload, 'clientId');
 
         $result = $this->external_request->send($payload, 'get', 'apiKeys');
 
@@ -66,7 +66,7 @@ class ApiKeyServices extends NrbServices
         // Client ID usage:
         // - if admin, can dynamically set which client (get from request)
         // - if client, statically set its own Client ID as client (get from parameter specified from controller)
-        $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
+        $payload['clientId'] = $client_id ?: get_val($payload, 'clientId');
 
         $result = $this->external_request->send($payload, 'post', 'apiKeys');
 
@@ -82,7 +82,7 @@ class ApiKeyServices extends NrbServices
         // Client ID usage:
         // - if admin, can dynamically set which client (get from request)
         // - if client, statically set its own Client ID as client (get from parameter specified from controller)
-        $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
+        $payload['clientId'] = $client_id ?: get_val($payload, 'clientId');
 
         $result = $this->external_request->send($payload, 'put', 'apiKeys/'.$id);
 

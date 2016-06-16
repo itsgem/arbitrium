@@ -52,6 +52,7 @@ class Errors
 
     // External Requests
     const EXTERNAL_PREFIX           = 10000;
+    const EXTERNAL_BAD_REQUEST      = 10000400;
     const EXTERNAL_UNAUTHORIZED     = 10000401;
     const EXTERNAL_FORBIDDEN        = 10000403;
     const EXTERNAL_NOT_FOUND        = 10000404;

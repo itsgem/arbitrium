@@ -19,16 +19,21 @@ class ApiKeyRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'clientId'               => 'required|exists:clients,id',
+                'clientId'               => 'exists:clients,id',
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
                 'permissions'            => 'array',
                 'ipAddresses'            => 'required_if:isWhitelist,1|array',
                 'isApiCallRestricted'    => 'boolean',
                 'isWhitelist'            => 'boolean',
-                'isCctive'               => 'boolean',
+                'isActive'               => 'boolean',
                 'isTestKey'              => 'boolean'
             ];
+
+            if (is_admin_user_logged_in())
+            {
+                $rules['clientId'] .= '|required';
+            }
         }
 
         return $rules;

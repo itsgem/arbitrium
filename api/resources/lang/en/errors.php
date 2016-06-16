@@ -41,7 +41,8 @@ return [
 
     Errors::INVOICE_STILL_UNPAID        => 'Invoice is still unpaid.',
 
+    Errors::EXTERNAL_BAD_REQUEST        => 'Invalid input.',
     Errors::EXTERNAL_UNAUTHORIZED       => 'Unable to authenticate your API credentials. Please contact our system admimnistrator.',
-    Errors::EXTERNAL_FORBIDDEN          => 'Unable to perform request to API server. Please try again later.',
+    Errors::EXTERNAL_FORBIDDEN          => 'Forbidden access to API server.',
     Errors::EXTERNAL_NOT_FOUND          => 'Unable to connect to API server. Please try again later.',
 ];

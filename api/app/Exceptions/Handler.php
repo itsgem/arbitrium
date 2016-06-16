@@ -89,6 +89,7 @@ class Handler extends ExceptionHandler
         {
             $errors = json_decode($e->getResponse()->getBody()->getContents(), true);
             $status = $e->getResponse()->getStatusCode();
+
             return $this->respondWithError(Errors::EXTERNAL_PREFIX.$status, $errors);
         }
         return parent::render($request, $e);
