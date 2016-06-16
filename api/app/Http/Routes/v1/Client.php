@@ -19,11 +19,11 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
                     Route::delete('permission',   ['uses' => 'ApiKeyController@removePermission']);
                 });
 
-                Route::group(['prefix' => 'ip-address'], function()
-                {
-                    Route::patch('{ip_address}/assign', ['uses' => 'ApiIpAddressController@assign']);
-                });
-                Route::resource('ip-address', 'ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+//                Route::group(['prefix' => 'ip-address'], function()
+//                {
+//                    Route::patch('{ip_address}/assign', ['uses' => 'ApiIpAddressController@assign']);
+//                });
+//                Route::resource('ip-address', 'ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
             });
             Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
         });

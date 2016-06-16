@@ -19,15 +19,12 @@ class ApiKeyController extends ApiController
     protected function getMethods()
     {
         return [
+            'activate'         => 'Activate API Key',
             'destroy'          => 'Delete API Key',
-            'generate'         => 'Generate API Key token',
             'index'            => 'Get all API Keys',
             'show'             => 'Get single API Key',
             'store'            => 'Add new API Key',
             'update'           => 'Update API Key',
-            'addPermission'    => 'Add API Key Permission',
-            'updatePermission' => 'Update API Key Permission',
-            'removePermission' => 'Remove API Key Permission',
         ];
     }
 
@@ -43,7 +40,7 @@ class ApiKeyController extends ApiController
 
     public function show($id, ApiKeyServices $service)
     {
-        return $service->show($this->request, $id);
+        return $service->show($id);
     }
 
     public function store(ApiKeyRequest $request, ApiKeyServices $service)
@@ -56,28 +53,8 @@ class ApiKeyController extends ApiController
         return $service->update($request, $id);
     }
 
-    public function generate(ApiKeyGenerateRequest $request, ApiKeyServices $service)
-    {
-        return $service->generate($request);
-    }
-
     public function activate(ApiKeyActivateRequest $request, $id, ApiKeyServices $service)
     {
         return $service->activate($request, $id);
-    }
-
-    public function addPermission(ApiKeyPermissionRequest $request, $id, ApiKeyServices $service)
-    {
-        return $service->addPermission($request, $id);
-    }
-
-    public function updatePermission(ApiKeyPermissionRequest $request, $id, ApiKeyServices $service)
-    {
-        return $service->updatePermission($request, $id);
-    }
-
-    public function removePermission(ApiKeyPermissionRequest $request, $id, ApiKeyServices $service)
-    {
-        return $service->removePermission($request, $id);
     }
 }

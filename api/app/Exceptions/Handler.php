@@ -2,23 +2,22 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use App\Errors;
+use App\Nrb\Http\v1\Traits\JsonResponseTrait;
 use BadMethodCallException;
-use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
+use Exception;
+use GuzzleHttp\Exception\RequestException as ExternalRequestException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Slack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use App\Errors;
-use App\Nrb\Http\v1\Traits\JsonResponseTrait;
-
-use Slack;
-
 class Handler extends ExceptionHandler
 {
     use JsonResponseTrait;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -86,11 +85,11 @@ class Handler extends ExceptionHandler
         {
             return $this->respondWithError(Errors::NOT_FOUND);
         }
-        if ($e instanceof GuzzleRequestException)
+        if ($e instanceof ExternalRequestException)
         {
             $errors = json_decode($e->getResponse()->getBody()->getContents(), true);
             $status = $e->getResponse()->getStatusCode();
-            return $this->respondWithError($status, $errors);
+            return $this->respondWithError(Errors::EXTERNAL_PREFIX.$status, $errors);
         }
         return parent::render($request, $e);
     }

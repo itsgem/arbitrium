@@ -46,18 +46,16 @@ class ApiKeyRequest extends NrbRequest
         else
         {
             // Validate IP Addresses
-            $rules_ipAddresses = [
-                'ipAddress' => ['required', 'ip'],
-            ];
             if ($this->get('ipAddresses'))
             {
+                $rules_ipAddresses = [
+                    'ipAddress' => ['required', 'ip'],
+                ];
                 foreach ($this->get('ipAddresses') as $ip_address)
                 {
                     $validation = Validator::make(
                         [
-                            // 'api_key_id' => get_val($ip_address, 'api_key_id', ''),
                             'ipAddress' => get_val($ip_address, 'ipAddress', ''),
-                            // 'name'       => get_val($ip_address, 'name', ''),
                         ],
                         $rules_ipAddresses
                     );

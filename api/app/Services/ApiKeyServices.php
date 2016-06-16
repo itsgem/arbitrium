@@ -5,62 +5,25 @@ namespace App\Services;
 use DB;
 
 use App\Nrb\NrbServices;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
 
 class ApiKeyServices extends NrbServices
 {
-    private $arbitrium;
+    private $external_request;
 
-    public function __construct()
+    public function __construct(ExternalRequestServices $external_request)
     {
-        $this->arbitrium = config('arbitrium.core');
+        $this->external_request = $external_request;
     }
-
-    public function login()
-    {
-        $guzzle = new Client();
-        $result = $guzzle->request('post', $this->arbitrium['api_url'].'/oauth/token', ['form_params' => $this->arbitrium]);
-
-        $response = [
-            'status' => $result->getStatusCode(),
-            'header' => $result->getHeader('content-type'),
-            'body'   => json_decode($result->getBody()->getContents()),
-        ];
-
-        return $response;
-    }
-
-    public function curl($payload, $type, $path)
-    {
-        $response = $this->login();
-        $guzzle = new Client();
-        $method['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
-
-        if ($payload && $type == 'get') {
-            $method['query'] = $payload;
-        }
-
-        if ($payload && ($type == 'post' || $type == 'put' || $type == 'patch')) {
-            $method['json'] = $payload;
-        }
-
-        $path = ($path) ? '/'.$path : '';
-        $result = $guzzle->request($type, $this->arbitrium['api_url'].$path, $method);
-        $response = json_decode($result->getBody()->getContents(), true);
-
-        return $response;
-    }
-
 
     // Admin\Api\ApiKeyController::destroy
     // Client\Api\ApiKeyController::destroy
     public function destroy($id, $client_id = null)
     {
-        $payload = [
-            'clientId' => $client_id,
-        ];
-        $result = $this->curl($payload, 'delete', 'apiKeys/'.$id);
+        // Client ID usage:
+        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
+        $payload['clientId'] = $client_id;
+
+        $result = $this->external_request->send($payload, 'delete', 'apiKeys/'.$id);
 
         return $this->respondWithData($result);
     }
@@ -70,21 +33,26 @@ class ApiKeyServices extends NrbServices
     public function index($request, $client_id = null)
     {
         $payload = $request->all();
+
+        // Client ID usage:
+        // - if admin, use it as filtering (get from request)
+        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
         $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
 
-        $result = $this->curl($payload, 'get', 'apiKeys');
+        $result = $this->external_request->send($payload, 'get', 'apiKeys');
 
         return $this->respondWithData($result);
     }
 
     // Admin\Api\ApiKeyController::show
     // Client\Api\ApiKeyController::show
-    public function show($request, $id, $client_id = null)
+    public function show($id, $client_id = null)
     {
-        $payload = $request->all();
-        $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
+        // Client ID usage:
+        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
+        $payload['clientId'] = $client_id;
 
-        $result = $this->curl($payload, 'get', 'apiKeys/'.$id);
+        $result = $this->external_request->send($payload, 'get', 'apiKeys/'.$id);
 
         return $this->respondWithData($result);
     }
@@ -94,9 +62,13 @@ class ApiKeyServices extends NrbServices
     public function store($request, $client_id = null)
     {
         $payload = $request->all();
+
+        // Client ID usage:
+        // - if admin, can dynamically set which client (get from request)
+        // - if client, statically set its own Client ID as client (get from parameter specified from controller)
         $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
 
-        $result = $this->curl($payload, 'post', 'apiKeys');
+        $result = $this->external_request->send($payload, 'post', 'apiKeys');
 
         return $this->respondWithData($result);
     }
@@ -106,17 +78,28 @@ class ApiKeyServices extends NrbServices
     public function update($request, $id, $client_id = null)
     {
         $payload = $request->all();
+
+        // Client ID usage:
+        // - if admin, can dynamically set which client (get from request)
+        // - if client, statically set its own Client ID as client (get from parameter specified from controller)
         $payload['clientId'] = $client_id ?: get_val($payload, 'client_id');
-        $result = $this->curl($payload, 'put', 'apiKeys/'.$id);
+
+        $result = $this->external_request->send($payload, 'put', 'apiKeys/'.$id);
 
         return $this->respondWithData($result);
     }
 
     // Admin\Api\ApiKeyController::activate
     // Client\Api\ApiKeyController::activate
-    public function activate($request, $id)
+    public function activate($request, $id, $client_id = null)
     {
-        $result = $this->curl($request->all(), 'patch', 'apiKeys/'.$id.'/activate');
+        $payload = $request->all();
+
+        // Client ID usage:
+        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
+        $payload['clientId'] = $client_id;
+
+        $result = $this->external_request->send($payload, 'patch', 'apiKeys/'.$id.'/activate');
 
         return $this->respondWithData($result);
     }
