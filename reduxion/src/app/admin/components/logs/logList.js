@@ -1,12 +1,16 @@
+import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 class LogList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
-      errorServer: null
+      errorServer: null,
+      created: null
     };
   }
   componentDidMount() {
@@ -92,7 +96,12 @@ class LogList extends React.Component {
       </div>
     );
   }
-
+  selectedDate(date, selectedDate) {
+    let isDate = {};
+    isDate[selectedDate] = date;
+    this.setState( isDate );
+    document.getElementById(selectedDate).classList.add('is-dirty');
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -129,8 +138,12 @@ class LogList extends React.Component {
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
-            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="created" ref="created" />
+            <div id="created" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <DatePicker
+                selected={this.state.created}
+                dateFormat="YYYY-MM-DD"
+                onChange={(e) => this.selectedDate(e, 'created')}
+                className="mdl-textfield__input font-input" id="created" ref="created" readOnly/>
               <label className="mdl-textfield__label">Date Created</label>
             </div>
           </div>
@@ -228,7 +241,16 @@ class LogList extends React.Component {
     e.preventDefault();
     this.refs.username.value = "";
     this.refs.statusCode.value = "";
-    this.refs.created.value = "";
+
+    document.getElementById('created').value = '';
+    this.setState({
+      created: null
+    });
+
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
+
     this.searchList(e);
   }
   searchList(e) {
@@ -236,7 +258,7 @@ class LogList extends React.Component {
     let payload = {
       username: this.refs.username.value,
       statusCode: this.refs.statusCode.value,
-      created: this.refs.created.value
+      created: document.getElementById('created').value
     };
     this.props.adminLogList(payload);
   }
@@ -247,7 +269,7 @@ class LogList extends React.Component {
       per_page: this.refs.pageNum.value,
       username: this.refs.username.value,
       statusCode: this.refs.statusCode.value,
-      created: this.refs.created.value
+      created: document.getElementById('created').value
     };
     this.props.adminLogList(payload);
   }
