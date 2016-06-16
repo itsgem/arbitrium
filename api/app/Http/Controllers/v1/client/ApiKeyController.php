@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\v1\Admin\Api;
+namespace App\Http\Controllers\v1\Client;
 
 use App\Http\Requests\v1\Api\ApiKeyRequest;
-use App\Http\Requests\v1\Api\ApiKeyGenerateRequest;
 use App\Http\Requests\v1\Api\ApiKeyPermissionRequest;
 use App\Http\Requests\v1\Api\ApiKeyActivateRequest;
 use App\Nrb\Http\v1\Controllers\ApiController;
@@ -30,31 +29,31 @@ class ApiKeyController extends ApiController
 
     public function destroy($id, ApiKeyServices $service)
     {
-        return $service->destroy($id);
+        return $service->destroy($id, get_logged_in_client_id());
     }
 
     public function index(ApiKeyServices $service)
     {
-        return $service->index($this->request);
+        return $service->index($this->request, get_logged_in_client_id());
     }
 
     public function show($id, ApiKeyServices $service)
     {
-        return $service->show($id);
+        return $service->show($id, get_logged_in_client_id());
     }
 
     public function store(ApiKeyRequest $request, ApiKeyServices $service)
     {
-        return $service->store($request);
+        return $service->store($request, get_logged_in_client_id());
     }
 
     public function update(ApiKeyRequest $request, $id, ApiKeyServices $service)
     {
-        return $service->update($request, $id);
+        return $service->update($request, $id, get_logged_in_client_id());
     }
 
     public function activate(ApiKeyActivateRequest $request, $id, ApiKeyServices $service)
     {
-        return $service->activate($request, $id);
+        return $service->activate($request, $id, get_logged_in_client_id());
     }
 }
