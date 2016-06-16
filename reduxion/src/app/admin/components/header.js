@@ -80,7 +80,7 @@ export default React.createClass( {
                   </div>
                   <div className="container">
                     <button id="demo-menu-subscription"
-                      className="mdl-button mdl-js-button">Subscriptions</button>
+                      className="menu-subscription mdl-button mdl-js-button mdl-layout__tab">Subscriptions</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-subscription">
                       <li className="mdl-menu__item"><Link to="/coffee/subscription/">Subscriptions List</Link></li>
@@ -88,7 +88,7 @@ export default React.createClass( {
                   </div>
                   <div className="container">
                     <button id="demo-menu-invoice"
-                      className="mdl-button mdl-js-button">Invoice</button>
+                      className="menu-invoice mdl-button mdl-js-button mdl-layout__tab">Invoice</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-invoice">
                       <li className="mdl-menu__item"><Link to="/coffee/invoice/">Client Invoice List</Link></li>
@@ -103,10 +103,10 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
                     </ul>
                   </div>}
-                  <Link className="menu-logs mdl-layout__tab" to="/coffee">Reports</Link>
+                  <Link className="mdl-layout__tab" to="/coffee">Reports</Link>
                   <div className="container">
                     <button id="demo-menu-logs"
-                      className="mdl-button mdl-js-button">Logs</button>
+                      className="menu-logs mdl-button mdl-js-button mdl-layout__tab">Logs</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-logs">
                       <li className="mdl-menu__item"><Link to="/coffee/logs/">API Logs List</Link></li>
