@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { adminLogList } from 'admin/reducers/logs';
-import ViewLogList from 'admin/views/logs/logList';
+import ViewClientLogList from 'admin/views/logs/clientLogList';
 
 const strMapToObj=(strMap) => {
   let obj = JSON.parse(JSON.stringify(strMap));
@@ -16,4 +16,4 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   adminLogList
-})(ViewLogList)
+})(ViewClientLogList)

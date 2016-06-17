@@ -45,7 +45,10 @@ export default React.createClass({
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/logs/">API Logs List</Link>
+            to="/coffee/logs/">Client API Logs List</Link>
+          <Link
+            className='mdl-layout__tab'
+            to={"/coffee/logs/client/" + this.props.params.client_id}>API Logs List</Link>
           <a className="mdl-layout__tab is-active" >API LOG DETAIL<i className="material-icons add">edit</i></a>
         </div>
         <LogDetail

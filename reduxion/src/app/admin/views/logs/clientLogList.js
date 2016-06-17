@@ -1,6 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
-import LogList from 'admin/components/logs/logList';
+import LogList from 'admin/components/logs/clientLogList';
 import { Link } from 'react-router';
 
 export default React.createClass( {
@@ -12,15 +12,12 @@ export default React.createClass( {
   },
   render() {
     return (
-      <div id="log_add_or_change" className="auth-view">
+      <div id="log_add_or_change">
         <DocTitle
           title="Logs"
         />
         <div className="client-tab">
-          <Link
-            className='mdl-layout__tab'
-            to="/coffee/logs/">Client API Logs List</Link>
-          <a className="mdl-layout__tab is-active" >API Logs List<i className="material-icons add">edit</i></a>
+          <label className="mdl-layout__tab is-active">Client API Logs List</label>
         </div>
         <LogList
           logList={this.props.logList}

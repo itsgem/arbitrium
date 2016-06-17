@@ -1,8 +1,5 @@
-import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
 
 class LogList extends React.Component {
   constructor(props) {
@@ -22,15 +19,13 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.ipAddress}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.statusCode}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.companyName}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.username}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.userid}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/logs/client/" + data.client_id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/logs/client/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -123,29 +118,19 @@ class LogList extends React.Component {
       <div className="filter-search">
         <p>Filter / Search</p>
         <div className="mdl-grid filter-search-bar">
-          <div className="mdl-cell mdl-cell--3-col">
+          <div className="mdl-cell mdl-cell--4-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="ipAddress" ref="ipAddress" />
-              <label className="mdl-textfield__label">IP Address</label>
+              <input className="mdl-textfield__input" type="text" id="companyName" ref="companyName" />
+              <label className="mdl-textfield__label">Company Name</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
+          <div className="mdl-cell mdl-cell--4-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="statusCode" ref="statusCode"/>
-              <label className="mdl-textfield__label">Status Code</label>
+              <input className="mdl-textfield__input" type="text" id="username" ref="username"/>
+              <label className="mdl-textfield__label">Username</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
-            <div id="created" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <DatePicker
-                selected={this.state.created}
-                dateFormat="YYYY-MM-DD"
-                onChange={(e) => this.selectedDate(e, 'created')}
-                className="mdl-textfield__input font-input" id="created" ref="created" readOnly/>
-              <label className="mdl-textfield__label">Date Created</label>
-            </div>
-          </div>
-          <div className="mdl-cell mdl-cell--3-col search-cta">
+          <div className="mdl-cell mdl-cell--4-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
@@ -157,12 +142,10 @@ class LogList extends React.Component {
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th width="200" className="mdl-data-table__cell--non-numeric">IP Address</th>
-              <th width="100" className="mdl-data-table__cell--non-numeric">Status Code</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">URL</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">Parameter</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
-              <th width="100" className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="450" className="mdl-data-table__cell--non-numeric">Company Name</th>
+              <th width="350" className="mdl-data-table__cell--non-numeric">Username</th>
+              <th width="250" className="mdl-data-table__cell--non-numeric">User ID</th>
+              <th width="150" className="mdl-data-table__cell--non-numeric">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -235,13 +218,8 @@ class LogList extends React.Component {
   }
   clearSearch(e) {
     e.preventDefault();
-    this.refs.ipAddress.value = "";
-    this.refs.statusCode.value = "";
-
-    document.getElementById('created').value = '';
-    this.setState({
-      created: null
-    });
+    this.refs.companyName.value = "";
+    this.refs.username.value = "";
 
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
@@ -252,9 +230,8 @@ class LogList extends React.Component {
   searchList(e) {
     e.preventDefault();
     let payload = {
-      ipAddress: this.refs.ipAddress.value,
-      statusCode: this.refs.statusCode.value,
-      created: document.getElementById('created').value
+      companyName: this.refs.companyName.value,
+      username: this.refs.username.value
     };
     this.props.adminLogList(payload);
   }
@@ -263,9 +240,8 @@ class LogList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      ipAddress: this.refs.ipAddress.value,
-      statusCode: this.refs.statusCode.value,
-      created: document.getElementById('created').value
+      companyName: this.refs.companyName.value,
+      username: this.refs.username.value
     };
     this.props.adminLogList(payload);
   }
