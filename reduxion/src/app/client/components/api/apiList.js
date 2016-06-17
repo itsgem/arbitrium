@@ -170,7 +170,7 @@ class ApiList extends React.Component {
                   <label className="mdl-textfield__label">Date created</label>
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col search-cta margin-top-20">
+              <div className="mdl-cell mdl-cell--3-col margin-top-20 text-right">
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
                   onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
