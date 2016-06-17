@@ -143,7 +143,7 @@ class ClientProfile extends React.Component {
                   {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col form-group-flag-icon">
+              <div className="mdl-cell mdl-cell--4-col form-group-flag-icon">
                 <button
                   id="check_availability"
                   type="button"
