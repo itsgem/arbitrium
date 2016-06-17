@@ -15,11 +15,11 @@ class ExternalRequestServices extends NrbServices
         $this->config = config('arbitrium.core');
     }
 
-    public function login()
+    public function login($params)
     {
         $http_client = new Client();
 
-        $data['form_params'] = $this->config['auth'];
+        $data['form_params'] = $params;
         $result = $http_client->request('post', $this->config['api_url'].'/oauth/token', $data);
 
         $response = [
@@ -31,9 +31,29 @@ class ExternalRequestServices extends NrbServices
         return $response;
     }
 
-    public function send($payload, $method, $path)
+    public function addUser($params)
     {
-        $response = $this->login();
+        // Can only add user using the Core-API
+        $response = $this->login($this->config['auth']);
+        $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
+
+        $http_client = new Client();
+
+        $data['form_params'] = $params;
+        $result = $http_client->request('post', $this->config['api_url'].'/users', $data);
+
+        $response = [
+            'status' => $result->getStatusCode(),
+            'header' => $result->getHeader('content-type'),
+            'body'   => json_decode($result->getBody()->getContents()),
+        ];
+
+        return $response;
+    }
+
+    public function send($payload, $method, $path, $auth)
+    {
+        $response = $this->login($auth);
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
         if ($payload && $method == 'get') {

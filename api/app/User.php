@@ -90,6 +90,11 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         return $this->hasOne('App\Models\Client');
     }
 
+    public function api()
+    {
+        return $this->hasOne('App\Models\UserApi');
+    }
+
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice');
@@ -273,6 +278,11 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
     public function isClient()
     {
         return $this->user_type == self::CLIENT;
+    }
+
+    public function hasApi()
+    {
+        return !empty($this->api);
     }
 
     public function isMaxLogAttempts()

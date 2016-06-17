@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\RenewSubscription::class,
         \App\Console\Commands\RenewSubscriptionReminder::class,
-        \App\Console\Commands\UpdateSubscriptionStatus::class
+        \App\Console\Commands\UpdateSubscriptionStatus::class,
+        \App\Console\Commands\CreateArbitriumCoreAccountsFromUsers::class,
     ];
 
     /**
