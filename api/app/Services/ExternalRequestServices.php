@@ -40,7 +40,6 @@ class ExternalRequestServices extends NrbServices
         $http_client = new Client();
 
         $data['form_params'] = $params;
-//        dd([$this->config['auth'], $data]);
         $result = $http_client->request('post', $this->config['api_url'].'/users', $data);
 
         $response = [

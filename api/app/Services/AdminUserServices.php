@@ -74,6 +74,14 @@ class AdminUserServices extends NrbServices
             $user = User::create($request->all());
             $user->attachRole(Role::find($request->get('role_id')));
             $user->admin()->save(new Admin($request->all()));
+
+            // Core-API signup
+            $user->registerApiCredentials([
+                'username'  => $user->username,
+                'password'  => $user->password,
+                'userType' => User::ADMIN,
+            ]);
+
             return $this->respondWithSuccess($user);
         });
     }

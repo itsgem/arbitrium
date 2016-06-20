@@ -16,8 +16,7 @@ class ApiKeyServices extends NrbServices
     {
         $this->external_request = $external_request;
 
-        // $this->auth = get_logged_in_user_api_creds();
-        $this->auth = null;
+        $this->auth = get_logged_in_user_api_creds();
     }
 
     // Admin\Api\ApiKeyController::destroy

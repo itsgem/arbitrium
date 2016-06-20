@@ -13,7 +13,9 @@ use App\Models\SystemSetting;
 use App\Models\Traits\ResetTokenTrait;
 use App\Models\Traits\RoleUserTrait;
 use App\Models\ResetToken;
+use App\Models\UserApi;
 use App\Services\MailServices;
+use App\Services\ExternalRequestServices;
 
 class User extends NrbModel implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -231,11 +233,40 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         $this->save();
     }
 
+    public function deactivate()
+    {
+        $this->activated_at = NULL;
+        $this->save();
+    }
+
     public function cancelChangeEmail()
     {
         $this->new_email_address = NULL;
         $this->save();
         $this->resetTokens(ResetToken::NEW_EMAIL_ADDRESS);
+    }
+
+    public function registerApiCredentials($params = null)
+    {
+        $data = [
+            'username'  => $this->username,
+            'password'  => $this->password,
+            'userType' => $this->user_type,
+        ];
+
+        if ($params)
+        {
+            $data = $params;
+        }
+
+        $response = (new ExternalRequestServices())->addUser($data);
+
+        $user_api = new UserApi([
+            'user_id'       => $this->id,
+            'api_client_id' => $response['body']->data->clientId,
+            'api_secret'    => $response['body']->data->clientSecret,
+        ]);
+        $user_api->save();
     }
 
     public function canDelete()
@@ -257,12 +288,6 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         }
 
         return $can;
-    }
-
-    public function deactivate()
-    {
-        $this->activated_at = NULL;
-        $this->save();
     }
 
     public function isActive()

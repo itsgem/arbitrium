@@ -19,8 +19,13 @@ class ClientServices extends NrbServices
     {
         return DB::transaction(function () use ($request, $id, $approve)
         {
-            $client = Client::findOrFail($id)->approve($request->get('callback_url'), $approve);
-            return $this->respondWithSuccess();
+            $client = Client::findOrFail($id);
+            $client->approve($request->get('callback_url'), $approve);
+
+            // Core-API signup
+            $client->user->registerApiCredentials();
+
+            return $this->respondWithSuccess($client);
         });
     }
 
@@ -104,6 +109,14 @@ class ClientServices extends NrbServices
             $user = User::create($request->all());
             $user->client()->save(new Client($request->all()));
             $user->sendNewClientAccount($request->get('callback_url'));
+
+            // Core-API signup
+            $user->registerApiCredentials([
+                'username'  => $user->username,
+                'password'  => $user->password,
+                'userType' => User::CLIENT,
+            ]);
+
             return $this->respondWithSuccess($user->client);
         });
     }
