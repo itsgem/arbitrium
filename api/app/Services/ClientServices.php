@@ -86,9 +86,13 @@ class ClientServices extends NrbServices
                 $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
             }]);
         }
-
         $client = $client->findOrFail($id);
         $this->addResponseData($client);
+        if ($request->get('with-api'))
+        {
+            $client['api'] = $client->user->api->getAuth();
+        }
+
         return $this->respondWithSuccess($client);
     }
 

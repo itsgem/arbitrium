@@ -85,7 +85,7 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
             {
                 $response = json_decode($e->getResponse()->getBody()->getContents(), true);
                 $this->info(' ERROR - '.$user->username.' - '.$response['error']);
-                Log::info(' ERROR - '.$user->username.' - '.$response['error']);
+                Log::info(' ERROR - '.$user->username.' - '.$response['error'].' | SERVER ERROR: '.$e->getMessage());
             }
         }
 

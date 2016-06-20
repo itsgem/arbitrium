@@ -81,4 +81,15 @@ class UserApi extends NrbModel
     }
 
     //---------- helpers
+
+    public function getAuth()
+    {
+        return [
+            'grant_type'    => 'password',
+            'client_id'     => $this->api_client_id,
+            'client_secret' => $this->api_secret,
+            'username'      => $this->user->username,
+            'password'      => $this->user->password,
+        ];
+    }
 }

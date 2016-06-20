@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\RenewSubscription::class,
         \App\Console\Commands\RenewSubscriptionReminder::class,
         \App\Console\Commands\UpdateSubscriptionStatus::class,
-        \App\Console\Commands\CreateArbitriumCoreAccountsFromUsers::class,
+        \App\Console\Commands\GenerateArbitriumCoreAccountsFromUsers::class,
     ];
 
     /**

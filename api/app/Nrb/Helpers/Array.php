@@ -43,3 +43,46 @@ function csv_to_array($filename='', $header=false, $delimiter=',')
     }
     return $a_data;
 }
+
+function transformArbitriumResponseData($response)
+{
+    if (!isset($response->data))
+    {
+        return $response;
+    }
+
+    if (isset($response->data))
+    {
+        $response_data = $response->data;
+
+        if (is_array($response_data))
+        {
+            foreach ($response_data as $key => $data)
+            {
+                if (isset($data->clientId))
+                {
+                    $user_api = \App\Models\UserApi::apiClientId($data->clientId)->first();
+
+                    if ($user_api)
+                    {
+                        $response->data[$key]->clientId = $user_api->user_id;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (isset($response_data->clientId))
+            {
+                $user_api = \App\Models\UserApi::apiClientId($response_data->clientId)->first();
+
+                if ($user_api)
+                {
+                    $response->data->clientId = $user_api->user_id;
+                }
+            }
+        }
+    }
+
+    return $response;
+}

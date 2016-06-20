@@ -40,6 +40,7 @@ class ExternalRequestServices extends NrbServices
         $http_client = new Client();
 
         $data['form_params'] = $params;
+//        dd([$this->config['auth'], $data]);
         $result = $http_client->request('post', $this->config['api_url'].'/users', $data);
 
         $response = [
@@ -51,8 +52,10 @@ class ExternalRequestServices extends NrbServices
         return $response;
     }
 
-    public function send($payload, $method, $path, $auth)
+    public function send($payload, $method, $path, $auth = null)
     {
+        $auth = $auth ?: $this->config['auth'];
+
         $response = $this->login($auth);
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
@@ -67,8 +70,11 @@ class ExternalRequestServices extends NrbServices
         $http_client = new Client();
 
         $path = ($path) ? '/'.$path : '';
+        dd([$auth, $data]);
+
         $result = $http_client->request($method, $this->config['api_url'].$path, $data);
-        $response = json_decode($result->getBody()->getContents(), true);
+        $response = json_decode($result->getBody()->getContents());
+        $response = transformArbitriumResponseData($response);
 
         return $response;
     }

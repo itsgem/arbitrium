@@ -4,15 +4,20 @@ namespace App\Services;
 
 use DB;
 
+use App\Models\Client;
 use App\Nrb\NrbServices;
 
 class ApiKeyServices extends NrbServices
 {
     private $external_request;
+    private $auth;
 
     public function __construct(ExternalRequestServices $external_request)
     {
         $this->external_request = $external_request;
+
+        // $this->auth = get_logged_in_user_api_creds();
+        $this->auth = null;
     }
 
     // Admin\Api\ApiKeyController::destroy
@@ -23,7 +28,10 @@ class ApiKeyServices extends NrbServices
         // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
         $payload['clientId'] = $client_id;
 
-        $result = $this->external_request->send($payload, 'delete', 'apiKeys/'.$id);
+        $client = Client::findOrfail($client_id);
+        $auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+
+        $result = $this->external_request->send($payload, 'delete', 'apiKeys/'.$id, $this->auth);
 
         return $this->respondWithData($result);
     }
@@ -32,14 +40,13 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::index
     public function index($request, $client_id = null)
     {
-        $payload = $request->all();
+        if ($client_id)
+        {
+            $client = Client::findOrfail($client_id);
+            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+        }
 
-        // Client ID usage:
-        // - if admin, use it as filtering (get from request)
-        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
-        $payload['clientId'] = $client_id ?: get_val($payload, 'clientId');
-
-        $result = $this->external_request->send($payload, 'get', 'apiKeys');
+        $result = $this->external_request->send($request->all(), 'get', 'apiKeys', $this->auth);
 
         return $this->respondWithData($result);
     }
@@ -48,11 +55,13 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::show
     public function show($id, $client_id = null)
     {
-        // Client ID usage:
-        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
-        $payload['clientId'] = $client_id;
+        if ($client_id)
+        {
+            $client = Client::findOrfail($client_id);
+            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+        }
 
-        $result = $this->external_request->send($payload, 'get', 'apiKeys/'.$id);
+        $result = $this->external_request->send(null, 'get', 'apiKeys/'.$id, $this->auth);
 
         return $this->respondWithData($result);
     }
@@ -63,12 +72,22 @@ class ApiKeyServices extends NrbServices
     {
         $payload = $request->all();
 
-        // Client ID usage:
-        // - if admin, can dynamically set which client (get from request)
-        // - if client, statically set its own Client ID as client (get from parameter specified from controller)
-        $payload['clientId'] = $client_id ?: get_val($payload, 'clientId');
+        $payload_client_id = get_val($payload, 'clientId');
+        if ($payload_client_id)
+        {
+            $payload_client_id = Client::findOrfail($payload_client_id)->user->api->getAuth();
+            $payload_client_id = $payload_client_id['client_id'];
+        }
 
-        $result = $this->external_request->send($payload, 'post', 'apiKeys');
+        $payload['clientId'] = $payload_client_id;
+
+        if ($client_id)
+        {
+            $client = Client::findOrfail($client_id);
+            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+        }
+
+        $result = $this->external_request->send($payload, 'post', 'apiKeys', $this->auth);
 
         return $this->respondWithData($result);
     }
@@ -79,12 +98,22 @@ class ApiKeyServices extends NrbServices
     {
         $payload = $request->all();
 
-        // Client ID usage:
-        // - if admin, can dynamically set which client (get from request)
-        // - if client, statically set its own Client ID as client (get from parameter specified from controller)
-        $payload['clientId'] = $client_id ?: get_val($payload, 'clientId');
+        $payload_client_id = get_val($payload, 'clientId');
+        if ($payload_client_id)
+        {
+            $payload_client_id = Client::findOrfail($payload_client_id)->user->api->getAuth();
+            $payload_client_id = $payload_client_id['client_id'];
+        }
 
-        $result = $this->external_request->send($payload, 'put', 'apiKeys/'.$id);
+        $payload['clientId'] = $payload_client_id;
+
+        if ($client_id)
+        {
+            $client = Client::findOrfail($client_id);
+            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+        }
+
+        $result = $this->external_request->send($payload, 'put', 'apiKeys/'.$id, $this->auth);
 
         return $this->respondWithData($result);
     }
@@ -99,7 +128,10 @@ class ApiKeyServices extends NrbServices
         // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
         $payload['clientId'] = $client_id;
 
-        $result = $this->external_request->send($payload, 'patch', 'apiKeys/'.$id.'/activate');
+        $client = Client::findOrfail($client_id);
+        $auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+
+        $result = $this->external_request->send($payload, 'patch', 'apiKeys/'.$id.'/activate', $this->auth);
 
         return $this->respondWithData($result);
     }

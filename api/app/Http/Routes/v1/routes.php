@@ -7,8 +7,6 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     {
         include('Admin.php');
         include('Client.php');
-
-        Route::resource('api-permission', 'ApiPermissionsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
     });
 
     Route::get('form/lists',    ['uses' => 'DropdownListsController@getListByType']);
