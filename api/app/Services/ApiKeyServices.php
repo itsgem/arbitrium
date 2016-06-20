@@ -24,14 +24,13 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::destroy
     public function destroy($id, $client_id = null)
     {
-        // Client ID usage:
-        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
-        $payload['clientId'] = $client_id;
+        if ($client_id)
+        {
+            $client = Client::findOrfail($client_id);
+            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+        }
 
-        $client = Client::findOrfail($client_id);
-        $auth = ($client->user->api) ? $client->user->api->getAuth() : null;
-
-        $result = $this->external_request->send($payload, 'delete', 'apiKeys/'.$id, $this->auth);
+        $result = $this->external_request->send(null, 'delete', 'apiKeys/'.$id, $this->auth);
 
         return $this->respondWithData($result);
     }
@@ -122,16 +121,13 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::activate
     public function activate($request, $id, $client_id = null)
     {
-        $payload = $request->all();
+        if ($client_id)
+        {
+            $client = Client::findOrfail($client_id);
+            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+        }
 
-        // Client ID usage:
-        // - if client, use it as trapping to make sure he owns it (get from parameter specified from controller)
-        $payload['clientId'] = $client_id;
-
-        $client = Client::findOrfail($client_id);
-        $auth = ($client->user->api) ? $client->user->api->getAuth() : null;
-
-        $result = $this->external_request->send($payload, 'patch', 'apiKeys/'.$id.'/activate', $this->auth);
+        $result = $this->external_request->send($request->all(), 'patch', 'apiKeys/'.$id.'/activate', $this->auth);
 
         return $this->respondWithData($result);
     }

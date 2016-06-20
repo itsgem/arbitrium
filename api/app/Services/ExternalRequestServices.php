@@ -70,7 +70,6 @@ class ExternalRequestServices extends NrbServices
         $http_client = new Client();
 
         $path = ($path) ? '/'.$path : '';
-        dd([$auth, $data]);
 
         $result = $http_client->request($method, $this->config['api_url'].$path, $data);
         $response = json_decode($result->getBody()->getContents());
