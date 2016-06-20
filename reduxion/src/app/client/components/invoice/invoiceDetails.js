@@ -58,7 +58,8 @@ class invoiceDetails extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--5-col right-info text-right">
             {settings.kcg_company_name}<br/>
-            {settings.kcg_street_address}, {settings.kcg_state}, {settings.kcg_country}<br/>
+            {settings.kcg_street_address}, {settings.kcg_city}, {settings.kcg_state}<br/>
+            {settings.kcg_country}, {settings.kcg_postal_code}<br/>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <h6>PRODUCTS AND SERVICES PURCHASED</h6>
