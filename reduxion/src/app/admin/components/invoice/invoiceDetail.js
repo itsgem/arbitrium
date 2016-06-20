@@ -45,7 +45,8 @@ class InvoiceDetail extends React.Component {
                   <h6 className="right-align">BILLING INVOICE</h6>
                   <br/>
                   <p className="right-align">{settings.kcg_company_name}</p>
-                  <p className="right-align">{settings.kcg_street_address}, {settings.kcg_state}, {settings.kcg_country}</p>
+                  <p className="right-align">{settings.kcg_street_address}, {settings.kcg_city}, {settings.kcg_state}</p>
+                  <p className="right-align">{settings.kcg_country}, {settings.kcg_postal_code}</p>
                   <br/>
                   <h6>Other Information:</h6>
                   <br/>
