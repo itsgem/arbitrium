@@ -5,6 +5,9 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
 import DatePicker from 'react-datepicker';
+import DateTimeField from 'react-bootstrap-datetimepicker';
+import moment from 'moment';
+import 'react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -20,6 +23,17 @@ class ApiList extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
     modal();
+  }
+  componentDidMount() {
+    // $( "#created_at" ).datepicker({
+    //    changeMonth: true,
+    //    changeYear: true,
+    //    yearRange: "1900:c+10",
+    //    dateFormat: "yy-mm-dd"
+    // });
+    // $(function () {
+      // $('#datetimepicker1').datetimepicker();
+    // });
   }
   userDisplay (data, alter) {
     return (
@@ -157,13 +171,15 @@ class ApiList extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <DatePicker
-                    selected={this.state.createdDate}
-                    dateFormat="YYYY-MM-DD"
-                    onChange={(e) => this.selectedDate(e, 'createdDate')}
-                    className="mdl-textfield__input font-input" id="created_at" readOnly/>
-                <label className="mdl-textfield__label">Date created</label>
+              <div className="input-group date mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label" id="createdDate">
+                <DateTimeField
+                  className="mdl-textfield__input font-input"
+                  id="created_at"
+                  dateTime="1990-06-05"
+                  format="YYYY-MM-DD"
+                  inputFormat="YYYY-MM-DD"
+                  mode="date"
+                />
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
