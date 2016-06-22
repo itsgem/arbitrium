@@ -68,57 +68,55 @@ class LogDetail extends React.Component {
     this.scrolltop(errors);
 
     return (
-      <div className="mdl-layout__content mdl-js-layout">
-          <div className="mdl-layout__panel is-active" id="#">
-            <div className="content-container">
-              <div className="mdl-grid content">
-                <div className="mdl-cell mdl-cell--6-col">
-                  <h6>USERNAME</h6>
-                  <p>juandelacruz1</p>
-                </div>
-                <div className="mdl-cell mdl-cell--6-col">
-                  <h6>USER ID</h6>
-                  <p>001</p>
-                </div>
-                <div className="mdl-cell mdl-cell--6-col">
-                  <h6>IP ADDRESS</h6>
-                  <p>192.168.1.1</p>
-                </div>
-                <div className="mdl-cell mdl-cell--6-col">
-                  <h6>STATUS CODE</h6>
-                  <p>200</p>
-                </div>
-                <div className="mdl-cell mdl-cell--6-col bottom-margin">
-                  <h6>URL</h6>
-                  <p>http://www.testinggrounds.com/api</p>
-                </div>
-                <div className="mdl-cell mdl-cell--6-col">
-                  <h6>DATE CREATED</h6>
-                  <p>October 31, 2016 7:45 AM</p>
-                </div>
-                <div className="mdl-cell mdl-cell--12-col">
-                  <h6>PARAMETER</h6>
-                  <pre className="script script-box-container">
-                    { "{\"employees\":[" } <br/>
-                      { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
-                      { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
-                      { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
-                    { "]}" }
-                  </pre>
-                </div>
-                <div className="mdl-cell mdl-cell--12-col">
-                  <h6>RESPONSE</h6>
-                  <pre className="script script-box-container">
-                    { "{\"employees\":[" } <br/>
-                      { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
-                      { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
-                      { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
-                    { "]}" }
-                  </pre>
-                </div>
-              </div>
+      <div className="mdl-layout__panel is-active" id="#">
+        <div className="content-container">
+          <div className="mdl-grid content">
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>USERNAME</h6>
+              <p>juandelacruz1</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>USER ID</h6>
+              <p>001</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>IP ADDRESS</h6>
+              <p>192.168.1.1</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>STATUS CODE</h6>
+              <p>200</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col bottom-margin">
+              <h6>URL</h6>
+              <p>http://www.testinggrounds.com/api</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>DATE CREATED</h6>
+              <p>October 31, 2016 7:45 AM</p>
+            </div>
+            <div className="mdl-cell mdl-cell--12-col">
+              <h6>PARAMETER</h6>
+              <pre className="script script-box-container">
+                { "{\"employees\":[" } <br/>
+                  { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
+                  { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
+                  { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
+                { "]}" }
+              </pre>
+            </div>
+            <div className="mdl-cell mdl-cell--12-col">
+              <h6>RESPONSE</h6>
+              <pre className="script script-box-container">
+                { "{\"employees\":[" } <br/>
+                  { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
+                  { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
+                  { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
+                { "]}" }
+              </pre>
             </div>
           </div>
+        </div>
       </div>
     );
   }
