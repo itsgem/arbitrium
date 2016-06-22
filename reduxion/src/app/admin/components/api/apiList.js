@@ -106,6 +106,9 @@ class ApiList extends React.Component {
     );
   }
   selectedDate(e, selectedDate) {
+    this.setState({
+      createdDate: e
+    });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
   render() {
@@ -130,6 +133,7 @@ class ApiList extends React.Component {
 
     if ( document.querySelector('.rdt input')) {
       document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
     }
 
     return (
@@ -281,36 +285,36 @@ class ApiList extends React.Component {
     e.preventDefault();
     this.refs.description.value = "";
     this.refs.api_key.value = "";
-    // document.getElementById('created_at').value = '';
-    document.querySelector('.rdt input').value = '';
-    console.log('TSET', document.querySelector('.rdt input').value);
-    $('.rdt input').val('test');
     this.setState( {
       createdDate: null
     } );
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
-    this.searchList(e, 10);
+    this.searchList(e, 10, true);
   }
-  searchList(e, pageNum = null) {
+  searchList(e, pageNum = null, clearDate = false) {
     e.preventDefault();
+    var createDate = this.state.createdDate;
+
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
       key: this.refs.api_key.value,
-      date_created: this.state.createdDate //document.getElementById('created_at').value
+      date_created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.apiList(payload).catch(createError);
   }
   page(e, pageNumber) {
     e.preventDefault();
+    var createDate = this.state.createdDate;
+
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      date_created: (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.apiList(payload).catch(createError);
   }
