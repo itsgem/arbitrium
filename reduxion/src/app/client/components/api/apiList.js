@@ -160,7 +160,7 @@ class ApiList extends React.Component {
                   <label className="mdl-textfield__label">API Key</label>
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col">
+              <div className="mdl-cell mdl-cell--2-col">
                 <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                   <DatePicker
                     selected={this.state.createdDate}
@@ -170,7 +170,7 @@ class ApiList extends React.Component {
                   <label className="mdl-textfield__label">Date created</label>
                 </div>
               </div>
-              <div className="mdl-cell mdl-cell--3-col search-cta margin-top-20">
+              <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
                   onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
