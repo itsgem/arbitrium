@@ -302,7 +302,7 @@ class SubscriptionDetail extends React.Component {
     if (this.refs.isTerm.checked ) {
       return this.validateTerm.call(this, payload)
         .with(this)
-        .then(this.validSubscribe)
+        .then(this.validSubscribe(payload))
         .catch(this.setErrors);
     } else {
       this.validSubscribe(payload);
