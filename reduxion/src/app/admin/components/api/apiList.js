@@ -4,8 +4,6 @@ import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
-import DatePicker from 'react-datepicker';
-// import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from 'moment';
 import Datetime from 'react-datetime';
 import 'react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css';
@@ -24,17 +22,6 @@ class ApiList extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
     modal();
-  }
-  componentDidMount() {
-    // $( "#created_at" ).datepicker({
-    //    changeMonth: true,
-    //    changeYear: true,
-    //    yearRange: "1900:c+10",
-    //    dateFormat: "yy-mm-dd"
-    // });
-    // $(function () {
-      // $('#datetimepicker1').datetimepicker();
-    // });
   }
   userDisplay (data, alter) {
     return (
@@ -119,9 +106,6 @@ class ApiList extends React.Component {
     );
   }
   selectedDate(e, selectedDate) {
-    // let isDate = {};
-    // isDate[selectedDate] = date;
-    // this.setState( isDate );
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
   render() {
@@ -143,10 +127,11 @@ class ApiList extends React.Component {
       pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
       perPage = apiList.per_page;
     }
-    console.log('test', document.querySelector('.rdt input'));
+
     if ( document.querySelector('.rdt input')) {
       document.querySelector('.rdt input').classList.add('mdl-textfield__input');
     }
+
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -176,12 +161,12 @@ class ApiList extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div id="dateCreated" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                   <Datetime
-                    format="YYYY-MM-DD"
-                    inputFormat="YYYY-MM-DD"
+                    id="created_at"
+                    dateFormat="YYYY-MM-DD"
                     timeFormat={false}
-                    onChange={(e)=> this.selectedDate(e, 'dateCreated')}
+                    onChange={(e)=> this.selectedDate(e, 'createdDate')}
                   />
                   <label className="mdl-textfield__label">Date Created</label>
               </div>
