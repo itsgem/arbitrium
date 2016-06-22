@@ -162,13 +162,14 @@ class ApiList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                  <Datetime
-                    id="created_at"
-                    dateFormat="YYYY-MM-DD"
-                    timeFormat={false}
-                    onChange={(e)=> this.selectedDate(e, 'createdDate')}
-                  />
-                  <label className="mdl-textfield__label">Date Created</label>
+                <Datetime
+                  id="created_at"
+                  value={this.state.createdDate}
+                  dateFormat="YYYY-MM-DD"
+                  timeFormat={false}
+                  onChange={(e)=> this.selectedDate(e, 'createdDate')}
+                />
+                <label className="mdl-textfield__label">Date Created</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
@@ -280,7 +281,10 @@ class ApiList extends React.Component {
     e.preventDefault();
     this.refs.description.value = "";
     this.refs.api_key.value = "";
-    document.getElementById('created_at').value = '';
+    // document.getElementById('created_at').value = '';
+    document.querySelector('.rdt input').value = '';
+    console.log('TSET', document.querySelector('.rdt input').value);
+    $('.rdt input').val('test');
     this.setState( {
       createdDate: null
     } );
@@ -295,7 +299,7 @@ class ApiList extends React.Component {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
       key: this.refs.api_key.value,
-      date_created: document.getElementById('created_at').value
+      date_created: this.state.createdDate //document.getElementById('created_at').value
     };
     this.props.apiList(payload).catch(createError);
   }

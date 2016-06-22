@@ -39,6 +39,7 @@
 }
 .rdtPicker td {
   cursor: pointer;
+  vertical-align: middle;
 }
 .rdtPicker td.rdtToday:hover,
 .rdtPicker td.rdtHour:hover,
@@ -96,8 +97,10 @@
 .rdtPicker .dow {
   width: 14.2857%;
   border-bottom: none;
+  vertical-align: middle;
 }
 .rdtPicker th.rdtSwitch {
+  vertical-align: middle;
   width: 100px;
 }
 .rdtPicker th.rdtNext,
@@ -153,6 +156,7 @@ td.rdtYear {
 	height: 50px;
 	width: 25%;
 	cursor: pointer;
+  vertical-align: middle;
 }
 td.rdtMonth:hover,
 td.rdtYear:hover {
