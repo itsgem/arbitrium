@@ -56,6 +56,7 @@ class Errors
     const EXTERNAL_UNAUTHORIZED     = 10000401;
     const EXTERNAL_FORBIDDEN        = 10000403;
     const EXTERNAL_NOT_FOUND        = 10000404;
+    const EXTERNAL_SERVER_ERROR     = 10000500;
 
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
