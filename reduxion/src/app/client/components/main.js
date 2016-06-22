@@ -23,16 +23,14 @@ class MainTop extends React.Component{
 
   render() {
     return (
-      <div className="theme-arbitrium mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        <ClientHeader />
-        <ClientSidebar />
+      <div id="application-view" >
+        <div className="theme-arbitrium mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+          <ClientHeader />
+          <ClientSidebar />
+        </div>
       </div>
     );
   }
 }
-
-MainTop.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
 
 export default MainTop;
