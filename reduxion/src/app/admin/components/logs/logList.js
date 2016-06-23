@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import Datetime from 'react-datetime';
-import 'react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css';
 
 class LogList extends React.Component {
   constructor(props) {
