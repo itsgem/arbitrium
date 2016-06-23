@@ -295,14 +295,14 @@ class SubscriptionDetail extends React.Component {
     let payload = {
       client_id: this.props.params.client_id,
       subscription_id: this.props.params.subscription_id,
-      term: (this.refs.isTerm.checked ? this.refs.term.value : 'Monthly'),
+      term: this.refs.term.value,
       is_auto_renew: this.refs.isTerm.checked
     };
 
     if (this.refs.isTerm.checked ) {
       return this.validateTerm.call(this, payload)
         .with(this)
-        .then(this.validSubscribe(payload))
+        .then(this.validSubscribe)
         .catch(this.setErrors);
     } else {
       this.validSubscribe(payload);
@@ -310,6 +310,7 @@ class SubscriptionDetail extends React.Component {
   }
   validateTerm(payload) {
     let rules = new Checkit({
+      client_id: [],
       subscription_id: [],
       term: [{ rule: 'required', label: 'term of subscription' }],
       is_auto_renew: []

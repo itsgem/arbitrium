@@ -77,16 +77,22 @@ export default React.createClass({
     let subscription = {};
     let isSubscription = false;
     let paypalPendingCancel = {};
+    let subscriptionTerm = "";
     if (Object.keys(this.props.paypalPending).length) {
       isSubscription = Object.keys(this.props.paypalPending.data).length ? true : false;
       subscription = this.props.paypalPending.data;
       paypalPendingCancel = this.props.paypalPendingCancel.data;
 
+      if (subscription.is_auto_renew != 1) {
+        subscriptionTerm = subscription.term == "Annually" ? "1 Year" : "1 Month";
+      } else {
+        subscriptionTerm = subscription.term;
+      }
     }
     return (
       <main className="mdl-layout__content subscription-type">
         { isSubscription && <div className="bs-callout bs-callout-info">
-          <p>You have a pending subscription change to { subscription.name } { (subscription.term) ? ' (' + subscription.term + ')' : '' }.<br />To confirm, please click on the confirmation button.</p>
+          <p>You have a pending subscription change to { subscription.name } {' (' + subscriptionTerm + ') '}.<br />To confirm, please click on the confirmation button.</p>
           <a className="margin-right-10" href={ subscription.paypal_approval_url }>Confirm</a>
           <a href="#" onClick={(e) => {this.cancelPendingSubscription(e)}}>Cancel</a>
         </div>}
