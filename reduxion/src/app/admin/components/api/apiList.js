@@ -14,7 +14,7 @@ class ApiList extends React.Component {
       errorServer:null,
       id: null,
       createdDate: null,
-      discription: null,
+      description: null,
       apiKey: null,
       created: null
     };  }
@@ -30,8 +30,8 @@ class ApiList extends React.Component {
       let apiList = nextProps.ListApiSuccess;
       let payload = {
         page: apiList.currentPage,
-        perPage: apiList.perPage,
-        description: this.state.discription,
+        per_page: apiList.per_page,
+        description: this.state.description,
         token: this.state.apiKey,
         created: this.state.created
       };
@@ -40,21 +40,21 @@ class ApiList extends React.Component {
   }
   userDisplay (data, alter) {
     return (
-      <tr key={data._id} className={alter ? "bg-dark" : "bg-light"}>
+      <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
         <td width="170" className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
-          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data._id}>
-            <input type="checkbox" id={"switch-" + data._id} className="mdl-switch__input" defaultChecked={(data.isActive == 1) ? false : true} onChange={(e) => this.changeActive(e, data._id)} />
+          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
+            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
             <span className="mdl-switch__label">On / Off</span>
             </label>
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/api/" + data._id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data._id)}>
+              onClick={(e) => this.modalConfirm(e, data.id)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -130,7 +130,7 @@ class ApiList extends React.Component {
     let counter = false;
     let alter = false;
     let pagination = [];
-    let perPage = 10;
+    let per_page = 10;
     let apiList = {lastPage: 1};
     let users = {};
     if (Object.keys(this.props.ListApiSuccess).length) {
@@ -143,7 +143,7 @@ class ApiList extends React.Component {
         pagination[i] = this.pagination(i, apiList.currentPage);
       }
       pagination[i+1] = this.nextPage(i+1, ((apiList.currentPage == apiList.lastPage)|| apiList.lastPage == 0 ? false : (apiList.currentPage + 1 )), apiList.lastPage );
-      perPage = apiList.perPage;
+      per_page = apiList.per_page;
     }
     return (
       <div className="filter-search">
@@ -215,7 +215,7 @@ class ApiList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
             <span className="tooltiptext">Items to show per page</span>
-            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={per_page} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
             <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
@@ -309,7 +309,7 @@ class ApiList extends React.Component {
       created: document.getElementById('created_at').value
     });
     let payload = {
-      perPage: (pageNum ? pageNum : this.refs.pageNum.value),
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
       token: this.refs.api_key.value,
       created: document.getElementById('created_at').value
@@ -320,7 +320,7 @@ class ApiList extends React.Component {
     e.preventDefault();
     let payload = {
       page: pageNumber,
-      perPage: this.refs.pageNum.value,
+      per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       token: this.refs.api_key.value,
       created: document.getElementById('created_at').value

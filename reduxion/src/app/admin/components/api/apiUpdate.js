@@ -55,15 +55,15 @@ class ApiUpdate extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ipAddresses: errorServer.response.ipAddresses[0].ipAddress ? errorServer.response.ipAddresses[0].ipAddress : errorServer.response.ipAddresses});
+      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
     this.scrolltop(errors);
     let getApiInfo = this.props.getApiInfo.data;
     let clientInfo = this.props.clientProfileSuccess.data;
     let permissions = this.props.apiPermissions.data;
-    let ipAddresses = '';
-    ipAddresses += getApiInfo.ipAddresses.map(item => { return item.ipAddress; });
-    ipAddresses = ipAddresses.split(',').join("\n")
+    let ip_addresses = '';
+    ip_addresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
+    ip_addresses = ip_addresses.split(',').join("\n")
 
     return (
       <form className="form-container" action="#" autoComplete="off">
@@ -88,21 +88,21 @@ class ApiUpdate extends React.Component {
             </div>
             <p>Add a description to your API key to allow you to filter by key</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
-              <input type="checkbox" id="checkbox-1" ref="isWhitelist" className="mdl-checkbox__input" defaultChecked={getApiInfo.isWhitelist == 1 ? true : false} />
+              <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_whitelist == 1 ? true : false} />
               <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
             </label>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield full-width">
-              <div className={this.formClassNames('ipAddresses', errors)}>
-                <textarea className="mdl-textfield__input" type="text" ref="ipAddresses" rows= "3" id="add-ip-address" defaultValue={ipAddresses}></textarea>
-                <label className="mdl-textfield__label" htmlFor="ipAddresses">Add IP Address...</label>
-                {errors.ipAddresses && <small className="mdl-textfield__error shown">{errors.ipAddresses[0]}</small>}
+              <div className={this.formClassNames('ip_addresses', errors)}>
+                <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" defaultValue={ip_addresses}></textarea>
+                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address...</label>
+                {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" ref="isApiCallRestricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.isApiCallRestricted == 1 ? true : false}/>
+              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_api_call_restricted == 1 ? true : false}/>
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
@@ -110,21 +110,21 @@ class ApiUpdate extends React.Component {
             permissions  && permissions.map(item => {
               let getCk = false;
               for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].apiPermissionId == item._id) {
+                if (getApiInfo.permissions[i].api_permission_id == item.id) {
                   getCk = true;
                   break;
                 }
               }
 
-              return <div key={item._id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item._id}>
+              return <div key={item.id} className="mdl-cell mdl-cell--3-col">
+                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
                         <input
                           type="checkbox"
                           className="mdl-checkbox__input"
-                          id={"checkbox-" + item._id}
+                          id={"checkbox-" + item.id}
                           name="chkRights[]"
                           defaultChecked={getCk}
-                          defaultValue={ item._id }
+                          defaultValue={ item.id }
                           onClick={(e) => this.ckPermissions(e)}/>
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
@@ -134,7 +134,7 @@ class ApiUpdate extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
-                <input type="checkbox" id="checkbox-11" ref="isTestKey" className="mdl-checkbox__input" defaultChecked={getApiInfo.isTestKey == 1 ? true : false}/>
+                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_test_key == 1 ? true : false}/>
                 <span className="mdl-checkbox__label">Test Key</span>
               </label>
             </div>
@@ -156,7 +156,7 @@ class ApiUpdate extends React.Component {
               <div className="flex-order-gt-md-2" >
                 <button id="btn-save"
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.update(e, getApiInfo._id)}>Update API Key</button>
+                  onClick={(e) => this.update(e, getApiInfo.id)}>Update API Key</button>
               </div>
             </div>
       </form>
@@ -175,7 +175,7 @@ class ApiUpdate extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {apiPermissionId: chkArr[k].value};
+        permissions[k] = {api_permission_id: chkArr[k].value};
       }
     }
 
@@ -185,26 +185,26 @@ class ApiUpdate extends React.Component {
       errorServer: null
     } );
 
-    let ipAddresses = this.refs.ipAddresses.value;
-    if (ipAddresses) {
-      ipAddresses = ipAddresses.split('\n');
-      ipAddresses = ipAddresses.map(function(obj){
+    let ip_addresses = this.refs.ip_addresses.value;
+    if (ip_addresses) {
+      ip_addresses = ip_addresses.split('\n');
+      ip_addresses = ip_addresses.map(function(obj){
          let rObj = {};
-         rObj = {ipAddress: obj.trim()};
+         rObj = {ip_address: obj.trim()};
          return rObj;
       });
     } else {
-      ipAddresses = [];
+      ip_addresses = [];
     }
     let payload = {
       id: id,
       client_id: this.refs.client_id.value,
       description: this.refs.description.value,
-      ipAddresses: ipAddresses,
+      ip_addresses: ip_addresses,
       permissions: permissions,
-      isWhitelist: (this.refs.isWhitelist.checked ? 1 : 0),
-      isApiCallRestricted: (this.refs.isApiCallRestricted.checked ? 1 : 0),
-      isTestKey: (this.refs.isTestKey.checked ? 1 : 0)
+      is_whitelist: (this.refs.is_whitelist.checked ? 1 : 0),
+      is_api_call_restricted: (this.refs.is_api_call_restricted.checked ? 1 : 0),
+      is_test_key: (this.refs.is_test_key.checked ? 1 : 0)
     };
     window.componentHandler.upgradeDom();
     return validateUpdate.call( this, payload )
@@ -226,11 +226,11 @@ function validateUpdate ( payload) {
     id: [],
     client_id: [],
     description: { rule: 'required', label: 'description'},
-    ipAddresses: [],
-    isWhitelist: [],
+    ip_addresses: [],
+    is_whitelist: [],
     permissions: [],
-    isApiCallRestricted: [],
-    isTestKey: []
+    is_api_call_restricted: [],
+    is_test_key: []
     } );
     return rules.run( payload );
 }

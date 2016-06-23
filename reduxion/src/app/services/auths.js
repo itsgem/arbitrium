@@ -241,35 +241,35 @@ export default {
   isActiveApiKey(payload) {
     return patch('admin/api-key/' + payload.id + "/activate", {
       params: {
-        isActive: payload.is_active
+        is_active: payload.is_active
       }
     });
   },
   registerApi(payload) {
     return post('admin/api-key',{
       params: {
-        clientId: payload.clientId,
+        client_id: payload.client_id,
         name: payload.description,
         description: payload.description,
-        ipAddresses: payload.ipAddresses,
-        isWhitelist: payload.isWhitelist,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
-        isApiCallRestricted: payload.isApiCallRestricted,
-        isTestKey: payload.isTestKey,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
       }
     });
   },
   adminUpdateApiKey(payload) {
     return put('admin/api-key/' + payload.id,{
       params: {
-        clientId: payload.client_id,
+        client_id: payload.client_id,
         name: payload.description,
         description: payload.description,
-        ipAddresses: payload.ipAddresses,
-        isWhitelist: payload.isWhitelist,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
-        isApiCallRestricted: payload.isApiCallRestricted,
-        isTestKey: payload.isTestKey
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key
       }
     });
   },
@@ -401,7 +401,7 @@ export default {
   clientIsActiveApiKey(payload) {
     return patch('client/api-key/' + payload.id + "/activate", {
       params: {
-        isActive: payload.isActive
+        is_active: payload.is_active
       }
     });
   },
@@ -410,11 +410,11 @@ export default {
       params: {
         name: payload.description,
         description: payload.description,
-        ipAddresses: payload.ipAddresses,
-        isWhitelist: payload.isWhitelist,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
-        isApiCallRestricted: payload.isApiCallRestricted,
-        isTestKey: payload.isTestKey,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
       }
     });
   },
@@ -426,11 +426,11 @@ export default {
       params: {
         name: payload.description,
         description: payload.description,
-        ipAddresses: payload.ipAddresses,
-        isWhitelist: payload.isWhitelist,
+        ip_addresses: payload.ip_addresses,
+        is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
-        isApiCallRestricted: payload.isApiCallRestricted,
-        isTestKey: payload.isTestKey,
+        is_api_call_restricted: payload.is_api_call_restricted,
+        is_test_key: payload.is_test_key,
       }
     });
   },

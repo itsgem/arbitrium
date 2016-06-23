@@ -115,12 +115,12 @@ function transformArbitriumResponseData($response)
 
                     if ($user_api)
                     {
-                        unset($response->data[$key]['clientId']);
-                        $response->data[$key]['user_id'] = $user_api->user_id;
+                        unset($data['clientId']);
+                        $data['user_id'] = $user_api->user_id;
 
                         if ($client = $user_api->user->client)
                         {
-                            $response->data[$key]['client'] = [
+                            $data['client'] = (object) [
                                 'id'             => $client->id,
                                 'company_name'   => $client->company_name,
                                 'rep_first_name' => $client->rep_first_name,
@@ -141,12 +141,12 @@ function transformArbitriumResponseData($response)
 
                 if ($user_api)
                 {
-                    unset($response->data['clientId']);
-                    $response->data['user_id'] = $user_api->user_id;
+                    unset($response_data['clientId']);
+                    $response_data['user_id'] = $user_api->user_id;
 
                     if ($client = $user_api->user->client)
                     {
-                        $response->data['client'] = [
+                        $response_data['client'] = (object) [
                             'id'             => $client->id,
                             'company_name'   => $client->company_name,
                             'rep_first_name' => $client->rep_first_name,
