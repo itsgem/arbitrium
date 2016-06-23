@@ -44,6 +44,54 @@ function csv_to_array($filename='', $header=false, $delimiter=',')
     return $a_data;
 }
 
+// Ref: https://gist.github.com/goldsky/3372487
+function array_keys_format_case($format = 'snake', $array, $array_holder = [])
+{
+    if (empty($array))
+    {
+        return [];
+    }
+
+    $formatted_array = !empty($array_holder) ? $array_holder : [];
+
+    foreach ($array as $key => $val)
+    {
+        if ($format == 'snake')
+        {
+            // Camel to snake case
+            $new_key = preg_replace('/[A-Z]/', '_$0', $key);
+            $new_key = strtolower($new_key);
+            $new_key = ltrim($new_key, '_');
+        }
+        else
+        {
+            // Snake to camel case
+            $new_key = explode('_', $key);
+            array_walk($new_key, create_function('&$v', '$v = ucwords($v);'));
+            $new_key = implode('', $new_key);
+            $new_key{0} = strtolower($new_key{0});
+        }
+
+
+        if (is_array($val))
+        {
+            $val_array = [];
+            $value = $val;
+            foreach ($value as $k => $v)
+            {
+                $val_array[] = array_keys_format_case($format, $val[$k], $v);
+            }
+            $formatted_array[$new_key] = $val_array;
+        }
+        else
+        {
+            $formatted_array[$new_key] = $val;
+        }
+    }
+
+    return $formatted_array;
+}
+
 function transformArbitriumResponseData($response)
 {
     if (!isset($response->data))
@@ -53,23 +101,26 @@ function transformArbitriumResponseData($response)
 
     if (isset($response->data))
     {
-        $response_data = $response->data;
+        $is_array = is_array($response->data);
 
-        if (is_array($response_data))
+        $response_data = $response->data = json_decode(json_encode($response->data), true);
+
+        if ($is_array)
         {
             foreach ($response_data as $key => $data)
             {
-                if (isset($data->clientId))
+                if (isset($data['clientId']))
                 {
-                    $user_api = \App\Models\UserApi::apiClientId($data->clientId)->first();
+                    $user_api = \App\Models\UserApi::apiClientId($data['clientId'])->first();
 
                     if ($user_api)
                     {
-                        $response->data[$key]->clientId = $user_api->user_id;
+                        unset($response->data[$key]['clientId']);
+                        $response->data[$key]['user_id'] = $user_api->user_id;
 
                         if ($client = $user_api->user->client)
                         {
-                            $response->data[$key]->client = (object) [
+                            $response->data[$key]['client'] = [
                                 'id'             => $client->id,
                                 'company_name'   => $client->company_name,
                                 'rep_first_name' => $client->rep_first_name,
@@ -78,21 +129,24 @@ function transformArbitriumResponseData($response)
                         }
                     }
                 }
+
+                $response->data[$key] = array_keys_format_case('snake', $data);
             }
         }
         else
         {
-            if (isset($response_data->clientId))
+            if (isset($response_data['clientId']))
             {
-                $user_api = \App\Models\UserApi::apiClientId($response_data->clientId)->first();
+                $user_api = \App\Models\UserApi::apiClientId($response_data['clientId'])->first();
 
                 if ($user_api)
                 {
-                    $response->data->clientId = $user_api->user_id;
+                    unset($response->data['clientId']);
+                    $response->data['user_id'] = $user_api->user_id;
 
                     if ($client = $user_api->user->client)
                     {
-                        $response->data->client = (object) [
+                        $response->data['client'] = [
                             'id'             => $client->id,
                             'company_name'   => $client->company_name,
                             'rep_first_name' => $client->rep_first_name,
@@ -101,6 +155,8 @@ function transformArbitriumResponseData($response)
                     }
                 }
             }
+
+            $response->data = array_keys_format_case('snake', $response_data);
         }
     }
 

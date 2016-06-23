@@ -16,7 +16,7 @@ class ApiKeyActivateRequest extends NrbRequest
     public function rules()
     {
         $rules = [
-            'isActive' => 'required|boolean'
+            'is_active' => 'required|boolean'
         ];
 
         return $rules;

@@ -22,16 +22,16 @@ class ApiKeyRequest extends NrbRequest
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
                 'permissions'            => 'array',
-                'ipAddresses'            => 'required_if:isWhitelist,1|array',
-                'isApiCallRestricted'    => 'boolean',
-                'isWhitelist'            => 'boolean',
-                'isActive'               => 'boolean',
-                'isTestKey'              => 'boolean'
+                'ip_addresses'           => 'required_if:is_whitelist,1|array',
+                'is_api_call_restricted' => 'boolean',
+                'is_whitelist'           => 'boolean',
+                'is_active'              => 'boolean',
+                'is_testKey'             => 'boolean'
             ];
 
             if (is_admin_user_logged_in())
             {
-                $rules['clientId'] = 'exists:clients,id|required';
+                $rules['client_id'] = 'exists:clients,id|required';
             }
         }
 
@@ -50,22 +50,22 @@ class ApiKeyRequest extends NrbRequest
         else
         {
             // Validate IP Addresses
-            if ($this->get('ipAddresses'))
+            if ($this->get('ip_addresses'))
             {
-                $rules_ipAddresses = [
-                    'ipAddress' => ['required', 'ip'],
+                $rules_ip_addresses = [
+                    'ip_address' => ['required', 'ip'],
                 ];
-                foreach ($this->get('ipAddresses') as $ip_address)
+                foreach ($this->get('ip_addresses') as $ip_address)
                 {
                     $validation = Validator::make(
                         [
-                            'ipAddress' => get_val($ip_address, 'ipAddress', ''),
+                            'ip_address' => get_val($ip_address, 'ip_address', ''),
                         ],
-                        $rules_ipAddresses
+                        $rules_ip_addresses
                     );
                     if ($validation->fails())
                     {
-                        $errors['ipAddresses'][] = $validation->messages()->toArray();
+                        $errors['ip_addresses'][] = $validation->messages()->toArray();
                     }
                 }
             }

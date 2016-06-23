@@ -61,3 +61,15 @@ function get_str_url_query_params($url, $query = null)
 
     return $query_params;
 }
+
+function get_api_url($endpoint, $data = [])
+{
+    $endpoint['method'] = get_val($endpoint, 'method', 'get');
+    $endpoint['path'] = get_val($endpoint, 'path');
+
+    foreach ($data as $key => $value) {
+        $endpoint['path'] = str_replace(':'.$key, $value, $endpoint['path']);
+    }
+
+    return $endpoint;
+}

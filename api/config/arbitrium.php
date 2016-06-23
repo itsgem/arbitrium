@@ -16,6 +16,16 @@ return [
             'username'      => env('ARBITRIUM_USERNAME'),
             'password'      => env('ARBITRIUM_PASSWORD'),
         ],
+        'endpoints'     => [
+            'list_api_keys'             => ['method' => 'get',    'path' => 'apiKeys'],
+            'show_api_key'              => ['method' => 'get',    'path' => 'apiKeys/:id'],
+            'create_api_key'            => ['method' => 'post',   'path' => 'apiKeys'],
+            'update_api_key'            => ['method' => 'put',    'path' => 'apiKeys/:id'],
+            'delete_api_key'            => ['method' => 'delete', 'path' => 'apiKeys/:id'],
+            'activate_api_key'          => ['method' => 'patch',  'path' => 'apiKeys/:id/activate'],
+
+            'list_api_key_permissions'  => ['method' => 'get',    'path' => 'permission'],
+        ]
     ],
 
     'temp_storage' => storage_path().'/temp/',

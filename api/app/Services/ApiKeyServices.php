@@ -11,12 +11,14 @@ class ApiKeyServices extends NrbServices
 {
     private $external_request;
     private $auth;
+    private $endpoints;
 
     public function __construct(ExternalRequestServices $external_request)
     {
         $this->external_request = $external_request;
 
         $this->auth = get_logged_in_user_api_creds();
+        $this->endpoints = config('arbitrium.core.endpoints');
     }
 
     // Admin\Api\ApiKeyController::destroy
@@ -29,9 +31,9 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send(null, 'delete', 'apiKeys/'.$id, $this->auth);
+        $result = $this->external_request->send(null, get_api_url($this->endpoints['delete_api_key'], ['id' => $id]), $this->auth);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 
     // Admin\Api\ApiKeyController::index
@@ -44,9 +46,9 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), 'get', 'apiKeys', $this->auth);
+        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['list_api_keys']), $this->auth);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 
     // Admin\Api\ApiKeyController::show
@@ -59,9 +61,9 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send(null, 'get', 'apiKeys/'.$id, $this->auth);
+        $result = $this->external_request->send(null, get_api_url($this->endpoints['show_api_key'], ['id' => $id]), $this->auth);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 
     // Admin\Api\ApiKeyController::store
@@ -70,14 +72,14 @@ class ApiKeyServices extends NrbServices
     {
         $payload = $request->all();
 
-        $payload_client_id = get_val($payload, 'clientId');
+        $payload_client_id = get_val($payload, 'client_id');
         if ($payload_client_id)
         {
             $payload_client_id = Client::findOrfail($payload_client_id)->user->api->getAuth();
             $payload_client_id = $payload_client_id['client_id'];
         }
 
-        $payload['clientId'] = $payload_client_id;
+        $payload['client_id'] = $payload_client_id;
 
         if ($client_id)
         {
@@ -85,9 +87,9 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($payload, 'post', 'apiKeys', $this->auth);
+        $result = $this->external_request->send($payload, get_api_url($this->endpoints['create_api_key']), $this->auth);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 
     // Admin\Api\ApiKeyController::update
@@ -96,14 +98,14 @@ class ApiKeyServices extends NrbServices
     {
         $payload = $request->all();
 
-        $payload_client_id = get_val($payload, 'clientId');
+        $payload_client_id = get_val($payload, 'client_id');
         if ($payload_client_id)
         {
             $payload_client_id = Client::findOrfail($payload_client_id)->user->api->getAuth();
             $payload_client_id = $payload_client_id['client_id'];
         }
 
-        $payload['clientId'] = $payload_client_id;
+        $payload['client_id'] = $payload_client_id;
 
         if ($client_id)
         {
@@ -111,9 +113,9 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($payload, 'put', 'apiKeys/'.$id, $this->auth);
+        $result = $this->external_request->send($payload, get_api_url($this->endpoints['update_api_key'], ['id' => $id]), $this->auth);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 
     // Admin\Api\ApiKeyController::activate
@@ -126,8 +128,8 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), 'patch', 'apiKeys/'.$id.'/activate', $this->auth);
+        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['activate_api_key'], ['id' => $id]), $this->auth);
 
-        return $this->respondWithData($result);
+        return $result;
     }
 }
