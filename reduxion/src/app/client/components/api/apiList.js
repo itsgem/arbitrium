@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
-import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import Datetime from 'react-datetime';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -101,10 +102,10 @@ class ApiList extends React.Component {
       </div>
     );
   }
-  selectedDate(date, selectedDate) {
-    let isDate = {};
-    isDate[selectedDate] = date;
-    this.setState( isDate );
+  selectedDate(e, selectedDate) {
+    this.setState({
+      createdDate: e
+    });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
   render() {
@@ -126,6 +127,12 @@ class ApiList extends React.Component {
       pagination[i+1] = this.nextPage(i+1, ((apiList.currentPage == apiList.lastPage)|| apiList.lastPage == 0 ? false : (apiList.currentPage + 1 )), apiList.lastPage );
       per_page = apiList.per_page;
     }
+
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+    }
+
     return (
       <div className="filter-search">
         <div className="mdl-grid">
@@ -162,12 +169,14 @@ class ApiList extends React.Component {
               </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                  <DatePicker
-                    selected={this.state.createdDate}
+                  <Datetime
+                    id="created_at"
+                    value={this.state.createdDate}
                     dateFormat="YYYY-MM-DD"
-                    onChange={(e) => this.selectedDate(e, 'createdDate')}
-                    className="mdl-textfield__input font-input" id="created_at" readOnly/>
-                  <label className="mdl-textfield__label">Date created</label>
+                    timeFormat={false}
+                    onChange={(e)=> this.selectedDate(e, 'createdDate')}
+                  />
+                  <label className="mdl-textfield__label">Date Created</label>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
@@ -217,23 +226,24 @@ class ApiList extends React.Component {
     e.preventDefault();
     this.refs.description.value = "";
     this.refs.api_key.value = "";
-    document.getElementById('created_at').value = '';
     this.setState( {
       createdDate: null
     } );
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
-    this.searchList(e, 10);
+    this.searchList(e, 10, true);
   }
 
-  searchList(e, pageNum = null) {
+  searchList(e, pageNum = null, clearDate = false) {
+    var createDate = this.state.createdDate;
     e.preventDefault();
+
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
       token: this.refs.api_key.value,
-      created: document.getElementById('created_at').value
+      created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.clientApiKeys(payload).catch(createError);
   }
@@ -299,13 +309,15 @@ class ApiList extends React.Component {
     closeModal();
   }
   page(e, pageNumber) {
+    var createDate = this.state.createdDate;
     e.preventDefault();
+
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       token: this.refs.api_key.value,
-      created: document.getElementById('created_at').value
+      created: (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.clientApiKeys(payload).catch(createError);
   }
