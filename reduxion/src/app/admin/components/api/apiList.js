@@ -130,7 +130,7 @@ class ApiList extends React.Component {
     let counter = false;
     let alter = false;
     let pagination = [];
-    let per_page = 10;
+    let perPage = 10;
     let apiList = {lastPage: 1};
     let users = {};
     if (Object.keys(this.props.ListApiSuccess).length) {
@@ -143,7 +143,7 @@ class ApiList extends React.Component {
         pagination[i] = this.pagination(i, apiList.currentPage);
       }
       pagination[i+1] = this.nextPage(i+1, ((apiList.currentPage == apiList.lastPage)|| apiList.lastPage == 0 ? false : (apiList.currentPage + 1 )), apiList.lastPage );
-      per_page = apiList.per_page;
+      perPage = apiList.per_page;
     }
     return (
       <div className="filter-search">

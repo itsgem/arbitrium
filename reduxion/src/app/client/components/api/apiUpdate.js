@@ -98,7 +98,7 @@ class ApiUpdate extends React.Component {
             permissions  && permissions.map(item => {
               let getCk = false;
               for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].api_permissionid == item.id) {
+                if (getApiInfo.permissions[i].api_permission_id == item.id) {
                   getCk = true;
                   break;
                 }
@@ -162,7 +162,7 @@ class ApiUpdate extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {api_permissionid: chkArr[k].value};
+        permissions[k] = {api_permission_id: chkArr[k].value};
       }
     }
 

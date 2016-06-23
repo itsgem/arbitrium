@@ -247,7 +247,7 @@ class ApiList extends React.Component {
       id: id,
       is_active: ((e.target.checked == true) ? 0 : 1)
     };
-    this.props.is_activeApiKey(payload).catch(createError);
+    this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber (pageNum) {
     let thisEvent = document.getElementById("numDisplay");

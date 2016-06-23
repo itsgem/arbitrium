@@ -57,10 +57,10 @@ class ApiAdd extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ipAddress ? errorServer.response.ip_addresses[0].ipAddress : errorServer.response.ip_addresses});
+      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
     let clientList = this.props.clientList.data;
-    let permissions = this.props.api_permissions.data;
+    let permissions = this.props.apiPermissions.data;
     this.scrolltop(errors);
     return (
       <form className="form-container" action="#" autoComplete="off">
@@ -207,21 +207,21 @@ class ApiAdd extends React.Component {
       errorServer: null
     } );
 
-    let ip_addresses = this.refs.ip_addresses.value;
-    if (ip_addresses) {
-      ip_addresses = ip_addresses.split('\n');
-      ip_addresses = ip_addresses.map(function(obj){
+    let ipAddresses = this.refs.ip_addresses.value;
+    if (ipAddresses) {
+      ipAddresses = ipAddresses.split('\n');
+      ipAddresses = ipAddresses.map(function(obj){
          let rObj = {};
          rObj = {ipAddress: obj.trim()};
          return rObj;
       });
     } else {
-      ip_addresses = [];
+      ipAddresses = [];
     }
     let payload = {
       client_id: this.state.client_id,
       description: this.refs.description.value,
-      ip_addresses: ip_addresses,
+      ip_addresses: ipAddresses,
       permissions: permissions,
       is_whitelist: (this.refs.is_whitelist.checked ? 1 : 0),
       is_api_call_restricted: (this.refs.is_api_call_restricted.checked ? 1 : 0),
