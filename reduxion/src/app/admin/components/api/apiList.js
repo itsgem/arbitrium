@@ -294,8 +294,8 @@ class ApiList extends React.Component {
     this.searchList(e, 10, true);
   }
   searchList(e, pageNum = null, clearDate = false) {
-    e.preventDefault();
     var createDate = this.state.createdDate;
+    e.preventDefault();
 
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
@@ -306,8 +306,8 @@ class ApiList extends React.Component {
     this.props.apiList(payload).catch(createError);
   }
   page(e, pageNumber) {
-    e.preventDefault();
     var createDate = this.state.createdDate;
+    e.preventDefault();
 
     let payload = {
       page: pageNumber,
