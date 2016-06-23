@@ -6,7 +6,6 @@ import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
 import moment from 'moment';
 import Datetime from 'react-datetime';
-import 'react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css';
 
 class ApiList extends React.Component {
   constructor(props) {
