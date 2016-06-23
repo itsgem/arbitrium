@@ -1,8 +1,9 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import Datetime from 'react-datetime';
+import 'react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css';
 
 class LogList extends React.Component {
   constructor(props) {
@@ -94,10 +95,10 @@ class LogList extends React.Component {
       </div>
     );
   }
-  selectedDate(date, selectedDate) {
-    let isDate = {};
-    isDate[selectedDate] = date;
-    this.setState( isDate );
+  selectedDate(e, selectedDate) {
+    this.setState({
+      created: e
+    });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
   render() {
@@ -119,6 +120,12 @@ class LogList extends React.Component {
       pagination[i+1] = this.nextPage(i+1, ((logList.current_page == logList.last_page)|| logList.last_page == 0 ? false : (logList.current_page + 1 )), logList.last_page );
       perPage = logList.per_page;
     }
+
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+    }
+
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -137,11 +144,13 @@ class LogList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div id="created" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <DatePicker
-                selected={this.state.created}
+              <Datetime
+                id="created_at"
+                value={this.state.created}
                 dateFormat="YYYY-MM-DD"
-                onChange={(e) => this.selectedDate(e, 'created')}
-                className="mdl-textfield__input font-input" id="created" ref="created" readOnly/>
+                timeFormat={false}
+                onChange={(e)=> this.selectedDate(e, 'created')}
+              />
               <label className="mdl-textfield__label">Date Created</label>
             </div>
           </div>
@@ -237,35 +246,37 @@ class LogList extends React.Component {
     e.preventDefault();
     this.refs.ipAddress.value = "";
     this.refs.statusCode.value = "";
-
-    document.getElementById('created').value = '';
     this.setState({
       created: null
     });
-
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
 
-    this.searchList(e);
+    this.searchList(e, 10, true);
   }
-  searchList(e) {
+  searchList(e, pageNum = null, clearDate = false) {
+    var createDate = this.state.created;
     e.preventDefault();
+
     let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       ipAddress: this.refs.ipAddress.value,
       statusCode: this.refs.statusCode.value,
-      created: document.getElementById('created').value
+      created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.adminLogList(payload);
   }
   page(e, pageNumber) {
+    var createDate = this.state.created;
     e.preventDefault();
+
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       ipAddress: this.refs.ipAddress.value,
       statusCode: this.refs.statusCode.value,
-      created: document.getElementById('created').value
+      created: (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.adminLogList(payload);
   }
