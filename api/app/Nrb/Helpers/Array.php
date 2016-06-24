@@ -58,18 +58,12 @@ function array_keys_format_case($format = 'snake', $array, $array_holder = [])
     {
         if ($format == 'snake')
         {
-            // Camel to snake case
-            $new_key = preg_replace('/[A-Z]/', '_$0', $key);
-            $new_key = strtolower($new_key);
+            $new_key = snake_case($key);
             $new_key = ltrim($new_key, '_');
         }
         else
         {
-            // Snake to camel case
-            $new_key = explode('_', $key);
-            array_walk($new_key, create_function('&$v', '$v = ucwords($v);'));
-            $new_key = implode('', $new_key);
-            $new_key{0} = strtolower($new_key{0});
+            $new_key = camel_case($key);
         }
 
         if (is_array($val))

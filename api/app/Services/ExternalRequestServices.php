@@ -22,7 +22,8 @@ class ExternalRequestServices extends NrbServices
         $http_client = new Client();
 
         $data['form_params'] = $params;
-        $result = $http_client->request('post', $this->config['api_url'].'/oauth/token', $data);
+        $endpoint = $this->config['endpoints']['authenticate'];
+        $result = $http_client->request($endpoint['method'], $this->config['api_url'].$endpoint['path'], $data);
 
         $response = [
             'status' => $result->getStatusCode(),
@@ -42,7 +43,8 @@ class ExternalRequestServices extends NrbServices
         $http_client = new Client();
 
         $data['form_params'] = $params;
-        $result = $http_client->request('post', $this->config['api_url'].'/users', $data);
+        $endpoint = $this->config['endpoints']['create_user'];
+        $result = $http_client->request($endpoint['method'], $this->config['api_url'].$endpoint['path'], $data);
 
         $response = [
             'status' => $result->getStatusCode(),
@@ -75,7 +77,7 @@ class ExternalRequestServices extends NrbServices
 
         $http_client = new Client();
 
-        $endpoint['path'] = ($endpoint['path']) ? '/'.$endpoint['path'] : '';
+        $endpoint['path'] = $endpoint['path'] ?: '';
 
         Log::info('START External Request');
         Log::info('PAYLOAD:', [

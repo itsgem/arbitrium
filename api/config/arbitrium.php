@@ -8,7 +8,7 @@ return [
     'subscription_email_reminder' => 5, // in days
 
     'core' => [
-        'api_url'       => env('ARBITRIUM_API_URL'),
+        'api_url'       => env('ARBITRIUM_API_URL').'/',
         'auth'          => [
             'grant_type'    => env('ARBITRIUM_GRANT_TYPE'),
             'client_id'     => env('ARBITRIUM_CLIENT_ID'),
@@ -17,6 +17,9 @@ return [
             'password'      => env('ARBITRIUM_PASSWORD'),
         ],
         'endpoints'     => [
+            'authenticate'              => ['method' => 'post',    'path' => 'oauth/token'],
+            'create_user'               => ['method' => 'post',    'path' => 'users'],
+
             'list_api_keys'             => ['method' => 'get',    'path' => 'apiKeys'],
             'show_api_key'              => ['method' => 'get',    'path' => 'apiKeys/:id'],
             'create_api_key'            => ['method' => 'post',   'path' => 'apiKeys'],
