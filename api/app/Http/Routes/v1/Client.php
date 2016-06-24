@@ -14,6 +14,12 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
         });
         Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
+        Route::group(['prefix' => 'api-log'], function()
+        {
+            Route::get('',           ['uses' => 'ApiLogController@index']);
+            Route::get('{api_log}',  ['uses' => 'ApiLogController@show']);
+        });
+
         //-- PROFILE
         Route::get('profile',               ['uses' => 'ClientsController@show']);
         Route::put('profile',               ['uses' => 'ClientsController@update']);

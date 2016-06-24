@@ -17,7 +17,7 @@ class ExternalRequestServices extends NrbServices
         $this->config = config('arbitrium.core');
     }
 
-    public function login($params)
+    public function authenticate($params)
     {
         $http_client = new Client();
 
@@ -35,8 +35,8 @@ class ExternalRequestServices extends NrbServices
 
     public function addUser($params)
     {
-        // Can only add user using the Core-API
-        $response = $this->login($this->config['auth']);
+        // Can only add user using the Core-API root
+        $response = $this->authenticate($this->config['auth']);
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
         $http_client = new Client();
@@ -58,7 +58,7 @@ class ExternalRequestServices extends NrbServices
         $auth = $auth ?: $this->config['auth'];
 
         // Authenticate External API access
-        $response = $this->login($auth);
+        $response = $this->authenticate($auth);
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
         // Transform payload to camelcase

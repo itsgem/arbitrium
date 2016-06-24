@@ -18,6 +18,12 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         });
         Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 
+        Route::group(['prefix' => 'api-log'], function()
+        {
+            Route::get('',           ['uses' => 'ApiLogController@index']);
+            Route::get('{api_log}',  ['uses' => 'ApiLogController@show']);
+        });
+
         //-- CLIENT
         Route::group(['prefix' => 'client'], function()
         {

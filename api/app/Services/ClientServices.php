@@ -53,12 +53,14 @@ class ClientServices extends NrbServices
                 'rep_phone_code', 'rep_phone_number', 'rep_mobile_code', 'rep_mobile_number', 'approval_status'
             )
             ->with(['user' => function($query){
-                $query->select('id', 'email_address', 'login_attempts', 'locked_at');
+                $query->select('id', 'email_address', 'username', 'login_attempts', 'locked_at');
             }])
             ->whereHas('user', function ($query) use ($request){
                 $query->emailLike($request->get('email_address'));
             })
-            ->approvalStatus($request->get('approval_status'))->companyNameLike($request->get('company_name'))
+            ->approvalStatus($request->get('approval_status'))
+            ->companyNameLike($request->get('company_name'))
+            ->usernameLike($request->get('username'))
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );

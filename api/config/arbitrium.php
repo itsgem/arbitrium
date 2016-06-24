@@ -25,6 +25,9 @@ return [
             'activate_api_key'          => ['method' => 'patch',  'path' => 'apiKeys/:id/activate'],
 
             'list_api_key_permissions'  => ['method' => 'get',    'path' => 'permission'],
+
+            'list_api_logs'             => ['method' => 'get',    'path' => 'apilogs'],
+            'show_api_log'              => ['method' => 'get',    'path' => 'apilogs/:id'],
         ]
     ],
 
