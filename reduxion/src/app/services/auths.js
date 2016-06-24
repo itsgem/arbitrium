@@ -45,7 +45,6 @@ export default {
     });
   },
   verifyEmailCode(payload) {
-    console.log('payload', payload)
     return patch('user/register/verify', {
       params: {
         token: payload.token,
@@ -257,7 +256,6 @@ export default {
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
         is_test_key: payload.is_test_key,
-        token: 'sample'
       }
     });
   },
@@ -271,8 +269,7 @@ export default {
         is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
-        is_test_key: payload.is_test_key,
-        token: 'sample'
+        is_test_key: payload.is_test_key
       }
     });
   },
@@ -434,7 +431,6 @@ export default {
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
         is_test_key: payload.is_test_key,
-        token: 'sample'
       }
     });
   },

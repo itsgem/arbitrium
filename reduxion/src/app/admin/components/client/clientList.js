@@ -175,8 +175,8 @@ class UserManagementList extends React.Component {
                 <th className="mdl-data-table__cell--non-numeric" width="195">Email Address</th>
                 <th className="mdl-data-table__cell--non-numeric" width="139">Phone Number</th>
                 <th className="mdl-data-table__cell--non-numeric" width="139">Mobile No.</th>
-                <th className="mdl-data-table__cell--non-numeric" width="103">Status</th>
-                <th className="mdl-data-table__cell--non-numeric" width="135">Action</th>
+                <th className="mdl-data-table__cell--non-numeric" width="110">Status</th>
+                <th className="mdl-data-table__cell--non-numeric" width="130">Action</th>
               </tr>
             </thead>
             <tbody>

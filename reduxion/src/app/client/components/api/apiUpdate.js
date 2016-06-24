@@ -11,7 +11,7 @@ class ApiUpdate extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      client_id: null,
+      clientid: null,
       permissions: {}
     };
   }
@@ -20,17 +20,49 @@ class ApiUpdate extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
+  scrolltop (errors) {
+    if (!document.querySelector('.alert')) {
+      return false;
+    }
+    if (Object.keys(errors).length) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      let scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
+    }
+  }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
+    this.scrolltop(errors);
 
     let ipAddresses = '';
     let getApiInfo = this.props.getApiInfo.data;
     let permissions = this.props.apiPermissions.data;
     ipAddresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
-    ipAddresses = ipAddresses.split(',').join("\n")
+    ipAddresses = ipAddresses.split(',').join("\n");
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <div className="mdl-grid">
@@ -52,7 +84,7 @@ class ApiUpdate extends React.Component {
             <div className="mdl-textfield mdl-js-textfield full-width">
               <div className={this.formClassNames('ip_addresses', errors)}>
                 <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" defaultValue={ipAddresses}></textarea>
-                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address...</label>
+                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address</label>
                 {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
             </div>
@@ -66,7 +98,7 @@ class ApiUpdate extends React.Component {
             permissions  && permissions.map(item => {
               let getCk = false;
               for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].api_permission_id == item.id && getApiInfo.permissions[i].value == 1) {
+                if (getApiInfo.permissions[i].api_permission_id == item.id) {
                   getCk = true;
                   break;
                 }
@@ -130,9 +162,7 @@ class ApiUpdate extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
-      } else {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
+        permissions[k] = {api_permission_id: chkArr[k].value};
       }
     }
 

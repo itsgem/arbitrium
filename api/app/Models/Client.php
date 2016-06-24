@@ -48,7 +48,7 @@ use App\User;
  *     required={"id", "credit_balance", "approval_status", "company_name", "street_address_1", "city", "country_id", "postal_code", "rep_first_name", "rep_last_name", "rep_email_address", "rep_gender", "rep_position", "rep_department", "can_delete"},
  *     @SWG\Property(property="id", type="integer", format="int64", description="Client ID", default="2"),
  *     @SWG\Property(property="credit_balance", type="integer", format="int64", description="Credit Balance", default="0"),
- *     @SWG\Property(property="approval_status", type="string", description="Approval Status", default="Approved"),
+ *     @SWG\Property(property="approval_status", type="string", description="Approval Status (Approved|Disapproved|Pending)", default="Approved"),
  *     @SWG\Property(property="approved_at", type="string", description="Date Approved", default="null"),
  *     @SWG\Property(property="disapproved_at", type="string", description="Date Disapproved", default="null"),
  *     @SWG\Property(property="company_name", type="string", description="Company Name", default="ABC"),
@@ -82,6 +82,29 @@ use App\User;
  * )
  *
  * @SWG\Definition(
+ *     definition="ClientResponse",
+ *     required={"id", "company_name", "rep_first_name", "rep_last_name", "rep_email_address", "rep_mobile_code", "rep_mobile_number", "rep_phone_code", "rep_phone_number", "approval_status", "can_avail_trial", "user"},
+ *     @SWG\Property(property="id", type="integer", format="int64", description="Client ID", default="1"),
+ *     @SWG\Property(property="company_name", type="string", description="Company Name", default="ABC Company"),
+ *     @SWG\Property(property="rep_first_name", type="string", description="Representative First Name", default="John"),
+ *     @SWG\Property(property="rep_last_name", type="string", description="Representative Last Name", default="Doe"),
+ *     @SWG\Property(property="rep_email_address", type="string", description="Representative Email Address", default="email@contact.com"),
+ *     @SWG\Property(property="rep_mobile_code", type="string", description="Representative Mobile Code", default="1"),
+ *     @SWG\Property(property="rep_mobile_number", type="string", description="Representative Mobile Number", default="555-1234"),
+ *     @SWG\Property(property="rep_phone_code", type="string", description="Representative Phone Code", default="1"),
+ *     @SWG\Property(property="rep_phone_number", type="string", description="Representative Phone Number", default="555-1234"),
+ *     @SWG\Property(property="approval_status", type="string", description="Approval Status (Approved|Disapproved|Pending)", default="Approved"),
+ *     @SWG\Property(property="can_avail_trial", type="string", description="Can client still avail trial (true|false)", default="true"),
+ *     @SWG\Property(property="user", description="Client User Data",
+ *         @SWG\Property(property="id", type="integer", format="int64", description="Client User ID", default="1"),
+ *         @SWG\Property(property="username", type="string", description="Username", default="client0001"),
+ *         @SWG\Property(property="email_address", type="string", description="Email", default="client0001-arbitrium@gmail.com"),
+ *         @SWG\Property(property="login_attempts", type="integer", format="int64", description="Number of failed login attempts", default="0"),
+ *         @SWG\Property(property="locked_at", type="string", format="date", description="Date account was locked", default="2016-06-24 02:14:44"),
+ *     ),
+ * )
+ *
+ * @SWG\Definition(
  *     definition="ClientUserResponse",
  *     required={"id", "username", "email_address", "activated_at", "items_per_page", "timezone", "locked_at"},
  *     @SWG\Property(property="id", type="integer", format="int64", description="Client User ID", default="1"),
@@ -90,7 +113,7 @@ use App\User;
  *     @SWG\Property(property="activated_at", type="string", format="date", description="Date account was activated", default="2016-05-12 03:45:47"),
  *     @SWG\Property(property="items_per_page", type="integer", format="int64", description="Number of rows per page in viewing list", default="10"),
  *     @SWG\Property(property="timezone", type="string", description="Timezone", default="Asia/Singapore"),
- *     @SWG\Property(property="locked_at", type="string", format="date", description="Date account was locked", default=""),
+ *     @SWG\Property(property="locked_at", type="string", format="date", description="Date account was locked", default="2016-06-24 02:14:44"),
  * )
  *
  * @package App\Models
@@ -195,6 +218,13 @@ class Client extends NrbModel
     }
 
     //---------- scopes
+    public function scopeUsernameLike($query, $username)
+    {
+        return $query->whereHas('user', function($query)use($username){
+            $query->like('username', $username);
+        });
+    }
+
     public function scopeCompanyNameLike($query, $name)
     {
         return $query->like('company_name', $name);

@@ -19,20 +19,19 @@ class ApiKeyRequest extends NrbRequest
         if ($method == 'POST' || $method == 'PUT')
         {
             $rules = [
-                'client_id'              => 'exists:clients,id',
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
-                'permissions'            => 'required_if:is_api_call_restricted,1|array',
+                'is_whitelist'           => 'boolean',
                 'ip_addresses'           => 'required_if:is_whitelist,1|array',
                 'is_api_call_restricted' => 'boolean',
-                'is_whitelist'           => 'boolean',
+                'permissions'            => 'required_if:is_api_call_restricted,1|array',
                 'is_active'              => 'boolean',
                 'is_test_key'            => 'boolean'
             ];
 
             if (is_admin_user_logged_in())
             {
-                $rules['client_id'] .= '|required';
+                $rules['client_id'] = 'exists:clients,id|required';
             }
         }
 
@@ -50,43 +49,17 @@ class ApiKeyRequest extends NrbRequest
         }
         else
         {
-            // Validate Permissions
-            $rules_permissions = [
-                'api_permission_id' => ['required', 'exists:api_permissions,id'],
-                'value'             => ['required', 'boolean'],
-            ];
-            if ($this->get('permissions'))
-            {
-                foreach ($this->get('permissions') as $permission)
-                {
-                    $validation = Validator::make(
-                        [
-                            'api_permission_id' => get_val($permission, 'api_permission_id', ''),
-                            'value'             => get_val($permission, 'value', ''),
-                        ],
-                        $rules_permissions
-                    );
-                    if ($validation->fails())
-                    {
-                        $errors['permissions'][] = $validation->messages()->toArray();
-                    }
-                }
-            }
             // Validate IP Addresses
-            $rules_ip_addresses = [
-                'api_key_id' => ['exists:api_keys,id'],
-                'ip_address' => ['required', 'ip'],
-                'name'       => ['max:255']
-            ];
             if ($this->get('ip_addresses'))
             {
+                $rules_ip_addresses = [
+                    'ip_address' => ['required', 'ip'],
+                ];
                 foreach ($this->get('ip_addresses') as $ip_address)
                 {
                     $validation = Validator::make(
                         [
-                            'api_key_id' => get_val($ip_address, 'api_key_id', ''),
                             'ip_address' => get_val($ip_address, 'ip_address', ''),
-                            'name'       => get_val($ip_address, 'name', ''),
                         ],
                         $rules_ip_addresses
                     );

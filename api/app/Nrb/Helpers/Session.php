@@ -6,6 +6,12 @@ function belongs_to_logged_in_user($user_id)
     return $logged_in && $user_id == $logged_in->id;
 }
 
+function get_logged_in_user_api_creds()
+{
+    $logged_in = auth()->user();
+    return $logged_in && $logged_in->hasApi() ? $logged_in->api->getAuth() : NULL;
+}
+
 function get_logged_in_client_id()
 {
     $logged_in = auth()->user();
