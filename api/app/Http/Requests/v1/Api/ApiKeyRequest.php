@@ -21,12 +21,12 @@ class ApiKeyRequest extends NrbRequest
             $rules = [
                 'name'                   => 'max:255',
                 'description'            => 'required|max:255',
-                'permissions'            => 'array',
+                'is_whitelist'           => 'boolean',
                 'ip_addresses'           => 'required_if:is_whitelist,1|array',
                 'is_api_call_restricted' => 'boolean',
-                'is_whitelist'           => 'boolean',
+                'permissions'            => 'required_if:is_api_call_restricted,1|array',
                 'is_active'              => 'boolean',
-                'is_testKey'             => 'boolean'
+                'is_test_key'            => 'boolean'
             ];
 
             if (is_admin_user_logged_in())
