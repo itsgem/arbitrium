@@ -58,11 +58,11 @@ class ApiUpdate extends React.Component {
     }
     this.scrolltop(errors);
 
-    let ip_addresses = '';
+    let ipAddresses = '';
     let getApiInfo = this.props.getApiInfo.data;
     let permissions = this.props.apiPermissions.data;
-    ip_addresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
-    ip_addresses = ip_addresses.split(',').join("\n");
+    ipAddresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
+    ipAddresses = ipAddresses.split(',').join("\n");
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <div className="mdl-grid">
@@ -83,8 +83,8 @@ class ApiUpdate extends React.Component {
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield full-width">
               <div className={this.formClassNames('ip_addresses', errors)}>
-                <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" defaultValue={ip_addresses}></textarea>
-                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address...</label>
+                <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" defaultValue={ipAddresses}></textarea>
+                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address</label>
                 {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
             </div>
@@ -172,21 +172,21 @@ class ApiUpdate extends React.Component {
       errorServer: null
     } );
 
-    let ip_addresses = this.refs.ip_addresses.value;
-    if (ip_addresses) {
-      ip_addresses = ip_addresses.split('\n');
-      ip_addresses = ip_addresses.map(function(obj){
+    let ipAddresses = this.refs.ip_addresses.value;
+    if (ipAddresses) {
+      ipAddresses = ipAddresses.split('\n');
+      ipAddresses = ipAddresses.map(function(obj){
          let rObj = {};
          rObj = {ip_address: obj.trim()};
          return rObj;
       });
     } else {
-      ip_addresses = [];
+      ipAddresses = [];
     }
     let payload = {
       id: id,
       description: this.refs.description.value,
-      ip_addresses: ip_addresses,
+      ip_addresses: ipAddresses,
       permissions: permissions,
       is_whitelist: (this.refs.is_whitelist.checked ? 1 : 0),
       is_api_call_restricted: (this.refs.is_api_call_restricted.checked ? 1 : 0),

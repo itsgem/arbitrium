@@ -212,7 +212,7 @@ class ApiAdd extends React.Component {
       ipAddresses = ipAddresses.split('\n');
       ipAddresses = ipAddresses.map(function(obj){
          let rObj = {};
-         rObj = {ipAddress: obj.trim()};
+         rObj = {ip_address: obj.trim()};
          return rObj;
       });
     } else {

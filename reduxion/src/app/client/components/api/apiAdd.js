@@ -158,20 +158,20 @@ class ApiAdd extends React.Component {
       errorServer: null
     } );
 
-    let ip_addresses = this.refs.ip_addresses.value;
-    if (ip_addresses) {
-      ip_addresses = ip_addresses.split('\n');
-      ip_addresses = ip_addresses.map(function(obj){
+    let ipAddresses = this.refs.ip_addresses.value;
+    if (ipAddresses) {
+      ipAddresses = ipAddresses.split('\n');
+      ipAddresses = ipAddresses.map(function(obj){
          let rObj = {};
          rObj = {ip_address: obj.trim()};
          return rObj;
       });
     } else {
-      ip_addresses = [];
+      ipAddresses = [];
     }
     let payload = {
       description: this.refs.description.value,
-      ip_addresses: ip_addresses,
+      ip_addresses: ipAddresses,
       permissions: permissions,
       is_whitelist: (this.refs.is_whitelist.checked ? 1 : 0),
       is_api_call_restricted: (this.refs.is_api_call_restricted.checked ? 1 : 0),

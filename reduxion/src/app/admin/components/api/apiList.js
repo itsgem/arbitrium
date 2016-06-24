@@ -23,18 +23,16 @@ class ApiList extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+
     modal();
-    if (nextProps.deleteApiKeySuccess && !nextProps.loading) {
-      this.props.apiList({per_page: 10}).catch(createError);
-    }
-    if (nextProps.activeApiKey) {
+    if (nextProps.activeApiKey || nextProps.deleteApiKeySuccess) {
       let apiList = nextProps.ListApiSuccess;
       let payload = {
         page: apiList.currentPage,
         per_page: apiList.per_page,
         description: this.state.description,
         token: this.state.apiKey,
-        created: this.state.created
+        created: this.state.created ? this.state.created.format("YYYY-MM-DD") : ''
       };
       nextProps.apiList(payload).catch(createError);
     }
@@ -132,18 +130,18 @@ class ApiList extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let apiList = {lastPage: 1};
+    let apiList = {last_page: 1};
     let users = {};
     if (Object.keys(this.props.ListApiSuccess).length) {
       let i=0;
       counter = true;
       apiList = this.props.ListApiSuccess;
       users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.currentPage > 1 ? (apiList.currentPage - 1): false));
-      for (i = 1; i <= apiList.lastPage; i++) {
-        pagination[i] = this.pagination(i, apiList.currentPage);
+      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
+      for (i = 1; i <= apiList.last_page; i++) {
+        pagination[i] = this.pagination(i, apiList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.currentPage == apiList.lastPage)|| apiList.lastPage == 0 ? false : (apiList.currentPage + 1 )), apiList.lastPage );
+      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
       perPage = apiList.per_page;
     }
 
@@ -224,7 +222,7 @@ class ApiList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
             <span className="tooltiptext">Items to show per page</span>
-            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={per_page} />
+            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
             <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
@@ -302,7 +300,10 @@ class ApiList extends React.Component {
     this.refs.description.value = "";
     this.refs.api_key.value = "";
     this.setState( {
-      createdDate: null
+      createdDate: null,
+      description: null,
+      token: null,
+      created: null
     } );
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
@@ -315,7 +316,7 @@ class ApiList extends React.Component {
     this.setState({
       description: this.refs.description.value,
       apiKey: this.refs.api_key.value,
-      created: document.getElementById('created_at').value
+      created: createDate
     });
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
@@ -328,6 +329,11 @@ class ApiList extends React.Component {
   page(e, pageNumber) {
     var createDate = this.state.createdDate;
     e.preventDefault();
+    this.setState({
+      description: this.refs.description.value,
+      token: this.refs.api_key.value,
+      created: (createDate ? createDate.format('YYYY-MM-DD') : '')
+    });
 
     let payload = {
       page: pageNumber,
