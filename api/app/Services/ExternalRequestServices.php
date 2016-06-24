@@ -55,7 +55,7 @@ class ExternalRequestServices extends NrbServices
         return $response;
     }
 
-    public function send($payload, $endpoint, $auth = null)
+    public function send($payload = [], $endpoint, $auth = null)
     {
         $auth = $auth ?: $this->config['auth'];
 

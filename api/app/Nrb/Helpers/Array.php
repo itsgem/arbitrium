@@ -45,41 +45,33 @@ function csv_to_array($filename='', $header=false, $delimiter=',')
 }
 
 // Ref: https://gist.github.com/goldsky/3372487
-function array_keys_format_case($format = 'snake', $array, $array_holder = [])
+function array_keys_format_case($format = 'snake', $array)
 {
-    if (empty($array))
+    if (!$array)
     {
         return [];
     }
 
-    $formatted_array = !empty($array_holder) ? $array_holder : [];
+    $formatted_array = [];
 
-    foreach ($array as $key => $val)
+    foreach ($array as $key => $value)
     {
         if ($format == 'snake')
         {
-            $new_key = snake_case($key);
-            $new_key = ltrim($new_key, '_');
+            $key = snake_case($key);
+            $key = ltrim($key, '_');
         }
         else
         {
-            $new_key = camel_case($key);
+            $key = camel_case($key);
         }
 
-        if (is_array($val))
+        if (is_array($value))
         {
-            $val_array = [];
-            $value = $val;
-            foreach ($value as $k => $v)
-            {
-                $val_array[] = array_keys_format_case($format, $val[$k], $v);
-            }
-            $formatted_array[$new_key] = $val_array;
+            $value = array_keys_format_case($format, $value);
         }
-        else
-        {
-            $formatted_array[$new_key] = $val;
-        }
+
+        $formatted_array[$key] = $value;
     }
 
     return $formatted_array;
@@ -113,7 +105,7 @@ function transformArbitriumResponseData($response)
 
                         if ($client = $user_api->user->client)
                         {
-                            $data['client'] = (object) [
+                            $data['client'] = [
                                 'id'             => $client->id,
                                 'company_name'   => $client->company_name,
                                 'rep_first_name' => $client->rep_first_name,
@@ -122,8 +114,6 @@ function transformArbitriumResponseData($response)
                         }
                     }
                 }
-
-                $response->data[$key] = array_keys_format_case('snake', $data);
             }
         }
         else
@@ -139,7 +129,7 @@ function transformArbitriumResponseData($response)
 
                     if ($client = $user_api->user->client)
                     {
-                        $response_data['client'] = (object) [
+                        $response_data['client'] = [
                             'id'             => $client->id,
                             'company_name'   => $client->company_name,
                             'rep_first_name' => $client->rep_first_name,
@@ -149,9 +139,9 @@ function transformArbitriumResponseData($response)
                 }
             }
 
-            $response->data = array_keys_format_case('snake', $response_data);
+            $response->data = $response_data;
         }
     }
 
-    return $response;
+    return array_keys_format_case('snake', $response);
 }
