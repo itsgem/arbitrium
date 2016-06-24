@@ -120,10 +120,11 @@ class SubscriptionEdit extends React.Component {
                             <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
                           </tr>
                           <tr>
-                            <td>
+                            <td style={(clientInfo.can_avail_trial == false && clientSubscriptionInfo.name != 'Free Trial') ? {'height' : '60px'} : {'height' : '48px'}}>
                               {
                                 item.name == 'Free Trial' ? (clientInfo.can_avail_trial == false ?
-                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
+                                  (clientSubscriptionInfo.name != 'Free Trial' ? '' :
+                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>)
                                   : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>Subscribe</Link> )
                                 : clientSubscriptionInfo.subscription_id == item.id ?
                                   <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
