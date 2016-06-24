@@ -72,7 +72,6 @@ function array_keys_format_case($format = 'snake', $array, $array_holder = [])
             $new_key{0} = strtolower($new_key{0});
         }
 
-
         if (is_array($val))
         {
             $val_array = [];

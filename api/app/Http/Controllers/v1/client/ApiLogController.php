@@ -24,10 +24,10 @@ class ApiLogController extends ApiController
      * Get all API Logs
      *
      * @SWG\Get(
-     *     path="/admin/api-log",
-     *     tags={"Admin - API Logs"},
+     *     path="/client/api-log",
+     *     tags={"Client - API Logs"},
      *     summary="All API Logs",
-     *     description="Get all API logs",
+     *     description="Get all logged in client's API logs",
      *     @SWG\Response(response="200", description="Success",
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
@@ -68,6 +68,44 @@ class ApiLogController extends ApiController
         return $service->index($this->request, get_logged_in_client_id());
     }
 
+    /**
+     * Get single API log
+     *
+     * @SWG\Get(
+     *     path="/client/api-log/{api_log}",
+     *     tags={"Client - API Logs"},
+     *     summary="Single API Log",
+     *     description="Get logged in client's single API log",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", ref="#/definitions/ApiLogResponse")
+     *         )
+     *     ),
+     *     @SWG\Response(response="204", description="No matches or no allowed matches found"),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="X-Token",
+     *         in="header",
+     *         description="X-Token",
+     *         required=true,
+     *         type="string",
+     *         default=""
+     *     ),
+     * )
+     *
+     * @param $id
+     * @param ApiLogServices $service
+     *
+     * @return mixed
+     */
     public function show($id, ApiLogServices $service)
     {
         return $service->show($id, get_logged_in_client_id());
