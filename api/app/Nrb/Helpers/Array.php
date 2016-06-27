@@ -114,6 +114,8 @@ function transformArbitriumResponseData($response)
                         }
                     }
                 }
+
+                $response->data[$key] = $data;
             }
         }
         else
