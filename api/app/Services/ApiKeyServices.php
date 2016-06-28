@@ -70,24 +70,13 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::store
     public function store($request, $client_id = null)
     {
-        $payload = $request->all();
-
-        $payload_client_id = get_val($payload, 'client_id');
-        if ($payload_client_id)
-        {
-            $payload_client_id = Client::findOrfail($payload_client_id)->user->api->getAuth();
-            $payload_client_id = $payload_client_id['client_id'];
-        }
-
-        $payload['client_id'] = $payload_client_id;
-
         if ($client_id)
         {
             $client = Client::findOrfail($client_id);
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($payload, get_api_url($this->endpoints['create_api_key']), $this->auth);
+        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['create_api_key']), $this->auth);
 
         return $result;
     }
@@ -96,24 +85,13 @@ class ApiKeyServices extends NrbServices
     // Client\Api\ApiKeyController::update
     public function update($request, $id, $client_id = null)
     {
-        $payload = $request->all();
-
-        $payload_client_id = get_val($payload, 'client_id');
-        if ($payload_client_id)
-        {
-            $payload_client_id = Client::findOrfail($payload_client_id)->user->api->getAuth();
-            $payload_client_id = $payload_client_id['client_id'];
-        }
-
-        $payload['client_id'] = $payload_client_id;
-
         if ($client_id)
         {
             $client = Client::findOrfail($client_id);
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($payload, get_api_url($this->endpoints['update_api_key'], ['id' => $id]), $this->auth);
+        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['update_api_key'], ['id' => $id]), $this->auth);
 
         return $result;
     }
