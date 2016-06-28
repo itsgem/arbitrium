@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Errors;
 use App\Nrb\NrbServices;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7;
 use Illuminate\Support\Facades\Log;
 
@@ -19,7 +19,7 @@ class ExternalRequestServices extends NrbServices
 
     public function authenticate($params)
     {
-        $http_client = new Client();
+        $http_client = new GuzzleClient();
 
         $data['form_params'] = $params;
         $endpoint = $this->config['endpoints']['authenticate'];
@@ -40,7 +40,7 @@ class ExternalRequestServices extends NrbServices
         $response = $this->authenticate($this->config['auth']);
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
-        $http_client = new Client();
+        $http_client = new GuzzleClient();
 
         $data['form_params'] = $params;
         $endpoint = $this->config['endpoints']['create_user'];
@@ -64,6 +64,7 @@ class ExternalRequestServices extends NrbServices
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
         // Transform payload to camelcase
+        $payload = transform_arbitrium_payload($payload);
         $payload = array_keys_format_case('camel', $payload);
 
         // Group different kinds of payload
@@ -75,7 +76,7 @@ class ExternalRequestServices extends NrbServices
             $data['json'] = $payload;
         }
 
-        $http_client = new Client();
+        $http_client = new GuzzleClient();
 
         $endpoint['path'] = $endpoint['path'] ?: '';
 
@@ -98,7 +99,7 @@ class ExternalRequestServices extends NrbServices
         }
         Log::info('RESPONSE SUCCESS: '.json_encode($response));
 
-        $response = transformArbitriumResponseData($response);
+        $response = transform_arbitrium_response_data($response);
         Log::info('TRANSFORMED RESPONSE: '.json_encode($response));
 
         Log::info('END External Request');
