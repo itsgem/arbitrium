@@ -31,6 +31,8 @@ return [
 
             'list_api_logs'             => ['method' => 'get',    'path' => 'apilogs'],
             'show_api_log'              => ['method' => 'get',    'path' => 'apilogs/:id'],
+
+            'subscribe'                 => ['method' => 'post',   'path' => 'subscribe'],
         ]
     ],
 

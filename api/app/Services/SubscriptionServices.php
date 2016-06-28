@@ -144,6 +144,12 @@ class SubscriptionServices extends NrbServices
 
             if ($finalized_client)
             {
+                // Core-API subscribe package plan
+                $client->coreApiSubscribe([
+                    'max_api_calls' => $client_subscription->max_api_calls,
+                    'max_decisions' => $client_subscription->max_decisions,
+                ]);
+
                 // Send client subscription change success email
                 $client->sendSubscriptionChangeSuccess($client_subscription);
 
@@ -347,32 +353,38 @@ class SubscriptionServices extends NrbServices
         // if client has subscribed before, suspend it
         if ($latest_subscription)
         {
-            $paypal = new PaypalServices();
-            $agreement = $paypal->showAgreement($latest_subscription->paypal_agreement_id);
-
-            if ($agreement instanceof JsonResponse)
+            if ($latest_subscription->isRecurring())
             {
-                return $agreement;
-            }
-
-            // Make sure the current subscription is still active in paypal
-            if ($agreement['state'] == ClientSubscription::PAYPAL_STATE_ACTIVE)
-            {
-                // Suspend last subscription agreement
                 $paypal = new PaypalServices();
-                $suspended_sub = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id);
-                $suspended_sub_data = $suspended_sub->getData();
+                $agreement = $paypal->showAgreement($latest_subscription->paypal_agreement_id);
 
-                if (!$suspended_sub_data->success)
+                if ($agreement instanceof JsonResponse)
                 {
-                    return $suspended_sub;
+                    return $agreement;
+                }
+
+                // Make sure the current subscription is still active in paypal
+                if ($agreement['state'] == ClientSubscription::PAYPAL_STATE_ACTIVE)
+                {
+                    // Suspend last subscription agreement
+                    $paypal = new PaypalServices();
+                    $suspended_sub = $paypal->suspendAgreement($latest_subscription->paypal_agreement_id);
+                    $suspended_sub_data = $suspended_sub->getData();
+
+                    if (!$suspended_sub_data->success)
+                    {
+                        return $suspended_sub;
+                    }
                 }
             }
 
             if (!$renew)
             {
-                DB::transaction(function () use ($latest_subscription)
+                DB::transaction(function () use ($latest_subscription, $client)
                 {
+                    // Core-API reset allowed requests and decisions
+                    $client->coreApiSubscribe();
+
                     $latest_subscription->cancel();
                 });
             }

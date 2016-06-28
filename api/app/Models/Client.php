@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Nrb\NrbModel;
 use App\Services\MailServices;
+use App\Services\ExternalRequestServices;
 use App\User;
 
 /**
@@ -425,6 +426,26 @@ class Client extends NrbModel
         {
             ClientSubscription::unfinishedTempSubscription($client_id)->delete();
         }
+    }
+
+    public function coreApiSubscribe($params = [])
+    {
+        if (!$this->user->api)
+        {
+            return false;
+        }
+
+        $auth = $this->user->api->getAuth();
+
+        $params = [
+            'client_id'     => $this->id,
+            'max_api_calls' => get_val($params, 'max_api_calls', 0),
+            'max_decisions' => get_val($params, 'max_decisions', 0),
+        ];
+
+        $result = (new ExternalRequestServices())->send($params, get_api_url(config('arbitrium.core.endpoints.subscribe')), $auth);
+
+        return $result;
     }
 
     public function sendApprovalLink($pending_subscription)
