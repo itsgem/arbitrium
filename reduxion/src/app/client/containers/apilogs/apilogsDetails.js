@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { clientApiLogInfo } from 'client/reducers/apilogs'
-import apiLogsDetails from 'client/views/apilogs/apiLogsDetails';
+import apiLogsDetails from 'client/views/apilogs/apilogsDetails';
 
 const strMapToObj=(strMap) => {
   let obj = JSON.parse(JSON.stringify(strMap));
