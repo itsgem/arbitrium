@@ -358,6 +358,7 @@ class SubscriptionServices extends NrbServices
                 $paypal = new PaypalServices();
                 $agreement = $paypal->showAgreement($latest_subscription->paypal_agreement_id);
 
+                // Return paypal error, if any
                 if ($agreement instanceof JsonResponse)
                 {
                     return $agreement;
