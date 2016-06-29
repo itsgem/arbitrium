@@ -201,7 +201,10 @@ class ClientSubscription extends Subscription
         $this->cancelled_at = current_datetime();
         $this->save();
 
-        $this->invoice->cancel();
+        if ($this->invoice)
+        {
+            $this->invoice->cancel();
+        }
     }
 
     public function renew()
@@ -243,6 +246,11 @@ class ClientSubscription extends Subscription
     public function isExpired()
     {
         return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_EXPIRED;
+    }
+
+    public function isRecurring()
+    {
+        return (boolean) $this->is_auto_renew;
     }
 
     public function generateInvoice()

@@ -10,7 +10,6 @@ export default React.createClass({
   },
   componentWillMount () {
     let id = this.props.params.id;
-    this.props.getApiPermission().catch(createError);
     this.props.clientGetApiKey(id).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
@@ -21,6 +20,9 @@ export default React.createClass({
         timeout: 3000
       });
       this.context.router.push('/i/api/');
+    }
+    if (Object.keys(nextProps.apiKeyInfo).length && !Object.keys(nextProps.apiPermissions).length && !nextProps.loading) {
+      this.props.getApiPermission().catch(createError);
     }
   },
   loadingRender () {

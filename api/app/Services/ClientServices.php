@@ -19,8 +19,13 @@ class ClientServices extends NrbServices
     {
         return DB::transaction(function () use ($request, $id, $approve)
         {
-            $client = Client::findOrFail($id)->approve($request->get('callback_url'), $approve);
-            return $this->respondWithSuccess();
+            $client = Client::findOrFail($id);
+            $client->approve($request->get('callback_url'), $approve);
+
+            // Core-API signup
+            $client->user->registerApiCredentials();
+
+            return $this->respondWithSuccess($client);
         });
     }
 
@@ -48,12 +53,14 @@ class ClientServices extends NrbServices
                 'rep_phone_code', 'rep_phone_number', 'rep_mobile_code', 'rep_mobile_number', 'approval_status'
             )
             ->with(['user' => function($query){
-                $query->select('id', 'email_address', 'login_attempts', 'locked_at');
+                $query->select('id', 'email_address', 'username', 'login_attempts', 'locked_at');
             }])
             ->whereHas('user', function ($query) use ($request){
                 $query->emailLike($request->get('email_address'));
             })
-            ->approvalStatus($request->get('approval_status'))->companyNameLike($request->get('company_name'))
+            ->approvalStatus($request->get('approval_status'))
+            ->companyNameLike($request->get('company_name'))
+            ->usernameLike($request->get('username'))
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );
@@ -86,9 +93,13 @@ class ClientServices extends NrbServices
                 $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
             }]);
         }
-
         $client = $client->findOrFail($id);
         $this->addResponseData($client);
+        if ($request->get('with-api'))
+        {
+            $client['api'] = $client->user->api->getAuth();
+        }
+
         return $this->respondWithSuccess($client);
     }
 
@@ -100,6 +111,14 @@ class ClientServices extends NrbServices
             $user = User::create($request->all());
             $user->client()->save(new Client($request->all()));
             $user->sendNewClientAccount($request->get('callback_url'));
+
+            // Core-API signup
+            $user->registerApiCredentials([
+                'username'  => $user->username,
+                'password'  => $user->password,
+                'userType' => User::CLIENT,
+            ]);
+
             return $this->respondWithSuccess($user->client);
         });
     }

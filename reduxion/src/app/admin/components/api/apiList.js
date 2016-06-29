@@ -14,20 +14,35 @@ class ApiList extends React.Component {
       errors: {},
       errorServer:null,
       id: null,
-      createdDate: null
+      createdDate: null,
+      description: null,
+      apiKey: null,
+      created: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+
     modal();
+    if (nextProps.activeApiKey || nextProps.deleteApiKeySuccess) {
+      let apiList = nextProps.ListApiSuccess;
+      let payload = {
+        page: apiList.currentPage,
+        per_page: apiList.per_page,
+        description: this.state.description,
+        token: this.state.apiKey,
+        created: this.state.created ? this.state.created.format("YYYY-MM-DD") : ''
+      };
+      nextProps.apiList(payload).catch(createError);
+    }
   }
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
@@ -38,7 +53,7 @@ class ApiList extends React.Component {
           to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+              onClick={(e) => this.modalConfirm(e, data.id)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -222,7 +237,7 @@ class ApiList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
             <span className="tooltiptext">Items to show per page</span>
-            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
             <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
@@ -242,7 +257,7 @@ class ApiList extends React.Component {
   changeActive (e, id) {
     let payload = {
       id: id,
-      is_active: ((e.target.checked == true) ? 0 : 1)
+      is_active: ((e.target.checked == true) ? false : true)
     };
 
     this.props.isActiveApiKey(payload).catch(createError);
@@ -286,7 +301,7 @@ class ApiList extends React.Component {
     thisEvent.value = pageNum;
     this.page(e, 1);
   }
-  modalConfirm (e, id, description) {
+  modalConfirm (e, id) {
     openModal();
     this.setState( {
       id: id
@@ -300,7 +315,10 @@ class ApiList extends React.Component {
     this.refs.description.value = "";
     this.refs.api_key.value = "";
     this.setState( {
-      createdDate: null
+      createdDate: null,
+      description: null,
+      token: null,
+      created: null
     } );
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
@@ -310,25 +328,34 @@ class ApiList extends React.Component {
   searchList(e, pageNum = null, clearDate = false) {
     var createDate = this.state.createdDate;
     e.preventDefault();
-
+    this.setState({
+      description: this.refs.description.value,
+      apiKey: this.refs.api_key.value,
+      created: createDate
+    });
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
+      token: this.refs.api_key.value,
+      created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.apiList(payload).catch(createError);
   }
   page(e, pageNumber) {
     var createDate = this.state.createdDate;
     e.preventDefault();
+    this.setState({
+      description: this.refs.description.value,
+      token: this.refs.api_key.value,
+      created: (createDate ? createDate.format('YYYY-MM-DD') : '')
+    });
 
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: (createDate ? createDate.format('YYYY-MM-DD') : '')
+      token: this.refs.api_key.value,
+      created: (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.apiList(payload).catch(createError);
   }

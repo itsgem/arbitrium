@@ -65,7 +65,7 @@ import ClientSubscriptionPayment from 'client/containers/subscription/subscripti
 
 import ClientInvoice from 'client/containers/invoice/invoiceList';
 import ClientInvoiceDetails from 'client/containers/invoice/invoiceDetails';
-import ClientApiLogs from 'client/views/apilogs/apilogs';
+import ClientApiLogs from 'client/views/apilogs/apilogsList';
 import ClientApiLogsDetails from 'client/views/apilogs/apilogsDetails';
 import ClientSystemSettings from 'client/views/settings/systemsettings';
 
