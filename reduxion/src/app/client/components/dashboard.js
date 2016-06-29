@@ -10,13 +10,13 @@ export default class Application extends React.Component {
   componentWillReceiveProps(nextProps) {
     document.querySelector('.alert').style.display = 'none';
   }
+  componentDidMount() {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
   render() {
-    // add vw-children_name as className
-    let css = this.props.children.props.route.path
-        ? `vw-${this.props.children.props.route.path}`
-        : `vw-home`;
     return (
-      <div id="application-view" className={css}>
         <div className="theme-arbitrium mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
           <ClientHeader />
           <ClientSidebar />
@@ -37,7 +37,6 @@ export default class Application extends React.Component {
               </section>
           </main>
         </div>
-      </div>
     );
   }
 };
