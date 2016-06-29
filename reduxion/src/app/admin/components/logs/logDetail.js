@@ -95,19 +95,15 @@ class LogDetail extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>PARAMETER</h6>
-              <pre className="script script-box-container">
+              <p className="script script-box-container">
                 {adminLogDetail.parameter}
-              </pre>
+              </p>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>RESPONSE</h6>
-              <pre className="script script-box-container">
-                { "{\"employees\":[" } <br/>
-                  { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
-                  { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
-                  { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
-                { "]}" }
-              </pre>
+              <p className="script script-box-container">
+                {adminLogDetail.response}
+              </p>
             </div>
           </div>
         </div>

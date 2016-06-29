@@ -17,6 +17,11 @@ class LogList extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+    }
   }
 
   logsDisplay (data, alter) {
@@ -118,11 +123,6 @@ class LogList extends React.Component {
       }
       pagination[i+1] = this.nextPage(i+1, ((logList.current_page == logList.last_page)|| logList.last_page == 0 ? false : (logList.current_page + 1 )), logList.last_page );
       perPage = logList.per_page;
-    }
-
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
     }
 
     return (
