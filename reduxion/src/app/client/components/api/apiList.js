@@ -258,7 +258,7 @@ class ApiList extends React.Component {
   }
 
   searchList(e, pageNum = null, clearDate = false) {
-    var createDate = this.state.createdDate;
+    let createDate = this.state.createdDate;
     e.preventDefault();
     this.setState({
       description: this.refs.description.value,

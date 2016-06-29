@@ -39,6 +39,7 @@
     "i18next-xhr-backend": "0.5.3",
     "immutable": "3.7.6",
     "intl": "1.1.0",
+    "json2csv": "^3.5.0",
     "ladda": "1.0.0",
     "lodash": "^4.8.2",
     "moment": "2.12.0",

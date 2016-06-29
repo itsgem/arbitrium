@@ -28,7 +28,7 @@ class ApiList extends React.Component {
     if (nextProps.activeApiKey || nextProps.deleteApiKeySuccess) {
       let apiList = nextProps.ListApiSuccess;
       let payload = {
-        page: apiList.currentPage,
+        page: apiList.current_page,
         per_page: apiList.per_page,
         description: this.state.description,
         token: this.state.apiKey,
@@ -42,7 +42,7 @@ class ApiList extends React.Component {
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created}</td>
+        <td width="200" className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />

@@ -175,7 +175,8 @@ div#application {
   top: 45%;
 }
 .mdl-switch.is-upgraded {
-    width: 110px;
+  width: 110px;
+  margin-right: 10px;
 }
 .layout-align-end-end {
   text-align: right;
@@ -219,4 +220,15 @@ div#application {
 }
 .mdl-data-table tbody tr td .btn-delete {
   background: #ff4a4a;
+}
+.hidden-text {
+  width: 200px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  font-size: inherit;
+  font-weight: inherit;
+  vertical-align: middle;
+  margin: 0;
 }

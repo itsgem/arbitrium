@@ -46,7 +46,7 @@ export default createReducer({
     activeApiKey: false
   }),
   [getApiPermission.ok]: (state, payload) => state.merge({
-    apiPermissions: state.concat(payload),
+    apiPermissions: (payload ? payload : false),
     loading: false,
     registerApiSuccess: false
   }),
@@ -63,7 +63,7 @@ export default createReducer({
     registerApiSuccess: false
   }),
   [clientGetApiKey.ok]: (state, payload) => state.merge({
-    apiKeyInfo: state.concat(payload),
+    apiKeyInfo: (payload ? payload : false),
     loading: false
   }),
   [clientGetApiKey.request]: (state) => state.merge({
