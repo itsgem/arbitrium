@@ -101,7 +101,7 @@ class invoiceDetails extends React.Component {
             <h6>Remarks</h6>
           </div>
           <div className="mdl-cell mdl-cell--6-col margin-bottom-40">
-            <h6>Premium Package Plan</h6>
+            <h6>{invoiceInfo.description}</h6>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <p><i className="note">This is an Electronic invoice. No signature is required.</i></p>
