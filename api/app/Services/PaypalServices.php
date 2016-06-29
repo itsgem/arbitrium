@@ -311,6 +311,12 @@ class PaypalServices extends NrbServices
             }
             else
             {
+                // Core-API subscribe package plan
+                $client->coreApiSubscribe([
+                    'max_api_calls' => $subscription->max_api_calls,
+                    'max_decisions' => $subscription->max_decisions,
+                ]);
+
                 $client->sendSubscriptionChangeSuccess($result);
             }
 
