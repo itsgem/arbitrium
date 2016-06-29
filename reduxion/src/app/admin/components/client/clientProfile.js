@@ -6,6 +6,7 @@ import cx from 'classnames';
 import {createError} from 'utils/error';
 import Country from 'admin/components/country'
 import {modal, openModal, closeModal} from 'common/components/modal'
+import moment from 'moment';
 
 
 class ClientProfile extends React.Component {
@@ -688,7 +689,7 @@ class ClientProfile extends React.Component {
               </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>START DATE</h6>
-                <p>{currentSubscription.valid_from}</p>
+                <p>{moment(currentSubscription.valid_from).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>TERMS OF SUBSCRIPTION</h6>
@@ -696,7 +697,7 @@ class ClientProfile extends React.Component {
               </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>END DATE</h6>
-                <p>{currentSubscription.valid_to}</p>
+                <p>{moment(currentSubscription.valid_to).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col bottom-margin">
                 <h6>AUTO-RENEW</h6>
