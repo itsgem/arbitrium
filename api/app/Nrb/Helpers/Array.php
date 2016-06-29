@@ -77,7 +77,23 @@ function array_keys_format_case($format = 'snake', $array)
     return $formatted_array;
 }
 
-function transformArbitriumResponseData($response)
+function transform_arbitrium_payload($payload)
+{
+    // Transform client_id to api_client_id
+    $payload_client_id = get_val($payload, 'client_id');
+    if ($payload_client_id)
+    {
+        $payload_client = \App\Models\Client::findOrfail($payload_client_id);
+        $payload_client_id = ($payload_client->user->api) ? $payload_client->user->api->getAuth() : null;
+        $payload_client_id = $payload_client_id['client_id'];
+    }
+
+    $payload['client_id'] = $payload_client_id;
+
+    return $payload;
+}
+
+function transform_arbitrium_response_data($response)
 {
     if (!isset($response->data))
     {

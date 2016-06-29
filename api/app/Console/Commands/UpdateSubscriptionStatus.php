@@ -45,7 +45,7 @@ class UpdateSubscriptionStatus extends Command
             Log::info('SUBSCRIPTIONS VALID TO: '.$yesterday);
 
             $client_subscriptions = ClientSubscription::active()
-                                    ->validTo($yesterday)
+                                    ->dateTo('valid_to', $yesterday)
                                     ->get();
 
             $loading = $this->output->createProgressBar($client_subscriptions->count());
