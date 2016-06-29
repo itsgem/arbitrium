@@ -22,15 +22,15 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.ipAddress}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.statusCode}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.ipaddress}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/logs/client/" + data.client_id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/logs/client/" + data.client.id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -259,9 +259,10 @@ class LogList extends React.Component {
     e.preventDefault();
 
     let payload = {
+      client_id: this.props.params.client_id,
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      ipAddress: this.refs.ipAddress.value,
-      statusCode: this.refs.statusCode.value,
+      ipaddress: this.refs.ipAddress.value,
+      status_code: this.refs.statusCode.value,
       created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.adminLogList(payload);
@@ -271,10 +272,11 @@ class LogList extends React.Component {
     e.preventDefault();
 
     let payload = {
+      client_id: this.props.params.client_id,
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      ipAddress: this.refs.ipAddress.value,
-      statusCode: this.refs.statusCode.value,
+      ipaddress: this.refs.ipAddress.value,
+      status_code: this.refs.statusCode.value,
       created: (createDate ? createDate.format('YYYY-MM-DD') : '')
     };
     this.props.adminLogList(payload);
