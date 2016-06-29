@@ -327,7 +327,7 @@ export default {
           city: payload.city,
           state: payload.state,
           postal_code: payload.postal_code,
-          country_id: payload.country_id,
+          country_id: payload.country_id ? payload.country_id : null,
           rep_first_name: payload.rep_first_name,
           rep_last_name: payload.rep_last_name,
           rep_gender: payload.rep_gender,
