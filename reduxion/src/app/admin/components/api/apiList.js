@@ -124,19 +124,6 @@ class ApiList extends React.Component {
       createdDate: e
     });
     document.getElementById(selectedDate).classList.add('is-dirty');
-    document.querySelector('.rdtOpen .rdtPicker').style.display = 'none';
-  }
-  openDatepicker(e) {
-    if (document.querySelector('rdtOpen')) {
-      document.querySelector('.rdtOpen .rdtPicker').style.display = 'block';
-    }
-  }
-  validDate(current) {
-    let today = Datetime.moment();
-    console.log("!!!", current.month());
-    console.log("!!!", current.year());
-    console.log("!!!", today);
-    return current.isBefore( today );
   }
   render() {
     let counter = false;
@@ -199,8 +186,6 @@ class ApiList extends React.Component {
                   dateFormat="YYYY-MM-DD"
                   timeFormat={false}
                   onChange={(e)=> this.selectedDate(e, 'createdDate')}
-                  onFocus={(e)=> this.openDatepicker(e)}
-                  isValidDate={this.validDate}
                 />
                 <label className="mdl-textfield__label">Date Created</label>
               </div>
