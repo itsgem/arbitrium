@@ -63,7 +63,7 @@ class ClientUserRequest extends NrbRequest
                 'city'              => $optional_signup.'max:100',
                 'state'             => 'max:100',
                 'country_id'        => $optional_signup.'exists:countries,id',
-                'postal_code'       => $optional_signup.'max:10',
+                'postal_code'       => $optional_signup.'alpha_dash|max:10',
                 'rep_first_name'    => 'required|max:64',
                 'rep_last_name'     => 'required|max:64',
                 'rep_email_address' => 'required|max:255|email',
