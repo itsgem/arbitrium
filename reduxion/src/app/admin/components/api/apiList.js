@@ -28,7 +28,7 @@ class ApiList extends React.Component {
     if (nextProps.activeApiKey || nextProps.deleteApiKeySuccess) {
       let apiList = nextProps.ListApiSuccess;
       let payload = {
-        page: apiList.currentPage,
+        page: apiList.current_page,
         per_page: apiList.per_page,
         description: this.state.description,
         token: this.state.apiKey,

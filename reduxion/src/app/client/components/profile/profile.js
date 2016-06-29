@@ -3,6 +3,7 @@ import {Router, Link, History} from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
 import Country from 'client/components/country';
+import moment from 'moment';
 
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
@@ -611,7 +612,7 @@ class ClientProfile extends React.Component {
               </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>START DATE</h6>
-                <p>{currentSubscription.valid_from}</p>
+                <p>{moment(currentSubscription.valid_from).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
                   <h6>{currentSubscription.subscription_id == 1 ? 'TERMS OF SUBSCRIPTION FOR FREE TRIAL PLAN' : 'TERMS OF SUBSCRIPTION'}</h6>
@@ -619,7 +620,7 @@ class ClientProfile extends React.Component {
                 </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>END DATE</h6>
-                <p>{currentSubscription.valid_to}</p>
+                <p>{moment(currentSubscription.valid_to).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col bottom-margin">
                 <h6>AUTO-RENEW</h6>

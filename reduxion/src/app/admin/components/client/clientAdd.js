@@ -177,7 +177,7 @@ this.scrolltop(errors);
                   id='postal_code'
                   ref="postal_code"
                   />
-                <label className="mdl-textfield__label" htmlFor="postal_code">Postal code</label>
+                <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
                 {errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
               </div>
             </div>
@@ -231,7 +231,7 @@ this.scrolltop(errors);
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
                   {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
                 </div>
               </div>

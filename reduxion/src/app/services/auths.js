@@ -327,7 +327,7 @@ export default {
           city: payload.city,
           state: payload.state,
           postal_code: payload.postal_code,
-          country_id: payload.country_id,
+          country_id: payload.country_id ? payload.country_id : null,
           rep_first_name: payload.rep_first_name,
           rep_last_name: payload.rep_last_name,
           rep_gender: payload.rep_gender,
@@ -468,17 +468,25 @@ export default {
   clientSubscriptionCancelPending() {
     return patch('client/subscription/cancel-confirm');
   },
-  clientInvoiceList(payload = {page: 1, per_page: 10})  {
+  clientInvoiceList(payload = {page: 1, per_page: 10}) {
     return get('client/invoice',{
       params : payload
     });
   },
-  clientInvoiceDetails(id)  {
+  clientInvoiceDetails(id) {
     return get('client/invoice/' + id, {
       params: {'with-details': 1, 'with-settings': 1}
     });
   },
-  clientInvoiceSendMail(id)  {
+  clientInvoiceSendMail(id) {
     return get('client/invoice/' + id + '/send');
+  },
+  clientApiLogsList(payload = {page: 1, per_page: 10}) {
+    return get('client/api-log/',{
+      params : payload
+    });
+  },
+  clientApiLogInfo(id) {
+    return get('client/api-log/' + id);
   }
 };

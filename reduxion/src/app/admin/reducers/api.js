@@ -75,7 +75,7 @@ export default createReducer({
   }),
   [getApiKey.ok]: (state, payload) => state.merge({
     loading: false,
-    getApiInfo: payload,
+    getApiInfo: (payload ? payload : false),
     clientProfileSuccess: {}
   }),
   [getApiKey.request]: (state) => state.merge({

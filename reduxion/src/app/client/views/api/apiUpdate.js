@@ -31,8 +31,16 @@ export default React.createClass({
       <div className="loading"></div>
     );
   },
-
+  noContent () {
+    return (
+      <div className="noContent">No content</div>
+    );
+  },
   render () {
+    if (!this.props.apiKeyInfo) {
+      closeLoading();
+      return this.noContent();
+    }
     if (Object.keys(this.props.apiKeyInfo).length && Object.keys(this.props.apiPermissions).length) {
       closeLoading();
       return this.renderApiInfo();

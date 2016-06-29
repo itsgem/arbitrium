@@ -65,8 +65,8 @@ import ClientSubscriptionPayment from 'client/containers/subscription/subscripti
 
 import ClientInvoice from 'client/containers/invoice/invoiceList';
 import ClientInvoiceDetails from 'client/containers/invoice/invoiceDetails';
-import ClientApiLogs from 'client/views/apilogs/apilogsList';
-import ClientApiLogsDetails from 'client/views/apilogs/apilogsDetails';
+import ClientApiLogs from 'client/containers/apilogs/apilogsList';
+import ClientApiLogsDetails from 'client/containers/apilogs/apilogsDetails';
 import ClientSystemSettings from 'client/views/settings/systemsettings';
 
 function startTimer(duration, tokenName) {
@@ -212,13 +212,13 @@ export default () => (
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
       <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
-        <Route path="client">
+        <Route path="client" onEnter={requireAuth}>
           <IndexRoute component={AdminClientList} />
           <Route component={AdminClientAdd} path="new"/>
           <Route component={AdminClientProfile} path=":id"/>
         </Route>
 
-        <Route path="api">
+        <Route path="api" onEnter={requireAuth}>
           <IndexRoute component={AdminApiList}/>
           <Route component={AdminApiAdd} path="new"/>
           <Route component={AdminApiUpdate} path=":id"/>
