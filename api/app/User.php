@@ -269,6 +269,15 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         $user_api->save();
     }
 
+    public function removeApiCredentials()
+    {
+        $auth = $this->api->getAuth();
+        $url = get_api_url(config('arbitrium.core.endpoints.delete_user'), ['id' => $auth['client_id']]);
+        (new ExternalRequestServices())->send(null, $url, null);
+
+        $this->api->delete();
+    }
+
     public function canDelete()
     {
         // do not allow user to delete his own account

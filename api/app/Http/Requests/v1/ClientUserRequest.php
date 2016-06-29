@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\v1;
 
+use App\Errors;
 use App\Http\Requests\v1\Field\UsernameRequest;
 use App\Http\Requests\v1\Field\PasswordRequest;
 use App\Models\Client;
 use App\Nrb\Http\v1\Requests\NrbRequest;
+use App\Services\ExternalRequestServices;
 use App\User;
 
 // Admin/ClientsController::store
@@ -103,5 +105,44 @@ class ClientUserRequest extends NrbRequest
         }
 
         return $rules;
+    }
+
+    public function validate()
+    {
+        $errors = [];
+        // validate based on the rules defined above
+        $instance = $this->getValidatorInstance();
+        if (!$instance->passes())
+        {
+            $errors = $instance->errors()->toArray();
+        }
+        else
+        {
+            // [Core-API] Check if username already taken
+            if ($this->get('username'))
+            {
+                $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
+                    'username' => $this->get('username')
+                ]);
+
+                $result = (new ExternalRequestServices())->send(null, $url, null, true);
+
+                if ($result['is_username'])
+                {
+                    $errors['username'] = trans('errors.'.Errors::USERNAME_TAKEN);
+                }
+            }
+        }
+
+        if (!empty($errors))
+        {
+            $this->errors = $errors;
+            $this->failedValidation($instance);
+        }
+    }
+
+    public function response(array $errors)
+    {
+        return parent::response($this->errors);
     }
 }

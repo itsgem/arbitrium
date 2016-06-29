@@ -55,13 +55,22 @@ class ExternalRequestServices extends NrbServices
         return $response;
     }
 
-    public function send($payload = [], $endpoint, $auth = null)
+    public function send($payload = [], $endpoint, $auth = null, $will_return_object = false)
     {
+        Log::info('START External Request');
         $auth = $auth ?: $this->config['auth'];
 
         // Authenticate External API access
         $response = $this->authenticate($auth);
+        Log::info('Authentication Success');
+
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
+
+        Log::info('PAYLOAD:', [
+            'method'   => $endpoint['method'],
+            'endpoint' => $this->config['api_url'].$endpoint['path'],
+            'headers'  => $data['headers'],
+        ]);
 
         // Transform payload to camelcase
         $payload = transform_arbitrium_payload($payload);
@@ -80,10 +89,7 @@ class ExternalRequestServices extends NrbServices
 
         $endpoint['path'] = $endpoint['path'] ?: '';
 
-        Log::info('START External Request');
         Log::info('PAYLOAD:', [
-            'method'   => $endpoint['method'],
-            'endpoint' => $this->config['api_url'].$endpoint['path'],
             'payload'  => $data,
         ]);
 
@@ -103,6 +109,11 @@ class ExternalRequestServices extends NrbServices
         Log::info('TRANSFORMED RESPONSE: '.json_encode($response));
 
         Log::info('END External Request');
+
+        if ($will_return_object)
+        {
+            return $response['data'];
+        }
 
         return $this->respondWithData($response);
     }

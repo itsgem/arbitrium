@@ -130,6 +130,15 @@ class UserServices extends NrbServices
                 $user->unlock();
                 $user->logout();
                 log_api_access($controller, 'doResetPassword', $user);
+
+                // If asked to reset password for the first time
+                // (Happens when admin creates account for client)
+                if (!$user->api)
+                {
+                    // [Core-API] Signup
+                    $user->registerApiCredentials();
+                }
+
                 return $this->respondWithSuccess();
             }
             return $this->respondWithError(Errors::EXPIRED_TOKEN);

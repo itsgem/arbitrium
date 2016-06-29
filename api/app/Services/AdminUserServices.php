@@ -20,6 +20,9 @@ class AdminUserServices extends NrbServices
             $admin = Admin::findOrFail($id);
             if ($admin->user->canDelete())
             {
+                // [Core-API] Delete account
+                $admin->user->removeApiCredentials();
+
                 $admin->delete();
                 return $this->respondWithSuccess($admin);
             }
@@ -75,7 +78,7 @@ class AdminUserServices extends NrbServices
             $user->attachRole(Role::find($request->get('role_id')));
             $user->admin()->save(new Admin($request->all()));
 
-            // Core-API signup
+            // [Core-API] Signup
             $user->registerApiCredentials([
                 'username'  => $user->username,
                 'password'  => $user->password,

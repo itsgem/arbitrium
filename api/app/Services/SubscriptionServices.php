@@ -144,7 +144,7 @@ class SubscriptionServices extends NrbServices
 
             if ($finalized_client)
             {
-                // Core-API subscribe package plan
+                // [Core-API] Subscribe package plan
                 $client->coreApiSubscribe([
                     'max_api_calls' => $client_subscription->max_api_calls,
                     'max_decisions' => $client_subscription->max_decisions,
@@ -383,7 +383,7 @@ class SubscriptionServices extends NrbServices
             {
                 DB::transaction(function () use ($latest_subscription, $client)
                 {
-                    // Core-API reset allowed requests and decisions
+                    // [Core-API] Reset allowed requests and decisions
                     $client->coreApiSubscribe();
 
                     $latest_subscription->cancel();
