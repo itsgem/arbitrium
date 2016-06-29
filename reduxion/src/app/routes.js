@@ -212,28 +212,28 @@ export default () => (
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
       <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
-        <Route path="client" onEnter={requireAuth}>
+        <Route path="client" >
           <IndexRoute component={AdminClientList} />
           <Route component={AdminClientAdd} path="new"/>
           <Route component={AdminClientProfile} path=":id"/>
         </Route>
 
-        <Route path="api" onEnter={requireAuth}>
+        <Route path="api" >
           <IndexRoute component={AdminApiList}/>
           <Route component={AdminApiAdd} path="new"/>
           <Route component={AdminApiUpdate} path=":id"/>
         </Route>
 
-        <Route path="subscription" onEnter={requireAuth}>
-          <IndexRoute component={AdminSubscriptionList} onEnter={requireAuth}/>
-          <Route component={AdminSubscriptionEdit} path="client/:client_id" onEnter={requireAuth}/>
-          <Route component={AdminSubscriptionDetail} path="client/:client_id/detail/:subscription_id" onEnter={requireAuth}/>
+        <Route path="subscription" >
+          <IndexRoute component={AdminSubscriptionList} />
+          <Route component={AdminSubscriptionEdit} path="client/:client_id" />
+          <Route component={AdminSubscriptionDetail} path="client/:client_id/detail/:subscription_id" />
         </Route>
 
-        <Route path="invoice" onEnter={requireAuth}>
-          <IndexRoute component={AdminClientInvoiceList} onEnter={requireAuth}/>
-          <Route component={AdminInvoiceList} path="client/:client_id" onEnter={requireAuth}/>
-          <Route component={AdminInvoiceDetail} path="client/:client_id/invoice-detail/:id" onEnter={requireAuth}/>
+        <Route path="invoice" >
+          <IndexRoute component={AdminClientInvoiceList} />
+          <Route component={AdminInvoiceList} path="client/:client_id" />
+          <Route component={AdminInvoiceDetail} path="client/:client_id/invoice-detail/:id" />
         </Route>
 
         <Route path="account">
@@ -242,10 +242,10 @@ export default () => (
           <Route component={AdminUserManagementUpdate} path=":id"/>
         </Route>
 
-        <Route path="logs" onEnter={requireAuth}>
-          <IndexRoute component={AdminClientLogList} onEnter={requireAuth}/>
-          <Route component={AdminLogList} path="client/:client_id" onEnter={requireAuth}/>
-          <Route component={AdminLogDetail} path="client/:client_id/log-detail/:id" onEnter={requireAuth}/>
+        <Route path="logs" >
+          <IndexRoute component={AdminClientLogList} />
+          <Route component={AdminLogList} path="client/:client_id" />
+          <Route component={AdminLogDetail} path="client/:client_id/log-detail/:id" />
         </Route>
 
         <Route path="profile">
@@ -258,7 +258,7 @@ export default () => (
     </Route>
 
     <Route name="home" path="i" >
-      <IndexRoute component={ClientTopPage} onEnter={requireAuth}/>
+      <IndexRoute component={ClientDashboard} onEnter={requireAuth}/>
       <Route component={ClientLogin} name="login" path="login" onEnter={islogin}/>
       <Route component={Signup} path="signup" onEnter={islogin}/>
       <Route component={ClientLogout} path="logout"/>
@@ -266,33 +266,35 @@ export default () => (
       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
       <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail" onEnter={islogin}/>
 
-      <Route path="client" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientProfile}/>
-        <Route component={ClientProfile} path="profile" />
-        <Route component={ClientChangePassword} path="profile/change_password" />
-        <Route component={ClientChangeEmail} path="profile/change_email" />
+      <Route component={ClientDashboard} name="home" onEnter={requireAuth}>
+        <Route path="client">
+          <IndexRoute component={ClientProfile}/>
+          <Route component={ClientProfile} path="profile" />
+          <Route component={ClientChangePassword} path="profile/change_password" />
+          <Route component={ClientChangeEmail} path="profile/change_email" />
+        </Route>
+        <Route path="api">
+          <IndexRoute component={ClientApiList}/>
+          <Route component={ClientApiAdd} path="new"/>
+          <Route component={ClientApiUpdate} path=":id"/>
+        </Route>
+        <Route path="subscription">
+          <IndexRoute component={ClientSubscriptionDetail}/>
+          <Route component={ClientSubscriptionPayment} path=":id" />
+        </Route>
+        <Route path="invoice">
+          <IndexRoute component={ClientInvoice}/>
+          <Route component={ClientInvoiceDetails} path=":id" />
+        </Route>
+        <Route path="apilogs">
+          <IndexRoute component={ClientApiLogs}/>
+          <Route component={ClientApiLogsDetails} path=":id" />
+        </Route>
+        <Route path="systemsettings">
+          <IndexRoute component={ClientSystemSettings}/>
+        </Route>
       </Route>
-      <Route path="api" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientApiList}/>
-        <Route component={ClientApiAdd} path="new"/>
-        <Route component={ClientApiUpdate} path=":id"/>
-      </Route>
-      <Route path="subscription" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientSubscriptionDetail}/>
-        <Route component={ClientSubscriptionPayment} path=":id" />
-      </Route>
-      <Route path="invoice" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientInvoice}/>
-        <Route component={ClientInvoiceDetails} path=":id" />
-      </Route>
-      <Route path="apilogs" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientApiLogs}/>
-        <Route component={ClientApiLogsDetails} path=":id" />
-      </Route>
-      <Route path="systemsettings" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientSystemSettings}/>
-      </Route>
+      <Route path="*" components={NoMatch} />
     </Route>
-    <Route path="*" components={NoMatch} />
   </Route>
 );
