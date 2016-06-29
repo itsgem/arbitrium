@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class LogList extends React.Component {
+class ClientLogList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,13 +19,13 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.companyName}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.username}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.userid}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.company_name}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.user.username}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.user.id}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/logs/client/" + data.client_id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/logs/client/" + data.user.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -100,19 +100,21 @@ class LogList extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let logList = {last_page: 1};
+    let clientList = {last_page: 1};
     let log = {};
-    if (Object.keys(this.props.logList).length) {
+    let user = {};
+    if (Object.keys(this.props.clientList).length) {
       let i=0;
       counter = true;
-      logList = this.props.logList;
-      log = logList.data;
-      pagination[i] = this.prevPage(i, (logList.current_page > 1 ? (logList.current_page - 1): false));
-      for (i = 1; i <= logList.last_page; i++) {
-        pagination[i] = this.pagination(i, logList.current_page);
+      clientList = this.props.clientList;
+      log = clientList.data;
+      user = clientList.user;
+      pagination[i] = this.prevPage(i, (clientList.current_page > 1 ? (clientList.current_page - 1): false));
+      for (i = 1; i <= clientList.last_page; i++) {
+        pagination[i] = this.pagination(i, clientList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((logList.current_page == logList.last_page)|| logList.last_page == 0 ? false : (logList.current_page + 1 )), logList.last_page );
-      perPage = logList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((clientList.current_page == clientList.last_page)|| clientList.last_page == 0 ? false : (clientList.current_page + 1 )), clientList.last_page );
+      perPage = clientList.per_page;
     }
     return (
       <div className="filter-search">
@@ -230,21 +232,21 @@ class LogList extends React.Component {
   searchList(e) {
     e.preventDefault();
     let payload = {
-      companyName: this.refs.companyName.value,
+      company_name: this.refs.companyName.value,
       username: this.refs.username.value
     };
-    this.props.adminLogList(payload);
+    this.props.adminClientList(payload);
   }
   page(e, pageNumber) {
     e.preventDefault();
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      companyName: this.refs.companyName.value,
+      company_name: this.refs.companyName.value,
       username: this.refs.username.value
     };
-    this.props.adminLogList(payload);
+    this.props.adminClientList(payload);
   }
 };
 
-export default LogList;
+export default ClientLogList;

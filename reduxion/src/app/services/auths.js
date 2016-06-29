@@ -316,6 +316,14 @@ export default {
   adminInvoiceSendEmail(id) {
     return get('admin/invoice/' + id + '/send');
   },
+  getAdminLogList(payload) {
+    return get('admin/api-log', {
+      params: payload
+    })
+  },
+  getAdminLogDetail(id) {
+    return get('admin/api-log/' + id)
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {

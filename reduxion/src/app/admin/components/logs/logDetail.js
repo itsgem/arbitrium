@@ -20,9 +20,6 @@ class LogDetail extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-  componentDidMount () {
-
-  }
   loadingRender () {
     return (
       <div className="loading"></div>
@@ -61,6 +58,7 @@ class LogDetail extends React.Component {
   }
   render () {
     let adminLogDetail = this.props.adminLogDetail.data;
+    let clientDetail = this.props.adminLogDetail.data.client;
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
@@ -72,48 +70,40 @@ class LogDetail extends React.Component {
         <div className="content-container">
           <div className="mdl-grid content">
             <div className="mdl-cell mdl-cell--6-col">
-              <h6>USERNAME</h6>
-              <p>juandelacruz1</p>
+              <h6>COMPANY NAME</h6>
+              <p>{clientDetail.company_name}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>USER ID</h6>
-              <p>001</p>
+              <p>{adminLogDetail.user_id}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>IP ADDRESS</h6>
-              <p>192.168.1.1</p>
+              <p>{adminLogDetail.ipaddress}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>STATUS CODE</h6>
-              <p>200</p>
+              <p>{adminLogDetail.status_code}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col bottom-margin">
               <h6>URL</h6>
-              <p>http://www.testinggrounds.com/api</p>
+              <p>{adminLogDetail.url}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>DATE CREATED</h6>
-              <p>October 31, 2016 7:45 AM</p>
+              <p>{adminLogDetail.created}</p>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>PARAMETER</h6>
-              <pre className="script script-box-container">
-                { "{\"employees\":[" } <br/>
-                  { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
-                  { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
-                  { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
-                { "]}" }
-              </pre>
+              <p className="script script-box-container">
+                {adminLogDetail.parameter}
+              </p>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>RESPONSE</h6>
-              <pre className="script script-box-container">
-                { "{\"employees\":[" } <br/>
-                  { "{\"firstName\":\"John\", \"lastName\":\"Doe\"}," } <br/>
-                  { "{\"firstName\":\"Anna\", \"lastName\":\"Smith\"}," } <br/>
-                  { "{\"firstName\":\"Peter\", \"lastName\":\"Jones\"}" } <br/>
-                { "]}" }
-              </pre>
+              <p className="script script-box-container">
+                {adminLogDetail.response}
+              </p>
             </div>
           </div>
         </div>
