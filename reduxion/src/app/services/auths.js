@@ -468,17 +468,25 @@ export default {
   clientSubscriptionCancelPending() {
     return patch('client/subscription/cancel-confirm');
   },
-  clientInvoiceList(payload = {page: 1, per_page: 10})  {
+  clientInvoiceList(payload = {page: 1, per_page: 10}) {
     return get('client/invoice',{
       params : payload
     });
   },
-  clientInvoiceDetails(id)  {
+  clientInvoiceDetails(id) {
     return get('client/invoice/' + id, {
       params: {'with-details': 1, 'with-settings': 1}
     });
   },
-  clientInvoiceSendMail(id)  {
+  clientInvoiceSendMail(id) {
     return get('client/invoice/' + id + '/send');
+  },
+  clientApiLogsList(payload = {page: 1, per_page: 10}) {
+    return get('client/api-log/',{
+      params : payload
+    });
+  },
+  clientApiLogInfo(id) {
+    return get('client/api-log/' + id);
   }
 };
