@@ -31,7 +31,7 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send(null, get_api_url($this->endpoints['delete_api_key'], ['id' => $id]), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['delete_api_key'], ['id' => $id]), null, $this->auth);
 
         return $result;
     }
@@ -46,7 +46,7 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['list_api_keys']), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['list_api_keys']), $request->all(), $this->auth);
 
         return $result;
     }
@@ -61,7 +61,7 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send(null, get_api_url($this->endpoints['show_api_key'], ['id' => $id]), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['show_api_key'], ['id' => $id]), null, $this->auth);
 
         return $result;
     }
@@ -76,7 +76,7 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['create_api_key']), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['create_api_key']), $request->all(), $this->auth);
 
         return $result;
     }
@@ -91,7 +91,7 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['update_api_key'], ['id' => $id]), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['update_api_key'], ['id' => $id]), $request->all(), $this->auth);
 
         return $result;
     }
@@ -106,7 +106,7 @@ class ApiKeyServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['activate_api_key'], ['id' => $id]), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['activate_api_key'], ['id' => $id]), $request->all(), $this->auth);
 
         return $result;
     }

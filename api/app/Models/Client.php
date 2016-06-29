@@ -443,7 +443,7 @@ class Client extends NrbModel
             'max_decisions' => get_val($params, 'max_decisions', 0),
         ];
 
-        $result = (new ExternalRequestServices())->send($params, get_api_url(config('arbitrium.core.endpoints.subscribe')), $auth);
+        $result = (new ExternalRequestServices())->send(get_api_url(config('arbitrium.core.endpoints.subscribe')), $params, $auth);
 
         return $result;
     }

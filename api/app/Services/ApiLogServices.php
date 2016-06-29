@@ -31,7 +31,7 @@ class ApiLogServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send($request->all(), get_api_url($this->endpoints['list_api_logs']), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['list_api_logs']), $request->all(), $this->auth);
 
         return $result;
     }
@@ -46,7 +46,7 @@ class ApiLogServices extends NrbServices
             $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
         }
 
-        $result = $this->external_request->send(null, get_api_url($this->endpoints['show_api_log'], ['id' => $id]), $this->auth);
+        $result = $this->external_request->send(get_api_url($this->endpoints['show_api_log'], ['id' => $id]), null, $this->auth);
 
         return $result;
     }

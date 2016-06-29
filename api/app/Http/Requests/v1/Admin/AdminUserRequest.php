@@ -70,7 +70,7 @@ class AdminUserRequest extends NrbRequest
                     'username' => $this->get('username')
                 ]);
 
-                $result = (new ExternalRequestServices())->send(null, $url, null, true);
+                $result = (new ExternalRequestServices())->send($url, null, null, true);
 
                 if ($result['is_username'])
                 {
