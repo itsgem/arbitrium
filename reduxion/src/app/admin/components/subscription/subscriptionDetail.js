@@ -299,14 +299,10 @@ class SubscriptionDetail extends React.Component {
       is_auto_renew: this.refs.isTerm.checked
     };
 
-    if (this.refs.isTerm.checked ) {
-      return this.validateTerm.call(this, payload)
-        .with(this)
-        .then(this.validSubscribe)
-        .catch(this.setErrors);
-    } else {
-      this.validSubscribe(payload);
-    }
+    return this.validateTerm.call(this, payload)
+      .with(this)
+      .then(this.validSubscribe)
+      .catch(this.setErrors);
   }
   validateTerm(payload) {
     let rules = new Checkit({
