@@ -75,6 +75,8 @@ class ExternalRequestServices extends NrbServices
     {
         Log::info('START External Request');
 
+        Log::info('AUTH:', $this->config['auth']);
+
         // Authenticate External API access
         $response = $this->authenticate($this->config['auth']);
         Log::info('Authentication Success');
@@ -84,7 +86,6 @@ class ExternalRequestServices extends NrbServices
         Log::info('PAYLOAD:', [
             'method'   => $endpoint['method'],
             'endpoint' => $this->config['api_url'].$endpoint['path'],
-            'headers'  => $data['headers'],
         ]);
 
         // Transform payload to camelcase

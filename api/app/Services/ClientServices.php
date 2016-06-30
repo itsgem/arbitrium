@@ -126,16 +126,24 @@ class ClientServices extends NrbServices
         return DB::transaction(function () use ($request, $id)
         {
             $client = Client::findOrFail($id);
+            $old_auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+
             $client->update($request->all());
             if (is_admin_user_logged_in())
             {
-                $client->user()->update($request->only('username', 'email_address', 'items_per_page', 'timezone'));
+                $client->user->update($request->only('username', 'email_address', 'items_per_page', 'timezone'));
             }
             else
             {
                 // client has to use change email address API
-                $client->user()->update($request->only('username', 'items_per_page', 'timezone'));
+                $client->user->update($request->only('username', 'items_per_page', 'timezone'));
             }
+
+            // [Core-API] Update username, password, user_type
+            $client->user->updateApiCredentials([
+                'username' => $client->user->username,
+            ], $old_auth);
+
             return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
         });
     }
