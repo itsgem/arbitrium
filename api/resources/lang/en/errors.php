@@ -41,6 +41,8 @@ return [
 
     Errors::INVOICE_STILL_UNPAID        => 'Invoice is still unpaid.',
 
+    Errors::CORE_API_USERNAME_TAKEN     => 'Unfortunately, username is no longer available in Core-API.',
+
     Errors::EXTERNAL_SERVER_ERROR       => 'API server error occurred. Please try again later.',
     Errors::EXTERNAL_BAD_REQUEST        => 'Invalid input.',
     Errors::EXTERNAL_UNAUTHORIZED       => 'Unable to authenticate your API credentials. Please contact our system admimnistrator.',
