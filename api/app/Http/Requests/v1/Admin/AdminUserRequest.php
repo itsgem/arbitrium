@@ -72,9 +72,9 @@ class AdminUserRequest extends NrbRequest
 
                 $result = (new ExternalRequestServices())->asObject()->send($url);
 
-                if ($result['is_username'])
+                if (isset($result['is_available']))
                 {
-                    $errors['username'] = trans('errors.'.Errors::USERNAME_TAKEN);
+                    $errors['username'][] = trans('errors.'.Errors::CORE_API_USERNAME_TAKEN);
                 }
             }
         }

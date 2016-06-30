@@ -50,6 +50,9 @@ class Errors
     // Invoices
     const INVOICE_STILL_UNPAID      = 70000;
 
+    // Core-API
+    const CORE_API_USERNAME_TAKEN   = 80000;
+
     // External Requests
     const EXTERNAL_PREFIX           = 10000;
     const EXTERNAL_BAD_REQUEST      = 10000400;
