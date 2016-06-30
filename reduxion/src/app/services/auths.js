@@ -490,7 +490,7 @@ export default {
     return get('client/invoice/' + id + '/send');
   },
   clientApiLogsList(payload = {page: 1, per_page: 10}) {
-    return get('client/api-log/',{
+    return get('client/api-log',{
       params : payload
     });
   },
