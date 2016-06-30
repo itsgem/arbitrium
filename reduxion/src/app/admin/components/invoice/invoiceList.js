@@ -308,8 +308,8 @@ class AdminInvoiceList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      date_from: clearDate  ? '' : (dateFrom ? dateFrom.format('YYYY-MM-DD') : ''),
-      date_to: clearDate  ? '' : (dateTo ? dateTo.format('YYYY-MM-DD') : ''),
+      date_from: (dateFrom ? dateFrom.format('YYYY-MM-DD') : ''),
+      date_to: (dateTo ? dateTo.format('YYYY-MM-DD') : ''),
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value,
       id: this.props.params.client_id

@@ -331,17 +331,20 @@ class invoiceList extends React.Component {
     closeModal();
   }
   page(e, pageNumber) {
+    var date_from = this.state.dateFrom;
+    var date_to = this.state.dateTo;
     e.preventDefault();
+
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
+      date_from: (date_from ? date_from.format('YYYY-MM-DD') : ''),
+      date_to: (date_to ? date_to.format('YYYY-MM-DD') : ''),
+      invoice_no: this.refs.invoice_no.value,
+      status: this.refs.status.value
     };
     this.props.clientInvoiceList(payload).catch(createError);
   }
 };
-
-// function getDate (date){
-//   console.log(this)
-// }
 
 export default invoiceList;
