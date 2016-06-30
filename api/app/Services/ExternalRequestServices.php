@@ -26,9 +26,9 @@ class ExternalRequestServices extends NrbServices
         return $this;
     }
 
-    public function asObject($flag)
+    public function asObject()
     {
-        $this->as_object = $flag;
+        $this->as_object = true;
 
         return $this;
     }
