@@ -125,7 +125,7 @@ class ClientUserRequest extends NrbRequest
                     'username' => $this->get('username')
                 ]);
 
-                $result = (new ExternalRequestServices())->send($url, null, null, true);
+                $result = (new ExternalRequestServices())->asObject(true)->send($url);
 
                 if ($result['is_username'])
                 {

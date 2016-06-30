@@ -11,10 +11,26 @@ use Illuminate\Support\Facades\Log;
 class ExternalRequestServices extends NrbServices
 {
     private $config;
+    private $as_object;
 
     public function __construct()
     {
-        $this->config = config('arbitrium.core');
+        $this->config    = config('arbitrium.core');
+        $this->as_object = false;
+    }
+
+    public function setAuth($auth)
+    {
+        $this->config['auth'] = $auth;
+
+        return $this;
+    }
+
+    public function asObject($flag)
+    {
+        $this->as_object = $flag;
+
+        return $this;
     }
 
     public function authenticate($params)
@@ -55,13 +71,12 @@ class ExternalRequestServices extends NrbServices
         return $response;
     }
 
-    public function send($endpoint, $payload = [], $auth = null, $will_return_object = false)
+    public function send($endpoint, $payload = [])
     {
         Log::info('START External Request');
-        $auth = $auth ?: $this->config['auth'];
 
         // Authenticate External API access
-        $response = $this->authenticate($auth);
+        $response = $this->authenticate($this->config['auth']);
         Log::info('Authentication Success');
 
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
@@ -110,7 +125,7 @@ class ExternalRequestServices extends NrbServices
 
         Log::info('END External Request');
 
-        if ($will_return_object)
+        if ($this->as_object)
         {
             return $response['data'];
         }

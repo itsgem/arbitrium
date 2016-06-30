@@ -23,7 +23,8 @@ class ApiPermissionServices extends NrbServices
     // ApiPermissionsController::index
     public function index($request)
     {
-        $result = $this->external_request->send(get_api_url($this->endpoints['list_api_key_permissions']), $request->all(), $this->auth);
+        $result = $this->external_request->setAuth($this->auth)
+            ->send(get_api_url($this->endpoints['list_api_key_permissions']), $request->all());
 
         return $result;
     }
