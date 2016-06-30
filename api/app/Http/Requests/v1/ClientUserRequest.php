@@ -127,7 +127,7 @@ class ClientUserRequest extends NrbRequest
 
                 $result = (new ExternalRequestServices())->asObject()->send($url);
 
-                if (isset($result['is_available']))
+                if (!get_val($result, 'is_available'))
                 {
                     $errors['username'][] = trans('errors.'.Errors::CORE_API_USERNAME_TAKEN);
                 }
