@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import Datetime from 'react-datetime';
+import json2csv from 'json2csv';
 
 class LogList extends React.Component {
   constructor(props) {
@@ -112,7 +113,18 @@ class LogList extends React.Component {
     let perPage = 10;
     let logList = {last_page: 1};
     let log = {};
+    let fields = ['ipaddress', 'statusCode', 'url', 'parameter', 'created'];
+    let estateNameCsv = '';
+    let datacsv = '';
+    let csvString = '';
+
     if (Object.keys(this.props.logList).length) {
+      json2csv({ data: this.props.logList.data, fields: fields }, function(err, csv) {
+        // estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        // datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
+        csvString = csv;
+      });
+
       let i=0;
       counter = true;
       logList = this.props.logList;
@@ -135,13 +147,13 @@ class LogList extends React.Component {
               <label className="mdl-textfield__label">IP Address</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
+          <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="statusCode" ref="statusCode"/>
               <label className="mdl-textfield__label">Status Code</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col">
+          <div className="mdl-cell mdl-cell--2-col">
             <div id="created" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <Datetime
                 id="created_at"
@@ -154,13 +166,14 @@ class LogList extends React.Component {
               <label className="mdl-textfield__label">Date Created</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--3-col search-cta">
+          <div className="mdl-cell mdl-cell--5-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+            <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" href={datacsv} target="_blank" download={estateNameCsv + ".csv"}>Download Logs</a>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
