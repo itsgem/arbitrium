@@ -435,7 +435,7 @@ class Client extends NrbModel
             return false;
         }
 
-        $auth = $this->user->api->getAuth();
+        $auth = ($this->user->api) ? $this->user->api->getAuth() : [];
 
         $params = [
             'client_id'     => $this->id,

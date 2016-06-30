@@ -269,7 +269,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         $user_api->save();
     }
 
-    public function updateApiCredentials($params = [], $auth = null)
+    public function updateApiCredentials($params = [])
     {
         $data = array_merge([
             'username' => $this->username,
@@ -277,21 +277,16 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
             'userType' => $this->user_type,
         ], $params);
 
-        $auth = $auth ?: $this->api->getAuth();
-        $url = get_api_url(config('arbitrium.core.endpoints.update_user'), ['id' => $auth['client_id']]);
+        $auth = ($this->api) ? $this->api->getAuth() : [];
+        $url = get_api_url(config('arbitrium.core.endpoints.update_user'), ['id' => get_val($auth, 'client_id')]);
 
-//        dd([
-//            'auth' => $auth,
-//            'url' => $url,
-//            'data' => $data,
-//        ]);
         (new ExternalRequestServices())->setAuth($auth)->send($url, $data);
     }
 
     public function removeApiCredentials()
     {
-        $auth = $this->api->getAuth();
-        $url = get_api_url(config('arbitrium.core.endpoints.delete_user'), ['id' => $auth['client_id']]);
+        $auth = ($this->api) ? $this->api->getAuth() : [];
+        $url = get_api_url(config('arbitrium.core.endpoints.delete_user'), ['id' => get_val($auth, 'client_id')]);
         (new ExternalRequestServices())->send($url);
 
         $this->api->delete();

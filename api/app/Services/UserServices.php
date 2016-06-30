@@ -126,8 +126,6 @@ class UserServices extends NrbServices
             {
                 $reset_token->resetTokens($field);
                 $user = $reset_token->user;
-                $old_auth = ($user->api) ? $user->api->getAuth() : null;
-
                 $user->password = $request->get('password');
                 $user->unlock();
                 $user->logout();
@@ -145,7 +143,7 @@ class UserServices extends NrbServices
                     // [Core-API] Update username, password, user_type
                     $user->updateApiCredentials([
                         'password' => $user->password,
-                    ], $old_auth);
+                    ]);
                 }
 
                 return $this->respondWithSuccess();
