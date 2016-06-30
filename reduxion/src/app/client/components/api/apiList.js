@@ -39,6 +39,12 @@ class ApiList extends React.Component {
     }
     modal();
   }
+  componentDidMount() {
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+    }
+  }
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
@@ -147,11 +153,6 @@ class ApiList extends React.Component {
       perPage = apiList.per_page;
     }
 
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
-    }
-
     return (
       <div className="filter-search">
         <div className="mdl-grid">
@@ -194,6 +195,7 @@ class ApiList extends React.Component {
                     dateFormat="YYYY-MM-DD"
                     timeFormat={false}
                     onChange={(e)=> this.selectedDate(e, 'createdDate')}
+                    closeOnSelect={true}
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>

@@ -149,6 +149,7 @@ class LogList extends React.Component {
                 dateFormat="YYYY-MM-DD"
                 timeFormat={false}
                 onChange={(e)=> this.selectedDate(e, 'created')}
+                closeOnSelect={true}
               />
               <label className="mdl-textfield__label">Date Created</label>
             </div>

@@ -3,8 +3,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import Datetime from 'react-datetime';
 
 class invoiceList extends React.Component {
   constructor(props) {
@@ -36,6 +36,13 @@ class invoiceList extends React.Component {
           }
         }, false);
       }
+    }
+
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('#dateTo .rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+      document.querySelector('#dateTo .rdt input').readOnly = true;
     }
   }
   invoiceDisplay (data, alter) {
@@ -111,12 +118,18 @@ class invoiceList extends React.Component {
       </div>
     );
   }
-  selectedDate(date, selectedDate) {
-    let isDate = {};
-    isDate[selectedDate] = date;
-    this.setState( isDate );
+  selectedDate(e, selectedDate) {
+    if (selectedDate == 'dateFrom') {
+      this.setState({
+        dateFrom: e
+      });
+    } else {
+      this.setState({
+        dateTo: e
+      });
+    }
+
     document.getElementById(selectedDate).classList.add('is-dirty');
-    console.log(date);
   }
   render() {
     let counter = false;
@@ -144,23 +157,28 @@ class invoiceList extends React.Component {
           <div className="mdl-grid filter-search-bar">
               <div className="mdl-cell mdl-cell--2-col">
                 <div id="dateFrom" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                  <DatePicker
-                    selected={this.state.dateFrom}
+                  <Datetime
+                    id="date_from"
+                    value={this.state.dateFrom}
                     dateFormat="YYYY-MM-DD"
-                    onChange={(e) => this.selectedDate(e, 'dateFrom')}
-                    className="mdl-textfield__input font-input" id="invoiceDateFrom" readOnly/>
-                  <label className="mdl-textfield__label" htmlFor="invoiceDateFrom">Invoice Date From</label>
+                    timeFormat={false}
+                    onChange={(e)=> this.selectedDate(e, 'dateFrom')}
+                    closeOnSelect={true}
+                  />
+                  <label className="mdl-textfield__label">Invoice Date From</label>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div id="dateTo" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                  <DatePicker
-                    selected={this.state.dateTo == null || (this.state.dateFrom < this.state.dateTo) ? this.state.dateTo : this.state.dateFrom}
+                  <Datetime
+                    id="date_to"
+                    value={this.state.dateTo}
                     dateFormat="YYYY-MM-DD"
-                    minDate={this.state.dateFrom ? this.state.dateFrom : moment()}
-                    onChange={(e) => this.selectedDate(e, 'dateTo')}
-                    className="mdl-textfield__input font-input" id="invoiceDateTo" readOnly/>
-                  <label className="mdl-textfield__label" htmlFor="invoiceDateTo">Invoice Date To</label>
+                    timeFormat={false}
+                    onChange={(e)=> this.selectedDate(e, 'dateTo')}
+                    closeOnSelect={true}
+                  />
+                  <label className="mdl-textfield__label">Invoice Date To</label>
                 </div>
               </div>
 
@@ -235,28 +253,27 @@ class invoiceList extends React.Component {
       dateFrom: null,
       dateTo: null
     } );
-    document.getElementById('invoiceDateFrom').value = '';
-    document.getElementById('invoiceDateFrom').value = '';
+
     this.refs.invoice_no.value = "";
     this.refs.status.value = "";
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
-    this.searchList(e, 10);
+    this.searchList(e, 10, true);
   }
 
-  searchList(e, pageNum = null) {
+  searchList(e, pageNum = null, clearDate = false) {
+    var date_from = this.state.dateFrom;
+    var date_to = this.state.dateTo;
     e.preventDefault();
-    let fromDate = document.getElementById('invoiceDateFrom').value;
-    let toDate = document.getElementById('invoiceDateTo').value;
+
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      date_from: fromDate,
-      date_to: toDate,
+      date_from: clearDate  ? '' : (date_from ? date_from.format('YYYY-MM-DD') : ''),
+      date_to: clearDate  ? '' : (date_to ? date_to.format('YYYY-MM-DD') : ''),
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value
     };
-    console.log(payload);
     this.props.clientInvoiceList(payload).catch(createError);
   }
 
