@@ -22,7 +22,7 @@ class ClientServices extends NrbServices
             $client = Client::findOrFail($id);
             $client->approve($request->get('callback_url'), $approve);
 
-            // Core-API signup
+            // [Core-API] Signup
             $client->user->registerApiCredentials();
 
             return $this->respondWithSuccess($client);
@@ -37,6 +37,9 @@ class ClientServices extends NrbServices
             $client = Client::findOrFail($id);
             if ($client->canDelete())
             {
+                // [Core-API] Delete account
+                $client->user->removeApiCredentials();
+
                 $client->delete();
                 return $this->respondWithSuccess($client);
             }
@@ -111,13 +114,6 @@ class ClientServices extends NrbServices
             $user = User::create($request->all());
             $user->client()->save(new Client($request->all()));
             $user->sendNewClientAccount($request->get('callback_url'));
-
-            // Core-API signup
-            $user->registerApiCredentials([
-                'username'  => $user->username,
-                'password'  => $user->password,
-                'userType' => User::CLIENT,
-            ]);
 
             return $this->respondWithSuccess($user->client);
         });

@@ -11,10 +11,26 @@ use Illuminate\Support\Facades\Log;
 class ExternalRequestServices extends NrbServices
 {
     private $config;
+    private $as_object;
 
     public function __construct()
     {
-        $this->config = config('arbitrium.core');
+        $this->config    = config('arbitrium.core');
+        $this->as_object = false;
+    }
+
+    public function setAuth($auth)
+    {
+        $this->config['auth'] = $auth;
+
+        return $this;
+    }
+
+    public function asObject()
+    {
+        $this->as_object = true;
+
+        return $this;
     }
 
     public function authenticate($params)
@@ -55,13 +71,21 @@ class ExternalRequestServices extends NrbServices
         return $response;
     }
 
-    public function send($payload = [], $endpoint, $auth = null)
+    public function send($endpoint, $payload = [])
     {
-        $auth = $auth ?: $this->config['auth'];
+        Log::info('START External Request');
 
         // Authenticate External API access
-        $response = $this->authenticate($auth);
+        $response = $this->authenticate($this->config['auth']);
+        Log::info('Authentication Success');
+
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
+
+        Log::info('PAYLOAD:', [
+            'method'   => $endpoint['method'],
+            'endpoint' => $this->config['api_url'].$endpoint['path'],
+            'headers'  => $data['headers'],
+        ]);
 
         // Transform payload to camelcase
         $payload = transform_arbitrium_payload($payload);
@@ -80,10 +104,7 @@ class ExternalRequestServices extends NrbServices
 
         $endpoint['path'] = $endpoint['path'] ?: '';
 
-        Log::info('START External Request');
         Log::info('PAYLOAD:', [
-            'method'   => $endpoint['method'],
-            'endpoint' => $this->config['api_url'].$endpoint['path'],
             'payload'  => $data,
         ]);
 
@@ -103,6 +124,11 @@ class ExternalRequestServices extends NrbServices
         Log::info('TRANSFORMED RESPONSE: '.json_encode($response));
 
         Log::info('END External Request');
+
+        if ($this->as_object)
+        {
+            return $response['data'];
+        }
 
         return $this->respondWithData($response);
     }
