@@ -17,8 +17,10 @@ return [
             'password'      => env('ARBITRIUM_PASSWORD'),
         ],
         'endpoints'     => [
-            'authenticate'              => ['method' => 'post',    'path' => 'oauth/token'],
-            'create_user'               => ['method' => 'post',    'path' => 'users'],
+            'authenticate'              => ['method' => 'post',   'path' => 'oauth/token'],
+            'create_user'               => ['method' => 'post',   'path' => 'users'],
+            'delete_user'               => ['method' => 'delete', 'path' => 'users/:id'],
+            'check_username'            => ['method' => 'get',    'path' => 'users/check/:username'],
 
             'list_api_keys'             => ['method' => 'get',    'path' => 'apiKeys'],
             'show_api_key'              => ['method' => 'get',    'path' => 'apiKeys/:id'],
