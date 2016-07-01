@@ -50,26 +50,26 @@ export default createReducer({
   [retrieveEmailChangeToken.ok]: (state, payload) => state.merge({
     loading: false,
     isRetrieveEmailChangeTokenSuccess: true,
-    emailChangeToken: state.concat(payload)
+    emailChangeToken: payload
   }),
   [retrieveEmailChangeToken.request]: (state, payload) => state.merge({
     loading: true,
     isRetrieveEmailChangeTokenSuccess: false,
     emailChangeToken: {},
-    errors: state.concat(payload)
+    errors: payload
   }),
 
-  [verifyEmailChange.ok]: (state, payload) => state.merge({
+  [verifyEmailChange.ok]: (state) => state.merge({
     loading: false,
     isVerifyEmailChangeSuccess: true
   }),
-  [verifyEmailChange.request]: (state, payload) => state.merge({
+  [verifyEmailChange.request]: (state) => state.merge({
     loading: true,
     isVerifyEmailChangeSuccess: false
   }),
   [verifyEmailChange.error]: (state, payload) => state.merge({
     loading: false,
-    errors: state.concat(payload)
+    errors: payload
   }),
   [getAvailableUsername.ok]: (state) => state.merge({ validateCompleted: true, loading: false }),
   [getAvailableUsername.request]: (state) => state.merge({ validateCompleted: false, loading: true }),

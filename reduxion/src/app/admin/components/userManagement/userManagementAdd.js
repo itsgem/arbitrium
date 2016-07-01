@@ -13,7 +13,7 @@ class UserManagementAdd extends React.Component {
       errorServer:null
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -220,7 +220,7 @@ class UserManagementAdd extends React.Component {
       errors: {},
       errorServer: null
     } );
-    let {username, email_address, password, rep_last_name, password_confirmation, first_name, last_name, role_id} = this.refs;
+    let {username, email_address, password, password_confirmation, first_name, last_name, role_id} = this.refs;
 
     let payload = {
       username: username.value,

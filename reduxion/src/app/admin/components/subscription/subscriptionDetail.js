@@ -4,7 +4,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
-import {openLoading, closeLoading} from 'common/components/modal'
+import {openLoading} from 'common/components/modal'
 
 class SubscriptionDetail extends React.Component {
   constructor(props) {
@@ -15,13 +15,11 @@ class SubscriptionDetail extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps () {
+    this.dateValid();
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-  }
-  componentDidMount () {
-    this.dateValid();
   }
   loadingRender () {
     return (
@@ -95,7 +93,7 @@ class SubscriptionDetail extends React.Component {
                 :
                 <div id="term-opt" className={this.formClassNames('term', errors)}>
                   <div className="mdl-selectfield">
-                    <select onChange={(e) => this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
+                    <select onChange={()=>this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
                       <option></option>
                       <option>Annually</option>
                       <option>Monthly</option>

@@ -1,7 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ClientLogList from 'admin/components/logs/clientLogList';
-import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal';
 
 export default React.createClass( {

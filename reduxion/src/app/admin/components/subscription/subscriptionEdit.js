@@ -1,9 +1,6 @@
 import React from 'react';
-import Checkit from 'checkit';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import cx from 'classnames';
-import {createError} from 'utils/error';
 
 class SubscriptionEdit extends React.Component {
   constructor(props) {
@@ -14,7 +11,7 @@ class SubscriptionEdit extends React.Component {
       permissions: {}
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -85,7 +82,7 @@ class SubscriptionEdit extends React.Component {
                 <div className="mdl-cell mdl-cell--9-col">
                   {
                     subscriptions.map(item => {
-                      return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
+                      return <table key={item.id} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                         <thead>
                           <tr>
                             <th>{item.name}</th>
@@ -120,7 +117,7 @@ class SubscriptionEdit extends React.Component {
                             <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
                           </tr>
                           <tr>
-                            <td style={(clientInfo.can_avail_trial == false && clientSubscriptionInfo.name != 'Free Trial') ? {'height' : '60px'} : {'height' : '48px'}}>
+                            <td style={(clientInfo.can_avail_trial == false && clientSubscriptionInfo.name != 'Free Trial') ? {height : '60px'} : {height : '48px'}}>
                               {
                                 item.name == 'Free Trial' ? (clientInfo.can_avail_trial == false ?
                                   (clientSubscriptionInfo.name != 'Free Trial' ? '' :

@@ -41,7 +41,7 @@ export default createReducer({
     purchaseSuccess: false,
     loading: false
   }),
-  [allSubscriptions.request]: (state, payload) => state.merge({
+  [allSubscriptions.request]: (state) => state.merge({
     purchaseSuccess: false,
     loading: true
   }),
@@ -49,7 +49,7 @@ export default createReducer({
     subscriptionInfoClient: payload,
     loading: false
   }),
-  [clientSubscriptionInfo.request]: (state, payload) => state.merge({
+  [clientSubscriptionInfo.request]: (state) => state.merge({
     loading: true
   }),
   [adminChangeSubscription.ok]: (state) => state.merge({
@@ -65,7 +65,7 @@ export default createReducer({
     purchaseSuccess: false,
     loading: false
   }),
-  [selectedSubscriptionInfo.request]: (state, payload) => state.merge({
+  [selectedSubscriptionInfo.request]: (state) => state.merge({
     subscriptionInfoSelected: {},
     purchaseSuccess: false,
     loading: true

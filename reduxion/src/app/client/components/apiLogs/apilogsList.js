@@ -1,10 +1,10 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
-import {modal, openModal, closeModal} from 'common/components/modal'
-import {createError} from 'utils/error';
-import Datetime from 'react-datetime';
+import { modal } from 'common/components/modal'
+import { createError } from 'utils/error';
 import moment from 'moment';
+import Datetime from 'react-datetime';
 import json2csv from 'json2csv';
 
 class apilogList extends React.Component {
@@ -21,13 +21,11 @@ class apilogList extends React.Component {
       status: null,
       created: null
     };  }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
     modal();
-  }
-  componentDidMount() {
     if (document.querySelector("select")) {
       let allSelectOpt = document.querySelectorAll("select");
       for (let i = 0; i < allSelectOpt.length; ++i) {
@@ -136,13 +134,11 @@ class apilogList extends React.Component {
     let fields = ['ipaddress', 'statusCode', 'url', 'parameter', 'created'];
     let estateNameCsv ='';
     let datacsv ='';
-    let csvString ='';
     if (Object.keys(this.props.successApiLogsList).length) {
 
       json2csv({ data: this.props.successApiLogsList.data, fields: fields }, function(err, csv) {
-        // estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        // datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
-        csvString = csv;
+        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
       });
 
       let i=0;
@@ -222,10 +218,10 @@ class apilogList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col tooltipBox">
               <span className="tooltiptext">Items to show per page</span>
-              <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
-              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+              <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
             </div>
           </div>
         </div>
@@ -279,7 +275,7 @@ class apilogList extends React.Component {
     this.props.clientApiLogsList(payload).catch(createError);
   }
 
-  selectPageNumber (pageNum) {
+  selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
     let btTwo = document.querySelector("#bt-20");
@@ -313,7 +309,7 @@ class apilogList extends React.Component {
     }
   }
   itemPage (e, pageNum = 10) {
-    this.selectPageNumber(pageNum);
+    this.selectPageNumber();
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
     this.page(e, 1);

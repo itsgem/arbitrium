@@ -3,8 +3,7 @@ import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import { Link } from 'react-router';
-import {openLoading, closeLoading} from 'common/components/modal'
+import {openLoading} from 'common/components/modal'
 
 class SystemSettings extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class SystemSettings extends React.Component {
       errorServer:null
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -235,50 +234,50 @@ class SystemSettings extends React.Component {
 
     let payload = {
       system_setting: [{
-          "name": "kcg_company_name",
-          "value": company_name.value
+          name: "kcg_company_name",
+          value: company_name.value
         }, {
-          "name": "kcg_street_address",
-          "value": street_address.value
+          name: "kcg_street_address",
+          value: street_address.value
         }, {
-          "name": "kcg_city",
-          "value": city.value
+          name: "kcg_city",
+          value: city.value
         }, {
-          "name": "kcg_state",
-          "value": state.value
+          name: "kcg_state",
+          value: state.value
         }, {
-          "name": "kcg_country",
-          "value": country.value
+          name: "kcg_country",
+          value: country.value
         }, {
-          "name": "kcg_postal_code",
-          "value": postal_code.value
+          name: "kcg_postal_code",
+          value: postal_code.value
         }, {
-          "name": "kcg_admin_email",
-          "value": admin_email.value
+          name: "kcg_admin_email",
+          value: admin_email.value
         }, {
-          "name": "reset_token_expiry",
-          "value": token_expiry.value
+          name: "reset_token_expiry",
+          value: token_expiry.value
         }, {
-          "name": "items_per_page",
-          "value": items_per_page.value
+          name: "items_per_page",
+          value: items_per_page.value
         }, {
-          "name": "kcg_swift_code",
-          "value": swift_code.value
+          name: "kcg_swift_code",
+          value: swift_code.value
         }, {
-          "name": "kcg_branch_code",
-          "value": branch_code.value
+          name: "kcg_branch_code",
+          value: branch_code.value
         }, {
-          "name": "kcg_account_name",
-          "value": account_name.value
+          name: "kcg_account_name",
+          value: account_name.value
         }, {
-          "name": "kcg_credit_to",
-          "value": credit_to.value
+          name: "kcg_credit_to",
+          value: credit_to.value
         }, {
-          "name": "kcg_bank_account",
-          "value": bank_account.value
+          name: "kcg_bank_account",
+          value: bank_account.value
         }, {
-          "name": "kcg_bank_code",
-          "value": bank_code.value
+          name: "kcg_bank_code",
+          value: bank_code.value
         }
       ]
     }

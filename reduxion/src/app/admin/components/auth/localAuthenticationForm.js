@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import tr from 'i18next';
@@ -15,7 +14,7 @@ class LocalAuthenticationForm extends React.Component {
       loading:false
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }

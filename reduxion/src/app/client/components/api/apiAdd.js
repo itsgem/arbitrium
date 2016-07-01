@@ -14,7 +14,7 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -135,7 +135,7 @@ class ApiAdd extends React.Component {
       </main>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {

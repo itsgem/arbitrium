@@ -16,13 +16,12 @@ class invoiceList extends React.Component {
       dateFrom: null,
       dateTo: null
     };  }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
     modal();
-  }
-  componentDidMount() {
+
     if (document.querySelector("select")) {
       let allSelectOpt = document.querySelectorAll("select");
       for (let i = 0; i < allSelectOpt.length; ++i) {
@@ -218,10 +217,10 @@ class invoiceList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col tooltipBox">
               <span className="tooltiptext">Items to show per page</span>
-              <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
-              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+              <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
             </div>
           </div>
         </div>
@@ -264,7 +263,7 @@ class invoiceList extends React.Component {
     this.props.clientDeleteApiKey(this.state.id).catch(createError);
     this.modalClose();
   }
-  selectPageNumber (pageNum) {
+  selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
     let btTwo = document.querySelector("#bt-20");
@@ -298,17 +297,11 @@ class invoiceList extends React.Component {
     }
   }
   itemPage (e, pageNum = 10) {
-    this.selectPageNumber(pageNum);
+    this.selectPageNumber();
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
     this.page(e, 1);
-  }
-  modalConfirm (e, id, company) {
-    openModal();
-    this.setState( {
-      id: id
-    } );
   }
   modalClose () {
     closeModal();

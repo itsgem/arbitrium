@@ -1,7 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import UserProfile from 'admin/components/userProfile/userProfile';
-import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
 
