@@ -19,6 +19,7 @@ return [
         'endpoints'     => [
             'authenticate'              => ['method' => 'post',   'path' => 'oauth/token'],
             'create_user'               => ['method' => 'post',   'path' => 'users'],
+            'update_user'               => ['method' => 'put',    'path' => 'users/:id'],
             'delete_user'               => ['method' => 'delete', 'path' => 'users/:id'],
             'check_username'            => ['method' => 'get',    'path' => 'users/check/:username'],
 

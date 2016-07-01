@@ -430,12 +430,12 @@ class Client extends NrbModel
 
     public function coreApiSubscribe($params = [])
     {
-        if (!$this->user->api)
+        if (!$this->user->hasApi())
         {
             return false;
         }
 
-        $auth = $this->user->api->getAuth();
+        $auth = $this->user->getApiAuth();
 
         $params = [
             'client_id'     => $this->id,

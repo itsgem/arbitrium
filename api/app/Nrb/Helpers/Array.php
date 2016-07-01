@@ -84,8 +84,8 @@ function transform_arbitrium_payload($payload)
     if ($payload_client_id)
     {
         $payload_client = \App\Models\Client::findOrfail($payload_client_id);
-        $payload_client_id = ($payload_client->user->api) ? $payload_client->user->api->getAuth() : null;
-        $payload_client_id = $payload_client_id['client_id'];
+        $payload_client_api = $payload_client->user->getApiAuth();
+        $payload_client_id = get_val($payload_client_api, 'client_id');
     }
 
     $payload['client_id'] = $payload_client_id;

@@ -100,7 +100,7 @@ class ClientServices extends NrbServices
         $this->addResponseData($client);
         if ($request->get('with-api'))
         {
-            $client['api'] = $client->user->api->getAuth();
+            $client['api'] = $client->user->getApiAuth();
         }
 
         return $this->respondWithSuccess($client);
@@ -129,13 +129,19 @@ class ClientServices extends NrbServices
             $client->update($request->all());
             if (is_admin_user_logged_in())
             {
-                $client->user()->update($request->only('username', 'email_address', 'items_per_page', 'timezone'));
+                $client->user->update($request->only('username', 'email_address', 'items_per_page', 'timezone'));
             }
             else
             {
                 // client has to use change email address API
-                $client->user()->update($request->only('username', 'items_per_page', 'timezone'));
+                $client->user->update($request->only('username', 'items_per_page', 'timezone'));
             }
+
+            // [Core-API] Update username, password, user_type
+            $client->user->updateApiCredentials([
+                'username' => $client->user->username,
+            ]);
+
             return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
         });
     }
