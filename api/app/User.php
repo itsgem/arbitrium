@@ -333,6 +333,16 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         return !empty($this->api);
     }
 
+    public function getApiAuth()
+    {
+        if ($this->hasApi())
+        {
+            return $this->api->getAuth();
+        }
+
+        return [];
+    }
+
     public function isMaxLogAttempts()
     {
         $max = false;

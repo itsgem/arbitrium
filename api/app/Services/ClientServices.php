@@ -100,7 +100,7 @@ class ClientServices extends NrbServices
         $this->addResponseData($client);
         if ($request->get('with-api'))
         {
-            $client['api'] = ($client->user->api) ? $client->user->api->getAuth() : [];
+            $client['api'] = $client->user->getApiAuth();
         }
 
         return $this->respondWithSuccess($client);
