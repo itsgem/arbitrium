@@ -277,7 +277,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
             'userType' => $this->user_type,
         ], $params);
 
-        $auth = ($this->api) ? $this->api->getAuth() : [];
+        $auth = $this->getApiAuth();
         $url = get_api_url(config('arbitrium.core.endpoints.update_user'), ['id' => get_val($auth, 'client_id')]);
 
         (new ExternalRequestServices())->setAuth($auth)->send($url, $data);
@@ -285,7 +285,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
 
     public function removeApiCredentials()
     {
-        $auth = ($this->api) ? $this->api->getAuth() : [];
+        $auth = $this->getApiAuth();
         $url = get_api_url(config('arbitrium.core.endpoints.delete_user'), ['id' => get_val($auth, 'client_id')]);
         (new ExternalRequestServices())->send($url);
 
