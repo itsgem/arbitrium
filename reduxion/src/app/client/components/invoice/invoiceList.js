@@ -115,7 +115,6 @@ class invoiceList extends React.Component {
     isDate[selectedDate] = date;
     this.setState( isDate );
     document.getElementById(selectedDate).classList.add('is-dirty');
-    console.log(date);
   }
   render() {
     let counter = false;
@@ -255,7 +254,7 @@ class invoiceList extends React.Component {
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value
     };
-    console.log(payload);
+
     this.props.clientInvoiceList(payload).catch(createError);
   }
 
@@ -315,9 +314,5 @@ class invoiceList extends React.Component {
     this.props.clientInvoiceList(payload).catch(createError);
   }
 };
-
-// function getDate (date){
-//   console.log(this)
-// }
 
 export default invoiceList;
