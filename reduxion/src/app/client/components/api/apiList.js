@@ -133,6 +133,10 @@ class ApiList extends React.Component {
     });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
+  validDate(current) {
+    let today = Datetime.moment();
+    return current.isBefore( today );
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -196,6 +200,7 @@ class ApiList extends React.Component {
                     timeFormat={false}
                     onChange={(e)=> this.selectedDate(e, 'createdDate')}
                     closeOnSelect={true}
+                    isValidDate={this.validDate}
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>
