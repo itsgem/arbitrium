@@ -92,6 +92,14 @@ class UserServices extends NrbServices
         if ($user->canDelete())
         {
             $user->deactivate();
+
+            if ($user->isClient())
+            {
+                // [Core-API] Deactivate account
+                // @TODO-Arbitrium: While waiting for deactivate endpoint in core, reset allowed requests and decisions
+                $user->client->coreApiSubscribe();
+            }
+
             return $this->respondWithSuccess();
         }
         return $this->respondWithError(Errors::CANNOT_DEACTIVATE, ['str_replace' => ['model' => 'User']]);
