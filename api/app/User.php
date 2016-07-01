@@ -246,18 +246,13 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         $this->resetTokens(ResetToken::NEW_EMAIL_ADDRESS);
     }
 
-    public function registerApiCredentials($params = null)
+    public function registerApiCredentials($params = [])
     {
-        $data = [
+        $data = array_merge([
             'username' => $this->username,
             'password' => $this->password,
             'userType' => $this->user_type,
-        ];
-
-        if ($params)
-        {
-            $data = $params;
-        }
+        ], $params);
 
         $response = (new ExternalRequestServices())->addUser($data);
 
@@ -265,6 +260,8 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
             'user_id'       => $this->id,
             'api_client_id' => $response['body']->data->clientId,
             'api_secret'    => $response['body']->data->clientSecret,
+            'api_username'  => $this->username,
+            'api_password'  => $this->password,
         ]);
         $user_api->save();
     }

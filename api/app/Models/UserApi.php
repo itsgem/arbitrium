@@ -16,7 +16,8 @@ class UserApi extends NrbModel
     protected $hidden = ['user','created_at','updated_at','deleted_at'];
 
     protected $fillable = [
-        'user_id', 'api_client_id', 'api_secret', 'api_access_token', 'api_refresh_token',
+        'user_id', 'api_client_id', 'api_secret', 'api_username', 'api_password',
+        'api_access_token', 'api_refresh_token',
     ];
 
     protected $appends = ['is_subscribed'];
@@ -88,8 +89,8 @@ class UserApi extends NrbModel
             'grant_type'    => 'password',
             'client_id'     => $this->api_client_id,
             'client_secret' => $this->api_secret,
-            'username'      => $this->user->username,
-            'password'      => $this->user->password,
+            'username'      => $this->api_username,
+            'password'      => $this->api_password,
         ];
     }
 }

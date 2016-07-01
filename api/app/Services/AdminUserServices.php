@@ -101,12 +101,6 @@ class AdminUserServices extends NrbServices
             $user->syncRoles([Role::findOrFail($request->get('role_id'))->id]);
             $user->update($request->only('username', 'email_address', 'password', 'items_per_page', 'timezone'));
 
-            // [Core-API] Update username, password, user_type
-            $user->updateApiCredentials([
-                'username' => $user->username,
-                'password' => $user->password,
-            ]);
-
             return $this->respondWithSuccess($admin);
         });
     }

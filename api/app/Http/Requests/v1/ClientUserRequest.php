@@ -110,6 +110,7 @@ class ClientUserRequest extends NrbRequest
     public function validate()
     {
         $errors = [];
+        $method = $this->method();
         // validate based on the rules defined above
         $instance = $this->getValidatorInstance();
         if (!$instance->passes())
@@ -118,18 +119,21 @@ class ClientUserRequest extends NrbRequest
         }
         else
         {
-            // [Core-API] Check if username already taken
-            if ($this->get('username'))
+            if ($method == 'POST')
             {
-                $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
-                    'username' => $this->get('username')
-                ]);
-
-                $result = (new ExternalRequestServices())->asObject()->send($url);
-
-                if (!get_val($result, 'is_available'))
+                // [Core-API] Check if username already taken
+                if ($this->get('username'))
                 {
-                    $errors['username'][] = trans('errors.'.Errors::CORE_API_USERNAME_TAKEN);
+                    $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
+                        'username' => $this->get('username')
+                    ]);
+
+                    $result = (new ExternalRequestServices())->asObject()->send($url);
+
+                    if (!get_val($result, 'is_available'))
+                    {
+                        $errors['username'][] = trans('errors.'.Errors::CORE_API_USERNAME_TAKEN);
+                    }
                 }
             }
         }
