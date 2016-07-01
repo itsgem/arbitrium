@@ -43,9 +43,12 @@ return [
 
     Errors::CORE_API_USERNAME_TAKEN     => 'Unfortunately, username is no longer available in Core-API.',
 
-    Errors::EXTERNAL_SERVER_ERROR       => 'API server error occurred. Please try again later.',
+    Errors::EXTERNAL_SERVER_ERROR       => 'External API server error occurred. Please try again later.',
+    Errors::EXTERNAL_BAD_GATEWAY        => 'External API server error occurred. Please try again later.',
+    Errors::EXTERNAL_UNAVAILABLE        => 'External API server is currently unavailable. Please try again later.',
+    Errors::EXTERNAL_GATEWAY_TIMEOUT    => 'External API server took too long to respond. Please try again later.',
     Errors::EXTERNAL_BAD_REQUEST        => 'Invalid input.',
-    Errors::EXTERNAL_UNAUTHORIZED       => 'Unable to authenticate your API credentials. Please contact our system admimnistrator.',
-    Errors::EXTERNAL_FORBIDDEN          => 'Forbidden access to API server.',
-    Errors::EXTERNAL_NOT_FOUND          => 'Unable to connect to API server. Please try again later.',
+    Errors::EXTERNAL_UNAUTHORIZED       => 'Unable to authenticate your External API credentials. Please contact our system admimnistrator.',
+    Errors::EXTERNAL_FORBIDDEN          => 'Forbidden access to External API server.',
+    Errors::EXTERNAL_NOT_FOUND          => 'Unable to connect to External API server. Please try again later.',
 ];

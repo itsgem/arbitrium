@@ -60,6 +60,9 @@ class Errors
     const EXTERNAL_FORBIDDEN        = 10000403;
     const EXTERNAL_NOT_FOUND        = 10000404;
     const EXTERNAL_SERVER_ERROR     = 10000500;
+    const EXTERNAL_BAD_GATEWAY      = 10000502;
+    const EXTERNAL_UNAVAILABLE      = 10000503;
+    const EXTERNAL_GATEWAY_TIMEOUT  = 10000504;
 
     public static $http_codes = [
         self::NOT_FOUND             => Response::HTTP_NOT_FOUND,
