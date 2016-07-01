@@ -19,7 +19,7 @@ class ExternalRequestServices extends NrbServices
         $this->as_object = false;
     }
 
-    public function setAuth($auth)
+    public function setAuth($auth = null)
     {
         $this->config['auth'] = ($auth) ?: config('arbitrium.core.auth');
 
