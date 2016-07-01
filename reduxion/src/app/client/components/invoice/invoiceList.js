@@ -263,14 +263,14 @@ class invoiceList extends React.Component {
   }
 
   searchList(e, pageNum = null, clearDate = false) {
-    var date_from = this.state.dateFrom;
-    var date_to = this.state.dateTo;
+    var invoicedDateFrom = this.state.dateFrom;
+    var invoicedDateTo = this.state.dateTo;
     e.preventDefault();
 
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      date_from: clearDate  ? '' : (date_from ? date_from.format('YYYY-MM-DD') : ''),
-      date_to: clearDate  ? '' : (date_to ? date_to.format('YYYY-MM-DD') : ''),
+      date_from: clearDate  ? '' : (invoicedDateFrom ? invoicedDateFrom.format('YYYY-MM-DD') : ''),
+      date_to: clearDate  ? '' : (invoicedDateTo ? invoicedDateTo.format('YYYY-MM-DD') : ''),
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value
     };
@@ -331,15 +331,15 @@ class invoiceList extends React.Component {
     closeModal();
   }
   page(e, pageNumber) {
-    var date_from = this.state.dateFrom;
-    var date_to = this.state.dateTo;
+    var invoicedDateFrom = this.state.dateFrom;
+    var invoicedDateTo = this.state.dateTo;
     e.preventDefault();
 
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      date_from: (date_from ? date_from.format('YYYY-MM-DD') : ''),
-      date_to: (date_to ? date_to.format('YYYY-MM-DD') : ''),
+      date_from: (invoicedDateFrom ? invoicedDateFrom.format('YYYY-MM-DD') : ''),
+      date_to: (invoicedDateTo ? invoicedDateTo.format('YYYY-MM-DD') : ''),
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value
     };
