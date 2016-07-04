@@ -117,19 +117,21 @@ class apilogList extends React.Component {
       </div>
     );
   }
-  selectedDate(e, selectedDate) {
-    this.setState({
-      dateFrom: e
+  componentDidMount() {
+    $( document ).ready(function() {
+      $('.datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: '+0d',
+          autoclose: true
+      });
     });
-    document.getElementById(selectedDate).classList.add('is-dirty');
   }
-
   render() {
     let counter = false;
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let listApiLogs = {last_page: 1};
+    let listApiLogs = {last_page: 1, total: null};
     let apiLogsData = {};
     let fields = ['ipaddress', 'statusCode', 'url', 'parameter', 'created'];
     let estateNameCsv ='';
@@ -152,12 +154,14 @@ class apilogList extends React.Component {
       }
       pagination[i+1] = this.nextPage(i+1, ((listApiLogs.current_page == listApiLogs.last_page)|| listApiLogs.last_page == 0 ? false : (listApiLogs.current_page + 1 )), listApiLogs.last_page );
       perPage = listApiLogs.per_page;
+      listApiLogs.total = listApiLogs.total ? listApiLogs.total : null;
     }
 
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
-    }
+    let isState = this ;
+    $('.datepicker').change(function(e){
+      isState.setState({dateFrom: $(this).val()});
+      document.getElementById('createdDate').classList.add('is-dirty');
+    });
 
     return (
       <div className="filter-search">
@@ -172,12 +176,10 @@ class apilogList extends React.Component {
               </div>
               <div className="mdl-cell mdl-cell--3-col">
                 <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                  <Datetime
+                  <input
+                    type="text"
+                    className="datepicker mdl-textfield__input"
                     id="created_at"
-                    value={this.state.dateFrom}
-                    dateFormat="YYYY-MM-DD"
-                    timeFormat={false}
-                    onChange={(e)=> this.selectedDate(e, 'createdDate')}
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>
@@ -189,7 +191,12 @@ class apilogList extends React.Component {
                 <button
                   className="margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
                   onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
-                <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" href={datacsv} target="_blank" download={estateNameCsv+".csv"}>Download Logs</a>
+                {listApiLogs.total &&
+                  <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" href={datacsv} target="_blank" download={estateNameCsv+".csv"}>Download Logs</a>
+                }
+                {!listApiLogs.total &&
+                  <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" disabled={true}>Download Logs</a>
+                }
               </div>
             </div>
           <table width="100%" className="mdl-data-table mdl-js-data-table table-client-list">
@@ -245,7 +252,7 @@ class apilogList extends React.Component {
     let pageNum = '';
     if (!clearDate) {
       statusCode = this.refs.statusCode.value;
-      dateFrom = (dateFrom ? dateFrom.format('YYYY-MM-DD') : '');
+      dateFrom = (dateFrom ? dateFrom : '');
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
       this.setState( {
         page: 1,
