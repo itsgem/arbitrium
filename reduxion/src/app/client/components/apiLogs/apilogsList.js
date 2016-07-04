@@ -42,6 +42,11 @@ class apilogList extends React.Component {
         }, false);
       }
     }
+
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+    }
   }
   apilogDisplay (data, alter) {
     return (
@@ -125,7 +130,10 @@ class apilogList extends React.Component {
     });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
-
+  validDate(current) {
+    let today = Datetime.moment();
+    return current.isBefore( today );
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -158,11 +166,6 @@ class apilogList extends React.Component {
       perPage = listApiLogs.per_page;
     }
 
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
-    }
-
     return (
       <div className="filter-search">
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
@@ -182,6 +185,8 @@ class apilogList extends React.Component {
                     dateFormat="YYYY-MM-DD"
                     timeFormat={false}
                     onChange={(e)=> this.selectedDate(e, 'createdDate')}
+                    closeOnSelect={true}
+                    isValidDate={this.validDate}
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>

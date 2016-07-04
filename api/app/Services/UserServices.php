@@ -133,10 +133,17 @@ class UserServices extends NrbServices
 
                 // If asked to reset password for the first time
                 // (Happens when admin creates account for client)
-                if (!$user->api)
+                if (!$user->hasApi())
                 {
                     // [Core-API] Signup
                     $user->registerApiCredentials();
+                }
+                else
+                {
+                    // [Core-API] Update username, password, user_type
+                    $user->updateApiCredentials([
+                        'password' => $user->password,
+                    ]);
                 }
 
                 return $this->respondWithSuccess();

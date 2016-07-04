@@ -28,7 +28,7 @@ class ApiLogServices extends NrbServices
         if ($client_id)
         {
             $client = Client::findOrfail($client_id);
-            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+            $this->auth = $client->user->getApiAuth();
         }
 
         $result = $this->external_request->setAuth($this->auth)
@@ -44,7 +44,7 @@ class ApiLogServices extends NrbServices
         if ($client_id)
         {
             $client = Client::findOrfail($client_id);
-            $this->auth = ($client->user->api) ? $client->user->api->getAuth() : null;
+            $this->auth = $client->user->getApiAuth();
         }
 
         $result = $this->external_request->setAuth($this->auth)

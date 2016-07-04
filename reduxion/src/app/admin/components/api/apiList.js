@@ -37,6 +37,12 @@ class ApiList extends React.Component {
       nextProps.apiList(payload).catch(createError);
     }
   }
+  componentDidMount() {
+    if ( document.querySelector('.rdt input')) {
+      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
+      document.querySelector('.rdt input').readOnly = true;
+    }
+  }
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
@@ -125,6 +131,10 @@ class ApiList extends React.Component {
     });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
+  validDate(current) {
+    let today = Datetime.moment();
+    return current.isBefore( today );
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -143,11 +153,6 @@ class ApiList extends React.Component {
       }
       pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
       perPage = apiList.per_page;
-    }
-
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
     }
 
     return (
@@ -186,6 +191,8 @@ class ApiList extends React.Component {
                   dateFormat="YYYY-MM-DD"
                   timeFormat={false}
                   onChange={(e)=> this.selectedDate(e, 'createdDate')}
+                  closeOnSelect={true}
+                  isValidDate={this.validDate}
                 />
                 <label className="mdl-textfield__label">Date Created</label>
               </div>
