@@ -260,8 +260,6 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
             'user_id'       => $this->id,
             'api_client_id' => $response['body']->data->clientId,
             'api_secret'    => $response['body']->data->clientSecret,
-            'api_username'  => $this->username,
-            'api_password'  => $this->password,
         ]);
         $user_api->save();
     }

@@ -146,6 +146,13 @@ class UserServices extends NrbServices
                     // [Core-API] Signup
                     $user->registerApiCredentials();
                 }
+                else
+                {
+                    // [Core-API] Update username, password, user_type
+                    $user->updateApiCredentials([
+                        'password' => $user->password,
+                    ]);
+                }
 
                 return $this->respondWithSuccess();
             }

@@ -137,6 +137,11 @@ class ClientServices extends NrbServices
                 $client->user->update($request->only('username', 'items_per_page', 'timezone'));
             }
 
+            // [Core-API] Update username, password, user_type
+            $client->user->updateApiCredentials([
+                'username' => $client->user->username,
+            ]);
+
             return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
         });
     }
