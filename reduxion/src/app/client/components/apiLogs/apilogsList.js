@@ -285,7 +285,7 @@ class apilogList extends React.Component {
     let payload = {
       page: 1,
       per_page: pageNum,
-      statusCode: statusCode,
+      status_code: statusCode,
       created: dateFrom,
     };
     this.props.clientApiLogsList(payload).catch(createError);
@@ -335,7 +335,7 @@ class apilogList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      statusCode: this.state.statusCode,
+      status_code: this.state.statusCode,
       created: this.state.created
     };
 
