@@ -136,9 +136,9 @@ class ApiAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col check-test-key">
               <div id="tt4" className="icon material-icons">help</div>
-                <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
+                <div className="mdl-tooltip mdl-tooltip--right" htmlFor="tt4">
                   You can use a test key to experiment
-                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation
+                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation.
                 </div>
             </div>
         </div>
