@@ -113,6 +113,12 @@ class LogList extends React.Component {
           todayHighlight: true
       });
     });
+
+    let isState = this ;
+    $('.datepicker').change(function(e){
+      isState.setState({created: $(this).val()});
+      document.getElementById('createdDate').classList.add('is-dirty');
+    });
   }
   render() {
     let counter = false;
@@ -144,12 +150,6 @@ class LogList extends React.Component {
       pagination[i+1] = this.nextPage(i+1, ((logList.current_page == logList.last_page)|| logList.last_page == 0 ? false : (logList.current_page + 1 )), logList.last_page );
       perPage = logList.per_page;
     }
-
-    let isState = this ;
-    $('.datepicker').change(function(e){
-      isState.setState({created: $(this).val()});
-      document.getElementById('createdDate').classList.add('is-dirty');
-    });
 
     return (
       <div className="filter-search">
