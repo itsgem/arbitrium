@@ -109,7 +109,8 @@ class LogList extends React.Component {
       $('.datepicker').datepicker({
           format: 'yyyy-mm-dd',
           endDate: '+0d',
-          autoclose: true
+          autoclose: true,
+          todayHighlight: true
       });
     });
   }
@@ -172,6 +173,7 @@ class LogList extends React.Component {
                 type="text"
                 className="datepicker mdl-textfield__input"
                 id="created_at" ref="created_at"
+                readOnly
               />
               <label className="mdl-textfield__label">Date Created</label>
             </div>
@@ -281,7 +283,6 @@ class LogList extends React.Component {
   }
   searchList(e, pageNum = null, clearDate = false) {
     e.preventDefault();
-
     let createDate = this.state.created;
     let statusCode = '';
     let ipAddress = '';

@@ -42,7 +42,8 @@ class ApiList extends React.Component {
       $('.datepicker').datepicker({
           format: 'yyyy-mm-dd',
           endDate: '+0d',
-          autoclose: true
+          autoclose: true,
+          todayHighlight: true
       });
     });
   }
@@ -194,6 +195,7 @@ class ApiList extends React.Component {
                     type="text"
                     className="datepicker mdl-textfield__input"
                     id="created_at" ref="created_at"
+                    readOnly
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>
