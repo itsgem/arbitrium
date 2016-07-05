@@ -40,11 +40,6 @@ class apilogList extends React.Component {
         }, false);
       }
     }
-
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
-    }
   }
   apilogDisplay (data, alter) {
     return (
