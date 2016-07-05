@@ -270,8 +270,6 @@ class apilogList extends React.Component {
         statusCode: null
       } );
     } else {
-      statusCode = ''
-      dateFrom = ''
       pageNum = 10;
       this.setState( {
         page: 1,

@@ -312,14 +312,14 @@ class ApiList extends React.Component {
     e.preventDefault();
 
     let createDate = this.state.created;
-    let descr = this.refs.description.value;
-    let token = this.refs.api_key.value;
+    let descr = '';
+    let token = '';
 
     if (!clearDate) {
       createDate = (createDate ? createDate : '');
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
-      descr = (descr ? descr : '');
-      token = (token ? token : '');
+      descr = this.refs.description.value;
+      token = this.refs.api_key.value;
 
       this.setState( {
         description: descr,
@@ -327,7 +327,7 @@ class ApiList extends React.Component {
         created: createDate
       } );
     } else {
-      createDate = ''
+      createDate = '';
       pageNum = 10;
       this.setState( {
         created: null,
