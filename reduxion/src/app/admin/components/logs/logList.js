@@ -110,6 +110,11 @@ class LogList extends React.Component {
     let today = Datetime.moment();
     return current.isBefore( today );
   }
+  download(e) {
+    if (this.props.logList.data.length <= 0) {
+      e.preventDefault();
+    }
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -122,10 +127,10 @@ class LogList extends React.Component {
     let datacsv = '';
     let csvString = '';
 
-    if (Object.keys(this.props.logList).length) {
+    if (Object.keys(this.props.logList.data).length) {
       json2csv({ data: this.props.logList.data, fields: fields }, function(err, csv) {
-        // estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        // datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
+        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
         csvString = csv;
       });
 
@@ -178,7 +183,7 @@ class LogList extends React.Component {
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
-            <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" href={datacsv} target="_blank" download={estateNameCsv + ".csv"}>Download Logs</a>
+            <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" disabled={this.props.logList.data.length <= 0} href={datacsv} onClick={(e)=> this.download(e)} target="_blank" download={estateNameCsv + ".csv"}>Download Logs</a>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
