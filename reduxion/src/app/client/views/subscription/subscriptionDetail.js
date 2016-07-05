@@ -25,18 +25,21 @@ export default React.createClass({
 
     let query = this.props.location.query;
     if (query.success && query.token) {
-      let payload = {
-        success: query.success == 'true' ? true : false,
-        token: query.token
-      };
+      if (nextProps.purchaseProcessingConfirm) {
+        this.context.router.push('/i/subscription');
+      } else {
+        let payload = {
+          success: query.success == 'true' ? true : false,
+          token: query.token
+        };
 
-      if (query.paymentId && query.PayerID) {
-        payload.payment_id = query.paymentId;
-        payload.payer_id = query.PayerID;
+        if (query.paymentId && query.PayerID) {
+          payload.payment_id = query.paymentId;
+          payload.payer_id = query.PayerID;
+        }
+
+        this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
       }
-
-      this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
-      this.context.router.push('/i/subscription');
     }
 
     if (nextProps.purchaseSuccessConfirm || nextProps.paypalPendingCancel) {
