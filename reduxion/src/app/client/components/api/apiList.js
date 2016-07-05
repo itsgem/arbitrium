@@ -270,7 +270,6 @@ class ApiList extends React.Component {
       token = (token ? token : '');
 
       this.setState( {
-        perPage: 10,
         description: descr,
         token: token,
         created: createDate
@@ -279,7 +278,6 @@ class ApiList extends React.Component {
       createDate = ''
       pageNum = 10;
       this.setState( {
-        perPage: 10,
         created: null,
         description: null,
         token: null
@@ -361,7 +359,7 @@ class ApiList extends React.Component {
     this.setState({
       description: this.refs.description.value,
       token: this.refs.api_key.value,
-      created: createDate ? createDate : ''
+      created: (createDate ? createDate : '')
     });
 
     let payload = {
@@ -369,7 +367,7 @@ class ApiList extends React.Component {
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       token: this.refs.api_key.value,
-      created: createDate ? createDate : ''
+      created: (createDate ? createDate : '')
     };
     this.props.clientApiKeys(payload).catch(createError);
   }
