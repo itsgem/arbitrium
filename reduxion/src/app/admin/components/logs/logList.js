@@ -105,6 +105,10 @@ class LogList extends React.Component {
     });
     document.getElementById(selectedDate).classList.add('is-dirty');
   }
+  validDate(current) {
+    let today = Datetime.moment();
+    return current.isBefore( today );
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -160,6 +164,8 @@ class LogList extends React.Component {
                 dateFormat="YYYY-MM-DD"
                 timeFormat={false}
                 onChange={(e)=> this.selectedDate(e, 'created')}
+                closeOnSelect={true}
+                isValidDate={this.validDate}
               />
               <label className="mdl-textfield__label">Date Created</label>
             </div>
