@@ -13,8 +13,7 @@ class ApiList extends React.Component {
       id: null,
       description: null,
       token: null,
-      created: null,
-      createdDate: null
+      created: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
