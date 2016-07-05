@@ -184,7 +184,7 @@ class apilogList extends React.Component {
                   <input
                     type="text"
                     className="datepicker mdl-textfield__input"
-                    id="created_at"
+                    id="created_at" ref="created_at"
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>
@@ -244,6 +244,10 @@ class apilogList extends React.Component {
   clearSearch(e) {
     e.preventDefault();
     this.refs.statusCode.value = "";
+    this.refs.created_at.value = "";
+    this.setState({
+      created: null
+    });
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
