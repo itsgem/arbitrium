@@ -7,13 +7,13 @@ export default class Application extends React.Component {
     super(props);
     this.props = props;
   }
-  componentWillReceiveProps(nextProps) {
-    document.querySelector('.alert').style.display = 'none';
-  }
   componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+  }
+  componentWillReceiveProps() {
+    document.querySelector('.alert').style.display = 'none';
   }
   render() {
     return (

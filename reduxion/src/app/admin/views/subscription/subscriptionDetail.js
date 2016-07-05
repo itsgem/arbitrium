@@ -13,11 +13,6 @@ export default React.createClass({
     this.props.clientSubscriptionInfo(this.props.params.client_id).catch(createError);
     this.props.selectedSubscriptionInfo(id).catch(createError);
   },
-  componentWillMount () {
-    if ( typeof(window.componentHandler) != 'undefined' ) {
-      setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    }
-  },
   loadingRender () {
     openLoading();
     return (
@@ -25,6 +20,10 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+
     if (nextProps.purchaseSuccess) {
       $('.msg').html('Successfully sent approval URL to client to complete the subscription change.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {

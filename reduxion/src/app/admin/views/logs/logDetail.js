@@ -11,7 +11,7 @@ export default React.createClass({
   componentDidMount () {
     this.props.adminLogDetail(this.props.params.id).catch(createError);
   },
-  componentWillMount () {
+  componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }

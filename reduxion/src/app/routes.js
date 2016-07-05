@@ -43,7 +43,6 @@ import AdminSystemSettings from 'admin/containers/systemSettings/settings';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
-import ClientTopPage from 'client/components/main';
 import ClientLogin from 'client/containers/auth/login';
 
 import ClientLogout from 'client/containers/auth/clientLogout';
@@ -153,7 +152,6 @@ function validateToken(tokenName, nextState, replace, isLogin = false) {
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
-  let bytes ='';
   let tokenName = '';
 
   switch (link[3]) {

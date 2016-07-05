@@ -1,12 +1,16 @@
 import { connect } from 'react-redux';
 import { signup, country } from 'client/reducers/signup'
-//import { country } from '../reducers/country'
 import SignupView from 'client/views/auth/signup';
+
+const strMapToObj=(strMap) => {
+  let obj = JSON.parse(JSON.stringify(strMap));
+  return obj;
+}
 
 const mapStateToProps = (state) => {
   return {
     registerCompleted: state.get('ClientSignup').get('registerCompleted'),
-    countryList: state.get('ClientSignup').get('countryList')
+    countryList: strMapToObj(state.get('ClientSignup').get('countryList'))
   };
 }
 

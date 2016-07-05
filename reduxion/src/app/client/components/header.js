@@ -6,7 +6,7 @@ class ClientHeader extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }

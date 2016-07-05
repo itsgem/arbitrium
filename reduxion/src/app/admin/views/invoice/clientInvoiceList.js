@@ -1,7 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ClientInvoiceList from 'admin/components/invoice/clientInvoiceList';
-import { Link } from 'react-router';
 
 export default React.createClass( {
   contextTypes: {

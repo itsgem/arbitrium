@@ -1,13 +1,11 @@
 import React from 'react';
-import Checkit from 'checkit';
-import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 class ApiLogsDetails extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -56,10 +54,6 @@ class ApiLogsDetails extends React.Component {
     );
   }
 };
-
-function setErrors( e ) {
-  this.setState(createError(e));
-}
 
 ApiLogsDetails.mixins = [LinkedStateMixin];
 ApiLogsDetails.defaultProps = {

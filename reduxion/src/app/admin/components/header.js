@@ -4,7 +4,19 @@ import config from 'config';
 import CryptoJS from 'crypto-js';
 
 export default React.createClass( {
-  componentWillReceiveProps(nextProps) {
+  activeNav () {
+    let isActive = document.querySelector('nav .is-active');
+    if (isActive) {
+      isActive.classList.remove('is-active');
+    }
+    let link = window.location.href.split("/");
+    let menu = (link[4] == undefined ? '.menu-dashboard' : '.menu-' + link[4]);
+    let isActiveMenu = document.querySelector(menu);
+    if (isActiveMenu) {
+      isActiveMenu.classList.add("is-active");
+    }
+  },
+  componentDidMount () {
     this.activeNav();
     if (document.querySelector("select")) {
       let allSelectOpt = document.querySelectorAll("select");
@@ -21,24 +33,10 @@ export default React.createClass( {
       }
     }
   },
-  activeNav () {
-    let isActive = document.querySelector('nav .is-active');
-    if (isActive) {
-      isActive.classList.remove('is-active');
-    }
-    let link = window.location.href.split("/");
-    let menu = (link[4] == undefined ? '.menu-dashboard' : '.menu-' + link[4]);
-    let isActiveMenu = document.querySelector(menu);
-    if (isActiveMenu) {
-      isActiveMenu.classList.add("is-active");
-    }
-  },
-  componentDidMount () {
+  componentWillReceiveProps () {
     this.activeNav();
   },
   render() {
-
-    let token = localStorage.getItem('coffee');
     let bytes = '';
     if (localStorage.getItem('coffee') ){
       bytes  = CryptoJS.AES.decrypt(localStorage.getItem('coffee'), config.key);

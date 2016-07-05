@@ -12,11 +12,6 @@ export default React.createClass({
     let id = this.props.params.id;
     this.props.adminInvoiceDetail(id).catch(createError);
   },
-  componentWillMount () {
-    if ( typeof(window.componentHandler) != 'undefined' ) {
-      setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    }
-  },
   loadingRender () {
     openLoading();
     return (
@@ -24,6 +19,10 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+
     if (nextProps.successMailSent) {
       $('.msg').html('Successfully sent invoice to your email.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
-import moment from 'moment';
 import Datetime from 'react-datetime';
 
 class ApiList extends React.Component {
@@ -61,7 +60,7 @@ class ApiList extends React.Component {
           to={"/i/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+              onClick={(e) => this.modalConfirm(e, data.id)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -171,8 +170,8 @@ class ApiList extends React.Component {
               <div className="msg-box mdl-shadow--2dp">
                  <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
                 <div className="mdl-dialog__actions">
-                  <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-                  <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                  <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>YES</button>
+                  <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>CANCEL</button>
                 </div>
               </div>
             </div>
@@ -237,10 +236,10 @@ class ApiList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col tooltipBox">
               <span className="tooltiptext">Items to show per page</span>
-              <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
-              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+              <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
+              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
             </div>
           </div>
         </div>
@@ -293,7 +292,7 @@ class ApiList extends React.Component {
     };
     this.props.isActiveApiKey(payload).catch(createError);
   }
-  selectPageNumber (pageNum) {
+  selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
     let btTwo = document.querySelector("#bt-20");
@@ -327,13 +326,13 @@ class ApiList extends React.Component {
     }
   }
   itemPage (e, pageNum = 10) {
-    this.selectPageNumber(pageNum);
+    this.selectPageNumber();
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
     this.page(e, 1);
   }
-  modalConfirm (e, id, company) {
+  modalConfirm (e, id) {
     openModal();
     this.setState( {
       id: id

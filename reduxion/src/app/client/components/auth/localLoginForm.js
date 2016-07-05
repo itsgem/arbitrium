@@ -2,7 +2,6 @@ import React from 'react';
 import LocalAuthenticationForm from 'client/components/auth/localAuthenticationForm';
 import ValidateLoginFields from 'utils/validations/validateLoginFields';
 import {createError} from 'utils/error';
-import Alert from 'common/components/alert';
 import tr from 'i18next';
 //import Debug from 'debug';
 
@@ -16,14 +15,12 @@ class LocalLoginForm extends React.Component {
       errors: {}
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if ( typeof(window.componentHandler) != 'undefined' )
-    {
+  componentWillReceiveProps() {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
   render() {
-    //debug('render state:', this.state);
     return (
       <div className="local-login-form">
         <div className="login-header">

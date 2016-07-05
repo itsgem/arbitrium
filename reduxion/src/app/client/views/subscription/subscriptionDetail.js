@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import SubscriptionDetail from 'client/components/subscription/subscriptionDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -13,35 +12,36 @@ export default React.createClass({
       error: false
     };
   },
-  componentDidMount () {
+  componentWillMount () {
     this.props.subscriptionList().catch(createError);
     this.props.clientSubscription().catch(createError);
     this.props.clientProfile().catch(createError);
     this.props.clientSubscriptionPending().catch(createError);
   },
-  componentWillMount () {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
 
     let query = this.props.location.query;
     if (query.success && query.token) {
-      let payload = {
-        success: query.success == 'true' ? true : false,
-        token: query.token
-      };
+      if (nextProps.purchaseProcessingConfirm) {
+        this.context.router.push('/i/subscription');
+      } else {
+        let payload = {
+          success: query.success == 'true' ? true : false,
+          token: query.token
+        };
 
-      if (query.paymentId && query.PayerID) {
-        payload.payment_id = query.paymentId;
-        payload.payer_id = query.PayerID;
+        if (query.paymentId && query.PayerID) {
+          payload.payment_id = query.paymentId;
+          payload.payer_id = query.PayerID;
+        }
+
+        this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
       }
-
-      this.props.clientPurchaseSubscriptionConfirm(payload).catch(createError);
-      this.context.router.push('/i/subscription');
     }
-  },
 
-  componentWillReceiveProps(nextProps) {
     if (nextProps.purchaseSuccessConfirm || nextProps.paypalPendingCancel) {
       this.props.subscriptionList().catch(createError);
       this.props.clientSubscription().catch(createError);
@@ -76,12 +76,10 @@ export default React.createClass({
     //let subscription = this.props.paypalPending.data.length ? true : false;
     let subscription = {};
     let isSubscription = false;
-    let paypalPendingCancel = {};
     let subscriptionTerm = "";
     if (Object.keys(this.props.paypalPending).length) {
       isSubscription = Object.keys(this.props.paypalPending.data).length ? true : false;
       subscription = this.props.paypalPending.data;
-      paypalPendingCancel = this.props.paypalPendingCancel.data;
 
       if (subscription.is_auto_renew != 1) {
         subscriptionTerm = subscription.term == "Annually" ? "1 Year" : "1 Month";

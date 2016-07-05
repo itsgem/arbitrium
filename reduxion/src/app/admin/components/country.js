@@ -4,7 +4,6 @@ class Country extends React.Component {
   render() {
     let countries = this.props.country.toArray();
     let selected = (this.props.selected) ? this.props.selected : "";
-    let required = (this.props.required) ? "*" : "";
 
     return (
       <div className="mdl-selectfield">

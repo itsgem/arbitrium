@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import ClientHeader from 'client/components/header';
 import ClientSidebar from 'client/components/sidebar';
 
@@ -8,19 +7,16 @@ class MainTop extends React.Component{
     super(props);
     this.props = props;
   }
-
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-
   componentWillMount() {
     if (!localStorage.getItem('token')){
       this.context.router.push(`/i/login`);
     }
   }
-
   render() {
     return (
       <div id="application-view" >

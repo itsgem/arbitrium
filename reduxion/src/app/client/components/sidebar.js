@@ -6,12 +6,11 @@ class ClientSidebar extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-
   activeNav () {
     let isActive = document.querySelector('.sideNav .is-active');
     if (isActive) {
@@ -24,7 +23,6 @@ class ClientSidebar extends React.Component {
       isActiveMenu.classList.add("is-active");
     }
   }
-
   render() {
     this.activeNav();
     return (

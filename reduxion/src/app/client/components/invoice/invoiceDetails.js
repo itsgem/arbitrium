@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router';
-import {modal, openModal, closeModal} from 'common/components/modal'
-import {createError} from 'utils/error';
-import {openLoading, closeLoading} from 'common/components/modal'
+import { modal } from 'common/components/modal';
+import { openLoading, closeLoading } from 'common/components/modal';
 
 class invoiceDetails extends React.Component {
   constructor(props) {
@@ -12,7 +10,7 @@ class invoiceDetails extends React.Component {
       errorServer:null,
       id: null
     };  }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }

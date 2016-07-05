@@ -15,12 +15,11 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-
   scrolltop (errors) {
     if (!document.querySelector('.alert')) {
       return false;
@@ -143,22 +142,22 @@ class ApiAdd extends React.Component {
             </div>
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
-              <div className="flex-order-gt-md-2 pd-10">
-                <Link
-                  className="mdl-button mdl-js-button mdl-button--colored"
-                  id='btn-cancel'
-                  to="/coffee/api/">CANCEL</Link>
-              </div>
-              <div className="flex-order-gt-md-2" >
-                <button id="btn-save"
-                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e)}>Create API Key</button>
-              </div>
-            </div>
+          <div className="flex-order-gt-md-2 pd-10">
+            <Link
+              className="mdl-button mdl-js-button mdl-button--colored"
+              id='btn-cancel'
+              to="/coffee/api/">CANCEL</Link>
+          </div>
+          <div className="flex-order-gt-md-2" >
+            <button id="btn-save"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.register(e)}>Create API Key</button>
+          </div>
+        </div>
       </form>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {
