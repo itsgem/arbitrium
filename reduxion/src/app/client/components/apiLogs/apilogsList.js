@@ -268,6 +268,7 @@ class apilogList extends React.Component {
       } );
     } else {
       pageNum = 10;
+      dateFrom = '';
       this.setState( {
         page: 1,
         perPage: 10,
