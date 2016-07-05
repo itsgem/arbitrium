@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import ClientProfile from 'client/components/profile/profile';
 import {createError} from 'utils/error';
 import {openLoading, closeLoading} from 'common/components/modal'

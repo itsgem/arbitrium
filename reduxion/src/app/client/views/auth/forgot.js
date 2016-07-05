@@ -5,8 +5,7 @@ import DocTitle from 'common/components/docTitle';
 import tr from 'i18next';
 import { Link } from 'react-router';
 import Checkit from 'checkit';
-
-import {createError} from 'utils/error';
+import { createError } from 'utils/error';
 
 export default React.createClass( {
 
@@ -72,11 +71,6 @@ export default React.createClass( {
   },
 
   render() {
-
-    let {errors, errorServer} = this.state ? this.state :'';
-    if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
-    }
     return (
       <div id="forgot" className="auth-view">
         <div className="container" title="Forgot password">

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import SystemSettings from 'admin/components/systemSettings/settings';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -11,11 +10,7 @@ export default React.createClass({
   componentDidMount () {
     this.props.adminSystemSettings().catch(createError);
   },
-  componentWillMount () {
-    if ( typeof(window.componentHandler) != 'undefined' ) {
-      setTimeout(() => {window.componentHandler.upgradeDom()},10);
-    }
-  },
+
   loadingRender () {
     openLoading();
     return (
@@ -23,6 +18,10 @@ export default React.createClass({
     );
   },
   componentWillReceiveProps(nextProps) {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+
     if (nextProps.saveSuccess) {
       nextProps.adminSystemSettings().catch(createError);
       $('.msg').html('Successfully saved system settings.').addClass('bg-green');

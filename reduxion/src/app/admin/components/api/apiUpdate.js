@@ -15,7 +15,7 @@ class ApiUpdate extends React.Component {
       permissions: {}
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -162,7 +162,7 @@ class ApiUpdate extends React.Component {
       </form>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {
@@ -234,18 +234,13 @@ function validateUpdate ( payload) {
     } );
     return rules.run( payload );
 }
+
 function updateApi (payload) {
   return this.props.updateApiKey(payload);
 }
 
 function setErrors( e ) {
   this.setState(createError(e));
-}
-
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
 }
 
 ApiUpdate.mixins = [LinkedStateMixin];

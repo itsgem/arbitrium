@@ -1,11 +1,9 @@
 import React from 'react';
-import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import { Link } from 'react-router';
-import {openLoading, closeLoading} from 'common/components/modal'
-import {modal, openModal, closeModal} from 'common/components/modal'
+import {openLoading} from 'common/components/modal'
+import {modal} from 'common/components/modal'
 
 class InvoiceDetail extends React.Component {
   constructor(props) {
@@ -16,7 +14,7 @@ class InvoiceDetail extends React.Component {
       id: null
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }

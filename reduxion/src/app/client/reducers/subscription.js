@@ -90,7 +90,7 @@ export default createReducer({
     paypalPendingCancel: false,
     error: {}
   }),
-  [clientSubscriptionCancelPending.ok]: (state, payload) => state.merge({
+  [clientSubscriptionCancelPending.ok]: (state) => state.merge({
     paypalPendingCancel: true,
     error: {}
   }),

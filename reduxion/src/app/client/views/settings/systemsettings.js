@@ -1,19 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router';
-import {openLoading, closeLoading} from 'common/components/modal'
-import {createError} from 'utils/error';
+import { openLoading } from 'common/components/modal'
+import { createError } from 'utils/error';
 
 export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  componentDidMount () {
+  componentWillMount () {
     this.props.subscriptionList().catch(createError);
     this.props.clientSubscription().catch(createError);
     this.props.clientProfile().catch(createError);
     this.props.clientSubscriptionPending().catch(createError);
   },
-  componentWillMount () {
+  componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -188,16 +187,8 @@ export default React.createClass({
     );
   },
   renderSubscriptionDetail () {
-    //let subscription = this.props.paypalPending.data.length ? true : false;
     let subscription = {};
     let isSubscription = false;
-    let paypalPendingCancel = {};
-    if (Object.keys(this.props.paypalPending).length) {
-      isSubscription = Object.keys(this.props.paypalPending.data).length ? true : false;
-      subscription = this.props.paypalPending.data;
-      paypalPendingCancel = this.props.paypalPendingCancel.data;
-
-    }
     return (
       <main className="mdl-layout__content subscription-type">
         { isSubscription && <div className="bs-callout bs-callout-info">

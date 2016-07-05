@@ -1,13 +1,12 @@
 import React from 'react';
-import {Router, Link, History} from 'react-router';
+import { Link } from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
-import Country from 'client/components/country';
 import moment from 'moment';
 
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {createError} from 'utils/error';
-import {modal, openModal, closeModal, openLoading, closeLoading} from 'common/components/modal'
+import { createError } from 'utils/error';
+import { modal, openModal, closeModal, openLoading } from 'common/components/modal'
 
 class ClientProfile extends React.Component {
 
@@ -51,7 +50,15 @@ class ClientProfile extends React.Component {
       document.querySelector('.alert').style.display = 'none';
     }
   }
-  componentDidMount () {
+  numberOnly(e) {
+    let key = e.keyCode || e.which;
+    key = String.fromCharCode( key );
+    let regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      e.preventDefault();
+    }
+  }
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -84,18 +91,7 @@ class ClientProfile extends React.Component {
         }, false);
       }
     }
-  }
 
-  numberOnly(e) {
-    let key = e.keyCode || e.which;
-    key = String.fromCharCode( key );
-    let regex = /[0-9]|\./;
-    if( !regex.test(key) ) {
-      e.preventDefault();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
     // (Optional) Finalize changing of email
     if (!nextProps.loading && nextProps.isRetrieveEmailChangeTokenSuccess && !nextProps.isVerifyEmailChangeSuccess) {
       let payload = {
@@ -640,6 +636,7 @@ class ClientProfile extends React.Component {
   }
 
   modalConfirm (e, id, company) {
+    e.preventDefault();
     openModal();
     this.setState( {
       id: id
@@ -781,7 +778,7 @@ class ClientProfile extends React.Component {
     });
 
 
-    let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code,
+    let {email_address, username, company_name, street_address_1, street_address_2, city, state, postal_code, country_id,
       rep_first_name, rep_last_name, rep_gender, rep_email_address, rep_mobile_code,
       rep_mobile_number, rep_phone_code, rep_phone_number, rep_position, rep_department,
       alt_first_name, alt_last_name, alt_email_address, alt_gender, alt_mobile_code,

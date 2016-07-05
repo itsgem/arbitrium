@@ -15,7 +15,7 @@ class ApiUpdate extends React.Component {
       permissions: {}
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -103,20 +103,24 @@ class ApiUpdate extends React.Component {
                   break;
                 }
               }
-              return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
-                        <input
-                          type="checkbox"
-                          className="mdl-checkbox__input"
-                          id={"checkbox-" + item.id}
-                          name="chkRights[]"
-                          defaultChecked={getCk}
-                          defaultValue={ item.id }
-                          onClick={(e) => this.ckPermissions(e)}/>
-                        <span className="mdl-checkbox__label">{item.name}</span>
-                      </label>
-                    </div>; })
-            }
+
+              return (
+                <div key={item.id} className="mdl-cell mdl-cell--3-col">
+                  <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                    <input
+                      type="checkbox"
+                      className="mdl-checkbox__input"
+                      id={"checkbox-" + item.id}
+                      name="chkRights[]"
+                      defaultChecked={getCk}
+                      defaultValue={ item.id }
+                      onClick={(e) => this.ckPermissions(e)}/>
+                    <span className="mdl-checkbox__label">{item.name}</span>
+                  </label>
+                </div>
+              );
+            })
+          }
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col check-test-key">
@@ -149,7 +153,7 @@ class ApiUpdate extends React.Component {
       </main>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {

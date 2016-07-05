@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import tr from 'i18next';
 import LocalLoginForm from 'client/components/auth/localLoginForm';
 import DocTitle from 'common/components/docTitle';
@@ -7,16 +6,12 @@ import moment from 'moment';
 import config from 'config';
 import CryptoJS from 'crypto-js';
 
-import Debug from 'debug';
-let debug = new Debug("views:login");
-
 class Login extends React.Component {
   componentWillReceiveProps(nextProps){
     let path = nextProps.location.query.nextPath || '/i';
     if (nextProps.authenticated) {
       let token = nextProps.user.get('data').get('token');
       let lifetime = nextProps.user.get('data').get('lifetime');
-      let user =  nextProps.user.get('data').get('username');
       let expired = moment().add(lifetime,'minutes').valueOf();
 
       let encryptToken = {

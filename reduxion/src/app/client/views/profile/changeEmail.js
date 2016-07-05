@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import ClientChangeEmail from 'client/components/profile/changeEmail';
 import {createError} from 'utils/error';
 
@@ -15,7 +14,6 @@ export default React.createClass({
 
   render () {
     let user = this.props.user.get('data');
-    let success = this.props.success;
     let errors = this.props.errors.get('data');
     return (
     <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">

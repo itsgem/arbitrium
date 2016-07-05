@@ -1,18 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router';
-import {openLoading, closeLoading} from 'common/components/modal'
-import {createError} from 'utils/error';
+import { openLoading } from 'common/components/modal'
+import { createError } from 'utils/error';
 import ApiLogsDetail from 'client/components/apiLogs/apilogsDetails';
 
 export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  componentDidMount () {
+  componentWillMount () {
     let id = this.props.params.id;
     this.props.clientApiLogInfo(id).catch(createError);
   },
-  componentWillMount () {
+  componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }

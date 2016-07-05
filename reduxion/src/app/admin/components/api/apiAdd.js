@@ -15,12 +15,11 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-
   scrolltop (errors) {
     if (!document.querySelector('.alert')) {
       return false;
@@ -127,38 +126,38 @@ class ApiAdd extends React.Component {
                     </div>; })
             }
         </div>
-          <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--2-col check-test-key">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
-                <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input"/>
-                <span className="mdl-checkbox__label">Test Key</span>
-              </label>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col check-test-key">
-              <div id="tt4" className="icon material-icons">help</div>
-                <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
-                  You can use a test key to experiment
-                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation
-                </div>
-            </div>
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--2-col check-test-key">
+            <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
+              <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input"/>
+              <span className="mdl-checkbox__label">Test Key</span>
+            </label>
+          </div>
+          <div className="mdl-cell mdl-cell--3-col check-test-key">
+            <div id="tt4" className="icon material-icons">help</div>
+              <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
+                You can use a test key to experiment
+                with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation
+              </div>
+          </div>
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
-              <div className="flex-order-gt-md-2 pd-10">
-                <Link
-                  className="mdl-button mdl-js-button mdl-button--colored"
-                  id='btn-cancel'
-                  to="/coffee/api/">CANCEL</Link>
-              </div>
-              <div className="flex-order-gt-md-2" >
-                <button id="btn-save"
-                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e)}>Create API Key</button>
-              </div>
-            </div>
+          <div className="flex-order-gt-md-2 pd-10">
+            <Link
+              className="mdl-button mdl-js-button mdl-button--colored"
+              id='btn-cancel'
+              to="/coffee/api/">CANCEL</Link>
+          </div>
+          <div className="flex-order-gt-md-2" >
+            <button id="btn-save"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.register(e)}>Create API Key</button>
+          </div>
+        </div>
       </form>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {

@@ -60,6 +60,14 @@ class ClientProfile extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
+  numberOnly(e) {
+    let key = e.keyCode || e.which;
+    key = String.fromCharCode( key );
+    let regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      e.preventDefault();
+    }
+  }
   render() {
     if (this.props.client.clientInfo) {
       return (
@@ -145,7 +153,7 @@ class ClientProfile extends React.Component {
               <p></p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>CANCEL</button>
               </div>
             </div>
           </div>
@@ -452,6 +460,8 @@ class ClientProfile extends React.Component {
                 id='rep_phone_code'
                 ref="rep_phone_code"
                 defaultValue={(client.rep_phone_code) ? client.rep_phone_code : ''}
+                onKeyPress={(e) => this.numberOnly(e)}
+                maxLength="3"
                 />
               <label className="mdl-textfield__label" htmlFor="rep_phone_code">Country Code*</label>
               {errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
@@ -465,6 +475,8 @@ class ClientProfile extends React.Component {
                 id='rep_phone_number'
                 ref="rep_phone_number"
                 defaultValue={(client.rep_phone_number) ? client.rep_phone_number : ''}
+                onKeyPress={(e) => this.numberOnly(e)}
+                maxLength="12"
                 />
               <label className="mdl-textfield__label" htmlFor="rep_phone_number">Telephone no.*</label>
               {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
@@ -591,6 +603,8 @@ class ClientProfile extends React.Component {
                 id='alt_phone_code'
                 ref="alt_phone_code"
                 defaultValue={(client.alt_phone_code) ? client.alt_phone_code : ''}
+                onKeyPress={(e) => this.numberOnly(e)}
+                maxLength="3"
                 />
               <label className="mdl-textfield__label" htmlFor="alt_phone_code">Country Code</label>
               {errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
@@ -604,6 +618,8 @@ class ClientProfile extends React.Component {
                 id='alt_phone_number'
                 ref="alt_phone_number"
                 defaultValue={(client.alt_phone_number) ? client.alt_phone_number : ''}
+                onKeyPress={(e) => this.numberOnly(e)}
+                maxLength="12"
                 />
               <label className="mdl-textfield__label" htmlFor="alt_phone_number">Telephone no.</label>
               {errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
@@ -877,12 +893,6 @@ class ClientProfile extends React.Component {
       .catch( setErrors );
   }
 };
-
-function mapObject(object, callback) {
-  return Object.keys(object).map(function (key) {
-    return callback(key, object[key]);
-  });
-}
 
 function validateClientProfile ( payload) {
   let rules = new Checkit( {

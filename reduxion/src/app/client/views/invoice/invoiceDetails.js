@@ -1,23 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router';
 import InvoiceDetails from 'client/components/invoice/invoiceDetails';
-import {openLoading, closeLoading} from 'common/components/modal'
-import {createError} from 'utils/error';
+import { openLoading } from 'common/components/modal'
+import { createError } from 'utils/error';
 
 export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  componentDidMount () {
+  componentWillMount () {
     let id = this.props.params.id;
     this.props.clientInvoiceDetails(id).catch(createError);
   },
-  componentWillMount () {
+  componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   },
-
   loadingRender () {
     openLoading();
     return (

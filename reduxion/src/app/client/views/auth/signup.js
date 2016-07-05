@@ -7,15 +7,9 @@ export default React.createClass( {
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  propTypes:{
-    registerCompleted: React.PropTypes.bool.isRequired,
-    signup: React.PropTypes.func.isRequired,
-    countryList: React.PropTypes.object,
-  },
   componentDidMount(){
     this.props.country();
   },
-
   render() {
     return (
       <div id="signup" className="auth-view">

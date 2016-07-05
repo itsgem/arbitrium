@@ -8,7 +8,6 @@ import {
   verifyEmailChange,
   clientSubscriptionCancel } from 'client/reducers/profile/profile';
 import { clientSubscription } from 'client/reducers/subscription';
-import { country } from 'client/reducers/country';
 import ClientProfile from 'client/views/profile/profile';
 
 const strMapToObj=(strMap) => {

@@ -95,7 +95,7 @@ export default createReducer({
   [clientRegister.error]: (state) => state.merge({registerCompleted: false, loading: false, validateCompleted: false}),
   [clientUpdateProfile.ok]: (state) => state.merge({updateCompleted: true}),
   [adminClientList.ok]: (state, payload) => state.merge({
-    clientList: state.concat(payload),
+    clientList: payload,
     registerCompleted: false,
     loading: false,
     updateCompleted: false,
@@ -120,7 +120,7 @@ export default createReducer({
   [clientUnlock.request]: (state) => state.merge({clientUnlockSuccess: false, loading: true}),
   [adminClientSubscription.ok]: (state, payload) => state.merge({currentClientSubscription: payload, loading: false}),
   [adminClientSubscription.request]: (state) => state.merge({currentClientSubscription: {}, loading: true}),
-  [adminClientSubscriptionCancel.ok]: (state, payload) => state.merge({cancelSubscription: true, loading: false}),
+  [adminClientSubscriptionCancel.ok]: (state) => state.merge({cancelSubscription: true, loading: false}),
   [adminClientSubscriptionCancel.request]: (state) => state.merge({cancelSubscription: false, loading: true})
 
 }, initialState);
