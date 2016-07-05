@@ -142,7 +142,7 @@ class Client extends NrbModel
         'created_by', 'updated_by'
     ];
 
-    protected $appends = ['can_avail_trial'];
+    protected $appends = ['can_avail_trial', 'has_subscription'];
 
 
     public static function boot()
@@ -216,6 +216,11 @@ class Client extends NrbModel
     public function getCanAvailTrialAttribute()
     {
         return $this->canAvailFreeTrial();
+    }
+
+    public function getHasSubscriptionAttribute()
+    {
+        return $this->hasSubscription();
     }
 
     //---------- scopes
@@ -400,6 +405,11 @@ class Client extends NrbModel
         }
 
         return true;
+    }
+
+    public function hasSubscription()
+    {
+        return !empty($this->subscription);
     }
 
     public function hasUnfinishedTempSubscriptions($client_id = null)
