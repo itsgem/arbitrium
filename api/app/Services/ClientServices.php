@@ -126,6 +126,8 @@ class ClientServices extends NrbServices
         return DB::transaction(function () use ($request, $id)
         {
             $client = Client::findOrFail($id);
+            $old_auth = $client->user->getApiAuth();
+
             $client->update($request->all());
             if (is_admin_user_logged_in())
             {
@@ -140,7 +142,7 @@ class ClientServices extends NrbServices
             // [Core-API] Update username, password, user_type
             $client->user->updateApiCredentials([
                 'username' => $client->user->username,
-            ]);
+            ], $old_auth);
 
             return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
         });

@@ -264,7 +264,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         $user_api->save();
     }
 
-    public function updateApiCredentials($params = [])
+    public function updateApiCredentials($params = [], $old_auth = [])
     {
         $data = array_merge([
             'username' => $this->username,
@@ -272,7 +272,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
             'userType' => $this->user_type,
         ], $params);
 
-        $auth = $this->getApiAuth();
+        $auth = $old_auth ?: $this->getApiAuth();
         $url = get_api_url(config('arbitrium.core.endpoints.update_user'), ['id' => get_val($auth, 'client_id')]);
 
         (new ExternalRequestServices())->setAuth($auth)->send($url, $data);

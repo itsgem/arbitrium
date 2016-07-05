@@ -77,7 +77,14 @@ class UserServices extends NrbServices
     public function changePassword($request)
     {
         $user = auth()->user();
+        $old_auth = $user->getApiAuth();
+
         $user->update(['password' => $request->password]);
+
+        // [Core-API] Update username, password, user_type
+        $user->updateApiCredentials([
+            'password' => $user->password,
+        ], $old_auth);
 
         // TODO-GEM: send notification that user has changed password?
         // with(new MailServices())->changePassword($user);
@@ -134,6 +141,8 @@ class UserServices extends NrbServices
             {
                 $reset_token->resetTokens($field);
                 $user = $reset_token->user;
+                $old_auth = $user->getApiAuth();
+
                 $user->password = $request->get('password');
                 $user->unlock();
                 $user->logout();
@@ -151,7 +160,7 @@ class UserServices extends NrbServices
                     // [Core-API] Update username, password, user_type
                     $user->updateApiCredentials([
                         'password' => $user->password,
-                    ]);
+                    ], $old_auth);
                 }
 
                 return $this->respondWithSuccess();
