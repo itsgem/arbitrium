@@ -98,6 +98,8 @@ class AdminUserServices extends NrbServices
             $admin->update($request->except('user_id'));
 
             $user = User::find($admin->user_id);
+            $old_auth = $user->getApiAuth();
+
             $user->syncRoles([Role::findOrFail($request->get('role_id'))->id]);
             $user->update($request->only('username', 'email_address', 'password', 'items_per_page', 'timezone'));
 
@@ -105,7 +107,7 @@ class AdminUserServices extends NrbServices
             $user->updateApiCredentials([
                 'username' => $user->username,
                 'password' => $user->password,
-            ]);
+            ], $old_auth);
 
             return $this->respondWithSuccess($admin);
         });
