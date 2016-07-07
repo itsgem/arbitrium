@@ -115,6 +115,10 @@ class AdminInvoiceList extends React.Component {
       isState.setState({invoiced_date_from: $(this).val()});
       document.getElementById('invoiced_date_from').classList.add('is-dirty');
 
+      if (isState.state.invoiced_date_from > isState.state.invoiced_date_to) {
+        $('#invoiced_date_to .datepicker').datepicker('update', moment(isState.state.invoiced_date_from).toDate());
+      }
+
       $('#invoiced_date_to .datepicker').datepicker('setStartDate', moment(isState.state.invoiced_date_from).toDate());
       $('#invoiced_date_to .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
       if (!isState.state.invoiced_date_to) {
