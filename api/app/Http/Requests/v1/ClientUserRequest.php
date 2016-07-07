@@ -119,7 +119,10 @@ class ClientUserRequest extends NrbRequest
         else
         {
             // [Core-API] Check if username already taken
-            if ($this->get('username'))
+            $client_id = (is_client_user_logged_in()) ? get_logged_in_client_id() : last($this->segments());
+            $username = Client::findOrFail($client_id)->user->username;
+
+            if ($this->get('username') && $this->get('username') != $username)
             {
                 $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
                     'username' => $this->get('username')

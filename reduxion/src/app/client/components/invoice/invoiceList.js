@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 
 class invoiceList extends React.Component {
   constructor(props) {
@@ -13,7 +12,7 @@ class invoiceList extends React.Component {
       errors: {},
       errorServer:null,
       id: null,
-      dateFrom: null,
+      dateFrom: moment(new Date()).format('YYYY-MM-DD'),
       dateTo: null
     };  }
   componentWillReceiveProps() {
@@ -35,13 +34,6 @@ class invoiceList extends React.Component {
           }
         }, false);
       }
-    }
-
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('#dateTo .rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
-      document.querySelector('#dateTo .rdt input').readOnly = true;
     }
   }
   invoiceDisplay (data, alter) {
@@ -117,18 +109,39 @@ class invoiceList extends React.Component {
       </div>
     );
   }
-  selectedDate(e, selectedDate) {
-    if (selectedDate == 'dateFrom') {
-      this.setState({
-        dateFrom: e
+  componentDidMount() {
+    let isState = this;
+    $( document ).ready(function() {
+      $('#dateFrom .datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: isState.state.dateFrom,
+          autoclose: true,
+          todayHighlight: true
       });
-    } else {
-      this.setState({
-        dateTo: e
+      $('#dateTo .datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: isState.state.dateFrom,
+          autoclose: true,
+          todayHighlight: true
       });
-    }
+    });
+    this.updateDatepicker(isState);
+  }
+  updateDatepicker(isState) {
+    $('#dateFrom .datepicker').change(function(){
+      isState.setState({dateFrom: $(this).val()});
+      document.getElementById('dateFrom').classList.add('is-dirty');
 
-    document.getElementById(selectedDate).classList.add('is-dirty');
+      $('#dateTo .datepicker').datepicker('setStartDate', moment(isState.state.dateFrom).toDate());
+      $('#dateTo .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
+      if (!isState.state.dateTo) {
+        document.getElementById('dateTo').classList.remove('is-dirty');
+      }
+    });
+    $('#dateTo .datepicker').change(function(){
+      isState.setState({dateTo: $(this).val()});
+      document.getElementById('dateTo').classList.add('is-dirty');
+    });
   }
   render() {
     let counter = false;
@@ -156,26 +169,22 @@ class invoiceList extends React.Component {
           <div className="mdl-grid filter-search-bar">
               <div className="mdl-cell mdl-cell--2-col">
                 <div id="dateFrom" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                  <Datetime
-                    id="date_from"
-                    value={this.state.dateFrom}
-                    dateFormat="YYYY-MM-DD"
-                    timeFormat={false}
-                    onChange={(e)=> this.selectedDate(e, 'dateFrom')}
-                    closeOnSelect={true}
+                  <input
+                    type="text"
+                    className="datepicker mdl-textfield__input"
+                    id="date_from" ref="date_from"
+                    readOnly
                   />
                   <label className="mdl-textfield__label">Invoice Date From</label>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--2-col">
                 <div id="dateTo" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                  <Datetime
-                    id="date_to"
-                    value={this.state.dateTo}
-                    dateFormat="YYYY-MM-DD"
-                    timeFormat={false}
-                    onChange={(e)=> this.selectedDate(e, 'dateTo')}
-                    closeOnSelect={true}
+                  <input
+                    type="text"
+                    className="datepicker mdl-textfield__input"
+                    id="date_to" ref="date_to"
+                    readOnly
                   />
                   <label className="mdl-textfield__label">Invoice Date To</label>
                 </div>
@@ -255,6 +264,8 @@ class invoiceList extends React.Component {
 
     this.refs.invoice_no.value = "";
     this.refs.status.value = "";
+    this.refs.date_from.value = "";
+    this.refs.date_to.value = "";
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
@@ -268,8 +279,8 @@ class invoiceList extends React.Component {
 
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      date_from: clearDate  ? '' : (invoicedDateFrom ? invoicedDateFrom.format('YYYY-MM-DD') : ''),
-      date_to: clearDate  ? '' : (invoicedDateTo ? invoicedDateTo.format('YYYY-MM-DD') : ''),
+      date_from: clearDate  ? '' : (invoicedDateFrom ? invoicedDateFrom : ''),
+      date_to: clearDate  ? '' : (invoicedDateTo ? invoicedDateTo : ''),
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value
     };
@@ -332,8 +343,8 @@ class invoiceList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      date_from: (invoicedDateFrom ? invoicedDateFrom.format('YYYY-MM-DD') : ''),
-      date_to: (invoicedDateTo ? invoicedDateTo.format('YYYY-MM-DD') : ''),
+      date_from: (invoicedDateFrom ? invoicedDateFrom : ''),
+      date_to: (invoicedDateTo ? invoicedDateTo : ''),
       invoice_no: this.refs.invoice_no.value,
       status: this.refs.status.value
     };

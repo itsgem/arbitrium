@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import { modal } from 'common/components/modal'
 import { createError } from 'utils/error';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 import json2csv from 'json2csv';
 
 class apilogList extends React.Component {
@@ -39,11 +38,6 @@ class apilogList extends React.Component {
           }
         }, false);
       }
-    }
-
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
     }
   }
   apilogDisplay (data, alter) {
@@ -127,7 +121,8 @@ class apilogList extends React.Component {
       $('.datepicker').datepicker({
           format: 'yyyy-mm-dd',
           endDate: '+0d',
-          autoclose: true
+          autoclose: true,
+          todayHighlight: true
       });
     });
   }
@@ -145,7 +140,7 @@ class apilogList extends React.Component {
 
       json2csv({ data: this.props.successApiLogsList.data, fields: fields }, function(err, csv) {
         estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
       let i=0;
@@ -163,7 +158,7 @@ class apilogList extends React.Component {
     }
 
     let isState = this ;
-    $('.datepicker').change(function(e){
+    $('.datepicker').change(function(){
       isState.setState({dateFrom: $(this).val()});
       document.getElementById('createdDate').classList.add('is-dirty');
     });
@@ -184,7 +179,8 @@ class apilogList extends React.Component {
                   <input
                     type="text"
                     className="datepicker mdl-textfield__input"
-                    id="created_at"
+                    id="created_at" ref="created_at"
+                    readOnly
                   />
                   <label className="mdl-textfield__label">Date Created</label>
                 </div>
@@ -244,6 +240,10 @@ class apilogList extends React.Component {
   clearSearch(e) {
     e.preventDefault();
     this.refs.statusCode.value = "";
+    this.refs.created_at.value = "";
+    this.setState({
+      created: null
+    });
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
@@ -266,9 +266,8 @@ class apilogList extends React.Component {
         statusCode: null
       } );
     } else {
-      statusCode = ''
-      dateFrom = ''
       pageNum = 10;
+      dateFrom = '';
       this.setState( {
         page: 1,
         perPage: 10,
@@ -281,7 +280,7 @@ class apilogList extends React.Component {
     let payload = {
       page: 1,
       per_page: pageNum,
-      statusCode: statusCode,
+      status_code: statusCode,
       created: dateFrom,
     };
     this.props.clientApiLogsList(payload).catch(createError);
@@ -331,7 +330,7 @@ class apilogList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      statusCode: this.state.statusCode,
+      status_code: this.state.statusCode,
       created: this.state.created
     };
 

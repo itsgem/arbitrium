@@ -61,22 +61,7 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
 
             try
             {
-                $response = (new ExternalRequestServices())->addUser([
-                    'username'  => $user->username,
-                    'password'  => $user->password,
-                    'userType' => $user->user_type,
-                ]);
-
-                $data = [
-                    'user_id'       => $user->id,
-                    'api_client_id' => $response['body']->data->clientId,
-                    'api_secret'    => $response['body']->data->clientSecret,
-                ];
-
-                DB::transaction(function() use ($data)
-                {
-                    UserApi::create($data);
-                });
+                $user->registerApiCredentials();
 
                 $this->info(' OK - '.$user->username);
                 Log::info(' OK - '.$user->username);
@@ -84,8 +69,8 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
             catch (ExternalRequestException $e)
             {
                 $response = json_decode($e->getResponse()->getBody()->getContents(), true);
-                $this->info(' ERROR - '.$user->username.' - '.$response['error']);
-                Log::info(' ERROR - '.$user->username.' - '.$response['error'].' | SERVER ERROR: '.$e->getMessage());
+                $this->info(' ERROR - '.$user->username.' - '.json_encode($response['errors']));
+                Log::info(' ERROR - '.$user->username.' - '.json_encode($response['errors']).' | SERVER ERROR: '.$e->getMessage());
             }
         }
 
