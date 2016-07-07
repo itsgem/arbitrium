@@ -132,6 +132,10 @@ class invoiceList extends React.Component {
       isState.setState({dateFrom: $(this).val()});
       document.getElementById('dateFrom').classList.add('is-dirty');
 
+      if (isState.state.dateFrom > isState.state.dateTo) {
+        $('#dateTo .datepicker').datepicker('update', moment(isState.state.dateFrom).toDate());
+      }
+
       $('#dateTo .datepicker').datepicker('setStartDate', moment(isState.state.dateFrom).toDate());
       $('#dateTo .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
       if (!isState.state.dateTo) {
