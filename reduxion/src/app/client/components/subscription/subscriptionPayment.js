@@ -102,13 +102,13 @@ class SubscriptionPayment extends React.Component {
                 }
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div id="validFromRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width subscribe-date hidden">
+              <div id="validFromRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
                 <input value="&nbsp;" className="mdl-textfield__input font-input" id="validFrom" type="text" ref="validFrom" readOnly/>
                 <label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div id="validToRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width subscribe-date hidden">
+              <div id="validToRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
                 <input value="&nbsp;" className="mdl-textfield__input font-input" id="validTo" type="text" ref="validTo" readOnly/>
                 <label className="mdl-textfield__label" htmlFor="validTo">To</label>
               </div>

@@ -105,13 +105,15 @@ class SubscriptionDetail extends React.Component {
               }
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/><label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
+              <div id="validFromRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
+                <input value="&nbsp;" className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/>
+                <label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/> <label className="mdl-textfield__label" htmlFor="validTo">To</label>
+              <div id="validToRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
+                <input value="&nbsp;" className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/> 
+                <label className="mdl-textfield__label" htmlFor="validTo">To</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -254,6 +256,15 @@ class SubscriptionDetail extends React.Component {
     let isFrom = ' ';
     let newDate = ' ';
     let isTo = ' ';
+
+    if (term!='') {
+      document.getElementById('validFromRap').classList.remove('hidden');
+      document.getElementById('validToRap').classList.remove('hidden');
+    } else {
+      document.getElementById('validFromRap').classList.add('hidden');
+      document.getElementById('validToRap').classList.add('hidden');
+    }
+
     switch (term) {
       case 'Annually':
         isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
