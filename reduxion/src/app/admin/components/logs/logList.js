@@ -17,11 +17,6 @@ class LogList extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-
-    if ( document.querySelector('.rdt input')) {
-      document.querySelector('.rdt input').classList.add('mdl-textfield__input');
-      document.querySelector('.rdt input').readOnly = true;
-    }
   }
 
   logsDisplay (data, alter) {
@@ -99,20 +94,26 @@ class LogList extends React.Component {
       </div>
     );
   }
-  selectedDate(e, selectedDate) {
-    this.setState({
-      created: e
-    });
-    document.getElementById(selectedDate).classList.add('is-dirty');
-  }
-  validDate(current) {
-    let today = Datetime.moment();
-    return current.isBefore( today );
-  }
   download(e) {
     if (this.props.logList.data.length <= 0) {
       e.preventDefault();
     }
+  }
+  componentDidMount() {
+    $( document ).ready(function() {
+      $('.datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: '+0d',
+          autoclose: true,
+          todayHighlight: true
+      });
+    });
+
+    let isState = this ;
+    $('.datepicker').change(function(e){
+      isState.setState({created: $(this).val()});
+      document.getElementById('createdDate').classList.add('is-dirty');
+    });
   }
   render() {
     let counter = false;
@@ -162,15 +163,12 @@ class LogList extends React.Component {
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
-            <div id="created" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <Datetime
-                id="created_at"
-                value={this.state.created}
-                dateFormat="YYYY-MM-DD"
-                timeFormat={false}
-                onChange={(e)=> this.selectedDate(e, 'created')}
-                closeOnSelect={true}
-                isValidDate={this.validDate}
+            <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="created_at" ref="created_at"
+                readOnly
               />
               <label className="mdl-textfield__label">Date Created</label>
             </div>
@@ -268,6 +266,7 @@ class LogList extends React.Component {
     e.preventDefault();
     this.refs.ipAddress.value = "";
     this.refs.statusCode.value = "";
+    this.refs.created_at.value = "";
     this.setState({
       created: null
     });
@@ -278,16 +277,37 @@ class LogList extends React.Component {
     this.searchList(e, 10, true);
   }
   searchList(e, pageNum = null, clearDate = false) {
-    var createDate = this.state.created;
     e.preventDefault();
+    let createDate = this.state.created;
+    let statusCode = '';
+    let ipAddress = '';
+    if (!clearDate) {
+      statusCode = this.refs.statusCode.value;
+      createDate = (createDate ? createDate : '');
+      ipAddress = this.refs.ipAddress.value;
+      pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
+      this.setState( {
+        created: createDate,
+        statusCode: null
+      } );
+    } else {
+      createDate = '';
+      pageNum = 10;
+      this.setState( {
+        created: null,
+        statusCode: null
+      } );
+    }
 
     let payload = {
       client_id: this.props.params.client_id,
-      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      ipaddress: this.refs.ipAddress.value,
-      status_code: this.refs.statusCode.value,
-      created: clearDate  ? '' : (createDate ? createDate.format('YYYY-MM-DD') : '')
+      page: 1,
+      per_page: pageNum,
+      ipAddress: ipAddress,
+      status_code: statusCode,
+      created: createDate,
     };
+
     this.props.adminLogList(payload);
   }
   page(e, pageNumber) {
@@ -300,7 +320,7 @@ class LogList extends React.Component {
       per_page: this.refs.pageNum.value,
       ipaddress: this.refs.ipAddress.value,
       status_code: this.refs.statusCode.value,
-      created: (createDate ? createDate.format('YYYY-MM-DD') : '')
+      created: (createDate ? createDate : '')
     };
     this.props.adminLogList(payload);
   }

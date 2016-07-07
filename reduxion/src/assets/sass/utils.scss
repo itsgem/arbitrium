@@ -367,3 +367,7 @@ div#application {
     left: 0;
   }
 }
+.datepicker table tr td,
+.datepicker table tr th {
+  vertical-align: middle;
+}
