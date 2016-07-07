@@ -56,7 +56,10 @@ class ApiAdd extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
+      errors = Object.assign({}, errorServer.response);
+      if (errors.ip_addresses) {
+        errors.ip_addresses = errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses
+      }
     }
     let clientList = this.props.clientList.data;
     let permissions = this.props.apiPermissions.data;
@@ -113,18 +116,21 @@ class ApiAdd extends React.Component {
           {
             permissions  && permissions.map(item => {
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
-                        <input
-                          type="checkbox"
-                          className="mdl-checkbox__input"
-                          id={"checkbox-" + item.id}
-                          name="chkRights[]"
-                          value={ item.id }
-                          onClick={(e) => this.ckPermissions(e)}/>
-                        <span className="mdl-checkbox__label">{item.name}</span>
-                      </label>
+                      <div className={this.formClassNames('permissions', errors)}>
+                        <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                          <input
+                            type="checkbox"
+                            className="mdl-checkbox__input"
+                            id={"checkbox-" + item.id}
+                            name="chkRights[]"
+                            value={ item.id }
+                            onClick={(e) => this.ckPermissions(e)}/>
+                          <span className="mdl-checkbox__label">{item.name}</span>
+                        </label>
+                        {errors.permissions && <small className="mdl-textfield__error shown">{errors.permissions}</small>}
+                      </div>
                     </div>; })
-            }
+          }
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col check-test-key">
