@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Datetime from 'react-datetime';
 import json2csv from 'json2csv';
+import moment from 'moment';
 
 class LogList extends React.Component {
   constructor(props) {
