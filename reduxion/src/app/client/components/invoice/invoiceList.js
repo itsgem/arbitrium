@@ -120,7 +120,7 @@ class invoiceList extends React.Component {
       });
       $('#dateTo .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          startDate: isState.state.dateFrom,
+          endDate: isState.state.dateFrom,
           autoclose: true,
           todayHighlight: true
       });
@@ -133,6 +133,7 @@ class invoiceList extends React.Component {
       document.getElementById('dateFrom').classList.add('is-dirty');
 
       $('#dateTo .datepicker').datepicker('setStartDate', moment(isState.state.dateFrom).toDate());
+      $('#dateTo .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
       if (!isState.state.dateTo) {
         document.getElementById('dateTo').classList.remove('is-dirty');
       }

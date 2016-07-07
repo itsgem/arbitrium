@@ -103,7 +103,7 @@ class AdminInvoiceList extends React.Component {
       });
       $('#invoiced_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          startDate: isState.state.invoiced_date_from,
+          endDate: isState.state.invoiced_date_from,
           autoclose: true,
           todayHighlight: true
       });
@@ -116,6 +116,7 @@ class AdminInvoiceList extends React.Component {
       document.getElementById('invoiced_date_from').classList.add('is-dirty');
 
       $('#invoiced_date_to .datepicker').datepicker('setStartDate', moment(isState.state.invoiced_date_from).toDate());
+      $('#invoiced_date_to .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
       if (!isState.state.invoiced_date_to) {
         document.getElementById('invoiced_date_to').classList.remove('is-dirty');
       }
