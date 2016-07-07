@@ -2,7 +2,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 
 class AdminInvoiceList extends React.Component {
   constructor(props) {
@@ -104,7 +103,7 @@ class AdminInvoiceList extends React.Component {
       });
       $('#invoiced_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          startDate: isState.state.invoiced_date_from,
+          endDate: isState.state.invoiced_date_from,
           autoclose: true,
           todayHighlight: true
       });
@@ -112,16 +111,17 @@ class AdminInvoiceList extends React.Component {
     this.updateDatepicker(isState);
   }
   updateDatepicker(isState) {
-    $('#invoiced_date_from .datepicker').change(function(e){
+    $('#invoiced_date_from .datepicker').change(function(){
       isState.setState({invoiced_date_from: $(this).val()});
       document.getElementById('invoiced_date_from').classList.add('is-dirty');
 
       $('#invoiced_date_to .datepicker').datepicker('setStartDate', moment(isState.state.invoiced_date_from).toDate());
+      $('#invoiced_date_to .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
       if (!isState.state.invoiced_date_to) {
         document.getElementById('invoiced_date_to').classList.remove('is-dirty');
       }
     });
-    $('#invoiced_date_to .datepicker').change(function(e){
+    $('#invoiced_date_to .datepicker').change(function(){
       isState.setState({invoiced_date_to: $(this).val()});
       document.getElementById('invoiced_date_to').classList.add('is-dirty');
     });

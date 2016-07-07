@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 
 class invoiceList extends React.Component {
   constructor(props) {
@@ -121,7 +120,7 @@ class invoiceList extends React.Component {
       });
       $('#dateTo .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          startDate: isState.state.dateFrom,
+          endDate: isState.state.dateFrom,
           autoclose: true,
           todayHighlight: true
       });
@@ -129,16 +128,17 @@ class invoiceList extends React.Component {
     this.updateDatepicker(isState);
   }
   updateDatepicker(isState) {
-    $('#dateFrom .datepicker').change(function(e){
+    $('#dateFrom .datepicker').change(function(){
       isState.setState({dateFrom: $(this).val()});
       document.getElementById('dateFrom').classList.add('is-dirty');
 
       $('#dateTo .datepicker').datepicker('setStartDate', moment(isState.state.dateFrom).toDate());
+      $('#dateTo .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
       if (!isState.state.dateTo) {
         document.getElementById('dateTo').classList.remove('is-dirty');
       }
     });
-    $('#dateTo .datepicker').change(function(e){
+    $('#dateTo .datepicker').change(function(){
       isState.setState({dateTo: $(this).val()});
       document.getElementById('dateTo').classList.add('is-dirty');
     });

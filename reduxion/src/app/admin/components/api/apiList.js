@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
-import Datetime from 'react-datetime';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -146,7 +145,7 @@ class ApiList extends React.Component {
     }
 
     let isState = this ;
-    $('.datepicker').change(function(e){
+    $('.datepicker').change(function(){
       isState.setState({created: $(this).val()});
       document.getElementById('createdDate').classList.add('is-dirty');
     });
