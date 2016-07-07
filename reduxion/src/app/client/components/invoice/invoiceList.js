@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 
 class invoiceList extends React.Component {
   constructor(props) {
@@ -129,7 +128,7 @@ class invoiceList extends React.Component {
     this.updateDatepicker(isState);
   }
   updateDatepicker(isState) {
-    $('#dateFrom .datepicker').change(function(e){
+    $('#dateFrom .datepicker').change(function(){
       isState.setState({dateFrom: $(this).val()});
       document.getElementById('dateFrom').classList.add('is-dirty');
 
@@ -138,7 +137,7 @@ class invoiceList extends React.Component {
         document.getElementById('dateTo').classList.remove('is-dirty');
       }
     });
-    $('#dateTo .datepicker').change(function(e){
+    $('#dateTo .datepicker').change(function(){
       isState.setState({dateTo: $(this).val()});
       document.getElementById('dateTo').classList.add('is-dirty');
     });

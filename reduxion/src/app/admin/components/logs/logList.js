@@ -1,7 +1,6 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
-import Datetime from 'react-datetime';
 import json2csv from 'json2csv';
 import moment from 'moment';
 
@@ -111,7 +110,7 @@ class LogList extends React.Component {
     });
 
     let isState = this ;
-    $('.datepicker').change(function(e){
+    $('.datepicker').change(function(){
       isState.setState({created: $(this).val()});
       document.getElementById('createdDate').classList.add('is-dirty');
     });
@@ -126,13 +125,11 @@ class LogList extends React.Component {
     let fields = ['ipaddress', 'statusCode', 'url', 'parameter', 'created'];
     let estateNameCsv = '';
     let datacsv = '';
-    let csvString = '';
 
     if (Object.keys(this.props.logList.data).length) {
       json2csv({ data: this.props.logList.data, fields: fields }, function(err, csv) {
         estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
-        csvString = csv;
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
       let i=0;

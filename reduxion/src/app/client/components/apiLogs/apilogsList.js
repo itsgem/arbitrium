@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import { modal } from 'common/components/modal'
 import { createError } from 'utils/error';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 import json2csv from 'json2csv';
 
 class apilogList extends React.Component {
@@ -141,7 +140,7 @@ class apilogList extends React.Component {
 
       json2csv({ data: this.props.successApiLogsList.data, fields: fields }, function(err, csv) {
         estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);;
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
       let i=0;
@@ -159,7 +158,7 @@ class apilogList extends React.Component {
     }
 
     let isState = this ;
-    $('.datepicker').change(function(e){
+    $('.datepicker').change(function(){
       isState.setState({dateFrom: $(this).val()});
       document.getElementById('createdDate').classList.add('is-dirty');
     });

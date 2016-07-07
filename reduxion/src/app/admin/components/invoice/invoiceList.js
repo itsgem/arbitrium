@@ -2,7 +2,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
-import Datetime from 'react-datetime';
 
 class AdminInvoiceList extends React.Component {
   constructor(props) {
@@ -112,7 +111,7 @@ class AdminInvoiceList extends React.Component {
     this.updateDatepicker(isState);
   }
   updateDatepicker(isState) {
-    $('#invoiced_date_from .datepicker').change(function(e){
+    $('#invoiced_date_from .datepicker').change(function(){
       isState.setState({invoiced_date_from: $(this).val()});
       document.getElementById('invoiced_date_from').classList.add('is-dirty');
 
@@ -121,7 +120,7 @@ class AdminInvoiceList extends React.Component {
         document.getElementById('invoiced_date_to').classList.remove('is-dirty');
       }
     });
-    $('#invoiced_date_to .datepicker').change(function(e){
+    $('#invoiced_date_to .datepicker').change(function(){
       isState.setState({invoiced_date_to: $(this).val()});
       document.getElementById('invoiced_date_to').classList.add('is-dirty');
     });
