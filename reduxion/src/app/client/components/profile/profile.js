@@ -23,7 +23,7 @@ class ClientProfile extends React.Component {
       return false;
     }
 
-    if (Object.keys(errors).length) {
+    if (Object.keys(errors).length && !Object.keys(this.props.errors).length) {
       document.querySelector('.alert').style.display = 'block';
       let target = document.getElementById('top');
       let scrollContainer = target;
@@ -58,7 +58,7 @@ class ClientProfile extends React.Component {
       e.preventDefault();
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidMount () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -91,11 +91,12 @@ class ClientProfile extends React.Component {
         }, false);
       }
     }
-
+  }
+  componentWillReceiveProps(nextProps) {
     // (Optional) Finalize changing of email
     if (!nextProps.loading && nextProps.isRetrieveEmailChangeTokenSuccess && !nextProps.isVerifyEmailChangeSuccess) {
       let payload = {
-        token: nextProps.emailChangeToken.get('data').token
+        token: nextProps.emailChangeToken.data.token
       };
 
       window.componentHandler.upgradeDom();
@@ -107,7 +108,7 @@ class ClientProfile extends React.Component {
 
     // (Optional) Logout user after finalizing of changing of email
     if (!nextProps.loading && nextProps.isVerifyEmailChangeSuccess) {
-      this.context.router.push('/i/logout');
+      window.location = window.location.origin + "/i/logout";
     }
   }
 
@@ -125,6 +126,7 @@ class ClientProfile extends React.Component {
       errors = Object.assign({}, errorServer.response);
     }
     this.scrolltop(errors);
+
     let currentSubscription = this.props.currentSubscription.data.length == 0  ? false : this.props.currentSubscription.data;
 
     return (

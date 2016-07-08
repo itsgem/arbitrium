@@ -18,10 +18,12 @@ const initialState = Immutable.fromJS({
 export default createReducer({
   [clientInvoiceList.ok]: (state, payload) => state.merge({
     loading: false,
-    listInvoice: payload
+    listInvoice: payload,
+    successMailSent: false
   }),
   [clientInvoiceList.request]: (state) => state.merge({
     loading: true,
+    successMailSent: false,
   }),
   [clientInvoiceDetails.ok]: (state, payload) => state.merge({
     loading: false,

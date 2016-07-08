@@ -70,14 +70,16 @@ class UserManagementUpdate extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, errorServer.response, {password_confirmation: []});
       errors.password = [];
-      if (errorServer.response.password.length == 1) {
-        errors.password_confirmation[0] = errorServer.response.password[0];
-      }else if (errorServer.response.password.length == 3) {
-        errors.password[0] = errorServer.response.password[0];
-        errors.password_confirmation[0] = errorServer.response.password[2];
-      } else {
-        errors.password[0] = errorServer.response.password[0];
-        errors.password_confirmation[0] = errorServer.response.password[1];
+      if (errorServer.response.password) {
+        if (errorServer.response.password.length == 1) {
+          errors.password_confirmation[0] = errorServer.response.password[0];
+        }else if (errorServer.response.password.length == 3) {
+          errors.password[0] = errorServer.response.password[0];
+          errors.password_confirmation[0] = errorServer.response.password[2];
+        } else {
+          errors.password[0] = errorServer.response.password[0];
+          errors.password_confirmation[0] = errorServer.response.password[1];
+        }
       }
     }
     this.scrolltop(errors);

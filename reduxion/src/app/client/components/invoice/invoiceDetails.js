@@ -1,6 +1,7 @@
 import React from 'react';
 import { modal } from 'common/components/modal';
 import { openLoading, closeLoading } from 'common/components/modal';
+import {createError} from 'utils/error';
 
 class invoiceDetails extends React.Component {
   constructor(props) {
@@ -17,10 +18,10 @@ class invoiceDetails extends React.Component {
     modal();
   }
   loadingRender () {
-    if (!this.props.loading && this.props.successMailSent) {
+    if (!this.props.loading && this.props.successMailSent || this.state.errorServer) {
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-        message: "Successfully sent invoice to your email ",
+        message: this.state.errorServer ? this.state.errorServer.response[0] : "Successfully sent invoice to your email ",
         timeout: 3000
       });
       closeLoading();
@@ -129,7 +130,10 @@ class invoiceDetails extends React.Component {
   invoiceSendMail(e, id) {
     e.preventDefault();
     openLoading();
-    this.props.clientInvoiceSendMail(id);
+    this.props.clientInvoiceSendMail(id).catch( (e) => this.setErrors(e) );
+  }
+  setErrors( e ) {
+    this.setState(createError(e));
   }
 };
 

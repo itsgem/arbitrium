@@ -7,7 +7,7 @@ export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  componentDidMount () {
+  componentWillMount () {
     this.props.adminSystemSettings().catch(createError);
   },
 

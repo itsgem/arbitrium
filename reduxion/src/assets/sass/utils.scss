@@ -357,6 +357,9 @@ div#application {
   bottom: 100%;
   margin-bottom: 2px;
 }
+.mdl-tooltip {
+  max-width: 380px;
+}
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
     right: 0;

@@ -21,13 +21,14 @@ const mapStateToProps = (state) => {
     countryList: strMapToObj(state.get('clientProfile').get('countryList')),
     isRetrieveEmailChangeTokenSuccess: state.get('clientProfile').get('isRetrieveEmailChangeTokenSuccess'),
     isVerifyEmailChangeSuccess: state.get('clientProfile').get('isVerifyEmailChangeSuccess'),
-    emailChangeToken: state.get('clientProfile').get('emailChangeToken'),
+    emailChangeToken: strMapToObj(state.get('clientProfile').get('emailChangeToken')),
     currentSubscription: strMapToObj(state.get('AdminSubscription').get('currentSubscription')),
     cancelSubscriptionSuccess: strMapToObj(state.get('clientProfile').get('cancelSubscriptionSuccess')),
     clientInfo: strMapToObj(state.get('clientProfile').get('clientInfo')),
     updateSuccess: strMapToObj(state.get('clientProfile').get('updateSuccess')),
     validateCompleted: strMapToObj(state.get('clientProfile').get('validateCompleted')),
-    errors: state.get('clientProfile').get('errors'),
+    errors: strMapToObj(state.get('clientProfile').get('errors')),
+    errorsVerifyEmailChange: strMapToObj(state.get('clientProfile').get('errorsVerifyEmailChange')),
     loading: state.get('clientProfile').get('loading')
   };
 }
