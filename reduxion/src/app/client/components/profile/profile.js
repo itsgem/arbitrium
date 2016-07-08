@@ -23,7 +23,7 @@ class ClientProfile extends React.Component {
       return false;
     }
 
-    if (Object.keys(errors).length && !Object.keys(nextProps.errors).length) {
+    if (Object.keys(errors).length && !Object.keys(this.props.errors).length) {
       document.querySelector('.alert').style.display = 'block';
       let target = document.getElementById('top');
       let scrollContainer = target;
@@ -125,6 +125,7 @@ class ClientProfile extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
     }
+    this.scrolltop(errors);
 
     let currentSubscription = this.props.currentSubscription.data.length == 0  ? false : this.props.currentSubscription.data;
 
