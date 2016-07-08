@@ -60,6 +60,7 @@ class SystemSettings extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
     }
+
     this.scrolltop(errors);
 
     if (Object.keys(this.props.adminSystemSettings).length) {
@@ -247,61 +248,59 @@ class SystemSettings extends React.Component {
     let {company_name, street_address, city, state, country, postal_code, admin_email, token_expiry,
       items_per_page, swift_code, branch_code, account_name, credit_to, bank_account, bank_code} = this.refs;
 
-    let payload = {
-          kcg_company_name: company_name.value,
-          kcg_street_address: street_address.value,
-          kcg_city: city.value,
-          kcg_state: state.value,
-          kcg_country: country.value,
-          kcg_postal_code: postal_code.value,
-          kcg_admin_email: admin_email.value,
-          reset_token_expiry: token_expiry.value,
-          items_per_page: items_per_page.value,
-          kcg_swift_code: swift_code.value,
-          kcg_branch_code: branch_code.value,
-          kcg_account_name: account_name.value,
-          kcg_credit_to: credit_to.value,
-          kcg_bank_account: bank_account.value,
-          kcg_bank_code: bank_code.value
-    }
-    window.componentHandler.upgradeDom();
-    return this.validateSave.call( this, payload )
-      .with( this )
-      .then( this.saveSettings )
-      .catch( this.setErrors );
-  }
-  validateSave ( payload) {
-    let rules = new Checkit( {
-      kcg_company_name: { rule: 'required', label: 'company name'},
-      kcg_street_address: { rule: 'required', label: 'billing info'},
-      kcg_city: { rule: 'required', label: 'city'},
-      kcg_state: { rule: 'required', label: 'state'},
-      kcg_country: { rule: 'required', label: 'country'},
-      kcg_postal_code: { rule: 'required', label: 'postal code'},
-      kcg_admin_email: { rule: 'required', label: 'E-mail'},
-      reset_token_expiry: { rule: 'required', label: 'token expiry'},
-      items_per_page: { rule: 'required', label: 'item per page'},
-      kcg_swift_code: { rule: 'required', label: 'Other settings'},
-      kcg_branch_code: { rule: 'required', label: 'Other settings'},
-      kcg_account_name: { rule: 'required', label: 'account name'},
-      kcg_credit_to: { rule: 'required', label: 'credit to'},
-      kcg_bank_account: { rule: 'required', label: 'bank account'},
-      kcg_bank_code: { rule: 'required', label: 'bank account code'}
-    } );
-    return rules.run( payload );
+    let payload = [
+      {
+        "name": "kcg_company_name",
+        "value": company_name.value
+      },{
+        "name": "kcg_street_address",
+        "value": street_address.value
+      },{
+        "name": "kcg_city",
+        "value": city.value
+      },{
+        "name": "kcg_state",
+        "value": state.value
+      },{
+        "name": "kcg_country",
+        "value": country.value
+      },{
+        "name": "kcg_postal_code",
+        "value": postal_code.value
+      },{
+        "name": "kcg_admin_email",
+        "value": admin_email.value
+      },{
+        "name": "reset_token_expiry",
+        "value": token_expiry.value
+      },{
+        "name": "items_per_page",
+        "value": items_per_page.value
+      },{
+        "name": "kcg_swift_code",
+        "value": swift_code.value
+      },{
+        "name": "kcg_branch_code",
+        "value": branch_code.value
+      },{
+        "name": "kcg_account_name",
+        "value": account_name.value
+      },{
+        "name": "kcg_credit_to",
+        "value": credit_to.value
+      },{
+        "name": "kcg_bank_account",
+        "value": bank_account.value
+      },{
+        "name": "kcg_bank_code",
+        "value": bank_code.value
+      }];
+    this.saveSettings(payload).catch( (e) => this.setErrors(e) );
   }
   saveSettings (payload) {
-    openLoading();
-    let errors = {};
-    this.setState({
-      errors: {},
-      errorServer:null
-    });
-    this.scrolltop(errors);
-
     return this.props.saveSystemSettings(payload);
   }
-  setErrors(e) {
+  setErrors( e ) {
     this.setState(createError(e));
   }
 };

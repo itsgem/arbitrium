@@ -294,7 +294,7 @@ export default {
   saveAdminSystemSettings(payload) {
     return patch('admin/system-setting/many', {
       params: {
-        system_setting: payload.system_setting
+        system_setting: payload
       }
     });
   },
