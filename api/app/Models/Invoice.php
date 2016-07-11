@@ -298,10 +298,20 @@ class Invoice extends NrbModel
         return $this->status == self::CANCELLED;
     }
 
+    public function hasBeenPaid()
+    {
+        return $this->paid_at;
+    }
+
     public function sendInvoice()
     {
-        with(new MailServices())->sendInvoice($this->user, $this->url);
+        if ($this->hasBeenPaid())
+        {
+            with(new MailServices())->sendInvoice($this->user, $this->url);
 
-        return true;
+            return true;
+        }
+
+        return false;
     }
 }
