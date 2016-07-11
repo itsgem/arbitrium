@@ -53,6 +53,7 @@ class UpdateSubscriptionStatus extends Command
             foreach($client_subscriptions as $client_subscription)
             {
                 $client_subscription->expire();
+                $client_subscription->client->sendSubscriptionExpired($client_subscription);
 
                 $message = ' Inactivated Client Subscription #'.$client_subscription->id;
 
