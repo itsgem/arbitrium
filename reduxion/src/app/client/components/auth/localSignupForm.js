@@ -2,6 +2,7 @@ import React from 'react';
 import Checkit from 'checkit';
 import LocalAuthenticationFormSignup from 'client/components/auth/localAuthenticationFormSignup';
 import {createError} from 'utils/error';
+import tr from 'i18next';
 
 import Debug from 'debug';
 
@@ -55,7 +56,7 @@ class LocalSignupForm extends React.Component {
           showLogin = {true}
           errorServer = {this.state.errorServer}
           country = {this.props.country}
-          buttonCaption = {this.props.buttonCaption || 'Create an account' }
+          buttonCaption = {this.props.buttonCaption || tr.t('button.createAnAccount') }
           errors = { this.state.errors }
           onButtonClick = {(payload) => {this.signup(payload)}}
           />

@@ -31,7 +31,7 @@ class LocalAuthenticationForm extends React.Component {
                 onKeyPress={(e) => this.toLogin(e)}
                 autoComplete="false"
                 />
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('email_or_username')}</label>
+              <label className="mdl-textfield__label" htmlFor="email">{tr.t('label.emailUsername')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
           }
@@ -45,7 +45,7 @@ class LocalAuthenticationForm extends React.Component {
               autoComplete="false"
               onKeyPress={(e) => this.toLogin(e)}
               />
-            <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
+            <label className="mdl-textfield__label" htmlFor="password">{tr.t('label.password')}</label>
             {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
           </div>
 
@@ -66,13 +66,13 @@ class LocalAuthenticationForm extends React.Component {
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-left">
               <Link
                 to="/i/forgot"
-              >{tr.t('forgotPassword')}</Link>
+              >{tr.t('button.forgotPassword')}</Link>
             </div>
 
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
               <Link
                 to="/i/signup"
-              >{tr.t('sign_up')}</Link>
+              >{tr.t('button.signUp')}</Link>
             </div>
           </div>
 
