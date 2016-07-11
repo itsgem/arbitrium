@@ -64,11 +64,16 @@ class AdminUserRequest extends NrbRequest
         else
         {
             // [Core-API] Check if username already taken
-            $admin_id = last($this->segments());
-            $admin_id = ((int) $admin_id != 0) ? $admin_id : get_logged_in_admin_id();
-            $username = Admin::findOrFail($admin_id)->user->username;
+            $is_username_owned = false;
+            if (is_logged_in())
+            {
+                $admin_id = last($this->segments());
+                $admin_id = ((int) $admin_id != 0) ? $admin_id : get_logged_in_admin_id();
+                $username = Admin::findOrFail($admin_id)->user->username;
+                $is_username_owned = ($this->get('username') == $username);
+            }
 
-            if ($this->get('username') && $this->get('username') != $username)
+            if ($this->get('username') && !$is_username_owned)
             {
                 $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
                     'username' => $this->get('username')
