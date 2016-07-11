@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import cx from 'classnames';
 
 class SubscriptionDetail extends React.Component {
   constructor(props) {
