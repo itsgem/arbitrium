@@ -268,13 +268,13 @@ class SubscriptionDetail extends React.Component {
     switch (term) {
       case 'Annually':
         isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
-        newDate = new Date(dateToday.getFullYear() + 1, dateToday.getMonth(), dateToday.getDate() + 29);
-        isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
+        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate() + 365);
+        isTo = newDate.getMonth() + '/' + newDate.getDate() + '/' +  newDate.getFullYear();
         break;
       case 'Monthly':
         isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
-        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate());
-        isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
+        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate() + 30);
+        isTo = newDate.getMonth() + '/' + newDate.getDate() + '/' + newDate.getFullYear();
         break;
     }
 
