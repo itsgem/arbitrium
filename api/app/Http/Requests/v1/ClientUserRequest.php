@@ -121,7 +121,7 @@ class ClientUserRequest extends NrbRequest
         {
             // [Core-API] Check if username already taken
             $is_username_owned = false;
-            if (is_logged_in() && $method == 'PUT')
+            if ($method == 'PUT')
             {
                 $client_id = (is_client_user_logged_in()) ? get_logged_in_client_id() : last($this->segments());
                 $username = Client::findOrFail($client_id)->user->username;

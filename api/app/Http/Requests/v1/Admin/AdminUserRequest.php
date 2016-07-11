@@ -66,7 +66,7 @@ class AdminUserRequest extends NrbRequest
         {
             // [Core-API] Check if username already taken
             $is_username_owned = false;
-            if (is_logged_in() && $method == 'PUT')
+            if ($method == 'PUT')
             {
                 $admin_id = last($this->segments());
                 $admin_id = ((int) $admin_id != 0) ? $admin_id : get_logged_in_admin_id();
