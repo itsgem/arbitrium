@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('subscription:update_status')->daily();
+        $schedule->command('subscription:renew_reminder')->daily();
 
         // TODO-GEM: current implementation is using basic package, enable these when subscription will be enabled
         // $schedule->command('renew:subscription')->daily();

@@ -15,7 +15,7 @@ class RenewSubscriptionReminder extends Command
      *
      * @var string
      */
-    protected $signature = 'renew:subscription-reminder';
+    protected $signature = 'subscription:renew_reminder';
 
     /**
      * The console command description.
@@ -32,6 +32,8 @@ class RenewSubscriptionReminder extends Command
     public function handle()
     {
         log_command($this->signature);
+
+        $this->info('START '.$this->signature);
         Log::info('START '.$this->signature);
 
         DB::transaction(function ()
@@ -40,30 +42,36 @@ class RenewSubscriptionReminder extends Command
             $valid_to           = format_date_to_string(current_date()->addDay($reminder_in_days));
             $new_validity_date  = convert_to_string(current_date()->addDay($reminder_in_days + 1), 'F j,Y');
 
+            $this->info('SUBSCRIPTIONS VALID TO: '.$valid_to.' NEW VALIDITY: '.$new_validity_date);
             Log::info('SUBSCRIPTIONS VALID TO: '.$valid_to.' NEW VALIDITY: '.$new_validity_date);
 
-            $client_subscriptions = ClientSubscription::renew()
-                                    ->emailReminderSent(false)
-                                    ->validTo($valid_to)
+            $client_subscriptions = ClientSubscription::active()
+                                    ->isAutoRenew()
+                                    ->isEmailReminderSent(false)
+                                    ->dateTo('valid_to', $valid_to)
                                     ->get();
+
+            $loading = $this->output->createProgressBar($client_subscriptions->count());
+
             foreach($client_subscriptions as $client_subscription)
             {
-                if ($client_subscription->client->canPurchaseSubscription($client_subscription->subscription))
-                {
-                    if ($client_subscription->subscription->price_in_credit > 0)
-                    {
-                        with(new MailServices())->renewSubscriptionReminder($client_subscription->client->user, $new_validity_date);
-                    }
-                }
-                else
-                {
-                    with(new MailServices())->renewSubscriptionCreditReminder($client_subscription->client->user);
-                }
-                $client_subscription->email_reminder_sent = 1;
+                with(new MailServices())->renewSubscriptionReminder($client_subscription->client->user, $new_validity_date);
+                $client_subscription->is_email_reminder_sent = 1;
                 $client_subscription->save();
+
+                $message = ' Reminded almost due Client Subscription #'.$client_subscription->id.' ('.$client_subscription->client->user->email_address.')';
+
+                $loading->advance();
+
+                $this->info($message);
+                Log::info($message);
             }
+
+            $loading->finish();
         });
 
+        $this->info('');
+        $this->info('END '.$this->signature);
         Log::info('END '.$this->signature);
     }
 }
