@@ -94,21 +94,21 @@ class ApiAdd extends React.Component {
           {
             permissions  && permissions.map(item => {
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <div className={this.formClassNames('permissions', errors)}>
-                        <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
-                          <input
-                            type="checkbox"
-                            className="mdl-checkbox__input"
-                            id={"checkbox-" + item.id}
-                            name="chkRights[]"
-                            value={ item.id }
-                            onClick={(e) => this.ckPermissions(e)}/>
-                          <span className="mdl-checkbox__label">{item.name}</span>
-                        </label>
-                      {errors.permissions && <small className="mdl-textfield__error shown">{errors.permissions}</small>}
-                      </div>
+                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                        <input
+                          type="checkbox"
+                          className="mdl-checkbox__input"
+                          id={"checkbox-" + item.id}
+                          name="chkRights[]"
+                          value={ item.id }
+                          onClick={(e) => this.ckPermissions(e)}/>
+                        <span className="mdl-checkbox__label">{item.name}</span>
+                      </label>
                     </div>; })
           }
+          <div className={this.formClassNames('permissions', errors)}>
+            {errors.permissions && <small className="mdl-textfield__error shown">{errors.permissions}</small>}
+          </div>
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--1-col check-test-key">
@@ -193,7 +193,8 @@ class ApiAdd extends React.Component {
   formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
-      'has-success': errors && !(errors[ field ])
+      'has-success': errors && !(errors[ field ]),
+      'permission-padding': field == 'permissions' && errors[ field ]
     } );
   }
 };
