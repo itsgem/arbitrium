@@ -151,7 +151,8 @@ class ClientSubscription extends Subscription
             ->status(self::STATUS_INACTIVE)
             ->whereNull('status_end')
             ->whereNull('valid_from')
-            ->whereNull('valid_to');
+            ->whereNull('valid_to')
+            ->whereDate('created_at', '>', current_datetime()->subDay()->toDateTimeString());
     }
 
     public function scopeIsAutoRenew($query, $flag = false)

@@ -216,9 +216,13 @@ class Invoice extends NrbModel
     //---------- helpers
     public function cancel()
     {
-        $this->status = self::CANCELLED;
-        $this->cancelled_at = current_datetime();
-        $this->save();
+        if (!$this->isCancelled())
+        {
+            $this->status = self::CANCELLED;
+            $this->cancelled_at = current_datetime();
+            $this->url = $this->updatePDF($this);
+            $this->save();
+        }
     }
 
     public function paid()
@@ -227,10 +231,21 @@ class Invoice extends NrbModel
         {
             $this->status = self::PAID;
             $this->paid_at = current_datetime();
-            $this->load('user', 'invoice_details');
-            $this->url = with(new FileServices())->setStoragePath(config('arbitrium.invoice.path'))->generateInvoicePDF($this);
+            $this->url = $this->updatePDF($this);
             $this->save();
         }
+    }
+
+    public function updatePDF($data)
+    {
+        if ($data)
+        {
+            $data->load('user', 'invoice_details');
+            return with(new FileServices())->setStoragePath(config('arbitrium.invoice.path'))
+                ->generateInvoicePDF($data);
+        }
+
+        return null;
     }
 
     public static function generate($data, $invoice_details = [])
@@ -278,15 +293,15 @@ class Invoice extends NrbModel
         return $this->status == self::PAID;
     }
 
+    public function isCancelled()
+    {
+        return $this->status == self::CANCELLED;
+    }
+
     public function sendInvoice()
     {
-        if ($this->isPaid())
-        {
-            with(new MailServices())->sendInvoice($this->user, $this->url);
+        with(new MailServices())->sendInvoice($this->user, $this->url);
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }
