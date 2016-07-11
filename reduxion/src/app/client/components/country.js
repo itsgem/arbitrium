@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 
 class Country extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class Country extends React.Component {
             {return <option key={item.id} value={item.id}>{item.name}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">Country</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('label.country')}</label>
       </div>
     );
   }
