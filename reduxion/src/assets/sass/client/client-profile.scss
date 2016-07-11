@@ -160,6 +160,12 @@ div#application {
         height: 48px;
         min-height: 0;
       }
+
+      .mdl-grid {
+        .permission-padding {
+          padding: 0 0 15px 10px;
+        }
+      }
     }
 
     .mdl-tabs__tab-bar {
