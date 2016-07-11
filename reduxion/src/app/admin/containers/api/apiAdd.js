@@ -8,7 +8,6 @@ const strMapToObj=(strMap) => {
   return obj;
 }
 
-
 const mapStateToProps = (state) => {
   return {
     loading: state.get('AdminApi').get('loading'),

@@ -490,8 +490,20 @@ select {
   }
 }
 
+.mdl-tooltip {
+    font-size: 14px;
+    font-weight: 100;
+    text-align: left;
+    line-height: 1.5;
+    padding: 15px;
+}
+
 .mdl-cell.check-test-key {
   width: 9%;
+
+  .mdl-tooltip {
+    max-width: 300px;
+  }
 }
 
 .arb-demo {

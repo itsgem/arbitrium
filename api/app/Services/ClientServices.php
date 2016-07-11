@@ -19,8 +19,13 @@ class ClientServices extends NrbServices
     {
         return DB::transaction(function () use ($request, $id, $approve)
         {
-            $client = Client::findOrFail($id)->approve($request->get('callback_url'), $approve);
-            return $this->respondWithSuccess();
+            $client = Client::findOrFail($id);
+            $client->approve($request->get('callback_url'), $approve);
+
+            // [Core-API] Signup
+            $client->user->registerApiCredentials();
+
+            return $this->respondWithSuccess($client);
         });
     }
 
@@ -32,6 +37,9 @@ class ClientServices extends NrbServices
             $client = Client::findOrFail($id);
             if ($client->canDelete())
             {
+                // [Core-API] Delete account
+                $client->user->removeApiCredentials();
+
                 $client->delete();
                 return $this->respondWithSuccess($client);
             }
@@ -48,12 +56,14 @@ class ClientServices extends NrbServices
                 'rep_phone_code', 'rep_phone_number', 'rep_mobile_code', 'rep_mobile_number', 'approval_status'
             )
             ->with(['user' => function($query){
-                $query->select('id', 'email_address', 'login_attempts', 'locked_at');
+                $query->select('id', 'email_address', 'username', 'login_attempts', 'locked_at');
             }])
             ->whereHas('user', function ($query) use ($request){
                 $query->emailLike($request->get('email_address'));
             })
-            ->approvalStatus($request->get('approval_status'))->companyNameLike($request->get('company_name'))
+            ->approvalStatus($request->get('approval_status'))
+            ->companyNameLike($request->get('company_name'))
+            ->usernameLike($request->get('username'))
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );
@@ -86,9 +96,13 @@ class ClientServices extends NrbServices
                 $query->select('id', 'username', 'email_address', 'activated_at', 'items_per_page', 'timezone', 'locked_at');
             }]);
         }
-
         $client = $client->findOrFail($id);
         $this->addResponseData($client);
+        if ($request->get('with-api'))
+        {
+            $client['api'] = $client->user->getApiAuth();
+        }
+
         return $this->respondWithSuccess($client);
     }
 
@@ -100,6 +114,7 @@ class ClientServices extends NrbServices
             $user = User::create($request->all());
             $user->client()->save(new Client($request->all()));
             $user->sendNewClientAccount($request->get('callback_url'));
+
             return $this->respondWithSuccess($user->client);
         });
     }
@@ -111,16 +126,24 @@ class ClientServices extends NrbServices
         return DB::transaction(function () use ($request, $id)
         {
             $client = Client::findOrFail($id);
+            $old_auth = $client->user->getApiAuth();
+
             $client->update($request->all());
             if (is_admin_user_logged_in())
             {
-                $client->user()->update($request->only('username', 'email_address', 'items_per_page', 'timezone'));
+                $client->user->update($request->only('username', 'email_address', 'items_per_page', 'timezone'));
             }
             else
             {
                 // client has to use change email address API
-                $client->user()->update($request->only('username', 'items_per_page', 'timezone'));
+                $client->user->update($request->only('username', 'items_per_page', 'timezone'));
             }
+
+            // [Core-API] Update username, password, user_type
+            $client->user->updateApiCredentials([
+                'username' => $client->user->username,
+            ], $old_auth);
+
             return $this->respondWithSuccess($client, trans("messages.success_client_edit_profile"));
         });
     }

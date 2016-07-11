@@ -15,9 +15,41 @@ class ApiUpdate extends React.Component {
       permissions: {}
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
+  scrolltop (errors) {
+    if (!document.querySelector('.alert')) {
+      return false;
+    }
+
+    if (Object.keys(errors).length) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      let scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
     }
   }
   render() {
@@ -25,12 +57,14 @@ class ApiUpdate extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
+    this.scrolltop(errors);
     let getApiInfo = this.props.getApiInfo.data;
     let clientInfo = this.props.clientProfileSuccess.data;
     let permissions = this.props.apiPermissions.data;
     let ipAddresses = '';
     ipAddresses += getApiInfo.ip_addresses.map(item => { return item.ip_address; });
-    ipAddresses = ipAddresses.split(',').join("\n")
+    ipAddresses = ipAddresses.split(',').join("\n");
+
     return (
       <form className="form-container" action="#" autoComplete="off">
         <div className="mdl-grid">
@@ -62,7 +96,7 @@ class ApiUpdate extends React.Component {
             <div className="mdl-textfield mdl-js-textfield full-width">
               <div className={this.formClassNames('ip_addresses', errors)}>
                 <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" defaultValue={ipAddresses}></textarea>
-                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address...</label>
+                <label className="mdl-textfield__label" htmlFor="ip_addresses">Add IP Address</label>
                 {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
             </div>
@@ -76,11 +110,12 @@ class ApiUpdate extends React.Component {
             permissions  && permissions.map(item => {
               let getCk = false;
               for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].api_permission_id == item.id && getApiInfo.permissions[i].value == 1) {
+                if (getApiInfo.permissions[i].api_permission_id == item.id) {
                   getCk = true;
                   break;
                 }
               }
+
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
                       <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
                         <input
@@ -105,9 +140,9 @@ class ApiUpdate extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col check-test-key">
               <div id="tt4" className="icon material-icons">help</div>
-                <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
+                <div className="mdl-tooltip mdl-tooltip--right" htmlFor="tt4">
                   You can use a test key to experiment
-                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation
+                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation.
                 </div>
             </div>
         </div>
@@ -121,28 +156,26 @@ class ApiUpdate extends React.Component {
               <div className="flex-order-gt-md-2" >
                 <button id="btn-save"
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e, getApiInfo.id)}>Update API Key</button>
+                  onClick={(e) => this.update(e, getApiInfo.id)}>Update API Key</button>
               </div>
             </div>
       </form>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {
       e.target.removeAttribute("checked");
     }
   }
-  register ( e, id ) {
+  update ( e, id ) {
     e.preventDefault();
     let chkArr =  document.getElementsByName("chkRights[]");
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
-      } else {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
+        permissions[k] = {api_permission_id: chkArr[k].value};
       }
     }
 
@@ -201,18 +234,13 @@ function validateUpdate ( payload) {
     } );
     return rules.run( payload );
 }
+
 function updateApi (payload) {
   return this.props.updateApiKey(payload);
 }
 
 function setErrors( e ) {
   this.setState(createError(e));
-}
-
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
 }
 
 ApiUpdate.mixins = [LinkedStateMixin];

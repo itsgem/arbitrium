@@ -45,7 +45,6 @@ export default {
     });
   },
   verifyEmailCode(payload) {
-    console.log('payload', payload)
     return patch('user/register/verify', {
       params: {
         token: payload.token,
@@ -257,7 +256,6 @@ export default {
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
         is_test_key: payload.is_test_key,
-        token: 'sample'
       }
     });
   },
@@ -271,8 +269,7 @@ export default {
         is_whitelist: payload.is_whitelist,
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
-        is_test_key: payload.is_test_key,
-        token: 'sample'
+        is_test_key: payload.is_test_key
       }
     });
   },
@@ -291,6 +288,42 @@ export default {
   adminClientSubscriptionCancel(id) {
     return patch('admin/client/' + id + '/subscription/cancel');
   },
+  adminGetSystemSettings() {
+    return get('admin/system-setting?response-format=key-name');
+  },
+  saveAdminSystemSettings(payload) {
+    return patch('admin/system-setting/many', {
+      params: {
+        system_setting: payload
+      }
+    });
+  },
+  adminGetClientInvoices(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/invoice', {
+      params : payload
+    });
+  },
+  adminGetInvoicesPerClient(payload = {page: 1, per_page: 10}) {
+    return get('admin/client/' + payload.id +'/invoice', {
+      params : payload
+    });
+  },
+  adminGetSelectedInvoice(id) {
+    return get('admin/invoice/' + id, {
+      params: {'with-details': 1, 'with-settings': 1}
+    });
+  },
+  adminInvoiceSendEmail(id) {
+    return get('admin/invoice/' + id + '/send');
+  },
+  getAdminLogList(payload) {
+    return get('admin/api-log', {
+      params: payload
+    })
+  },
+  getAdminLogDetail(id) {
+    return get('admin/api-log/' + id)
+  },
 
   // ------- CLIENT -------
   signupLocal(payload) {
@@ -302,7 +335,7 @@ export default {
           city: payload.city,
           state: payload.state,
           postal_code: payload.postal_code,
-          country_id: payload.country_id,
+          country_id: payload.country_id ? payload.country_id : null,
           rep_first_name: payload.rep_first_name,
           rep_last_name: payload.rep_last_name,
           rep_gender: payload.rep_gender,
@@ -368,7 +401,7 @@ export default {
       params: payload
     });
   },
-  clietApiKeys(payload = {page: 1, per_page: 10}) {
+  clientApiKeys(payload = {page: 1, per_page: 10}) {
     return get('client/api-key', {
       params : payload
     });
@@ -406,7 +439,6 @@ export default {
         permissions: payload.permissions,
         is_api_call_restricted: payload.is_api_call_restricted,
         is_test_key: payload.is_test_key,
-        token: 'sample'
       }
     });
   },
@@ -429,7 +461,9 @@ export default {
     return post('client/subscription/confirm', {
       params: {
         success: payload.success,
-        token: payload.token
+        token: payload.token,
+        payment_id: payload.payment_id ? payload.payment_id : '',
+        payer_id: payload.payer_id ? payload.payer_id : ''
       }
     });
   },
@@ -441,5 +475,26 @@ export default {
   },
   clientSubscriptionCancelPending() {
     return patch('client/subscription/cancel-confirm');
+  },
+  clientInvoiceList(payload = {page: 1, per_page: 10}) {
+    return get('client/invoice',{
+      params : payload
+    });
+  },
+  clientInvoiceDetails(id) {
+    return get('client/invoice/' + id, {
+      params: {'with-details': 1, 'with-settings': 1}
+    });
+  },
+  clientInvoiceSendMail(id) {
+    return get('client/invoice/' + id + '/send');
+  },
+  clientApiLogsList(payload = {page: 1, per_page: 10}) {
+    return get('client/api-log',{
+      params : payload
+    });
+  },
+  clientApiLogInfo(id) {
+    return get('client/api-log/' + id);
   }
 };

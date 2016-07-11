@@ -65,10 +65,10 @@ export default createReducer({
   [listRoleAdmin.ok]: (state, payload) => state.merge({
     role: payload,
     validateCompleted: false}),
-  [deleteAdminAccount.ok]: (state, payload) => state.merge({
+  [deleteAdminAccount.ok]: (state) => state.merge({
     adminDelete: true,
     loading: false}),
-  [deleteAdminAccount.request]: (state, payload) => state.merge({
+  [deleteAdminAccount.request]: (state) => state.merge({
     adminDelete: false,
     loading: true}),
   [getAdminInfo.ok]: (state, payload) => state.merge({
@@ -77,7 +77,7 @@ export default createReducer({
     adminUpdate: false,
     loading: false,
     adminUnlockSuccess: false}),
-  [getAdminInfo.request]: (state, payload) => state.merge({
+  [getAdminInfo.request]: (state) => state.merge({
     loading: true,
     registerCompleted: false,
     adminUpdate: false,

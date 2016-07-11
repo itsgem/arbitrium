@@ -12,7 +12,6 @@ export default React.createClass( {
   componentWillMount(){
     let id = this.props.params.id;
     this.props.getApiKey(id).catch(createError);
-    this.props.getApiPermission().catch(createError);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {
@@ -22,8 +21,11 @@ export default React.createClass( {
       });
       this.context.router.push('/coffee/api/');
     }
-    if (!Object.keys(nextProps.clientProfileSuccess).length && Object.keys(nextProps.getApiInfo).length && !nextProps.loadingCLient && !nextProps.loading) {
-      nextProps.clientProfile(nextProps.getApiInfo.data.client_id).catch(createError);
+    if (Object.keys(nextProps.getApiInfo).length && !Object.keys(nextProps.clientProfileSuccess).length && !nextProps.loading) {
+      nextProps.clientProfile(nextProps.getApiInfo.data.client.id).catch(createError);
+    }
+    if (!Object.keys(nextProps.apiPermissions).length && Object.keys(nextProps.clientProfileSuccess).length && !nextProps.loading) {
+      this.props.getApiPermission().catch(createError);
     }
   },
   loadingRender () {
@@ -32,12 +34,22 @@ export default React.createClass( {
       <div className="loading"></div>
     );
   },
-  render() {
-    if (Object.keys(this.props.getApiInfo).length && Object.keys(this.props.clientProfileSuccess).length) {
+  noContent () {
+    return (
+      <div className="noContent">No content</div>
+    );
+  },
+  render () {
+    if (!this.props.getApiInfo) {
+      closeLoading();
+      return this.noContent();
+    }
+
+    if (Object.keys(this.props.getApiInfo).length && Object.keys(this.props.clientProfileSuccess).length && Object.keys(this.props.apiPermissions).length) {
       closeLoading();
       return this.renderApiInfo();
     } else {
-       return this.loadingRender();
+      return this.loadingRender();
     }
   },
   renderApiInfo () {

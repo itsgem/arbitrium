@@ -77,7 +77,14 @@ class UserServices extends NrbServices
     public function changePassword($request)
     {
         $user = auth()->user();
+        $old_auth = $user->getApiAuth();
+
         $user->update(['password' => $request->password]);
+
+        // [Core-API] Update username, password, user_type
+        $user->updateApiCredentials([
+            'password' => $user->password,
+        ], $old_auth);
 
         // TODO-GEM: send notification that user has changed password?
         // with(new MailServices())->changePassword($user);
@@ -92,6 +99,14 @@ class UserServices extends NrbServices
         if ($user->canDelete())
         {
             $user->deactivate();
+
+            if ($user->isClient())
+            {
+                // [Core-API] Deactivate account
+                // @TODO-Arbitrium: While waiting for deactivate endpoint in core, reset allowed requests and decisions
+                $user->client->coreApiSubscribe();
+            }
+
             return $this->respondWithSuccess();
         }
         return $this->respondWithError(Errors::CANNOT_DEACTIVATE, ['str_replace' => ['model' => 'User']]);
@@ -126,10 +141,28 @@ class UserServices extends NrbServices
             {
                 $reset_token->resetTokens($field);
                 $user = $reset_token->user;
+                $old_auth = $user->getApiAuth();
+
                 $user->password = $request->get('password');
                 $user->unlock();
                 $user->logout();
                 log_api_access($controller, 'doResetPassword', $user);
+
+                // If asked to reset password for the first time
+                // (Happens when admin creates account for client)
+                if (!$user->hasApi())
+                {
+                    // [Core-API] Signup
+                    $user->registerApiCredentials();
+                }
+                else
+                {
+                    // [Core-API] Update username, password, user_type
+                    $user->updateApiCredentials([
+                        'password' => $user->password,
+                    ], $old_auth);
+                }
+
                 return $this->respondWithSuccess();
             }
             return $this->respondWithError(Errors::EXPIRED_TOKEN);

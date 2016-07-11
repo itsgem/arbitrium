@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import ClientProfile from 'client/components/profile/profile';
 import {createError} from 'utils/error';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -30,12 +29,18 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.updateSuccess || nextProps.cancelSubscriptionSuccess){
+    if (Object.keys(nextProps.errors).length) {
+      console.log('sss', nextProps.errors.data.errors);
+    }
+
+    if(nextProps.updateSuccess || nextProps.cancelSubscriptionSuccess || Object.keys(nextProps.errors).length){
       let message = '';
       if (nextProps.cancelSubscriptionSuccess) {
         message = "Successfully cancel subscription.";
       } else if (nextProps.updateSuccess) {
         message = "Successfully updated profile.";
+      } else {
+        message = nextProps.errors.data.errors[0];
       }
       nextProps.clientProfile().catch(createError);
       nextProps.countryProfile().catch(createError);
@@ -75,6 +80,7 @@ export default React.createClass({
               verifyEmailChange={this.props.verifyEmailChange}
               isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
               loading={this.props.loading}
+              errors={this.props.errors}
             />
             <div className="mdl-tabs__panel" id="change_password"></div>
             <div className="mdl-tabs__panel" id="change_email"></div>

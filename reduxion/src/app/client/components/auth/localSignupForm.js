@@ -45,7 +45,7 @@ class LocalSignupForm extends React.Component {
         <div className="alert alert-warning">
           <i className="material-icons"></i>
           <div className="content">
-            Please fill in the following required fields below.
+            Please review below details.
           </div>
         </div>
         <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">

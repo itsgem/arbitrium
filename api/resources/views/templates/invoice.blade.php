@@ -155,15 +155,15 @@
                          <tr>
                             <td>{{ $detail["name"] }}</td>
                             <td>Subscription</td>
-                            <td>{{ $detail["amount"] }}</td>
-                            <td>0.00</td>
-                            <td>{{ $detail["amount"] }}</td>
+                            <td class="text-right">{{ $detail["amount"] }}</td>
+                            <td class="text-right">0.00</td>
+                            <td class="text-right">{{ $detail["amount"] }}</td>
                         </tr>
                     @endforeach
 
                     <tr>
                         <td class="thick-top-border text-right" colspan="4"><b>OVERALL TOTAL</b></td>
-                        <td class="thick-top-border">{{ config('paypal.currency') }} {{ $total_amount }}</td>
+                        <td class="thick-top-border text-right">{{ config('paypal.currency') }} {{ $total_amount }}</td>
                     </tr>
                 </table>
 
@@ -179,14 +179,16 @@
                 <br /><br />
                 <span>THIS IS AN ELECTRONIC INVOICE. NO SIGNATURE IS REQUIRED.</span><br /><br />
                 <b>BANK DETAILS</b><br />
-                <b>Account Name:</b>   {{ $kcg_credit_to }}<br />
-                <b>Bank Account:</b> {{ $kcg_bank_account }}<br />
+                <b>Account Name:</b>   {{ $kcg_account_name }}<br />
+                <b>Bank:</b>   {{ $kcg_bank_account }}<br />
+                <b>Account Number:</b>   {{ $kcg_credit_to }}<br />
                 <b>Bank Code:</b> {{ $kcg_bank_code }}; <b>Branch Code:</b> {{ $kcg_branch_code }}<br />
             </div>
             <div id="footer">
                 <h2>Thank You.</h2>
                 <h5>{{ $kcg_company_name }}</h5>
                 {{ $kcg_street_address }}<br />
+                {{ $kcg_city }}<br />
                 {{ $kcg_state }}, {{ $kcg_postal_code }}<br />
                 {{ $kcg_country }}
             </div>

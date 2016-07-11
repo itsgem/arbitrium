@@ -54,7 +54,8 @@ class SystemSettingsController extends ApiController
      *         required=true,
      *         type="string",
      *         default=""
-     *     )
+     *     ),
+     *     @SWG\Parameter(name="response-format", in="query", description="Response format (default|key-name)", required=false, type="string", default=""),
      * )
      *
      * @param SystemSettingServices $service

@@ -9,27 +9,19 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         Route::put('my-profile',    ['uses' => 'AdminsController@updateMyProfile']);
 
         //-- API
-        Route::group(['namespace' => 'api'], function()
+        Route::group(['prefix' => 'api-key'], function()
         {
-            Route::group(['prefix' => 'api-key'], function()
+            Route::group(['prefix' => '{api_key}'], function()
             {
-                Route::get('generate',            ['uses' => 'ApiKeyController@generate']);
-
-                Route::group(['prefix' => '{api_key}'], function()
-                {
-                    Route::patch('activate',      ['uses' => 'ApiKeyController@activate']);
-                    Route::post('permission',     ['uses' => 'ApiKeyController@addPermission']);
-                    Route::patch('permission',    ['uses' => 'ApiKeyController@updatePermission']);
-                    Route::delete('permission',   ['uses' => 'ApiKeyController@removePermission']);
-                });
-
-                Route::group(['prefix' => 'ip-address'], function()
-                {
-                    Route::patch('{ip_address}/assign', ['uses' => 'ApiIpAddressController@assign']);
-                });
-                Route::resource('ip-address', 'ApiIpAddressController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+                Route::patch('activate',      ['uses' => 'ApiKeyController@activate']);
             });
-            Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+        });
+        Route::resource('api-key', 'ApiKeyController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+
+        Route::group(['prefix' => 'api-log'], function()
+        {
+            Route::get('',           ['uses' => 'ApiLogController@index']);
+            Route::get('{api_log}',  ['uses' => 'ApiLogController@show']);
         });
 
         //-- CLIENT
@@ -48,6 +40,8 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
                     Route::get('resend-approval-link', ['uses' => 'ClientsController@resendSubscriptionChangeApprovalLink']);
                     Route::patch('cancel',      ['uses' => 'ClientsController@cancelSubscription']);
                 });
+
+                Route::get('invoice',  ['uses' => 'InvoicesController@listByClient']);
             });
 
             Route::group(['prefix' => 'subscription'], function()
@@ -61,6 +55,8 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
                 Route::post('adjust-credit',        ['uses' => 'ClientsController@adjustCredit']);
                 Route::post('purchase-credit',      ['uses' => 'ClientsController@purchaseCredit']);
             });
+
+            Route::get('invoice',       ['uses' => 'InvoicesController@listClientLatest']);
         });
         Route::resource('client', 'ClientsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
 

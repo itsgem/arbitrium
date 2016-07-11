@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\v1\Admin;
 
+use App\Errors;
 use App\Http\Requests\v1\Field\UsernameRequest;
 use App\Http\Requests\v1\Field\PasswordRequest;
 use App\Models\Admin;
 use App\Nrb\Http\v1\Requests\NrbRequest;
+use App\Services\ExternalRequestServices;
 use App\User;
 
 // Admin/AdminsController::store
@@ -48,5 +50,48 @@ class AdminUserRequest extends NrbRequest
         }
 
         return $rules;
+    }
+
+    public function validate()
+    {
+        $errors = [];
+        // validate based on the rules defined above
+        $instance = $this->getValidatorInstance();
+        if (!$instance->passes())
+        {
+            $errors = $instance->errors()->toArray();
+        }
+        else
+        {
+            // [Core-API] Check if username already taken
+            $admin_id = last($this->segments());
+            $admin_id = ((int) $admin_id != 0) ? $admin_id : get_logged_in_admin_id();
+            $username = Admin::findOrFail($admin_id)->user->username;
+
+            if ($this->get('username') && $this->get('username') != $username)
+            {
+                $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
+                    'username' => $this->get('username')
+                ]);
+
+                $result = (new ExternalRequestServices())->asObject()->send($url);
+
+                if (!get_val($result, 'is_available'))
+                {
+                    $errors['username'][] = trans('errors.'.Errors::CORE_API_USERNAME_TAKEN);
+                }
+            }
+        }
+
+        if (!empty($errors))
+        {
+            $this->errors = $errors;
+            $this->failedValidation($instance);
+        }
+    }
+
+    public function response(array $errors)
+    {
+        return parent::response($this->errors);
     }
 }

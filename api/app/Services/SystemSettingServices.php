@@ -23,6 +23,18 @@ class SystemSettingServices extends NrbServices
             ->segment($request->get('segment'))
             ->get();
 
+        if ($request->get('response-format') == 'key-name')
+        {
+            $data = [];
+            foreach ($system_setting as $name => $properties)
+            {
+                $name = $properties->name;
+                unset($properties->name);
+                $data[$name] = $properties;
+            }
+            $system_setting = $data;
+        }
+
         return $this->respondWithSuccess($system_setting);
     }
 

@@ -9,18 +9,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {IntlProvider} from 'react-intl';
 import Intl from 'intl';
-
 import Debug from 'debug';
-
 import i18n from 'utils/i18n';
 import rootView from './rootView';
 
 Debug.enable("*,-engine*,-sockjs-client*,-socket*");
-
 let debug = new Debug("app");
-
 debug("begins");
-
 
 function App() {
   //debug("App");
@@ -62,7 +57,6 @@ function App() {
           {rootView()}
         </IntlProvider>
         , mountEl);
-
   }
 }
 

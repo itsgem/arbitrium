@@ -51,6 +51,48 @@ class ClientsController extends ApiController
         return $service->approve($this->request, $id, false);
     }
 
+    /**
+     * Get all clients
+     *
+     * @SWG\Get(
+     *     path="/admin/client",
+     *     tags={"Admin - Clients"},
+     *     summary="All Clients",
+     *     description="Get all clients",
+     *     @SWG\Response(response="200", description="Success",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
+     *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientResponse"))
+     *         )
+     *     ),
+     *     @SWG\Response(response="403", description="Authentication Failed",
+     *         @SWG\Schema(title="response", type="object", required={"success", "message", "messages"},
+     *             @SWG\Property(property="success", type="boolean", description="Is success", default="false"),
+     *             @SWG\Property(property="message", type="string", description="Error message", default="Authentication Failed"),
+     *             @SWG\Property(property="messages", type="array", description="Other messages or instructions for user", items=""),
+     *         )
+     *     ),
+     *     @SWG\Parameter(
+     *         name="X-Token",
+     *         in="header",
+     *         description="X-Token",
+     *         required=true,
+     *         type="string",
+     *         default=""
+     *     ),
+     *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="username", in="query", description="FILTER by client username", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="approval_status", in="query", description="FILTER by approval status (Approved|Disapproved|Pending)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="per_page", in="query", description="for pagination, number of items to return per page", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="page", in="query", description="for pagination, show items belonging to page", required=false, type="integer", default=""),
+     *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
+     * )
+     *
+     * @param SubscriptionServices $service
+     *
+     * @return mixed
+     */
     public function index(ClientServices $service)
     {
         return $service->index($this->request);
@@ -85,7 +127,7 @@ class ClientsController extends ApiController
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionResponse"))
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionConfirmResponse"))
      *         )
      *     ),
      *     @SWG\Response(response="403", description="Authentication Failed",
@@ -140,7 +182,7 @@ class ClientsController extends ApiController
      *         @SWG\Schema(title="response", type="object", required={"success", "message", "data"},
      *             @SWG\Property(property="success", type="boolean", description="Is success", default="true"),
      *             @SWG\Property(property="message", type="string", description="Success message", default="Success"),
-     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionResponse"))
+     *             @SWG\Property(property="data", type="array", items=@SWG\Property(ref="#/definitions/ClientSubscriptionConfirmResponse"))
      *         )
      *     ),
      *     @SWG\Response(response="403", description="Authentication Failed",

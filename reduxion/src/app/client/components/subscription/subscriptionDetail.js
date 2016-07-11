@@ -1,26 +1,18 @@
 import React from 'react';
-import Checkit from 'checkit';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
-import {createError} from 'utils/error';
 
 class SubscriptionDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      errors: {},
-      errorServer:null,
-      permissions: {}
-    };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
   render() {
-    let {errors, errorServer} = this.state ? this.state :'';
     let listSubscription = this.props.listSubscription.data;
     let currentSubscription = this.props.currentSubscription.data;
     let clientInfo = this.props.clientInfo.data;
@@ -79,7 +71,7 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--9-col">
               {
                 listSubscription.map(item => {
-                  return <table key={item.id} style={{'width': '20%', 'float': 'left'}} className="mdl-data-table mdl-js-data-table table-list">
+                  return <table key={item.id} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                     <thead>
                       <tr>
                         <th>{item.type == 'Trial' ? "Free Trial" : item.name}</th>
@@ -114,11 +106,12 @@ class SubscriptionDetail extends React.Component {
                         <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts }</td>
                       </tr>
                       <tr>
-                        <td>
+                        <td style={(clientInfo.can_avail_trial == false && currentSubscription.name != 'Free Trial') ? {height : '60px'} : {height : '48px'}}>
                           {
                             item.type == 'Trial' ? (clientInfo.can_avail_trial == false ?
-                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                                : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Subscribe</Link> )
+                              (currentSubscription.name != 'Free Trial' ? '' :
+                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>)
+                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Subscribe</Link> )
                             : currentSubscription.subscription_id == item.id ?
                                 <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
                               : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribe'}</Link>
@@ -133,12 +126,6 @@ class SubscriptionDetail extends React.Component {
           </div>
       </div>
     );
-  }
-  formClassNames( field, errors ) {
-    return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
-      'is-invalid is-dirty': errors[ field ],
-      'has-success': errors && !(errors[ field ])
-    } );
   }
 };
 

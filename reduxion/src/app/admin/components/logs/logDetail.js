@@ -1,10 +1,7 @@
 import React from 'react';
-import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import { Link } from 'react-router';
-import {openLoading, closeLoading} from 'common/components/modal'
 
 class LogDetail extends React.Component {
   constructor(props) {
@@ -15,13 +12,10 @@ class LogDetail extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-  }
-  componentDidMount () {
-
   }
   loadingRender () {
     return (
@@ -61,6 +55,7 @@ class LogDetail extends React.Component {
   }
   render () {
     let adminLogDetail = this.props.adminLogDetail.data;
+    let clientDetail = this.props.adminLogDetail.data.client;
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
@@ -68,8 +63,47 @@ class LogDetail extends React.Component {
     this.scrolltop(errors);
 
     return (
-      <div className="mdl-cell mdl-cell--12-col subscription-detail">
-        TEST INVOICE DETAIL
+      <div className="mdl-layout__panel is-active" id="#">
+        <div className="content-container">
+          <div className="mdl-grid content">
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>COMPANY NAME</h6>
+              <p>{clientDetail.company_name}</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>USER ID</h6>
+              <p>{adminLogDetail.user_id}</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>IP ADDRESS</h6>
+              <p>{adminLogDetail.ipaddress}</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>STATUS CODE</h6>
+              <p>{adminLogDetail.status_code}</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col bottom-margin">
+              <h6>URL</h6>
+              <p>{adminLogDetail.url}</p>
+            </div>
+            <div className="mdl-cell mdl-cell--6-col">
+              <h6>DATE CREATED</h6>
+              <p>{adminLogDetail.created}</p>
+            </div>
+            <div className="mdl-cell mdl-cell--12-col">
+              <h6>PARAMETER</h6>
+              <p className="script script-box-container">
+                {adminLogDetail.parameter}
+              </p>
+            </div>
+            <div className="mdl-cell mdl-cell--12-col">
+              <h6>RESPONSE</h6>
+              <p className="script script-box-container">
+                {adminLogDetail.response}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

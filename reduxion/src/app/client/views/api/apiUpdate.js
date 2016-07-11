@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import ApiEdit from 'client/components/api/apiUpdate';
 import {createError} from 'utils/error';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -10,7 +9,6 @@ export default React.createClass({
   },
   componentWillMount () {
     let id = this.props.params.id;
-    this.props.getApiPermission().catch(createError);
     this.props.clientGetApiKey(id).catch(createError);
   },
   componentWillReceiveProps(nextProps) {
@@ -22,6 +20,9 @@ export default React.createClass({
       });
       this.context.router.push('/i/api/');
     }
+    if (Object.keys(nextProps.apiKeyInfo).length && !Object.keys(nextProps.apiPermissions).length && !nextProps.loading) {
+      this.props.getApiPermission().catch(createError);
+    }
   },
   loadingRender () {
     openLoading();
@@ -29,8 +30,16 @@ export default React.createClass({
       <div className="loading"></div>
     );
   },
-
+  noContent () {
+    return (
+      <div className="noContent">No content</div>
+    );
+  },
   render () {
+    if (!this.props.apiKeyInfo) {
+      closeLoading();
+      return this.noContent();
+    }
     if (Object.keys(this.props.apiKeyInfo).length && Object.keys(this.props.apiPermissions).length) {
       closeLoading();
       return this.renderApiInfo();

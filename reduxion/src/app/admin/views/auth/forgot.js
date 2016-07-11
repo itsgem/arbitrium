@@ -72,11 +72,6 @@ export default React.createClass( {
   },
 
   render() {
-
-    let {errors, errorServer} = this.state ? this.state :'';
-    if (errorServer) {
-      errors = Object.assign({}, errorServer.response);
-    }
     return (
       <div id="forgot" className="auth-view">
         <div className="container" title="Forgot password">

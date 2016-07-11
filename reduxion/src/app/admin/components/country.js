@@ -4,7 +4,6 @@ class Country extends React.Component {
   render() {
     let countries = this.props.country.toArray();
     let selected = (this.props.selected) ? this.props.selected : "";
-    let required = (this.props.required) ? "*" : "";
 
     return (
       <div className="mdl-selectfield">
@@ -14,7 +13,7 @@ class Country extends React.Component {
             {return <option key={item.get('id')} value={item.get('id')}>{item.get('name')}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">Country {required}</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">Country *</label>
       </div>
     );
   }

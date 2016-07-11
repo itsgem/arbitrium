@@ -20,13 +20,23 @@ class ClientSubscription extends Subscription
     const STATUS_END_RENEWED   = 'Renewed';
     const STATUS_END_EXPIRED   = 'Expired';
 
+    const PAYPAL_STATE_ACTIVE     = 'Active';
+    const PAYPAL_STATE_PENDING    = 'Pending';
+    const PAYPAL_STATE_EXPIRED    = 'Expired';
+    const PAYPAL_STATE_SUSPENDED  = 'Suspended';
+    const PAYPAL_STATE_REACTIVATE = 'Reactivate';
+    const PAYPAL_STATE_CANCEL     = 'Canceled';
+    const PAYPAL_STATE_COMPLETED  = 'Completed';
+
+    const PAYPAL_TRANSACTION_TYPE_SUBSCRIPTION_PAYMENT = 'recurring_payment';
+
     protected $table = 'client_subscriptions';
 
-    protected $dates = ['valid_from', 'valid_to'];
+    protected $dates = ['valid_from', 'valid_to', 'cancelled_at'];
 
     protected $fillable = [
-        'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
-        'name', 'description', 'type', 'country_id',
+        'paypal_payer_id', 'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
+        'paypal_transaction_id', 'paypal_ipn_response', 'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
@@ -48,6 +58,13 @@ class ClientSubscription extends Subscription
     public function subscription()
     {
         return $this->belongsTo(Subscription::class);
+    }
+
+    //---------- mutators
+
+    public function getPaypalIpnResponseAttribute($value)
+    {
+        return json_decode($value);
     }
 
     //---------- scopes
@@ -171,12 +188,23 @@ class ClientSubscription extends Subscription
         }
     }
 
+    public function scopeIsEmailReminderSent($query, $sent = true)
+    {
+        return $query->where('is_email_reminder_sent', $sent);
+    }
+
     //---------- helpers
     public function cancel()
     {
         $this->status = self::STATUS_INACTIVE;
         $this->status_end = self::STATUS_END_CANCELLED;
+        $this->cancelled_at = current_datetime();
         $this->save();
+
+        if ($this->invoice)
+        {
+            $this->invoice->cancel();
+        }
     }
 
     public function renew()
@@ -200,6 +228,31 @@ class ClientSubscription extends Subscription
         $this->save();
     }
 
+    public function isCancelled()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_CANCELLED;
+    }
+
+    public function isRenewed()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_RENEWED;
+    }
+
+    public function isUpgraded()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_UPGRADED;
+    }
+
+    public function isExpired()
+    {
+        return $this->status == self::STATUS_INACTIVE && $this->status_end == self::STATUS_END_EXPIRED;
+    }
+
+    public function isRecurring()
+    {
+        return (boolean) $this->is_auto_renew;
+    }
+
     public function generateInvoice()
     {
         $subscription_fees = $this->getFees($this->term);
@@ -219,7 +272,7 @@ class ClientSubscription extends Subscription
                                 '> ',
             'description'  => $this->description,
             'discounts'    => $this->discounts,
-            'total_amount' => $this->calculateTotal(self::TERM_ANNUALLY.'_With_Setup'),
+            'total_amount' => $this->calculateTotal($this->term.'_With_Setup'),
             'payment_method' => Invoice::PAYMENT_METHOD_PAYPAL,
         ], $invoice_details);
 
@@ -280,7 +333,12 @@ class ClientSubscription extends Subscription
 
     public function hasPaypal()
     {
-        return $this->paypal_plan_id && $this->paypal_agreement_id;
+        return $this->paypal_token_id && $this->paypal_agreement_id;
+    }
+
+    public function hasAlreadyConfirmed()
+    {
+        return !is_null($this->paypal_agreement_id);
     }
 
     public function isOwnedByClientId($client_id)

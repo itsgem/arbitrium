@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\v1;
 
+use App\Errors;
 use App\Http\Requests\v1\Field\UsernameRequest;
 use App\Http\Requests\v1\Field\PasswordRequest;
 use App\Models\Client;
 use App\Nrb\Http\v1\Requests\NrbRequest;
+use App\Services\ExternalRequestServices;
 use App\User;
 
 // Admin/ClientsController::store
@@ -63,7 +65,7 @@ class ClientUserRequest extends NrbRequest
                 'city'              => $optional_signup.'max:100',
                 'state'             => 'max:100',
                 'country_id'        => $optional_signup.'exists:countries,id',
-                'postal_code'       => $optional_signup.'max:10',
+                'postal_code'       => $optional_signup.'alpha_dash|max:10',
                 'rep_first_name'    => 'required|max:64',
                 'rep_last_name'     => 'required|max:64',
                 'rep_email_address' => 'required|max:255|email',
@@ -103,5 +105,47 @@ class ClientUserRequest extends NrbRequest
         }
 
         return $rules;
+    }
+
+    public function validate()
+    {
+        $errors = [];
+        // validate based on the rules defined above
+        $instance = $this->getValidatorInstance();
+        if (!$instance->passes())
+        {
+            $errors = $instance->errors()->toArray();
+        }
+        else
+        {
+            // [Core-API] Check if username already taken
+            $client_id = (is_client_user_logged_in()) ? get_logged_in_client_id() : last($this->segments());
+            $username = Client::findOrFail($client_id)->user->username;
+
+            if ($this->get('username') && $this->get('username') != $username)
+            {
+                $url = get_api_url(config('arbitrium.core.endpoints.check_username'), [
+                    'username' => $this->get('username')
+                ]);
+
+                $result = (new ExternalRequestServices())->asObject()->send($url);
+
+                if (!get_val($result, 'is_available'))
+                {
+                    $errors['username'][] = trans('errors.'.Errors::CORE_API_USERNAME_TAKEN);
+                }
+            }
+        }
+
+        if (!empty($errors))
+        {
+            $this->errors = $errors;
+            $this->failedValidation($instance);
+        }
+    }
+
+    public function response(array $errors)
+    {
+        return parent::response($this->errors);
     }
 }

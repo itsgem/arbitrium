@@ -23,6 +23,7 @@ class EmailLog extends NrbLogModel
     const RENEW_SUBSCRIPTION    = 'Subscription Renewal';
     const CHANGE_SUBSCRIPTION   = 'Admin Change Client Subscription Approval';
     const CHANGE_SUBSCRIPTION_SUCCESS = 'Client Subscription Change Success';
+    const SUBSCRIPTION_RENEWAL_SUCCESS = 'Client Subscription Renewal Success';
     const CANCEL_SUBSCRIPTION   = 'Client Subscription Cancellation';
     const ADMINISTER_SURVEY     = 'Administer Survey';
     const SURVEY_INVITATION     = 'Survey Invitation';

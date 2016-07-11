@@ -9,9 +9,9 @@ export default React.createClass({
     router: React.PropTypes.object.isRequired
   },
   componentDidMount () {
-    this.props.adminLogDetail(this.props.params.client_id).catch(createError);
+    this.props.adminLogDetail(this.props.params.id).catch(createError);
   },
-  componentWillMount () {
+  componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -22,22 +22,17 @@ export default React.createClass({
       <div className="loading"></div>
     );
   },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.purchaseSuccess) {
-      $('.msg').html('Successfully sent approval URL to client to complete the subscription change.').addClass('bg-green');
-      $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(5000);
-      });
-      this.context.router.push('/coffee/logs');
-    }
-  },
   render() {
-    if (!this.props.loading) {
-      closeLoading();
+    if (Object.keys(this.props.logDetail).length) {
+      if (!this.props.loading) {
+        closeLoading();
+      } else {
+        openLoading();
+      }
+      return this.renderLogDetail();
     } else {
-      openLoading();
+      return this.loadingRender();
     }
-    return this.renderLogDetail();
   },
   renderLogDetail () {
     return (
@@ -45,8 +40,11 @@ export default React.createClass({
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/logs/">Logs List</Link>
-          <a className="mdl-layout__tab is-active" >LOG DETAIL<i className="material-icons add">edit</i></a>
+            to="/coffee/logs/">Client API Logs List</Link>
+          <Link
+            className='mdl-layout__tab'
+            to={"/coffee/logs/client/" + this.props.params.client_id}>API Logs List</Link>
+          <a className="mdl-layout__tab is-active" >API LOG DETAIL<i className="material-icons add">edit</i></a>
         </div>
         <LogDetail
           params = {this.props.params}

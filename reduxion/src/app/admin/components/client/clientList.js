@@ -11,7 +11,7 @@ class UserManagementList extends React.Component {
       errorServer:null,
       id: null
     };  }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -106,18 +106,20 @@ class UserManagementList extends React.Component {
     let users = {};
     let clientList = {last_page: 1};
     let perPage = 10;
-    if (this.props.clientList.size) {
+
+    if (Object.keys(this.props.clientList).length) {
       let i=0;
       counter = true;
       clientList = this.props.clientList;
-      users = clientList.get('data');
-      pagination[i] = this.prevPage(i, (clientList.get('current_page') > 1 ? (clientList.get('current_page') - 1): false));
-      for (i = 1; i <= clientList.get('last_page'); i++) {
-        pagination[i] = this.pagination(i, clientList.get('current_page'));
+      users = clientList.data;
+      pagination[i] = this.prevPage(i, (clientList.current_page > 1 ? (clientList.current_page - 1): false));
+      for (i = 1; i <= clientList.last_page; i++) {
+        pagination[i] = this.pagination(i, clientList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((clientList.get('current_page') == clientList.get('last_page'))|| clientList.get('last_page') == 0 ? false : (clientList.get('current_page') + 1 )), clientList.get('last_page') );
-      perPage = clientList.get('per_page');
+      pagination[i+1] = this.nextPage(i+1, ((clientList.current_page == clientList.last_page)|| clientList.last_page == 0 ? false : (clientList.current_page + 1 )), clientList.last_page );
+      perPage = clientList.per_page;
     }
+
     return (
       <div className="filter-search">
         <div className="dialog-box"></div>
@@ -126,8 +128,8 @@ class UserManagementList extends React.Component {
             <div className="msg-box mdl-shadow--2dp">
               <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>CANCEL</button>
               </div>
             </div>
           </div>
@@ -148,7 +150,7 @@ class UserManagementList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div id="status-opt" className="mdl-selectfield mdl-textfield mdl-block mdl-js-selectfield mdl-textfield--floating-label">
-                <select onKeyPress={(e) => this.isPress(e)} className="selectBox mdl-textfield__input" id="status" ref="status">
+                <select onKeyPress={()=>this.isPress()} className="selectBox mdl-textfield__input" id="status" ref="status">
                   <option value=""></option>
                   <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>
@@ -171,12 +173,12 @@ class UserManagementList extends React.Component {
               <tr>
                 <th className="mdl-data-table__cell--non-numeric" width="112">ID</th>
                 <th className="mdl-data-table__cell--non-numeric" width="114">Company Name</th>
-                <th className="mdl-data-table__cell--non-numeric" width="248">Representative Name</th>
+                <th className="mdl-data-table__cell--non-numeric" width="200">Representative Name</th>
                 <th className="mdl-data-table__cell--non-numeric" width="195">Email Address</th>
-                <th className="mdl-data-table__cell--non-numeric" width="139">Phone Number</th>
+                <th className="mdl-data-table__cell--non-numeric" width="170">Phone Number</th>
                 <th className="mdl-data-table__cell--non-numeric" width="139">Mobile No.</th>
-                <th className="mdl-data-table__cell--non-numeric" width="103">Status</th>
-                <th className="mdl-data-table__cell--non-numeric" width="135">Action</th>
+                <th className="mdl-data-table__cell--non-numeric" width="110">Status</th>
+                <th className="mdl-data-table__cell--non-numeric" width="130">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -193,20 +195,20 @@ class UserManagementList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
             <span className="tooltiptext">Items to show per page</span>
-            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
-            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+            <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
+            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
           </div>
         </div>
       </div>
     );
   }
-  isPress(e) {
+  isPress() {
     document.getElementById("status-opt").classList.add('is-dirty');
   }
 
-  selectPageNumber (pageNum) {
+  selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
     let btTwo = document.querySelector("#bt-20");
@@ -240,7 +242,7 @@ class UserManagementList extends React.Component {
     }
   }
   itemPage (e, pageNum = 10) {
-    this.selectPageNumber(pageNum);
+    this.selectPageNumber();
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
     this.page(e, 1);
@@ -260,6 +262,9 @@ class UserManagementList extends React.Component {
     this.refs.company.value = "";
     this.refs.email_address.value = "";
     this.refs.status.value = "";
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
     this.searchList(e, 10);
   }
   searchList(e, pageNum = null) {

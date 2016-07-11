@@ -25,21 +25,21 @@ export default createReducer({
   [logout.ok]: (state) => state.merge({
     authenticated: false,
     user: null,
-    logout: payload
+    logout: true
   }),
-  [passwordReset.ok]: (state, payload) => state.merge({
+  [passwordReset.ok]: (state) => state.merge({
     forgotPassword: true
   }),
   [passwordReset.error]: (state, payload) => state.merge({
-    error: state.concat(payload),
+    error: payload,
     forgotPassword:false
   }),
-  [confirmPasswordReset.ok]: (state, payload) => state.merge({
+  [confirmPasswordReset.ok]: (state) => state.merge({
     isConfirmPasswordReset: true,
     error: {}
   }),
   [confirmPasswordReset.error]: (state, payload) => state.merge({
-    error: state.concat(payload),
+    error: payload,
     isConfirmPasswordReset: false
   })
 }, initialState);

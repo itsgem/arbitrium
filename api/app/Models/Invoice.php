@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Models\Client;
-use App\Models\InvoiceDetail;
 use App\Nrb\NrbModel;
 use App\Services\FileServices;
 use App\Services\MailServices;
@@ -39,6 +37,12 @@ use App\User;
  *     @SWG\Property(property="country", type="string", description="Company country", default="USA"),
  *     @SWG\Property(property="postal_code", type="string", description="Company postal code", default="92013"),
  *     @SWG\Property(property="url", type="string", description="Representative Position", default="http://arbitrium-api.dev/invoices/00000009.pdf"),
+ *     @SWG\Property(property="invoice_details", type="array", description="Optional: Invoice Details (For show single invoice only)", items=@SWG\Property(ref="#/definitions/InvoiceDetailResponse")),
+ *     @SWG\Property(property="system_settings", description="Optional: System Settings (For show single invoice only)",
+ *         @SWG\Property(property="<setting_1>", type="string", description="setting_1 value", default="<setting_1_value>"),
+ *         @SWG\Property(property="<setting_2>", type="string", description="setting_2 value", default="<setting_2_value>"),
+ *         @SWG\Property(property="<setting_3>", type="string", description="setting_3 value", default="<setting_3_value>"),
+ *     ),
  * )
  *
  * @SWG\Definition(
@@ -66,10 +70,10 @@ class Invoice extends NrbModel
 
     protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
-    protected $dates = ['invoiced_at', 'paid_at'];
+    protected $dates = ['invoiced_at', 'paid_at', 'cancelled_at'];
 
     protected $fillable = [
-        'client_id', 'total_amount', 'description',
+        'client_id', 'total_amount', 'description', 'payment_method',
         'created_by', 'updated_by'
     ];
 
@@ -125,68 +129,95 @@ class Invoice extends NrbModel
 
     public function getUrlAttribute($value)
     {
-        $value = config('arbitrium.invoice_url').'/'.basename($value);
+        $value = config('arbitrium.invoice.url').basename($value);
         return url($value);
     }
 
     //---------- scopes
-    public function scopeClientNameLike($query, $name)
+    public function scopeClientNameLike($query, $name, $prefix = null)
     {
+        $prefix = $prefix ?: $this->table;
         if (!empty($name))
         {
-            return $query->where(function($query) use ($name)
+            return $query->where(function($query) use ($name, $prefix)
             {
-                return $query->like('rep_first_name', $name)
-                             ->orLike('rep_last_name', $name);
+                return $query->like($prefix.'.rep_first_name', $name)
+                             ->orLike($prefix.'.rep_last_name', $name);
             });
         }
     }
 
-    public function scopeClientId($query, $client_id)
+    public function scopeClientId($query, $client_id, $prefix = null)
     {
+        $prefix = $prefix ?: $this->table;
         if ($client_id)
         {
-            return $query->where('client_id', $client_id);
+            return $query->where($prefix.'.client_id', $client_id);
         }
     }
 
-    public function scopeCompanyNameLike($query, $name)
+    public function scopeCompanyNameLike($query, $name, $prefix = null)
     {
-        return $query->like('company_name', $name);
+        $prefix = $prefix ?: $this->table;
+        return $query->like($prefix.'.company_name', $name);
     }
 
-    public function scopeInvoiceDateFrom($query, $from)
+    public function scopeInvoiceDateFrom($query, $from, $prefix = null)
     {
-        return $query->dateFrom('invoiced_at', $from, true);
+        $prefix = $prefix ?: $this->table;
+        return $query->dateFrom($prefix.'.invoiced_at', $from, true);
     }
 
-    public function scopeInvoiceDateTo($query, $to)
+    public function scopeInvoiceDateTo($query, $to, $prefix = null)
     {
-        return $query->dateTo('invoiced_at', $to, true);
+        $prefix = $prefix ?: $this->table;
+        return $query->dateTo($prefix.'.invoiced_at', $to, true);
     }
 
-    public function scopeInvoiceNoLike($query, $invoice_no)
+    public function scopeInvoiceNoLike($query, $invoice_no, $prefix = null)
     {
-        return $query->like('invoice_no', $invoice_no);
+        $prefix = $prefix ?: $this->table;
+        return $query->like($prefix.'.invoice_no', $invoice_no);
     }
 
-    public function scopePoNoLike($query, $po_no)
+    public function scopePoNoLike($query, $po_no, $prefix = null)
     {
-        return $query->like('po_no', $po_no);
+        $prefix = $prefix ?: $this->table;
+        return $query->like($prefix.'.po_no', $po_no);
     }
 
-    public function scopeStatus($query, $status)
+    public function scopeStatus($query, $status, $prefix = null)
     {
+        $prefix = $prefix ?: $this->table;
         if ($status)
         {
-            return $query->where('status', $status);
+            return $query->where($prefix.'.status', $status);
         }
+    }
+
+    public function scopeClientLatest($query, $prefix = null)
+    {
+        $prefix = $prefix ?: $this->table;
+
+        // -- Base Query --
+        // SELECT i1.* FROM `invoices` AS i1
+        // LEFT JOIN `invoices` AS i2
+        // ON (i1.`client_id` = i2.`client_id` AND i1.`invoiced_at` < i2.`invoiced_at`)
+        // WHERE i2.`invoiced_at` IS NULL;
+
+        return $query->select($prefix.'.*')
+            ->leftJoin($this->table.' AS i2', function ($join) use ($prefix) {
+                $join->on($prefix.'.client_id', '=', 'i2.client_id');
+                $join->on($prefix.'.invoiced_at', '<', 'i2.invoiced_at');
+            })
+            ->whereRaw('i2.invoiced_at IS NULL');
     }
 
     //---------- helpers
     public function cancel()
     {
         $this->status = self::CANCELLED;
+        $this->cancelled_at = current_datetime();
         $this->save();
     }
 
@@ -197,7 +228,7 @@ class Invoice extends NrbModel
             $this->status = self::PAID;
             $this->paid_at = current_datetime();
             $this->load('user', 'invoice_details');
-            $this->url = with(new FileServices())->setStoragePath(config('arbitrium.invoice_path'))->generateInvoicePDF($this);
+            $this->url = with(new FileServices())->setStoragePath(config('arbitrium.invoice.path'))->generateInvoicePDF($this);
             $this->save();
         }
     }
@@ -205,7 +236,7 @@ class Invoice extends NrbModel
     public static function generate($data, $invoice_details = [])
     {
         $invoice = new Invoice($data);
-        $invoice->paid();
+        $invoice->save();
 
         if ($invoice_details)
         {
@@ -245,5 +276,17 @@ class Invoice extends NrbModel
     public function isPaid()
     {
         return $this->status == self::PAID;
+    }
+
+    public function sendInvoice()
+    {
+        if ($this->isPaid())
+        {
+            with(new MailServices())->sendInvoice($this->user, $this->url);
+
+            return true;
+        }
+
+        return false;
     }
 }

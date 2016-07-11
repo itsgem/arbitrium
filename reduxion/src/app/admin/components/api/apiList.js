@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Checkit from 'checkit';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {createError} from 'utils/error';
-import {modal, openModal, closeModal} from 'common/components/modal'
+import {modal, openModal, closeModal} from 'common/components/modal';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -11,20 +9,45 @@ class ApiList extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      id: null
+      id: null,
+      description: null,
+      apiKey: null,
+      created: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+
     modal();
+    if (nextProps.activeApiKey || nextProps.deleteApiKeySuccess) {
+      let apiList = nextProps.ListApiSuccess;
+      let payload = {
+        page: apiList.current_page,
+        per_page: apiList.per_page,
+        description: this.state.description,
+        token: this.state.apiKey,
+        created: this.state.created ? this.state.created.format("YYYY-MM-DD") : ''
+      };
+      nextProps.apiList(payload).catch(createError);
+    }
+  }
+  componentDidMount() {
+    $( document ).ready(function() {
+      $('.datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: '+0d',
+          autoclose: true,
+          todayHighlight: true
+      });
+    });
   }
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="170" className="mdl-data-table__cell--non-numeric">{data.created_at}</td>
+        <td width="200" className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
@@ -35,7 +58,7 @@ class ApiList extends React.Component {
           to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id, data.description)}>
+              onClick={(e) => this.modalConfirm(e, data.id)}>
             <i className="material-icons">delete</i>
           </button>
         </td>
@@ -120,6 +143,13 @@ class ApiList extends React.Component {
       pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
       perPage = apiList.per_page;
     }
+
+    let isState = this ;
+    $('.datepicker').change(function(){
+      isState.setState({created: $(this).val()});
+      document.getElementById('createdDate').classList.add('is-dirty');
+    });
+
     return (
       <div className="filter-search">
         <p>Filter / Search</p>
@@ -129,8 +159,8 @@ class ApiList extends React.Component {
             <div className="msg-box mdl-shadow--2dp">
               <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.deleteItem()}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>YES</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>CANCEL</button>
               </div>
             </div>
           </div>
@@ -149,9 +179,14 @@ class ApiList extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="created_at" ref="created_at" />
-                <label className="mdl-textfield__label">Date created</label>
+              <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input
+                  type="text"
+                  className="datepicker mdl-textfield__input"
+                  id="created_at" ref="created_at"
+                  readOnly
+                />
+                <label className="mdl-textfield__label">Date Created</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
@@ -186,10 +221,10 @@ class ApiList extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
             <span className="tooltiptext">Items to show per page</span>
-            <input ref="pageNum" type="button" onClick={(e) => this.selectPageNumber(e)} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
-            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', 'transitionDelay': '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+            <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
+            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
           </div>
         </div>
       </div>
@@ -206,12 +241,12 @@ class ApiList extends React.Component {
   changeActive (e, id) {
     let payload = {
       id: id,
-      is_active: ((e.target.checked == true) ? 0 : 1)
+      is_active: ((e.target.checked == true) ? false : true)
     };
 
     this.props.isActiveApiKey(payload).catch(createError);
   }
-  selectPageNumber (pageNum) {
+  selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
     let btTwo = document.querySelector("#bt-20");
@@ -245,12 +280,12 @@ class ApiList extends React.Component {
     }
   }
   itemPage (e, pageNum = 10) {
-    this.selectPageNumber(pageNum);
+    this.selectPageNumber();
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
     this.page(e, 1);
   }
-  modalConfirm (e, id, description) {
+  modalConfirm (e, id) {
     openModal();
     this.setState( {
       id: id
@@ -264,26 +299,67 @@ class ApiList extends React.Component {
     this.refs.description.value = "";
     this.refs.api_key.value = "";
     this.refs.created_at.value = "";
-    this.searchList(e, 10);
+    this.setState( {
+      description: null,
+      apiKey: null,
+      created: null
+    } );
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
+    this.searchList(e, 10, true);
   }
-  searchList(e, pageNum = null) {
+  searchList(e, pageNum = null, clearDate = false) {
     e.preventDefault();
+
+    let createDate = this.state.created;
+    let descr = '';
+    let token = '';
+
+    if (!clearDate) {
+      createDate = (createDate ? createDate : '');
+      pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
+      descr = this.refs.description.value;
+      token = this.refs.api_key.value;
+
+      this.setState( {
+        description: descr,
+        apiKey: token,
+        created: createDate
+      } );
+    } else {
+      createDate = '';
+      pageNum = 10;
+      this.setState( {
+        created: null,
+        description: null,
+        apiKey: null
+      } );
+    }
+
     let payload = {
-      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
-      description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: this.refs.created_at.value
+      per_page: pageNum,
+      created: createDate,
+      description: descr,
+      token: token
     };
     this.props.apiList(payload).catch(createError);
   }
   page(e, pageNumber) {
+    var createDate = this.state.createdDate;
     e.preventDefault();
+    this.setState({
+      description: this.refs.description.value,
+      apiKey: this.refs.api_key.value,
+      created: (createDate ? createDate : '')
+    });
+
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
-      key: this.refs.api_key.value,
-      date_created: this.refs.created_at.value
+      token: this.refs.api_key.value,
+      created: (createDate ? createDate : '')
     };
     this.props.apiList(payload).catch(createError);
   }

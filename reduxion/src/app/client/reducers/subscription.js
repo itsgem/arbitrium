@@ -61,12 +61,14 @@ export default createReducer({
   [getSubscriptionItem.ok]: (state, payload) => state.merge({
     loading: false,
     subscriptionItem: payload,
-    purchaseSuccessConfirm: false
+    purchaseSuccessConfirm: false,
+    error: {}
   }),
   [getSubscriptionItem.request]: (state) => state.merge({
     subscriptionItem: {},
     loading: false,
-    purchaseSuccessConfirm: false
+    purchaseSuccessConfirm: false,
+    error: {}
   }),
   [clientPurchaseSubscriptionConfirm.ok]: (state) => state.merge({
     loading: false,
@@ -86,11 +88,14 @@ export default createReducer({
   [clientSubscriptionPending.ok]: (state, payload) => state.merge({
     paypalPending: payload,
     paypalPendingCancel: false,
+    error: {}
   }),
-  [clientSubscriptionCancelPending.ok]: (state, payload) => state.merge({
-    paypalPendingCancel: true
+  [clientSubscriptionCancelPending.ok]: (state) => state.merge({
+    paypalPendingCancel: true,
+    error: {}
   }),
   [clientSubscriptionCancelPending.request]: (state) => state.merge({
-    paypalPendingCancel: false
+    paypalPendingCancel: false,
+    error: {}
   })
 }, initialState);

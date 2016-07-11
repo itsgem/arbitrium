@@ -76,16 +76,18 @@ class SystemSettingRequest extends NrbRequest
                     {
                         foreach ($system_setting as $setting)
                         {
+                            $slug = get_val($setting, 'name');
                             $validation = Validator::make(
                                 [
-                                    'name'  => get_val($setting, 'name', ''),
-                                    'value' => get_val($setting, 'value', ''),
+                                    'name'  => $slug,
+                                    'value' => get_val($setting, 'value'),
                                 ],
                                 $rules_system_setting
                             );
                             if ($validation->fails())
                             {
-                                $errors['system_setting'][] = $validation->messages()->toArray();
+                                $error_messages = $validation->messages()->toArray();
+                                $errors[$slug] = array_flatten(array_values($error_messages));
                             }
                         }
                     }

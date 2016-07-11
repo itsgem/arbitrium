@@ -1,6 +1,5 @@
 import React from 'react';
 import Checkit from 'checkit';
-import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
@@ -13,7 +12,7 @@ class UserProfile extends React.Component {
       errorServer:null
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -263,7 +262,7 @@ class UserProfile extends React.Component {
       errors: {},
       errorServer: null
     } );
-    let {username, email_address, password, rep_last_name, password_confirmation, first_name, last_name, role_id} = this.refs;
+    let {username, email_address, password, password_confirmation, first_name, last_name, role_id} = this.refs;
 
     let payload = {
       username: username.value,

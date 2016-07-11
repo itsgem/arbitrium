@@ -26,18 +26,23 @@ import AdminSubscriptionList from 'admin/containers/subscription/subscriptionLis
 import AdminSubscriptionEdit from 'admin/containers/subscription/subscriptionEdit';
 import AdminSubscriptionDetail from 'admin/containers/subscription/subscriptionDetail';
 
+import AdminClientInvoiceList from 'admin/containers/invoice/clientInvoiceList';
+import AdminInvoiceList from 'admin/containers/invoice/invoiceList';
+import AdminInvoiceDetail from 'admin/containers/invoice/invoiceDetail';
+
 import AdminUserManagementList from 'admin/containers/userManagement/userManagementList';
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
+import AdminClientLogList from 'admin/containers/logs/clientLogList';
 import AdminLogList from 'admin/containers/logs/logList';
 import AdminLogDetail from 'admin/containers/logs/logDetail';
 
 import AdminProfile from 'admin/containers/userProfile/userProfile';
+import AdminSystemSettings from 'admin/containers/systemSettings/settings';
 
 // ----- Client
 import ClientDashboard from 'client/components/dashboard';
-import ClientTopPage from 'client/components/main';
 import ClientLogin from 'client/containers/auth/login';
 
 import ClientLogout from 'client/containers/auth/clientLogout';
@@ -57,9 +62,10 @@ import ClientApiUpdate from 'client/containers/api/apiUpdate';
 import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
-import ClientInvoice from 'client/views/invoice/invoiceList';
-import ClientInvoiceListDetails from 'client/views/invoice/invoiceListDetails';
-import ClientApiLogs from 'client/views/apilogs/apilogs';
+import ClientInvoice from 'client/containers/invoice/invoiceList';
+import ClientInvoiceDetails from 'client/containers/invoice/invoiceDetails';
+import ClientApiLogs from 'client/containers/apilogs/apilogsList';
+import ClientApiLogsDetails from 'client/containers/apilogs/apilogsDetails';
 import ClientSystemSettings from 'client/views/settings/systemsettings';
 
 function startTimer(duration, tokenName) {
@@ -92,7 +98,7 @@ function startTimer(duration, tokenName) {
     setInterval(timer, 1000);
 }
 
-function validateToken(tokenName, nextState, replace) {
+function validateToken(tokenName, nextState, replace, isLogin = false) {
   let bytes ='';
   if (localStorage.getItem(tokenName) ){
     bytes  = CryptoJS.AES.decrypt(localStorage.getItem(tokenName), config.key);
@@ -114,15 +120,13 @@ function validateToken(tokenName, nextState, replace) {
         state: { nextPathname: nextState.location.pathname }
       });
     }
-
     if(decryptedData.token && decryptedData.expired <= moment().valueOf()) {
       localStorage.removeItem(tokenName);
       replace({
-        pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
-        state: { nextPathname: nextState.location.pathname }
-      });
+          pathname: "/" +  (tokenName == 'token' ? "i" : tokenName) + "/login",
+          state: { nextPathname: nextState.location.pathname }
+        });
     }
-
     if(decryptedData.token && decryptedData.expired > moment().valueOf()) {
       let lifetime = decryptedData.lifetime;
       let expired = moment().add(lifetime,'minutes').valueOf();
@@ -148,7 +152,6 @@ function validateToken(tokenName, nextState, replace) {
 
 function requireAuth(nextState, replace, cb) {
   let link = window.location.href.split("/");
-  let bytes ='';
   let tokenName = '';
 
   switch (link[3]) {
@@ -187,9 +190,7 @@ function islogin(nextState, replace, cb) {
       default :
         tokenName = 'token';
   }
-  validateToken(tokenName);
-  let isValidate = validateToken(tokenName, nextState, replace);
-  console.log("isLogin", isValidate);
+  let isValidate = validateToken(tokenName, nextState, replace, true);
   if (isValidate) {
     replace({
       pathname: '/' + (tokenName == 'token' ? "i" : tokenName),
@@ -209,22 +210,28 @@ export default () => (
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
       <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
-        <Route path="client">
+        <Route path="client" >
           <IndexRoute component={AdminClientList} />
           <Route component={AdminClientAdd} path="new"/>
           <Route component={AdminClientProfile} path=":id"/>
         </Route>
 
-        <Route path="api">
+        <Route path="api" >
           <IndexRoute component={AdminApiList}/>
           <Route component={AdminApiAdd} path="new"/>
           <Route component={AdminApiUpdate} path=":id"/>
         </Route>
 
-        <Route path="subscription" onEnter={requireAuth}>
-          <IndexRoute component={AdminSubscriptionList} onEnter={requireAuth}/>
-          <Route component={AdminSubscriptionEdit} path="client/:client_id" onEnter={requireAuth}/>
-          <Route component={AdminSubscriptionDetail} path="client/:client_id/detail/:subscription_id" onEnter={requireAuth}/>
+        <Route path="subscription" >
+          <IndexRoute component={AdminSubscriptionList} />
+          <Route component={AdminSubscriptionEdit} path="client/:client_id" />
+          <Route component={AdminSubscriptionDetail} path="client/:client_id/detail/:subscription_id" />
+        </Route>
+
+        <Route path="invoice" >
+          <IndexRoute component={AdminClientInvoiceList} />
+          <Route component={AdminInvoiceList} path="client/:client_id" />
+          <Route component={AdminInvoiceDetail} path="client/:client_id/invoice-detail/:id" />
         </Route>
 
         <Route path="account">
@@ -233,19 +240,23 @@ export default () => (
           <Route component={AdminUserManagementUpdate} path=":id"/>
         </Route>
 
-        <Route path="logs" onEnter={requireAuth}>
-          <IndexRoute component={AdminLogList} onEnter={requireAuth}/>
-          <Route component={AdminLogDetail} path=":client_id" onEnter={requireAuth}/>
+        <Route path="logs" >
+          <IndexRoute component={AdminClientLogList} />
+          <Route component={AdminLogList} path="client/:client_id" />
+          <Route component={AdminLogDetail} path="client/:client_id/log-detail/:id" />
         </Route>
 
         <Route path="profile">
           <IndexRoute component={AdminProfile}/>
         </Route>
+        <Route path="systemsettings">
+          <IndexRoute component={AdminSystemSettings}/>
+        </Route>
       </Route>
     </Route>
 
     <Route name="home" path="i" >
-      <IndexRoute component={ClientTopPage} onEnter={requireAuth}/>
+      <IndexRoute component={ClientDashboard} onEnter={requireAuth}/>
       <Route component={ClientLogin} name="login" path="login" onEnter={islogin}/>
       <Route component={Signup} path="signup" onEnter={islogin}/>
       <Route component={ClientLogout} path="logout"/>
@@ -253,32 +264,35 @@ export default () => (
       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
       <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail" onEnter={islogin}/>
 
-      <Route path="client" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientProfile}/>
-        <Route component={ClientProfile} path="profile" />
-        <Route component={ClientChangePassword} path="profile/change_password" />
-        <Route component={ClientChangeEmail} path="profile/change_email" />
+      <Route component={ClientDashboard} name="home" onEnter={requireAuth}>
+        <Route path="client">
+          <IndexRoute component={ClientProfile}/>
+          <Route component={ClientProfile} path="profile" />
+          <Route component={ClientChangePassword} path="profile/change_password" />
+          <Route component={ClientChangeEmail} path="profile/change_email" />
+        </Route>
+        <Route path="api">
+          <IndexRoute component={ClientApiList}/>
+          <Route component={ClientApiAdd} path="new"/>
+          <Route component={ClientApiUpdate} path=":id"/>
+        </Route>
+        <Route path="subscription">
+          <IndexRoute component={ClientSubscriptionDetail}/>
+          <Route component={ClientSubscriptionPayment} path=":id" />
+        </Route>
+        <Route path="invoice">
+          <IndexRoute component={ClientInvoice}/>
+          <Route component={ClientInvoiceDetails} path=":id" />
+        </Route>
+        <Route path="apilogs">
+          <IndexRoute component={ClientApiLogs}/>
+          <Route component={ClientApiLogsDetails} path=":id" />
+        </Route>
+        <Route path="systemsettings">
+          <IndexRoute component={ClientSystemSettings}/>
+        </Route>
       </Route>
-      <Route path="api" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientApiList}/>
-        <Route component={ClientApiAdd} path="new"/>
-        <Route component={ClientApiUpdate} path=":id"/>
-      </Route>
-      <Route path="subscription" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientSubscriptionDetail}/>
-        <Route component={ClientSubscriptionPayment} path=":id" />
-      </Route>
-      <Route path="invoice" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientInvoice}/>
-        <Route component={ClientInvoiceListDetails} path=":id" />
-      </Route>
-      <Route path="apilogs" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientApiLogs}/>
-      </Route>
-      <Route path="systemsettings" component={ClientDashboard} onEnter={requireAuth}>
-        <IndexRoute component={ClientSystemSettings}/>
-      </Route>
+      <Route path="*" components={NoMatch} />
     </Route>
-    <Route path="*" components={NoMatch} />
   </Route>
 );

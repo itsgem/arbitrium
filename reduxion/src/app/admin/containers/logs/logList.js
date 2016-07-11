@@ -10,8 +10,7 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
     logList: strMapToObj(state.get('adminLogs').get('logList')),
-    loading: state.get('adminLogs').get('loading'),
-    role: state.get('adminLogs').get('role')
+    loading: state.get('adminLogs').get('loading')
   };
 }
 

@@ -14,16 +14,51 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
+  scrolltop (errors) {
+    if (!document.querySelector('.alert')) {
+      return false;
+    }
+    if (Object.keys(errors).length) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      let scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
     }
   }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
+      errors = Object.assign({}, errorServer.response);
+      if (errors.ip_addresses) {
+        errors.ip_addresses = errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses
+      }
     }
+    this.scrolltop(errors);
     let permissions = this.props.apiPermissions.data;
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
@@ -70,7 +105,10 @@ class ApiAdd extends React.Component {
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
                     </div>; })
-            }
+          }
+          <div className={this.formClassNames('permissions', errors)}>
+            {errors.permissions && <small className="mdl-textfield__error shown">{errors.permissions}</small>}
+          </div>
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--1-col check-test-key">
@@ -81,9 +119,9 @@ class ApiAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--1-col check-test-key">
               <div id="tt4" className="icon material-icons">help</div>
-                <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
+                <div className="mdl-tooltip mdl-tooltip--right" htmlFor="tt4">
                   You can use a test key to experiment
-                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation
+                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation.
                 </div>
             </div>
         </div>
@@ -103,7 +141,7 @@ class ApiAdd extends React.Component {
       </main>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {
@@ -115,9 +153,7 @@ class ApiAdd extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
-      } else {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
+        permissions[k] = {api_permission_id: chkArr[k].value};
       }
     }
 
@@ -157,7 +193,8 @@ class ApiAdd extends React.Component {
   formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
-      'has-success': errors && !(errors[ field ])
+      'has-success': errors && !(errors[ field ]),
+      'permission-padding': field == 'permissions' && errors[ field ]
     } );
   }
 };

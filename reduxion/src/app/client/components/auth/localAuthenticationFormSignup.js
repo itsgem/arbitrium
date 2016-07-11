@@ -15,23 +15,7 @@ class LocalAuthenticationFormSignup extends React.Component {
       loading:false
     }
   }
-  componentDidMount() {
-    if (document.querySelector("select")) {
-      let allSelectOpt = document.querySelectorAll("select");
-      for (let i = 0; i < allSelectOpt.length; ++i) {
-          allSelectOpt[i].addEventListener("change", function(e) {
-          e.preventDefault();
-          let target = e.target.id + "-opt";
-          if (e.target.value) {
-            document.getElementById(target).classList.add('is-dirty');
-          } else {
-            document.getElementById(target).classList.remove('is-dirty');
-          }
-        }, false);
-      }
-    }
-  }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -49,7 +33,23 @@ class LocalAuthenticationFormSignup extends React.Component {
         }, false);
       }
     }
+
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
   }
+
   scrolltop (errors, errorServer) {
     if (!document.querySelector('.alert')) {
       return false;
@@ -92,12 +92,14 @@ class LocalAuthenticationFormSignup extends React.Component {
         errors.password = "";
       }
     }
+
     return (
       <div className="local-signin-form login-frame">
         <div className="sign-top">
             <h3 className="mdl-typography--headline">{tr.t('formTitle.signUp')}</h3>
             <p>{tr.t('headerText.text1')}</p>
         </div>
+
         <form className="mdl-shadow--2dp" action={ this.signup }>
           <legend>{tr.t('title.companyOrganization')}</legend>
           <div className="mdl-layout__content">
@@ -389,7 +391,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                 className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--blue"
                 id='btn-login'
                 type='button'
-                onClick={(e) => this.signup(e)}>{ this.props.buttonCaption }</button>
+                onClick={(e)=>this.signup(e)}>{ this.props.buttonCaption }</button>
             </div>
           </footer>
         </form>
@@ -409,6 +411,7 @@ class LocalAuthenticationFormSignup extends React.Component {
     } );
   }
   signup( e ) {
+    e.preventDefault();
     this.setState( {
       loading: true,
     } );
@@ -423,7 +426,7 @@ class LocalAuthenticationFormSignup extends React.Component {
       city: city.value,
       state: state.value,
       postal_code: postal_code.value,
-      country_id: country_id.value,
+      country_id: document.querySelector('#country_id').value,
       rep_first_name: rep_first_name.value,
       rep_last_name: rep_last_name.value,
       rep_gender: rep_gender.value,
@@ -440,7 +443,6 @@ class LocalAuthenticationFormSignup extends React.Component {
       username: username.value
     } );
   }
-
 }
 
 LocalAuthenticationFormSignup.mixins = [LinkedStateMixin];

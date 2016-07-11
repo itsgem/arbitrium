@@ -8,7 +8,7 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
         include('Admin.php');
         include('Client.php');
 
-        Route::resource('api-permission', 'ApiPermissionsController', ['only' => ['destroy', 'index', 'show', 'store', 'update']]);
+        Route::get('api-permission', ['uses' => 'ApiPermissionsController@index']);
     });
 
     Route::get('form/lists',    ['uses' => 'DropdownListsController@getListByType']);
@@ -24,6 +24,7 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
     });
 
     Route::post('mail-webhook',                 ['uses' => 'MailWebHooksController@status']);
+    Route::post('paypal-ipn',                   ['uses' => 'PaypalIpnController@status']);
 
     Route::get('subscription',                  ['uses' => 'SubscriptionsController@index']);
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);

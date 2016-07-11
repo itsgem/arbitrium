@@ -211,7 +211,7 @@
   width: 1200px;
 
   .mdl-grid {
-   .mdl-cell--12-col {
+    .mdl-cell--12-col {
 
       .full-width {
         width: 100%;
@@ -233,6 +233,10 @@
       .mdl-button--accent {
         margin-right: 16px;
       }
+    }
+
+    .permission-padding {
+      padding: 0 0 30px 10px;
     }
   }
 

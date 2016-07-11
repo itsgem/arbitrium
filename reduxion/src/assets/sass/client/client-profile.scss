@@ -44,6 +44,15 @@ div#application {
         & + .mdl-navigation {
           padding-top: 49px;
 
+          .is-active {
+            background: #FF6600;
+            color: #fff!important;
+
+            .material-icons {
+              color: #fff!important;
+            }
+          }
+
           a.mdl-navigation__link {
             color: #555555;
 
@@ -150,6 +159,12 @@ div#application {
       .client-tab-header {
         height: 48px;
         min-height: 0;
+      }
+
+      .mdl-grid {
+        .permission-padding {
+          padding: 0 0 15px 10px;
+        }
       }
     }
 

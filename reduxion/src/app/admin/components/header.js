@@ -4,7 +4,19 @@ import config from 'config';
 import CryptoJS from 'crypto-js';
 
 export default React.createClass( {
-  componentWillReceiveProps(nextProps) {
+  activeNav () {
+    let isActive = document.querySelector('nav .is-active');
+    if (isActive) {
+      isActive.classList.remove('is-active');
+    }
+    let link = window.location.href.split("/");
+    let menu = (link[4] == undefined ? '.menu-dashboard' : '.menu-' + link[4]);
+    let isActiveMenu = document.querySelector(menu);
+    if (isActiveMenu) {
+      isActiveMenu.classList.add("is-active");
+    }
+  },
+  componentDidMount () {
     this.activeNav();
     if (document.querySelector("select")) {
       let allSelectOpt = document.querySelectorAll("select");
@@ -21,24 +33,10 @@ export default React.createClass( {
       }
     }
   },
-  activeNav () {
-    let isActive = document.querySelector('nav .is-active');
-    if (isActive) {
-      isActive.classList.remove('is-active');
-    }
-    let link = window.location.href.split("/");
-    let menu = (link[4] == undefined ? '.menu-dashboard' : '.menu-' + link[4]);
-    let isActiveMenu = document.querySelector(menu);
-    if (isActiveMenu) {
-      isActiveMenu.classList.add("is-active");
-    }
-  },
-  componentDidMount () {
+  componentWillReceiveProps () {
     this.activeNav();
   },
   render() {
-
-    let token = localStorage.getItem('coffee');
     let bytes = '';
     if (localStorage.getItem('coffee') ){
       bytes  = CryptoJS.AES.decrypt(localStorage.getItem('coffee'), config.key);
@@ -80,10 +78,18 @@ export default React.createClass( {
                   </div>
                   <div className="container">
                     <button id="demo-menu-subscription"
-                      className="mdl-button mdl-js-button">Subscriptions</button>
+                      className="menu-subscription mdl-button mdl-js-button mdl-layout__tab">Subscriptions</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-subscription">
                       <li className="mdl-menu__item"><Link to="/coffee/subscription/">Subscriptions List</Link></li>
+                    </ul>
+                  </div>
+                  <div className="container">
+                    <button id="demo-menu-invoice"
+                      className="menu-invoice mdl-button mdl-js-button mdl-layout__tab">Invoice</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-invoice">
+                      <li className="mdl-menu__item"><Link to="/coffee/invoice/">Client Invoice List</Link></li>
                     </ul>
                   </div>
                   {role && <div className="container">
@@ -95,12 +101,13 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">Add New Administrator</Link></li>
                     </ul>
                   </div>}
+                  <Link className="mdl-layout__tab" to="/coffee">Reports</Link>
                   <div className="container">
                     <button id="demo-menu-logs"
-                      className="mdl-button mdl-js-button">Logs</button>
+                      className="menu-logs mdl-button mdl-js-button mdl-layout__tab">Logs</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-logs">
-                      <li className="mdl-menu__item"><Link to="/coffee/logs/">API Logs List</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/">Client API Logs List</Link></li>
                     </ul>
                   </div>
                 </nav>
@@ -110,7 +117,7 @@ export default React.createClass( {
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
                     <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/profile"><i className="material-icons">person</i>My Profile</Link></li>
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee"><i className="material-icons">settings</i>Settings</Link></li>
+                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/systemsettings"><i className="material-icons">settings</i>Settings</Link></li>
                     <li className="mdl-menu__item"><a className="logout-text" href ="/coffee/logout"><i className="material-icons">exit_to_app</i>Logout</a></li>
                   </ul>
                 </div>

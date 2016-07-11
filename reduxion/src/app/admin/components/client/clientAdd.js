@@ -14,49 +14,58 @@ class ClientAdd extends React.Component {
       errorServer:null
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-scrolltop (errors) {
-  if (!document.querySelector('.alert')) {
-    return false;
-  }
-
-  if (Object.keys(errors).length) {
-    document.querySelector('.alert').style.display = 'block';
-    let target = document.getElementById('top');
-    let scrollContainer = target;
-    do { //find scroll container
-        scrollContainer = scrollContainer.parentNode;
-        if (!scrollContainer) return;
-        scrollContainer.scrollTop += 1;
-    } while (scrollContainer.scrollTop == 0);
-
-    let targetY = 0;
-    do { //find the top of target relatively to the container
-        if (target == scrollContainer) break;
-        targetY += target.offsetTop;
-    } while (target = target.offsetParent);
-
-    let scroll = function(c, a, b, i) {
-        i++; if (i > 30) return;
-        c.scrollTop = a + (b - a) / 30 * i;
-        setTimeout(function(){ scroll(c, a, b, i); }, 20);
+  scrolltop (errors) {
+    if (!document.querySelector('.alert')) {
+      return false;
     }
-    // start scrolling
-    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
-  } else {
-    document.querySelector('.alert').style.display = 'none';
+
+    if (Object.keys(errors).length) {
+      document.querySelector('.alert').style.display = 'block';
+      let target = document.getElementById('top');
+      let scrollContainer = target;
+      do { //find scroll container
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop == 0);
+
+      let targetY = 0;
+      do { //find the top of target relatively to the container
+          if (target == scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+
+      let scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+    } else {
+      document.querySelector('.alert').style.display = 'none';
+    }
   }
-}
+  numberOnly(e) {
+    let key = e.keyCode || e.which;
+    key = String.fromCharCode( key );
+    let regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      e.preventDefault();
+    }
+  }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
     }
-this.scrolltop(errors);
+
+    this.scrolltop(errors);
     return (
       <form action={ this.clientAdd }>
         <div className="required">Required fields</div>
@@ -177,7 +186,7 @@ this.scrolltop(errors);
                   id='postal_code'
                   ref="postal_code"
                   />
-                <label className="mdl-textfield__label" htmlFor="postal_code">Postal code</label>
+                <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
                 {errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
               </div>
             </div>
@@ -231,7 +240,7 @@ this.scrolltop(errors);
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="rep_gender">Gender</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
                   {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
                 </div>
               </div>
@@ -251,6 +260,8 @@ this.scrolltop(errors);
                   type="text"
                   id='rep_mobile_code'
                   ref="rep_mobile_code"
+                  onKeyPress={(e) => this.numberOnly(e)}
+                  maxLength="3"
                   />
                 <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Country Code*</label>
                 {errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
@@ -263,6 +274,8 @@ this.scrolltop(errors);
                   type="text"
                   id='rep_mobile_number'
                   ref="rep_mobile_number"
+                  onKeyPress={(e) => this.numberOnly(e)}
+                  maxLength="12"
                   />
                 <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.*</label>
                 {errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
@@ -275,6 +288,8 @@ this.scrolltop(errors);
                   type="text"
                   id='rep_phone_code'
                   ref="rep_phone_code"
+                  onKeyPress={(e) => this.numberOnly(e)}
+                  maxLength="3"
                   />
                 <label className="mdl-textfield__label" htmlFor="rep_phone_code">Country Code*</label>
                 {errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
@@ -287,6 +302,8 @@ this.scrolltop(errors);
                   type="text"
                   id='rep_phone_number'
                   ref="rep_phone_number"
+                  onKeyPress={(e) => this.numberOnly(e)}
+                  maxLength="12"
                   />
                 <label className="mdl-textfield__label" htmlFor="rep_phone_number">Phone Number*</label>
                 {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
@@ -538,12 +555,6 @@ this.scrolltop(errors);
   }
 
 };
-
-function mapObject(object, callback) {
-    return Object.keys(object).map(function (key) {
-        return callback(key, object[key]);
-    });
-}
 
 function validateRegister ( payload) {
   let rules = new Checkit( {

@@ -2,8 +2,8 @@ import React from 'react';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
-import {createError} from 'utils/error';
-import {openLoading, closeLoading} from 'common/components/modal'
+import { createError } from 'utils/error';
+import { openLoading } from 'common/components/modal'
 
 class SubscriptionPayment extends React.Component {
   constructor(props) {
@@ -14,13 +14,11 @@ class SubscriptionPayment extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps () {
+    this.dateValid();
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
-  }
-  componentDidMount () {
-    this.dateValid();
   }
   loadingRender () {
     return (
@@ -92,7 +90,7 @@ class SubscriptionPayment extends React.Component {
                   :
                   <div id="term-opt" className={this.formClassNames('term', errors)}>
                     <div className="mdl-selectfield">
-                      <select onChange={(e) => this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
+                      <select onChange={()=>this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
                         <option></option>
                         <option>Annually</option>
                         <option>Monthly</option>
@@ -104,14 +102,14 @@ class SubscriptionPayment extends React.Component {
                 }
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" id="validFrom" type="text" ref="validFrom" readOnly/>
+              <div id="validFromRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
+                <input value="&nbsp;" className="mdl-textfield__input font-input" id="validFrom" type="text" ref="validFrom" readOnly/>
                 <label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" id="validTo" type="text" ref="validTo" readOnly/>
+              <div id="validToRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
+                <input value="&nbsp;" className="mdl-textfield__input font-input" id="validTo" type="text" ref="validTo" readOnly/>
                 <label className="mdl-textfield__label" htmlFor="validTo">To</label>
               </div>
             </div>
@@ -260,16 +258,25 @@ class SubscriptionPayment extends React.Component {
     let isFrom = ' ';
     let newDate = ' ';
     let isTo = ' ';
+
+    if (term!='') {
+      document.getElementById('validFromRap').classList.remove('hidden');
+      document.getElementById('validToRap').classList.remove('hidden');
+    } else {
+      document.getElementById('validFromRap').classList.add('hidden');
+      document.getElementById('validToRap').classList.add('hidden');
+    }
+
     switch (term) {
       case 'Annually':
-        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
-        newDate = new Date(dateToday.getFullYear() + 1, dateToday.getMonth(), dateToday.getDate() + 29);
-        isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
+        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate() + 365);
+        isTo = newDate.getMonth() + '/' + newDate.getDate() + '/' +  newDate.getFullYear();
         break;
       case 'Monthly':
         isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
-        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate());
-        isTo = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' +  (newDate.getFullYear());
+        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate() + 30);
+        isTo = newDate.getMonth() + '/' + newDate.getDate() + '/' + newDate.getFullYear();
         break;
     }
 

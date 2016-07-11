@@ -1,5 +1,4 @@
 import React from 'react';
-import {Router, Link, History} from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';

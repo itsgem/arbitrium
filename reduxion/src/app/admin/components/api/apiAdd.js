@@ -15,12 +15,11 @@ class ApiAdd extends React.Component {
       permissions: {}
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
-
   scrolltop (errors) {
     if (!document.querySelector('.alert')) {
       return false;
@@ -57,7 +56,10 @@ class ApiAdd extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
+      errors = Object.assign({}, errorServer.response);
+      if (errors.ip_addresses) {
+        errors.ip_addresses = errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses
+      }
     }
     let clientList = this.props.clientList.data;
     let permissions = this.props.apiPermissions.data;
@@ -106,7 +108,7 @@ class ApiAdd extends React.Component {
               </div>
               <p>Add one IP Address per line separated by line breaks</p>
             </div>
-            <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
+            <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-2">
               <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
@@ -125,7 +127,10 @@ class ApiAdd extends React.Component {
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
                     </div>; })
-            }
+          }
+          <div className={this.formClassNames('permissions', errors)}>
+            {errors.permissions && <small className="mdl-textfield__error shown">{errors.permissions}</small>}
+          </div>
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col check-test-key">
@@ -136,29 +141,29 @@ class ApiAdd extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col check-test-key">
               <div id="tt4" className="icon material-icons">help</div>
-                <div className="mdl-tooltip mdl-tooltip--large" htmlFor="tt4">
+                <div className="mdl-tooltip mdl-tooltip--right" htmlFor="tt4">
                   You can use a test key to experiment
-                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation
+                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation.
                 </div>
             </div>
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
-              <div className="flex-order-gt-md-2 pd-10">
-                <Link
-                  className="mdl-button mdl-js-button mdl-button--colored"
-                  id='btn-cancel'
-                  to="/coffee/api/">CANCEL</Link>
-              </div>
-              <div className="flex-order-gt-md-2" >
-                <button id="btn-save"
-                  className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                  onClick={(e) => this.register(e)}>Create API Key</button>
-              </div>
-            </div>
+          <div className="flex-order-gt-md-2 pd-10">
+            <Link
+              className="mdl-button mdl-js-button mdl-button--colored"
+              id='btn-cancel'
+              to="/coffee/api/">CANCEL</Link>
+          </div>
+          <div className="flex-order-gt-md-2" >
+            <button id="btn-save"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.register(e)}>Create API Key</button>
+          </div>
+        </div>
       </form>
     );
   }
-  ckPermissions ( e, id ) {
+  ckPermissions ( e ) {
     if (e.target.checked) {
       e.target.setAttribute("checked", "checked");
     } else {
@@ -196,9 +201,7 @@ class ApiAdd extends React.Component {
     let permissions = [];
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 1};
-      } else {
-        permissions[k] = {api_permission_id: chkArr[k].value, value: 0};
+        permissions[k] = {api_permission_id: chkArr[k].value};
       }
     }
 
@@ -239,7 +242,8 @@ class ApiAdd extends React.Component {
   formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
-      'has-success': errors && !(errors[ field ])
+      'has-success': errors && !(errors[ field ]),
+      'permission-padding': field == 'permissions' && errors[ field ]
     } );
   }
 };

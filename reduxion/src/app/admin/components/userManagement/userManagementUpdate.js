@@ -13,7 +13,7 @@ class UserManagementUpdate extends React.Component {
       errorServer:null
     };
   }
-  componentDidMount() {
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -70,14 +70,16 @@ class UserManagementUpdate extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, errorServer.response, {password_confirmation: []});
       errors.password = [];
-      if (errorServer.response.password.length == 1) {
-        errors.password_confirmation[0] = errorServer.response.password[0];
-      }else if (errorServer.response.password.length == 3) {
-        errors.password[0] = errorServer.response.password[0];
-        errors.password_confirmation[0] = errorServer.response.password[2];
-      } else {
-        errors.password[0] = errorServer.response.password[0];
-        errors.password_confirmation[0] = errorServer.response.password[1];
+      if (errorServer.response.password) {
+        if (errorServer.response.password.length == 1) {
+          errors.password_confirmation[0] = errorServer.response.password[0];
+        }else if (errorServer.response.password.length == 3) {
+          errors.password[0] = errorServer.response.password[0];
+          errors.password_confirmation[0] = errorServer.response.password[2];
+        } else {
+          errors.password[0] = errorServer.response.password[0];
+          errors.password_confirmation[0] = errorServer.response.password[1];
+        }
       }
     }
     this.scrolltop(errors);
@@ -270,7 +272,7 @@ class UserManagementUpdate extends React.Component {
       errors: {},
       errorServer: null
     } );
-    let {username, email_address, password, rep_last_name, password_confirmation, first_name, last_name, role_id} = this.refs;
+    let {username, email_address, password, password_confirmation, first_name, last_name, role_id} = this.refs;
 
     let payload = {
       id: id,
