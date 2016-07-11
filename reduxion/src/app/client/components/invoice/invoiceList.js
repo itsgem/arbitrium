@@ -1,7 +1,7 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
-import {modal, openModal, closeModal} from 'common/components/modal'
+import {modal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
 import moment from 'moment';
 
