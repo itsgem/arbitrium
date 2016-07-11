@@ -48,7 +48,7 @@ class RenewSubscriptionReminder extends Command
             $client_subscriptions = ClientSubscription::active()
                                     ->isAutoRenew()
                                     ->isEmailReminderSent(false)
-                                    ->dateTo('valid_to', $valid_to)
+                                    ->validTo($valid_to)
                                     ->get();
 
             $loading = $this->output->createProgressBar($client_subscriptions->count());
