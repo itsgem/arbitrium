@@ -55,6 +55,7 @@ class AdminUserRequest extends NrbRequest
     public function validate()
     {
         $errors = [];
+        $method = $this->method();
         // validate based on the rules defined above
         $instance = $this->getValidatorInstance();
         if (!$instance->passes())
@@ -65,7 +66,7 @@ class AdminUserRequest extends NrbRequest
         {
             // [Core-API] Check if username already taken
             $is_username_owned = false;
-            if (is_logged_in())
+            if (is_logged_in() && $method == 'PUT')
             {
                 $admin_id = last($this->segments());
                 $admin_id = ((int) $admin_id != 0) ? $admin_id : get_logged_in_admin_id();

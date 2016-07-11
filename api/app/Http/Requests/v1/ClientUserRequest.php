@@ -110,6 +110,7 @@ class ClientUserRequest extends NrbRequest
     public function validate()
     {
         $errors = [];
+        $method = $this->method();
         // validate based on the rules defined above
         $instance = $this->getValidatorInstance();
         if (!$instance->passes())
@@ -120,7 +121,7 @@ class ClientUserRequest extends NrbRequest
         {
             // [Core-API] Check if username already taken
             $is_username_owned = false;
-            if (is_logged_in())
+            if (is_logged_in() && $method == 'PUT')
             {
                 $client_id = (is_client_user_logged_in()) ? get_logged_in_client_id() : last($this->segments());
                 $username = Client::findOrFail($client_id)->user->username;
