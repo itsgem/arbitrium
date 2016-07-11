@@ -268,6 +268,9 @@ class LogList extends React.Component {
     this.setState({
       created: null
     });
+
+    $('.datepicker').datepicker('setDate', null);
+
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
