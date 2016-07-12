@@ -76,7 +76,7 @@ export default React.createClass( {
         <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
-            <span className="bar-title">Forgot Password</span>
+            <span className="bar-title">{tr.t('formTitle.forgotPassword')}</span>
             <DocTitle title="Forgot password"/>
             </div>
             <fieldset>
@@ -105,7 +105,7 @@ export default React.createClass( {
       <div className="login-view">
         <div className="local-login-form">
           <form>
-            <legend>{tr.t('title.forgotPassword')}</legend>
+            <legend>{tr.t('title.passwordReset')}</legend>
             <p><strong>{tr.t('note.forgotPasswordLine1')}</strong></p>
             <p>{tr.t('note.forgotPasswordLine2')}</p>
             <div className={ this.formClassNames('email',errors) }>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import tr from 'i18next';
 
 class ClientHeader extends React.Component {
 
@@ -12,6 +13,7 @@ class ClientHeader extends React.Component {
     }
   }
   render() {
+    console.log('tr',tr);
     return (
       <header className="mdl-layout__header">
         <div className="mdl-layout__header-row">
@@ -20,11 +22,11 @@ class ClientHeader extends React.Component {
           <nav className="mdl-navigation">
             <div className="container">
               <a id="demo-menu-account"
-                className="mdl-button mdl-js-button">Account</a>
+                className="mdl-button mdl-js-button">{tr.t('header.account')}</a>
               <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo-menu-account">
-                <li className="mdl-menu__item"><Link to="/i/client/profile">My Profile</Link></li>
-                <li className="mdl-menu__item"><Link to="/i/client/profile/change_password">Change Password</Link></li>
-                <li className="mdl-menu__item"><Link to="/i/client/profile/change_email">Change Email Address</Link></li>
+                <li className="mdl-menu__item"><a href ="/i/client/profile">{tr.t('header.myProfile')}</a></li>
+                <li className="mdl-menu__item"><Link to="/i/client/profile/change_password">{tr.t('header.changePassword')}</Link></li>
+                <li className="mdl-menu__item"><Link to="/i/client/profile/change_email">{tr.t('header.changeEmailAddress')}</Link></li>
               </ul>
             </div>
             <div className="container">
@@ -32,8 +34,8 @@ class ClientHeader extends React.Component {
                 <i className="material-icons">person</i>
               </button>
               <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo_menu-lower-right">
-                <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i"><i className="material-icons mdl-list__item-icon">settings</i> Settings</Link></li>
-                <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i> Logout</a></li>
+                <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i"><i className="material-icons mdl-list__item-icon">settings</i>{tr.t('header.settings')}</Link></li>
+                <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i>{tr.t('header.logout')}</a></li>
               </ul>
             </div>
             </nav>
