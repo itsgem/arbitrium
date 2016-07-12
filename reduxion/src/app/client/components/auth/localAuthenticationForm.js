@@ -15,7 +15,11 @@ class LocalAuthenticationForm extends React.Component {
       loading:false
     }
   }
-
+  componentDidMount() {
+    if ( typeof(window.componentHandler) != 'undefined' ) {
+      setTimeout(() => {window.componentHandler.upgradeDom()},10);
+    }
+  }
   render() {
     let {errors} = this.props;
     return (
