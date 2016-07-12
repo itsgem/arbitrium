@@ -128,6 +128,16 @@ class MailServices extends NrbServices
         ], $user);
     }
 
+    public function subscriptionExpired($user, $subscription)
+    {
+        $this->sendMail('email.subscription_expired', [
+            'name'  => $user->first_name,
+            'subscription_name' => $subscription->getSubscriptionName(),
+            'cancelled_at' => current_datetime(),
+            'email_category' => EmailLog::SUBSCRIPTION_EXPIRED
+        ], $user);
+    }
+
     public function pendingSubscriptionCancellation($user, $subscription_name)
     {
         $this->sendMail('email.pending_subscription_cancellation', [

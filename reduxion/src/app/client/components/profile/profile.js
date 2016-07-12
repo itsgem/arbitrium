@@ -480,7 +480,7 @@ class ClientProfile extends React.Component {
                 <div id="alt_gender-opt" className={this.formClassNames('alt_gender', errors)}>
                   <div className="mdl-selectfield">
                     <select
-                      className="mdl-select__input"
+                      className="mdl-textfield__input"
                       id="alt_gender"
                       ref="alt_gender"
                       defaultValue={clientInfo.alt_gender} >
@@ -660,7 +660,7 @@ class ClientProfile extends React.Component {
                <p>Are you sure you want to cancel this subscription?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={(e) => this.cancelSubscription(e)}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>CANCEL</button>
               </div>
             </div>
           </div>

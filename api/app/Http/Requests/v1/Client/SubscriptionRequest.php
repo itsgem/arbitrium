@@ -21,7 +21,7 @@ class SubscriptionRequest extends NrbRequest
         {
             $rules = [
                 'subscription_id' => 'required|exists:subscriptions,id,deleted_at,NULL',
-                'term'            => 'required|in:'.ClientSubscription::TERM_MONTHLY.','.ClientSubscription::TERM_ANNUALLY,
+                'term'            => 'required|in:'.implode(',', ClientSubscription::getTerms()),
                 'is_auto_renew'   => 'required|boolean',
             ];
         }

@@ -99,6 +99,14 @@ class ApiLogController extends ApiController
      *         type="string",
      *         default=""
      *     ),
+     *     @SWG\Parameter(
+     *         name="api_log",
+     *         in="path",
+     *         description="API Log ID",
+     *         required=true,
+     *         type="string",
+     *         default="1"
+     *     ),
      * )
      *
      * @param $id

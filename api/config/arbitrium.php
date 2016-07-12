@@ -5,7 +5,7 @@ return [
     'min_admin_count'       => 3,
     'default_timezone'      => 'Asia/Singapore',
 
-    'subscription_email_reminder' => 5, // in days
+    'subscription_email_reminder' => 7, // in days
 
     'core' => [
         'api_url'       => env('ARBITRIUM_API_URL').'/',

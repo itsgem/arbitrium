@@ -46,7 +46,7 @@
                 border-bottom: 0.1pt solid #aaa;
                 font-size: 14px;
                 text-align: left;
-                padding: 7px;
+                padding: 4px 7px;
             }
 
             table td.td-label {
@@ -89,6 +89,10 @@
                 text-decoration:none;
             }
 
+            .text-red {
+                color: #950000;
+            }
+
             #invoice-ids-block table {
                 width: 300px;
             }
@@ -121,6 +125,12 @@
                         <td class="td-label">Invoice Date</td>
                         <td>{{ $invoiced_at }}</td>
                     </tr>
+                    @if ($status == 'Cancelled')
+                    <tr>
+                        <td class="td-label text-red">Cancelled at</td>
+                        <td class="text-red">{{ $cancelled_at }}</td>
+                    </tr>
+                    @endif
                 </table>
             </div>
             <br />
