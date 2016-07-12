@@ -77,8 +77,8 @@ export default React.createClass( {
         <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
-            <span className="bar-title">Forgot Password</span>
-            <DocTitle title="Forgot password"/>
+            <span className="bar-title">{tr.t('title.forgotPassword')}</span>
+            <DocTitle title={tr.t('title.forgotPassword')}/>
             </div>
             <fieldset>
               <div className="background">
@@ -89,7 +89,7 @@ export default React.createClass( {
         </div>
         <div className="mdl-grid mdl-grid--no-spacing forgot-footer" id="other-links">
           <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-            <Link to="/coffee/login"> Back to Login </Link>
+            <Link to="/coffee/login">{tr.t('button.backToLogin')}</Link>
           </div>
         </div>
       </div>
@@ -106,19 +106,19 @@ export default React.createClass( {
       <div className="login-view">
         <div className="local-login-form">
           <form>
-            <legend>Password Reset</legend>
-            <p><strong>Enter the email address used when you registered with username and password. </strong></p>
-            <p>You'll be sent a reset code to change your password.</p>
+            <legend>{tr.t('title.passwordReset')}</legend>
+            <p><strong>{tr.t('note.forgotPasswordLine1')}</strong></p>
+            <p>{tr.t('note.forgotPasswordLine2')}</p>
             <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('email')}</label>
+              <label className="mdl-textfield__label" htmlFor="email">{tr.t('label.email')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
             <div className="spacer">
               <button type="button"
               className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
               onClick={(e)=>this.requestReset(e)}>
-                Send Reset Email
+                {tr.t('button.sendResetEmail')}
               </button>
             </div>
            </form>
@@ -132,13 +132,11 @@ export default React.createClass( {
     }
     return (
       <div className="login-view padding-15">
-          <legend>Step 2 - Check Email</legend>
+          <legend>{tr.t('title.checkMail')}</legend>
           <p>
-            <strong>An email has been sent containing your reset link. Click on the link to proceed.</strong>
+            <strong>{tr.t('note.checkMailLine1')}</strong>
           </p>
-          <p>
-            Please also check your spam folder just in case the reset email ended up there.
-          </p>
+          <p>{tr.t('note.checkMailLine2')}</p>
       </div>
     );
   },
