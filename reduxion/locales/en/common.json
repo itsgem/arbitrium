@@ -14,6 +14,7 @@
     "text1": "Fields with asterisks are required."
   },
   "title": {
+    "login": "Login",
     "forgotPassword": "Forgot Password",
     "checkMail": "Step 2 - Check Email",
     "companyOrganization": "Company / Organization",
