@@ -1,7 +1,9 @@
 import React from 'react';
 import ClientProfile from 'client/components/profile/profile';
 import {createError} from 'utils/error';
+import DocTitle from 'common/components/docTitle';
 import {openLoading, closeLoading} from 'common/components/modal'
+import tr from 'i18next';
 
 export default React.createClass({
 
@@ -56,13 +58,16 @@ export default React.createClass({
   renderClientInfo () {
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <DocTitle
+          title="My Profile"
+        />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container" >
           <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
             <div className="mdl-snackbar__text"></div>
             <button type="button" className="mdl-snackbar__action"></button>
           </div>
           <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>My Profile</p>
+            <p>{tr.t('formTitle.myProfile')}</p>
           </div>
           <div className="page-content">
             <ClientProfile

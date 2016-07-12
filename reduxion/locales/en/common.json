@@ -7,8 +7,27 @@
   "forgotPassword": "Forgot Password",
   "sign_up": "Sign up",
 
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "myProfile": "My Profile",
+    "apiKeys": "API Keys",
+    "mySubscription": "My Subscription",
+    "invoice": "Invoice",
+    "apiLogs": "API Logs",
+    "logout": "Logout"
+  },
+  "header": {
+    "myProfile": "My Profile",
+    "changePassword": "Change Password",
+    "changeEmailAddress": "Change Email Address",
+    "account": "Account",
+    "settings": " Settings",
+    "logout": " Logout"
+  },
   "formTitle": {
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "myProfile": "My Profile",
+    "forgotPassword": "Forgot Password"
   },
   "headerText":{
     "text1": "Fields with asterisks are required."
@@ -17,7 +36,10 @@
     "forgotPassword": "Forgot Password",
     "checkMail": "Step 2 - Check Email",
     "companyOrganization": "Company / Organization",
-    "companyRepresentative": "Company Representative"
+    "companyRepresentative": "Company Representative",
+    "loginInformation": "Login Information",
+    "generalInformation": "General Information",
+    "passwordReset": "Password Reset"
   },
   "note": {
     "forgotPasswordLine1": "Enter the email address used when you registered with username and passwords.",
@@ -27,7 +49,8 @@
   },
   "label": {
     "emailUsername": "Email / Username",
-    "email": "Email *",
+    "email": "Email",
+    "emailReq": "Email *",
     "password": "Password",
     "confirmPassword": "Confirm Password *",
     "userName": "Username *",
@@ -54,6 +77,7 @@
     "sendResetEmail": "Send Reset Email",
     "backToLogin": "Back to Login",
     "alreadyHaveAnAccount": "Already have an account? Login here.",
-    "createAnAccount": "Create an account"
+    "createAnAccount": "Create an account",
+    "checkAvailability": "Check Availability"
   }
 }

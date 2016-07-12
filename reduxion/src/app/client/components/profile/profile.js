@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import cx from 'classnames';
 import Checkit from 'checkit';
 import moment from 'moment';
+import tr from 'i18next';
 
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { createError } from 'utils/error';
@@ -133,7 +134,7 @@ class ClientProfile extends React.Component {
       <div>
       <div className="mdl-tabs__panel is-active" id="profile">
         <form>
-          <legend>Login Information</legend>
+          <legend>{tr.t('title.loginInformation')}</legend>
           <div className="">
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--6-col">
@@ -146,7 +147,7 @@ class ClientProfile extends React.Component {
                     data-client="user"
                     defaultValue={clientInfo.user.username}
                     />
-                  <label className="mdl-textfield__label" htmlFor="username">Username *</label>
+                  <label className="mdl-textfield__label" htmlFor="username">{tr.t('label.userName')}</label>
                   {errors && errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
                 </div>
               </div>
@@ -157,7 +158,7 @@ class ClientProfile extends React.Component {
                   className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
                   onClick={this.onClickGetAvailableUsername.bind(this)}
                   >
-                  Check availability
+                  {tr.t('button.checkAvailability')}
                 </button>
                 { this.isUsernameAvailable(errors.username) }
               </div>
@@ -174,14 +175,14 @@ class ClientProfile extends React.Component {
                       defaultValue={clientInfo.user.email_address}
                       readOnly={true}
                       />
-                    <label className="mdl-textfield__label" htmlFor="email_address">E-mail</label>
+                    <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('label.email')}</label>
                     {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                   </div>
                 </div>
               </div>
           </div>
 
-          <legend>General Information</legend>
+          <legend>{tr.t('title.generalInformation')}</legend>
           <div className="">
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--6-col">
@@ -193,7 +194,7 @@ class ClientProfile extends React.Component {
                     ref="company_name"
                     defaultValue={clientInfo.company_name}
                     />
-                  <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
+                  <label className="mdl-textfield__label" htmlFor="company_name">{tr.t('label.companyName')}</label>
                   {errors && errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
                 </div>
               </div>
@@ -208,7 +209,7 @@ class ClientProfile extends React.Component {
                     ref="street_address_1"
                     defaultValue={clientInfo.street_address_1}
                     />
-                  <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1 *</label>
+                  <label className="mdl-textfield__label" htmlFor="street_address_1">{tr.t('label.streetAddress1')}</label>
                   {errors && errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
                 </div>
               </div>
@@ -221,7 +222,7 @@ class ClientProfile extends React.Component {
                     ref="street_address_2"
                     defaultValue={clientInfo.street_address_2}
                     />
-                  <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
+                  <label className="mdl-textfield__label" htmlFor="street_address_2">{tr.t('label.streetAddress2')}</label>
                   {errors && errors.street_address_2 && <small className="mdl-textfield__error shown">{errors.street_address_2[0]}</small>}
                 </div>
               </div>
@@ -234,7 +235,7 @@ class ClientProfile extends React.Component {
                     ref="city"
                     defaultValue={clientInfo.city}
                     />
-                  <label className="mdl-textfield__label" htmlFor="city">City *</label>
+                  <label className="mdl-textfield__label" htmlFor="city">{tr.t('label.city')}</label>
                   {errors && errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
                 </div>
               </div>
@@ -249,7 +250,7 @@ class ClientProfile extends React.Component {
                     ref="state"
                     defaultValue={clientInfo.state}
                     />
-                  <label className="mdl-textfield__label" htmlFor="state">State / Province</label>
+                  <label className="mdl-textfield__label" htmlFor="state">{tr.t('label.stateProvince')}</label>
                   {errors && errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
                 </div>
               </div>
@@ -262,7 +263,7 @@ class ClientProfile extends React.Component {
                       ref="postal_code"
                       defaultValue={clientInfo.postal_code}
                       />
-                    <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
+                    <label className="mdl-textfield__label" htmlFor="postal_code">{tr.t('label.postalCode')}</label>
                     {errors && errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
                 </div>
               </div>
@@ -277,7 +278,7 @@ class ClientProfile extends React.Component {
             </div>
           </div>
 
-          <legend>Company Representative</legend>
+          <legend>{tr.t('title.companyRepresentative')}</legend>
           <div className="">
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--3-col">
@@ -290,7 +291,7 @@ class ClientProfile extends React.Component {
                     defaultValue={clientInfo.rep_first_name}
 
                     />
-                  <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('label.firstName')}</label>
                   {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
                 </div>
               </div>
@@ -303,7 +304,7 @@ class ClientProfile extends React.Component {
                     ref="rep_last_name"
                     defaultValue={clientInfo.rep_last_name}
                     />
-                  <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('label.lastName')}</label>
                   {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
                 </div>
               </div>
@@ -317,7 +318,7 @@ class ClientProfile extends React.Component {
                       defaultValue={clientInfo.rep_email_address}
 
                       />
-                    <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
+                    <label className="mdl-textfield__label" htmlFor="rep_email_address">{tr.t('label.emailReq')}</label>
                     {errors && errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
                 </div>
               </div>
@@ -678,7 +679,7 @@ class ClientProfile extends React.Component {
             {return <option key={item.id} value={item.id}>{item.name}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">Country</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('label.country')}</label>
       </div>
     );
   }
