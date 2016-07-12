@@ -54,8 +54,12 @@ class ApiUpdate extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
+      errors = Object.assign({}, errorServer.response);
+      if (errors.ip_addresses) {
+        errors.ip_addresses = errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses
+      }
     }
+
     this.scrolltop(errors);
 
     let ipAddresses = '';
