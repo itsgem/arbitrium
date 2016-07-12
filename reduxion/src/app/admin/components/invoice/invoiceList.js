@@ -284,6 +284,7 @@ class AdminInvoiceList extends React.Component {
     dialog.close();
   }
   clearSearch(e) {
+    var today = moment(new Date()).format('YYYY-MM-DD');
     e.preventDefault();
     this.refs.invoice_no.value = "";
     this.refs.status.value = "";
@@ -294,6 +295,13 @@ class AdminInvoiceList extends React.Component {
       invoiced_date_from: null,
       invoiced_date_to: null
     });
+
+    $('#invoiced_date_from .datepicker').datepicker('setDate', null);
+    $('#invoiced_date_from .datepicker').datepicker('setEndDate', today);
+
+    $('#invoiced_date_to .datepicker').datepicker('setDate', null);
+    $('#invoiced_date_to .datepicker').datepicker('setStartDate', null);
+    $('#invoiced_date_to .datepicker').datepicker('setEndDate', today);
 
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
