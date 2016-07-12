@@ -168,7 +168,12 @@ class Subscription extends NrbModel
 
     public function getCurrencyAttribute()
     {
-        return $this->country->currency_code;
+        if ($this->country)
+        {
+            return $this->country->currency_code;
+        }
+
+        return null;
     }
 
     //---------- helpers

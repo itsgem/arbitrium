@@ -64,6 +64,7 @@ class ClientServices extends NrbServices
             ->approvalStatus($request->get('approval_status'))
             ->companyNameLike($request->get('company_name'))
             ->usernameLike($request->get('username'))
+            ->havingSubscription($request->get('has_subscription'))
             ->paginate($request->get('per_page')),
             $request->get('max_pagination_links')
         );

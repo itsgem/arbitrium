@@ -249,6 +249,24 @@ class Client extends NrbModel
         return $query->where('approval_status', '<>', self::DISAPPROVED);
     }
 
+    public function scopeHavingSubscription($query, $flag)
+    {
+        if ($flag)
+        {
+            // -- Base Query --
+            // SELECT * FROM client_subscriptions
+            // WHERE id IN (SELECT MAX(id) FROM client_subscriptions GROUP BY client_id)
+
+            return $query->whereHas('subscriptions', function($query){
+                $query->whereIn('id', function($query){
+                    $query->selectRaw('MAX(id)')
+                        ->from(with(new ClientSubscription)->getTable())
+                        ->groupBy('client_id');
+                });
+            });
+        }
+    }
+
     //---------- helpers
     public function approve($callback_url, $approve = true)
     {

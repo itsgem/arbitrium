@@ -84,12 +84,13 @@ class ClientsController extends ApiController
      *     @SWG\Parameter(name="company_name", in="query", description="FILTER by client company name", required=false, type="string", default=""),
      *     @SWG\Parameter(name="username", in="query", description="FILTER by client username", required=false, type="string", default=""),
      *     @SWG\Parameter(name="approval_status", in="query", description="FILTER by approval status (Approved|Disapproved|Pending)", required=false, type="string", default=""),
+     *     @SWG\Parameter(name="has_subscription", in="query", description="FILTER by with having subscription (0|1)", required=false, type="string", default=""),
      *     @SWG\Parameter(name="per_page", in="query", description="for pagination, number of items to return per page", required=false, type="integer", default=""),
      *     @SWG\Parameter(name="page", in="query", description="for pagination, show items belonging to page", required=false, type="integer", default=""),
      *     @SWG\Parameter(name="max_pagination_links", in="query", description="for pagination, maximum number of pages", required=false, type="integer", default=""),
      * )
      *
-     * @param SubscriptionServices $service
+     * @param ClientServices $service
      *
      * @return mixed
      */
