@@ -1,7 +1,7 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import { Link } from 'react-router';
-import {modal, openModal, closeModal} from 'common/components/modal'
+import {modal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
 import moment from 'moment';
 
@@ -260,6 +260,7 @@ class invoiceList extends React.Component {
   }
 
   clearSearch(e) {
+    var today = moment(new Date()).format('YYYY-MM-DD');
     e.preventDefault();
     this.setState( {
       dateFrom: null,
@@ -270,6 +271,14 @@ class invoiceList extends React.Component {
     this.refs.status.value = "";
     this.refs.date_from.value = "";
     this.refs.date_to.value = "";
+
+    $('#dateFrom .datepicker').datepicker('setDate', null);
+    $('#dateFrom .datepicker').datepicker('setEndDate', today);
+
+    $('#dateTo .datepicker').datepicker('setDate', null);
+    $('#dateTo .datepicker').datepicker('setStartDate', null);
+    $('#dateTo .datepicker').datepicker('setEndDate', today);
+
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }

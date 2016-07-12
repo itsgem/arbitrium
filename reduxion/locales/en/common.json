@@ -1,10 +1,59 @@
 {
-  "login": "Login",
   "logout": "Logout",
   "email": "Email",
   "email_or_username": "Email / Username",
   "username": "Username",
   "password": "Password",
   "forgotPassword": "Forgot Password",
-  "sign_up": "Sign up"
+  "sign_up": "Sign up",
+
+  "formTitle": {
+    "signUp": "Sign Up"
+  },
+  "headerText":{
+    "text1": "Fields with asterisks are required."
+  },
+  "title": {
+    "forgotPassword": "Forgot Password",
+    "checkMail": "Step 2 - Check Email",
+    "companyOrganization": "Company / Organization",
+    "companyRepresentative": "Company Representative"
+  },
+  "note": {
+    "forgotPasswordLine1": "Enter the email address used when you registered with username and passwords.",
+    "forgotPasswordLine2": "You'll be sent a reset code to change your password.",
+    "checkMailLine1": "An email has been sent containing your reset link. Click on the link to proceed.",
+    "checkMailLine2": "Please also check your spam folder just in case the reset email ended up there."
+  },
+  "label": {
+    "emailUsername": "Email / Username",
+    "email": "Email *",
+    "password": "Password",
+    "confirmPassword": "Confirm Password *",
+    "userName": "Username *",
+    "companyName": "Company name *",
+    "streetAddress1": "Street Address 1",
+    "streetAddress2": "Street Address 2",
+    "city": "City",
+    "stateProvince": "State / Province",
+    "postalCode": "Postal code",
+    "country": "Country",
+    "firstName": "First name *",
+    "lastName": "Last name *",
+    "gender": "Gender",
+    "code": "Code",
+    "mobileNumber": "Mobile no.",
+    "phoneNumber": "Phone no.",
+    "position": "Position *",
+    "department": "Department *"
+  },
+  "button": {
+    "login": "Login",
+    "forgotPassword": "Forgot Password",
+    "signUp": "Sign Up",
+    "sendResetEmail": "Send Reset Email",
+    "backToLogin": "Back to Login",
+    "alreadyHaveAnAccount": "Already have an account? Login here.",
+    "createAnAccount": "Create an account"
+  }
 }

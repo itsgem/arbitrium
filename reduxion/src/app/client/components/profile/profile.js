@@ -637,7 +637,7 @@ class ClientProfile extends React.Component {
     );
   }
 
-  modalConfirm (e, id, company) {
+  modalConfirm (e, id) {
     e.preventDefault();
     openModal();
     this.setState( {
