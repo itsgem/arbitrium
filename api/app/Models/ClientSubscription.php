@@ -322,12 +322,12 @@ class ClientSubscription extends Subscription
 
         if ($term == self::TERM_ANNUALLY)
         {
-            $this->valid_to = $this->valid_from->addDays(364);
+            $this->valid_to = $this->valid_from->addDays(config('paypal.period_days.annually'));
         }
         else
         {
             // Monthly and Trial
-            $this->valid_to = $this->valid_from->addDays(29);
+            $this->valid_to = $this->valid_from->addDays(config('paypal.period_days.monthly'));
         }
     }
 
@@ -374,6 +374,14 @@ class ClientSubscription extends Subscription
         return [
             'noun' => 'change',
             'past' => 'changed',
+        ];
+    }
+
+    public static function getTerms()
+    {
+        return [
+            self::TERM_ANNUALLY,
+            self::TERM_MONTHLY,
         ];
     }
 }

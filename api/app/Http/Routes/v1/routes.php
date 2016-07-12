@@ -21,6 +21,7 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
             Route::get('status',                ['uses' => 'InvoicesController@getStatusList']);
         });
         Route::get('role/admin',                ['uses' => 'RolesController@getAdminRoles']);
+        Route::get('subscription/terms',     ['uses' => 'SubscriptionsController@getTerms']);
     });
 
     Route::post('mail-webhook',                 ['uses' => 'MailWebHooksController@status']);
@@ -28,6 +29,7 @@ Route::group(['namespace' => 'v1', 'prefix' => 'api/v1'], function()
 
     Route::get('subscription',                  ['uses' => 'SubscriptionsController@index']);
     Route::get('subscription/{subscription}',   ['uses' => 'SubscriptionsController@show']);
+    Route::get('client/subscription/validity',  ['uses' => 'SubscriptionsController@getValidity']);
 
 
     // @TODO-Arbitrium: For immediate paypal testing
