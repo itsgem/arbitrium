@@ -244,6 +244,10 @@ class UserManagementList extends React.Component {
     this.refs.email_address.value = "";
     this.refs.name.value = "";
     this.searchList(e, 10);
+
+    for (let item of document.querySelectorAll('.is-dirty')) {
+      item.classList.remove('is-dirty');
+    }
   }
   searchList(e, pageNum = null) {
     e.preventDefault();

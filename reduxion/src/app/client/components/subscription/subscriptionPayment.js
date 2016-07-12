@@ -56,6 +56,22 @@ class SubscriptionPayment extends React.Component {
       document.querySelector('.alert').style.display = 'none';
     }
   }
+  componentDidMount() {
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
+  }
   render () {
     let subscriptionItem = this.props.subscriptionItem.data;
     let {errors, errorServer} = this.state ? this.state :'';

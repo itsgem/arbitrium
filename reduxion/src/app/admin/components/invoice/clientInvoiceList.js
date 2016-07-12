@@ -14,6 +14,22 @@ class AdminClientInvoiceList extends React.Component {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
   }
+  componentDidMount() {
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
+  }
 
   clientInvoiceListDisplay (data, alter) {
     return (
@@ -125,7 +141,7 @@ class AdminClientInvoiceList extends React.Component {
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
-            <div id="status-opt" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+            <div id="status-opt" className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield">
               <div className="mdl-selectfield">
                 <select
                   className="mdl-textfield__input"

@@ -17,6 +17,8 @@ class UserManagementUpdate extends React.Component {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+  }
+  componentDidMount() {
     if (document.querySelector("select")) {
       let allSelectOpt = document.querySelectorAll("select");
       for (let i = 0; i < allSelectOpt.length; ++i) {

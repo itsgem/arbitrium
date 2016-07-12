@@ -479,7 +479,7 @@ class ClientProfile extends React.Component {
                 <div id="alt_gender-opt" className={this.formClassNames('alt_gender', errors)}>
                   <div className="mdl-selectfield">
                     <select
-                      className="mdl-select__input"
+                      className="mdl-textfield__input"
                       id="alt_gender"
                       ref="alt_gender"
                       defaultValue={clientInfo.alt_gender} >
