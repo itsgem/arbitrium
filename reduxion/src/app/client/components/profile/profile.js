@@ -659,7 +659,7 @@ class ClientProfile extends React.Component {
                <p>Are you sure you want to cancel this subscription?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={(e) => this.cancelSubscription(e)}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>CANCEL</button>
               </div>
             </div>
           </div>

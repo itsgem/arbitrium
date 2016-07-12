@@ -56,7 +56,7 @@ export default createReducer({
     emailChangeToken: payload,
     errors: {}
   }),
-  [retrieveEmailChangeToken.request]: (state, payload) => state.merge({
+  [retrieveEmailChangeToken.request]: (state) => state.merge({
     loading: true,
     isRetrieveEmailChangeTokenSuccess: false,
     emailChangeToken: {},
