@@ -177,9 +177,11 @@ class ApiUpdate extends React.Component {
     e.preventDefault();
     let chkArr =  document.getElementsByName("chkRights[]");
     let permissions = [];
+    let count = 0;
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
-        permissions[k] = {api_permission_id: chkArr[k].value};
+        permissions[count] = {api_permission_id: chkArr[k].value};
+        count++;
       }
     }
 
