@@ -49,7 +49,7 @@
   },
   "button": {
     "login": "Login",
-    "forgotPassword": "forgot Password",
+    "forgotPassword": "Forgot Password",
     "signUp": "Sign Up",
     "sendResetEmail": "Send Reset Email",
     "backToLogin": "Back to Login",
