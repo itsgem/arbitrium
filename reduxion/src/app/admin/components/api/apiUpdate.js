@@ -57,6 +57,7 @@ class ApiUpdate extends React.Component {
     if (errorServer) {
       errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
     }
+
     this.scrolltop(errors);
     let getApiInfo = this.props.getApiInfo.data;
     let clientInfo = this.props.clientProfileSuccess.data;
@@ -109,26 +110,29 @@ class ApiUpdate extends React.Component {
           {
             permissions  && permissions.map(item => {
               let getCk = false;
-              for (let i = 0; i < getApiInfo.permissions.length; i++) {
-                if (getApiInfo.permissions[i].api_permission_id == item.id) {
-                  getCk = true;
-                  break;
+              if (getApiInfo.permissions) {
+                for (let i = 0; i < getApiInfo.permissions.length; i++) {
+                  if (getApiInfo.permissions[i].api_permission_id == item.id) {
+                    getCk = true;
+                    break;
+                  }
                 }
               }
 
-              return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
-                        <input
-                          type="checkbox"
-                          className="mdl-checkbox__input"
-                          id={"checkbox-" + item.id}
-                          name="chkRights[]"
-                          defaultChecked={getCk}
-                          defaultValue={ item.id }
-                          onClick={(e) => this.ckPermissions(e)}/>
-                        <span className="mdl-checkbox__label">{item.name}</span>
-                      </label>
-                    </div>; })
+              return (<div key={item.id} className="mdl-cell mdl-cell--3-col">
+                        <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                          <input
+                            type="checkbox"
+                            className="mdl-checkbox__input"
+                            id={"checkbox-" + item.id}
+                            name="chkRights[]"
+                            defaultChecked={getCk}
+                            defaultValue={ item.id }
+                            onClick={(e) => this.ckPermissions(e)}/>
+                          <span className="mdl-checkbox__label">{item.name}</span>
+                        </label>
+                      </div>);
+              })
             }
         </div>
           <div className="mdl-grid">
