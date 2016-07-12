@@ -17,6 +17,22 @@ class UserManagementList extends React.Component {
     }
     modal();
   }
+  componentDidMount() {
+    if (document.querySelector("select")) {
+      let allSelectOpt = document.querySelectorAll("select");
+      for (let i = 0; i < allSelectOpt.length; ++i) {
+          allSelectOpt[i].addEventListener("change", function(e) {
+          e.preventDefault();
+          let target = e.target.id + "-opt";
+          if (e.target.value) {
+            document.getElementById(target).classList.add('is-dirty');
+          } else {
+            document.getElementById(target).classList.remove('is-dirty');
+          }
+        }, false);
+      }
+    }
+  }
   userDisplay (data, alter) {
     return (
        <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
@@ -149,14 +165,16 @@ class UserManagementList extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
-              <div id="status-opt" className="mdl-selectfield mdl-textfield mdl-block mdl-js-selectfield mdl-textfield--floating-label">
-                <select onKeyPress={()=>this.isPress()} className="selectBox mdl-textfield__input" id="status" ref="status">
-                  <option value=""></option>
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Disapproved">Disapproved</option>
-                </select>
-                <label className="mdl-textfield__label">Status</label>
+              <div id="status-opt" className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield">
+                <div className="mdl-selectfield">
+                  <select onKeyPress={()=>this.isPress()} className="mdl-textfield__input" id="status" ref="status">
+                    <option value=""></option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Disapproved">Disapproved</option>
+                  </select>
+                  <label className="mdl-textfield__label">Status</label>
+                </div>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
