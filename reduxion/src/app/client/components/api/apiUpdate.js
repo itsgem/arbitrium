@@ -54,8 +54,12 @@ class ApiUpdate extends React.Component {
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
-      errors = Object.assign({}, {ip_addresses: errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses});
+      errors = Object.assign({}, errorServer.response);
+      if (errors.ip_addresses) {
+        errors.ip_addresses = errorServer.response.ip_addresses[0].ip_address ? errorServer.response.ip_addresses[0].ip_address : errorServer.response.ip_addresses
+      }
     }
+
     this.scrolltop(errors);
 
     let ipAddresses = '';
@@ -89,7 +93,7 @@ class ApiUpdate extends React.Component {
               </div>
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
-            <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
+            <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-2">
               <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_api_call_restricted == 1 ? true : false}/>
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
@@ -121,6 +125,9 @@ class ApiUpdate extends React.Component {
               );
             })
           }
+          <div className={this.formClassNames('permissions', errors)}>
+            {errors.permissions && <small className="mdl-textfield__error shown">{errors.permissions}</small>}
+          </div>
         </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col check-test-key">
@@ -208,7 +215,8 @@ class ApiUpdate extends React.Component {
   formClassNames( field, errors ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': errors[ field ],
-      'has-success': errors && !(errors[ field ])
+      'has-success': errors && !(errors[ field ]),
+      'permission-padding': field == 'permissions' && errors[ field ]
     } );
   }
 };
