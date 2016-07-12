@@ -1,5 +1,4 @@
 import React from 'react';
-import tr from 'i18next';
 import LocalLoginForm from 'client/components/auth/localLoginForm';
 import DocTitle from 'common/components/docTitle';
 import moment from 'moment';
