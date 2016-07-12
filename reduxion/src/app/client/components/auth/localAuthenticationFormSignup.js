@@ -363,7 +363,7 @@ class LocalAuthenticationFormSignup extends React.Component {
                     ref="password"
                     type='password'
                     />
-                  <label className="mdl-textfield__label" htmlFor="password">{tr.t('label.userName')}</label>
+                  <label className="mdl-textfield__label" htmlFor="password">{tr.t('label.password')}</label>
                   {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                 </div>
               </div>
