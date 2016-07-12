@@ -497,6 +497,11 @@ class Client extends NrbModel
         with(new MailServices())->subscriptionCancellation($this->user, $subscription);
     }
 
+    public function sendSubscriptionExpired($subscription)
+    {
+        with(new MailServices())->subscriptionExpired($this->user, $subscription);
+    }
+
     public function sendPendingSubscriptionCancellation($subscription_name)
     {
         with(new MailServices())->pendingSubscriptionCancellation($this->user, $subscription_name);
