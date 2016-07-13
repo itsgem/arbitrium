@@ -80,5 +80,47 @@
     "alreadyHaveAnAccount": "Already have an account? Login here.",
     "createAnAccount": "Create an account",
     "checkAvailability": "Check Availability"
+  },
+  "LOGIN": {
+    "DOC_TITLE": "Login",
+    "FORM": {
+      "LABEL": {
+        "EMAIL_USER": "Email / Username",
+        "PASSWORD": "Password"
+      },
+      "BUTTON": {
+        "LOGIN_BTN": "Login"
+      }
+    },
+    "LINK": {
+      "FORGOT_PW": "Forgot Password"
+    }
+  },
+  "FORGOT_PW": {
+    "DOC_TITLE": "Forgot Password",
+    "FORM": {
+      "TITLE": {
+        "FORGOT_PW": "Forgot Password"
+      },
+      "SUB_TITLE": {
+        "PW_RESET": "Password Reset",
+        "CHECK_EMAIL": "Step 2 - Check Email"
+      },
+      "NOTE": {
+        "ENTER_EMAIL": "Enter the email address used when you registered with username and passwords.",
+        "YOU_WILL_BE_SENT_RESET_CODE": "You'll be sent a reset code to change your password.",
+        "EMAIL_SENT": "An email has been sent containing your reset link. Click on the link to proceed.",
+        "CHECK_SPAM": "Please also check your spam folder just in case the reset email ended up there."
+      },
+      "LABEL": {
+        "EMAIL": "Email"
+      },
+      "BUTTON": {
+        "SEND_RESET_EMAIL": "Send Reset Email"
+      }
+    },
+    "LINK": {
+      "BACK_TO_LOGIN": "Back to Login"
+    }
   }
 }
