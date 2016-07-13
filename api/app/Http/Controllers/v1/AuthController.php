@@ -96,7 +96,7 @@ class AuthController extends ApiController
                         'lifetime'  => get_sesssion_lifetime(),
                         'timezone'  => $user->timezone,
                         'username'  => $user->username,
-                        'role_id'  => $user->getRoleIds()
+                        'role_id'   => $user->getRoles('id')
                     ];
                     return $this->respondWithSuccess($data);
                 }
@@ -140,7 +140,7 @@ class AuthController extends ApiController
                     'lifetime'  => get_sesssion_lifetime(),
                     'timezone'  => $user->timezone,
                     'username'  => $user->username,
-                    'role_id'  => $user->getRoleIds()
+                    'role_id'   => $user->getRoles('id')
                 ]);
     }
 
