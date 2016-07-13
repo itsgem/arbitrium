@@ -257,7 +257,7 @@ class Client extends NrbModel
             // SELECT * FROM client_subscriptions
             // WHERE id IN (SELECT MAX(id) FROM client_subscriptions GROUP BY client_id)
 
-            return $query->whereHas('subscriptions', function($query){
+            return $query->whereHas('subscription', function($query){
                 $query->whereIn('id', function($query){
                     $query->selectRaw('MAX(id)')
                         ->from(with(new ClientSubscription)->getTable())
