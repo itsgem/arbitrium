@@ -35,7 +35,7 @@ class LocalLoginForm extends React.Component {
           </div>
         </div>
         <LocalAuthenticationForm
-          buttonCaption={tr.t('button.login') }
+          buttonCaption={tr.t('LOGIN.FORM.BUTTON.LOGIN_BTN') }
           errors={ this.state.errors }
           onButtonClick={ (payload) => { this.login(payload) } }
           login={ this.props.login }
@@ -96,9 +96,6 @@ class LocalLoginForm extends React.Component {
 
 };
 
-
-//////////////////////
-
 LocalLoginForm.propTypes = {
   login: React.PropTypes.func.isRequired
 };
@@ -106,7 +103,6 @@ LocalLoginForm.propTypes = {
 LocalLoginForm.defaultProps = {
   onLoggedIn: () => {}
 };
-//////////////////////
 
 function validateLogin( payload ) {
   return new ValidateLoginFields( {

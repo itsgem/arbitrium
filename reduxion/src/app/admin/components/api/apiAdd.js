@@ -193,6 +193,7 @@ class ApiAdd extends React.Component {
     }
     let payload = {
       company_name: this.refs.client_id.value,
+      has_subscription: 1
     }
     this.props.adminClientList(payload).catch(createError);
   }
