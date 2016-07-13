@@ -23,6 +23,10 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
 
     const ADMIN         = 1;
     const CLIENT        = 2;
+
+    const ROLE_SUPER_ADMIN = 'super_admin';
+    const ROLE_ADMIN       = 'admin';
+
     /**
      * The database table used by the model.
      *
@@ -313,9 +317,19 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         return $this->activated_at;
     }
 
-    public function isAdmin()
+    public function isAdmin($role = null)
     {
-        return $this->user_type == self::ADMIN;
+        if ($this->user_type == self::ADMIN)
+        {
+            if ($role)
+            {
+                return in_array($role, array_pluck($this->getRoles(), 'name'));
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public function isClient()
@@ -341,7 +355,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
     public function isMaxLogAttempts()
     {
         $max = false;
-        if (!$this->isAdmin() && $this->login_attempts >= config('arbitrium.max_login_attempts'))
+        if (!$this->isAdmin(self::ROLE_SUPER_ADMIN) && $this->login_attempts >= config('arbitrium.max_login_attempts'))
         {
             $max = true;
             $this->locked_at = current_datetime();
@@ -352,7 +366,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
 
     public function isLocked()
     {
-        if (!$this->isAdmin() && $this->locked_at)
+        if (!$this->isAdmin(self::ROLE_SUPER_ADMIN) && $this->locked_at)
         {
             $locked_duration = $this->locked_at->addMinutes(config('arbitrium.user_lock_duration'));
             return (current_datetime() < $locked_duration);
@@ -369,9 +383,18 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         }
     }
 
-    public function getRoleIds()
+    public function getRoles($key = null)
     {
-        return ($this->isAdmin()) ? array_pluck($this->roles, 'id') : null;
+        if ($this->roles)
+        {
+            if ($key)
+            {
+                return array_pluck($this->roles, $key);
+            }
+            return $this->roles;
+        }
+
+        return [];
     }
 
     public function sendChangeEmail($callback_url, $new_email_address)
