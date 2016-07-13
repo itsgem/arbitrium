@@ -66,6 +66,8 @@ export default React.createClass({
             params = {this.props.params}
             clientPurchaseSubscription = {this.props.clientPurchaseSubscription}
             subscriptionItem = {this.props.subscriptionItem}
+            subscriptionValidityPeriod = {this.props.subscriptionValidityPeriod}
+            subscriptionValidity = {this.props.subscriptionValidity}
           />
         </div>
       </main>

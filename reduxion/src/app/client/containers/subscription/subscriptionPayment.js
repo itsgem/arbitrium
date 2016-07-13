@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { clientPurchaseSubscription, getSubscriptionItem } from 'client/reducers/subscription'
+import { clientPurchaseSubscription, getSubscriptionItem, subscriptionValidity } from 'client/reducers/subscription'
 import SubscriptionPayment from 'client/views/subscription/subscriptionPayment';
 
 const strMapToObj=(strMap) => {
@@ -10,9 +10,10 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => ({
   loading: state.get('AdminSubscription').get('loading'),
   subscriptionItem: strMapToObj(state.get('AdminSubscription').get('subscriptionItem')),
+  subscriptionValidityPeriod: strMapToObj(state.get('AdminSubscription').get('subscriptionValidityPeriod')),
   purchaseSuccess: strMapToObj(state.get('AdminSubscription').get('purchaseSuccess'))
 });
 
 export default connect((mapStateToProps), {
-  clientPurchaseSubscription, getSubscriptionItem
+  clientPurchaseSubscription, getSubscriptionItem, subscriptionValidity
 })(SubscriptionPayment)
