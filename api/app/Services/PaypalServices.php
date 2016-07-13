@@ -72,6 +72,11 @@ class PaypalServices extends NrbServices
 
         $plan_frequency_interval = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
 
+        if (env('APP_DEBUG') && ($data['term'] == ClientSubscription::TERM_DAILY))
+        {
+            $plan_frequency_interval =  1;
+        }
+
         $plan->setName($data['name'])
             ->setDescription($data['description'])
             ->setType($plan_type);
@@ -267,6 +272,12 @@ class PaypalServices extends NrbServices
                 $data['paypal_plan_id'] = $result_data->data->paypal_plan_id;
 
                 $start_date_offset = ($data['term'] == ClientSubscription::TERM_ANNUALLY) ? config('paypal.period_days.annually') : config('paypal.period_days.monthly');
+
+                if (env('APP_DEBUG') && ($data['term'] == ClientSubscription::TERM_DAILY))
+                {
+                    $start_date_offset = 1;
+                }
+
                 $start_date = current_datetime_iso8601($start_date_offset);
 
                 // Subscribe Customer

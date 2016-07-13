@@ -165,6 +165,11 @@ class SubscriptionsController extends ApiController
             $data['valid_to'] = $date->addDays(config('paypal.period_days.monthly'));
         }
 
+        if (env('APP_DEBUG') && ($request->get('term') == ClientSubscription::TERM_DAILY))
+        {
+            $data['valid_to'] = $date->addDay();
+        }
+
         $data = array_map(function($date) use($request){
             if ($request->get('with-time'))
             {
