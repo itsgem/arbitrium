@@ -32,14 +32,14 @@ class Login extends React.Component {
     return (
       <div id='login' className="auth-view">
         <DocTitle
-          title={tr.t('title.login')}
+          title={tr.t('LOGIN.DOC_TITLE')}
         />
         <div className="login-view">
           <LocalLoginForm login={this.props.login}/>
           <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
                 <Link
-                  to="/coffee/forgot">{tr.t('button.forgotPassword')}</Link>
+                  to="/coffee/forgot">{tr.t('LOGIN.LINK.FORGOT_PW')}</Link>
             </div>
           </div>
         </div>
