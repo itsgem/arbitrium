@@ -11,11 +11,12 @@ class SubscriptionPayment extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      permissions: {}
+      permissions: {},
+      validFrom: null,
+      validTo: null
     };
   }
   componentWillReceiveProps () {
-    this.dateValid();
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -106,7 +107,7 @@ class SubscriptionPayment extends React.Component {
                   :
                   <div id="term-opt" className={this.formClassNames('term', errors)}>
                     <div className="mdl-selectfield">
-                      <select onChange={()=>this.dateValid()} id="term" ref="term" className="mdl-textfield__input">
+                      <select onChange={(e)=>this.dateValid(e)} id="term" ref="term" className="mdl-textfield__input">
                         <option></option>
                         <option>Annually</option>
                         <option>Monthly</option>
@@ -267,13 +268,9 @@ class SubscriptionPayment extends React.Component {
     });
   }
 
-  dateValid() {
+  dateValid(e) {
     let subscriptionItem = this.props.subscriptionItem.data;
-    let term = subscriptionItem.type == "Trial" ?  "Monthly" : this.refs.term.value;
-    let dateToday = new Date();
-    let isFrom = ' ';
-    let newDate = ' ';
-    let isTo = ' ';
+    let termValue = e ? e.target.value : '';
 
     if (term!='') {
       document.getElementById('validFromRap').classList.remove('hidden');
@@ -281,19 +278,6 @@ class SubscriptionPayment extends React.Component {
     } else {
       document.getElementById('validFromRap').classList.add('hidden');
       document.getElementById('validToRap').classList.add('hidden');
-    }
-
-    switch (term) {
-      case 'Annually':
-        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
-        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate() + 365);
-        isTo = newDate.getMonth() + '/' + newDate.getDate() + '/' +  newDate.getFullYear();
-        break;
-      case 'Monthly':
-        isFrom = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' +  dateToday.getFullYear();
-        newDate = new Date(dateToday.getFullYear(), dateToday.getMonth() + 1, dateToday.getDate() + 30);
-        isTo = newDate.getMonth() + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-        break;
     }
 
     let target = this.refs.term.id + "-opt";
@@ -305,8 +289,24 @@ class SubscriptionPayment extends React.Component {
       }
     }
 
-    this.refs.validFrom.value = isFrom;
-    this.refs.validTo.value = isTo;
+    let payload = {
+      term: termValue
+    };
+
+    this.props.subscriptionValidity(payload)
+      .then(() => this.setValidityPeriod())
+      .catch(createError);
+  }
+  setValidityPeriod() {
+    let validPeriod = this.props.subscriptionValidityPeriod.data;
+
+    this.setState({
+      validFrom: validPeriod.valid_from,
+      validTo: validPeriod.valid_to
+    });
+
+    this.refs.validFrom.value = this.state.validFrom;
+    this.refs.validTo.value = this.state.validTo;
   }
   termConditions(e) {
     if (e.target.checked) {
