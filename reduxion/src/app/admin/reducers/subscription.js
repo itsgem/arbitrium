@@ -10,6 +10,7 @@ export const clientSubscriptionInfo = createActionAsync('ADMIN_CLIENT_SUBSCRIPTI
 export const selectedSubscriptionInfo = createActionAsync('ADMIN_SELECTED_SUBSCRIPTION_INFO', auth.getSubscriptionItem);
 export const adminChangeSubscription = createActionAsync('ADMIN_CHANGE_SUBSCRIPTION', auth.changePurchaseSubscription);
 export const clientProfile = createActionAsync('ADMIN_CLIENT_PROFILE', auth.clientProfile);
+export const subscriptionValidity = createActionAsync('SUBSCRIPTION_VALIDITY', auth.subscriptionValidity);
 
 const initialState = Immutable.fromJS({
   clientInfo: {},
@@ -17,6 +18,7 @@ const initialState = Immutable.fromJS({
   subscriptions: {},
   subscriptionInfoClient: {},
   subscriptionInfoSelected: {},
+  subscriptionValidityPeriod: {},
   purchaseSuccess: false,
   loading: false
 });
@@ -68,6 +70,13 @@ export default createReducer({
   [selectedSubscriptionInfo.request]: (state) => state.merge({
     subscriptionInfoSelected: {},
     purchaseSuccess: false,
+    loading: true
+  }),
+  [subscriptionValidity.ok]: (state, payload) => state.merge({
+    subscriptionValidityPeriod: payload,
+    loading: false
+  }),
+  [subscriptionValidity.request]: (state) => state.merge({
     loading: true
   })
 }, initialState);
