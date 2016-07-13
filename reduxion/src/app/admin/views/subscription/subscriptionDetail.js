@@ -61,6 +61,8 @@ export default React.createClass({
           clientSubscriptionInfo = {this.props.subscriptionInfoClient}
           selectedSubscriptionInfo = {this.props.subscriptionInfoSelected}
           adminChangeSubscription = {this.props.adminChangeSubscription}
+          subscriptionValidityPeriod = {this.props.subscriptionValidityPeriod}
+          subscriptionValidity = {this.props.subscriptionValidity}
         />
       </div>
     );
