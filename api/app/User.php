@@ -341,7 +341,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
     public function isMaxLogAttempts()
     {
         $max = false;
-        if ($this->login_attempts >= config('arbitrium.max_login_attempts'))
+        if (!$this->isAdmin() && $this->login_attempts >= config('arbitrium.max_login_attempts'))
         {
             $max = true;
             $this->locked_at = current_datetime();
@@ -352,7 +352,13 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
 
     public function isLocked()
     {
-        return $this->locked_at;
+        if (!$this->isAdmin() && $this->locked_at)
+        {
+            $locked_duration = $this->locked_at->addMinutes(config('arbitrium.user_lock_duration'));
+            return (current_datetime() < $locked_duration);
+        }
+
+        return false;
     }
 
     public function logout()

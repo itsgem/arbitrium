@@ -3,6 +3,7 @@
 return [
     'max_login_attempts'    => 3,
     'min_admin_count'       => 3,
+    'user_lock_duration'    => 5, // in minutes
     'default_timezone'      => 'Asia/Singapore',
 
     'subscription_email_reminder' => 7, // in days
