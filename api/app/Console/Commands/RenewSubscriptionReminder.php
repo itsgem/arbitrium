@@ -33,8 +33,8 @@ class RenewSubscriptionReminder extends Command
     {
         log_command($this->signature);
 
-        $this->info('START '.$this->signature);
-        Log::info('START '.$this->signature);
+        $this->info('['.$this->signature.'] ===== START =====');
+        Log::info('['.$this->signature.'] ===== START =====');
 
         DB::transaction(function ()
         {
@@ -42,8 +42,8 @@ class RenewSubscriptionReminder extends Command
             $valid_to           = format_date_to_string(current_date()->addDay($reminder_in_days));
             $new_validity_date  = convert_to_string(current_date()->addDay($reminder_in_days + 1), 'F j,Y');
 
-            $this->info('SUBSCRIPTIONS VALID TO: '.$valid_to.' NEW VALIDITY: '.$new_validity_date);
-            Log::info('SUBSCRIPTIONS VALID TO: '.$valid_to.' NEW VALIDITY: '.$new_validity_date);
+            $this->info('['.$this->signature.'] SUBSCRIPTIONS VALID TO: '.$valid_to.' NEW VALIDITY: '.$new_validity_date);
+            Log::info('['.$this->signature.'] SUBSCRIPTIONS VALID TO: '.$valid_to.' NEW VALIDITY: '.$new_validity_date);
 
             $client_subscriptions = ClientSubscription::active()
                                     ->isAutoRenew()
@@ -59,19 +59,20 @@ class RenewSubscriptionReminder extends Command
                 $client_subscription->is_email_reminder_sent = 1;
                 $client_subscription->save();
 
-                $message = ' Reminded almost due Client Subscription #'.$client_subscription->id.' ('.$client_subscription->client->user->email_address.')';
+                $message = 'Reminded almost due Client Subscription #'.$client_subscription->id.' ('.$client_subscription->client->user->email_address.')';
 
                 $loading->advance();
 
-                $this->info($message);
-                Log::info($message);
+                $this->info(' '.$message);
+                Log::info('['.$this->signature.'] '.$message);
             }
 
             $loading->finish();
         });
 
         $this->info('');
-        $this->info('END '.$this->signature);
-        Log::info('END '.$this->signature);
+        $this->info('');
+        $this->info('['.$this->signature.'] ===== END =====');
+        Log::info('['.$this->signature.'] ===== END =====');
     }
 }

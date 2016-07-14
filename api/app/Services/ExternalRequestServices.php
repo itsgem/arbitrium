@@ -73,20 +73,17 @@ class ExternalRequestServices extends NrbServices
 
     public function send($endpoint, $payload = [])
     {
-        Log::info('START External Request');
+        Log::info('['.get_called_class().'] ===== START =====');
 
-        Log::info('AUTH:', $this->config['auth']);
+        Log::info('['.get_called_class().'] AUTH:', $this->config['auth']);
 
         // Authenticate External API access
         $response = $this->authenticate($this->config['auth']);
-        Log::info('Authentication Success');
+        Log::info('['.get_called_class().'] Authentication Success');
 
         $data['headers'] = ['Authorization' => $response['body']->token_type.' '.$response['body']->access_token];
 
-        Log::info('PAYLOAD:', [
-            'method'   => $endpoint['method'],
-            'endpoint' => $this->config['api_url'].$endpoint['path'],
-        ]);
+        Log::info('['.get_called_class().'] PAYLOAD:', ['method'   => $endpoint['method'], 'endpoint' => $this->config['api_url'].$endpoint['path']]);
 
         // Transform payload to camelcase
         $payload = transform_arbitrium_payload($payload);
@@ -105,9 +102,7 @@ class ExternalRequestServices extends NrbServices
 
         $endpoint['path'] = $endpoint['path'] ?: '';
 
-        Log::info('PAYLOAD:', [
-            'payload'  => $data,
-        ]);
+        Log::info('['.get_called_class().'] PAYLOAD:', ['payload'  => $data]);
 
         $result = $http_client->request($endpoint['method'], $this->config['api_url'].$endpoint['path'], $data);
 
@@ -116,15 +111,15 @@ class ExternalRequestServices extends NrbServices
         // 204 No Content
         if (!$response)
         {
-            Log::info('RESPONSE ERROR: No content');
+            Log::info('['.get_called_class().'] RESPONSE ERROR: No content');
             return $this->respondWithError(Errors::NO_CONTENT);
         }
-        Log::info('RESPONSE SUCCESS: '.json_encode($response));
+        Log::info('['.get_called_class().'] RESPONSE SUCCESS: '.json_encode($response));
 
         $response = transform_arbitrium_response_data($response);
-        Log::info('TRANSFORMED RESPONSE: '.json_encode($response));
+        Log::info('['.get_called_class().'] TRANSFORMED RESPONSE: '.json_encode($response));
 
-        Log::info('END External Request');
+        Log::info('['.get_called_class().'] ===== END =====');
 
         if ($this->as_object)
         {
