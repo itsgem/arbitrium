@@ -132,12 +132,22 @@ class ApiList extends React.Component {
     let apiList = {last_page: 1};
     let users = {};
     if (Object.keys(this.props.ListApiSuccess).length) {
-      let i=0;
       counter = true;
       apiList = this.props.ListApiSuccess;
       users = apiList.data;
-      pagination[i] = this.prevPage(i, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
-      for (i = 1; i <= apiList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
+      let i = 1;
+      if (apiList.last_page > apiList.max_pagination_links) {
+        i = Math.round(apiList.max_pagination_links / 2);
+        i = i < apiList.current_page ? (apiList.current_page - 2) : 1;
+        i = (apiList.last_page >  apiList.max_pagination_links) && i > (apiList.last_page - apiList.max_pagination_links) ? ((apiList.last_page - apiList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= apiList.last_page ; i++) {
+        if (pageLimitCounter >= apiList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, apiList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );

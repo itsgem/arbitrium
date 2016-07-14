@@ -9,7 +9,7 @@ class AdminInvoiceList extends React.Component {
     this.state = {
       errors: {},
       errorServer: null,
-      invoiced_date_from: moment(new Date()).format('YYYY-MM-DD'),
+      invoiced_date_from: null,
       invoiced_date_to: null
     };
   }
@@ -152,12 +152,22 @@ class AdminInvoiceList extends React.Component {
     let invoiceList = {last_page: 1};
     let log = {};
     if (Object.keys(this.props.invoiceList).length) {
-      let i=0;
       counter = true;
       invoiceList = this.props.invoiceList;
       log = invoiceList.data;
-      pagination[i] = this.prevPage(i, (invoiceList.current_page > 1 ? (invoiceList.current_page - 1): false));
-      for (i = 1; i <= invoiceList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (invoiceList.current_page > 1 ? (invoiceList.current_page - 1): false));
+      let i = 1;
+      if (invoiceList.last_page > invoiceList.max_pagination_links) {
+        i = Math.round(invoiceList.max_pagination_links / 2);
+        i = i < invoiceList.current_page ? (invoiceList.current_page - 2) : 1;
+        i = (invoiceList.last_page >  invoiceList.max_pagination_links) && i > (invoiceList.last_page - invoiceList.max_pagination_links) ? ((invoiceList.last_page - invoiceList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= invoiceList.last_page ; i++) {
+        if (pageLimitCounter >= invoiceList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, invoiceList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((invoiceList.current_page == invoiceList.last_page)|| invoiceList.last_page == 0 ? false : (invoiceList.current_page + 1 )), invoiceList.last_page );
@@ -329,6 +339,7 @@ class AdminInvoiceList extends React.Component {
     e.preventDefault();
 
     let payload = {
+      per_page: this.refs.pageNum.value,
       date_from: clearDate  ? '' : (dateFrom ? dateFrom : ''),
       date_to: clearDate  ? '' : (dateTo ? dateTo : ''),
       invoice_no: this.refs.invoice_no.value,

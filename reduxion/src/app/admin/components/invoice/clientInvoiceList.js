@@ -113,12 +113,22 @@ class AdminClientInvoiceList extends React.Component {
     let clientInvoiceList = {last_page: 1};
     let log = {};
     if (Object.keys(this.props.clientInvoiceList).length) {
-      let i=0;
       counter = true;
       clientInvoiceList = this.props.clientInvoiceList;
       log = clientInvoiceList.data;
-      pagination[i] = this.prevPage(i, (clientInvoiceList.current_page > 1 ? (clientInvoiceList.current_page - 1): false));
-      for (i = 1; i <= clientInvoiceList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (clientInvoiceList.current_page > 1 ? (clientInvoiceList.current_page - 1): false));
+      let i = 1;
+      if (clientInvoiceList.last_page > clientInvoiceList.max_pagination_links) {
+        i = Math.round(clientInvoiceList.max_pagination_links / 2);
+        i = i < clientInvoiceList.current_page ? (clientInvoiceList.current_page - 2) : 1;
+        i = (clientInvoiceList.last_page >  clientInvoiceList.max_pagination_links) && i > (clientInvoiceList.last_page - clientInvoiceList.max_pagination_links) ? ((clientInvoiceList.last_page - clientInvoiceList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= clientInvoiceList.last_page ; i++) {
+        if (pageLimitCounter >= clientInvoiceList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, clientInvoiceList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((clientInvoiceList.current_page == clientInvoiceList.last_page)|| clientInvoiceList.last_page == 0 ? false : (clientInvoiceList.current_page + 1 )), clientInvoiceList.last_page );
@@ -260,6 +270,7 @@ class AdminClientInvoiceList extends React.Component {
     e.preventDefault();
 
     let payload = {
+      per_page: this.refs.pageNum.value,
       company_name: this.refs.company_name.value,
       client_name: this.refs.name.value,
       status: this.refs.status.value

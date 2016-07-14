@@ -33,18 +33,17 @@ export default React.createClass({
   },
   noContent () {
     return (
-      <div className="noContent">No content</div>
+      <div className="noContent">
+        <NotFound />
+      </div>
     );
   },
   render () {
     if (!this.props.apiKeyInfo) {
       closeLoading();
-      return (
-        <div>
-          <NotFound />
-        </div>
-      );
+      return this.noContent();
     }
+
     if (Object.keys(this.props.apiKeyInfo).length && Object.keys(this.props.apiPermissions).length) {
       closeLoading();
       return this.renderApiInfo();
