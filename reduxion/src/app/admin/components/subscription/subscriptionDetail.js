@@ -108,13 +108,13 @@ class SubscriptionDetail extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div id="validFromRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
-                <input value="&nbsp;" className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/>
+                <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/>
                 <label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div id="validToRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
-                <input value="&nbsp;" className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/>
+                <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/>
                 <label className="mdl-textfield__label" htmlFor="validTo">To</label>
               </div>
             </div>
@@ -267,8 +267,12 @@ class SubscriptionDetail extends React.Component {
     if (subscriptionItem.type != "Trial" && this.refs.term.value) {
       if (document.getElementById(target)) {
         document.getElementById(target).classList.add('is-dirty');
+        document.getElementById('validFromRap').classList.add('is-dirty');
+        document.getElementById('validToRap').classList.add('is-dirty');
       } else {
         document.getElementById(target).classList.remove('is-dirty');
+        document.getElementById('validFromRap').classList.remove('is-dirty');
+        document.getElementById('validToRap').classList.remove('is-dirty');
       }
     }
 
