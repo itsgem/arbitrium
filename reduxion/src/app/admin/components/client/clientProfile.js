@@ -708,8 +708,8 @@ class ClientProfile extends React.Component {
                 <p>{moment(currentSubscription.valid_from).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>TERMS OF SUBSCRIPTION</h6>
-                <p>{currentSubscription.term}</p>
+                <h6>{currentSubscription.type == 'Trial' ? 'TERMS OF SUBSCRIPTION FOR FREE TRIAL PLAN' : 'TERMS OF SUBSCRIPTION'}</h6>
+                <p>{currentSubscription.type == 'Trial' ? '30 days' : currentSubscription.term}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
                 <h6>END DATE</h6>
