@@ -4,10 +4,12 @@ namespace App\Models;
 
 class ClientSubscription extends Subscription
 {
+    const TERM_DAILY           = 'Daily';
     const TERM_MONTHLY         = 'Monthly';
     const TERM_ANNUALLY        = 'Annually';
-    const TERM_ANNUAL          = '1 Year';
+    const TERM_DAY             = '1 Day';
     const TERM_MONTH           = '1 Month';
+    const TERM_ANNUAL          = '1 Year';
 
     const TYPE_TRIAL           = 'Trial';
     const TYPE_PLAN            = 'Plan';
@@ -301,6 +303,11 @@ class ClientSubscription extends Subscription
                 {
                     $term = self::TERM_MONTH;
                 }
+
+                if (env('APP_DEBUG') && $this->term == self::TERM_DAILY)
+                {
+                    $term = self::TERM_DAY;
+                }
             }
 
             $name .= ' ('.$term.')';
@@ -329,6 +336,11 @@ class ClientSubscription extends Subscription
         {
             // Monthly and Trial
             $this->valid_to = $this->valid_from->addDays(config('paypal.period_days.monthly'));
+        }
+
+        if (env('APP_DEBUG') && $term == self::TERM_DAILY)
+        {
+            $this->valid_to = $this->valid_from->addDay();
         }
     }
 
@@ -380,9 +392,16 @@ class ClientSubscription extends Subscription
 
     public static function getTerms()
     {
-        return [
+        $data = [
             self::TERM_ANNUALLY,
             self::TERM_MONTHLY,
         ];
+
+        if (env('APP_DEBUG'))
+        {
+            $data[] = self::TERM_DAILY;
+        }
+
+        return $data;
     }
 }

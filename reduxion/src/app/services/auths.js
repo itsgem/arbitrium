@@ -78,6 +78,11 @@ export default {
       }
     });
   },
+  subscriptionValidity(payload) {
+    return get('client/subscription/validity',{
+      params: payload
+    });
+  },
   clientList(payload = {page: 1, per_page: 10}) {
     return get('admin/client',{
       params: payload

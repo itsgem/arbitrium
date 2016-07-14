@@ -222,6 +222,11 @@ class Subscription extends NrbModel
             ClientSubscription::TERM_ANNUALLY => $annually,
         ];
 
+        if (env('APP_DEBUG'))
+        {
+            $fees[ClientSubscription::TERM_DAILY] = $monthly;
+        }
+
         if ($term) {
             return $fees[$term];
         }
@@ -258,6 +263,12 @@ class Subscription extends NrbModel
                 ])
             ),
         ];
+
+        if (env('APP_DEBUG'))
+        {
+            $total[ClientSubscription::TERM_DAILY]               = $total[ClientSubscription::TERM_MONTHLY];
+            $total[ClientSubscription::TERM_DAILY.'_With_Setup'] = $total[ClientSubscription::TERM_MONTHLY.'_With_Setup'];
+        }
 
         if ($term) {
             return $total[$term];

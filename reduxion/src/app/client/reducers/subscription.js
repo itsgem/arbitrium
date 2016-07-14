@@ -11,6 +11,7 @@ export const getSubscriptionItem = createActionAsync('CLIENT_SINGLE_SUBSCRIPTION
 export const clientPurchaseSubscriptionConfirm = createActionAsync('CLIENT_PURCHASE_SUBSCRIPTION_CONFIRM', auth.clientPurchaseSubscriptionConfirm);
 export const clientSubscriptionPending = createActionAsync('CLIENT_SUBSCRIPTION_PENDING', auth.clientSubscriptionPending);
 export const clientSubscriptionCancelPending = createActionAsync('CLIENT_SUBSCRIPTION_PENDING_CANCEL', auth.clientSubscriptionCancelPending);
+export const subscriptionValidity = createActionAsync('CLIENT_SUBSCRIPTION_VALIDITY', auth.subscriptionValidity);
 
 const initialState = Immutable.fromJS({
   listSubscription: {},
@@ -22,7 +23,8 @@ const initialState = Immutable.fromJS({
   loading: false,
   paypalPending: {},
   paypalPendingCancel: false,
-  error: {}
+  error: {},
+  subscriptionValidityPeriod: {},
 });
 
 export default createReducer({
@@ -97,5 +99,12 @@ export default createReducer({
   [clientSubscriptionCancelPending.request]: (state) => state.merge({
     paypalPendingCancel: false,
     error: {}
+  }),
+  [subscriptionValidity.ok]: (state, payload) => state.merge({
+    subscriptionValidityPeriod: payload,
+    loading: false
+  }),
+  [subscriptionValidity.request]: (state) => state.merge({
+    loading: true
   })
 }, initialState);
