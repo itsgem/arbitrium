@@ -272,7 +272,7 @@ class SubscriptionPayment extends React.Component {
     let subscriptionItem = this.props.subscriptionItem.data;
     let termValue = e ? e.target.value : '';
 
-    if (term!='') {
+    if (termValue != '') {
       document.getElementById('validFromRap').classList.remove('hidden');
       document.getElementById('validToRap').classList.remove('hidden');
     } else {
