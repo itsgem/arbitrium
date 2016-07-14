@@ -97,6 +97,7 @@ class SubscriptionDetail extends React.Component {
                       <option></option>
                       <option>Annually</option>
                       <option>Monthly</option>
+                      {(process.env.APP_DEBUG == "true") ? <option value="Daily">Daily (DEBUG)</option> : ''}
                     </select>
                     <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
                     {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}

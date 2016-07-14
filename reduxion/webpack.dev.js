@@ -20,7 +20,8 @@ var webpackDevConfig = {
         new webpack.DefinePlugin( {
             'process.env': {
                 NODE_ENV: JSON.stringify( 'development' ),
-                API_URL: JSON.stringify( process.env.API_URL )
+                API_URL: JSON.stringify( process.env.API_URL ),
+                APP_DEBUG: JSON.stringify( process.env.APP_DEBUG )
             }
         } ),
         new OpenBrowserPlugin({ url: 'http://localhost:9991' })
