@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiEdit from 'client/components/api/apiUpdate';
+import NotFound from 'common/components/noMatch';
 import {createError} from 'utils/error';
 import {openLoading, closeLoading} from 'common/components/modal'
 
@@ -38,7 +39,11 @@ export default React.createClass({
   render () {
     if (!this.props.apiKeyInfo) {
       closeLoading();
-      return this.noContent();
+      return (
+        <div>
+          <NotFound />
+        </div>
+      );
     }
     if (Object.keys(this.props.apiKeyInfo).length && Object.keys(this.props.apiPermissions).length) {
       closeLoading();
