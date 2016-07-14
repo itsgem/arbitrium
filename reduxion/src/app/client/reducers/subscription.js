@@ -106,5 +106,9 @@ export default createReducer({
   }),
   [subscriptionValidity.request]: (state) => state.merge({
     loading: true
+  }),
+  [subscriptionValidity.error]: (state, payload) => state.merge({
+    error: payload,
+    loading: false
   })
 }, initialState);
