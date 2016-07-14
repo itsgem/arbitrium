@@ -11,7 +11,8 @@ class ApiAdd extends React.Component {
     this.state = {
       errors: {},
       errorServer:null,
-      permissions: {}
+      permissions: {},
+      checked: false
     };
   }
   componentWillReceiveProps() {
@@ -87,21 +88,23 @@ class ApiAdd extends React.Component {
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
+              <input onChange={(e)=>this.allowKey(e, permissions)} type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" checked={this.state.checked ? 'checked' : null} />
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
           {
             permissions  && permissions.map(item => {
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                      <label id={item.id} className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
                         <input
                           type="checkbox"
-                          className="mdl-checkbox__input"
+                          className="mdl-checkbox__input permission_item"
                           id={"checkbox-" + item.id}
                           name="chkRights[]"
                           value={ item.id }
-                          onClick={(e) => this.ckPermissions(e)}/>
+                          onClick={(e) => this.ckPermissions(e)}
+                          disabled={!this.state.checked ? 'true' : ''}
+                          />
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
                     </div>; })
@@ -131,7 +134,7 @@ class ApiAdd extends React.Component {
               className="mdl-button mdl-js-button mdl-button--colored"
               id='btn-cancel'
               to="/i/api/">CANCEL</Link>
-          </div>
+        </div>
           <div className="flex-order-gt-md-2" >
             <button id="btn-save"
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
@@ -140,6 +143,24 @@ class ApiAdd extends React.Component {
         </div>
       </main>
     );
+  }
+  allowKey(e, permissions) {
+    if (e.target.checked) {
+      this.setState({checked:true});
+      permissions.map(function(item) {
+        let id = 'checkbox-' + item.id;
+        document.getElementById(item.id).classList.remove('is-disabled');
+      })
+    } else {
+      this.setState({checked:false});
+      permissions.map(function(item) {
+        let id = 'checkbox-' + item.id;
+        document.getElementById(item.id).classList.remove('is-checked');
+        document.getElementById(item.id).classList.add('is-disabled');
+        document.getElementById(id).removeAttribute('checked');
+        document.getElementById(id).checked = false;
+      })
+    }
   }
   ckPermissions ( e ) {
     if (e.target.checked) {
@@ -219,6 +240,9 @@ function registerApi (payload) {
 function setErrors( e ) {
   this.setState(createError(e));
 }
+
+
+
 
 ApiAdd.mixins = [LinkedStateMixin];
 ApiAdd.defaultProps = {
