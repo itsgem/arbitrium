@@ -111,6 +111,7 @@ class SubscriptionPayment extends React.Component {
                         <option></option>
                         <option>Annually</option>
                         <option>Monthly</option>
+                        {(process.env.APP_DEBUG == "true") ? <option value="Daily">Daily (DEBUG)</option> : ''}
                       </select>
                     <label className="mdl-textfield__label" htmlFor="term">Terms of Subscription</label>
                     {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
@@ -272,7 +273,7 @@ class SubscriptionPayment extends React.Component {
     let subscriptionItem = this.props.subscriptionItem.data;
     let termValue = e ? e.target.value : '';
 
-    if (term!='') {
+    if (termValue != '') {
       document.getElementById('validFromRap').classList.remove('hidden');
       document.getElementById('validToRap').classList.remove('hidden');
     } else {
