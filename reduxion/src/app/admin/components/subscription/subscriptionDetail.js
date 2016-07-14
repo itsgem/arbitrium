@@ -11,7 +11,7 @@ class SubscriptionDetail extends React.Component {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null,
+      errorServer: null,
       permissions: {},
       validFrom: null,
       validTo: null
