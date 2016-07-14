@@ -68,7 +68,7 @@ class UpdateSubscriptionStatus extends Command
 
         $this->info('');
         $this->info('');
-        $this->info('['.$this->signature.'] ===== END =====');
-        Log::info('['.$this->signature.'] ===== END =====');
+        $this->info('['.$this->signature.'] ====== END ======');
+        Log::info('['.$this->signature.'] ====== END ======');
     }
 }

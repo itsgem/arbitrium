@@ -119,7 +119,7 @@ class ExternalRequestServices extends NrbServices
         $response = transform_arbitrium_response_data($response);
         Log::info('['.get_called_class().'] TRANSFORMED RESPONSE: '.json_encode($response));
 
-        Log::info('['.get_called_class().'] ===== END =====');
+        Log::info('['.get_called_class().'] ====== END ======');
 
         if ($this->as_object)
         {
