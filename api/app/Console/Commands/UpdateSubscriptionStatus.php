@@ -33,16 +33,16 @@ class UpdateSubscriptionStatus extends Command
     {
         log_command($this->signature);
 
-        $this->info('START '.$this->signature);
-        Log::info('START '.$this->signature);
+        $this->info('['.$this->signature.'] ===== START =====');
+        Log::info('['.$this->signature.'] ===== START =====');
 
         DB::transaction(function ()
         {
             $yesterday  = format_date_to_string(current_date()->subDay());
             $today      = current_date_to_string();
 
-            $this->info('SUBSCRIPTIONS VALID TO: '.$yesterday);
-            Log::info('SUBSCRIPTIONS VALID TO: '.$yesterday);
+            $this->info('['.$this->signature.'] SUBSCRIPTIONS VALID TO: '.$yesterday);
+            Log::info('['.$this->signature.'] SUBSCRIPTIONS VALID TO: '.$yesterday);
 
             $client_subscriptions = ClientSubscription::active()
                                     ->dateTo('valid_to', $yesterday)
@@ -55,19 +55,20 @@ class UpdateSubscriptionStatus extends Command
                 $client_subscription->expire();
                 $client_subscription->client->sendSubscriptionExpired($client_subscription);
 
-                $message = ' Inactivated Client Subscription #'.$client_subscription->id;
+                $message = 'Inactivated Client Subscription #'.$client_subscription->id;
 
                 $loading->advance();
 
-                $this->info($message);
-                Log::info($message);
+                $this->info(' '.$message);
+                Log::info('['.$this->signature.'] '.$message);
             }
 
             $loading->finish();
         });
 
         $this->info('');
-        $this->info('END '.$this->signature);
-        Log::info('END '.$this->signature);
+        $this->info('');
+        $this->info('['.$this->signature.'] ====== END ======');
+        Log::info('['.$this->signature.'] ====== END ======');
     }
 }

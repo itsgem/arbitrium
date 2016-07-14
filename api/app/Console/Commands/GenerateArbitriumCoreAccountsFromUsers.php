@@ -41,8 +41,8 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
      */
     public function handle()
     {
-        $this->info('START '.$this->signature);
-        Log::info('START '.$this->signature);
+        $this->info('['.$this->signature.'] ===== START =====');
+        Log::info('['.$this->signature.'] ===== START =====');
 
         $users = User::all();
 
@@ -55,7 +55,7 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
             if ($user->hasApi())
             {
                 $this->warn(' SKIPPPED - '.$user->username);
-                Log::warning(' SKIPPPED - '.$user->username);
+                Log::warning('['.$this->signature.'] SKIPPPED - '.$user->username);
                 continue;
             }
 
@@ -64,13 +64,13 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
                 $user->registerApiCredentials();
 
                 $this->info(' OK - '.$user->username);
-                Log::info(' OK - '.$user->username);
+                Log::info('['.$this->signature.'] OK - '.$user->username);
             }
             catch (ExternalRequestException $e)
             {
                 $response = json_decode($e->getResponse()->getBody()->getContents(), true);
                 $this->info(' ERROR - '.$user->username.' - '.json_encode($response['errors']));
-                Log::info(' ERROR - '.$user->username.' - '.json_encode($response['errors']).' | SERVER ERROR: '.$e->getMessage());
+                Log::info('['.$this->signature.'] ERROR - '.$user->username.' - '.json_encode($response['errors']).' | SERVER ERROR: '.$e->getMessage());
             }
         }
 
@@ -78,7 +78,7 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
 
         $this->info('');
         $this->info('');
-        $this->info('END '.$this->signature);
-        Log::info('END '.$this->signature);
+        $this->info('['.$this->signature.'] ====== END ======');
+        Log::info('['.$this->signature.'] ====== END ======');
     }
 }

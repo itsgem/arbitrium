@@ -46,8 +46,8 @@ class apilogList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{data.ipaddress}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.method}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
-        <td className="mdl-data-table__cell--non-numeric"><p className="hidden-text">{data.url}</p></td>
-        <td className="mdl-data-table__cell--non-numeric"><p className="hidden-text">{data.parameter}</p></td>
+        <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
@@ -203,13 +203,13 @@ class apilogList extends React.Component {
           <table width="100%" className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th className="mdl-data-table__cell--non-numeric">IP Address</th>
-                <th className="mdl-data-table__cell--non-numeric">Method</th>
-                <th className="mdl-data-table__cell--non-numeric">Status Code</th>
-                <th className="mdl-data-table__cell--non-numeric">URL</th>
-                <th className="mdl-data-table__cell--non-numeric">Parameter</th>
-                <th className="mdl-data-table__cell--non-numeric">Date Created</th>
-                <th className="mdl-data-table__cell--non-numeric">Action</th>
+                <th width="150" className="mdl-data-table__cell--non-numeric">IP Address</th>
+                <th width="100" className="mdl-data-table__cell--non-numeric">Method</th>
+                <th width="110" className="mdl-data-table__cell--non-numeric">Status Code</th>
+                <th width="270" className="mdl-data-table__cell--non-numeric">URL</th>
+                <th width="270" className="mdl-data-table__cell--non-numeric">Parameter</th>
+                <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
+                <th width="100" className="mdl-data-table__cell--non-numeric">Action</th>
               </tr>
             </thead>
             <tbody>
