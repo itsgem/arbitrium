@@ -47,7 +47,10 @@ trait JsonResponseTrait
 
     public function addHTTPHeaders($headers)
     {
-        $this->custom_headers[] = $headers;
+        foreach ($headers as $key => $value)
+        {
+            $this->custom_headers[$key] = $value;
+        }
     }
 
     public function respondWithData($data = [], $max_pagination_links = 5)
@@ -97,6 +100,16 @@ trait JsonResponseTrait
     {
         $this->response_details['success'] = false;
         $this->status_code = Errors::httpCode($error_code);
+
+        if( $this->status_code === Response::HTTP_UNAUTHORIZED ||
+            $this->status_code === Response::HTTP_INTERNAL_SERVER_ERROR ||
+            $this->status_code === Response::HTTP_BAD_REQUEST ||
+            $this->status_code === Response::HTTP_NOT_FOUND ||
+            $this->status_code === Response::HTTP_NO_CONTENT )
+        {
+            $this->addHTTPHeaders(['Access-Control-Allow-Origin' => '*']);
+        }
+
         if (array_key_exists($error_code, Errors::$extended_codes))
         {
             $this->response_details['extended_code'] =  Errors::$extended_codes[$error_code];
