@@ -339,7 +339,7 @@ class AdminInvoiceList extends React.Component {
     e.preventDefault();
 
     let payload = {
-      per_page: this.refs.pageNum.value,
+      per_page: clearDate  ? 10 : this.refs.pageNum.value,
       date_from: clearDate  ? '' : (dateFrom ? dateFrom : ''),
       date_to: clearDate  ? '' : (dateTo ? dateTo : ''),
       invoice_no: this.refs.invoice_no.value,

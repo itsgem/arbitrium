@@ -78,6 +78,7 @@ export default createReducer({
     loading: false,
     adminUnlockSuccess: false}),
   [getAdminInfo.request]: (state) => state.merge({
+    adminInfo: {},
     loading: true,
     registerCompleted: false,
     adminUpdate: false,

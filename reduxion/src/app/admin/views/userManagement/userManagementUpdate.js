@@ -4,6 +4,7 @@ import UserManagementUpdate from 'admin/components/userManagement/userManagement
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
+import NotFound from 'common/components/noMatch';
 
 export default React.createClass( {
   contextTypes: {
@@ -19,8 +20,20 @@ export default React.createClass( {
       <div className="loading"></div>
     );
   },
-  render() {
-    if (this.props.adminInfo.get("data")) {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.adminInfo) {
+      closeLoading();
+      return this.noContent();
+    }
+
+    if (Object.keys(this.props.adminInfo).length && Object.keys(this.props.role).length) {
       closeLoading();
       return this.renderAdminInfo();
     } else {

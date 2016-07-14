@@ -266,11 +266,11 @@ class AdminClientInvoiceList extends React.Component {
 
     this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, clearData = false) {
     e.preventDefault();
 
     let payload = {
-      per_page: this.refs.pageNum.value,
+      per_page: clearData ? clearData : this.refs.pageNum.value,
       company_name: this.refs.company_name.value,
       client_name: this.refs.name.value,
       status: this.refs.status.value

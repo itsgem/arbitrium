@@ -234,11 +234,12 @@ class ClientLogList extends React.Component {
       item.classList.remove('is-dirty');
     }
 
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: pageNum ? pageNum : this.refs.pageNum.value,
       company_name: this.refs.companyName.value,
       username: this.refs.username.value
     };

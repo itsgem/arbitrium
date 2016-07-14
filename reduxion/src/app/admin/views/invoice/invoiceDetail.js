@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import InvoiceDetail from 'admin/components/invoice/invoiceDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
+import NotFound from 'common/components/noMatch';
 
 export default React.createClass({
   contextTypes: {
@@ -31,7 +32,19 @@ export default React.createClass({
       this.context.router.push('/coffee/invoice');
     }
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.invoiceDetail) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.invoiceDetail).length) {
       if (!this.props.loading) {
         closeLoading();

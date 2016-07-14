@@ -86,9 +86,9 @@ class UserManagementUpdate extends React.Component {
     }
     this.scrolltop(errors);
     let userInfo = {};
-    userInfo = this.props.adminInfo.get('data');
-    let userRole = userInfo.get('user').get("roles").toArray();
-    userRole = userRole.map(item => { return item.get("id"); });
+    userInfo = this.props.adminInfo.data;
+    let userRole = userInfo.user.roles;
+    userRole = userRole.map(item => { return item.id; });
     return (
       <form>
         <div className="required">Required fields</div>
@@ -101,8 +101,8 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='username'
                   ref="username"
-                  onChange={(e) => this.notUsername(e, userInfo.get("user").get("username"))}
-                  defaultValue={userInfo.get("user").get("username")}
+                  onChange={(e) => this.notUsername(e, userInfo.user.username)}
+                  defaultValue={userInfo.user.username}
                   />
                 <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
@@ -128,7 +128,7 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='email_address'
                   ref="email_address"
-                  defaultValue={userInfo.get("user").get("email_address")}
+                  defaultValue={userInfo.user.email_address}
                   />
                 <label className="mdl-textfield__label" htmlFor="email_address">E-mail Address*</label>
                 {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
@@ -145,7 +145,7 @@ class UserManagementUpdate extends React.Component {
                     <option value=""></option>
                     {role.map(item =>
                       {
-                        return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>
+                        return (<option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>);
                       }
                     )}
                   </select>
@@ -192,7 +192,7 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='first_name'
                   ref="first_name"
-                  defaultValue={userInfo.get("first_name")}
+                  defaultValue={userInfo.first_name}
                   />
                 <label className="mdl-textfield__label" htmlFor="first_name">First name *</label>
                 {errors.first_name && <small className="mdl-textfield__error shown">{errors.first_name[0]}</small>}
@@ -205,7 +205,7 @@ class UserManagementUpdate extends React.Component {
                   type="text"
                   id='last_name'
                   ref="last_name"
-                  defaultValue={userInfo.get("last_name")}
+                  defaultValue={userInfo.last_name}
                   />
                 <label className="mdl-textfield__label" htmlFor="last_name">Last name *</label>
                 {errors.last_name && <small className="mdl-textfield__error shown">{errors.last_name[0]}</small>}
@@ -216,12 +216,12 @@ class UserManagementUpdate extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               {
-                userInfo.get('user').get("locked_at")?
+                userInfo.user.locked_at?
                   <button
                     id='btnClientApproval'
                     type='button'
                     className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
-                    onClick={(e) => this.adminUnlock(e, userInfo.get("user").get("id"))}>
+                    onClick={(e) => this.adminUnlock(e, userInfo.user.id)}>
                       <span>Unlock </span>
                       <span className="ion-unlocked icon-con"></span>
                   </button>
@@ -242,7 +242,7 @@ class UserManagementUpdate extends React.Component {
                     className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     id='btn-save'
                     type='button'
-                    onClick={(e) => this.update(e, userInfo.get("id"))}>UPDATE</button>
+                    onClick={(e) => this.update(e, userInfo.id)}>UPDATE</button>
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import DocTitle from 'common/components/docTitle';
 import SubscriptionEdit from 'admin/components/subscription/subscriptionEdit';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import NotFound from 'common/components/noMatch';
 
 export default React.createClass( {
   contextTypes: {
@@ -13,7 +14,19 @@ export default React.createClass( {
     this.props.clientSubscriptionInfo(this.props.params.client_id);
     this.props.clientProfile(this.props.params.client_id);
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.subscriptionInfoClient) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.subscriptions).length && Object.keys(this.props.subscriptionInfoClient).length && Object.keys(this.props.clientInfo).length) {
       closeLoading();
       return this.renderSubscriptions();

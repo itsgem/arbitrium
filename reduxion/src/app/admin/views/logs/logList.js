@@ -3,15 +3,25 @@ import DocTitle from 'common/components/docTitle';
 import LogList from 'admin/components/logs/logList';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal';
+import NotFound from 'common/components/noMatch';
 
 export default React.createClass( {
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
   componentWillMount(){
     this.props.adminLogList({per_page: 10, client_id: this.props.params.client_id});
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.logList) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.logList).length) {
       closeLoading();
       return this.renderLogList();
