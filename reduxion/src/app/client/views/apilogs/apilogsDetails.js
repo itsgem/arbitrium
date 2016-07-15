@@ -31,7 +31,7 @@ export default React.createClass({
     );
   },
   render () {
-    if (!this.props.apiKeyInfo) {
+    if (!this.props.successApiLogInfo) {
       closeLoading();
       return this.noContent();
     }

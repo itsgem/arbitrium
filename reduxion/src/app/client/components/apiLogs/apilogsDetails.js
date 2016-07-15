@@ -14,6 +14,7 @@ class ApiLogsDetails extends React.Component {
     let iplogInfo = this.props.successApiLogInfo.data;
     return (
       <section>
+        <div className="mdl-cell--12-col header-title"><p>API Logs detail</p></div>
         <div className="mdl-grid content">
           <div className="mdl-cell mdl-cell--6-col">
             <h6>IP ADDRESS</h6>

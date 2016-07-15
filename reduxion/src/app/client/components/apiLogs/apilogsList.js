@@ -176,7 +176,7 @@ class apilogList extends React.Component {
     return (
       <div className="filter-search">
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
-          <div className="mdl-cell mdl-cell--12-col header-title"><p>Invoice List</p></div>
+          <div className="mdl-cell mdl-cell--12-col header-title"><p>API Logs List</p></div>
           <div className="mdl-grid filter-search-bar">
               <div className="mdl-cell mdl-cell--3-col">
                 <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
