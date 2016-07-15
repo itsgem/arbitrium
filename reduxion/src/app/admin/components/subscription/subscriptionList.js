@@ -101,12 +101,22 @@ class SubscriptionList extends React.Component {
     let subscriptionList = {last_page: 1};
     let subscription = {};
     if (Object.keys(this.props.subscriptionList).length) {
-      let i=0;
       counter = true;
       subscriptionList = this.props.subscriptionList;
       subscription = subscriptionList.data;
-      pagination[i] = this.prevPage(i, (subscriptionList.current_page > 1 ? (subscriptionList.current_page - 1): false));
-      for (i = 1; i <= subscriptionList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (subscriptionList.current_page > 1 ? (subscriptionList.current_page - 1): false));
+      let i = 1;
+      if (subscriptionList.last_page > subscriptionList.max_pagination_links) {
+        i = Math.round(subscriptionList.max_pagination_links / 2);
+        i = i < subscriptionList.current_page ? (subscriptionList.current_page - 2) : 1;
+        i = (subscriptionList.last_page >  subscriptionList.max_pagination_links) && i > (subscriptionList.last_page - subscriptionList.max_pagination_links) ? ((subscriptionList.last_page - subscriptionList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= subscriptionList.last_page ; i++) {
+        if (pageLimitCounter >= subscriptionList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, subscriptionList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((subscriptionList.current_page == subscriptionList.last_page)|| subscriptionList.last_page == 0 ? false : (subscriptionList.current_page + 1 )), subscriptionList.last_page );
@@ -217,8 +227,7 @@ class SubscriptionList extends React.Component {
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalClose () {
     let dialog = document.querySelector('dialog');
@@ -234,11 +243,12 @@ class SubscriptionList extends React.Component {
       item.classList.remove('is-dirty');
     }
 
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: (pageNum ? pageNum : this.refs.pageNum.value),
       company_name: this.refs.company_name.value,
       name: this.refs.name.value,
       type: this.refs.type.value

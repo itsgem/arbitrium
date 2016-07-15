@@ -292,7 +292,7 @@ export default () => (
           <IndexRoute component={ClientSystemSettings}/>
         </Route>
       </Route>
-      <Route path="*" components={NoMatch} />
     </Route>
+    <Route path="*" components={NoMatch} />
   </Route>
 );

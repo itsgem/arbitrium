@@ -124,12 +124,22 @@ class UserManagementList extends React.Component {
     let perPage = 10;
 
     if (Object.keys(this.props.clientList).length) {
-      let i=0;
       counter = true;
       clientList = this.props.clientList;
       users = clientList.data;
-      pagination[i] = this.prevPage(i, (clientList.current_page > 1 ? (clientList.current_page - 1): false));
-      for (i = 1; i <= clientList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (clientList.current_page > 1 ? (clientList.current_page - 1): false));
+      let i = 1;
+      if (clientList.last_page > clientList.max_pagination_links) {
+        i = Math.round(clientList.max_pagination_links / 2);
+        i = i < clientList.current_page ? (clientList.current_page - 2) : 1;
+        i = (clientList.last_page >  clientList.max_pagination_links) && i > (clientList.last_page - clientList.max_pagination_links) ? ((clientList.last_page - clientList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= clientList.last_page ; i++) {
+        if (pageLimitCounter >= clientList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, clientList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((clientList.current_page == clientList.last_page)|| clientList.last_page == 0 ? false : (clientList.current_page + 1 )), clientList.last_page );
