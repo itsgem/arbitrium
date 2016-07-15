@@ -103,12 +103,22 @@ class ClientLogList extends React.Component {
     let clientList = {last_page: 1};
     let log = {};
     if (Object.keys(this.props.clientList).length) {
-      let i=0;
       counter = true;
       clientList = this.props.clientList;
       log = clientList.data;
-      pagination[i] = this.prevPage(i, (clientList.current_page > 1 ? (clientList.current_page - 1): false));
-      for (i = 1; i <= clientList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (clientList.current_page > 1 ? (clientList.current_page - 1): false));
+      let i = 1;
+      if (clientList.last_page > clientList.max_pagination_links) {
+        i = Math.round(clientList.max_pagination_links / 2);
+        i = i < clientList.current_page ? (clientList.current_page - 2) : 1;
+        i = (clientList.last_page >  clientList.max_pagination_links) && i > (clientList.last_page - clientList.max_pagination_links) ? ((clientList.last_page - clientList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= clientList.last_page ; i++) {
+        if (pageLimitCounter >= clientList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, clientList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((clientList.current_page == clientList.last_page)|| clientList.last_page == 0 ? false : (clientList.current_page + 1 )), clientList.last_page );
@@ -209,8 +219,7 @@ class ClientLogList extends React.Component {
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalClose () {
     let dialog = document.querySelector('dialog');
@@ -225,11 +234,12 @@ class ClientLogList extends React.Component {
       item.classList.remove('is-dirty');
     }
 
-    this.searchList(e);
+    this.searchList(e, 10);
   }
-  searchList(e) {
+  searchList(e, pageNum = null) {
     e.preventDefault();
     let payload = {
+      per_page: pageNum ? pageNum : this.refs.pageNum.value,
       company_name: this.refs.companyName.value,
       username: this.refs.username.value
     };

@@ -105,12 +105,23 @@ class UserManagementList extends React.Component {
     let adminList = {last_page: 1};
     let perPage = 10;
     if (this.props.adminList.size) {
-      let i=0;
       counter = true;
       adminList = this.props.adminList;
       users = adminList.get('data').toArray();
-      pagination[i] = this.prevPage(i, (adminList.get('current_page') > 1 ? (adminList.get('current_page') - 1): false));
-      for (i = 1; i <= adminList.get('last_page'); i++) {
+      // pagination[i] = this.prevPage(i, (adminList.get('current_page') > 1 ? (adminList.get('current_page') - 1): false));
+      pagination[0] = this.prevPage(0, (adminList.get('current_page') > 1 ? (adminList.get('current_page') - 1): false));
+      let i = 1;
+      if (adminList.get('last_page') > adminList.get('max_pagination_links')) {
+        i = Math.round(adminList.get('max_pagination_links') / 2);
+        i = i < adminList.get('current_page') ? (adminList.get('current_page') - 2) : 1;
+        i = (adminList.get('last_page') >  adminList.get('max_pagination_links')) && i > (adminList.get('last_page') - adminList.get('max_pagination_links')) ? ((adminList.get('last_page') - adminList.get('max_pagination_links')) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= adminList.get('last_page') ; i++) {
+        if (pageLimitCounter >= adminList.get('max_pagination_links')) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, adminList.get('current_page'));
       }
       pagination[i+1] = this.nextPage(i+1, ((adminList.get('current_page') == adminList.get('last_page'))|| adminList.get('last_page') == 0 ? false : (adminList.get('current_page') + 1 )), adminList.get('last_page') );

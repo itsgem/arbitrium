@@ -17,21 +17,21 @@ const initialState = Immutable.fromJS({
 
 export default createReducer({
   [adminClientList.ok]: (state, payload) => state.merge({
-    clientList: state.concat(payload),
+    clientList: payload,
     loading: false
   }),
   [adminClientList.request]: (state) => state.merge({
     loading: true
   }),
   [adminLogList.ok]: (state, payload) => state.merge({
-    logList: state.concat(payload),
+    logList: payload,
     loading: false
   }),
   [adminLogList.request]: (state) => state.merge({
     loading: true
   }),
   [adminLogDetail.ok]: (state, payload) => state.merge({
-    logDetail: state.concat(payload),
+    logDetail: payload,
     loading: false
   }),
   [adminLogDetail.request]: (state) => state.merge({

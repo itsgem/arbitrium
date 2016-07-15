@@ -1,5 +1,6 @@
 import React from 'react';
 import SubscriptionPayment from 'client/components/subscription/subscriptionPayment';
+import NotFound from 'common/components/noMatch';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
 
@@ -15,7 +16,8 @@ export default React.createClass({
   },
   componentWillMount() {
     let id = this.props.params.id;
-    this.props.getSubscriptionItem(id).catch(createError);
+    this.props.getSubscriptionItem(id)
+      .catch((err) => this.setState(createError(err)));
   },
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -43,7 +45,19 @@ export default React.createClass({
       });
     }
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.subscriptionItem) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.subscriptionItem).length) {
       if (!this.props.loading) {
         closeLoading();

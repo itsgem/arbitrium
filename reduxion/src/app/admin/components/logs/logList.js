@@ -132,12 +132,22 @@ class LogList extends React.Component {
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
-      let i=0;
       counter = true;
       logList = this.props.logList;
       log = logList.data;
-      pagination[i] = this.prevPage(i, (logList.current_page > 1 ? (logList.current_page - 1): false));
-      for (i = 1; i <= logList.last_page; i++) {
+      pagination[0] = this.prevPage(0, (logList.current_page > 1 ? (logList.current_page - 1): false));
+      let i = 1;
+      if (logList.last_page > logList.max_pagination_links) {
+        i = Math.round(logList.max_pagination_links / 2);
+        i = i < logList.current_page ? (logList.current_page - 2) : 1;
+        i = (logList.last_page >  logList.max_pagination_links) && i > (logList.last_page - logList.max_pagination_links) ? ((logList.last_page - logList.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= logList.last_page ; i++) {
+        if (pageLimitCounter >= logList.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, logList.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((logList.current_page == logList.last_page)|| logList.last_page == 0 ? false : (logList.current_page + 1 )), logList.last_page );
@@ -253,8 +263,7 @@ class LogList extends React.Component {
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
 
-    let currentPage = this.refs.currentpage.value;
-    this.page(e, currentPage);
+    this.page(e, 1);
   }
   modalClose () {
     let dialog = document.querySelector('dialog');

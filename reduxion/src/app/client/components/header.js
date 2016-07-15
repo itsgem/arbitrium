@@ -13,7 +13,6 @@ class ClientHeader extends React.Component {
     }
   }
   render() {
-    console.log('tr',tr);
     return (
       <header className="mdl-layout__header">
         <div className="mdl-layout__header-row">
