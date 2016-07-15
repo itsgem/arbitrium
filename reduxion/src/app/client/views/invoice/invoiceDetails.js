@@ -1,6 +1,7 @@
 import React from 'react';
 import InvoiceDetails from 'client/components/invoice/invoiceDetails';
-import { openLoading } from 'common/components/modal'
+import NotFound from 'common/components/noMatch';
+import { openLoading, closeLoading } from 'common/components/modal'
 import { createError } from 'utils/error';
 
 export default React.createClass({
@@ -22,7 +23,19 @@ export default React.createClass({
       <div className="loading"></div>
     );
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.invoiceInfo) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.invoiceInfo).length) {
       return this.renderInvoiceInfo();
     } else {

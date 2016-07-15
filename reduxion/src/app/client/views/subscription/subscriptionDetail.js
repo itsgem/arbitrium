@@ -13,10 +13,11 @@ export default React.createClass({
     };
   },
   componentWillMount () {
-    this.props.subscriptionList().catch(createError);
-    this.props.clientSubscription().catch(createError);
-    this.props.clientProfile().catch(createError);
-    this.props.clientSubscriptionPending().catch(createError);
+    this.props.subscriptionList()
+      .then(()=> this.props.clientSubscription())
+      .then(()=> this.props.clientProfile())
+      .then(()=> this.props.clientSubscriptionPending())
+      .catch((err) => this.setState(createError(err)));
   },
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {

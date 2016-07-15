@@ -1,7 +1,8 @@
 import React from 'react';
-import { openLoading } from 'common/components/modal'
+import { openLoading, closeLoading } from 'common/components/modal'
 import { createError } from 'utils/error';
 import ApiLogsDetail from 'client/components/apiLogs/apilogsDetails';
+import NotFound from 'common/components/noMatch';
 
 export default React.createClass({
   contextTypes: {
@@ -22,7 +23,19 @@ export default React.createClass({
       <div className="loading"></div>
     );
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.apiKeyInfo) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.successApiLogInfo).length) {
       return this.renderApiLogDetails();
     } else {

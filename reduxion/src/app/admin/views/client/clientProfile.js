@@ -3,6 +3,7 @@ import ClientProfile from 'admin/components/client/clientProfile';
 import DocTitle from 'common/components/docTitle';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import NotFound from 'common/components/noMatch';
 import {createError} from 'utils/error';
 
 export default React.createClass( {
@@ -65,7 +66,19 @@ export default React.createClass( {
       <div className="loading"></div>
     );
   },
-  render() {
+  noContent () {
+    return (
+      <div className="noContent">
+        <NotFound />
+      </div>
+    );
+  },
+  render () {
+    if (!this.props.clientProfileSuccess) {
+      closeLoading();
+      return this.noContent();
+    }
+
     if (Object.keys(this.props.clientProfileSuccess).length && Object.keys(this.props.currentClientSubscription).length ) {
       closeLoading();
       return this.renderAdminInfo();

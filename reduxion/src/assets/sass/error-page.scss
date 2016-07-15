@@ -1,11 +1,14 @@
+.noContent {
+	width: 100%;
+}
 .section-error {
 	height: 100%;
-	margin-top: 5%;
 
 	.error-content {
+		width: 100%;
 		background: #fff;
 		color: #454545;
-		min-height: 415px;
+		min-height: 550px;
 		margin: 0 auto;
 		text-align: center;
 		padding: 50px;
@@ -17,6 +20,8 @@
 		}
 
 		.sub-title {
+			padding-top: 10%;
+			line-height: normal;
 			font-size: 3em;
 			text-transform: uppercase;
 		}

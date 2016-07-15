@@ -12,7 +12,7 @@ class invoiceList extends React.Component {
       errors: {},
       errorServer:null,
       id: null,
-      dateFrom: moment(new Date()).format('YYYY-MM-DD'),
+      dateFrom: null,
       dateTo: null
     };  }
   componentWillReceiveProps() {
@@ -155,12 +155,22 @@ class invoiceList extends React.Component {
     let listInvoice = {last_page: 1};
     let invoiceData = {};
     if (Object.keys(this.props.listInvoice).length) {
-      let i=0;
       counter = true;
       listInvoice = this.props.listInvoice;
       invoiceData = listInvoice.data;
-      pagination[i] = this.prevPage(i, (listInvoice.current_page > 1 ? (listInvoice.current_page - 1): false));
-      for (i = 1; i <= listInvoice.last_page; i++) {
+      pagination[0] = this.prevPage(0, (listInvoice.current_page > 1 ? (listInvoice.current_page - 1): false));
+      let i = 1;
+      if (listInvoice.last_page > listInvoice.max_pagination_links) {
+        i = Math.round(listInvoice.max_pagination_links / 2);
+        i = i < listInvoice.current_page ? (listInvoice.current_page - 2) : 1;
+        i = (listInvoice.last_page >  listInvoice.max_pagination_links) && i > (listInvoice.last_page - listInvoice.max_pagination_links) ? ((listInvoice.last_page - listInvoice.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= listInvoice.last_page ; i++) {
+        if (pageLimitCounter >= listInvoice.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, listInvoice.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((listInvoice.current_page == listInvoice.last_page)|| listInvoice.last_page == 0 ? false : (listInvoice.current_page + 1 )), listInvoice.last_page );

@@ -143,13 +143,23 @@ class apilogList extends React.Component {
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
-      let i=0;
       counter = true;
       listApiLogs = this.props.successApiLogsList;
-      // listApiLogs = mongoDB;
       apiLogsData = listApiLogs.data;
-      pagination[i] = this.prevPage(i, (listApiLogs.current_page > 1 ? (listApiLogs.current_page - 1): false));
-      for (i = 1; i <= listApiLogs.last_page; i++) {
+
+      pagination[0] = this.prevPage(0, (listApiLogs.current_page > 1 ? (listApiLogs.current_page - 1): false));
+      let i = 1;
+      if (listApiLogs.last_page > listApiLogs.max_pagination_links) {
+        i = Math.round(listApiLogs.max_pagination_links / 2);
+        i = i < listApiLogs.current_page ? (listApiLogs.current_page - 2) : 1;
+        i = (listApiLogs.last_page >  listApiLogs.max_pagination_links) && i > (listApiLogs.last_page - listApiLogs.max_pagination_links) ? ((listApiLogs.last_page - listApiLogs.max_pagination_links) + 1) : i;
+      }
+      let pageLimitCounter = 0;
+      for (i; i <= listApiLogs.last_page ; i++) {
+        if (pageLimitCounter >= listApiLogs.max_pagination_links) {
+          break;
+        }
+        pageLimitCounter++;
         pagination[i] = this.pagination(i, listApiLogs.current_page);
       }
       pagination[i+1] = this.nextPage(i+1, ((listApiLogs.current_page == listApiLogs.last_page)|| listApiLogs.last_page == 0 ? false : (listApiLogs.current_page + 1 )), listApiLogs.last_page );
@@ -220,8 +230,7 @@ class apilogList extends React.Component {
           </table>
             {/* <!-- Pagination -->*/}
           <div className="mdl-grid pagination">
-            <div className="mdl-cell mdl-cell--3-col"></div>
-            <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-cell mdl-cell--12-col">
               {counter && pagination}
             </div>
             <div className="mdl-cell mdl-cell--3-col tooltipBox">

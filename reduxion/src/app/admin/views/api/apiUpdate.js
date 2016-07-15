@@ -3,6 +3,7 @@ import DocTitle from 'common/components/docTitle';
 import ApiUpdate from 'admin/components/api/apiUpdate';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import NotFound from 'common/components/noMatch';
 import {createError} from 'utils/error';
 
 export default React.createClass( {
@@ -36,7 +37,9 @@ export default React.createClass( {
   },
   noContent () {
     return (
-      <div className="noContent">No content</div>
+      <div className="noContent">
+        <NotFound />
+      </div>
     );
   },
   render () {

@@ -8,9 +8,10 @@ import tr from 'i18next';
 export default React.createClass({
 
   componentDidMount() {
-    this.props.clientProfile().catch(createError);
-    this.props.countryProfile().catch(createError);
-    this.props.clientSubscription().catch(createError);
+    this.props.clientProfile()
+      .then(() => this.props.countryProfile())
+      .then(() => this.props.clientSubscription())
+      .catch((err) => this.setState(createError(err)));
   },
 
   loadingRender () {
@@ -31,10 +32,6 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (Object.keys(nextProps.errors).length) {
-      console.log('sss', nextProps.errors.data.errors);
-    }
-
     if(nextProps.updateSuccess || nextProps.cancelSubscriptionSuccess || Object.keys(nextProps.errors).length){
       let message = '';
       if (nextProps.cancelSubscriptionSuccess) {
