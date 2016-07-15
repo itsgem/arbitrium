@@ -73,11 +73,13 @@ export default React.createClass( {
   render() {
     return (
       <div id="forgot" className="auth-view">
+        <DocTitle
+          title={tr.t('FORGOT_PW.DOC_TITLE')}
+        />
         <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
-            <span className="bar-title">{tr.t('formTitle.forgotPassword')}</span>
-            <DocTitle title="Forgot password"/>
+            <span className="bar-title">{tr.t('FORGOT_PW.FORM.TITLE.FORGOT_PW')}</span>
             </div>
             <fieldset>
               <div className="background">
@@ -88,7 +90,7 @@ export default React.createClass( {
         </div>
         <div className="mdl-grid mdl-grid--no-spacing forgot-footer" id="other-links">
           <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-            <Link to="/i/login">{tr.t('button.backToLogin')}</Link>
+            <Link to="/i/login">{tr.t('FORGOT_PW.LINK.BACK_TO_LOGIN')}</Link>
           </div>
         </div>
       </div>
@@ -105,19 +107,19 @@ export default React.createClass( {
       <div className="login-view">
         <div className="local-login-form">
           <form>
-            <legend>{tr.t('title.passwordReset')}</legend>
-            <p><strong>{tr.t('note.forgotPasswordLine1')}</strong></p>
-            <p>{tr.t('note.forgotPasswordLine2')}</p>
+            <legend>{tr.t('FORGOT_PW.FORM.SUB_TITLE.PW_RESET')}</legend>
+            <p><strong>{tr.t('FORGOT_PW.FORM.NOTE.ENTER_EMAIL')}</strong></p>
+            <p>{tr.t('FORGOT_PW.FORM.NOTE.YOU_WILL_BE_SENT_RESET_CODE')}</p>
             <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('label.email')}</label>
+              <label className="mdl-textfield__label" htmlFor="email">{tr.t('FORGOT_PW.FORM.LABEL.EMAIL')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
             <div className="spacer">
               <button type="button"
               className='auth-button primary mdl-button mdl-js-button mdl-button--fullwidth mdl-button--blue mdl-js-ripple-effect'
               onClick={(e)=>this.requestReset(e)}>
-                {tr.t('button.sendResetEmail')}
+                {tr.t('FORGOT_PW.FORM.BUTTON.SEND_RESET_EMAIL')}
               </button>
             </div>
            </form>
@@ -133,9 +135,9 @@ export default React.createClass( {
       <div className="login-view">
 
         <div className="local-login-form padding-15">
-          <legend>{tr.t('title.checkMail')}</legend>
-          <p><strong>{tr.t('note.checkMailLine1')}</strong></p>
-          <p>{tr.t('note.checkMailLine2')}</p>
+          <legend>{tr.t('FORGOT_PW.FORM.SUB_TITLE.CHECK_EMAIL')}</legend>
+          <p><strong>{tr.t('FORGOT_PW.FORM.NOTE.EMAIL_SENT')}</strong></p>
+          <p>{tr.t('FORGOT_PW.FORM.NOTE.CHECK_SPAM')}</p>
         </div>
       </div>
     );
