@@ -501,7 +501,8 @@ class PaypalServices extends NrbServices
 
     public function statusUpdate($request)
     {
-        Log::info("[IPN] Start");
+        Log::info("[IPN] ===== Start =====");
+        Log::info("[IPN] ~~~~~ VALID ~~~~~");
         Log::info("[IPN] TRANSACTION: ". $request->get('txn_type'));
 
         $paypal_ipn_response = json_encode($request->all());
@@ -562,6 +563,6 @@ class PaypalServices extends NrbServices
             return $this->respondWithError(Errors::SUBSCRIPTION_RENEWAL_ERROR);
         }
 
-        Log::info("[IPN] End");
+        Log::info("[IPN] ====== End ======");
     }
 }
