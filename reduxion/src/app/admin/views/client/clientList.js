@@ -3,6 +3,7 @@ import DocTitle from 'common/components/docTitle';
 import ClientList from 'admin/components/client/clientList';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
+import tr from 'i18next';
 
 export default React.createClass( {
   contextTypes: {
@@ -20,13 +21,13 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title="Client List"
+          title={tr.t('CLIENT.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">Client List</label>
+          <label className="mdl-layout__tab is-active">{tr.t('CLIENT.PAGE_TITLE.LIST')}</label>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/client/new">Add New Client<i className="material-icons add">add</i></Link>
+              to="/coffee/client/new">{tr.t('CLIENT.PAGE_TITLE.ADD')}<i className="material-icons add">add</i></Link>
         </div>
         <ClientList
           clientList={this.props.clientList}
