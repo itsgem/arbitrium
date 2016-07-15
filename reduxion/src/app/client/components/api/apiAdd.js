@@ -134,7 +134,7 @@ class ApiAdd extends React.Component {
               className="mdl-button mdl-js-button mdl-button--colored"
               id='btn-cancel'
               to="/i/api/">CANCEL</Link>
-        </div>
+          </div>
           <div className="flex-order-gt-md-2" >
             <button id="btn-save"
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
@@ -146,13 +146,18 @@ class ApiAdd extends React.Component {
   }
   allowKey(e, permissions) {
     if (e.target.checked) {
-      this.setState({checked:true});
+      this.setState({
+        checked: true
+      });
       permissions.map(function(item) {
-        let id = 'checkbox-' + item.id;
         document.getElementById(item.id).classList.remove('is-disabled');
       })
     } else {
-      this.setState({checked:false});
+      this.setState({
+        checked: false,
+        errors: {},
+        errorServer: null
+      });
       permissions.map(function(item) {
         let id = 'checkbox-' + item.id;
         document.getElementById(item.id).classList.remove('is-checked');
