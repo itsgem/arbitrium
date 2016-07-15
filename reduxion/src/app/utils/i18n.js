@@ -43,8 +43,8 @@ export default {
         .init({
           fallbackLng: 'en',
           // have a common namespace used around the full app
-          ns: ['common', 'common_bryan'],
-          defaultNS: ['common', 'common_bryan'],
+          ns: ['common'],
+          defaultNS: 'common',
 
           debug: true,
 
