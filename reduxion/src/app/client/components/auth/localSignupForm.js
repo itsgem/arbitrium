@@ -56,7 +56,7 @@ class LocalSignupForm extends React.Component {
           showLogin = {true}
           errorServer = {this.state.errorServer}
           country = {this.props.country}
-          buttonCaption = {this.props.buttonCaption || tr.t('button.createAnAccount') }
+          buttonCaption = { tr.t('SIGNUP.FORM.BUTTON.CREATE_AN_ACCOUNT_BTN') }
           errors = { this.state.errors }
           onButtonClick = {(payload) => {this.signup(payload)}}
           />
@@ -79,8 +79,6 @@ class LocalSignupForm extends React.Component {
 
 }
 
-//////////////////////
-
 LocalSignupForm.propTypes = {
   signup: React.PropTypes.func.isRequired
 };
@@ -89,7 +87,6 @@ LocalSignupForm.defaultProps = {
   onLoggedIn: () => {}
 };
 
-//////////////////////
 function mapObject(object, callback) {
   return Object.keys(object).map(function (key) {
     return callback(key, object[key]);

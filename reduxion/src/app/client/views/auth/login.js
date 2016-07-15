@@ -4,6 +4,7 @@ import DocTitle from 'common/components/docTitle';
 import moment from 'moment';
 import config from 'config';
 import CryptoJS from 'crypto-js';
+import tr from 'i18next';
 
 class Login extends React.Component {
   componentWillReceiveProps(nextProps){
@@ -28,7 +29,7 @@ class Login extends React.Component {
     return (
       <div id='login' className="auth-view">
         <DocTitle
-          title="Login"
+          title={tr.t('LOGIN.DOC_TITLE')}
         />
         <div className="login-view">
           <LocalLoginForm login={this.props.login}/>
