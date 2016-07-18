@@ -36,50 +36,42 @@
       }
   },
   "CLIENT": {
-    "DOC_TITLE": "Client List",
+    "DOC_TITLE_LIST": "Client List",
+    "DOC_TITLE_ADD": "Client ADD",
     "PAGE_TITLE": {
       "LIST": "Client List",
       "ADD": "Add New Client"
     },
-    "SEARCH_FORM": {
-        "TITLE": "Filter / Search",
-        "LABEL": {
-          "COMPANY": "Company",
-          "EMAIL": "Email Address",
-          "STATUS": "Status",
-          "STATUS_SUB": {
-            "PENDING": "Pending",
-            "APPROVED": "Approved",
-            "DISSAPROVED": "Disapproved"
-          }
-        },
-        "BUTTON": {
-          "SEARCH": "Search",
-          "CLEAR": "Clear"
-        }
-    },
-    "TABLE": {
-      "LIST_CLIENT": {
-        "HEADER": {
-          "ID": "ID",
-          "COMPANY": "Company Name",
-          "REPRESENTATIVE": "Representative Name",
-          "EMAIL": "Email Address",
-          "PHONE": "Phone Number",
-          "MOBILE": "Mobile No.",
-          "STATUS": "Status",
-          "ACTION": "Action"
-        }
-      }
-    }
-  },
-  "CLIENT_ADD": {
     "FORM": {
       "TITLE": {
-        "USER_DETAILS": "User account details"
+        "USER_DETAILS": "User account details",
+        "GENERAL_INFO": "General information",
+        "COMPANY_REP": "Company Representative",
+        "MOBILE": "Mobile Number",
+        "PHONE": "Phone Number",
+        "ALTERNATIVE_REPRESENTATIVE": "Alternative Representative"
       },
       "MESSAGE": {
-        "REQUIRED_FIELD": "Required fields"
+        "REQUIRED_FIELD": "Required fields",
+        "CHECK_AVAILABILITY": "Check Availability"
+      },
+      "LABEL": {
+        "USER": "Username",
+        "EMAIL": "Email Address",
+        "COMPANY": "Company name",
+        "STREET_ADDRESS1": "Street Address 1",
+        "STREET_ADDRESS2": "Street Address 2",
+        "CITY": "City",
+        "STATE_PROVINCE": "State / Province",
+        "POSTAL_CODE": "Postal code",
+        "FIRST_NAME": "First name",
+        "LAST_NAME": "Last name",
+        "GENDER": "Gender",
+        "COUNTRY_CODE": "Country Code",
+        "MOBILE": "Mobile no.",
+        "PHONE": "Phone no.",
+        "POSITION": "Position",
+        "DEPARTMENT": "Department"
       }
     }
   },
@@ -92,6 +84,61 @@
         "FIRST": "First",
         "LAST": "Last"
       }
+    },
+    "FORM": {
+      "LABEL": {
+        "COUNTRY": "Country"
+      },
+      "SELECT": {
+        "GENDER": {
+          "MALE": "Male",
+          "FEMALE": "Female"
+        }
+      },
+      "BUTTON": {
+        "SAVE": "Save",
+        "YES": "Yes",
+        "CANCEL": "Cancel"
+      },
+      "LINK": {
+        "CANCEL": "Cancel"
+      }
+    },
+    "SEARCH_FORM": {
+        "TITLE": "Filter / Search",
+        "LABEL": {
+          "COMPANY": "Company",
+          "EMAIL": "Email Address",
+          "STATUS": "Status",
+          "STATUS_SUB": {
+            "PENDING": "Pending",
+            "APPROVED": "Approved",
+            "DISSAPROVED": "Disapproved"
+          },
+          "DESCRIPTION": "Description",
+          "API_KEY": "API Key",
+          "DATE_CREATED": "Date Created"
+        },
+        "BUTTON": {
+          "SEARCH": "Search",
+          "CLEAR": "Clear"
+        }
+    },
+    "TABLE": {
+        "HEADER": {
+          "ID": "ID",
+          "COMPANY": "Company Name",
+          "REPRESENTATIVE": "Representative Name",
+          "EMAIL": "Email Address",
+          "PHONE": "Phone Number",
+          "MOBILE": "Mobile No.",
+          "STATUS": "Status",
+          "ACTION": "Action",
+          "DESCRIPTION": "Description",
+          "API_KEY": "API Key",
+          "DATE_CREATED": "Date Created",
+          "ACTION": "Action"
+        }
     }
   }
 }

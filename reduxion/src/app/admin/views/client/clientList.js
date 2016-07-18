@@ -21,7 +21,7 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title={tr.t('CLIENT.DOC_TITLE')}
+          title={tr.t('CLIENT.DOC_TITLE_LIST')}
         />
         <div className="client-tab">
           <label className="mdl-layout__tab is-active">{tr.t('CLIENT.PAGE_TITLE.LIST')}</label>
