@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
+import tr from 'i18next';
 
 class UserManagementList extends React.Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class UserManagementList extends React.Component {
         {prev &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, 1)}>FIRST</button>
+          onClick={(e) => this.page(e, 1)}>{tr.t('COMMON.PAGINATION.NAV.FIRST')}</button>
         }
         {!prev &&
           <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
@@ -107,7 +108,7 @@ class UserManagementList extends React.Component {
       {next &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, last)}>LAST</button>
+          onClick={(e) => this.page(e, last)}>{tr.t('COMMON.PAGINATION.NAV.LAST')}</button>
       }
       {!next &&
         <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">LAST</button>
@@ -160,18 +161,18 @@ class UserManagementList extends React.Component {
             </div>
           </div>
         </div>
-        <p>Filter / Search</p>
+        <p>{tr.t('CLIENT.SEARCH_FORM.TITLE')}</p>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="company" ref="company"/>
-                <label className="mdl-textfield__label">Company</label>
+                <label className="mdl-textfield__label">{tr.t('CLIENT.SEARCH_FORM.LABEL.COMPANY')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="email-address" ref="email_address" />
-                <label className="mdl-textfield__label">Email Address</label>
+                <label className="mdl-textfield__label">{tr.t('CLIENT.SEARCH_FORM.LABEL.EMAIL')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -179,34 +180,34 @@ class UserManagementList extends React.Component {
                 <div className="mdl-selectfield">
                   <select onKeyPress={()=>this.isPress()} className="mdl-textfield__input" id="status" ref="status">
                     <option value=""></option>
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Disapproved">Disapproved</option>
+                    <option value="Pending">{tr.t('CLIENT.SEARCH_FORM.LABEL.STATUS_SUB.PENDING')}</option>
+                    <option value="Approved">{tr.t('CLIENT.SEARCH_FORM.LABEL.STATUS_SUB.APPROVED')}</option>
+                    <option value="Disapproved">{tr.t('CLIENT.SEARCH_FORM.LABEL.STATUS_SUB.DISSAPROVED')}</option>
                   </select>
-                  <label className="mdl-textfield__label">Status</label>
+                  <label className="mdl-textfield__label">{tr.t('CLIENT.SEARCH_FORM.LABEL.STATUS')}</label>
                 </div>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('CLIENT.SEARCH_FORM.BUTTON.SEARCH')}</button>
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('CLIENT.SEARCH_FORM.BUTTON.CLEAR')}</button>
             </div>
           </div>
           <table className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th className="mdl-data-table__cell--non-numeric" width="112">ID</th>
-                <th className="mdl-data-table__cell--non-numeric" width="114">Company Name</th>
-                <th className="mdl-data-table__cell--non-numeric" width="200">Representative Name</th>
-                <th className="mdl-data-table__cell--non-numeric" width="195">Email Address</th>
-                <th className="mdl-data-table__cell--non-numeric" width="170">Phone Number</th>
-                <th className="mdl-data-table__cell--non-numeric" width="139">Mobile No.</th>
-                <th className="mdl-data-table__cell--non-numeric" width="110">Status</th>
-                <th className="mdl-data-table__cell--non-numeric" width="130">Action</th>
+                <th className="mdl-data-table__cell--non-numeric" width="112">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.ID')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="114">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.COMPANY')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="200">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.REPRESENTATIVE')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="195">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.EMAIL')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="170">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.PHONE')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="139">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.MOBILE')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="110">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.STATUS')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="130">{tr.t('CLIENT.TABLE.LIST_CLIENT.HEADER.ACTION')}</th>
               </tr>
             </thead>
             <tbody>
