@@ -1,0 +1,97 @@
+{
+  "HEADER": {
+      "DASHBOARD": "Dashboard",
+      "CLIENTS": "Clients",
+      "CLIENTS_SUB": {
+        "LIST": "Client List",
+        "ADD": "Add new client"
+      },
+      "API_KEYS": "API KEYS",
+      "API_KEYS_SUB": {
+        "LIST": "API keys list",
+        "ADD": "Add new API key"
+      },
+      "SUBSCRIPTIONS": "Subscriptions",
+      "SUBSCRIPTIONS_SUB": {
+        "LIST": "Subscriptions list"
+      },
+      "INVOICE": "Invoice",
+      "INVOICE_SUB": {
+        "LIST_CLIENT": "Client Invoice List"
+      },
+      "ADMIN_ACCOUNTS": "Admin accounts",
+      "ADMIN_ACCOUNTS_SUB": {
+        "LIST": "Admin list",
+        "ADD": "Add New Administrator"
+      },
+      "REPORTS": "Reports",
+      "LOGS": "Logs",
+      "LOGS_SUB": {
+        "LIST_CLIENT_API": "Client API logs list"
+      },
+      "USER_OPTIONS": {
+        "PROFILE": "My Profile",
+        "SETTINGS": "Settings",
+        "LOGOUT": "Logout"
+      }
+  },
+  "CLIENT": {
+    "DOC_TITLE": "Client List",
+    "PAGE_TITLE": {
+      "LIST": "Client List",
+      "ADD": "Add New Client"
+    },
+    "SEARCH_FORM": {
+        "TITLE": "Filter / Search",
+        "LABEL": {
+          "COMPANY": "Company",
+          "EMAIL": "Email Address",
+          "STATUS": "Status",
+          "STATUS_SUB": {
+            "PENDING": "Pending",
+            "APPROVED": "Approved",
+            "DISSAPROVED": "Disapproved"
+          }
+        },
+        "BUTTON": {
+          "SEARCH": "Search",
+          "CLEAR": "Clear"
+        }
+    },
+    "TABLE": {
+      "LIST_CLIENT": {
+        "HEADER": {
+          "ID": "ID",
+          "COMPANY": "Company Name",
+          "REPRESENTATIVE": "Representative Name",
+          "EMAIL": "Email Address",
+          "PHONE": "Phone Number",
+          "MOBILE": "Mobile No.",
+          "STATUS": "Status",
+          "ACTION": "Action"
+        }
+      }
+    }
+  },
+  "CLIENT_ADD": {
+    "FORM": {
+      "TITLE": {
+        "USER_DETAILS": "User account details"
+      },
+      "MESSAGE": {
+        "REQUIRED_FIELD": "Required fields"
+      }
+    }
+  },
+  "COMMON": {
+    "SUCCESS": {
+      "MESSAGE01": "Success Message"
+    },
+    "PAGINATION": {
+      "NAV": {
+        "FIRST": "First",
+        "LAST": "Last"
+      }
+    }
+  }
+}

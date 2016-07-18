@@ -2,6 +2,7 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import LocalSignupForm from 'client/components/auth/localSignupForm';
 import { Link } from 'react-router';
+import tr from 'i18next';
 
 export default React.createClass( {
   contextTypes: {
@@ -14,7 +15,7 @@ export default React.createClass( {
     return (
       <div id="signup" className="auth-view">
         <DocTitle
-          title="Register"
+          title={tr.t('SIGNUP.DOC_TITLE')}
         />
         { this.props.registerCompleted && this.renderRegisterComplete() }
         { !this.props.registerCompleted && this.renderRegisterForm() }
