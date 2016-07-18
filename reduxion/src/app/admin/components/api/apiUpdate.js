@@ -53,6 +53,13 @@ class ApiUpdate extends React.Component {
       document.querySelector('.alert').style.display = 'none';
     }
   }
+  componentDidMount () {
+    let getApiInfo = this.props.getApiInfo.data;
+
+    this.setState({
+      checked: getApiInfo.is_api_call_restricted
+    });
+  }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
@@ -108,7 +115,7 @@ class ApiUpdate extends React.Component {
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-2">
               <input onChange={(e)=>this.allowKey(e, permissions)} type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input"
-               defaultChecked={getApiInfo.is_api_call_restricted == 1 ? true : false} checked={this.state.checked ? 'checked' : null}/>
+               checked={this.state.checked ? 'checked' : null}/>
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
