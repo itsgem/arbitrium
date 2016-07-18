@@ -2,6 +2,7 @@ import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import ClientAdd from 'admin/components/client/clientAdd';
 import { Link } from 'react-router';
+import tr from 'i18next';
 
 export default React.createClass( {
   contextTypes: {
@@ -24,7 +25,7 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title="Client Add"
+          title={tr.t('CLIENT.DOC_TITLE_ADD')}
         />
       <div className="client-tab">
         <Link

@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 
 class Country extends React.Component {
   render() {
@@ -13,7 +14,7 @@ class Country extends React.Component {
             {return <option key={item.get('id')} value={item.get('id')}>{item.get('name')}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">Country *</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('COMMON.FORM.LABEL.COUNTRY')} *</label>
       </div>
     );
   }
