@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
+import tr from 'i18next';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -78,10 +79,10 @@ class ApiList extends React.Component {
         {prev &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, 1)}>FIRST</button>
+          onClick={(e) => this.page(e, 1)}>{tr.t('COMMON.PAGINATION.NAV.FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('COMMON.PAGINATION.NAV.FIRST')}</button>
         }
         {prev &&
           <button
@@ -116,10 +117,10 @@ class ApiList extends React.Component {
       {next &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, last)}>LAST</button>
+          onClick={(e) => this.page(e, last)}>{tr.t('COMMON.PAGINATION.NAV.LAST')}</button>
       }
       {!next &&
-        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">LAST</button>
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('COMMON.PAGINATION.NAV.LAST')}</button>
       }
       </div>
     );
@@ -162,15 +163,15 @@ class ApiList extends React.Component {
 
     return (
       <div className="filter-search">
-        <p>Filter / Search</p>
+        <p>{tr.t('COMMON.SEARCH_FORM.TITLE')}</p>
         <div className="dialog-box"></div>
         <div className="dialog-content">
           <div className="dialog-inner">
             <div className="msg-box mdl-shadow--2dp">
               <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('COMMON.FORM.BUTTON.YES')}</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('COMMON.FORM.BUTTON.CANCEL')}</button>
               </div>
             </div>
           </div>
@@ -179,13 +180,13 @@ class ApiList extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
-                <label className="mdl-textfield__label">Description</label>
+                <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.DESCRIPTION')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
-                <label className="mdl-textfield__label">API Key</label>
+                <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.API_KEY')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -196,25 +197,25 @@ class ApiList extends React.Component {
                   id="created_at" ref="created_at"
                   readOnly
                 />
-                <label className="mdl-textfield__label">Date Created</label>
+                <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.DATE_CREATED')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('COMMON.SEARCH_FORM.BUTTON.SEARCH')}</button>
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('COMMON.SEARCH_FORM.BUTTON.CLEAR')}</button>
             </div>
           </div>
           <table className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th className="mdl-data-table__cell--non-numeric">Description</th>
-                <th className="mdl-data-table__cell--non-numeric">Key</th>
-                <th className="mdl-data-table__cell--non-numeric">Date Created</th>
-                <th className="mdl-data-table__cell--non-numeric">Action</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('COMMON.TABLE.HEADER.DESCRIPTION')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('COMMON.TABLE.HEADER.API_KEY')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('COMMON.TABLE.HEADER.DATE_CREATED')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('COMMON.TABLE.HEADER.ACTION')}</th>
               </tr>
             </thead>
             <tbody>
