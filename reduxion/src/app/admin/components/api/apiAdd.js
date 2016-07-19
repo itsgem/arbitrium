@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
-import tr from 'i18next';
 
 class ApiAdd extends React.Component {
   constructor(props) {
@@ -13,7 +12,8 @@ class ApiAdd extends React.Component {
       errors: {},
       errorServer:null,
       client_id: null,
-      permissions: {}
+      permissions: {},
+      checked: false
     };
   }
   componentWillReceiveProps() {
@@ -83,48 +83,50 @@ class ApiAdd extends React.Component {
                     return <li onClick={(e) => this.selectedCompany(e, item.id, item.company_name)} key={item.id}>{item.company_name}</li>; })
                   }
                 </ul>
-                <label className="mdl-textfield__label" htmlFor="client_id">{tr.t('API.FORM.LABEL.CLIENT_COMPANY')} *</label>
+                <label className="mdl-textfield__label" htmlFor="client_id">Client Company *</label>
                 {errors.client_id && <small className="mdl-textfield__error shown">{errors.client_id[0]}</small>}
               </div>
             </div>
             <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
               <div className={this.formClassNames('description', errors)}>
                 <input className="mdl-textfield__input font-input" ref="description" type="text" id="api-description" />
-                <label className="mdl-textfield__label" htmlFor="description">{tr.t('COMMON.FORM.LABEL.DESCRIPTION')} *</label>
+                <label className="mdl-textfield__label" htmlFor="description">Description *</label>
                 {errors.description && <small className="mdl-textfield__error shown">{errors.description[0]}</small>}
               </div>
-              <p>{tr.t('API.FORM.MESSAGE.ADD_DESCRIPTION')}</p>
+              <p>Add a description to your API key to allow you to filter by key</p>
             </div>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1">
               <input type="checkbox" id="checkbox-1" ref="is_whitelist" className="mdl-checkbox__input" />
-              <span className="mdl-checkbox__label">{tr.t('API.FORM.CHECKBOX_LABEL.ALLOW_KEY_IP_ADDRESS')}</span>
+              <span className="mdl-checkbox__label">Only allow the Key to work from certain IP address</span>
             </label>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <div className="mdl-textfield mdl-js-textfield full-width">
               <div className={this.formClassNames('ip_addresses', errors)}>
                 <textarea className="mdl-textfield__input" type="text" ref="ip_addresses" rows= "3" id="add-ip-address" ></textarea>
-                <label className="mdl-textfield__label" htmlFor="sample5">{tr.t('API.FORM.LABEL.ADD_IP')}...</label>
+                <label className="mdl-textfield__label" htmlFor="sample5">Add IP Address...</label>
                 {errors.ip_addresses && <small className="mdl-textfield__error shown">{errors.ip_addresses[0]}</small>}
               </div>
-              <p>{tr.t('API.FORM.MESSAGE.ADD_ONE_IP')}</p>
+              <p>Add one IP Address per line separated by line breaks</p>
             </div>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" />
+              <input onChange={(e)=>this.allowKey(e, permissions)} type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" checked={this.state.checked ? 'checked' : null} />
               <span className="mdl-checkbox__label">{tr.t('API.FORM.CHECKBOX_LABEL.ALLOW_KEY_API_CALLS')}</span>
             </label>
           </div>
           {
             permissions  && permissions.map(item => {
               return <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                      <label id={item.id} className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
                         <input
                           type="checkbox"
-                          className="mdl-checkbox__input"
+                          className="mdl-checkbox__input permission_item"
                           id={"checkbox-" + item.id}
                           name="chkRights[]"
                           value={ item.id }
-                          onClick={(e) => this.ckPermissions(e)}/>
+                          onClick={(e) => this.ckPermissions(e)}
+                          disabled={!this.state.checked ? 'true' : ''}
+                          />
                         <span className="mdl-checkbox__label">{item.name}</span>
                       </label>
                     </div>; })
@@ -137,12 +139,15 @@ class ApiAdd extends React.Component {
             <div className="mdl-cell mdl-cell--2-col check-test-key">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-11">
                 <input type="checkbox" id="checkbox-11" ref="is_test_key" className="mdl-checkbox__input"/>
-                <span className="mdl-checkbox__label">{tr.t('API.FORM.CHECKBOX_LABEL.TEST_KEY')}</span>
+                <span className="mdl-checkbox__label">Test Key</span>
               </label>
             </div>
             <div className="mdl-cell mdl-cell--3-col check-test-key">
               <div id="tt4" className="icon material-icons">help</div>
-                <div className="mdl-tooltip mdl-tooltip--right" htmlFor="tt4">{tr.t('API.FORM.MESSAGE.TEST_KEY_TOOLTIP')}</div>
+                <div className="mdl-tooltip mdl-tooltip--right" htmlFor="tt4">
+                  You can use a test key to experiment
+                  with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation.
+                </div>
             </div>
         </div>
         <div className="layout-gt-md-row layout-align-end-end btn">
@@ -150,16 +155,39 @@ class ApiAdd extends React.Component {
             <Link
               className="mdl-button mdl-js-button mdl-button--colored"
               id='btn-cancel'
-              to="/coffee/api/">{tr.t('COMMON.FORM.LINK.CANCEL')}</Link>
+              to="/coffee/api/">CANCEL</Link>
           </div>
           <div className="flex-order-gt-md-2" >
             <button id="btn-save"
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-              onClick={(e) => this.register(e)}>{tr.t('COMMON.FORM.BUTTON.CREATE_API')}</button>
+              onClick={(e) => this.register(e)}>Create API Key</button>
           </div>
         </div>
       </form>
     );
+  }
+  allowKey(e, permissions) {
+    if (e.target.checked) {
+      this.setState({
+        checked: true
+      });
+      permissions.map(function(item) {
+        document.getElementById(item.id).classList.remove('is-disabled');
+      })
+    } else {
+      this.setState({
+        checked: false,
+        errors: {},
+        errorServer: null
+      });
+      permissions.map(function(item) {
+        let id = 'checkbox-' + item.id;
+        document.getElementById(item.id).classList.remove('is-checked');
+        document.getElementById(item.id).classList.add('is-disabled');
+        document.getElementById(id).removeAttribute('checked');
+        document.getElementById(id).checked = false;
+      })
+    }
   }
   ckPermissions ( e ) {
     if (e.target.checked) {
