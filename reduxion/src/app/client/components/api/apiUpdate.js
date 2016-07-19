@@ -12,7 +12,8 @@ class ApiUpdate extends React.Component {
       errors: {},
       errorServer:null,
       clientid: null,
-      permissions: {}
+      permissions: {},
+      checked: false
     };
   }
   componentWillReceiveProps() {
@@ -50,6 +51,13 @@ class ApiUpdate extends React.Component {
     } else {
       document.querySelector('.alert').style.display = 'none';
     }
+  }
+  componentDidMount () {
+    let getApiInfo = this.props.getApiInfo.data;
+
+    this.setState({
+      checked: getApiInfo.is_api_call_restricted
+    });
   }
   render() {
     let {errors, errorServer} = this.state ? this.state :'';
@@ -94,7 +102,8 @@ class ApiUpdate extends React.Component {
             </div>
             <p>Add one IP Address per line separated by line breaks</p>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-2">
-              <input type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" defaultChecked={getApiInfo.is_api_call_restricted == 1 ? true : false}/>
+              <input onChange={(e)=>this.allowKey(e, permissions)} type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input"
+               checked={this.state.checked ? 'checked' : null}/>
               <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
             </label>
           </div>
@@ -110,15 +119,17 @@ class ApiUpdate extends React.Component {
 
               return (
                 <div key={item.id} className="mdl-cell mdl-cell--3-col">
-                  <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
+                  <label id={item.id} className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={"checkbox-" + item.id}>
                     <input
                       type="checkbox"
-                      className="mdl-checkbox__input"
+                      className="mdl-checkbox__input permission_item"
                       id={"checkbox-" + item.id}
                       name="chkRights[]"
                       defaultChecked={getCk}
                       defaultValue={ item.id }
-                      onClick={(e) => this.ckPermissions(e)}/>
+                      onClick={(e) => this.ckPermissions(e)}
+                      disabled={!this.state.checked ? 'true' : ''}
+                      />
                     <span className="mdl-checkbox__label">{item.name}</span>
                   </label>
                 </div>
@@ -159,6 +170,29 @@ class ApiUpdate extends React.Component {
         </div>
       </main>
     );
+  }
+  allowKey(e, permissions) {
+    if (e.target.checked) {
+      this.setState({
+        checked: true
+      });
+      permissions.map(function(item) {
+        document.getElementById(item.id).classList.remove('is-disabled');
+      })
+    } else {
+      this.setState({
+        checked: false,
+        errors: {},
+        errorServer: null
+      });
+      permissions.map(function(item) {
+        let id = 'checkbox-' + item.id;
+        document.getElementById(item.id).classList.remove('is-checked');
+        document.getElementById(item.id).classList.add('is-disabled');
+        document.getElementById(id).removeAttribute('checked');
+        document.getElementById(id).checked = false;
+      })
+    }
   }
   ckPermissions ( e ) {
     if (e.target.checked) {

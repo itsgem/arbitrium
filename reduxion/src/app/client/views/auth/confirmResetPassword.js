@@ -73,11 +73,13 @@ export default React.createClass( {
 
     return (
       <div id="forgot" className="auth-view">
+        <DocTitle
+          title={tr.t('CONFIRM_RESET_PW.DOC_TITLE')}
+        />
         <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
             <span className="bar-title">Confirm Reset Password</span>
-            <DocTitle title="Confirm"/>
           </div>
           <fieldset>
             <div className="background">
@@ -86,19 +88,19 @@ export default React.createClass( {
                   <form>
                     <div className={ this.formClassNames('password',errors) }>
                       <input className="mdl-textfield__input" type="password" id='password'ref="password" onKeyPress={(e) => this.toConfirmReset(e)}/>
-                      <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
+                      <label className="mdl-textfield__label" htmlFor="password">{tr.t('CONFIRM_RESET_PW.FORM.LABEL.NEW_PASSWORD')}</label>
                       {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                     </div>
                     <div className={ this.formClassNames('password_confirmation',errors) }>
                       <input className="mdl-textfield__input" type="password" id='passwordConfirmation'ref="passwordConfirmation" onKeyPress={(e) => this.toConfirmReset(e)}/>
-                      <label className="mdl-textfield__label" htmlFor="email">Password Confirmation</label>
+                      <label className="mdl-textfield__label" htmlFor="email">{tr.t('CONFIRM_RESET_PW.FORM.LABEL.NEW_PW_CONFIRMATION')}</label>
                       {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                     </div>
                     <div className="spacer">
                       <button type="button"
                       className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
                       onClick={(e)=>this.confirmReset(e)}>
-                       Ok
+                       {tr.t('CONFIRM_RESET_PW.FORM.BUTTON.OK_BTN')}
                       </button>
                     </div>
                    </form>
@@ -109,7 +111,7 @@ export default React.createClass( {
         </div>
         <div className="mdl-grid mdl-grid--no-spacing forgot-footer" id="other-links">
           <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-            <Link to="/i/login"> Back to Login </Link>
+            <Link to="/i/login">{tr.t('CONFIRM_RESET_PW.LINK.BACK_TO_LOGIN')}</Link>
           </div>
         </div>
       </div>

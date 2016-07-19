@@ -31,7 +31,7 @@ class LocalLoginForm extends React.Component {
           <button type="button" className="mdl-snackbar__action"></button>
         </div>
         <LocalAuthenticationForm
-          buttonCaption={tr.t('button.login') }
+          buttonCaption={tr.t('LOGIN.FORM.BUTTON.LOGIN_BTN') }
           errors={ this.state.errors }
           onButtonClick={ (payload) => { this.login(payload) } }
           login={ this.props.login }

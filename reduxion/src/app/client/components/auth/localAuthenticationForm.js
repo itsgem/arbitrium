@@ -35,7 +35,7 @@ class LocalAuthenticationForm extends React.Component {
                 onKeyPress={(e) => this.toLogin(e)}
                 autoComplete="false"
                 />
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('label.emailUsername')}</label>
+              <label className="mdl-textfield__label" htmlFor="email">{tr.t('LOGIN.FORM.LABEL.EMAIL_USER')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
           }
@@ -49,7 +49,7 @@ class LocalAuthenticationForm extends React.Component {
               autoComplete="false"
               onKeyPress={(e) => this.toLogin(e)}
               />
-            <label className="mdl-textfield__label" htmlFor="password">{tr.t('label.password')}</label>
+            <label className="mdl-textfield__label" htmlFor="password">{tr.t('LOGIN.FORM.LABEL.PASSWORD')}</label>
             {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
           </div>
 
@@ -59,24 +59,17 @@ class LocalAuthenticationForm extends React.Component {
             type='button'
             onClick={(e) => this.login(e)}>{ this.props.buttonCaption }</button>
 
-          { this.props.showLogin &&
-            <Link
-            className='auth-button secondary mdl-button mdl-js-button mdl-button--raised mdl-button--blue mdl-js-ripple-effect'
-            id='btn-signup'
-            to="/login">{ tr.t('login') }</Link>
-          }
-
           <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-left">
               <Link
                 to="/i/forgot"
-              >{tr.t('button.forgotPassword')}</Link>
+              >{tr.t('LOGIN.LINK.FORGOT_PW')}</Link>
             </div>
 
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
               <Link
                 to="/i/signup"
-              >{tr.t('button.signUp')}</Link>
+              >{tr.t('LOGIN.LINK.SIGNUP')}</Link>
             </div>
           </div>
 
