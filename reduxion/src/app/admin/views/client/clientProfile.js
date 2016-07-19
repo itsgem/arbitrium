@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
 import NotFound from 'common/components/noMatch';
 import {createError} from 'utils/error';
+import tr from 'i18next';
 
 export default React.createClass( {
   contextTypes: {
@@ -104,16 +105,16 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title="Client Profile"
+          title={tr.t('CLIENT.DOC_TITLE_PROFILE')}
         />
         <div className="client-tab">
           <Link
             className="mdl-layout__tab"
-            to="/coffee/client/">Client List</Link>
+            to="/coffee/client/">{tr.t('CLIENT.PAGE_TITLE.LIST')}</Link>
           <Link
             className='mdl-layout__tab'
-            to="/coffee/client/new">Add New Client<i className="material-icons add">add</i></Link>
-          <a className="mdl-layout__tab is-active" >VIEW CLIENT<i className="material-icons add">edit</i></a>
+            to="/coffee/client/new">{tr.t('CLIENT.PAGE_TITLE.ADD')}<i className="material-icons add">add</i></Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('CLIENT.PAGE_TITLE.VIEW')}<i className="material-icons add">edit</i></a>
         </div>
         <ClientProfile
           client={client}

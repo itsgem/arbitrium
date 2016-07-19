@@ -153,7 +153,7 @@ class UserManagementList extends React.Component {
         <div className="dialog-content">
           <div className="dialog-inner">
             <div className="msg-box mdl-shadow--2dp">
-              <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
+              <p>{tr.t('COMMON.MESSAGE.BOX.SURE_TO_DELETE')} <label></label>{tr.t('COMMON.MESSAGE.BOX.S_ACCOUNT')}<br />{tr.t('COMMON.MESSAGE.BOX.CANNOT_BE_UNDONE')}</p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('COMMON.FORM.BUTTON.YES')}</button>
                 <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('COMMON.FORM.BUTTON.CANCEL')}</button>

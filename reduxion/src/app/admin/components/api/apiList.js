@@ -168,7 +168,7 @@ class ApiList extends React.Component {
         <div className="dialog-content">
           <div className="dialog-inner">
             <div className="msg-box mdl-shadow--2dp">
-              <p>Are you sure you want to delete this API Key?<br />This cannot be undone.</p>
+              <p>{tr.t('COMMON.MESSAGE.BOX.DELETE_API')}<br />{tr.t('COMMON.MESSAGE.BOX.CANNOT_BE_UNDONE')}</p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('COMMON.FORM.BUTTON.YES')}</button>
                 <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('COMMON.FORM.BUTTON.CANCEL')}</button>
@@ -180,7 +180,7 @@ class ApiList extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
-                <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.DESCRIPTION')}</label>
+                <label className="mdl-textfield__label">{tr.t('COMMON.FORM.LABEL.DESCRIPTION')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">

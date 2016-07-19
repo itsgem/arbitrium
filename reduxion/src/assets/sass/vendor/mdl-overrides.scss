@@ -390,6 +390,7 @@ select {
 .header-title {
   background: $base-blue;
   padding: 15px;
+  margin-bottom: 20px;
 
   p {
     color: #fff!important;
@@ -506,6 +507,12 @@ select {
   }
 }
 
+.mdl-cell {
+  h6 {
+    text-transform: uppercase;
+  }
+}
+
 .arb-demo {
   &.mdl-list {
     padding: 46px 0 0 0;
@@ -525,6 +532,12 @@ select {
 .arb-navigation.mdl-navigation {
   .mdl-layout__tab {
     font-size: 15px;
+  }
+}
+
+.msg-box {
+  p {
+    padding: 10px 0 0 !important;
   }
 }
 
