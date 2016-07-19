@@ -1,6 +1,7 @@
 import React from 'react';
-import ClientProfile from 'admin/components/client/clientProfile';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
+import ClientProfile from 'admin/components/client/clientProfile';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
 import NotFound from 'common/components/noMatch';
@@ -109,11 +110,11 @@ export default React.createClass( {
         <div className="client-tab">
           <Link
             className="mdl-layout__tab"
-            to="/coffee/client/">Client List</Link>
+            to="/coffee/client/">{tr.t('ADMIN_CLIENT.CLIENT_LIST.TITLE')}</Link>
           <Link
             className='mdl-layout__tab'
-            to="/coffee/client/new">Add New Client<i className="material-icons add">add</i></Link>
-          <a className="mdl-layout__tab is-active" >VIEW CLIENT<i className="material-icons add">edit</i></a>
+            to="/coffee/client/new">{tr.t('ADMIN_CLIENT.CLIENT_ADD.TITLE')}<i className="material-icons add">add</i></Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_CLIENT.VIEW_CLIENT.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <ClientProfile
           client={client}

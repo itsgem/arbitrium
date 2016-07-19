@@ -102,7 +102,7 @@ class UserManagementAdd extends React.Component {
                   ref="username"
                   onChange={(e) => this.notUsername(e)}
                   />
-                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USER_NAME_REQ')}</label>
+                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USERNAME_REQ')}</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
               </div>
             </div>

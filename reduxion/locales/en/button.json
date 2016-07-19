@@ -1,5 +1,6 @@
 {
   "BUTTON": {
+    "YES": "Yes",
     "SAVE": "Save",
     "SEARCH": "Search",
     "CLEAR": "Clear",
@@ -11,6 +12,14 @@
     "SAVE_SUBSCRIPTION": "Save Subscription",
     "SUBSCRIBED": "Subscribed",
     "SUBSCRIBE": "Subscribe",
-    "UPGRADE": "Upgrade"
+    "UPGRADE": "Upgrade",
+    "DEACTIVATE": "Deactivate",
+    "ACTIVATE": "Activate",
+    "FORGOT_PASSWORD": "Forgot Password",
+    "LOGIN": "LOGIN",
+    "BACK_TO_LOGIN": "Back to Login",
+    "SEND_RESET_EMAIL": "Send reset E-mail",
+    "CREATE_API_KEY": "Create API Key",
+    "UPDATE_API_KEY": "Update API Key"
   }
 }

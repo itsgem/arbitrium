@@ -25,14 +25,14 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title={tr.t('CLIENT.DOC_TITLE_ADD')}
-        />
-      <div className="client-tab">
-        <Link
-          className="mdl-layout__tab"
-          to="/coffee/client/">Client List</Link>
-        <a className="mdl-layout__tab is-active">Add New Client<i className="material-icons add">add</i></a>
-      </div>
+            title={tr.t('ADMIN_CLIENT.CLIENT_ADD.DOC_TITLE')}
+          />
+        <div className="client-tab">
+          <Link
+            className="mdl-layout__tab"
+            to="/coffee/client/">{tr.t('ADMIN_CLIENT.CLIENT_LIST.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_CLIENT.CLIENT_ADD.TITLE')}<i className="material-icons add">add</i></a>
+        </div>
         <ClientAdd
           clientRegister={this.props.clientRegister}
           validateUsername={this.props.validateUsername}

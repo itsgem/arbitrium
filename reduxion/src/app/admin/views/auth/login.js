@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
-import tr from 'i18next';
-import LocalLoginForm from 'admin/components/auth/localLoginForm';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
+import { Link } from 'react-router';
+import LocalLoginForm from 'admin/components/auth/localLoginForm';
 import moment from 'moment';
 import config from 'config';
 import CryptoJS from 'crypto-js';
@@ -32,14 +32,14 @@ class Login extends React.Component {
     return (
       <div id='login' className="auth-view">
         <DocTitle
-          title={tr.t('LOGIN.DOC_TITLE')}
+          title={tr.t('ADMIN_LOGIN.DOC_TITLE')}
         />
         <div className="login-view">
           <LocalLoginForm login={this.props.login}/>
           <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
                 <Link
-                  to="/coffee/forgot">{tr.t('LOGIN.LINK.FORGOT_PW')}</Link>
+                  to="/coffee/forgot">{tr.t('BUTTON.FORGOT_PASSWORD')}</Link>
             </div>
           </div>
         </div>

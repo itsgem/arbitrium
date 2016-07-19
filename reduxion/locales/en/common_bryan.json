@@ -1,40 +1,4 @@
 {
-  "HEADER": {
-      "DASHBOARD": "Dashboard",
-      "CLIENTS": "Clients",
-      "CLIENTS_SUB": {
-        "LIST": "Client List",
-        "ADD": "Add new client"
-      },
-      "API_KEYS": "API KEYS",
-      "API_KEYS_SUB": {
-        "LIST": "API keys list",
-        "ADD": "Add new API key"
-      },
-      "SUBSCRIPTIONS": "Subscriptions",
-      "SUBSCRIPTIONS_SUB": {
-        "LIST": "Subscriptions list"
-      },
-      "INVOICE": "Invoice",
-      "INVOICE_SUB": {
-        "LIST_CLIENT": "Client Invoice List"
-      },
-      "ADMIN_ACCOUNTS": "Admin accounts",
-      "ADMIN_ACCOUNTS_SUB": {
-        "LIST": "Admin list",
-        "ADD": "Add New Administrator"
-      },
-      "REPORTS": "Reports",
-      "LOGS": "Logs",
-      "LOGS_SUB": {
-        "LIST_CLIENT_API": "Client API logs list"
-      },
-      "USER_OPTIONS": {
-        "PROFILE": "My Profile",
-        "SETTINGS": "Settings",
-        "LOGOUT": "Logout"
-      }
-  },
   "CLIENT": {
     "DOC_TITLE_LIST": "Client List",
     "DOC_TITLE_ADD": "Client ADD",

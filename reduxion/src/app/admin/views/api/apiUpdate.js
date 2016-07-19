@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ApiUpdate from 'admin/components/api/apiUpdate';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -59,16 +60,16 @@ export default React.createClass( {
     return (
         <div id="client_add" className="auth-view">
           <DocTitle
-            title="View API KEY"
+            title={tr.t('ADMIN_API_KEYS.API_KEY_UPDATE.DOC_TITLE')}
           />
           <div className="client-tab">
             <Link
               className="mdl-layout__tab"
-              to="/coffee/api/">List of API keys</Link>
+              to="/coffee/api/">{tr.t('ADMIN_API_KEYS.API_LIST.TITLE')}</Link>
             <Link
               className='mdl-layout__tab'
-              to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
-            <a className="mdl-layout__tab is-active" >VIEW API key<i className="material-icons add">edit</i></a>
+              to="/coffee/api/new">{tr.t('ADMIN_API_KEYS.API_KEY_ADD.TITLE')}<i className="material-icons add">add</i></Link>
+            <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_API_KEYS.API_KEY_UPDATE.TITLE')}<i className="material-icons add">edit</i></a>
           </div>
           <ApiUpdate
             getApiInfo={this.props.getApiInfo}

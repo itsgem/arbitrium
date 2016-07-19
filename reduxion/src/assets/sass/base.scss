@@ -2,11 +2,11 @@
 @import './variables';
 @import './mixins';
 
-// @import './vendor/ionicons';
-@import './vendor/mdl-overrides';
-
 @import './material.indigo-pink.min';
 @import './bootstrap-datepicker3';
+
+// @import './vendor/ionicons';
+@import './vendor/mdl-overrides';
 
 // Components
 @import './alerts';

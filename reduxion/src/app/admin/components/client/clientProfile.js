@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import Checkit from 'checkit';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
@@ -152,16 +153,16 @@ class ClientProfile extends React.Component {
             <div className="msg-box mdl-shadow--2dp">
               <p></p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>{tr.t('LABEL.YES')}</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>{tr.t('LABEL.CANCEL')}</button>
               </div>
             </div>
           </div>
         </div>
-        <div className="required">Required fields</div>
+        <div className="required">{tr.t('LABEL.REQUIRED_FIELDS')}</div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--6-col">
-            <legend>USER ACCOUNT DETAILS</legend>
+            <legend>{tr.t('LABEL.USER_ACCOUNT_DETAILS')}</legend>
             <div className={this.formClassNames('username', errors)}>
               <input
                 className="mdl-textfield__input"
@@ -171,7 +172,7 @@ class ClientProfile extends React.Component {
                 onChange={(e) => this.notUsername(e, client.user.username)}
                 defaultValue={(client.user) ? client.user.username : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
+              <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USERNAME_REQ')}</label>
               {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
             </div>
           </div>
@@ -184,7 +185,7 @@ class ClientProfile extends React.Component {
               type='button'
               value="disabled"
               ref="checkUser"
-              onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
+              onClick={(e) => this.checkUsername(e)}>{tr.t('BUTTON.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
           </div>
           <div className="mdl-layout__content">
             <div className="mdl-cell mdl-cell--6-col">
@@ -196,7 +197,7 @@ class ClientProfile extends React.Component {
                   ref="email_address"
                   defaultValue={(client.user) ? client.user.email_address : ''}
                   />
-                <label className="mdl-textfield__label" htmlFor="email_address">E-mail Address*</label>
+                <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
                 {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
               </div>
             </div>
@@ -207,7 +208,7 @@ class ClientProfile extends React.Component {
           <div className="mdl-layout__content status-content">
             <div className="mdl-cell mdl-cell--6-col">
              <div className="mdl-cell mdl-cell--6-col status-col">
-                <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">Approval Status:</div>
+                <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">{tr.t('ADMIN_CLIENT.LABEL.APPROVAL_STATUS')}</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
                 <div className="mdl-cell mdl-cell--7-col float-lft">
                   { status &&
@@ -216,7 +217,7 @@ class ClientProfile extends React.Component {
                       type='button'
                       className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
                       onClick={(e) => this.changeApprovalStatus(e)}>
-                        <span>Approve</span>
+                        <span>{tr.t('LABEL.APPROVED')}</span>
                         <span className="ion-checkmark-circled icon-con"></span>
                     </button>
                   }
@@ -226,7 +227,7 @@ class ClientProfile extends React.Component {
                       type='button'
                       className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent status-btn'
                       onClick={(e) => this.clientDisapproveStatus(e)}>
-                        <span>Disapprove</span>
+                        <span>{tr.t('LABEL.DISAPPROVED')}</span>
                         <span className="ion-android-cancel icon-con"></span>
                     </button>
                   }
@@ -234,7 +235,7 @@ class ClientProfile extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <h5>Credit Balance</h5>
+              <h5>{tr.t('LABEL.CREDIT_BALANCE')}</h5>
               <h4>{client.credit_balance}</h4>
             </div>
           </div>
@@ -242,9 +243,9 @@ class ClientProfile extends React.Component {
           <div className="mdl-layout__content status-content">
             <div className="mdl-cell mdl-cell--6-col">
              <div className="mdl-cell mdl-cell--6-col status-col">
-                <div className="mdl-cell mdl-cell--2-col float-lft mg-lf">Status:</div>
+                <div className="mdl-cell mdl-cell--2-col float-lft mg-lf">{tr.t('LABEL.STATUS')}:</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">
-                  {client.user.activated_at? "Active": 'Inactive'}
+                  {client.user.activated_at? tr.t('LABEL.ACTIVE') : tr.t('LABEL.INACTIVE')}
                 </div>
                 <div className="mdl-cell mdl-cell--6-col float-lft">
                   { (client.approval_status === 'Approved')?
@@ -255,7 +256,7 @@ class ClientProfile extends React.Component {
                         type='button'
                         className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent status-btn'
                         onClick={(e) => this.modalConfirm(e, client)}>
-                          <span>Deactivate</span>
+                          <span>{tr.t('BUTTON.DEACTIVATE')}</span>
                           <span className="ion-flash-off icon-con"></span>
                       </button>
                     </div>
@@ -266,7 +267,7 @@ class ClientProfile extends React.Component {
                         type='button'
                         className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
                         onClick={(e) => this.modalConfirm(e, client)}>
-                          <span>Activate </span>
+                          <span>{tr.t('BUTTON.ACTIVATE')} </span>
                           <span className="ion-power icon-con"></span>
                       </button>
                     </div>
@@ -281,7 +282,7 @@ class ClientProfile extends React.Component {
         <div className="mdl-grid">
           <div className="mdl-layout__content">
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>GENERAL INFORMATION</legend>
+              <legend>{tr.t('LABEL.GENERAL_INFORMATION')}</legend>
               <div className={this.formClassNames('company_name', errors)}>
                 <input
                   className="mdl-textfield__input"
@@ -290,7 +291,7 @@ class ClientProfile extends React.Component {
                   ref="company_name"
                   defaultValue={(client.company_name) ? client.company_name : ''}
                   />
-                <label className="mdl-textfield__label" htmlFor="company_name">Company name *</label>
+                <label className="mdl-textfield__label" htmlFor="company_name">{tr.t('LABEL.COMPANY_NAME_REQ')}</label>
                 {errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
               </div>
             </div>
@@ -304,7 +305,7 @@ class ClientProfile extends React.Component {
                 ref="street_address_1"
                 defaultValue={(client.street_address_1) ? client.street_address_1 : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="street_address_1">Street Address 1*</label>
+              <label className="mdl-textfield__label" htmlFor="street_address_1">{tr.t('LABEL.STREET_ADDRESS_1_REQ')}</label>
               {errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
             </div>
           </div>
@@ -317,7 +318,7 @@ class ClientProfile extends React.Component {
                 ref="street_address_2"
                 defaultValue={(client.street_address_2) ? client.street_address_2 : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="street_address_2">Street Address 2</label>
+              <label className="mdl-textfield__label" htmlFor="street_address_2">{tr.t('LABEL.STREET_ADDRESS_2')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--6-col">
@@ -329,7 +330,7 @@ class ClientProfile extends React.Component {
                 ref="city"
                 defaultValue={(client.city) ? client.city : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="city">City*</label>
+              <label className="mdl-textfield__label" htmlFor="city">{tr.t('LABEL.CITY_REQ')}</label>
               {errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
             </div>
           </div>
@@ -342,7 +343,7 @@ class ClientProfile extends React.Component {
                 ref="state"
                 defaultValue={(client.state) ? client.state : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="state">State / Province*</label>
+              <label className="mdl-textfield__label" htmlFor="state">{tr.t('LABEL.STATE_PROVINCE_REQ')}</label>
               {errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
             </div>
           </div>
@@ -361,7 +362,7 @@ class ClientProfile extends React.Component {
                 ref="postal_code"
                 defaultValue={(client.postal_code) ? client.postal_code : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="postal_code">Postal code *</label>
+              <label className="mdl-textfield__label" htmlFor="postal_code">{tr.t('LABEL.POSTAL_CODE_REQ')}</label>
               {errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
             </div>
           </div>
@@ -377,7 +378,7 @@ class ClientProfile extends React.Component {
                 ref="rep_first_name"
                 defaultValue={(client.rep_first_name) ? client.rep_first_name : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_first_name">First name *</label>
+              <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
               {errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
             </div>
           </div>
@@ -390,7 +391,7 @@ class ClientProfile extends React.Component {
                 ref="rep_last_name"
                 defaultValue={(client.rep_last_name) ? client.rep_last_name : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_last_name">Last name *</label>
+              <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
               {errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
             </div>
           </div>
@@ -403,7 +404,7 @@ class ClientProfile extends React.Component {
                 ref="rep_email_address"
                 defaultValue={(client.rep_email_address) ? client.rep_email_address : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_email_address">E-mail *</label>
+              <label className="mdl-textfield__label" htmlFor="rep_email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
               {errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
             </div>
           </div>
@@ -416,10 +417,10 @@ class ClientProfile extends React.Component {
                   ref="rep_gender"
                   defaultValue={(client.rep_gender) ? client.rep_gender : ''} >
                   <option value=""></option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="Male">{tr.t('LABEL.MALE')}</option>
+                  <option value="Female">{tr.t('LABEL.FEMALE')}</option>
                 </select>
-                <label className="mdl-textfield__label" htmlFor="rep_gender">Gender *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_gender">{tr.t('LABEL.GENDER_REQ')}</label>
                 {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
               </div>
             </div>
@@ -435,7 +436,7 @@ class ClientProfile extends React.Component {
                 ref="rep_mobile_code"
                 defaultValue={(client.rep_mobile_code) ? client.rep_mobile_code : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_mobile_code">Country Code*</label>
+              <label className="mdl-textfield__label" htmlFor="rep_mobile_code">{tr.t('LABEL.COUNTRY_CODE_REQ')}</label>
               {errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
             </div>
           </div>
@@ -448,7 +449,7 @@ class ClientProfile extends React.Component {
                 ref="rep_mobile_number"
                 defaultValue={(client.rep_mobile_number) ? client.rep_mobile_number : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_mobile_number">Mobile no.*</label>
+              <label className="mdl-textfield__label" htmlFor="rep_mobile_number">{tr.t('LABEL.MOBILE_NO_REQ')}</label>
               {errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
             </div>
           </div>
@@ -463,7 +464,7 @@ class ClientProfile extends React.Component {
                 onKeyPress={(e) => this.numberOnly(e)}
                 maxLength="3"
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_phone_code">Country Code*</label>
+              <label className="mdl-textfield__label" htmlFor="rep_phone_code">{tr.t('LABEL.COUNTRY_CODE_REQ')}</label>
               {errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
             </div>
           </div>
@@ -478,7 +479,7 @@ class ClientProfile extends React.Component {
                 onKeyPress={(e) => this.numberOnly(e)}
                 maxLength="12"
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_phone_number">Telephone no.*</label>
+              <label className="mdl-textfield__label" htmlFor="rep_phone_number">{tr.t('LABEL.TELEPHONE_NO_REQ')}</label>
               {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
             </div>
           </div>
@@ -491,7 +492,7 @@ class ClientProfile extends React.Component {
                 ref="rep_position"
                 defaultValue={(client.rep_position) ? client.rep_position : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_position">Position *</label>
+              <label className="mdl-textfield__label" htmlFor="rep_position">{tr.t('LABEL.POSITION_REQ')}</label>
               {errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
             </div>
           </div>
@@ -504,7 +505,7 @@ class ClientProfile extends React.Component {
                 ref="rep_department"
                 defaultValue={(client.rep_department) ? client.rep_department : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_department">Department *</label>
+              <label className="mdl-textfield__label" htmlFor="rep_department">{tr.t('LABEL.DEPARTMENT_REQ')}</label>
               {errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
             </div>
           </div>
@@ -520,7 +521,7 @@ class ClientProfile extends React.Component {
                 ref="alt_first_name"
                 defaultValue={(client.alt_first_name) ? client.alt_first_name : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_first_name">First name</label>
+              <label className="mdl-textfield__label" htmlFor="alt_first_name">{tr.t('LABEL.FIRST_NAME')}</label>
               {errors.alt_first_name && <small className="mdl-textfield__error shown">{errors.alt_first_name[0]}</small>}
             </div>
           </div>
@@ -533,7 +534,7 @@ class ClientProfile extends React.Component {
                 ref="alt_last_name"
                 defaultValue={(client.alt_last_name) ? client.alt_last_name : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_last_name">Last name</label>
+              <label className="mdl-textfield__label" htmlFor="alt_last_name">{tr.t('LABEL.LAST_NAME')}</label>
               {errors.alt_last_name && <small className="mdl-textfield__error shown">{errors.alt_last_name[0]}</small>}
             </div>
           </div>
@@ -546,7 +547,7 @@ class ClientProfile extends React.Component {
                 ref="alt_email_address"
                 defaultValue={(client.alt_email_address) ? client.alt_email_address : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_email_address">E-mail</label>
+              <label className="mdl-textfield__label" htmlFor="alt_email_address">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
               {errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
             </div>
           </div>
@@ -559,10 +560,10 @@ class ClientProfile extends React.Component {
                   ref="alt_gender"
                   defaultValue={(client.alt_gender) ? client.alt_gender : ''} >
                   <option value=""></option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="Male">{tr.t('LABEL.MALE')}</option>
+                  <option value="Female">{tr.t('LABEL.FEMALE')}</option>
                 </select>
-                <label className="mdl-textfield__label" htmlFor="alt_gender">Gender</label>
+                <label className="mdl-textfield__label" htmlFor="alt_gender">{tr.t('LABEL.GENDER')}</label>
                 {errors.alt_gender && <small className="mdl-textfield__error shown">{errors.alt_gender[0]}</small>}
               </div>
             </div>
@@ -578,7 +579,7 @@ class ClientProfile extends React.Component {
                 ref="alt_mobile_code"
                 defaultValue={(client.alt_mobile_code) ? client.alt_mobile_code : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_mobile_code">Country Code</label>
+              <label className="mdl-textfield__label" htmlFor="alt_mobile_code">{tr.t('LABEL.COUNTRY_CODE')}</label>
               {errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
             </div>
           </div>
@@ -591,7 +592,7 @@ class ClientProfile extends React.Component {
                 ref="alt_mobile_number"
                 defaultValue={(client.alt_mobile_number) ? client.alt_mobile_number : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_mobile_number">Mobile no.</label>
+              <label className="mdl-textfield__label" htmlFor="alt_mobile_number">{tr.t('LABEL.MOBILE_NO')}</label>
               {errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
             </div>
           </div>
@@ -606,7 +607,7 @@ class ClientProfile extends React.Component {
                 onKeyPress={(e) => this.numberOnly(e)}
                 maxLength="3"
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_phone_code">Country Code</label>
+              <label className="mdl-textfield__label" htmlFor="alt_phone_code">{tr.t('LABEL.COUNTRY_CODE')}</label>
               {errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
             </div>
           </div>
@@ -621,7 +622,7 @@ class ClientProfile extends React.Component {
                 onKeyPress={(e) => this.numberOnly(e)}
                 maxLength="12"
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_phone_number">Telephone no.</label>
+              <label className="mdl-textfield__label" htmlFor="alt_phone_number">{tr.t('LABEL.TELEPHONE_NO')}</label>
               {errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
             </div>
           </div>
@@ -634,7 +635,7 @@ class ClientProfile extends React.Component {
                 ref="alt_position"
                 defaultValue={(client.alt_position) ? client.alt_position : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_position">Position</label>
+              <label className="mdl-textfield__label" htmlFor="alt_position">{tr.t('LABEL.POSITION')}</label>
               {errors.alt_position && <small className="mdl-textfield__error shown">{errors.alt_position[0]}</small>}
             </div>
           </div>
@@ -647,7 +648,7 @@ class ClientProfile extends React.Component {
                 ref="alt_department"
                 defaultValue={(client.alt_department) ? client.alt_department : ''}
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_department">Department</label>
+              <label className="mdl-textfield__label" htmlFor="alt_department">{tr.t('LABEL.DEPARTMENT')}</label>
               {errors.alt_department && <small className="mdl-textfield__error shown">{errors.alt_department[0]}</small>}
             </div>
           </div>
@@ -661,7 +662,7 @@ class ClientProfile extends React.Component {
                   type='button'
                   className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
                   onClick={(e) => this.clientUnlock(e)}>
-                    <span>Unlock </span>
+                    <span>{tr.t('BUTTON.UNLOCK')}</span>
                     <span className="ion-unlocked icon-con"></span>
                 </button>
               : null
@@ -674,14 +675,14 @@ class ClientProfile extends React.Component {
                   className="mdl-button mdl-js-button mdl-button--colored"
                   id='btn-cancel'
                   to="/coffee/client/"
-                  >CANCEL</Link>
+                  >{tr.t('BUTTON.CANCEL')}</Link>
               </div>
               <div className="flex-order-gt-md-2">
                 <button
                   className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary"
                   id='btn-save'
                   type='submit'
-                  >SAVE</button>
+                  >{tr.t('BUTTON.SAVE')}</button>
               </div>
             </div>
           </div>
@@ -695,7 +696,7 @@ class ClientProfile extends React.Component {
     return (
       <div className="margin-top-20">
           <div className="header-title">
-            <p>SUBSCRIPTION PLAN</p>
+            <p>{tr.t('LABEL.SUBSCRIPTION_PLAN')}</p>
           </div>
           <div className="mdl-layout__panel" id="#">
             <div className="mdl-grid content">

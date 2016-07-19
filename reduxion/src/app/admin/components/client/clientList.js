@@ -1,8 +1,8 @@
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
-import tr from 'i18next';
 
 class UserManagementList extends React.Component {
   constructor(props) {
@@ -70,10 +70,10 @@ class UserManagementList extends React.Component {
         {prev &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, 1)}>{tr.t('COMMON.PAGINATION.NAV.FIRST')}</button>
+          onClick={(e) => this.page(e, 1)}>{tr.t('LABEL.FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('COMMON.PAGINATION.NAV.FIRST')}</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.FIRST')}</button>
         }
         {prev &&
           <button
@@ -108,10 +108,10 @@ class UserManagementList extends React.Component {
       {next &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, last)}>{tr.t('COMMON.PAGINATION.NAV.LAST')}</button>
+          onClick={(e) => this.page(e, last)}>{tr.t('LABEL.LAST')}</button>
       }
       {!next &&
-        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('COMMON.PAGINATION.NAV.LAST')}</button>
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.LAST')}</button>
       }
       </div>
     );
@@ -153,26 +153,32 @@ class UserManagementList extends React.Component {
         <div className="dialog-content">
           <div className="dialog-inner">
             <div className="msg-box mdl-shadow--2dp">
-              <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
+              <p>
+                {tr.t('NOTEFICATION_MESSAGE.DELETE.CONFIRM_02')}
+                <label></label>
+                {tr.t('NOTEFICATION_MESSAGE.DELETE.CONFIRM_03')}
+                <br />
+                {tr.t('NOTEFICATION_MESSAGE.DELETE.CANNOT_UNDONE')}
+              </p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('COMMON.FORM.BUTTON.YES')}</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('COMMON.FORM.BUTTON.CANCEL')}</button>
+                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('BUTTON.YES')}</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('BUTTON.CANCEL')}</button>
               </div>
             </div>
           </div>
         </div>
-        <p>{tr.t('COMMON.SEARCH_FORM.TITLE')}</p>
+        <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="company" ref="company"/>
-                <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.COMPANY')}</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.COMPANY')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="email-address" ref="email_address" />
-                <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.EMAIL')}</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
@@ -180,34 +186,34 @@ class UserManagementList extends React.Component {
                 <div className="mdl-selectfield">
                   <select onKeyPress={()=>this.isPress()} className="mdl-textfield__input" id="status" ref="status">
                     <option value=""></option>
-                    <option value="Pending">{tr.t('COMMON.SEARCH_FORM.LABEL.STATUS_SUB.PENDING')}</option>
-                    <option value="Approved">{tr.t('COMMON.SEARCH_FORM.LABEL.STATUS_SUB.APPROVED')}</option>
-                    <option value="Disapproved">{tr.t('COMMON.SEARCH_FORM.LABEL.STATUS_SUB.DISSAPROVED')}</option>
+                    <option value="Pending">{tr.t('LABEL.PENDING')}</option>
+                    <option value="Approved">{tr.t('LABEL.APPROVED')}</option>
+                    <option value="Disapproved">{tr.t('LABEL.DISAPPROVED')}</option>
                   </select>
-                  <label className="mdl-textfield__label">{tr.t('COMMON.SEARCH_FORM.LABEL.STATUS')}</label>
+                  <label className="mdl-textfield__label">{tr.t('LABEL.STATUS')}</label>
                 </div>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('COMMON.SEARCH_FORM.BUTTON.SEARCH')}</button>
+                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('COMMON.SEARCH_FORM.BUTTON.CLEAR')}</button>
+                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
             </div>
           </div>
           <table className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th className="mdl-data-table__cell--non-numeric" width="112">{tr.t('COMMON.TABLE.HEADER.ID')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="114">{tr.t('COMMON.TABLE.HEADER.COMPANY')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="200">{tr.t('COMMON.TABLE.HEADER.REPRESENTATIVE')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="195">{tr.t('COMMON.TABLE.HEADER.EMAIL')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="170">{tr.t('COMMON.TABLE.HEADER.PHONE')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="139">{tr.t('COMMON.TABLE.HEADER.MOBILE')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="110">{tr.t('COMMON.TABLE.HEADER.STATUS')}</th>
-                <th className="mdl-data-table__cell--non-numeric" width="130">{tr.t('COMMON.TABLE.HEADER.ACTION')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="112">{tr.t('LABEL.ID')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="114">{tr.t('LABEL.COMPANY_NAME')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="200">{tr.t('LABEL.REPRESENTATIVE_NAME')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="195">{tr.t('LABEL.EMAIL_ADDRESS')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="170">{tr.t('LABEL.PHONE_NUMBER')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="139">{tr.t('LABEL.MOBILE_NO')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="110">{tr.t('LABEL.STATUS')}</th>
+                <th className="mdl-data-table__cell--non-numeric" width="130">{tr.t('LABEL.ACTION')}</th>
               </tr>
             </thead>
             <tbody>
@@ -223,7 +229,7 @@ class UserManagementList extends React.Component {
             {counter && pagination}
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
-            <span className="tooltiptext">Items to show per page</span>
+            <span className="tooltiptext">{tr.t('LABEL.ITEM_PER_PAGE')}</span>
             <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>

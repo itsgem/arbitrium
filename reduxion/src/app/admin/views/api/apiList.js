@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ApiList from 'admin/components/api/apiList';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
@@ -26,14 +27,14 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title="API List"
+          title={tr.t('ADMIN_API_KEYS.API_LIST.DOC_TITLE')}
         />
         {this.loadingRender()}
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">List of API keys</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_API_KEYS.API_LIST.TITLE')}</label>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
+              to="/coffee/api/new">{tr.t('ADMIN_API_KEYS.API_KEY_ADD.TITLE')}<i className="material-icons add">add</i></Link>
         </div>
         <ApiList
           ListApiSuccess={this.props.ListApiSuccess}

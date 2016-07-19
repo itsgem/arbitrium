@@ -105,7 +105,7 @@ class UserManagementUpdate extends React.Component {
                   onChange={(e) => this.notUsername(e, userInfo.user.username)}
                   defaultValue={userInfo.user.username}
                   />
-                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USER_NAME_REQ')}</label>
+                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USERNAME_REQ')}</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
               </div>
             </div>
