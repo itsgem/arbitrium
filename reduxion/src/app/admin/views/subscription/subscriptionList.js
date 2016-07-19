@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import DocTitle from 'common/components/docTitle';
 import SubscriptionList from 'admin/components/subscription/subscriptionList';
 
@@ -13,10 +14,10 @@ export default React.createClass( {
     return (
       <div id="subscription_add_or_change">
         <DocTitle
-          title="Subscriptions"
+          title={tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">Subscriptions List</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.FORM.TITLE')}</label>
         </div>
         <SubscriptionList
           subscriptionList={this.props.subscriptionList}

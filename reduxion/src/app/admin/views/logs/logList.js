@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import LogList from 'admin/components/logs/logList';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal';
@@ -39,13 +40,13 @@ export default React.createClass( {
     return (
       <div id="log_add_or_change" className="auth-view">
         <DocTitle
-          title="Logs"
+          title={tr.t('ADMIN_API_LOGS.API_LOGS_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/logs/">Client API Logs List</Link>
-          <a className="mdl-layout__tab is-active" >API Logs List<i className="material-icons add">edit</i></a>
+            to="/coffee/logs/">{tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.FORM.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_API_LOGS.API_LOGS_LIST.FORM.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <LogList
           params={this.props.params}

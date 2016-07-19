@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import DocTitle from 'common/components/docTitle';
 import SubscriptionEdit from 'admin/components/subscription/subscriptionEdit';
 import { Link } from 'react-router';
@@ -49,8 +50,8 @@ export default React.createClass( {
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/subscription/">Subscriptions List</Link>
-          <a className="mdl-layout__tab is-active" >SUBSCRIPTION DETAIL<i className="material-icons add">edit</i></a>
+            to="/coffee/subscription/">{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.FORM.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_DETAIL.FORM.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <SubscriptionEdit
           allSubscriptions={this.props.subscriptions}

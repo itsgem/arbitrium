@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -24,7 +25,7 @@ class UserManagementList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{data.get('username')}<br /> {data.get('roles').toArray().map(key => {return key.get('display_name')})}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.get('email_address')}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.get('name')}</td>
-        <td className="mdl-data-table__cell--non-numeric">Failed login attempts: {data.get('login_attempts')}</td>
+        <td className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.FAILED_LOGIN_ATTEMPTS')} {data.get('login_attempts')}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
@@ -51,10 +52,10 @@ class UserManagementList extends React.Component {
         {prev &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, 1)}>FIRST</button>
+          onClick={(e) => this.page(e, 1)}>{tr.t('LABEL.FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.FIRST')}</button>
         }
         {prev &&
           <button
@@ -89,10 +90,10 @@ class UserManagementList extends React.Component {
       {next &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, last)}>LAST</button>
+          onClick={(e) => this.page(e, last)}>{tr.t('LABEL.LAST')}</button>
       }
       {!next &&
-        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">LAST</button>
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.LAST')}</button>
       }
       </div>
     );
@@ -129,15 +130,15 @@ class UserManagementList extends React.Component {
     }
     return (
       <div className="filter-search">
-        <p>Filter / Search</p>
+        <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
         <div className="dialog-box"></div>
         <div className="dialog-content">
           <div className="dialog-inner">
             <div className="msg-box mdl-shadow--2dp">
                <p>Are you sure you want to delete <label></label>’s account?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('BUTTON.YES')}</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('BUTTON.CANCEL')}</button>
               </div>
             </div>
           </div>
@@ -146,33 +147,33 @@ class UserManagementList extends React.Component {
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="email-address" ref="email_address" />
-                <label className="mdl-textfield__label">Email Address</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
-                <label className="mdl-textfield__label">Name</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.NAME')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col search-cta">
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
             </div>
           </div>
           <table className="mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th className="mdl-data-table__cell--non-numeric">ID</th>
-                <th className="mdl-data-table__cell--non-numeric">Username</th>
-                <th className="mdl-data-table__cell--non-numeric">Email Address</th>
-                <th className="mdl-data-table__cell--non-numeric">Name</th>
-                <th className="mdl-data-table__cell--non-numeric">Stats</th>
-                <th className="mdl-data-table__cell--non-numeric">Action</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ID')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.USERNAME')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.EMAIL_ADDRESS')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.NAME')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATS')}</th>
+                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
               </tr>
             </thead>
             <tbody>
@@ -191,7 +192,7 @@ class UserManagementList extends React.Component {
             {counter && pagination}
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
-            <span className="tooltiptext">Items to show per page</span>
+            <span className="tooltiptext">{tr.t('LABEL.ITEM_PER_PAGE')}</span>
             <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>

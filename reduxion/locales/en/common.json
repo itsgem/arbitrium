@@ -1,170 +1,241 @@
 {
-
-  "sidebar": {
-    "dashboard": "Dashboard",
-    "myProfile": "My Profile",
-    "apiKeys": "API Keys",
-    "mySubscription": "My Subscription",
-    "invoice": "Invoice",
-    "apiLogs": "API Logs",
-    "logout": "Logout"
+  "BUTTON": {
+    "SAVE": "Save",
+    "SEARCH": "Search",
+    "CLEAR": "Clear",
+    "CANCEL": "Cancel",
+    "CHECK_AVAILABILITY": "Check Availability",
+    "UPDATE": "Update",
+    "UNLOCK": "UNLOCK",
+    "BACK": "BACK",
+    "SAVE_SUBSCRIPTION": "Save Subscription",
+    "SUBSCRIBED": "Subscribed",
+    "SUBSCRIBE": "Subscribe",
+    "UPGRADE": "Upgrade"
   },
-  "header": {
-    "myProfile": "My Profile",
-    "changePassword": "Change Password",
-    "changeEmailAddress": "Change Email Address",
-    "account": "Account",
-    "settings": " Settings",
-    "logout": " Logout"
+  "LABEL": {
+    "ACCOUNT_NAME_REQ": "Account Name *",
+    "ADMIN_EMAIL_REQ": "Admin Email *",
+    "BANK_ACCOUNT_REQ": "Bank Account *",
+    "BILLING_INFORMATION_REQ": "Billing Info *",
+    "BANK_ACCOUNT_CODE_REQ": "Bank Account Code *",
+    "CITY_REQ": "City *",
+    "COMPANY_NAME_REQ": "Company Name *",
+    "COUNTRY_REQ": "Country *",
+    "CREDIT_TO_REQ": "Credit To *",
+    "EMAIL_ADDRESS_REQ": "E-mail Address *",
+    "ITEMS_PER_PAGE_REQ": "Items Per Page *",
+    "STATE_REQ": "State *",
+    "POSTAL_CODE_REQ": "Postal Code *",
+    "TOKEN_EXPIRY_REQ": "Token Expiry *",
+    "USER_NAME_REQ": "Username *",
+    "PASSWORD_REQ": "Password *",
+    "CONFIRM_PASSWORD_REQ": "Confirm Pasword *",
+    "FIRST_NAME_REQ": "First name *",
+    "LAST_NAME_REQ": "Last name *",
+    "ROLE_REQ": "Role *",
+    "OTHER_SETTINGS01_REQ": "Other settings textfield 1",
+    "OTHER_SETTINGS01": "Other settings 1 *",
+    "OTHER_SETTINGS02_REQ": "Other settings textfield 2",
+    "OTHER_SETTINGS02": "Other settings 2 *",
+    "ACTION": "Action",
+    "COMPANY": "Company",
+    "COMPANY_NAME": "Company Name",
+    "BILLING_INFORMATION": "Billing Information",
+    "FILTER_SEARCH": "Filter / Search",
+    "ITEM_PER_PAGE": "Items to show per page",
+    "USER_ID": "User ID",
+    "FIRST": "FIRST",
+    "LAST": "LAST",
+    "USERNAME": "Username",
+    "IP_ADDRESS": "IP Address",
+    "STATUS_CODE": "Status Code",
+    "ID": "ID",
+    "EMAIL_ADDRESS": "E-mail Address",
+    "NAME": "Name",
+    "STATS": "Stats",
+    "URL": "URL",
+    "PARAMETER": "Parameter",
+    "DATE_CREATED": "Date Created",
+    "RESPONSE": "Response",
+    "DOWNLOAD_LOGS": "Download Logs",
+    "FAILED_LOGIN_ATTEMPTS": "Failed login attempts:",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm Pasword",
+    "REPRESENTATIVE_NAME": "Representative name",
+    "INVOICE_STATUS": "Invoice status",
+    "UNPAID": "Unpaid",
+    "PAID": "Paid",
+    "CANCELLED": "Cancelled",
+    "INVOICE_DATE": "Invoice Date",
+    "INVOICE_NUMBER_LATEST": "Invoice Number (Latest)",
+    "INVOICE_STATUS_LATEST": "Invoice Status (Latest)",
+    "INVOICE_NUMBER": "Invoice Number",
+    "INVOICE_DATE_FROM": "Invoice Date From",
+    "INVOICE_DATE_TO": "Invoice Date TO",
+    "REQUIRED_FIELDS": "Required fields",
+    "SUBSCRIPTION": "Subscription",
+    "PLAN_TYPE": "Plan Type",
+    "STATUS": "STATUS",
+    "SUBSCRIPTION_NAME": "Subscription Name",
+    "CURRENCY": "Currency",
+    "TERM_SUBSCRIPTION": "Term of Subscription",
+    "ANNUALLY": "Annualy",
+    "MONTHLY": "Monthly",
+    "AUTO_RENEW": "Auto-renew",
+    "DAILY_DEBUG": "Daily (DEBUG)",
+    "VALID_FROM": "Valid from",
+    "TO": "To",
+    "USD": "USD"
   },
-  "formTitle": {
-    "signUp": "Sign Up",
-    "myProfile": "My Profile",
-    "forgotPassword": "Forgot Password"
-  },
-  "headerText":{
-    "text1": "Fields with asterisks are required."
-  },
-  "title": {
-    "login": "Login",
-    "forgotPassword": "Forgot Password",
-    "checkMail": "Step 2 - Check Email",
-    "companyOrganization": "Company / Organization",
-    "companyRepresentative": "Company Representative",
-    "loginInformation": "Login Information",
-    "generalInformation": "General Information",
-    "passwordReset": "Password Reset"
-  },
-  "label": {
-    "emailUsername": "Email / Username",
-    "email": "Email",
-    "emailReq": "Email *",
-    "password": "Password",
-    "confirmPassword": "Confirm Password *",
-    "userName": "Username *",
-    "companyName": "Company name *",
-    "streetAddress1": "Street Address 1",
-    "streetAddress2": "Street Address 2",
-    "city": "City",
-    "stateProvince": "State / Province",
-    "postalCode": "Postal code",
-    "country": "Country",
-    "firstName": "First name *",
-    "lastName": "Last name *",
-    "gender": "Gender",
-    "code": "Code",
-    "mobileNumber": "Mobile no.",
-    "phoneNumber": "Phone no.",
-    "position": "Position *",
-    "department": "Department *"
-  },
-  "button": {
-    "sendResetEmail": "Send Reset Email",
-    "backToLogin": "Back to Login",
-    "alreadyHaveAnAccount": "Already have an account? Login here.",
-    "createAnAccount": "Create an account",
-    "checkAvailability": "Check Availability"
-  },
-  "LOGIN": {
-    "DOC_TITLE": "Login",
+  "ADMIN_SYSTEM_SETTINGS": {
+    "DOC_TITLE": "System Settings",
     "FORM": {
-      "LABEL": {
-        "EMAIL_USER": "Email / Username",
-        "PASSWORD": "Password"
-      },
-      "BUTTON": {
-        "LOGIN_BTN": "Login"
-      }
-    },
-    "LINK": {
-      "FORGOT_PW": "Forgot Password",
-      "SIGNUP": "Sign Up"
+      "TITLE": "System Settings",
+      "GENERAL_INFORMATION": "General information"
     }
   },
-  "FORGOT_PW": {
-    "DOC_TITLE": "Forgot Password",
-    "FORM": {
-      "TITLE": {
-        "FORGOT_PW": "Forgot Password"
-      },
-      "SUB_TITLE": {
-        "PW_RESET": "Password Reset",
-        "CHECK_EMAIL": "Step 2 - Check Email"
-      },
-      "NOTE": {
-        "ENTER_EMAIL": "Enter the email address used when you registered with username and passwords.",
-        "YOU_WILL_BE_SENT_RESET_CODE": "You'll be sent a reset code to change your password.",
-        "EMAIL_SENT": "An email has been sent containing your reset link. Click on the link to proceed.",
-        "CHECK_SPAM": "Please also check your spam folder just in case the reset email ended up there."
-      },
-      "LABEL": {
-        "EMAIL": "Email"
-      },
-      "BUTTON": {
-        "SEND_RESET_EMAIL": "Send Reset Email"
+  "ADMIN_API_LOGS": {
+    "CLIENT_API_LOGS_LIST": {
+      "DOC_TITLE": "Client API Logs List",
+      "FORM": {
+        "TITLE": "Client API Logs List"
       }
     },
-    "LINK": {
-      "BACK_TO_LOGIN": "Back to Login"
+    "API_LOGS_LIST": {
+      "DOC_TITLE": "API Logs List",
+      "FORM": {
+        "TITLE": "API Logs List"
+      }
+    },
+    "API_LOG_DETAIL": {
+      "DOC_TITLE": "API log detail",
+      "FORM": {
+        "TITLE": "API log detail"
+      }
     }
   },
-  "CONFIRM_RESET_PW": {
-    "DOC_TITLE": "Confirm",
-    "FORM": {
-      "TITLE": "Confirm Reset Password",
-      "LABEL": {
-        "NEW_PASSWORD": "New Password",
-        "NEW_PW_CONFIRMATION": "New Password Confirmation"
-      },
-      "BUTTON": {
-        "OK_BTN": "OK"
+  "ADMIN_USER_MANAGEMENT": {
+    "LABEL": {
+      "USER_ACCOUNT_DETAILS": "USER ACCOUNT DETAILS",
+      "PERSONAL_INFORMATION": "PERSONAL INFORMATION"
+    },
+    "USER_LIST": {
+      "DOC_TITLE": "Admin List",
+      "FORM": {
+        "TITLE": "Admin List"
       }
     },
-    "LINK": {
-      "BACK_TO_LOGIN": "Back to Login"
+    "USER_ADD": {
+      "DOC_TITLE": "Add new admin",
+      "FORM": {
+        "TITLE": "Add new admin"
+      }
+    },
+    "USER_UPDATE": {
+      "DOC_TITLE": "View Admin",
+      "FORM": {
+        "TITLE": "View Admin"
+      }
     }
   },
-  "SIGNUP": {
-    "DOC_TITLE": "Register",
-    "FORM": {
-      "TITLE": {
-        "SIGNUP": "Sign Up"
-      },
-      "INFO": {
-        "FIELDS_REQUIRED": "Fields with asterisks are required."
-      },
-      "SUB_TITLE": {
-        "COMPANY_ORGANIZATION": "Company / Organization",
-        "COMPANY_REPRESENTATIVE": "Company Representative",
-        "ARBITRIUM_LOGIN_INFO": "Arbitrium Login Information"
-      },
-      "LABEL": {
-        "COMPANY_NAME_REQ": "Company Name *",
-        "STREET_ADDRESS_1": "Street Address 1",
-        "STREET_ADDRESS_2": "Street Address 2",
-        "CITY": "City",
-        "STATE_PROVINCE": "State / Province",
-        "POSTAL_CODE": "Postal Code",
-        "COUNTRY": "Country",
-        "FIRSTNAME_REQ": "First Name *",
-        "LASTNAME_REQ": "Last Name *",
-        "GENDER": "Gender",
-        "EMAIL": "Email",
-        "CODE": "Code",
-        "MOBILE_NUMBER": "Mobile No.",
-        "PHONE_NUMBER": "Phone No.",
-        "POSITION_REQ": "Position *",
-        "DEPARTMENT_REQ": "Department *",
-        "USERNAME_REQ": "Username *",
-        "PASSWORD": "Password",
-        "CONFIRM_PW_REQ": "Confirm Password *"
-      },
-      "BUTTON": {
-        "CREATE_AN_ACCOUNT_BTN": "Create an Account"
+  "ADMIN_INVOICE": {
+    "LABEL": {
+      "BILLING_INVOICE": "BILLING INVOICE",
+      "OTHER_INFORMATION": "Other Information:",
+      "INVOICE_NO": "Invoice No.:",
+      "INVOICE_DATE": "Invoice Date:",
+      "PRODUCT_SERVICES_PURCHASED": "PRODUCTS AND SERVICES PURCHASED",
+      "NOTE_ELETRONIC_INVOICE": "This is an Electronic invoice. No signature is required.",
+      "BANKING_DETAILS": "Banking Details:",
+      "ACCOUNT_NAME": "Account Name:",
+      "ACCOUNT_NO": "Account No.:",
+      "BANK": "Bank:",
+      "BANK_CODE": "Bank Code:",
+      "BRANCH_CODE": "Branch Code:",
+      "GENERATE_PDF": "GENERATE PDF",
+      "SEND_TO_EMAIL": "SEND TO EMAIL",
+      "TABLE" : {
+        "NAME": "Name",
+        "TYPE": "Type",
+        "PRICE": "Price (USD)",
+        "DISCOUNT": "Discount (USD)",
+        "SUBTOTAL": "Subtotal (USD)",
+        "SUBSCRIPTION": "Subscription",
+        "OVERALL_TOTAL": "OVERALL TOTAL"
       }
     },
-    "LINK": {
-      "ALREADY_HAVE_AN_ACCOUNT": "Already have an account? Login here."
+    "CLIENT_INVOICE_LIST": {
+      "DOC_TITLE": "Client Invoice List",
+      "FORM": {
+        "TITLE": "Client Invoice List"
       }
+    },
+    "INVOICE_LIST": {
+      "DOC_TITLE": "Invoice List",
+      "FORM": {
+        "TITLE": "Invoice List"
+      }
+    },
+    "INVOICE_DETAIL": {
+      "DOC_TITLE": "Client Invoice Detail",
+      "FORM": {
+        "TITLE": "Client Invoice Detail"
+      }
+    }
+  },
+  "ADMIN_SUBSCRIPTION": {
+    "LABEL": {
+      "PRICE_COMPUTATION": "PRICE COMPUTATION",
+      "ANNUAL_MAINTENANCE_FEE": "ANNUAL MAINTENANCE FEE",
+      "PAYMENT_SUMMARY": "Payment Summary",
+      "ANNUAL_SUBSCRIPTION": "ANNUAL SUBSCRIPTION",
+      "ANNUAL_LICENSE_FEE": "ANNUAL LICENSE FEE",
+      "INITIAL_SETUP_FEE": "INITIAL SETUP FEE",
+      "SUB_TOTAL": "SUB TOTAL",
+      "TAX_COMPUTATION": "TAX COMPUTATION",
+      "SUB_TOTAL_PRICE": "SUB TOTAL PRICE",
+      "TAX_PERCENTAGE": "TAX PERCENTAGE",
+      "COMPUTED_TAX": "COMPUTED TAX",
+      "OVERALL_COMPUTATION": "OVERALL COMPUTATION",
+      "CREDITS": "CREDITS",
+      "TAX": "TAX",
+      "TOTAL_PRICE": "TOTAL PRICE",
+      "MONTHLY_SUBSCRIPTION": "Monthly Subscription",
+      "ANNUAL_SUBSCRIPTION": "Annual Subscription",
+      "ANNUAL_LICENCE_FEE": "Annual License Fee",
+      "INITIAL_SETUP_FEE": "Initial Setup Fee",
+      "MONTHLY_MAINTENANCE_FEE": "Monthly Maintenance Fee",
+      "ANNUAL_MAINTENANCE_FEE": "Annual Maintenance Fee",
+      "TRANSACTIONS": "Transactions/Calls to the APIs",
+      "DECISIONS_RENDERED": "No. of Decisions Rendered",
+      "DISCOUNTS": "Discounts/Free Transactions"
+    },
+    "SUBSCRIPTION_LIST" : {
+      "DOC_TITLE": "Subscription List",
+      "FORM": {
+        "TITLE": "Subscription List"
+      }
+    },
+    "SUBSCRIPTION_DETAIL" : {
+      "DOC_TITLE": "Subscription Detail",
+      "FORM": {
+        "TITLE": "Subscription Detail"
+      }
+    },
+    "SUBSCRIPTION_PAYMENT_DETAIL" : {
+      "DOC_TITLE": "Subscription Payment Detail",
+      "FORM": {
+        "TITLE": "Subscription Payment Detail"
+      }
+    }
   }
 }
+
+
+
+
+
+
+
+

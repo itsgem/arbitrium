@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
@@ -75,13 +76,13 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                 <input className="mdl-textfield__input font-input" type="text" id="subscription" value={selectedSubscriptionInfo.name} readOnly/>
-                <label className="mdl-textfield__label" htmlFor="subscription">Subscription Name</label>
+                <label className="mdl-textfield__label" htmlFor="subscription">{tr.t('LABEL.SUBSCRIPTION_NAME')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                 <input className="mdl-textfield__input font-input" type="text" id="currency" value="USD" readOnly/>
-                <label className="mdl-textfield__label" htmlFor="currency">Currency</label>
+                <label className="mdl-textfield__label" htmlFor="currency">{tr.t('LABEL.CURRENCY')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
@@ -89,18 +90,18 @@ class SubscriptionDetail extends React.Component {
                 <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
                     <input className="mdl-textfield__input font-input" type="text" id="term" value="30 days" readOnly/>
                     <input type="hidden" ref="term" value="Monthly" readOnly/>
-                    <label className="mdl-textfield__label" htmlFor="term">Subscription Name</label>
+                    <label className="mdl-textfield__label" htmlFor="term">{tr.t('LABEL.SUBSCRIPTION_NAME')}</label>
                 </div>
                 :
                 <div id="term-opt" className={this.formClassNames('term', errors)}>
                   <div className="mdl-selectfield">
                     <select onChange={(e)=>this.dateValid(e)} id="term" ref="term" className="mdl-textfield__input">
                       <option></option>
-                      <option>Annually</option>
-                      <option>Monthly</option>
-                      {(process.env.APP_DEBUG == "true") ? <option value="Daily">Daily (DEBUG)</option> : ''}
+                      <option>{tr.t('LABEL.ANNUALLY')}</option>
+                      <option>{tr.t('LABEL.MONTHLY')}</option>
+                      {(process.env.APP_DEBUG == "true") ? <option value="Daily">{tr.t('LABEL.DAILY_DEBUG')}</option> : ''}
                     </select>
-                    <label className="mdl-textfield__label" htmlFor="alt_gender">Terms of Subscription</label>
+                    <label className="mdl-textfield__label" htmlFor="alt_gender">{tr.t('LABEL.TERM_SUBSCRIPTION')}</label>
                     {errors && errors.term && <small className="mdl-textfield__error shown">{errors.term[0]}</small>}
                   </div>
                 </div>
@@ -109,59 +110,59 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div id="validFromRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
                 <input className="mdl-textfield__input font-input" type="text" ref="validFrom" readOnly/>
-                <label className="mdl-textfield__label" htmlFor="validFrom">Valid From</label>
+                <label className="mdl-textfield__label" htmlFor="validFrom">{tr.t('LABEL.VALID_FROM')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div id="validToRap" className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width hidden">
                 <input className="mdl-textfield__input font-input" type="text" ref="validTo" readOnly/>
-                <label className="mdl-textfield__label" htmlFor="validTo">To</label>
+                <label className="mdl-textfield__label" htmlFor="validTo">{tr.t('LABEL.TO')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect padding-bot" htmlFor="checkbox_2">
                 <input type="checkbox" id="checkbox_2" ref="isTerm" className="mdl-checkbox__input" disabled={this.props.params.subscription_id == 1 ? true : false}/>
-                <span className="mdl-checkbox__label">Auto-Renew</span>
+                <span className="mdl-checkbox__label">{tr.t('LABEL.AUTO_RENEW')}</span>
               </label>
             </div>
           </div>
 
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col padding-top-40">
-              <h6>PAYMENT SUMMARY</h6>
+              <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.PAYMENT_SUMMARY')}</h6>
             </div>
             <div className="mdl-cell mdl-cell--4-col box-container">
               <div className="mdl-grid">
                 <div className="mdl-cell mdl-cell--12-col padding-top-20">
-                  <h6>PRICE COMPUTATION</h6>
+                  <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.PRICE_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>ANNUAL SUBSCRIPTION</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_SUBSCRIPTION')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>ANNUAL LICENSE FEE</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_LICENSE_FEE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>INITIAL SETUP FEE</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.INITIAL_SETUP_FEE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>ANNUAL MAINTENANCE FEE</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
-                    <p>SUB TOTAL</p>
+                    <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.SUB_TOTAL')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
                     <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
@@ -172,23 +173,23 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--4-col box-container">
               <div className="mdl-grid">
                 <div className="mdl-cell mdl-cell--12-col padding-top-20">
-                  <h6>TAX COMPUTATION</h6>
+                  <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>SUB TOTAL PRICE</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.SUB_TOTAL_PRICE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>TAX PERCENTAGE</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX_PERCENTAGE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '0%' : '7%'}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
-                    <p>COMPUTED TAX</p>
+                    <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.COMPUTED_TAX')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
                     <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
@@ -199,29 +200,29 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--4-col box-container">
               <div className="mdl-grid">
                 <div className="mdl-cell mdl-cell--12-col padding-top-20">
-                  <h6>OVERALL COMPUTATION</h6>
+                  <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.OVERALL_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>SUBTOTAL PRICE</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.SUB_TOTAL_PRICE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>CREDITS</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.CREDITS')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$8'}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>TAX</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
-                    <p>TOTAL PRICE</p>
+                    <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TOTAL_PRICE')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
                     <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
@@ -235,8 +236,12 @@ class SubscriptionDetail extends React.Component {
             <div className="mdl-cell mdl-cell--4-col"></div>
             <div className="mdl-cell mdl-cell--8-col footer-action margin-top-10">
               <span>
-                <Link className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id }>Back</Link>
-                <button className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent pd-10" onClick={(e) => this.subscribe(e)}>Save Subscription</button>
+                <Link
+                  className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                  to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id }>{tr.t('BUTTON.CANCEL')}</Link>
+                <button
+                  className="btn-paypal margin-left-0 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent pd-10"
+                  onClick={(e) => this.subscribe(e)}>{tr.t('BUTTON.SAVE_SUBSCRIPTION')}</button>
               </span>
             </div>
           </div>

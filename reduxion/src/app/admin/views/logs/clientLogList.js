@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import DocTitle from 'common/components/docTitle';
 import ClientLogList from 'admin/components/logs/clientLogList';
 import {openLoading, closeLoading} from 'common/components/modal';
@@ -28,10 +29,10 @@ export default React.createClass( {
     return (
       <div id="log_add_or_change">
         <DocTitle
-          title="Logs"
+          title={tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">Client API Logs List</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.FORM.TITLE')}</label>
         </div>
         <ClientLogList
           clientList={this.props.clientList}

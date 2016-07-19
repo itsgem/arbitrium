@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import UserManagementUpdate from 'admin/components/userManagement/userManagementUpdate';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -60,16 +61,16 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title="Client Add"
+          title={tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/account/">Admin List</Link>
+            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.FORM.TITLE')}</Link>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/account/new">Add New Admin<i className="material-icons add">add</i></Link>
-          <a className="mdl-layout__tab is-active" >VIEW ADMIN<i className="material-icons add">edit</i></a>
+              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.FORM.TITLE')}<i className="material-icons add">add</i></Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_USER_MANAGEMENT.USER_UPDATE.FORM.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <UserManagementUpdate
           validateUsername={this.props.validateUsername}

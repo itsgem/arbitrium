@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import Checkit from 'checkit';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
@@ -94,7 +95,7 @@ class UserManagementUpdate extends React.Component {
         <div className="required">Required fields</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
-            <legend>USER ACCOUNT DETAILS</legend>
+            <legend>{tr.t('ADMIN_USER_MANAGEMENT.LABEL.USER_ACCOUNT_DETAILS')}</legend>
               <div className={this.formClassNames('username', errors)}>
                 <input
                   className="mdl-textfield__input"
@@ -104,7 +105,7 @@ class UserManagementUpdate extends React.Component {
                   onChange={(e) => this.notUsername(e, userInfo.user.username)}
                   defaultValue={userInfo.user.username}
                   />
-                <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
+                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USER_NAME_REQ')}</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
               </div>
             </div>
@@ -117,7 +118,7 @@ class UserManagementUpdate extends React.Component {
                 type='button'
                 value="disabled"
                 ref="checkUser"
-                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
+                onClick={(e) => this.checkUsername(e)}>{tr.t('BUTTON.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
           </div>
           <div className="mdl-grid">
@@ -130,7 +131,7 @@ class UserManagementUpdate extends React.Component {
                   ref="email_address"
                   defaultValue={userInfo.user.email_address}
                   />
-                <label className="mdl-textfield__label" htmlFor="email_address">E-mail Address*</label>
+                <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
                 {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
               </div>
             </div>
@@ -149,7 +150,7 @@ class UserManagementUpdate extends React.Component {
                       }
                     )}
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="role_id">Role*</label>
+                  <label className="mdl-textfield__label" htmlFor="role_id">{tr.t('LABEL.ROLE_REQ')}</label>
                   {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
                 </div>
               </div>
@@ -164,7 +165,7 @@ class UserManagementUpdate extends React.Component {
                   id='password'
                   ref="password"
                   />
-                <label className="mdl-textfield__label" htmlFor="password">Password</label>
+                <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.PASSWORD')}</label>
                 {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
               </div>
             </div>
@@ -176,14 +177,14 @@ class UserManagementUpdate extends React.Component {
                   id='password_confirmation'
                   ref="password_confirmation"
                   />
-                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password</label>
+                <label className="mdl-textfield__label" htmlFor="password_confirmation">{tr.t('LABEL.CONFIRM_PASSWORD')}</label>
                 {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
               </div>
             </div>
           </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-            <legend>PERSONAL INFORMATION</legend>
+            <legend>{tr.t('ADMIN_USER_MANAGEMENT.LABEL.PERSONAL_INFORMATION')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('first_name', errors)}>
@@ -194,7 +195,7 @@ class UserManagementUpdate extends React.Component {
                   ref="first_name"
                   defaultValue={userInfo.first_name}
                   />
-                <label className="mdl-textfield__label" htmlFor="first_name">First name *</label>
+                <label className="mdl-textfield__label" htmlFor="first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
                 {errors.first_name && <small className="mdl-textfield__error shown">{errors.first_name[0]}</small>}
               </div>
             </div>
@@ -207,7 +208,7 @@ class UserManagementUpdate extends React.Component {
                   ref="last_name"
                   defaultValue={userInfo.last_name}
                   />
-                <label className="mdl-textfield__label" htmlFor="last_name">Last name *</label>
+                <label className="mdl-textfield__label" htmlFor="last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
                 {errors.last_name && <small className="mdl-textfield__error shown">{errors.last_name[0]}</small>}
               </div>
             </div>
@@ -222,7 +223,7 @@ class UserManagementUpdate extends React.Component {
                     type='button'
                     className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored status-btn'
                     onClick={(e) => this.adminUnlock(e, userInfo.user.id)}>
-                      <span>Unlock </span>
+                      <span>{tr.t('BUTTON.UNLOCK')}</span>
                       <span className="ion-unlocked icon-con"></span>
                   </button>
                 : null
@@ -235,14 +236,14 @@ class UserManagementUpdate extends React.Component {
                     className="mdl-button mdl-js-button mdl-button--colored"
                     id='btn-cancel'
                     to="/coffee/account/"
-                    >CANCEL</Link>
+                    >{tr.t('BUTTON.CANCEL')}</Link>
                 </div>
                 <div className="flex-order-gt-md-2">
                   <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     id='btn-save'
                     type='button'
-                    onClick={(e) => this.update(e, userInfo.id)}>UPDATE</button>
+                    onClick={(e) => this.update(e, userInfo.id)}>{tr.t('BUTTON.UPDATE')}</button>
                 </div>
               </div>
             </div>

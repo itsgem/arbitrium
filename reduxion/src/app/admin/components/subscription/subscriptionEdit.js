@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
@@ -34,47 +35,47 @@ class SubscriptionEdit extends React.Component {
                   <ul className="arb-demo mdl-list">
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Monthly Subscription
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.MONTHLY_SUBSCRIPTION')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Annual Subscription
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_SUBSCRIPTION')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Annual License Fee
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_LICENCE_FEE')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Initial Setup Fee
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.INITIAL_SETUP_FEE')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Monthly Maintenance Fee
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.MONTHLY_MAINTENANCE_FEE')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Annual Maintenance Fee
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Transactions/Calls to the APIs
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.TRANSACTIONS')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        No. of Decisions Rendered
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.DECISIONS_RENDERED')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        Discounts/Free Transactions
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.DISCOUNTS')}
                       </span>
                     </li>
                   </ul>
@@ -121,11 +122,11 @@ class SubscriptionEdit extends React.Component {
                               {
                                 item.name == 'Free Trial' ? (clientInfo.can_avail_trial == false ?
                                   (clientSubscriptionInfo.name != 'Free Trial' ? '' :
-                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>)
-                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>Subscribe</Link> )
+                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>)
+                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{tr.t('BUTTON.SUBSCRIBE')}</Link> )
                                 : clientSubscriptionInfo.subscription_id == item.id ?
-                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Free Trial' ? 'Subscribe' : 'Upgrade') : 'Subscribed'}</Link>
+                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>
+                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Free Trial' ? tr.t('BUTTON.SUBSCRIBE') : tr.t('BUTTON.UPGRADE')) : tr.t('BUTTON.SUBSCRIBED')}</Link>
                               }
                             </td>
                           </tr>

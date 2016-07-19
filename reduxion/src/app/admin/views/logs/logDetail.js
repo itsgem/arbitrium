@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import LogDetail from 'admin/components/logs/logDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -50,14 +52,17 @@ export default React.createClass({
   renderLogDetail () {
     return (
       <div id="client_add" className="auth-view">
+        <DocTitle
+          title={tr.t('ADMIN_API_LOGS.API_LOG_DETAIL.DOC_TITLE')}
+        />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/logs/">Client API Logs List</Link>
+            to="/coffee/logs/">{tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.FORM.TITLE')}</Link>
           <Link
             className='mdl-layout__tab'
-            to={"/coffee/logs/client/" + this.props.params.client_id}>API Logs List</Link>
-          <a className="mdl-layout__tab is-active" >API LOG DETAIL<i className="material-icons add">edit</i></a>
+            to={"/coffee/logs/client/" + this.props.params.client_id}>{tr.t('ADMIN_API_LOGS.API_LOGS_LIST.FORM.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_API_LOGS.API_LOG_DETAIL.FORM.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <LogDetail
           params = {this.props.params}
