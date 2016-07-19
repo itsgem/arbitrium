@@ -48,7 +48,7 @@ export default React.createClass({
           title={tr.t('ADMIN_SYSTEM_SETTINGS.DOC_TITLE')}
         />
         <div className="client-tab">
-          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_SYSTEM_SETTINGS.FORM.TITLE')}<i className="material-icons add">edit</i></a>
+          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_SYSTEM_SETTINGS.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <SystemSettings
           adminSystemSettings = {this.props.systemSettings}

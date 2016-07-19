@@ -30,8 +30,8 @@ export default React.createClass( {
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.FORM.TITLE')}</Link>
-          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.FORM.TITLE')}<i className="material-icons add">add</i></a>
+            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></a>
         </div>
         <UserManagementAdd
             validateUsername={this.props.validateUsername}

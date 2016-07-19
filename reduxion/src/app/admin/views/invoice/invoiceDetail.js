@@ -67,11 +67,11 @@ export default React.createClass({
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/invoice/">{tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.FORM.TITLE')}</Link>
+            to="/coffee/invoice/">{tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.TITLE')}</Link>
           <Link
             className='mdl-layout__tab'
-            to={"/coffee/invoice/client/" + this.props.params.client_id}>{tr.t('ADMIN_INVOICE.INVOICE_LIST.FORM.TITLE')}</Link>
-          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_INVOICE.INVOICE_DETAIL.FORM.TITLE')}<i className="material-icons add">edit</i></a>
+            to={"/coffee/invoice/client/" + this.props.params.client_id}>{tr.t('ADMIN_INVOICE.INVOICE_LIST.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_INVOICE.INVOICE_DETAIL.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <InvoiceDetail
           params = {this.props.params}

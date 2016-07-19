@@ -73,7 +73,7 @@ class SystemSettings extends React.Component {
           <div className="required">Required fields</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-              <legend>{tr.t('ADMIN_SYSTEM_SETTINGS.FORM.GENERAL_INFORMATION')}</legend>
+              <legend>{tr.t('ADMIN_SYSTEM_SETTINGS.LABEL.GENERAL_INFORMATION')}</legend>
             </div>
           </div>
 

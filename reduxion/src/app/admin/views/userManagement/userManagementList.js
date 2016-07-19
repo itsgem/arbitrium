@@ -24,10 +24,10 @@ export default React.createClass( {
           title={tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.FORM.TITLE')}</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</label>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.FORM.TITLE')}<i className="material-icons add">add</i></Link>
+              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></Link>
         </div>
         <UserManagementList
           deleteAdminAccount={this.props.deleteAdminAccount}

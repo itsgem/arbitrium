@@ -66,11 +66,11 @@ export default React.createClass( {
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.FORM.TITLE')}</Link>
+            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</Link>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.FORM.TITLE')}<i className="material-icons add">add</i></Link>
-          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_USER_MANAGEMENT.USER_UPDATE.FORM.TITLE')}<i className="material-icons add">edit</i></a>
+              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_USER_MANAGEMENT.USER_UPDATE.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <UserManagementUpdate
           validateUsername={this.props.validateUsername}

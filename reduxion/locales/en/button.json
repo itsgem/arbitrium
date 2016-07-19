@@ -1,0 +1,16 @@
+{
+  "BUTTON": {
+    "SAVE": "Save",
+    "SEARCH": "Search",
+    "CLEAR": "Clear",
+    "CANCEL": "Cancel",
+    "CHECK_AVAILABILITY": "Check Availability",
+    "UPDATE": "Update",
+    "UNLOCK": "UNLOCK",
+    "BACK": "BACK",
+    "SAVE_SUBSCRIPTION": "Save Subscription",
+    "SUBSCRIBED": "Subscribed",
+    "SUBSCRIBE": "Subscribe",
+    "UPGRADE": "Upgrade"
+  }
+}

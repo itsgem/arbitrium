@@ -17,7 +17,7 @@ export default React.createClass( {
           title={tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.FORM.TITLE')}</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.TITLE')}</label>
         </div>
         <SubscriptionList
           subscriptionList={this.props.subscriptionList}

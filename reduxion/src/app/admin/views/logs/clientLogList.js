@@ -32,7 +32,7 @@ export default React.createClass( {
           title={tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.FORM.TITLE')}</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_API_LOGS.CLIENT_API_LOGS_LIST.TITLE')}</label>
         </div>
         <ClientLogList
           clientList={this.props.clientList}

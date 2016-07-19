@@ -17,7 +17,7 @@ export default React.createClass( {
           title={tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.FORM.TITLE')}</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.TITLE')}</label>
         </div>
         <ClientInvoiceList
           clientInvoiceList={this.props.clientInvoiceList}

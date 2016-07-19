@@ -1,0 +1,128 @@
+{
+  "ADMIN_SYSTEM_SETTINGS": {
+    "LABEL": {
+      "GENERAL_INFORMATION": "General information"
+    },
+    "DOC_TITLE": "System Settings",
+    "TITLE": "System Settings"
+  },
+  "ADMIN_API_LOGS": {
+    "CLIENT_API_LOGS_LIST": {
+      "DOC_TITLE": "Client API Logs List",
+      "TITLE": "Client API Logs List"
+    },
+    "API_LOGS_LIST": {
+      "DOC_TITLE": "API Logs List",
+      "TITLE": "API Logs List"
+    },
+    "API_LOG_DETAIL": {
+      "DOC_TITLE": "API log detail",
+      "TITLE": "API log detail"
+    }
+  },
+  "ADMIN_USER_MANAGEMENT": {
+    "LABEL": {
+      "USER_ACCOUNT_DETAILS": "USER ACCOUNT DETAILS",
+      "PERSONAL_INFORMATION": "PERSONAL INFORMATION"
+    },
+    "USER_LIST": {
+      "DOC_TITLE": "Admin List",
+      "TITLE": "Admin List"
+    },
+    "USER_ADD": {
+      "DOC_TITLE": "Add new admin",
+      "TITLE": "Add new admin"
+    },
+    "USER_UPDATE": {
+      "DOC_TITLE": "View Admin",
+      "TITLE": "View Admin"
+    }
+  },
+  "ADMIN_INVOICE": {
+    "LABEL": {
+      "BILLING_INVOICE": "BILLING INVOICE",
+      "OTHER_INFORMATION": "Other Information:",
+      "INVOICE_NO": "Invoice No.:",
+      "INVOICE_DATE": "Invoice Date:",
+      "PRODUCT_SERVICES_PURCHASED": "PRODUCTS AND SERVICES PURCHASED",
+      "NOTE_ELETRONIC_INVOICE": "This is an Electronic invoice. No signature is required.",
+      "BANKING_DETAILS": "Banking Details:",
+      "ACCOUNT_NAME": "Account Name:",
+      "ACCOUNT_NO": "Account No.:",
+      "BANK": "Bank:",
+      "BANK_CODE": "Bank Code:",
+      "BRANCH_CODE": "Branch Code:",
+      "GENERATE_PDF": "GENERATE PDF",
+      "SEND_TO_EMAIL": "SEND TO EMAIL",
+      "TABLE" : {
+        "NAME": "Name",
+        "TYPE": "Type",
+        "PRICE": "Price (USD)",
+        "DISCOUNT": "Discount (USD)",
+        "SUBTOTAL": "Subtotal (USD)",
+        "SUBSCRIPTION": "Subscription",
+        "OVERALL_TOTAL": "OVERALL TOTAL"
+      }
+    },
+    "CLIENT_INVOICE_LIST": {
+      "DOC_TITLE": "Client Invoice List",
+      "TITLE": "Client Invoice List"
+    },
+    "INVOICE_LIST": {
+      "DOC_TITLE": "Invoice List",
+      "TITLE": "Invoice List"
+    },
+    "INVOICE_DETAIL": {
+      "DOC_TITLE": "Client Invoice Detail",
+      "TITLE": "Client Invoice Detail"
+    }
+  },
+  "ADMIN_SUBSCRIPTION": {
+    "LABEL": {
+      "PRICE_COMPUTATION": "PRICE COMPUTATION",
+      "ANNUAL_MAINTENANCE_FEE": "ANNUAL MAINTENANCE FEE",
+      "PAYMENT_SUMMARY": "Payment Summary",
+      "ANNUAL_SUBSCRIPTION": "ANNUAL SUBSCRIPTION",
+      "ANNUAL_LICENSE_FEE": "ANNUAL LICENSE FEE",
+      "INITIAL_SETUP_FEE": "INITIAL SETUP FEE",
+      "SUB_TOTAL": "SUB TOTAL",
+      "TAX_COMPUTATION": "TAX COMPUTATION",
+      "SUB_TOTAL_PRICE": "SUB TOTAL PRICE",
+      "TAX_PERCENTAGE": "TAX PERCENTAGE",
+      "COMPUTED_TAX": "COMPUTED TAX",
+      "OVERALL_COMPUTATION": "OVERALL COMPUTATION",
+      "CREDITS": "CREDITS",
+      "TAX": "TAX",
+      "TOTAL_PRICE": "TOTAL PRICE",
+      "MONTHLY_SUBSCRIPTION": "Monthly Subscription",
+      "ANNUAL_SUBSCRIPTION": "Annual Subscription",
+      "ANNUAL_LICENCE_FEE": "Annual License Fee",
+      "INITIAL_SETUP_FEE": "Initial Setup Fee",
+      "MONTHLY_MAINTENANCE_FEE": "Monthly Maintenance Fee",
+      "ANNUAL_MAINTENANCE_FEE": "Annual Maintenance Fee",
+      "TRANSACTIONS": "Transactions/Calls to the APIs",
+      "DECISIONS_RENDERED": "No. of Decisions Rendered",
+      "DISCOUNTS": "Discounts/Free Transactions"
+    },
+    "SUBSCRIPTION_LIST" : {
+      "DOC_TITLE": "Subscription List",
+      "TITLE": "Subscription List"
+    },
+    "SUBSCRIPTION_DETAIL" : {
+      "DOC_TITLE": "Subscription Detail",
+      "TITLE": "Subscription Detail"
+    },
+    "SUBSCRIPTION_PAYMENT_DETAIL" : {
+      "DOC_TITLE": "Subscription Payment Detail",
+      "TITLE": "Subscription Payment Detail"
+    }
+  }
+}
+
+
+
+
+
+
+
+
