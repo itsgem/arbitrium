@@ -4,6 +4,7 @@ import ApiList from 'admin/components/api/apiList';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
+import tr from 'i18next';
 
 export default React.createClass( {
   contextTypes: {
@@ -26,14 +27,14 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title="API List"
+          title={tr.t('API.DOC_TITLE_LIST')}
         />
         {this.loadingRender()}
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">List of API keys</label>
+          <label className="mdl-layout__tab is-active">{tr.t('API.PAGE_TITLE.LIST')}</label>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/api/new">Add New API key<i className="material-icons add">add</i></Link>
+              to="/coffee/api/new">{tr.t('API.PAGE_TITLE.ADD')}<i className="material-icons add">add</i></Link>
         </div>
         <ApiList
           ListApiSuccess={this.props.ListApiSuccess}

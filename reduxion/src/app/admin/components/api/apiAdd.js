@@ -111,7 +111,7 @@ class ApiAdd extends React.Component {
             </div>
             <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-2">
               <input onChange={(e)=>this.allowKey(e, permissions)} type="checkbox" id="checkbox-2" ref="is_api_call_restricted" className="mdl-checkbox__input" checked={this.state.checked ? 'checked' : null} />
-              <span className="mdl-checkbox__label">Only allow this Key to user certain API calls</span>
+              <span className="mdl-checkbox__label">{tr.t('API.FORM.CHECKBOX_LABEL.ALLOW_KEY_API_CALLS')}</span>
             </label>
           </div>
           {

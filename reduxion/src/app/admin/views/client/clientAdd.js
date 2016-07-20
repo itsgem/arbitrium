@@ -30,8 +30,8 @@ export default React.createClass( {
       <div className="client-tab">
         <Link
           className="mdl-layout__tab"
-          to="/coffee/client/">Client List</Link>
-        <a className="mdl-layout__tab is-active">Add New Client<i className="material-icons add">add</i></a>
+          to="/coffee/client/">{tr.t('CLIENT.PAGE_TITLE.LIST')}</Link>
+        <a className="mdl-layout__tab is-active">{tr.t('CLIENT.PAGE_TITLE.ADD')}<i className="material-icons add">add</i></a>
       </div>
         <ClientAdd
           clientRegister={this.props.clientRegister}
