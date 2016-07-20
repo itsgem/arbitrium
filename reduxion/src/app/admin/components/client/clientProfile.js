@@ -9,7 +9,6 @@ import Country from 'admin/components/country'
 import {modal, openModal, closeModal} from 'common/components/modal'
 import moment from 'moment';
 
-
 class ClientProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -368,7 +367,7 @@ class ClientProfile extends React.Component {
           </div>
         </div>
         <div className="mdl-grid">
-          <legend>COMPANY REPRESENTATIVE</legend>
+          <legend>{tr.t('CLIENT.FORM.TITLE.COMPANY_REP')}</legend>
           <div className="mdl-cell mdl-cell--6-col">
             <div className={this.formClassNames('rep_first_name', errors)}>
               <input
@@ -511,7 +510,7 @@ class ClientProfile extends React.Component {
           </div>
         </div>
         <div className="mdl-grid">
-          <legend>ALTERNATIVE REPRESENTATIVE</legend>
+          <legend>{tr.t('CLIENT.FORM.TITLE.ALTERNATIVE_REPRESENTATIVE')}</legend>
           <div className="mdl-cell mdl-cell--6-col">
             <div className={this.formClassNames('alt_first_name', errors)}>
               <input
@@ -701,28 +700,28 @@ class ClientProfile extends React.Component {
           <div className="mdl-layout__panel" id="#">
             <div className="mdl-grid content">
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>SUBSCRIPTION</h6>
+                <h6>{tr.t('CLIENT.FORM.LABEL.SUBSCRIPTION')}</h6>
                 <p>{currentSubscription.name}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>START DATE</h6>
+                <h6>{tr.t('CLIENT.FORM.LABEL.START_DATE')}</h6>
                 <p>{moment(currentSubscription.valid_from).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>{currentSubscription.type == 'Trial' ? 'TERMS OF SUBSCRIPTION FOR FREE TRIAL PLAN' : 'TERMS OF SUBSCRIPTION'}</h6>
+                <h6>{currentSubscription.type == 'Trial' ? tr.t('CLIENT.FORM.LABEL.TERMS_SUBSCRIPTION_FREE') : tr.t('CLIENT.FORM.LABEL.TERMS_SUBSCRIPTION')}</h6>
                 <p>{currentSubscription.type == 'Trial' ? '30 days' : currentSubscription.term}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>END DATE</h6>
+                <h6>{tr.t('CLIENT.FORM.LABEL.END_DATE')}</h6>
                 <p>{moment(currentSubscription.valid_to).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col bottom-margin">
-                <h6>AUTO-RENEW</h6>
+                <h6>{tr.t('CLIENT.FORM.LABEL.AUTO_RENEW')}</h6>
                 <p>{currentSubscription.is_auto_renew == 1 ? 'Enabled' : 'Disabled'}</p>
               </div>
             </div>
              <div className="layout-gt-md-row layout-align-end-end btn">
-                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent right" onClick={(e) => this.modalSubscription(e) }>CANCEL SUBSCRIPTION</button>
+                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent right" onClick={(e) => this.modalSubscription(e) }>{tr.t('CLIENT.FORM.BUTTON.CANCEL_SUBSCRIPTION')}</button>
               </div>
           </div>
         </div>

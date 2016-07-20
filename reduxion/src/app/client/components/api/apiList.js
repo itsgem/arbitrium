@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import {modal, openModal, closeModal} from 'common/components/modal'
 import {createError} from 'utils/error';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -166,9 +168,12 @@ class ApiList extends React.Component {
 
     return (
       <div className="filter-search">
+        <DocTitle
+          title= {tr.t('API_KEYS.DOC_TITLE')}
+        />
         <div className="mdl-grid">
           <div className="mdl-cell">
-            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">New API Key</Link>
+            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">{tr.t('API_KEYS.BUTTON.NEW_API_KEY')}</Link>
           </div>
         </div>
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
@@ -184,18 +189,18 @@ class ApiList extends React.Component {
               </div>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--12-col header-title"><p>Api key list</p></div>
+          <div className="mdl-cell mdl-cell--12-col header-title"><p>{tr.t('API_KEYS.FORM.TITLE')}</p></div>
           <div className="mdl-grid filter-search-bar">
               <div className="mdl-cell mdl-cell--3-col">
                 <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                   <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
-                  <label className="mdl-textfield__label">Description</label>
+                  <label className="mdl-textfield__label">{tr.t('API_KEYS.FORM.SEARCH_FORM.LABEL.DESCRIPTION')}</label>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--3-col">
                 <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                   <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
-                  <label className="mdl-textfield__label">API Key</label>
+                  <label className="mdl-textfield__label">{tr.t('API_KEYS.FORM.SEARCH_FORM.LABEL.API_KEY')}</label>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--2-col">
@@ -206,13 +211,13 @@ class ApiList extends React.Component {
                     id="created_at" ref="created_at"
                     readOnly
                   />
-                  <label className="mdl-textfield__label">Date Created</label>
+                  <label className="mdl-textfield__label">{tr.t('API_KEYS.FORM.SEARCH_FORM.LABEL.DATE_CREATED')}</label>
                 </div>
               </div>
               <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
-                  onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+                  onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('API_KEYS.FORM.SEARCH_FORM.BUTTON.SEARCH')}</button>
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
                   onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
@@ -221,10 +226,10 @@ class ApiList extends React.Component {
           <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
-                <th width="300" className="mdl-data-table__cell--non-numeric">Description</th>
-                <th width="500" className="mdl-data-table__cell--non-numeric">Key</th>
-                <th width="200" className="mdl-data-table__cell--non-numeric">Date Created</th>
-                <th width="300" className="mdl-data-table__cell--non-numeric">Action</th>
+                <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('API_KEYS.FORM.TABLE.HEADER.DESCRIPTION')}</th>
+                <th width="500" className="mdl-data-table__cell--non-numeric">{tr.t('API_KEYS.FORM.TABLE.HEADER.KEY')}</th>
+                <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('API_KEYS.FORM.TABLE.HEADER.DATE_CREATED')}</th>
+                <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('API_KEYS.FORM.TABLE.HEADER.ACTION')}</th>
               </tr>
             </thead>
             <tbody>

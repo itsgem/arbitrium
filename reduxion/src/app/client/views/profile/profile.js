@@ -56,7 +56,7 @@ export default React.createClass({
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <DocTitle
-          title="My Profile"
+          title= {tr.t('MY_PROFILE.DOC_TITLE')}
         />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container" >
           <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
@@ -64,7 +64,7 @@ export default React.createClass({
             <button type="button" className="mdl-snackbar__action"></button>
           </div>
           <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>{tr.t('formTitle.myProfile')}</p>
+            <p>{tr.t('MY_PROFILE.FORM.TITLE.MY_PROFILE')}</p>
           </div>
           <div className="page-content">
             <ClientProfile
