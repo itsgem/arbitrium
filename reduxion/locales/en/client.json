@@ -1,0 +1,169 @@
+{
+  "CLIENT_LOGIN": {
+    "DOC_TITLE": "Login"
+  },
+  "CLIENT_FORGOT_PASSWORD" : {
+    "DOC_TITLE": "Forgot Password",
+    "TITLE": "Forgot Password",
+    "NOTE": {
+      "CHECK_EMAIL": "Step 2 - Check Email",
+      "EMAIL_SENT": "An email has been sent containing your reset link. Click on the link to proceed.",
+      "CHECK_SPAM": "Please also check your spam folder just in case the reset email ended up there.",
+      "ENTER_EMAIL": "Enter the email address used when you registered with username and passwords.",
+      "SENT_RESET_CODE": "You'll be sent a reset code to change your password."
+    },
+    "LABEL" : {
+      "PASSWORD_RESET": "Password Reset"
+    }
+  },
+  "CLIENT_CONFIRM_RESET_PASSWORD": {
+    "DOC_TITLE": "Confirm Reset Password",
+    "TITLE": "Confirm Reset Password"
+  },
+  "CLIENT_SIGN_UP": {
+    "DOC_TITLE": "Sign up",
+    "TITLE": "Sign up",
+    "LABEL": {
+      "LOGIN_INFORMATION": "ARBITRIUM LOGIN INFORMATION",
+      "ALREADY_HAVE_AN_ACCOUNT": "Already have an account? Login here."
+    },
+    "NOTE": {
+      "CONFIRMATION_EMAIL": "A confirmation email has been sent.",
+      "VERIFY_EMAIL": "Click on the link to verify your email address and activate your account."
+    }
+  },
+  "CLIENT_SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "MY_PROFILE": "My Profile",
+    "API_KEYS": "API Keys",
+    "MY_SUBSCRIPTION": "My Subscription",
+    "INVOICE": "Invoice",
+    "API_LOGS": "API Logs",
+    "LOGOUT": "Logout"
+  },
+  "CLIENT_HEADER": {
+    "LABEL": {
+      "ACCOUNT": "Account"
+    },
+    "MY_PROFILE": "My Profile",
+    "CHANGE_PW": "Change Password",
+    "CHANGE_EMAIL_ADD": "Change Email Address",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout"
+  },
+  "CLIENT_PROFILE": {
+    "DOC_TITLE": "My Profile",
+    "TITLE": "My Profile"
+  },
+  "CLIENT_CHANGE_PASSWORD": {
+    "DOC_TITLE": "Change Password",
+    "TITLE": "Change Password"
+  },
+  "CHANGE_EMAIL_ADDRESS": {
+    "DOC_TITLE": "Change E-mail Address",
+    "TITLE": "Change E-mail Address"
+  },
+  "CLIENT_API_KEY": {
+    "NOTE": {
+      "ALLOW_FILTER": "Add a description to your API key to allow you to filter by key",
+      "ALLOW_IP_ADDRESS": "Only allow the Key to work from certain IP address",
+      "IP_ADDRESS_PER_LINE": "Add one IP Address per line separated by line breaks",
+      "CERTAIN_API_CALLS": "Only allow this Key to user certain API calls",
+      "TEST_KEY": "You can use a test key to experiment with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation."
+    },
+    "API_LIST": {
+      "DOC_TITLE": "List of API keys",
+      "TITLE": "List of API keys"
+    },
+    "API_KEY_ADD": {
+      "DOC_TITLE": "Add New API key",
+      "TITLE": "Add New API key"
+    },
+    "API_KEY_UPDATE": {
+      "DOC_TITLE": "API key detail",
+      "TITLE": "API key detail"
+    }
+  },
+  "CLIENT_SUBCRIPTION": {
+    "LABEL": {
+      "PRICE_COMPUTATION": "Price Computation",
+      "PAYMENT_SUMMARY": "Payment Summary",
+      "ANNUAL_SUBSCRIPTION": "Annual Subscription",
+      "ANNUAL_LICENSE_FEE": "Annual License Fee",
+      "INITIAL_SETUP_FEE": "Initil Setup Fee",
+      "SUB_TOTAL": "Sub Total",
+      "TAX_COMPUTATION": "Tax Computation",
+      "SUB_TOTAL_PRICE": "Sub Total Price",
+      "TAX_PERCENTAGE": "Tax Percentage",
+      "COMPUTED_TAX": "Computed Tax",
+      "OVERALL_COMPUTATION": "Overall Computation",
+      "CREDITS": "Credits",
+      "TAX": "TAX",
+      "TOTAL_PRICE": "Totl Price",
+      "MONTHLY_SUBSCRIPTION": "Monthly Subscription",
+      "INITIAL_SETUP_FEE": "Initial Setup Fee",
+      "MONTHLY_MAINTENANCE_FEE": "Monthly Maintenance Fee",
+      "ANNUAL_MAINTENANCE_FEE": "Annual Maintenance Fee",
+      "TRANSACTIONS": "Transactions/Calls to the APIs",
+      "DECISIONS_RENDERED": "No. of Decisions Rendered",
+      "DISCOUNTS": "Discounts/Free Transactions",
+      "FREE_TRIAL": "Free Trial"
+    },
+    "SUBSCRIPTION_DETAIL": {
+      "DOC_TITLE": "Subscription Detail",
+      "TITLE": "Subscription Detail"
+    },
+    "SUBSCRIPTION_PAYMENT_DETAIL" : {
+      "DOC_TITLE": "Subscription Payment Detail",
+      "TITLE": "Subscription Payment Detail"
+    }
+  },
+  "CLIENT_INVOICE": {
+    "LABEL": {
+      "BILLING_INVOICE": "BILLING INVOICE",
+      "OTHER_INFORMATION": "Other Information:",
+      "INVOICE_NO": "Invoice No.:",
+      "INVOICE_DATE": "Invoice Date:",
+      "PRODUCT_SERVICES_PURCHASED": "PRODUCTS AND SERVICES PURCHASED",
+      "NOTE_ELETRONIC_INVOICE": "This is an Electronic invoice. No signature is required.",
+      "BANKING_DETAILS": "Banking Details:",
+      "ACCOUNT_NAME": "Account Name:",
+      "ACCOUNT_NO": "Account No.:",
+      "BANK": "Bank:",
+      "BANK_CODE": "Bank Code:",
+      "BRANCH_CODE": "Branch Code:",
+      "GENERATE_PDF": "GENERATE PDF",
+      "SEND_TO_EMAIL": "SEND TO EMAIL",
+      "TABLE" : {
+        "NAME": "Name",
+        "TYPE": "Type",
+        "PRICE": "Price (USD)",
+        "DISCOUNT": "Discount (USD)",
+        "SUBTOTAL": "Subtotal (USD)",
+        "SUBSCRIPTION": "Subscription",
+        "OVERALL_TOTAL": "OVERALL TOTAL"
+      }
+    },
+    "INVOICE_LIST": {
+      "DOC_TITLE": "Invoice List",
+      "TITLE": "Invoice List"
+    },
+    "INVOICE_DETAIL": {
+      "DOC_TITLE": "Client Invoice Detail",
+      "TITLE": "Client Invoice Detail"
+    }
+  },
+  "CLIENT_API_LOGS": {
+    "API_LOGS_LIST": {
+      "DOC_TITLE": "API Logs List",
+      "TITLE": "API Logs List"
+    },
+    "API_LOG_DETAIL": {
+      "DOC_TITLE": "API log detail",
+      "TITLE": "API log detail"
+    }
+  }
+}
+
+
+

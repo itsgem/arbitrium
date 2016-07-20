@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ApiEdit from 'client/components/api/apiUpdate';
 import NotFound from 'common/components/noMatch';
 import {createError} from 'utils/error';
@@ -34,6 +36,9 @@ export default React.createClass({
   noContent () {
     return (
       <div className="noContent">
+        <DocTitle
+          title={tr.t('CLIENT_API_KEY.API_KEY_UPDATE.DOC_TITLE')}
+        />
         <NotFound />
       </div>
     );
@@ -56,6 +61,9 @@ export default React.createClass({
   renderApiInfo () {
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <DocTitle
+          title={tr.t('CLIENT_API_KEY.API_KEY_UPDATE.DOC_TITLE')}
+        />
         <div className="page-content">
           <ApiEdit
             getApiInfo={this.props.apiKeyInfo}

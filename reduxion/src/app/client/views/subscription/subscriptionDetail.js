@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import SubscriptionDetail from 'client/components/subscription/subscriptionDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -61,7 +63,7 @@ export default React.createClass({
     if (Object.keys(this.props.error).length && this.state.error == false){
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-          message: "Unable to confirm subscription plan.",
+          message: tr.t('NOTEFICATION_MESSAGE.UNABLE_CONFIRM_SUBSCRIPTION'),
           timeout: 3000
       });
       this.setState({error: true});
@@ -83,21 +85,24 @@ export default React.createClass({
       subscription = this.props.paypalPending.data;
 
       if (subscription.is_auto_renew != 1) {
-        subscriptionTerm = subscription.term == "Annually" ? "1 Year" : "1 Month";
+        subscriptionTerm = subscription.term == "Annually" ? tr.t('LABEL.1_YEAR') : tr.t('LABEL.1_MONTH');
       } else {
         subscriptionTerm = subscription.term;
       }
     }
     return (
       <main className="mdl-layout__content subscription-type">
+        <DocTitle
+          title={tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_DETAIL.DOC_TITLE')}
+        />
         { isSubscription && <div className="bs-callout bs-callout-info">
-          <p>You have a pending subscription change to { subscription.name } {' (' + subscriptionTerm + ') '}.<br />To confirm, please click on the confirmation button.</p>
+          <p>{tr.t('NOTEFICATION_MESSAGE.PENDING_SUBSCRIPTION')} { subscription.name } {' (' + subscriptionTerm + ') '}.<br />{tr.t('NOTEFICATION_MESSAGE.TO_CONFIRM_SUBSCRIPTION')}</p>
           <a className="margin-right-10" href={ subscription.paypal_approval_url }>Confirm</a>
-          <a href="#" onClick={(e) => {this.cancelPendingSubscription(e)}}>Cancel</a>
+          <a href="#" onClick={(e) => {this.cancelPendingSubscription(e)}}>{tr.t('BUTTON.CANCEL')}</a>
         </div>}
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
           <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>Subscription Detail</p>
+            <p>{tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_DETAIL.TITLE')}</p>
           </div>
           <SubscriptionDetail
             listSubscription={this.props.listSubscription}

@@ -13,7 +13,7 @@ class Country extends React.Component {
             {return <option key={item.id} value={item.id}>{item.name}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('SIGNUP.FORM.LABEL.COUNTRY')}</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('LABEL.COUNTRY')}</label>
       </div>
     );
   }

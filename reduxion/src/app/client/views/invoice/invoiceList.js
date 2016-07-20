@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import InvoiceList from 'client/components/invoice/invoiceList';
 import { openLoading, closeLoading } from 'common/components/modal';
 import { createError } from 'utils/error';
@@ -24,6 +26,9 @@ export default React.createClass({
 
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <DocTitle
+          title={tr.t('CLIENT_INVOICE.INVOICE_LIST.DOC_TITLE')}
+        />
         { this.loadingRender() }
         <div className="page-content">
           <InvoiceList

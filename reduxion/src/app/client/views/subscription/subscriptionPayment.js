@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import SubscriptionPayment from 'client/components/subscription/subscriptionPayment';
 import NotFound from 'common/components/noMatch';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -48,6 +50,9 @@ export default React.createClass({
   noContent () {
     return (
       <div className="noContent">
+        <DocTitle
+          title={tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_DETAIL.DOC_TITLE')}
+        />
         <NotFound />
       </div>
     );
@@ -72,9 +77,12 @@ export default React.createClass({
   renderSubscriptionPayment () {
     return (
       <main className="mdl-layout__content subscription-type">
+        <DocTitle
+          title={tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_PAYMENT_DETAIL.DOC_TITLE')}
+        />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
           <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>Subscription Payment Detail</p>
+            <p>{tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_PAYMENT_DETAIL.TITLE')}</p>
           </div>
           <SubscriptionPayment
             params = {this.props.params}

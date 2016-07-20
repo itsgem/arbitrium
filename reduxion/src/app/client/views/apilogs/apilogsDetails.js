@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import { openLoading, closeLoading } from 'common/components/modal'
 import { createError } from 'utils/error';
 import ApiLogsDetail from 'client/components/apiLogs/apilogsDetails';
@@ -45,6 +47,9 @@ export default React.createClass({
   renderApiLogDetails() {
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <DocTitle
+          title={tr.t('CLIENT_API_LOGS.API_LOG_DETAIL.DOC_TITLE')}
+        />
         <div className="page-content">
           <ApiLogsDetail successApiLogInfo={this.props.successApiLogInfo} />
         </div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ClientChangeEmail from 'client/components/profile/changeEmail';
 import {createError} from 'utils/error';
 
@@ -17,6 +19,9 @@ export default React.createClass({
     let errors = this.props.errors.get('data');
     return (
     <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+      <DocTitle
+        title={tr.t('CHANGE_EMAIL_ADDRESS.DOC_TITLE')}
+      />
       <div className="page-content">
         <div className="mdl-tabs__panel is-active" id="change_email">
         <ClientChangeEmail

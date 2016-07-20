@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import cx from 'classnames';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
@@ -78,7 +79,7 @@ class ClientChangeEmail extends React.Component {
               Oops!, Please fill in the required field.
             </div>
           </div>
-          <legend>Change Email Address</legend>
+          <legend>{tr.t('CHANGE_EMAIL_ADDRESS.TITLE')}</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
@@ -91,7 +92,7 @@ class ClientChangeEmail extends React.Component {
                     value={client.user.email_address}
                     readOnly={true}
                     />
-                  <label className="mdl-textfield__label" htmlFor="email_address">Email Address</label>
+                  <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
                   {errors && errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                 </div>
               </div>
@@ -106,7 +107,7 @@ class ClientChangeEmail extends React.Component {
                     ref="new_email_address"
                     value={client.new_email_address}
                     />
-                  <label className="mdl-textfield__label" htmlFor="new_email_address">New Email Address *</label>
+                  <label className="mdl-textfield__label" htmlFor="new_email_address">{tr.t('LABEL.NEW_EMAIL_ADDRESS')}</label>
                   {errors && errors.new_email_address && <small className="mdl-textfield__error shown">{errors.new_email_address[0]}</small>}
                 </div>
               </div>
@@ -117,15 +118,14 @@ class ClientChangeEmail extends React.Component {
               className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
               type="submit"
               >
-              Request Reset Email
+              {tr.t('BUTTON.REQUEST_RESET_EMAIL')}
             </button>
-
             <button
               className="mdl-button mdl-js-button mdl-button--raised"
               type="button"
               onClick={this.onClickResetEmail.bind(this)}
               >
-              Cancel Request
+              {tr.t('BUTTON.CANCEL_REQUEST')}
             </button>
           </div>
         </form>
@@ -228,7 +228,7 @@ class ClientChangeEmail extends React.Component {
 
   validateUpdateClientEmail(payload) {
     let rules = new Checkit({
-      new_email_address: [{ rule: 'required', label: 'new email address'}, { rule: 'email', label: 'new email address'}],
+      new_email_address: [{ rule: 'required', label: tr.t('LABEL.NEW_EMAIL_ADDRESS')}, { rule: 'email', label: tr.t('LABEL.NEW_EMAIL_ADDRESS')}],
       callback_url:      [{ rule: 'required', label: 'callback URL'}]
     });
 

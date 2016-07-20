@@ -1,8 +1,8 @@
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
-import tr from 'i18next';
 
 class ApiList extends React.Component {
   constructor(props) {
