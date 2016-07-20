@@ -501,7 +501,6 @@ class PaypalServices extends NrbServices
 
     public function statusUpdate($request)
     {
-        Log::info("[IPN] ===== Start =====");
         Log::info("[IPN] ~~~~~ VALID ~~~~~");
         Log::info("[IPN] TRANSACTION: ". $request->get('txn_type'));
 
