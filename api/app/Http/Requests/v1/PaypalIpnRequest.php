@@ -82,7 +82,7 @@ class PaypalIpnRequest extends NrbRequest
             Log::info('[IPN] ~~~~ INVALID ~~~~');
             Log::info('[IPN] TRANSACTION: '.$this->get('txn_type'));
             Log::info('[IPN] PAYLOAD: '.$paypal_log);
-            Log::info('[IPN] Request Validation Errors: '.json_encode($errors));
+            Log::error('[IPN] Request Validation Errors: '.json_encode($errors));
             Log::info('[IPN] ====== END ======');
 
             $this->errors = $errors;
