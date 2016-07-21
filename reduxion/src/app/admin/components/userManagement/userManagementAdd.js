@@ -274,17 +274,25 @@ class UserManagementAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
+    username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ],
     email_address: [
-      {rule: 'required', label: 'E-mail address'},
-      {rule: 'email', label: 'E-mail address'},
-      {rule: 'minLength:6', label: 'E-mail address'},
-      {rule: 'maxLength:64', label: 'E-mail address'} ],
-    password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-    password_confirmation: {rule: 'required', label: 'confirm password'},
-    first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'last name' },
-    role_id: { rule: 'required', label: 'role' }
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
+    password: [
+      {rule: 'required', label: tr.t('LABEL.PASSWORD') },
+      {rule: 'alphaDash', label: tr.t('LABEL.PASSWORD') },
+      {rule: 'minLength:8', label: tr.t('LABEL.PASSWORD') },
+      {rule: 'maxLength:64', label: tr.t('LABEL.PASSWORD') } ],
+    password_confirmation: {rule: 'required', label: tr.t('LABEL.CONFIRM_PASSWORD') },
+    first_name: { rule: 'required', label: tr.t('LABEL.FIRST_NAME') },
+    last_name: { rule: 'required', label: tr.t('LABEL.LAST_NAME') },
+    role_id: { rule: 'required', label: tr.t('LABEL.ROLE') }
     } );
     return rules.run( payload );
 }
@@ -294,7 +302,11 @@ function registerAdmin (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

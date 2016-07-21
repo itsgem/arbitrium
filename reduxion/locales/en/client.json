@@ -51,6 +51,15 @@
     "SETTINGS": "Settings",
     "LOGOUT": "Logout"
   },
+  "CLIENT_VERIFY_EMAIL": {
+    "DOC_TITLE": "Verification E-mail",
+    "TITLE": "Verification E-mail",
+    "NOTE" : {
+      "NO_LONGER_VALID": "The email verification code is no longer valid.",
+      "AN_ERROR_OCCURED": "An error occured",
+      "REGISTERING_YOUR_ACCOUNT": "Registering your account."
+    }
+  },
   "CLIENT_PROFILE": {
     "DOC_TITLE": "My Profile",
     "TITLE": "My Profile"

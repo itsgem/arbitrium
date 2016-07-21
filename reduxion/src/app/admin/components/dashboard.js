@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import AdminHeader from './header';
 
 class Dashboard extends React.Component {
@@ -27,7 +28,7 @@ class Dashboard extends React.Component {
             <div className="alert alert-warning">
               <i className="material-icons"></i>
               <div className="content">
-                Please fill in the following required fields below.
+                {tr.t('NOTEFICATION_MESSAGE.PLEASE_FILL_REQUIRED_FIELDS')}
               </div>
             </div>
             {this.props.children}

@@ -323,13 +323,21 @@ class UserManagementUpdate extends React.Component {
 function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
-    email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+    username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ],
+    email_address: [
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
     password: [],
     password_confirmation: [],
-    first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'last name' },
-    role_id: { rule: 'required', label: 'role' }
+    first_name: { rule: 'required', label: tr.t('LABEL.FIRST_NAME') },
+    last_name: { rule: 'required', label: tr.t('LABEL.LAST_NAME') },
+    role_id: { rule: 'required', label: tr.t('LABEL.ROLE') }
     } );
     return rules.run( payload );
 }
@@ -339,7 +347,11 @@ function updateAdmin (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

@@ -35,9 +35,9 @@ export default React.createClass({
     if(nextProps.updateSuccess || nextProps.cancelSubscriptionSuccess || Object.keys(nextProps.errors).length){
       let message = '';
       if (nextProps.cancelSubscriptionSuccess) {
-        message = "Successfully cancel subscription.";
+        message = tr.t('NOTEFICATION_MESSAGE.SUCCESS_CANCEL_SUBSCRIPTION');
       } else if (nextProps.updateSuccess) {
-        message = "Successfully updated profile.";
+        message = tr.t('NOTEFICATION_MESSAGE.SUCCESS_UPDATE_PROFILE');
       } else {
         message = nextProps.errors.data.errors[0];
       }

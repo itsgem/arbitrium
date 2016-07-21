@@ -1,5 +1,5 @@
 {
-  "HEADER": {
+  "ADMIN_HEADER": {
     "DASHBOARD": "Dashboard",
     "CLIENTS": "Clients",
     "CLIENTS_SUB": {
@@ -207,6 +207,10 @@
       "DOC_TITLE": "View Client",
       "TITLE": "View Client"
     }
+  },
+  "ADMIN_PROFILE": {
+    "DOC_TITLE": "Admin Profile",
+    "TITLE": "Admin Profile"
   }
 }
 

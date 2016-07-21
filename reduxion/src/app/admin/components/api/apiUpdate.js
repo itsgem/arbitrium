@@ -271,7 +271,7 @@ function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],
     client_id: [],
-    description: { rule: 'required', label: 'description'},
+    description: { rule: 'required', label: tr.t('LABEL.DESCRIPTION') },
     ip_addresses: [],
     is_whitelist: [],
     permissions: [],

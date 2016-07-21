@@ -575,37 +575,41 @@ class ClientAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    company_name: { rule: 'required', label: 'company name'},
-    street_address_1: { rule: 'required', label: 'Street address' },
+    company_name: { rule: 'required', label: tr.t('LABEL.COMPANY_NAME') },
+    street_address_1: { rule: 'required', label: tr.t('LABEL.STREET_ADDRESS_1') },
     street_address_2: [],
-    city: { rule: 'required', label: 'City' },
-    state: { rule: 'required', label: 'State / Province' },
-    postal_code: { rule: 'required', label: 'Postal Code' },
-    country_id: { rule: 'required', label: 'Country' },
-    rep_first_name: { rule: 'required', label: 'first name' },
-    rep_last_name: { rule: 'required', label: 'last name' },
-    rep_gender: { rule: 'required', label: 'Gender' },
+    city: { rule: 'required', label: tr.t('LABEL.CITY') },
+    state: { rule: 'required', label: tr.t('LABEL.STATE_PROVINCE') },
+    postal_code: { rule: 'required', label: tr.t('LABEL.POSTAL_CODE') },
+    country_id: { rule: 'required', label: tr.t('LABEL.COUNTRY') },
+    rep_first_name: { rule: 'required', label: tr.t('LABEL.FIRST_NAME') },
+    rep_last_name: { rule: 'required', label: tr.t('LABEL.LAST_NAME') },
+    rep_gender: { rule: 'required', label: tr.t('LABEL.GENDER') },
     rep_email_address: [
-      {rule: 'required', label: 'E-mail address'},
-      {rule: 'email', label: 'E-mail address'},
-      {rule: 'minLength:6', label: 'E-mail address'},
-      {rule: 'maxLength:64', label: 'E-mail address'} ],
-    rep_mobile_code: { rule: 'required', label: 'Country Code' },
-    rep_mobile_number: { rule: 'required', label: 'Mobile no.' },
-    rep_phone_code: { rule: 'required', label: 'Country Code' },
-    rep_phone_number: { rule: 'required', label: 'Phone no.' },
-    rep_position: { rule: 'required', label: 'position' },
-    rep_department: { rule: 'required', label: 'department' },
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
+    rep_mobile_code: { rule: 'required', label: tr.t('LABEL.COUNTRY_CODE') },
+    rep_mobile_number: { rule: 'required', label: tr.t('LABEL.MOBILE_NO') },
+    rep_phone_code: { rule: 'required', label: tr.t('LABEL.COUNTRY_CODE') },
+    rep_phone_number: { rule: 'required', label: tr.t('LABEL.PHONE_NUMBER') },
+    rep_position: { rule: 'required', label: tr.t('LABEL.POSITION') },
+    rep_department: { rule: 'required', label: tr.t('LABEL.DEPARTMENT') },
     email_address: [
-      {rule: 'required', label: 'E-mail address'},
-      {rule: 'email', label: 'E-mail address'},
-      {rule: 'minLength:6', label: 'E-mail address'},
-      {rule: 'maxLength:64', label: 'E-mail address'} ],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
+    username: [
+      {rule: 'required', label: tr.t('LABEL.USERNAME') },
+      {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+      {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ],
     alt_first_name: [],
     alt_last_name: [],
     alt_gender: [],
-    alt_email_address: {rule: 'email', label: 'E-mail address'},
+    alt_email_address: {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
     alt_mobile_code: [],
     alt_mobile_number: [],
     alt_phone_code: [],
@@ -621,7 +625,11 @@ function registerClient (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

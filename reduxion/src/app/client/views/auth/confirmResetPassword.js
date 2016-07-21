@@ -1,9 +1,9 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
 import tr from 'i18next';
 import cx from 'classnames';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import DocTitle from 'common/components/docTitle';
 import Checkit from 'checkit';
 
 import {createError} from 'utils/error';
@@ -147,11 +147,11 @@ export default React.createClass( {
     let rules = new Checkit( {
       token:[],
       password: [
-        { rule: 'required', label: 'new password'},
-        { rule: 'minLength:8', label: 'new password'},
-        { rule: 'maxLength:64', label: 'new password'}
+        { rule: 'required', label: tr.t('LABEL.NEW_PASSWORD')},
+        { rule: 'minLength:8', label: tr.t('LABEL.NEW_PASSWORD')},
+        { rule: 'maxLength:64', label: tr.t('LABEL.NEW_PASSWORD')}
       ],
-      password_confirmation: [{ rule: 'required', label: 'confirm new password'},{rule:'matchesField:password', label:'confirm new password'}]
+      password_confirmation: [{ rule: 'required', label: tr.t('LABEL.CONFIRM_NEW_PASSWORD') },{rule:'matchesField:password', label: tr.t('LABEL.CONFIRM_NEW_PASSWORD') }]
     });
     return rules.run( payload );
   },

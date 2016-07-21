@@ -327,7 +327,7 @@ class SubscriptionDetail extends React.Component {
     let rules = new Checkit({
       client_id: [],
       subscription_id: [],
-      term: [{ rule: 'required', label: 'term of subscription' }],
+      term: [{ rule: 'required', label: tr.t('LABEL.TERM_SUBSCRIPTION') }],
       is_auto_renew: []
     });
 

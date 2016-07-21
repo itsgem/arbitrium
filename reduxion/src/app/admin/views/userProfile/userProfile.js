@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import UserProfile from 'admin/components/userProfile/userProfile';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -40,10 +41,10 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title="My Profile"
+          title={tr.t('ADMIN_PROFILE.DOC_TITLE')}
         />
         <div className="client-tab">
-          <a className="mdl-layout__tab is-active">Admin Profile</a>
+          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_PROFILE.TITLE')}</a>
         </div>
         <UserProfile
           adminProfile={this.props.adminProfile}

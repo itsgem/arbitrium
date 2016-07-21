@@ -30,7 +30,7 @@ export default React.createClass({
         let id = this.props.params.id;
         let notification = document.querySelector('.mdl-snackbar');
         notification.MaterialSnackbar.showSnackbar( {
-            message: (id == 1 ? 'Successfully subscribe the Free Trial' : 'Redirecting to PayPal'),
+            message: (id == 1 ? tr.t('NOTEFICATION_MESSAGE.SUCCESS_FREE_TRIAL') : tr.t('NOTEFICATION_MESSAGE.REDIRECTING_PAYPAL') ),
             timeout: 3000
         });
       if (nextProps.purchaseSuccess.data.approval_url) {

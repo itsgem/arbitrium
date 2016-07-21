@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
@@ -72,10 +73,10 @@ class UserProfile extends React.Component {
     userRole = userRole.map(item => { return item.id; });
     return (
       <form>
-        <div className="required">Required fields</div>
+        <div className="required">{tr.t('LABEL.REQUIRED_FIELDS')}</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
-            <legend>USER ACCOUNT DETAILS</legend>
+            <legend>{tr.t('LABEL.USER_ACCOUNT_DETAILS')}</legend>
               <div className={this.formClassNames('username', errors)}>
                 <input
                   className="mdl-textfield__input"
@@ -85,7 +86,7 @@ class UserProfile extends React.Component {
                   onChange={(e) => this.notUsername(e, userInfo.user.username)}
                   defaultValue={userInfo.user.username}
                   />
-                <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
+                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USERNAME_REQ')}</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
               </div>
             </div>
@@ -98,7 +99,7 @@ class UserProfile extends React.Component {
                 type='button'
                 value="disabled"
                 ref="checkUser"
-                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
+                onClick={(e) => this.checkUsername(e)}>{tr.t('BUTTON.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
           </div>
           <div className="mdl-grid">
@@ -111,7 +112,7 @@ class UserProfile extends React.Component {
                   ref="email_address"
                   defaultValue={userInfo.user.email_address}
                   />
-                <label className="mdl-textfield__label" htmlFor="email_address">E-mail Address*</label>
+                <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
                 {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
               </div>
             </div>
@@ -131,7 +132,7 @@ class UserProfile extends React.Component {
                       }
                     )}
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="role_id">Role*</label>
+                  <label className="mdl-textfield__label" htmlFor="role_id">{tr.t('LABEL.ROLE')}</label>
                   {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
                 </div>
               </div>
@@ -146,7 +147,7 @@ class UserProfile extends React.Component {
                   id='password'
                   ref="password"
                   />
-                <label className="mdl-textfield__label" htmlFor="password">Password</label>
+                <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.PASSWORD')}</label>
                 {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
               </div>
             </div>
@@ -158,14 +159,14 @@ class UserProfile extends React.Component {
                   id='password_confirmation'
                   ref="password_confirmation"
                   />
-                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password</label>
+                <label className="mdl-textfield__label" htmlFor="password_confirmation">{tr.t('LABEL.CONFIRM_PASSWORD')}</label>
                 {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
               </div>
             </div>
           </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-            <legend>PERSONAL INFORMATION</legend>
+            <legend>{tr.t('LABEL.PERSONAL_INFORMATION')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('first_name', errors)}>
@@ -176,7 +177,7 @@ class UserProfile extends React.Component {
                   ref="first_name"
                   defaultValue={userInfo.first_name}
                   />
-                <label className="mdl-textfield__label" htmlFor="first_name">First name *</label>
+                <label className="mdl-textfield__label" htmlFor="first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
                 {errors.first_name && <small className="mdl-textfield__error shown">{errors.first_name[0]}</small>}
               </div>
             </div>
@@ -189,7 +190,7 @@ class UserProfile extends React.Component {
                   ref="last_name"
                   defaultValue={userInfo.last_name}
                   />
-                <label className="mdl-textfield__label" htmlFor="last_name">Last name *</label>
+                <label className="mdl-textfield__label" htmlFor="last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
                 {errors.last_name && <small className="mdl-textfield__error shown">{errors.last_name[0]}</small>}
               </div>
             </div>
@@ -217,14 +218,14 @@ class UserProfile extends React.Component {
                     className="mdl-button mdl-js-button mdl-button--colored"
                     id='btn-cancel'
                     onClick={(e) => this.cancel(e)}
-                    >CANCEL</button>
+                    >{tr.t('BUTTON.CANCEL')}</button>
                 </div>
                 <div className="flex-order-gt-md-2">
                   <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     id='btn-save'
                     type='button'
-                    onClick={(e) => this.update(e)}>UPDATE</button>
+                    onClick={(e) => this.update(e)}>{tr.t('BUTTON.UPDATE')}</button>
                 </div>
               </div>
             </div>
@@ -309,13 +310,21 @@ class UserProfile extends React.Component {
 function validateUpdate ( payload) {
   let rules = new Checkit( {
     id: [],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
-    email_address: [ 'required', 'email', 'minLength:6', 'maxLength:64' ],
+    username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')}
+    ],
+    email_address: [
+      { rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+      { rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS') }
+    ],
     password: [],
     password_confirmation: [],
-    first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'last name' },
-    role_id: { rule: 'required', label: 'role' }
+    first_name: [{ rule: 'required', label: tr.t('LABEL.FIRST_NAME') }],
+    last_name: [{ rule: 'required', label: tr.t('LABEL.LAST_NAME') }],
+    role_id: { rule: 'required', label: tr.t('LABEL.ROLE') }
     } );
     return rules.run( payload );
 }
@@ -325,7 +334,11 @@ function updateAdmin (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

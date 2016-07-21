@@ -152,8 +152,8 @@ class ClientProfile extends React.Component {
             <div className="msg-box mdl-shadow--2dp">
               <p></p>
               <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>{tr.t('LABEL.YES')}</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>{tr.t('LABEL.CANCEL')}</button>
+                <button type="button" className="mdl-button modal-yes" onClick={(e) => this.activeStatus(e, client.user.activated_at)}>{tr.t('BUTTON.YES')}</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>{tr.t('BUTTON.CANCEL')}</button>
               </div>
             </div>
           </div>
@@ -478,7 +478,7 @@ class ClientProfile extends React.Component {
                 onKeyPress={(e) => this.numberOnly(e)}
                 maxLength="12"
                 />
-              <label className="mdl-textfield__label" htmlFor="rep_phone_number">{tr.t('LABEL.TELEPHONE_NO_REQ')}</label>
+              <label className="mdl-textfield__label" htmlFor="rep_phone_number">{tr.t('LABEL.PHONE_NUMBER_REQ')}</label>
               {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
             </div>
           </div>
@@ -621,7 +621,7 @@ class ClientProfile extends React.Component {
                 onKeyPress={(e) => this.numberOnly(e)}
                 maxLength="12"
                 />
-              <label className="mdl-textfield__label" htmlFor="alt_phone_number">{tr.t('LABEL.TELEPHONE_NO')}</label>
+              <label className="mdl-textfield__label" htmlFor="alt_phone_number">{tr.t('LABEL.PHONE_NUMBER')}</label>
               {errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
             </div>
           </div>
@@ -700,28 +700,28 @@ class ClientProfile extends React.Component {
           <div className="mdl-layout__panel" id="#">
             <div className="mdl-grid content">
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>{tr.t('CLIENT.FORM.LABEL.SUBSCRIPTION')}</h6>
+                <h6>{tr.t('LABEL.SUBSCRIPTION')}</h6>
                 <p>{currentSubscription.name}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>{tr.t('CLIENT.FORM.LABEL.START_DATE')}</h6>
+                <h6>{tr.t('LABEL.START_DATE')}</h6>
                 <p>{moment(currentSubscription.valid_from).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>{currentSubscription.type == 'Trial' ? tr.t('CLIENT.FORM.LABEL.TERMS_SUBSCRIPTION_FREE') : tr.t('CLIENT.FORM.LABEL.TERMS_SUBSCRIPTION')}</h6>
+                <h6>{currentSubscription.type == 'Trial' ? tr.t('LABEL.TERMS_OF_SUBSCRIPTION_FREE') : tr.t('LABEL.TERMS_SUBSCRIPTION')}</h6>
                 <p>{currentSubscription.type == 'Trial' ? '30 days' : currentSubscription.term}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>{tr.t('CLIENT.FORM.LABEL.END_DATE')}</h6>
+                <h6>{tr.t('LABEL.END_DATE')}</h6>
                 <p>{moment(currentSubscription.valid_to).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col bottom-margin">
-                <h6>{tr.t('CLIENT.FORM.LABEL.AUTO_RENEW')}</h6>
+                <h6>{tr.t('LABEL.AUTO_RENEW')}</h6>
                 <p>{currentSubscription.is_auto_renew == 1 ? 'Enabled' : 'Disabled'}</p>
               </div>
             </div>
              <div className="layout-gt-md-row layout-align-end-end btn">
-                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent right" onClick={(e) => this.modalSubscription(e) }>{tr.t('CLIENT.FORM.BUTTON.CANCEL_SUBSCRIPTION')}</button>
+                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent right" onClick={(e) => this.modalSubscription(e) }>{tr.t('BUTTON.CANCEL_SUBSCRIPTION')}</button>
               </div>
           </div>
         </div>
@@ -853,12 +853,12 @@ class ClientProfile extends React.Component {
       .catch(setErrors);
   }
   modalConfirm (e, client) {
-    document.querySelector('.msg-box p').innerHTML = "Are you sure you want to " + (client.user.activated_at ? 'deactivate' : 'activate') + " this account?<br />This cannot be undone.";
+    document.querySelector('.msg-box p').innerHTML = tr.t('NOTEFICATION_MESSAGE.ARE_YOU_SURE') + (client.user.activated_at ? tr.t('LABEL.DEACTIVATE') : tr.t('LABEL.ACTIVATE')) + tr.t('NOTEFICATION_MESSAGE.CONFIRM_03')  + "<br />" + tr.t('NOTEFICATION_MESSAGE.CANNOT_UNDONE');
     openModal();
   }
 
   modalSubscription (e) {
-    document.querySelector('.msg-box p').innerHTML = "Are you sure you want to cancel this subscription?<br />This cannot be undone.";
+    document.querySelector('.msg-box p').innerHTML = tr.t('NOTEFICATION_MESSAGE.CANCEL_SUBSCRIPTION') + "<br />" + tr.t('NOTEFICATION_MESSAGE.CANNOT_UNDONE');
     e.preventDefault();
     this.setState( {
       subscriptionCancel: true
@@ -896,86 +896,86 @@ class ClientProfile extends React.Component {
 
 function validateClientProfile ( payload) {
   let rules = new Checkit( {
-    company_name:      [{ rule: 'required', label: 'company name'}],
-    street_address_1:  [{ rule: 'required', label: 'street address 1'}],
+    company_name:      [{ rule: 'required', label: tr.t('LABEL.COMPANY_NAME') }],
+    street_address_1:  [{ rule: 'required', label: tr.t('LABEL.STREET_ADDRESS_1') }],
     street_address_2:  [],
-    city:              [{ rule: 'required', label: 'city'}],
-    state:             [{ rule: 'required', label: 'state / province'}],
-    country_id:        [{ rule: 'required', label: 'country'}],
-    postal_code:       [{ rule: 'required', label: 'postal code'}],
-    rep_first_name:    [{ rule: 'required', label: 'first name'}],
-    rep_last_name:     [{ rule: 'required', label: 'last name'}],
+    city:              [{ rule: 'required', label: tr.t('LABEL.CITY') }],
+    state:             [{ rule: 'required', label: tr.t('LABEL.STATE_PROVINCE') }],
+    country_id:        [{ rule: 'required', label: tr.t('LABEL.COUNTRY') }],
+    postal_code:       [{ rule: 'required', label: tr.t('LABEL.POSTAL_CODE') }],
+    rep_first_name:    [{ rule: 'required', label: tr.t('LABEL.FIRST_NAME') }],
+    rep_last_name:     [{ rule: 'required', label: tr.t('LABEL.LAST_NAME') }],
     rep_email_address: [
-      { rule: 'required', label: 'email' },
-      { rule: 'email', label: 'email' }
+      { rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+      { rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS') }
     ],
-    rep_gender:        [{ rule: 'required', label: 'gender'}],
+    rep_gender:        [{ rule: 'required', label: tr.t('LABEL.GENDER')}],
     rep_mobile_code:   [
-      { rule: 'required', label: 'mobile code' },
-      { rule: 'numeric', label: 'mobile code' },
-      { rule: 'min:1', label: 'mobile code' },
-      { rule: 'max:3', label: 'mobile code' }
+      { rule: 'required', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'numeric', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'min:1', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'max:3', label: tr.t('LABEL.COUNTRY_CODE') }
     ],
     rep_mobile_number: [
-      { rule: 'required', label: 'mobile number'},
-      { rule: 'numeric', label: 'mobile number'},
-      { rule: 'min:1', label: 'mobile number' },
-      { rule: 'max:12', label: 'mobile number' }
+      { rule: 'required', label: tr.t('LABEL.MOBILE_NO')},
+      { rule: 'numeric', label: tr.t('LABEL.MOBILE_NO')},
+      { rule: 'min:1', label: tr.t('LABEL.MOBILE_NO') },
+      { rule: 'max:12', label: tr.t('LABEL.MOBILE_NO') }
     ],
     rep_phone_code:    [
-      { rule: 'required', label: 'phone code' },
-      { rule: 'numeric', label: 'phone code' },
-      { rule: 'min:1', label: 'phone code' },
-      { rule: 'max:3', label: 'phone code' }
+      { rule: 'required', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'numeric', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'min:1', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'max:3', label: tr.t('LABEL.COUNTRY_CODE') }
     ],
     rep_phone_number:  [
-      { rule: 'required', label: 'phone number'},
-      { rule: 'numeric', label: 'phone number'},
-      { rule: 'min:1', label: 'phone number' },
-      { rule: 'max:12', label: 'phone number' }
+      { rule: 'required', label: tr.t('LABEL.PHONE_NUMBER') },
+      { rule: 'numeric', label: tr.t('LABEL.PHONE_NUMBER') },
+      { rule: 'min:1', label: tr.t('LABEL.PHONE_NUMBER')  },
+      { rule: 'max:12', label: tr.t('LABEL.PHONE_NUMBER')  }
     ],
     rep_position:      [
-      { rule: 'required', label: 'position' },
-      { rule: 'max:100', label: 'position' }
+      { rule: 'required', label: tr.t('LABEL.POSITION') },
+      { rule: 'max:100', label: tr.t('LABEL.POSITION') }
     ],
     rep_department:    [
-      { rule: 'required', label: 'department' },
-      { rule: 'max:100', label: 'department'}
+      { rule: 'required', label: tr.t('LABEL.DEPARTMENT') },
+      { rule: 'max:100', label: tr.t('LABEL.DEPARTMENT')}
     ],
     alt_first_name:    [],
     alt_last_name:     [],
-    alt_email_address: [{ rule: 'email', label: 'email'}],
+    alt_email_address: [{ rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')}],
     alt_gender:        [],
     alt_mobile_code:   [
-      { rule: 'numeric', label: 'mobile code'},
-      { rule: 'min:1', label: 'mobile code' },
-      { rule: 'max:3', label: 'mobile code' }
+      { rule: 'numeric', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'min:1', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'max:3', label: tr.t('LABEL.COUNTRY_CODE') }
     ],
     alt_mobile_number: [
-      { rule: 'numeric', label: 'mobile number'},
-      { rule: 'min:1', label: 'mobile number' },
-      { rule: 'max:12', label: 'mobile number' }
+      { rule: 'numeric', label: tr.t('LABEL.MOBILE_NO') },
+      { rule: 'min:1', label: tr.t('LABEL.MOBILE_NO') },
+      { rule: 'max:12', label: tr.t('LABEL.MOBILE_NO') }
     ],
     alt_phone_code:    [
-      { rule: 'numeric', label: 'phone code'},
-      { rule: 'min:1', label: 'phone code' },
-      { rule: 'max:3', label: 'phone code' }
+      { rule: 'numeric', label: tr.t('LABEL.COUNTRY_CODE')},
+      { rule: 'min:1', label: tr.t('LABEL.COUNTRY_CODE') },
+      { rule: 'max:3', label: tr.t('LABEL.COUNTRY_CODE') }
     ],
     alt_phone_number:  [
-      { rule: 'numeric', label: 'phone number'},
-      { rule: 'min:1', label: 'phone number' },
-      { rule: 'max:12', label: 'phone number' }
+      { rule: 'numeric', label: tr.t('LABEL.PHONE_NUMBER')},
+      { rule: 'min:1', label: tr.t('LABEL.PHONE_NUMBER') },
+      { rule: 'max:12', label: tr.t('LABEL.PHONE_NUMBER') }
     ],
-    alt_position:      [{ rule: 'max:100', label: 'position'}],
-    alt_department:    [{ rule: 'max:100', label: 'department'}],
+    alt_position:      [{ rule: 'max:100', label: tr.t('LABEL.POSITION') }],
+    alt_department:    [{ rule: 'max:100', label: tr.t('LABEL.DEPARTMENT') }],
     username:          [
-      { rule: 'required', label: 'username' },
-      { rule: 'min:8', label: 'username' },
-      { rule: 'max:32', label: 'username' }
+      { rule: 'required', label: tr.t('LABEL.USERNAME') },
+      { rule: 'min:8', label: tr.t('LABEL.USERNAME') },
+      { rule: 'max:32', label: tr.t('LABEL.USERNAME') }
     ],
     email_address: [
-      { rule: 'required', label: 'email' },
-      { rule: 'email', label: 'email' }
+      { rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+      { rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS') }
     ],
     items_per_page:    [{ rule: 'integer', label: 'items per page'}],
     timezone:          []
@@ -989,7 +989,11 @@ function updateClientProfile (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-    username: [ 'required', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

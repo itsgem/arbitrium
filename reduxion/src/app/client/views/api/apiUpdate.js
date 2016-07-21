@@ -18,7 +18,7 @@ export default React.createClass({
     if (nextProps.apiUpdateSuccess && !nextProps.loading) {
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-        message: "API Key Successfully Updated",
+        message: tr.t('NOTEFICATION_MESSAGE.API_KEY_SUCCESSFULLY_UPDATED'),
         timeout: 3000
       });
       this.context.router.push('/i/api/');

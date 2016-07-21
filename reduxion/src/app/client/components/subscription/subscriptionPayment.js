@@ -338,7 +338,7 @@ class SubscriptionPayment extends React.Component {
   validateTerm(payload) {
     let rules = new Checkit({
       subscription_id: [],
-      term: [{ rule: 'required', label: 'term of subscription' }],
+      term: [{ rule: 'required', label: tr.t('LABEL.TERM_SUBSCRIPTION') }],
       is_auto_renew: []
     });
 

@@ -166,7 +166,7 @@ export default React.createClass( {
   },
   validateEmail(payload) {
     let rules = new Checkit( {
-      email: ['required', 'email'],
+      email: [{rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS')}, {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')}],
       user_type: [],
       callbackUrl: []
     });

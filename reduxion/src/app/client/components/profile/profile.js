@@ -839,8 +839,8 @@ class ClientProfile extends React.Component {
       rep_first_name:    [{ rule: 'required', label: tr.t('LABEL.FIRST_NAME')}],
       rep_last_name:     [{ rule: 'required', label: tr.t('LABEL.LAST_NAME')}],
       rep_email_address: [
-        { rule: 'required', label: 'email' },
-        { rule: 'email', label: 'email' }
+        { rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+        { rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS') }
       ],
       rep_gender:        [{ rule: 'required', label: tr.t('LABEL.GENDER')}],
       rep_mobile_code:   [{ rule: 'numeric', label: tr.t('LABEL.COUNTRY_CODE')}],
@@ -888,9 +888,9 @@ class ClientProfile extends React.Component {
   validateAvailableUsername(payload) {
     let rules = new Checkit({
       username:          [
-        { rule: 'required', label: 'username' },
-        { rule: 'min:8', label: 'username' },
-        { rule: 'max:32', label: 'username' }
+        { rule: 'required', label: tr.t('LABEL.USERNAME') },
+        { rule: 'min:8', label: tr.t('LABEL.USERNAME') },
+        { rule: 'max:32', label: tr.t('LABEL.USERNAME') }
       ],
       except_user_id: [ 'required' ]
     });
@@ -900,9 +900,9 @@ class ClientProfile extends React.Component {
 
   validateEmailChangeToken(payload) {
     let rules = new Checkit({
-      token:        [{ rule: 'required', label: 'token' }],
+      token:        [{ rule: 'required', label: tr.t('LABEL.TOTKEN') }],
       callback_url: [{ rule: 'required', label: 'callback url' }],
-      user_type:    [{ rule: 'required', label: 'user type' }]
+      user_type:    [{ rule: 'required', label: tr.t('LABEL.USER_TYPE') }]
     });
 
     return rules.run(payload);
@@ -910,7 +910,7 @@ class ClientProfile extends React.Component {
 
   validateVerifyEmailChange(payload) {
     let rules = new Checkit({
-      token:        [{ rule: 'required', label: 'token' }]
+      token:        [{ rule: 'required', label: tr.t('LABEL.TOKEN') }]
     });
 
     return rules.run(payload);
