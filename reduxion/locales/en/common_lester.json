@@ -187,7 +187,8 @@
         "DATE_CREATED": "Date Created"
         },
       "BUTTON":{
-        "SEARCH": "Search"
+        "SEARCH": "Search",
+        "CLEAR": "Clear"
         }
       },
     "TABLE": {
@@ -197,6 +198,9 @@
         "DATE_CREATED": "Date Created",
         "ACTION": "Action"
         }
+      },
+    "TOOL_TIP": {
+        "ITEMS_PER_PAGE": "Items to show per page"
       }
     }
   }

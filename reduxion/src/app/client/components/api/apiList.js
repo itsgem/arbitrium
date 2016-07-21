@@ -220,7 +220,7 @@ class ApiList extends React.Component {
                   onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('API_KEYS.FORM.SEARCH_FORM.BUTTON.SEARCH')}</button>
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                  onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+                  onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('API_KEYS.FORM.SEARCH_FORM.BUTTON.CLEAR')}</button>
               </div>
             </div>
           <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
@@ -244,7 +244,7 @@ class ApiList extends React.Component {
               {counter && pagination}
             </div>
             <div className="mdl-cell mdl-cell--3-col tooltipBox">
-              <span className="tooltiptext">Items to show per page</span>
+              <span className="tooltiptext">{tr.t('API_KEYS.FORM.TOOL_TIP.ITEMS_PER_PAGE')}</span>
               <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
               <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
               <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
