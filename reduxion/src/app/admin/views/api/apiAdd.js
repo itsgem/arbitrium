@@ -1,9 +1,9 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ApiAdd from 'admin/components/api/apiAdd';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
-import tr from 'i18next';
 
 export default React.createClass( {
   contextTypes: {
@@ -25,13 +25,13 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title={tr.t('API.DOC_TITLE_ADD')}
+          title={tr.t('ADMIN_API_KEYS.API_KEY_ADD.DOC_TITLE')}
         />
       <div className="client-tab">
         <Link
           className="mdl-layout__tab"
-          to="/coffee/api/">{tr.t('API.PAGE_TITLE.LIST')}</Link>
-        <a className="mdl-layout__tab is-active">{tr.t('API.PAGE_TITLE.ADD')}<i className="material-icons add">add</i></a>
+          to="/coffee/api/">{tr.t('ADMIN_API_KEYS.API_LIST.TITLE')}</Link>
+        <a className="mdl-layout__tab is-active">{tr.t('ADMIN_API_KEYS.API_KEY_ADD.TITLE')}<i className="material-icons add">add</i></a>
       </div>
         <ApiAdd
           registerApi={this.props.registerApi}

@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 class ApiLogsDetails extends React.Component {
@@ -14,25 +15,26 @@ class ApiLogsDetails extends React.Component {
     let iplogInfo = this.props.successApiLogInfo.data;
     return (
       <section>
+        <div className="mdl-cell--12-col header-title"><p>{tr.t('CLIENT_API_LOGS.API_LOG_DETAIL.TITLE')}</p></div>
         <div className="mdl-grid content">
           <div className="mdl-cell mdl-cell--6-col">
-            <h6>IP ADDRESS</h6>
+            <h6>{tr.t('LABEL.IP_ADDRESS')}</h6>
             <p>{iplogInfo.ipaddress}</p>
           </div>
           <div className="mdl-cell mdl-cell--6-col">
-            <h6>STATUS CODE</h6>
+            <h6>{tr.t('LABEL.STATUS_CODE')}</h6>
             <p>{iplogInfo.status_code}</p>
           </div>
           <div className="mdl-cell mdl-cell--6-col bottom-margin">
-            <h6>URL</h6>
+            <h6>{tr.t('LABEL.URL')}</h6>
             <p>{iplogInfo.url}</p>
           </div>
           <div className="mdl-cell mdl-cell--6-col">
-            <h6>DATE CREATED</h6>
+            <h6>{tr.t('LABEL.DATE_CREATED')}</h6>
             <p>{iplogInfo.created}</p>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <h6>PARAMETER</h6>
+            <h6>{tr.t('LABEL.PARAMETER')}</h6>
             <pre className="script script-box-container">
                 {
                   JSON.stringify(JSON.parse(iplogInfo.parameter),null,2)
@@ -40,7 +42,7 @@ class ApiLogsDetails extends React.Component {
             </pre>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <h6>RESPONSE</h6>
+            <h6>{tr.t('LABEL.RESPONSE')}</h6>
             <pre className="script script-box-container">
               <code>
                 {

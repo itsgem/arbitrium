@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import cx from 'classnames';
 import Checkit from 'checkit';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
@@ -63,10 +64,10 @@ class ClientChangePassword extends React.Component {
           <div className="alert alert-warning">
             <i className="material-icons"></i>
             <div className="content">
-              The password must have small letters, capital letters and numbers.
+              {tr.t('NOTEFICATION_MESSAGE.PASSWORD_SMALL_CAPITAL_LETTER')}
             </div>
           </div>
-          <legend>Change password</legend>
+          <legend>{tr.t('CLIENT_CHANGE_PASSWORD.TITLE')}</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
@@ -78,7 +79,7 @@ class ClientChangePassword extends React.Component {
                     id="current_password"
                     ref="current_password"
                     />
-                  <label className="mdl-textfield__label" htmlFor="current_password">Current Password *</label>
+                  <label className="mdl-textfield__label" htmlFor="current_password">{tr.t('LABEL.CURRENT_PASSWORD_REQ')}</label>
                   {errors && errors.current_password && <small className="mdl-textfield__error shown">{errors.current_password[0]}</small>}
                 </div>
               </div>
@@ -92,7 +93,7 @@ class ClientChangePassword extends React.Component {
                     id="password"
                     ref="password"
                     />
-                  <label className="mdl-textfield__label" htmlFor="password">New Password *</label>
+                  <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.NEW_PASSWORD_REQ')}</label>
                   {errors && errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                 </div>
               </div>
@@ -106,7 +107,7 @@ class ClientChangePassword extends React.Component {
                     id="password_confirmation"
                     ref="password_confirmation"
                     />
-                  <label className="mdl-textfield__label" htmlFor="password_confirmation">Re-type New Password *</label>
+                  <label className="mdl-textfield__label" htmlFor="password_confirmation">{tr.t('LABEL.RE_TYPE_NEW_PASSWORD_REQ')}</label>
                   {errors && errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                 </div>
               </div>
@@ -118,13 +119,13 @@ class ClientChangePassword extends React.Component {
               type="submit"
               onClick={(e) => this.onSubmitChangePassword(e) }
               >
-              Save
+              {tr.t('BUTTON.SAVE')}
             </button>
             <button
               className="mdl-button mdl-js-button mdl-button--raised "
               onClick={(e) =>this.clearRender(e)}
               >
-              Cancel
+              {tr.t('BUTTON.CANCEL')}
             </button>
           </div>
         </form>
@@ -227,11 +228,11 @@ class ClientChangePassword extends React.Component {
 
   validateUpdateClientPassword(payload) {
     let rules = new Checkit({
-    current_password:    [{ rule: 'required', label: 'current password'}],
-    password:        [{ rule: 'required', label: 'password'}],
+    current_password:    [{ rule: 'required', label: tr.t('LABEL.CURRENT_PASSWORD')}],
+    password:        [{ rule: 'required', label: tr.t('LABEL.PASSWORD')}],
     password_confirmation: [
-      { rule: 'required', label: 'password confirmation'},
-      { rule: 'matchesField:password', label: 'password confirmation'}
+      { rule: 'required', label: tr.t('LABEL.PASSWORD_CONFIRMATION')},
+      { rule: 'matchesField:password', label: tr.t('LABEL.PASSWORD_CONFIRMATION')}
     ]
     });
 

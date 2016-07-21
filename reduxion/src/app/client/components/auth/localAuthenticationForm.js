@@ -1,8 +1,8 @@
 import React from 'react';
+import tr from 'i18next';
+import cx from 'classnames';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import cx from 'classnames';
-import tr from 'i18next';
 
 class LocalAuthenticationForm extends React.Component {
 
@@ -35,7 +35,7 @@ class LocalAuthenticationForm extends React.Component {
                 onKeyPress={(e) => this.toLogin(e)}
                 autoComplete="false"
                 />
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('LOGIN.FORM.LABEL.EMAIL_USER')}</label>
+              <label className="mdl-textfield__label" htmlFor="email">{tr.t('LABEL.EMAIL_USERNAME')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
           }
@@ -49,7 +49,7 @@ class LocalAuthenticationForm extends React.Component {
               autoComplete="false"
               onKeyPress={(e) => this.toLogin(e)}
               />
-            <label className="mdl-textfield__label" htmlFor="password">{tr.t('LOGIN.FORM.LABEL.PASSWORD')}</label>
+            <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.PASSWORD')}</label>
             {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
           </div>
 
@@ -63,13 +63,13 @@ class LocalAuthenticationForm extends React.Component {
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-left">
               <Link
                 to="/i/forgot"
-              >{tr.t('LOGIN.LINK.FORGOT_PW')}</Link>
+              >{tr.t('BUTTON.FORGOT_PASSWORD')}</Link>
             </div>
 
             <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
               <Link
                 to="/i/signup"
-              >{tr.t('LOGIN.LINK.SIGNUP')}</Link>
+              >{tr.t('BUTTON.SIGNUP')}</Link>
             </div>
           </div>
 

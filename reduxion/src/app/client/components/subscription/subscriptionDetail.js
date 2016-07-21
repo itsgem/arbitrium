@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
@@ -22,47 +23,47 @@ class SubscriptionDetail extends React.Component {
               <ul className="arb-demo mdl-list">
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Monthly Subscription
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.MONTHLY_SUBSCRIPTION')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Annual Subscription
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_SUBSCRIPTION')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Annual License Fee
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_LICENSE_FEE')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Initial Setup Fee
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.INITIAL_SETUP_FEE')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Monthly Maintenance Fee
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.MONTHLY_MAINTENANCE_FEE')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Annual Maintenance Fee
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Transactions/Calls to the APIs
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.TRANSACTIONS')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    No. of Decisions Rendered
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.DECISIONS_RENDERED')}
                   </span>
                 </li>
                 <li className="mdl-list__item">
                   <span className="mdl-list__item-primary-content">
-                    Discounts/Free Transactions
+                    {tr.t('CLIENT_SUBCRIPTION.LABEL.DISCOUNTS')}
                   </span>
                 </li>
               </ul>
@@ -73,7 +74,7 @@ class SubscriptionDetail extends React.Component {
                   return <table key={item.id} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                     <thead>
                       <tr>
-                        <th>{item.type == 'Trial' ? "Free Trial" : item.name}</th>
+                        <th>{item.type == 'Trial' ? tr.t('CLIENT_SUBCRIPTION.LABEL.FREE_TRIAL') : item.name}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -109,11 +110,11 @@ class SubscriptionDetail extends React.Component {
                           {
                             item.type == 'Trial' ? (clientInfo.can_avail_trial == false ?
                               (currentSubscription.name != 'Free Trial' ? '' :
-                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>)
-                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>Subscribe</Link> )
+                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>)
+                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{tr.t('BUTTON.SUBSCRIBE')}</Link> )
                             : currentSubscription.subscription_id == item.id ?
-                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">Subscribed</button>
-                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? 'Upgrade' : 'Subscribe'}</Link>
+                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>
+                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? tr.t('BUTTON.UPGRADE') : tr.t('BUTTON.SUBSCRIBE') }</Link>
                           }
                         </td>
                       </tr>

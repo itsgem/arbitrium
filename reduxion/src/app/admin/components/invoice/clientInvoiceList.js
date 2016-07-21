@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 
 class AdminClientInvoiceList extends React.Component {
@@ -59,10 +60,10 @@ class AdminClientInvoiceList extends React.Component {
         {prev &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, 1)}>FIRST</button>
+          onClick={(e) => this.page(e, 1)}>{tr.t('FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('FIRST')}</button>
         }
         {prev &&
           <button
@@ -97,10 +98,10 @@ class AdminClientInvoiceList extends React.Component {
       {next &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, last)}>LAST</button>
+          onClick={(e) => this.page(e, last)}>{tr.t('LAST')}</button>
       }
       {!next &&
-        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">LAST</button>
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LAST')}</button>
       }
       </div>
     );
@@ -136,18 +137,18 @@ class AdminClientInvoiceList extends React.Component {
     }
     return (
       <div className="filter-search">
-        <p>Filter / Search</p>
+        <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" />
-              <label className="mdl-textfield__label">Company Name</label>
+              <label className="mdl-textfield__label">{tr.t('LABEL.COMPANY_NAME')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="name" ref="name"/>
-              <label className="mdl-textfield__label">Representative Name</label>
+              <label className="mdl-textfield__label">{tr.t('LABEL.REPRESENTATIVE_NAME')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
@@ -158,31 +159,31 @@ class AdminClientInvoiceList extends React.Component {
                   id="status"
                   ref="status">
                   <option value=""></option>
-                  <option value="Unpaid">Unpaid</option>
-                  <option value="Paid">Paid</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="Unpaid">{tr.t('LABEL.UNPAID')}</option>
+                  <option value="Paid">{tr.t('LABEL.PAID')}</option>
+                  <option value="Cancelled">{tr.t('LABEL.CANCELLED')}</option>
                 </select>
-                <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+                <label className="mdl-textfield__label" htmlFor="status">{tr.t('LABEL.INVOICE_STATUS')}</label>
               </div>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--4-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th width="400" className="mdl-data-table__cell--non-numeric">Company Name</th>
-              <th width="400" className="mdl-data-table__cell--non-numeric">Representative Name</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">Invoice Number (Latest)</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">Invoice Status (Latest)</th>
-              <th width="100" className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.COMPANY_NAME')}</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.REPRESENTATIVE_NAME')}</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.INVOICE_NUMBER_LATEST')}</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.INVOICE_STATUS_LATEST')}</th>
+              <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
             </tr>
           </thead>
           <tbody>
@@ -198,7 +199,7 @@ class AdminClientInvoiceList extends React.Component {
             {counter && pagination}
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
-            <span className="tooltiptext">Items to show per page</span>
+            <span className="tooltiptext">{tr.t('LABEL.ITEM_PER_PAGE')}</span>
             <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>

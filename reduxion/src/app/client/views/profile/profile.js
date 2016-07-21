@@ -1,9 +1,9 @@
 import React from 'react';
+import tr from 'i18next';
+import DocTitle from 'common/components/docTitle';
 import ClientProfile from 'client/components/profile/profile';
 import {createError} from 'utils/error';
-import DocTitle from 'common/components/docTitle';
 import {openLoading, closeLoading} from 'common/components/modal'
-import tr from 'i18next';
 
 export default React.createClass({
 
@@ -35,9 +35,9 @@ export default React.createClass({
     if(nextProps.updateSuccess || nextProps.cancelSubscriptionSuccess || Object.keys(nextProps.errors).length){
       let message = '';
       if (nextProps.cancelSubscriptionSuccess) {
-        message = "Successfully cancel subscription.";
+        message = tr.t('NOTEFICATION_MESSAGE.SUCCESS_CANCEL_SUBSCRIPTION');
       } else if (nextProps.updateSuccess) {
-        message = "Successfully updated profile.";
+        message = tr.t('NOTEFICATION_MESSAGE.SUCCESS_UPDATE_PROFILE');
       } else {
         message = nextProps.errors.data.errors[0];
       }
@@ -56,7 +56,7 @@ export default React.createClass({
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
         <DocTitle
-          title= {tr.t('MY_PROFILE.DOC_TITLE')}
+          title= {tr.t('CLIENT_PROFILE.DOC_TITLE')}
         />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container" >
           <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
@@ -64,7 +64,7 @@ export default React.createClass({
             <button type="button" className="mdl-snackbar__action"></button>
           </div>
           <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>{tr.t('MY_PROFILE.FORM.TITLE.MY_PROFILE')}</p>
+            <p>{tr.t('CLIENT_PROFILE.TITLE')}</p>
           </div>
           <div className="page-content">
             <ClientProfile

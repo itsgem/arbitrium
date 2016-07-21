@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ApiAdd from 'client/components/api/apiAdd';
 import {createError} from 'utils/error';
 
@@ -13,7 +15,7 @@ export default React.createClass({
     if (nextProps.registerApiSuccess && !nextProps.loading) {
       let notification = document.querySelector('.mdl-snackbar');
       notification.MaterialSnackbar.showSnackbar( {
-        message: "API Key Successfully Added",
+        message: tr.t('NOTEFICATION_MESSAGE.API_KEY_SUCCESSFULLY_ADDED'),
         timeout: 5000
       });
       this.context.router.push('/i/api/');
@@ -22,10 +24,13 @@ export default React.createClass({
   render () {
     return (
       <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+        <DocTitle
+          title={tr.t('CLIENT_API_KEY.API_KEY_ADD.DOC_TITLE')}
+        />
         <div className="alert alert-warning">
           <i className="material-icons"></i>
           <div className="content">
-            Oops! Please fill in the required field below.
+            {tr.t('NOTEFICATION_MESSAGE.PLEASE_REQUIRED_FIELD')}
           </div>
         </div>
         <div className="page-content">

@@ -1,8 +1,8 @@
 import React from 'react';
+import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import DocTitle from 'common/components/docTitle';
-import tr from 'i18next';
 import { Link } from 'react-router';
 import Checkit from 'checkit';
 
@@ -74,11 +74,11 @@ export default React.createClass( {
   render() {
     return (
       <div id="forgot" className="auth-view">
+        <DocTitle title={tr.t('FORGOT_PASSWORD.DOC_TITLE')}/>
         <div className="container" title="Forgot password">
           { this.renderError()}
           <div className="bar">
-            <span className="bar-title">{tr.t('FORGOT_PW.FORM.TITLE.FORGOT_PW')}</span>
-            <DocTitle title={tr.t('FORGOT_PW.DOC_TITLE')}/>
+            <span className="bar-title">{tr.t('FORGOT_PASSWORD.TITLE')}</span>
             </div>
             <fieldset>
               <div className="background">
@@ -89,7 +89,7 @@ export default React.createClass( {
         </div>
         <div className="mdl-grid mdl-grid--no-spacing forgot-footer" id="other-links">
           <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-            <Link to="/coffee/login">{tr.t('FORGOT_PW.LINK.BACK_TO_LOGIN')}</Link>
+            <Link to="/coffee/login">{tr.t('BUTTON.BACK_TO_LOGIN')}</Link>
           </div>
         </div>
       </div>
@@ -106,19 +106,19 @@ export default React.createClass( {
       <div className="login-view">
         <div className="local-login-form">
           <form>
-            <legend>{tr.t('FORGOT_PW.FORM.SUB_TITLE.PW_RESET')}</legend>
-            <p><strong>{tr.t('FORGOT_PW.FORM.NOTE.ENTER_EMAIL')}</strong></p>
-            <p>{tr.t('FORGOT_PW.FORM.NOTE.YOU_WILL_BE_SENT_RESET_CODE')}</p>
+            <legend>{tr.t('FORGOT_PASSWORD.LABEL.PASSWORD_RESET')}</legend>
+            <p><strong>{tr.t('FORGOT_PASSWORD.NOTE.ENTER_EMAIL')}</strong></p>
+            <p>{tr.t('FORGOT_PASSWORD.NOTE.SENT_RESET_CODE')}</p>
             <div className={ this.formClassNames('email',errors) }>
               <input className="mdl-textfield__input" type="email" id='email'ref="email"/>
-              <label className="mdl-textfield__label" htmlFor="email">{tr.t('FORGOT_PW.FORM.LABEL.EMAIL')}</label>
+              <label className="mdl-textfield__label" htmlFor="email">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
               {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
             </div>
             <div className="spacer">
               <button type="button"
               className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
               onClick={(e)=>this.requestReset(e)}>
-                {tr.t('FORGOT_PW.FORM.BUTTON.SEND_RESET_EMAIL')}
+                {tr.t('BUTTON.SEND_RESET_EMAIL')}
               </button>
             </div>
            </form>

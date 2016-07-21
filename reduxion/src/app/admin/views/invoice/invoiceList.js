@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import InvoiceList from 'admin/components/invoice/invoiceList';
 import { Link } from 'react-router';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -29,13 +30,13 @@ export default React.createClass( {
     return (
       <div id="log_add_or_change" className="auth-view">
         <DocTitle
-          title="Invoice List"
+          title={tr.t('ADMIN_INVOICE.INVOICE_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/invoice/">Client Invoice List</Link>
-          <a className="mdl-layout__tab is-active" >INVOICE LIST<i className="material-icons add">edit</i></a>
+            to="/coffee/invoice/">{tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_INVOICE.INVOICE_LIST.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <InvoiceList
           params = {this.props.params}

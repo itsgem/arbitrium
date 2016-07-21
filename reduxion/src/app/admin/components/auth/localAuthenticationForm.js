@@ -1,7 +1,7 @@
 import React from 'react';
+import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
-import tr from 'i18next';
 
 class LocalAuthenticationForm extends React.Component {
 
@@ -32,7 +32,7 @@ class LocalAuthenticationForm extends React.Component {
               ref="email"
               onKeyPress={(e) => this.toLogin(e)}
               />
-            <label className="mdl-textfield__label" htmlFor="email">{tr.t('LOGIN.FORM.LABEL.EMAIL_USER')}</label>
+            <label className="mdl-textfield__label" htmlFor="email">{tr.t('LABEL.EMAIL_USERNAME')}</label>
             {errors.email && <small className="mdl-textfield__error shown">{errors.email[0]}</small>}
           </div>
 
@@ -44,7 +44,7 @@ class LocalAuthenticationForm extends React.Component {
               ref="password"
               onKeyPress={(e) => this.toLogin(e)}
               />
-            <label className="mdl-textfield__label" htmlFor="password">{tr.t('LOGIN.FORM.LABEL.PASSWORD')}</label>
+            <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.PASSWORD')}</label>
             {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
           </div>
           <button

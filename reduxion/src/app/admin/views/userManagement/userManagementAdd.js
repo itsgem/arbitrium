@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import UserManagementAdd from 'admin/components/userManagement/userManagementAdd';
 import { Link } from 'react-router';
 import {createError} from 'utils/error';
@@ -24,13 +25,13 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title="Client Add"
+          title={tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/account/">Admin List</Link>
-          <a className="mdl-layout__tab is-active">Add New Admin<i className="material-icons add">add</i></a>
+            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></a>
         </div>
         <UserManagementAdd
             validateUsername={this.props.validateUsername}

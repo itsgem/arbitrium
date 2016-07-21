@@ -1,5 +1,6 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import ClientInvoiceList from 'admin/components/invoice/clientInvoiceList';
 
 export default React.createClass( {
@@ -13,10 +14,10 @@ export default React.createClass( {
     return (
       <div id="log_add_or_change">
         <DocTitle
-          title="Client Invoice List"
+          title={tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.DOC_TITLE')}
         />
         <div className="client-tab">
-          <label className="mdl-layout__tab is-active">Client Invoice List</label>
+          <label className="mdl-layout__tab is-active">{tr.t('ADMIN_INVOICE.CLIENT_INVOICE_LIST.TITLE')}</label>
         </div>
         <ClientInvoiceList
           clientInvoiceList={this.props.clientInvoiceList}

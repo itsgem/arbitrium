@@ -14,7 +14,7 @@ class Country extends React.Component {
             {return <option key={item.get('id')} value={item.get('id')}>{item.get('name')}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('COMMON.FORM.LABEL.COUNTRY')} *</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('LABEL.COUNTRY_REQ')}</label>
       </div>
     );
   }

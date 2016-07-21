@@ -15,17 +15,20 @@ const initialState = Immutable.fromJS({
 
 export default createReducer({
   [clientApiLogsList.ok]: (state, payload) => state.merge({
-    loading: false,
+    successApiLogInfo: {},
     successApiLogsList: payload,
+    loading: false
   }),
   [clientApiLogsList.request]: (state) => state.merge({
+    successApiLogInfo: {},
     loading: true
   }),
   [clientApiLogInfo.ok]: (state, payload) => state.merge({
-    loading: false,
     successApiLogInfo: payload,
+    loading: false,
   }),
   [clientApiLogInfo.request]: (state) => state.merge({
+    successApiLogInfo: {},
     loading: true
   })
 }, initialState);

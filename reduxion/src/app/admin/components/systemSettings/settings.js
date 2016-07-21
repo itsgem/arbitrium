@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
@@ -72,8 +73,7 @@ class SystemSettings extends React.Component {
           <div className="required">Required fields</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-              <legend>General Information</legend>
-              <p>The contents appear below this section are placeholder content to show the actual layout of the section. The contents will be replaced later on.</p>
+              <legend>{tr.t('ADMIN_SYSTEM_SETTINGS.LABEL.GENERAL_INFORMATION')}</legend>
             </div>
           </div>
 
@@ -81,14 +81,14 @@ class SystemSettings extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('kcg_company_name', errors)}>
                 <input className="mdl-textfield__input" type="text" id="company_name" ref="company_name" defaultValue={adminSystemSettings.kcg_company_name.value}/>
-                <label className="mdl-textfield__label">Company Name *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.COMPANY_NAME_REQ')}</label>
                 {errors.kcg_company_name && <small className="mdl-textfield__error shown">{errors.kcg_company_name[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('kcg_street_address', errors)}>
                 <input className="mdl-textfield__input" type="text" id="street_address" ref="street_address" defaultValue={adminSystemSettings.kcg_street_address.value}/>
-                <label className="mdl-textfield__label">Billing Info *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.BILLING_INFORMATION_REQ')}</label>
                 {errors.kcg_street_address && <small className="mdl-textfield__error shown">{errors.kcg_street_address[0]}</small>}
               </div>
             </div>
@@ -98,14 +98,14 @@ class SystemSettings extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('kcg_city', errors)}>
                 <input className="mdl-textfield__input" type="text" id="city" ref="city" defaultValue={adminSystemSettings.kcg_city.value}/>
-                <label className="mdl-textfield__label">City *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.CITY_REQ')}</label>
                 {errors.kcg_city && <small className="mdl-textfield__error shown">{errors.kcg_city[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('kcg_state', errors)}>
                 <input className="mdl-textfield__input" type="text" id="state" ref="state" defaultValue={adminSystemSettings.kcg_state.value}/>
-                <label className="mdl-textfield__label">State *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.STATE_REQ')}</label>
                 {errors.kcg_state && <small className="mdl-textfield__error shown">{errors.kcg_state[0]}</small>}
               </div>
             </div>
@@ -113,14 +113,14 @@ class SystemSettings extends React.Component {
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('kcg_country', errors)}>
                 <input className="mdl-textfield__input" type="text" id="country" ref="country" defaultValue={adminSystemSettings.kcg_country.value}/>
-                <label className="mdl-textfield__label">Country *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.COUNTRY_REQ')}</label>
                 {errors.kcg_country && <small className="mdl-textfield__error shown">{errors.kcg_country[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('kcg_postal_code', errors)}>
                 <input className="mdl-textfield__input" type="text" id="postal_code" ref="postal_code" defaultValue={adminSystemSettings.kcg_postal_code.value}/>
-                <label className="mdl-textfield__label">Postal Code *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.POSTAL_CODE_REQ')}</label>
                 {errors.kcg_postal_code && <small className="mdl-textfield__error shown">{errors.kcg_postal_code[0]}</small>}
               </div>
             </div>
@@ -130,21 +130,21 @@ class SystemSettings extends React.Component {
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('kcg_admin_email', errors)}>
                 <input className="mdl-textfield__input" type="text" id="admin_email" ref="admin_email" defaultValue={adminSystemSettings.kcg_admin_email.value}/>
-                <label className="mdl-textfield__label">Admin Email *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.ADMIN_EMAIL_REQ')}</label>
                 {errors.kcg_admin_email && <small className="mdl-textfield__error shown">{errors.kcg_admin_email[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('reset_token_expiry', errors)}>
                 <input className="mdl-textfield__input" type="text" id="token_expiry" ref="token_expiry" defaultValue={adminSystemSettings.reset_token_expiry.value}/>
-                <label className="mdl-textfield__label">Token Expiry *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.TOKEN_EXPIRY_REQ')}</label>
                 {errors.reset_token_expiry && <small className="mdl-textfield__error shown">{errors.reset_token_expiry[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col">
               <div className={this.formClassNames('items_per_page', errors)}>
                 <input className="mdl-textfield__input" type="text" id="items_per_page" ref="items_per_page" defaultValue={adminSystemSettings.items_per_page.value}/>
-                <label className="mdl-textfield__label">Items Per Page *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.ITEMS_PER_PAGE_REQ')}</label>
                 {errors.items_per_page && <small className="mdl-textfield__error shown">{errors.items_per_page[0]}</small>}
               </div>
             </div>
@@ -153,13 +153,13 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield">
-                <p>Other settings textfield 1</p>
+                <p>{tr.t('LABEL.OTHER_SETTINGS01_REQ')}</p>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('kcg_swift_code', errors)}>
                 <input className="mdl-textfield__input" type="text" id="swift_code" ref="swift_code" defaultValue={adminSystemSettings.kcg_swift_code.value}/>
-                <label className="mdl-textfield__label">Other settings 1 *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.OTHER_SETTINGS01')}</label>
                 {errors.kcg_swift_code && <small className="mdl-textfield__error shown">{errors.kcg_swift_code[0]}</small>}
               </div>
             </div>
@@ -168,13 +168,13 @@ class SystemSettings extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--2-col">
               <div className="mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield">
-                <p>Other settings textfield 2</p>
+                <p>{tr.t('LABEL.OTHER_SETTINGS02_REQ')}</p>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('kcg_branch_code', errors)}>
                 <input className="mdl-textfield__input" type="text" id="branch_code" ref="branch_code" defaultValue={adminSystemSettings.kcg_branch_code.value}/>
-                <label className="mdl-textfield__label">Other settings 2 *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.OTHER_SETTINGS02')}</label>
                 {errors.kcg_branch_code && <small className="mdl-textfield__error shown">{errors.kcg_branch_code[0]}</small>}
               </div>
             </div>
@@ -182,8 +182,7 @@ class SystemSettings extends React.Component {
 
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-              <legend>Billing Information</legend>
-              <p>The contents appear below this section are placeholder content to show the actual layout of the section. The contents will be replaced later on.</p>
+              <legend>{tr.t('LABEL.BILLING_INFORMATION')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
             </div>
@@ -193,14 +192,14 @@ class SystemSettings extends React.Component {
             <div className="mdl-cell mdl-cell--4-col">
               <div className={this.formClassNames('kcg_account_name', errors)}>
                 <input className="mdl-textfield__input" type="text" id="account_name" ref="account_name" defaultValue={adminSystemSettings.kcg_account_name.value}/>
-                <label className="mdl-textfield__label">Account Name *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.ACCOUNT_NAME_REQ')}</label>
                 {errors.kcg_account_name && <small className="mdl-textfield__error shown">{errors.kcg_account_name[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
               <div className={this.formClassNames('kcg_credit_to', errors)}>
                 <input className="mdl-textfield__input" type="text" id="credit_to" ref="credit_to" defaultValue={adminSystemSettings.kcg_credit_to.value}/>
-                <label className="mdl-textfield__label">Credit To *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.CREDIT_TO_REQ')}</label>
                 {errors.kcg_credit_to && <small className="mdl-textfield__error shown">{errors.kcg_credit_to[0]}</small>}
               </div>
             </div>
@@ -210,21 +209,21 @@ class SystemSettings extends React.Component {
             <div className="mdl-cell mdl-cell--4-col">
               <div className={this.formClassNames('kcg_bank_account', errors)}>
                 <input className="mdl-textfield__input" type="text" id="bank_account" ref="bank_account" defaultValue={adminSystemSettings.kcg_bank_account.value}/>
-                <label className="mdl-textfield__label">Bank Account *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.BANK_ACCOUNT_REQ')}</label>
                 {errors.kcg_bank_account && <small className="mdl-textfield__error shown">{errors.kcg_bank_account[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--4-col">
               <div className={this.formClassNames('kcg_bank_code', errors)}>
                 <input className="mdl-textfield__input" type="text" id="bank_code" ref="bank_code" defaultValue={adminSystemSettings.kcg_bank_code.value}/>
-                <label className="mdl-textfield__label">Bank Account Code *</label>
+                <label className="mdl-textfield__label">{tr.t('LABEL.BANK_ACCOUNT_CODE_REQ')}</label>
                 {errors.kcg_bank_code && <small className="mdl-textfield__error shown">{errors.kcg_bank_code[0]}</small>}
               </div>
             </div>
           </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--4-col">
-              <button className="mdl-button mdl-button--accent" id="btn_save" type="button" onClick={(e) => this.save(e)}>Save</button>
+              <button className="mdl-button mdl-button--accent" id="btn_save" type="button" onClick={(e) => this.save(e)}>{tr.t('BUTTON.SAVE')}</button>
             </div>
           </div>
         </form>

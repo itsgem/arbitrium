@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import Checkit from 'checkit';
 import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
@@ -89,10 +90,10 @@ class UserManagementAdd extends React.Component {
 
     return (
       <form>
-        <div className="required">Required fields</div>
+        <div className="required">{tr.t('LABEL.REQUIRED_FIELDS')}</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
-            <legend>USER ACCOUNT DETAILS</legend>
+            <legend>{tr.t('ADMIN_USER_MANAGEMENT.LABEL.USER_ACCOUNT_DETAILS')}</legend>
               <div className={this.formClassNames('username', errors)}>
                 <input
                   className="mdl-textfield__input"
@@ -101,7 +102,7 @@ class UserManagementAdd extends React.Component {
                   ref="username"
                   onChange={(e) => this.notUsername(e)}
                   />
-                <label className="mdl-textfield__label" htmlFor="usernmae">Username*</label>
+                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USERNAME_REQ')}</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
               </div>
             </div>
@@ -112,7 +113,7 @@ class UserManagementAdd extends React.Component {
                     "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button ng-scope bg-green" }
                     id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>Check Availability{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
+                onClick={(e) => this.checkUsername(e)}>{tr.t('BUTTON.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
           </div>
           <div className="mdl-grid">
@@ -124,7 +125,7 @@ class UserManagementAdd extends React.Component {
                   id='email_address'
                   ref="email_address"
                   />
-                <label className="mdl-textfield__label" htmlFor="email_address">E-mail Address*</label>
+                <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
                 {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
               </div>
             </div>
@@ -137,7 +138,7 @@ class UserManagementAdd extends React.Component {
                       {return <option key={item.get('id')} value={item.get('id')}>{item.get('display_name')}</option>}
                     )}
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="email_address">Role*</label>
+                  <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.ROLE_REQ')}</label>
                   {errors.role_id && <small className="mdl-textfield__error shown">{errors.role_id[0]}</small>}
                 </div>
               </div>
@@ -152,7 +153,7 @@ class UserManagementAdd extends React.Component {
                   id='password'
                   ref="password"
                   />
-                <label className="mdl-textfield__label" htmlFor="password">Password*</label>
+                <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.PASSWORD_REQ')}</label>
                 {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
               </div>
             </div>
@@ -164,14 +165,14 @@ class UserManagementAdd extends React.Component {
                   id='password_confirmation'
                   ref="password_confirmation"
                   />
-                <label className="mdl-textfield__label" htmlFor="password_confirmation">Confirm password *</label>
+                <label className="mdl-textfield__label" htmlFor="password_confirmation">{tr.t('LABEL.CONFIRM_PASSWORD_REQ')}</label>
                 {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
               </div>
             </div>
           </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-            <legend>PERSONAL INFORMATION</legend>
+            <legend>{tr.t('ADMIN_USER_MANAGEMENT.LABEL.PERSONAL_INFORMATION')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('first_name', errors)}>
@@ -181,7 +182,7 @@ class UserManagementAdd extends React.Component {
                   id='first_name'
                   ref="first_name"
                   />
-                <label className="mdl-textfield__label" htmlFor="first_name">First name *</label>
+                <label className="mdl-textfield__label" htmlFor="first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
                 {errors.first_name && <small className="mdl-textfield__error shown">{errors.first_name[0]}</small>}
               </div>
             </div>
@@ -193,7 +194,7 @@ class UserManagementAdd extends React.Component {
                   id='last_name'
                   ref="last_name"
                   />
-                <label className="mdl-textfield__label" htmlFor="last_name">Last name *</label>
+                <label className="mdl-textfield__label" htmlFor="last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
                 {errors.last_name && <small className="mdl-textfield__error shown">{errors.last_name[0]}</small>}
               </div>
             </div>
@@ -204,14 +205,14 @@ class UserManagementAdd extends React.Component {
                 className="mdl-button mdl-js-button mdl-button--colored"
                 id='btn-cancel'
                 to="/coffee/account/"
-                >CANCEL</Link>
+                >{tr.t('BUTTON.CANCEL')}</Link>
             </div>
             <div className="flex-order-gt-md-2">
               <button
                 className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                 id='btn-save'
                 type='button'
-                onClick={(e) => this.register(e)}>SAVE</button>
+                onClick={(e) => this.register(e)}>{tr.t('BUTTON.SAVE')}</button>
             </div>
           </div>
       </form>
@@ -273,17 +274,25 @@ class UserManagementAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
+    username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ],
     email_address: [
-      {rule: 'required', label: 'E-mail address'},
-      {rule: 'email', label: 'E-mail address'},
-      {rule: 'minLength:6', label: 'E-mail address'},
-      {rule: 'maxLength:64', label: 'E-mail address'} ],
-    password: [ 'required', 'alphaDash', 'minLength:8', 'maxLength:64' ],
-    password_confirmation: {rule: 'required', label: 'confirm password'},
-    first_name: { rule: 'required', label: 'first name' },
-    last_name: { rule: 'required', label: 'last name' },
-    role_id: { rule: 'required', label: 'role' }
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') },
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
+    password: [
+      {rule: 'required', label: tr.t('LABEL.PASSWORD') },
+      {rule: 'alphaDash', label: tr.t('LABEL.PASSWORD') },
+      {rule: 'minLength:8', label: tr.t('LABEL.PASSWORD') },
+      {rule: 'maxLength:64', label: tr.t('LABEL.PASSWORD') } ],
+    password_confirmation: {rule: 'required', label: tr.t('LABEL.CONFIRM_PASSWORD') },
+    first_name: { rule: 'required', label: tr.t('LABEL.FIRST_NAME') },
+    last_name: { rule: 'required', label: tr.t('LABEL.LAST_NAME') },
+    role_id: { rule: 'required', label: tr.t('LABEL.ROLE') }
     } );
     return rules.run( payload );
 }
@@ -293,7 +302,11 @@ function registerAdmin (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

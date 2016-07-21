@@ -1,8 +1,8 @@
 import React from 'react';
+import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import DocTitle from 'common/components/docTitle';
-import tr from 'i18next';
 import { Link } from 'react-router';
 import Checkit from 'checkit';
 
@@ -73,11 +73,13 @@ export default React.createClass( {
 
     return (
       <div id="forgot" className="auth-view">
-        <div className="container" title="Forgot password">
+        <DocTitle
+          title={tr.t('CONFIRM_RESET_PASSWORD.DOC_TITLE')}
+        />
+        <div className="container">
           { this.renderError()}
           <div className="bar">
-            <span className="bar-title">Confirm Reset Password</span>
-            <DocTitle title="Confirm"/>
+            <span className="bar-title">{tr.t('CONFIRM_RESET_PASSWORD.TITLE')}</span>
             </div>
             <fieldset>
               <div className="background">
@@ -86,19 +88,19 @@ export default React.createClass( {
                     <form>
                       <div className={ this.formClassNames('password',errors) }>
                         <input className="mdl-textfield__input" type="password" id='password'ref="password" onKeyPress={(e) => this.toConfirmReset(e)}/>
-                        <label className="mdl-textfield__label" htmlFor="password">{tr.t('password')}</label>
+                        <label className="mdl-textfield__label" htmlFor="password">{tr.t('LABEL.PASSWORD_REQ')}</label>
                         {errors.password && <small className="mdl-textfield__error shown">{errors.password[0]}</small>}
                       </div>
                       <div className={ this.formClassNames('password_confirmation',errors) }>
                         <input className="mdl-textfield__input" type="password" id='passwordConfirmation'ref="passwordConfirmation" onKeyPress={(e) => this.toConfirmReset(e)}/>
-                        <label className="mdl-textfield__label" htmlFor="email">Password Confirmation</label>
+                        <label className="mdl-textfield__label" htmlFor="email">{tr.t('LABEL.CONFIRM_PASSWORD_REQ')}</label>
                         {errors.password_confirmation && <small className="mdl-textfield__error shown">{errors.password_confirmation[0]}</small>}
                       </div>
                       <div className="spacer">
                         <button type="button"
                         className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
                         onClick={(e)=>this.confirmReset(e)}>
-                         Ok
+                         {tr.t('BUTTON.SAVE')}
                         </button>
                       </div>
                      </form>

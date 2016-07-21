@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import SystemSettings from 'admin/components/systemSettings/settings';
 import {openLoading, closeLoading} from 'common/components/modal'
 import {createError} from 'utils/error';
@@ -42,8 +44,11 @@ export default React.createClass({
   renderSystemSettings () {
     return (
       <div id="client_add" className="auth-view">
+      <DocTitle
+          title={tr.t('ADMIN_SYSTEM_SETTINGS.DOC_TITLE')}
+        />
         <div className="client-tab">
-          <a className="mdl-layout__tab is-active">System Settings<i className="material-icons add">edit</i></a>
+          <a className="mdl-layout__tab is-active">{tr.t('ADMIN_SYSTEM_SETTINGS.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <SystemSettings
           adminSystemSettings = {this.props.systemSettings}
