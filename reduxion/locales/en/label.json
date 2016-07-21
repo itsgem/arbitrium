@@ -26,6 +26,7 @@
     "CANCEL_SUBSCRIPTION": "Are you sure you want to cancel this subscription?"
   },
   "LABEL": {
+    "SELECT_COUNTRY_SITE": "Select country site",
     "ACTIVATE": "Activate",
     "DEACTIVATE": "Deactivate",
     "CURRENT_PASSWORD_REQ": "Current Password *",

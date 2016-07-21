@@ -382,3 +382,37 @@ div#application {
 .datepicker table tr th {
   vertical-align: middle;
 }
+.selectCountry {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 20px;
+  width: 100%;
+  background: #0e3192;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 12px;
+  text-align: right;
+
+  .country-opt {
+    padding: 0;
+    margin: 0 50px 0 20px;
+    width: auto;
+    font-size: 12px;
+  }
+
+  .mdl-selectfield:after {
+    position: absolute;
+    top: 12px;
+    right: -8px;
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: .25em solid transparent;
+    border-right: .25em solid transparent;
+    border-top: 0.375em solid #fff;
+    pointer-events: none
+  }
+}
+

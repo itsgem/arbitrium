@@ -1,3 +1,7 @@
 {
-
+  "BUTTON": {
+    "LOGIN": "Accesso",
+    "SIGNUP": "Registrazione",
+    "FORGOT_PASSWORD": "Ha dimenticato la password"
+  }
 }

@@ -60,13 +60,13 @@ class LocalAuthenticationForm extends React.Component {
             onClick={(e) => this.login(e)}>{ this.props.buttonCaption }</button>
 
           <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
-            <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-left">
+            <div className="mdl-cell mdl-cell--7-col mdl-cell--12-col-tablet text-left">
               <Link
                 to="/i/forgot"
               >{tr.t('BUTTON.FORGOT_PASSWORD')}</Link>
             </div>
 
-            <div className="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet text-right">
+            <div className="mdl-cell mdl-cell--5-col mdl-cell--12-col-tablet text-right">
               <Link
                 to="/i/signup"
               >{tr.t('BUTTON.SIGNUP')}</Link>

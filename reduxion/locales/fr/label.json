@@ -1,5 +1,6 @@
 {
   "LABEL": {
+    "SELECT_COUNTRY_SITE": "Sélectionnez site pays",
     "EMAIL_USERNAME": "Nom d'utilisateur",
     "PASSWORD": "Mot de passe"
   }

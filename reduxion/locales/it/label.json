@@ -1,3 +1,7 @@
 {
-
+  "LABEL": {
+    "SELECT_COUNTRY_SITE": "Seleziona sito Paese",
+    "EMAIL_USERNAME": "Nome utente / indirizzo e-mail",
+    "PASSWORD": "parola d'ordine"
+  }
 }
