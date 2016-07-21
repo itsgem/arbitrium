@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import SubscriptionPayment from 'client/components/subscription/subscriptionPayment';
 import NotFound from 'common/components/noMatch';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -28,7 +30,7 @@ export default React.createClass({
         let id = this.props.params.id;
         let notification = document.querySelector('.mdl-snackbar');
         notification.MaterialSnackbar.showSnackbar( {
-            message: (id == 1 ? 'Successfully subscribe the Free Trial' : 'Redirecting to PayPal'),
+            message: (id == 1 ? tr.t('NOTEFICATION_MESSAGE.SUCCESS_FREE_TRIAL') : tr.t('NOTEFICATION_MESSAGE.REDIRECTING_PAYPAL') ),
             timeout: 3000
         });
       if (nextProps.purchaseSuccess.data.approval_url) {
@@ -48,6 +50,9 @@ export default React.createClass({
   noContent () {
     return (
       <div className="noContent">
+        <DocTitle
+          title={tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_DETAIL.DOC_TITLE')}
+        />
         <NotFound />
       </div>
     );
@@ -72,9 +77,12 @@ export default React.createClass({
   renderSubscriptionPayment () {
     return (
       <main className="mdl-layout__content subscription-type">
+        <DocTitle
+          title={tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_PAYMENT_DETAIL.DOC_TITLE')}
+        />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container">
           <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>Subscription Payment Detail</p>
+            <p>{tr.t('CLIENT_SUBCRIPTION.SUBSCRIPTION_PAYMENT_DETAIL.TITLE')}</p>
           </div>
           <SubscriptionPayment
             params = {this.props.params}

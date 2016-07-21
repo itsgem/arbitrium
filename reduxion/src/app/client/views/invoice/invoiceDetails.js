@@ -1,4 +1,6 @@
 import React from 'react';
+import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
 import InvoiceDetails from 'client/components/invoice/invoiceDetails';
 import NotFound from 'common/components/noMatch';
 import { openLoading, closeLoading } from 'common/components/modal'
@@ -45,6 +47,9 @@ export default React.createClass({
   renderInvoiceInfo() {
     return (
       <main className="mdl-layout__content">
+        <DocTitle
+          title={tr.t('CLIENT_INVOICE.INVOICE_DETAIL.DOC_TITLE')}
+        />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container table-invoice">
           <InvoiceDetails
             invoiceInfo={this.props.invoiceInfo}

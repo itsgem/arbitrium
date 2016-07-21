@@ -1,5 +1,6 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
+import tr from 'i18next';
 import { Link } from 'react-router';
 import moment from 'moment';
 
@@ -78,10 +79,10 @@ class AdminInvoiceList extends React.Component {
         {prev &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, 1)}>FIRST</button>
+          onClick={(e) => this.page(e, 1)}>{tr.t('LABEL.FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">FIRST</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.FIRST')}</button>
         }
         {prev &&
           <button
@@ -116,10 +117,10 @@ class AdminInvoiceList extends React.Component {
       {next &&
         <button
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-blue"
-          onClick={(e) => this.page(e, last)}>LAST</button>
+          onClick={(e) => this.page(e, last)}>{tr.t('LABEL.LAST')}</button>
       }
       {!next &&
-        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">LAST</button>
+        <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.LAST')}</button>
       }
       </div>
     );
@@ -175,7 +176,7 @@ class AdminInvoiceList extends React.Component {
     }
     return (
       <div className="filter-search">
-        <p>Filter / Search</p>
+        <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--2-col">
             <div id="invoiced_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
@@ -185,7 +186,7 @@ class AdminInvoiceList extends React.Component {
                 id="date_from" ref="date_from"
                 readOnly
               />
-              <label className="mdl-textfield__label">Invoice Date From</label>
+              <label className="mdl-textfield__label">{tr.t('LABEL.INVOICE_DATE_FROM')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
@@ -196,13 +197,13 @@ class AdminInvoiceList extends React.Component {
                 id="date_to" ref="date_to"
                 readOnly
               />
-              <label className="mdl-textfield__label">Invoice Date To</label>
+              <label className="mdl-textfield__label">{tr.t('LABEL.INVOICE_DATE_FROM')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="invoice_no" ref="invoice_no" />
-              <label className="mdl-textfield__label">Invoice Number</label>
+              <label className="mdl-textfield__label">{tr.t('LABEL.INVOICE_NUMBER')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
@@ -213,30 +214,30 @@ class AdminInvoiceList extends React.Component {
                   id="status"
                   ref="status">
                   <option value=""></option>
-                  <option value="Unpaid">Unpaid</option>
-                  <option value="Paid">Paid</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="Unpaid">{tr.t('LABEL.UNPAID')}</option>
+                  <option value="Paid">{tr.t('LABEL.PAID')}</option>
+                  <option value="Cancelled">{tr.t('LABEL.CANCELLED')}</option>
                 </select>
-                <label className="mdl-textfield__label" htmlFor="status">Invoice Status</label>
+                <label className="mdl-textfield__label" htmlFor="status">{tr.t('LABEL.INVOICE_STATUS')}</label>
               </div>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--4-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>Search</button>
+              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>Clear</button>
+              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th width="400" className="mdl-data-table__cell--non-numeric">Invoice Date</th>
-              <th width="400" className="mdl-data-table__cell--non-numeric">Invoice Number</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">Invoice Status</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">Action</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.INVOICE_DATE')}</th>
+              <th width="400" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.INVOICE_NUMBER')}</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.INVOICE_STATUS')}</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
             </tr>
           </thead>
           <tbody>
@@ -252,7 +253,7 @@ class AdminInvoiceList extends React.Component {
             {counter && pagination}
           </div>
           <div className="mdl-cell mdl-cell--3-col tooltipBox">
-            <span className="tooltiptext">Items to show per page</span>
+            <span className="tooltiptext">{tr.t('LABEL.ITEM_PER_PAGE')}</span>
             <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" value={perPage} />
             <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
             <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>

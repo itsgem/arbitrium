@@ -1,10 +1,10 @@
 import React from 'react';
-import LocalLoginForm from 'client/components/auth/localLoginForm';
 import DocTitle from 'common/components/docTitle';
+import tr from 'i18next';
+import LocalLoginForm from 'client/components/auth/localLoginForm';
 import moment from 'moment';
 import config from 'config';
 import CryptoJS from 'crypto-js';
-import tr from 'i18next';
 
 class Login extends React.Component {
   componentWillReceiveProps(nextProps){
@@ -29,7 +29,7 @@ class Login extends React.Component {
     return (
       <div id='login' className="auth-view">
         <DocTitle
-          title={tr.t('LOGIN.DOC_TITLE')}
+          title={tr.t('CLIENT_LOGIN.DOC_TITLE')}
         />
         <div className="login-view">
           <LocalLoginForm login={this.props.login}/>

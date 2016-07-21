@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import ClientHeader from 'client/components/header';
 import ClientSidebar from 'client/components/sidebar';
 
@@ -25,7 +26,7 @@ export default class Application extends React.Component {
               <div className="alert alert-warning">
                 <i className="material-icons"></i>
                 <div className="content">
-                  Please fill in the following required fields below.
+                  {tr.t('NOTEFICATION_MESSAGE.PLEASE_FILL_REQUIRED_FIELDS')}
                 </div>
               </div>
               <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">

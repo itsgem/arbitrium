@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import { modal } from 'common/components/modal';
 import { openLoading, closeLoading } from 'common/components/modal';
 import {createError} from 'utils/error';
@@ -39,18 +40,18 @@ class invoiceDetails extends React.Component {
     return (
       <div className="mdl-grid mdl-grid--no-spacing table-list-container">
         {this.loadingRender()}
-        <div className="mdl-cell mdl-cell--12-col header-title"><p>INVOICE DETAIL</p></div>
+        <div className="mdl-cell mdl-cell--12-col header-title"><p>{tr.t('CLIENT_INVOICE.INVOICE_DETAIL.TITLE')}</p></div>
         <div className="mdl-grid content">
           <div className="mdl-cell mdl-cell--12-col">
             <center><h6>{settings.kcg_company_name}</h6></center>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <legend className="to-right">
-              <h4>BILLING INVOICE</h4>
+              <h4>{tr.t('CLIENT_INVOICE.LABEL.BILLING_INVOICE')}</h4>
             </legend>
           </div>
           <div className="mdl-cell mdl-cell--7-col left-info">
-            Other Information:<br/>
+            {tr.t('CLIENT_INVOICE.LABEL.OTHER_INFORMATION')}<br/>
             {invoiceInfo.rep_first_name} {invoiceInfo.rep_last_name}<br/>
             {invoiceInfo.company_name}<br/>
             {invoiceInfo.street_address_1}, {invoiceInfo.city}, {invoiceInfo.state}
@@ -61,17 +62,17 @@ class invoiceDetails extends React.Component {
             {settings.kcg_country}, {settings.kcg_postal_code}<br/>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <h6>PRODUCTS AND SERVICES PURCHASED</h6>
+            <h6>{tr.t('CLIENT_INVOICE.LABEL.PRODUCT_SERVICES_PURCHASED')}</h6>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <table className="mdl-data-table mdl-js-data-table table-list">
               <thead>
                 <tr>
-                  <th className="left-align">Name</th>
-                  <th className="left-align">Type</th>
-                  <th>Price (USD)</th>
-                  <th>Discount (USD)</th>
-                  <th>Subtotal (USD)</th>
+                  <th className="left-align">{tr.t('CLIENT_INVOICE.LABEL.TABLE.NAME')}</th>
+                  <th className="left-align">{tr.t('CLIENT_INVOICE.LABEL.TABLE.TYPE')}</th>
+                  <th>{tr.t('CLIENT_INVOICE.LABEL.TABLE.PRICE')}</th>
+                  <th>{tr.t('CLIENT_INVOICE.LABEL.TABLE.DISCOUNT')}</th>
+                  <th>{tr.t('CLIENT_INVOICE.LABEL.TABLE.SUBTOTAL')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,7 +81,7 @@ class invoiceDetails extends React.Component {
                       overallTotal = parseFloat( parseFloat(overallTotal) + parseFloat(item.amount)).toFixed(2);
                       subtotal = parseFloat( parseFloat(item.amount) - parseFloat(invoiceInfo.discounts)).toFixed(2);
                       return <tr key={item.id}><td className="text-left">{item.name}</td>
-                      <td className="text-left">Subscription</td>
+                      <td className="text-left">{tr.t('LABEL.SUBSCRIPTION')}</td>
                       <td>{item.amount}</td>
                       <td>0.00</td>
                       <td>{subtotal}</td></tr>;
@@ -90,38 +91,38 @@ class invoiceDetails extends React.Component {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td><h6>OVERALL TOTAL</h6></td>
-                  <td><h6>USD {overallTotal}</h6></td>
+                  <td><h6>{tr.t('CLIENT_INVOICE.LABEL.TABLE.OVERALL_TOTAL')}</h6></td>
+                  <td><h6>{tr.t('LABEL.USD')} {overallTotal}</h6></td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div className="mdl-cell mdl-cell--4-col margin-bottom-40">
-            <h6>Remarks</h6>
+            <h6>{tr.t('LABEL.REMARKS')}</h6>
           </div>
           <div className="mdl-cell mdl-cell--6-col margin-bottom-40">
             <h6>{invoiceInfo.description}</h6>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <p><i className="note">This is an Electronic invoice. No signature is required.</i></p>
+            <p><i className="note">{tr.t('CLIENT_INVOICE.LABEL.NOTE_ELETRONIC_INVOICE')}</i></p>
           </div>
           <div className="mdl-cell mdl-cell--12-col top-margin20">
-            <h6>Banking Details:</h6>
+            <h6>{tr.t('CLIENT_INVOICE.LABEL.BANKING_DETAILS')}</h6>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <p>Account Name: <span className="invoice-value">{settings.kcg_credit_to}</span> <br />
-            Bank: <span className="invoice-value">{settings.kcg_account_name}</span><br />
-            Account No.: <span className="invoice-value">{settings.kcg_bank_account}</span></p>
+            <p>{tr.t('CLIENT_INVOICE.LABEL.ACCOUNT_NAME')}<span className="invoice-value">{settings.kcg_credit_to}</span> <br />
+            {tr.t('CLIENT_INVOICE.LABEL.BANK')} <span className="invoice-value">{settings.kcg_account_name}</span><br />
+            {tr.t('CLIENT_INVOICE.LABEL.ACCOUNT_NO')} <span className="invoice-value">{settings.kcg_bank_account}</span></p>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
-            <p>Bank Code: <span className="invoice-value">{settings.kcg_bank_code}</span></p>
+            <p>{tr.t('CLIENT_INVOICE.LABEL.BANK_CODE')} <span className="invoice-value">{settings.kcg_bank_code}</span></p>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
-            <p>Branch Code: <span className="invoice-value">{settings.kcg_branch_code}</span></p>
+            <p>{tr.t('CLIENT_INVOICE.LABEL.BRANCH_CODE')} <span className="invoice-value">{settings.kcg_branch_code}</span></p>
           </div>
           <div className="mdl-cell mdl-cell--12-col cta-bottom text-right">
-            <a href={invoiceInfo.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>GENERATE PDF</a>
-            <button onClick={(e)=>this.invoiceSendMail(e, invoiceInfo.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>SEND TO EMAIL</button>
+            <a href={invoiceInfo.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('BUTTON.GENERATE_PDF')}</a>
+            <button onClick={(e)=>this.invoiceSendMail(e, invoiceInfo.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('BUTTON.SEND_TO_MAIL')}</button>
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import tr from 'i18next';
+import DocTitle from 'common/components/docTitle';
 import { Link } from 'react-router';
 import SubscriptionDetail from 'admin/components/subscription/subscriptionDetail';
 import {openLoading, closeLoading} from 'common/components/modal'
@@ -47,14 +49,17 @@ export default React.createClass({
   renderSubscriptionDetail () {
     return (
       <div id="client_add" className="auth-view">
+        <DocTitle
+          title={tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_DETAIL.DOC_TITLE')}
+        />
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/subscription/">Subscriptions List</Link>
+            to="/coffee/subscription/">{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_LIST.TITLE')}</Link>
           <Link
             className='mdl-layout__tab'
-            to={"/coffee/subscription/client/" + this.props.params.client_id}>Subscription Detail</Link>
-          <a className="mdl-layout__tab is-active" >SUBSCRIPTION PAYMENT DETAIL<i className="material-icons add">edit</i></a>
+            to={"/coffee/subscription/client/" + this.props.params.client_id}>{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_DETAIL.TITLE')}</Link>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_PAYMENT_DETAIL.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <SubscriptionDetail
           params = {this.props.params}

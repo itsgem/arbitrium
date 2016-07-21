@@ -28,7 +28,6 @@ class LocalSignupForm extends React.Component {
   renderError() {
     let error = this.state.errorServer;
     if(!error) return;
-    //let arr = Object.keys(error.response).map(function (key) {return error.response[key]});
     let results = error.response;
     return (
       <div className="msg-server alert alert-danger text-center animate bounceIn" role="alert">
@@ -45,7 +44,7 @@ class LocalSignupForm extends React.Component {
         <div className="alert alert-warning">
           <i className="material-icons"></i>
           <div className="content">
-            Please review below details.
+            {tr.t('LABEL.PLEASE_REVIEW')}
           </div>
         </div>
         <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
@@ -56,7 +55,7 @@ class LocalSignupForm extends React.Component {
           showLogin = {true}
           errorServer = {this.state.errorServer}
           country = {this.props.country}
-          buttonCaption = { tr.t('SIGNUP.FORM.BUTTON.CREATE_AN_ACCOUNT_BTN') }
+          buttonCaption = { tr.t('BUTTON.CREATE_ACCOUNT') }
           errors = { this.state.errors }
           onButtonClick = {(payload) => {this.signup(payload)}}
           />
@@ -95,27 +94,36 @@ function mapObject(object, callback) {
 
 function validateSignup( payload ) {
   let rules = new Checkit( {
-    company_name: { rule: 'required', label: 'company name'},
+    company_name: { rule: 'required', label: tr.t('LABEL.COMPANY_NAME')},
     street_address_1: [],
     street_address_2: [],
     city: [],
     state: [],
     postal_code: [],
     country_id: [],
-    rep_first_name: { rule: 'required', label: 'first name' },
-    rep_last_name: { rule: 'required', label: 'last name' },
+    rep_first_name: { rule: 'required', label: tr.t('LABEL.FIRST_NAME') },
+    rep_last_name: { rule: 'required', label: tr.t('LABEL.LAST_NAME') },
     rep_gender: [],
-    rep_email_address: [{ rule: 'required', label: 'Email address' }, { rule: 'email', label: 'Email address' }],
+    rep_email_address: [{ rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS') }, { rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS') }],
     rep_mobile_code: [],
     rep_mobile_number: [],
     rep_phone_code: [],
     rep_phone_number: [],
-    rep_position: { rule: 'required', label: 'position' },
-    rep_department: { rule: 'required', label: 'department' },
-    password_confirmation: {rule: 'required', label: 'confirm password'},
-    password: [ 'required', 'required', 'minLength:8', 'maxLength:64' ],
-    email_address:  [{ rule: 'required', label: 'Email address' }, { rule: 'email', label: 'Email address' }],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+    rep_position: { rule: 'required', label: tr.t('LABEL.POSITION') },
+    rep_department: { rule: 'required', label: tr.t('LABEL.DEPARTMENT') },
+    password_confirmation: {rule: 'required', label: tr.t('LABEL.CONFIRM_PASSWORD')},
+    password: [
+      {rule: 'required', label: tr.t('LABEL.PASSWORD')},
+      {rule: 'minLength:8', label: tr.t('LABEL.PASSWORD')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.PASSWORD')}
+    ],
+    email_address:  [{ rule: 'required', label: 'Email address' }, { rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS') }],
+    username: [
+      {rule: 'required', label: tr.t('LABEL.USERNAME')},
+      {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+      {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')}
+    ]
   } );
   return rules.run( payload );
 }

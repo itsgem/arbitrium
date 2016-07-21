@@ -1,8 +1,8 @@
 import React from 'react';
+import tr from 'i18next';
 import LocalAuthenticationForm from 'admin/components/auth/localAuthenticationForm';
 import ValidateLoginFields from 'utils/validations/validateLoginFields';
 import {createError} from 'utils/error';
-import tr from 'i18next';
 
 class LocalLoginForm extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class LocalLoginForm extends React.Component {
           </div>
         </div>
         <LocalAuthenticationForm
-          buttonCaption={tr.t('LOGIN.FORM.BUTTON.LOGIN_BTN') }
+          buttonCaption={tr.t('BUTTON.LOGIN') }
           errors={ this.state.errors }
           onButtonClick={ (payload) => { this.login(payload) } }
           login={ this.props.login }
@@ -61,7 +61,7 @@ class LocalLoginForm extends React.Component {
     let message = null;
     switch(e.status) {
       case 401 :
-       message = 'No matching credentials. Please check your e-mail and password.';
+       message = tr.t('NOTEFICATION_MESSAGE.NO_MATCHING_CREDENTIALS');
       break;
 
       case 403 :

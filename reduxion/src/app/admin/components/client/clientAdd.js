@@ -85,10 +85,10 @@ class ClientAdd extends React.Component {
     this.scrolltop(errors);
     return (
       <form action={ this.clientAdd }>
-        <div className="required">{tr.t('CLIENT.FORM.MESSAGE.REQUIRED_FIELD')}</div>
+        <div className="required">{tr.t('LABEL.REQUIRED_FIELDS')}</div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
-            <legend>{tr.t('CLIENT.FORM.TITLE.USER_DETAILS')}</legend>
+            <legend>{tr.t('LABEL.USER_ACCOUNT_DETAILS')}</legend>
               <div className={this.formClassNames('username', errors)}>
                 <input
                   className="mdl-textfield__input"
@@ -96,7 +96,7 @@ class ClientAdd extends React.Component {
                   id='username'
                   ref="username"
                   />
-                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('CLIENT.FORM.LABEL.USER')} *</label>
+                <label className="mdl-textfield__label" htmlFor="usernmae">{tr.t('LABEL.USERNAME_REQ')}</label>
                 {errors.username && <small className="mdl-textfield__error shown">{errors.username[0]}</small>}
               </div>
             </div>
@@ -107,7 +107,7 @@ class ClientAdd extends React.Component {
                     "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button ng-scope bg-green" }
                 id='check_availability'
                 type='button'
-                onClick={(e) => this.checkUsername(e)}>{tr.t('CLIENT.FORM.MESSAGE.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
+                onClick={(e) => this.checkUsername(e)}>{tr.t('BUTTON.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
             </div>
             <div className="mdl-layout__content">
               <div className="mdl-cell mdl-cell--6-col">
@@ -118,7 +118,7 @@ class ClientAdd extends React.Component {
                     id='email_address'
                     ref="email_address"
                     />
-                  <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('CLIENT.FORM.LABEL.EMAIL')} *</label>
+                  <label className="mdl-textfield__label" htmlFor="email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
                   {errors.email_address && <small className="mdl-textfield__error shown">{errors.email_address[0]}</small>}
                 </div>
               </div>
@@ -127,7 +127,7 @@ class ClientAdd extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-layout__content">
               <div className="mdl-cell mdl-cell--6-col">
-                <legend>{tr.t('CLIENT.FORM.TITLE.GENERAL_INFO')}</legend>
+                <legend>{tr.t('LABEL.GENERAL_INFORMATION')}</legend>
                 <div className={this.formClassNames('company_name', errors)}>
                   <input
                     className="mdl-textfield__input"
@@ -135,7 +135,7 @@ class ClientAdd extends React.Component {
                     id='company_name'
                     ref="company_name"
                     />
-                  <label className="mdl-textfield__label" htmlFor="company_name">{tr.t('CLIENT.FORM.LABEL.COMPANY')} *</label>
+                  <label className="mdl-textfield__label" htmlFor="company_name">{tr.t('LABEL.COMPANY_NAME_REQ')}</label>
                   {errors.company_name && <small className="mdl-textfield__error shown">{errors.company_name[0]}</small>}
                 </div>
               </div>
@@ -148,7 +148,7 @@ class ClientAdd extends React.Component {
                   id='street_address_1'
                   ref="street_address_1"
                   />
-                <label className="mdl-textfield__label" htmlFor="street_address_1">{tr.t('CLIENT.FORM.LABEL.STREET_ADDRESS1')} *</label>
+                <label className="mdl-textfield__label" htmlFor="street_address_1">{tr.t('LABEL.STREET_ADDRESS_1_REQ')}</label>
                 {errors.street_address_1 && <small className="mdl-textfield__error shown">{errors.street_address_1[0]}</small>}
               </div>
             </div>
@@ -160,7 +160,7 @@ class ClientAdd extends React.Component {
                   id='street_address_2'
                   ref="street_address_2"
                   />
-                  <label className="mdl-textfield__label" htmlFor="street_address_2">{tr.t('CLIENT.FORM.LABEL.STREET_ADDRESS2')}</label>
+                  <label className="mdl-textfield__label" htmlFor="street_address_2">{tr.t('LABEL.STREET_ADDRESS_2')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
@@ -171,7 +171,7 @@ class ClientAdd extends React.Component {
                   id='city'
                   ref="city"
                   />
-                <label className="mdl-textfield__label" htmlFor="city">{tr.t('CLIENT.FORM.LABEL.CITY')} *</label>
+                <label className="mdl-textfield__label" htmlFor="city">{tr.t('LABEL.CITY_REQ')}</label>
                 {errors.city && <small className="mdl-textfield__error shown">{errors.city[0]}</small>}
               </div>
             </div>
@@ -183,7 +183,7 @@ class ClientAdd extends React.Component {
                   id='state'
                   ref="state"
                   />
-                <label className="mdl-textfield__label" htmlFor="state">{tr.t('CLIENT.FORM.LABEL.STATE_PROVINCE')} *</label>
+                <label className="mdl-textfield__label" htmlFor="state">{tr.t('LABEL.STATE_PROVINCE_REQ')}</label>
                 {errors.state && <small className="mdl-textfield__error shown">{errors.state[0]}</small>}
               </div>
             </div>
@@ -203,13 +203,13 @@ class ClientAdd extends React.Component {
                   id='postal_code'
                   ref="postal_code"
                   />
-                <label className="mdl-textfield__label" htmlFor="postal_code">{tr.t('CLIENT.FORM.LABEL.POSTAL_CODE')} *</label>
+                <label className="mdl-textfield__label" htmlFor="postal_code">{tr.t('LABEL.POSTAL_CODE_REQ')}</label>
                 {errors.postal_code && <small className="mdl-textfield__error shown">{errors.postal_code[0]}</small>}
               </div>
             </div>
           </div>
           <div className="mdl-grid">
-            <legend>{tr.t('CLIENT.FORM.TITLE.COMPANY_REP')}</legend>
+            <legend>{tr.t('LABEL.COMPANY_REPRESENTATIVE')}</legend>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('rep_first_name', errors)}>
                 <input
@@ -218,7 +218,7 @@ class ClientAdd extends React.Component {
                   id='rep_first_name'
                   ref="rep_first_name"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('CLIENT.FORM.LABEL.FIRST_NAME')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
                 {errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
               </div>
             </div>
@@ -230,7 +230,7 @@ class ClientAdd extends React.Component {
                   id='rep_last_name'
                   ref="rep_last_name"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('CLIENT.FORM.LABEL.LAST_NAME')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
                 {errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
               </div>
             </div>
@@ -242,7 +242,7 @@ class ClientAdd extends React.Component {
                   id='rep_email_address'
                   ref="rep_email_address"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_email_address">{tr.t('CLIENT.FORM.LABEL.EMAIL')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_email_address">{tr.t('LABEL.EMAIL_ADDRESS_REQ')}</label>
                 {errors.rep_email_address && <small className="mdl-textfield__error shown">{errors.rep_email_address[0]}</small>}
               </div>
             </div>
@@ -254,10 +254,10 @@ class ClientAdd extends React.Component {
                     id='rep_gender'
                     ref="rep_gender" >
                     <option value=""></option>
-                    <option value="Male">{tr.t('COMMON.FORM.SELECT.GENDER.MALE')}</option>
-                    <option value="Female">{tr.t('COMMON.FORM.SELECT.GENDER.FEMALE')}</option>
+                    <option value="Male">{tr.t('LABEL.MALE')}</option>
+                    <option value="Female">{tr.t('LABEL.FEMALE')}</option>
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="rep_gender">{tr.t('CLIENT.FORM.LABEL.GENDER')} *</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_gender">{tr.t('LABEL.GENDER_REQ')}</label>
                   {errors.rep_gender && <small className="mdl-textfield__error shown">{errors.rep_gender[0]}</small>}
                 </div>
               </div>
@@ -265,10 +265,10 @@ class ClientAdd extends React.Component {
           </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>{tr.t('CLIENT.FORM.TITLE.MOBILE')}</legend>
+              <legend>{tr.t('LABEL.MOBILE_NUMBER')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>{tr.t('CLIENT.FORM.TITLE.PHONE')}</legend>
+              <legend>{tr.t('LABEL.PHONE_NUMBER')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('rep_mobile_code', errors)}>
@@ -280,7 +280,7 @@ class ClientAdd extends React.Component {
                   onKeyPress={(e) => this.numberOnly(e)}
                   maxLength="3"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_mobile_code">{tr.t('CLIENT.FORM.LABEL.COUNTRY_CODE')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_mobile_code">{tr.t('LABEL.COUNTRY_CODE_REQ')}</label>
                 {errors.rep_mobile_code && <small className="mdl-textfield__error shown">{errors.rep_mobile_code[0]}</small>}
               </div>
             </div>
@@ -294,7 +294,7 @@ class ClientAdd extends React.Component {
                   onKeyPress={(e) => this.numberOnly(e)}
                   maxLength="12"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_mobile_number">{tr.t('CLIENT.FORM.LABEL.MOBILE')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_mobile_number">{tr.t('LABEL.MOBILE_NO_REQ')}</label>
                 {errors.rep_mobile_number && <small className="mdl-textfield__error shown">{errors.rep_mobile_number[0]}</small>}
               </div>
             </div>
@@ -308,7 +308,7 @@ class ClientAdd extends React.Component {
                   onKeyPress={(e) => this.numberOnly(e)}
                   maxLength="3"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_phone_code">{tr.t('CLIENT.FORM.LABEL.COUNTRY_CODE')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_phone_code">{tr.t('LABEL.COUNTRY_CODE_REQ')}</label>
                 {errors.rep_phone_code && <small className="mdl-textfield__error shown">{errors.rep_phone_code[0]}</small>}
               </div>
             </div>
@@ -322,7 +322,7 @@ class ClientAdd extends React.Component {
                   onKeyPress={(e) => this.numberOnly(e)}
                   maxLength="12"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_phone_number">{tr.t('CLIENT.FORM.LABEL.PHONE')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_phone_number">{tr.t('LABEL.PHONE_NUMBER_REQ')}</label>
                 {errors.rep_phone_number && <small className="mdl-textfield__error shown">{errors.rep_phone_number[0]}</small>}
               </div>
             </div>
@@ -334,7 +334,7 @@ class ClientAdd extends React.Component {
                   id='rep_position'
                   ref="rep_position"
                   />
-                <label className="mdl-textfield__label" htmlFor="rep_position">{tr.t('CLIENT.FORM.LABEL.POSITION')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_position">{tr.t('LABEL.POSITION_REQ')}</label>
                 {errors.rep_position && <small className="mdl-textfield__error shown">{errors.rep_position[0]}</small>}
               </div>
             </div>
@@ -346,12 +346,12 @@ class ClientAdd extends React.Component {
                   id='rep_department'
                   ref="rep_department"
                     />
-                <label className="mdl-textfield__label" htmlFor="rep_department">{tr.t('CLIENT.FORM.LABEL.DEPARTMENT')} *</label>
+                <label className="mdl-textfield__label" htmlFor="rep_department">{tr.t('LABEL.DEPARTMENT_REQ')}</label>
                 {errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
               </div>
             </div>
             <div className="mdl-cell mdl-cell--9-col">
-              <legend>{tr.t('CLIENT.FORM.TITLE.ALTERNATIVE_REPRESENTATIVE')}</legend>
+              <legend>{tr.t('LABEL.ALTERNATIVE_REPRESENTATIVE')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('alt_first_name', errors)}>
@@ -361,7 +361,7 @@ class ClientAdd extends React.Component {
                   id='alt_first_name'
                   ref="alt_first_name"
                     />
-                <label className="mdl-textfield__label" htmlFor="alt_first_name">{tr.t('CLIENT.FORM.LABEL.FIRST_NAME')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_first_name">{tr.t('LABEL.FIRST_NAME')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
@@ -372,7 +372,7 @@ class ClientAdd extends React.Component {
                   id='alt_last_name'
                   ref="alt_last_name"
                     />
-                <label className="mdl-textfield__label" htmlFor="alt_last_name">{tr.t('CLIENT.FORM.LABEL.LAST_NAME')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_last_name">{tr.t('LABEL.LAST_NAME')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
@@ -383,7 +383,7 @@ class ClientAdd extends React.Component {
                   id='alt_email_address'
                   ref="alt_email_address"
                     />
-                <label className="mdl-textfield__label" htmlFor="alt_email_address">{tr.t('CLIENT.FORM.LABEL.EMAIL')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_email_address">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
                 {errors.alt_email_address && <small className="mdl-textfield__error shown">{errors.alt_email_address[0]}</small>}
               </div>
             </div>
@@ -395,18 +395,18 @@ class ClientAdd extends React.Component {
                     id='alt_gender'
                     ref="alt_gender" >
                     <option value=""></option>
-                    <option value="Male">{tr.t('COMMON.FORM.SELECT.GENDER.MALE')}</option>
-                    <option value="Female">{tr.t('COMMON.FORM.SELECT.GENDER.FEMALE')}</option>
+                    <option value="Male">{tr.t('LABEL.MALE')}</option>
+                    <option value="Female">{tr.t('LABEL.FEMALE')}</option>
                   </select>
-                  <label className="mdl-textfield__label" htmlFor="alt_gender">{tr.t('CLIENT.FORM.LABEL.GENDER')}</label>
+                  <label className="mdl-textfield__label" htmlFor="alt_gender">{tr.t('LABEL.GENDER')}</label>
                 </div>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>{tr.t('CLIENT.FORM.TITLE.MOBILE')}</legend>
+              <legend>{tr.t('LABEL.MOBILE_NUMBER')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <legend>{tr.t('CLIENT.FORM.TITLE.PHONE')}</legend>
+              <legend>{tr.t('LABEL.PHONE_NUMBER')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--2-col">
               <div className={this.formClassNames('alt_mobile_code', errors)}>
@@ -416,7 +416,7 @@ class ClientAdd extends React.Component {
                   id='alt_mobile_code'
                   ref="alt_mobile_code"
                   />
-                <label className="mdl-textfield__label" htmlFor="alt_mobile_code">{tr.t('CLIENT.FORM.LABEL.COUNTRY_CODE')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_mobile_code">{tr.t('LABEL.COUNTRY_CODE')}</label>
                 {errors.alt_mobile_code && <small className="mdl-textfield__error shown">{errors.alt_mobile_code[0]}</small>}
               </div>
             </div>
@@ -428,7 +428,7 @@ class ClientAdd extends React.Component {
                   id='alt_mobile_number'
                   ref="alt_mobile_number"
                   />
-                <label className="mdl-textfield__label" htmlFor="alt_mobile_number">{tr.t('CLIENT.FORM.LABEL.MOBILE')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_mobile_number">{tr.t('LABEL.MOBILE_NO')}</label>
                 {errors.alt_mobile_number && <small className="mdl-textfield__error shown">{errors.alt_mobile_number[0]}</small>}
               </div>
             </div>
@@ -440,7 +440,7 @@ class ClientAdd extends React.Component {
                   id='alt_phone_code'
                   ref="alt_phone_code"
                   />
-                <label className="mdl-textfield__label" htmlFor="alt_phone_code">{tr.t('CLIENT.FORM.LABEL.COUNTRY_CODE')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_phone_code">{tr.t('LABEL.COUNTRY_CODE')}</label>
                 {errors.alt_phone_code && <small className="mdl-textfield__error shown">{errors.alt_phone_code[0]}</small>}
               </div>
             </div>
@@ -452,7 +452,7 @@ class ClientAdd extends React.Component {
                   id='alt_phone_number'
                   ref="alt_phone_number"
                   />
-                <label className="mdl-textfield__label" htmlFor="alt_phone_number">{tr.t('CLIENT.FORM.LABEL.PHONE')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_phone_number">{tr.t('LABEL.PHONE_NUMBER')}</label>
                 {errors.alt_phone_number && <small className="mdl-textfield__error shown">{errors.alt_phone_number[0]}</small>}
               </div>
             </div>
@@ -464,7 +464,7 @@ class ClientAdd extends React.Component {
                   id='alt_position'
                   ref="alt_position"
                   />
-                <label className="mdl-textfield__label" htmlFor="alt_position">{tr.t('CLIENT.FORM.LABEL.POSITION')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_position">{tr.t('LABEL.POSITION')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
@@ -475,7 +475,7 @@ class ClientAdd extends React.Component {
                   id='alt_department'
                   ref="alt_department"
                     />
-                <label className="mdl-textfield__label" htmlFor="alt_department">{tr.t('CLIENT.FORM.LABEL.DEPARTMENT')}</label>
+                <label className="mdl-textfield__label" htmlFor="alt_department">{tr.t('LABEL.DEPARTMENT')}</label>
               </div>
             </div>
           </div>
@@ -485,14 +485,14 @@ class ClientAdd extends React.Component {
                 className="mdl-button mdl-js-button mdl-button--colored"
                 id='btn-cancel'
                 to="/coffee/client/"
-                >{tr.t('COMMON.FORM.LINK.CANCEL')}</Link>
+                >{tr.t('BUTTON.CANCEL')}</Link>
             </div>
             <div className="flex-order-gt-md-2">
               <button
                 className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                 id='btn-save'
                 type='button'
-                onClick={(e) => this.register(e)}>{tr.t('COMMON.FORM.BUTTON.SAVE')}</button>
+                onClick={(e) => this.register(e)}>{tr.t('BUTTON.SAVE')}</button>
             </div>
           </div>
       </form>
@@ -575,37 +575,41 @@ class ClientAdd extends React.Component {
 
 function validateRegister ( payload) {
   let rules = new Checkit( {
-    company_name: { rule: 'required', label: 'company name'},
-    street_address_1: { rule: 'required', label: 'Street address' },
+    company_name: { rule: 'required', label: tr.t('LABEL.COMPANY_NAME') },
+    street_address_1: { rule: 'required', label: tr.t('LABEL.STREET_ADDRESS_1') },
     street_address_2: [],
-    city: { rule: 'required', label: 'City' },
-    state: { rule: 'required', label: 'State / Province' },
-    postal_code: { rule: 'required', label: 'Postal Code' },
-    country_id: { rule: 'required', label: 'Country' },
-    rep_first_name: { rule: 'required', label: 'first name' },
-    rep_last_name: { rule: 'required', label: 'last name' },
-    rep_gender: { rule: 'required', label: 'Gender' },
+    city: { rule: 'required', label: tr.t('LABEL.CITY') },
+    state: { rule: 'required', label: tr.t('LABEL.STATE_PROVINCE') },
+    postal_code: { rule: 'required', label: tr.t('LABEL.POSTAL_CODE') },
+    country_id: { rule: 'required', label: tr.t('LABEL.COUNTRY') },
+    rep_first_name: { rule: 'required', label: tr.t('LABEL.FIRST_NAME') },
+    rep_last_name: { rule: 'required', label: tr.t('LABEL.LAST_NAME') },
+    rep_gender: { rule: 'required', label: tr.t('LABEL.GENDER') },
     rep_email_address: [
-      {rule: 'required', label: 'E-mail address'},
-      {rule: 'email', label: 'E-mail address'},
-      {rule: 'minLength:6', label: 'E-mail address'},
-      {rule: 'maxLength:64', label: 'E-mail address'} ],
-    rep_mobile_code: { rule: 'required', label: 'Country Code' },
-    rep_mobile_number: { rule: 'required', label: 'Mobile no.' },
-    rep_phone_code: { rule: 'required', label: 'Country Code' },
-    rep_phone_number: { rule: 'required', label: 'Phone no.' },
-    rep_position: { rule: 'required', label: 'position' },
-    rep_department: { rule: 'required', label: 'department' },
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
+    rep_mobile_code: { rule: 'required', label: tr.t('LABEL.COUNTRY_CODE') },
+    rep_mobile_number: { rule: 'required', label: tr.t('LABEL.MOBILE_NO') },
+    rep_phone_code: { rule: 'required', label: tr.t('LABEL.COUNTRY_CODE') },
+    rep_phone_number: { rule: 'required', label: tr.t('LABEL.PHONE_NUMBER') },
+    rep_position: { rule: 'required', label: tr.t('LABEL.POSITION') },
+    rep_department: { rule: 'required', label: tr.t('LABEL.DEPARTMENT') },
     email_address: [
-      {rule: 'required', label: 'E-mail address'},
-      {rule: 'email', label: 'E-mail address'},
-      {rule: 'minLength:6', label: 'E-mail address'},
-      {rule: 'maxLength:64', label: 'E-mail address'} ],
-    username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ],
+      {rule: 'required', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'minLength:6', label: tr.t('LABEL.EMAIL_ADDRESS')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.EMAIL_ADDRESS')} ],
+    username: [
+      {rule: 'required', label: tr.t('LABEL.USERNAME') },
+      {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+      {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+      {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ],
     alt_first_name: [],
     alt_last_name: [],
     alt_gender: [],
-    alt_email_address: {rule: 'email', label: 'E-mail address'},
+    alt_email_address: {rule: 'email', label: tr.t('LABEL.EMAIL_ADDRESS')},
     alt_mobile_code: [],
     alt_mobile_number: [],
     alt_phone_code: [],
@@ -621,7 +625,11 @@ function registerClient (payload) {
 
 function validateUsername( payload ) {
   let rules = new Checkit( {
-      username: [ 'required', 'alphaNumeric', 'minLength:8', 'maxLength:64' ]
+      username: [
+        {rule: 'required', label: tr.t('LABEL.USERNAME')},
+        {rule: 'alphaNumeric', label: tr.t('LABEL.USERNAME')},
+        {rule: 'minLength:8', label: tr.t('LABEL.USERNAME')},
+        {rule: 'maxLength:64', label: tr.t('LABEL.USERNAME')} ]
   } );
   return rules.run( payload );
 }

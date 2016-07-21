@@ -1,4 +1,5 @@
 import React from 'react';
+import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
@@ -67,37 +68,37 @@ class LogDetail extends React.Component {
         <div className="content-container">
           <div className="mdl-grid content">
             <div className="mdl-cell mdl-cell--6-col">
-              <h6>COMPANY NAME</h6>
+              <h6>{tr.t('LABEL.COMPANY_NAME')}</h6>
               <p>{clientDetail.company_name}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <h6>USER ID</h6>
+              <h6>{tr.t('LABEL.USER_ID')}</h6>
               <p>{adminLogDetail.user_id}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <h6>IP ADDRESS</h6>
+              <h6>{tr.t('LABEL.IP_ADDRESS')}</h6>
               <p>{adminLogDetail.ipaddress}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <h6>STATUS CODE</h6>
+              <h6>{tr.t('LABEL.STATUS_CODE')}</h6>
               <p>{adminLogDetail.status_code}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col bottom-margin">
-              <h6>URL</h6>
+              <h6>{tr.t('LABEL.URL')}</h6>
               <p>{adminLogDetail.url}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
-              <h6>DATE CREATED</h6>
+              <h6>{tr.t('LABEL.DATE_CREATED')}</h6>
               <p>{adminLogDetail.created}</p>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
-              <h6>PARAMETER</h6>
+              <h6>{tr.t('LABEL.PARAMETER')}</h6>
               <p className="script script-box-container">
                 {adminLogDetail.parameter}
               </p>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
-              <h6>RESPONSE</h6>
+              <h6>{tr.t('LABEL.RESPONSE')}</h6>
               <p className="script script-box-container">
                 {adminLogDetail.response}
               </p>
