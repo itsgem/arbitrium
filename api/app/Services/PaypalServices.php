@@ -501,7 +501,6 @@ class PaypalServices extends NrbServices
 
     public function statusUpdate($request)
     {
-        Log::info("[IPN] ===== Start =====");
         Log::info("[IPN] ~~~~~ VALID ~~~~~");
         Log::info("[IPN] TRANSACTION: ". $request->get('txn_type'));
 
@@ -552,17 +551,16 @@ class PaypalServices extends NrbServices
                     $renewed_subscription->invoice->sendInvoice();
 
                     Log::info("[IPN] Sent client email on their renewed subscription invoice. Invoice#".$renewed_subscription->invoice->id);
+                    Log::info("[IPN] ====== End ======");
 
                     return $this->respondWithSuccess($renewed_subscription);
                 });
             }
 
             Log::error("[IPN] ".Errors::SUBSCRIPTION_RENEWAL_ERROR);
-            Log::info("[IPN] End");
+            Log::info("[IPN] ====== End ======");
 
             return $this->respondWithError(Errors::SUBSCRIPTION_RENEWAL_ERROR);
         }
-
-        Log::info("[IPN] ====== End ======");
     }
 }

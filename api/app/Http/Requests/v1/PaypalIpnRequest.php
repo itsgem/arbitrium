@@ -39,6 +39,8 @@ class PaypalIpnRequest extends NrbRequest
 
     public function validate()
     {
+        Log::info('[IPN] ===== Start =====');
+
         $errors = [];
         $method = $this->method();
         // validate based on the rules defined above
@@ -72,12 +74,16 @@ class PaypalIpnRequest extends NrbRequest
 
         if (!empty($errors))
         {
-            Log::error('[IPN] ===== Start =====');
-            Log::error("[IPN] ~~~~ INVALID ~~~~");
-            Log::error('[IPN] TRANSACTION: '.$this->get('txn_type'));
-            Log::error('[IPN] PAYLOAD: '.json_encode($this->all()));
+            $paypal_log = json_encode([
+                'header' => $this->header(),
+                'body'   => $this->all()
+            ]);
+
+            Log::info('[IPN] ~~~~ INVALID ~~~~');
+            Log::info('[IPN] TRANSACTION: '.$this->get('txn_type'));
+            Log::info('[IPN] PAYLOAD: '.$paypal_log);
             Log::error('[IPN] Request Validation Errors: '.json_encode($errors));
-            Log::error('[IPN] ====== END ======');
+            Log::info('[IPN] ====== END ======');
 
             $this->errors = $errors;
             $this->failedValidation($instance);
