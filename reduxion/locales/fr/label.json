@@ -1,3 +1,6 @@
 {
-
+  "LABEL": {
+    "EMAIL_USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe"
+  }
 }
