@@ -132,11 +132,11 @@ export default React.createClass( {
     }
     return (
       <div className="login-view padding-15">
-          <legend>{tr.t('FORGOT_PW.FORM.SUB_TITLE.CHECK_EMAIL')}</legend>
+          <legend>{tr.t('FORGOT_PASSWORD.NOTE.CHECK_EMAIL')}</legend>
           <p>
-            <strong>{tr.t('FORGOT_PW.FORM.NOTE.EMAIL_SENT')}</strong>
+            <strong>{tr.t('FORGOT_PASSWORD.NOTE.EMAIL_SENT')}</strong>
           </p>
-          <p>{tr.t('FORGOT_PW.FORM.NOTE.CHECK_SPAM')}</p>
+          <p>{tr.t('FORGOT_PASSWORD.NOTE.CHECK_SPAM')}</p>
       </div>
     );
   },
