@@ -27,6 +27,7 @@ const languagesDetectorOption = {
 
 export default {
   load() {
+    let lang = localStorage.getItem('i18nextLng') ? localStorage.getItem('i18nextLng') : 'en';
     return new Promise((resolve/*, reject*/) => {
 
       i18next.on('languageChanged', function(lng) {
@@ -41,7 +42,8 @@ export default {
         .use(LanguageDetector)
         .use(XHR)
         .init({
-          fallbackLng: 'en',
+          fallbackLng: [lang],
+          lng: lang,
           // have a common namespace used around the full app
           ns: ['admin', 'client', 'label', 'button'],
           defaultNS: ['admin', 'client', 'label', 'button'],
