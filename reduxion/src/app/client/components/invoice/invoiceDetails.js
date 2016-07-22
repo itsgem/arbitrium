@@ -3,6 +3,7 @@ import tr from 'i18next';
 import { modal } from 'common/components/modal';
 import { openLoading, closeLoading } from 'common/components/modal';
 import {createError} from 'utils/error';
+import { Link } from 'react-router';
 
 class invoiceDetails extends React.Component {
   constructor(props) {
@@ -122,9 +123,16 @@ class invoiceDetails extends React.Component {
           <div className="mdl-cell mdl-cell--4-col">
             <p>{tr.t('CLIENT_INVOICE.LABEL.BRANCH_CODE')} <span className="invoice-value">{settings.kcg_branch_code}</span></p>
           </div>
-          <div className="mdl-cell mdl-cell--12-col cta-bottom text-right">
-            <a href={invoiceInfo.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('BUTTON.GENERATE_PDF')}</a>
-            <button onClick={(e)=>this.invoiceSendMail(e, invoiceInfo.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('BUTTON.SEND_TO_MAIL')}</button>
+          <div className="mdl-grid mdl-cell--12-col cta-bottom">
+            <div className="mdl-cell mdl-cell--4-col left-align">
+              <Link
+                className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                to="/i/invoice">{tr.t('BUTTON.BACK')}</Link>
+            </div>
+            <div className="mdl-cell mdl-cell--8-col text-right">
+              <a href={invoiceInfo.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('BUTTON.GENERATE_PDF')}</a>
+              <button onClick={(e)=>this.invoiceSendMail(e, invoiceInfo.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('BUTTON.SEND_TO_MAIL')}</button>
+            </div>
           </div>
         </div>
       </div>
