@@ -3,6 +3,7 @@ import tr from 'i18next';
 import { Link } from 'react-router';
 import {createError} from 'utils/error';
 import {modal, openModal, closeModal} from 'common/components/modal';
+import moment from 'moment';
 
 class ApiList extends React.Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class ApiList extends React.Component {
       id: null,
       description: null,
       apiKey: null,
-      created: null
+      created_date_from: null,
+      created_date_to: null
     };  }
   componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -28,20 +30,29 @@ class ApiList extends React.Component {
         per_page: apiList.per_page,
         description: this.state.description,
         token: this.state.apiKey,
-        created: this.state.created ? this.state.created.format("YYYY-MM-DD") : ''
+        date_from: this.state.created_date_from ? this.state.created_date_from.format("YYYY-MM-DD") : '',
+        date_to: this.state.created_date_to ? this.state.created_date_to.format("YYYY-MM-DD") : ''
       };
       nextProps.apiList(payload).catch(createError);
     }
   }
   componentDidMount() {
+    let isState = this;
     $( document ).ready(function() {
-      $('.datepicker').datepicker({
+      $('#created_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: '+0d',
+          endDate: isState.state.created_date_from,
+          autoclose: true,
+          todayHighlight: true
+      });
+      $('#created_date_to .datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: isState.state.created_date_to,
           autoclose: true,
           todayHighlight: true
       });
     });
+    this.updateDatepicker(isState);
   }
   userDisplay (data, alter) {
     return (
@@ -125,6 +136,26 @@ class ApiList extends React.Component {
       </div>
     );
   }
+  updateDatepicker(isState) {
+    $('#created_date_from .datepicker').change(function(){
+      isState.setState({created_date_from: $(this).val()});
+      document.getElementById('created_date_from').classList.add('is-dirty');
+
+      if (isState.state.created_date_from > isState.state.created_date_to) {
+        $('#created_date_to .datepicker').datepicker('update', moment(isState.state.created_date_from).toDate());
+      }
+
+      $('#created_date_to .datepicker').datepicker('setStartDate', moment(isState.state.created_date_from).toDate());
+      $('#created_date_to .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
+      if (!isState.state.created_date_to) {
+        document.getElementById('created_date_to').classList.remove('is-dirty');
+      }
+    });
+    $('#created_date_to .datepicker').change(function(){
+      isState.setState({created_date_to: $(this).val()});
+      document.getElementById('created_date_to').classList.add('is-dirty');
+    });
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -155,12 +186,6 @@ class ApiList extends React.Component {
       perPage = apiList.per_page;
     }
 
-    let isState = this ;
-    $('.datepicker').change(function(){
-      isState.setState({created: $(this).val()});
-      document.getElementById('createdDate').classList.add('is-dirty');
-    });
-
     return (
       <div className="filter-search">
         <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
@@ -180,7 +205,29 @@ class ApiList extends React.Component {
           </div>
         </div>
           <div className="mdl-grid filter-search-bar">
-            <div className="mdl-cell mdl-cell--3-col">
+            <div className="mdl-cell mdl-cell--2-col">
+              <div id="created_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input
+                  type="text"
+                  className="datepicker mdl-textfield__input"
+                  id="date_from" ref="date_from"
+                  readOnly
+                />
+                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_FROM')}</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--2-col">
+              <div id="created_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+                <input
+                  type="text"
+                  className="datepicker mdl-textfield__input"
+                  id="date_to" ref="date_to"
+                  readOnly
+                />
+                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
+              </div>
+            </div>
+            <div className="mdl-cell mdl-cell--2-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
                 <label className="mdl-textfield__label">{tr.t('LABEL.DESCRIPTION')}</label>
@@ -190,17 +237,6 @@ class ApiList extends React.Component {
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
                 <label className="mdl-textfield__label">{tr.t('LABEL.API_KEY')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input
-                  type="text"
-                  className="datepicker mdl-textfield__input"
-                  id="created_at" ref="created_at"
-                  readOnly
-                />
-                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED')}</label>
               </div>
             </div>
             <div className="mdl-cell mdl-cell--3-col search-cta">
@@ -309,17 +345,26 @@ class ApiList extends React.Component {
     closeModal();
   }
   clearSearch(e) {
+    var today = moment(new Date()).format('YYYY-MM-DD');
     e.preventDefault();
     this.refs.description.value = "";
     this.refs.api_key.value = "";
-    this.refs.created_at.value = "";
+    this.refs.date_from.value = "";
+    this.refs.date_to.value = "";
+
     this.setState( {
       description: null,
       apiKey: null,
-      created: null
+      created_date_from: null,
+      created_date_to: null
     } );
 
-    $('.datepicker').datepicker('setDate', null);
+    $('#created_date_from .datepicker').datepicker('setDate', null);
+    $('#created_date_from .datepicker').datepicker('setEndDate', today);
+
+    $('#created_date_to .datepicker').datepicker('setDate', null);
+    $('#created_date_to .datepicker').datepicker('setStartDate', null);
+    $('#created_date_to .datepicker').datepicker('setEndDate', today);
 
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
@@ -327,14 +372,16 @@ class ApiList extends React.Component {
     this.searchList(e, 10, true);
   }
   searchList(e, pageNum = null, clearDate = false) {
+    var dateFrom = this.state.created_date_from;
+    var dateTo = this.state.created_date_to;
     e.preventDefault();
 
-    let createDate = this.state.created;
     let descr = '';
     let token = '';
 
     if (!clearDate) {
-      createDate = (createDate ? createDate : '');
+      dateFrom = (dateFrom ? dateFrom : '');
+      dateTo = (dateTo ? dateTo : '');
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
       descr = this.refs.description.value;
       token = this.refs.api_key.value;
@@ -342,13 +389,16 @@ class ApiList extends React.Component {
       this.setState( {
         description: descr,
         apiKey: token,
-        created: createDate
+        created_date_from: dateFrom,
+        created_date_to: dateTo
       } );
     } else {
-      createDate = '';
+      dateFrom = '';
+      dateTo = '';
       pageNum = 10;
       this.setState( {
-        created: null,
+        created_date_from: null,
+        created_date_to: null,
         description: null,
         apiKey: null
       } );
@@ -356,19 +406,22 @@ class ApiList extends React.Component {
 
     let payload = {
       per_page: pageNum,
-      created: createDate,
+      date_from: dateFrom,
+      date_to: dateTo,
       description: descr,
       token: token
     };
     this.props.apiList(payload).catch(createError);
   }
   page(e, pageNumber) {
-    var createDate = this.state.createdDate;
+    var dateFrom = this.state.created_date_from;
+    var dateTo = this.state.created_date_to;
     e.preventDefault();
     this.setState({
       description: this.refs.description.value,
       apiKey: this.refs.api_key.value,
-      created: (createDate ? createDate : '')
+      created_date_from: (dateFrom ? dateFrom : ''),
+      created_date_to: (dateTo ? dateTo : '')
     });
 
     let payload = {
@@ -376,7 +429,8 @@ class ApiList extends React.Component {
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       token: this.refs.api_key.value,
-      created: (createDate ? createDate : '')
+      date_from: (dateFrom ? dateFrom : ''),
+      date_to: (dateTo ? dateTo : '')
     };
     this.props.apiList(payload).catch(createError);
   }

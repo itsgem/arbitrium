@@ -104,6 +104,8 @@
     "STATE_PROVINCE": "State / Province",
     "PARAMETER": "Parameter",
     "DATE_CREATED": "Date Created",
+    "DATE_CREATED_FROM": "Date Created From",
+    "DATE_CREATED_TO": "Date Created To",
     "RESPONSE": "Response",
     "DOWNLOAD_LOGS": "Download Logs",
     "FAILED_LOGIN_ATTEMPTS": "Failed login attempts:",
