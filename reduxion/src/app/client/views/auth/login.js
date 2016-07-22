@@ -27,11 +27,13 @@ class Login extends React.Component {
   }
   changeLanguage(lang) {
     i18next
-        .init({
-          fallbackLng: [lang.target.value],
-          lng: lang.target.value
-        });
-    location.reload();
+      .init({
+        fallbackLng: [lang.target.value],
+        lng: lang.target.value
+      });
+    setTimeout(() => {
+      location.reload();
+    },1000);
   }
   render() {
     let selectLang = localStorage.getItem('i18nextLng') ? localStorage.getItem('i18nextLng') : 'en';

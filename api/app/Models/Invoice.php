@@ -120,6 +120,11 @@ class Invoice extends NrbModel
         return $this->hasMany(InvoiceDetail::class);
     }
 
+    public function subscription_details()
+    {
+        return $this->hasOne(ClientSubscription::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
