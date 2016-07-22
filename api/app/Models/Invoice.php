@@ -122,7 +122,7 @@ class Invoice extends NrbModel
 
     public function subscription_details()
     {
-        return $this->hasone(ClientSubscription::class);
+        return $this->hasOne(ClientSubscription::class);
     }
 
     public function user()
