@@ -5,6 +5,7 @@ import cx from 'classnames';
 import {createError} from 'utils/error';
 import {openLoading} from 'common/components/modal'
 import {modal} from 'common/components/modal'
+import { Link } from 'react-router';
 
 class InvoiceDetail extends React.Component {
   constructor(props) {
@@ -119,9 +120,16 @@ class InvoiceDetail extends React.Component {
               <div className="mdl-cell mdl-cell--4-col">
                 <p>{tr.t('ADMIN_INVOICE.LABEL.BRANCH_CODE')} <span className="invoice-value">{settings.kcg_branch_code}</span></p>
               </div>
-              <div className="mdl-cell mdl-cell--12-col cta-bottom">
-                <a href={adminInvoiceDetail.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('ADMIN_INVOICE.LABEL.GENERATE_PDF')}</a>
-                <button onClick={(e)=>this.invoiceSendMail(e, adminInvoiceDetail.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('ADMIN_INVOICE.LABEL.SEND_TO_EMAIL')}</button>
+              <div className="mdl-grid mdl-cell--12-col cta-bottom">
+                <div className="mdl-cell mdl-cell--4-col left-align">
+                  <Link
+                    className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                    to={ "/coffee/invoice/client/" + adminInvoiceDetail.client_id }>{tr.t('BUTTON.BACK')}</Link>
+                </div>
+                <div className="mdl-cell mdl-cell--8-col">
+                  <a href={adminInvoiceDetail.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('ADMIN_INVOICE.LABEL.GENERATE_PDF')}</a>
+                  <button onClick={(e)=>this.invoiceSendMail(e, adminInvoiceDetail.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('ADMIN_INVOICE.LABEL.SEND_TO_EMAIL')}</button>
+                </div>
               </div>
             </div>
           </div>
