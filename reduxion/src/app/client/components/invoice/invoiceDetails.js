@@ -4,6 +4,7 @@ import { modal } from 'common/components/modal';
 import { openLoading, closeLoading } from 'common/components/modal';
 import {createError} from 'utils/error';
 import { Link } from 'react-router';
+import moment from 'moment';
 
 class invoiceDetails extends React.Component {
   constructor(props) {
@@ -43,9 +44,6 @@ class invoiceDetails extends React.Component {
         {this.loadingRender()}
         <div className="mdl-cell mdl-cell--12-col header-title"><p>{tr.t('CLIENT_INVOICE.INVOICE_DETAIL.TITLE')}</p></div>
         <div className="mdl-grid content">
-          <div className="mdl-cell mdl-cell--12-col box_dotted_title">
-            <label>{tr.t('LABEL.SUBSCRIPTION_NAME')}:</label> {invoiceInfo.description}
-          </div>
           <div className="mdl-cell mdl-cell--12-col">
             <center><h6>{settings.kcg_company_name}</h6></center>
           </div>
@@ -64,9 +62,11 @@ class invoiceDetails extends React.Component {
             <br/>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
-            <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_NO')} <span className="invoice-value">{invoiceInfo.invoice_no}</span></p>
+            <p>{tr.t('LABEL.SUBSCRIPTION_NAME')}: <span className="invoice-value">{invoiceInfo.description}</span></p>
+            <p>{tr.t('LABEL.SUBSCRIPTION_PERIOD')}: <span className="invoice-value">{moment(invoiceInfo.subscription_details.valid_from).format('YYYY-MM-DD')} - {moment(invoiceInfo.subscription_details.valid_to).format('YYYY-MM-DD')}</span></p>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
+            <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_NO')} <span className="invoice-value">{invoiceInfo.invoice_no}</span></p>
             <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_DATE')} <span className="invoice-value">{invoiceInfo.invoiced_at}</span></p>
             <br/>
           </div>

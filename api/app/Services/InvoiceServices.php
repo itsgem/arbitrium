@@ -94,14 +94,13 @@ class InvoiceServices extends NrbServices
         if ($request->get('with-details'))
         {
             $invoice = $invoice->with('invoice_details');
+            $invoice = $invoice->with('subscription_details');
         }
         $invoice = $invoice->clientId($client_id)->findOrFail($id);
-
         if ($request->get('with-settings'))
         {
             $invoice['system_settings'] = SystemSetting::getList();
         }
-
         return $this->respondWithSuccess($invoice);
     }
 
