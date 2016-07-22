@@ -50,9 +50,9 @@ class ApiList extends React.Component {
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
             <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == true) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
@@ -229,9 +229,9 @@ class ApiList extends React.Component {
           <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
             <thead>
               <tr>
+                <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
                 <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DESCRIPTION')}</th>
                 <th width="500" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.API_KEY')}</th>
-                <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
                 <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
               </tr>
             </thead>
