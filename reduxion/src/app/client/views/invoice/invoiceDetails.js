@@ -50,7 +50,7 @@ export default React.createClass({
         <DocTitle
           title={tr.t('CLIENT_INVOICE.INVOICE_DETAIL.DOC_TITLE')}
         />
-        <div className="mdl-grid mdl-grid--no-spacing table-list-container table-invoice">
+        <div className="mdl-grid mdl-grid--no-spacing table-list-container content-container">
           <InvoiceDetails
             invoiceInfo={this.props.invoiceInfo}
             clientInvoiceSendMail={this.props.clientInvoiceSendMail}

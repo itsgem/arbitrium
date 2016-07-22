@@ -42,27 +42,35 @@ class invoiceDetails extends React.Component {
         {this.loadingRender()}
         <div className="mdl-cell mdl-cell--12-col header-title"><p>{tr.t('CLIENT_INVOICE.INVOICE_DETAIL.TITLE')}</p></div>
         <div className="mdl-grid content">
+          <div className="mdl-cell mdl-cell--12-col box_dotted_title">
+            <label>{tr.t('LABEL.SUBSCRIPTION_NAME')}:</label> {invoiceInfo.description}
+          </div>
           <div className="mdl-cell mdl-cell--12-col">
             <center><h6>{settings.kcg_company_name}</h6></center>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <legend className="to-right">
-              <h4>{tr.t('CLIENT_INVOICE.LABEL.BILLING_INVOICE')}</h4>
-            </legend>
+            <h6 className="right-align">{tr.t('ADMIN_INVOICE.LABEL.BILLING_INVOICE')}</h6>
+            <br/>
+            <p className="right-align">{settings.kcg_company_name}</p>
+            <p className="right-align">{settings.kcg_street_address}, {settings.kcg_city}, {settings.kcg_state}</p>
+            <p className="right-align">{settings.kcg_country}, {settings.kcg_postal_code}</p>
+            <br/>
+            <h6>{tr.t('ADMIN_INVOICE.LABEL.OTHER_INFORMATION')}</h6>
+            <br/>
+            <p>{invoiceInfo.rep_first_name} {invoiceInfo.rep_last_name}</p>
+            <p>{invoiceInfo.company_name}</p>
+            <p>{invoiceInfo.street_address_1}, {invoiceInfo.city}, {invoiceInfo.state}</p>
+            <br/>
           </div>
-          <div className="mdl-cell mdl-cell--7-col left-info">
-            {tr.t('CLIENT_INVOICE.LABEL.OTHER_INFORMATION')}<br/>
-            {invoiceInfo.rep_first_name} {invoiceInfo.rep_last_name}<br/>
-            {invoiceInfo.company_name}<br/>
-            {invoiceInfo.street_address_1}, {invoiceInfo.city}, {invoiceInfo.state}
+          <div className="mdl-cell mdl-cell--4-col">
+            <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_NO')} <span className="invoice-value">{invoiceInfo.invoice_no}</span></p>
           </div>
-          <div className="mdl-cell mdl-cell--5-col right-info text-right">
-            {settings.kcg_company_name}<br/>
-            {settings.kcg_street_address}, {settings.kcg_city}, {settings.kcg_state}<br/>
-            {settings.kcg_country}, {settings.kcg_postal_code}<br/>
+          <div className="mdl-cell mdl-cell--4-col">
+            <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_DATE')} <span className="invoice-value">{invoiceInfo.invoiced_at}</span></p>
+            <br/>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
-            <h6>{tr.t('CLIENT_INVOICE.LABEL.PRODUCT_SERVICES_PURCHASED')}</h6>
+            <h6>{tr.t('ADMIN_INVOICE.LABEL.PRODUCT_SERVICES_PURCHASED')}</h6>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <table className="mdl-data-table mdl-js-data-table table-list">
@@ -96,12 +104,6 @@ class invoiceDetails extends React.Component {
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div className="mdl-cell mdl-cell--4-col margin-bottom-40">
-            <h6>{tr.t('LABEL.REMARKS')}</h6>
-          </div>
-          <div className="mdl-cell mdl-cell--6-col margin-bottom-40">
-            <h6>{invoiceInfo.description}</h6>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <p><i className="note">{tr.t('CLIENT_INVOICE.LABEL.NOTE_ELETRONIC_INVOICE')}</i></p>

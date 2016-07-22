@@ -105,7 +105,7 @@ export default React.createClass( {
     return (
       <div id="client_add">
         <DocTitle
-          title={tr.t('CLIENT.DOC_TITLE_PROFILE')}
+          title={tr.t('ADMIN_CLIENT.VIEW_CLIENT.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link

@@ -9,7 +9,7 @@ Convert from various errors: Checkit and ajax
 Suitable to update the component state.
 */
 export function createError(errorIn) {
-  if (errorIn == "Error: Network Error") {
+  if (errorIn == "Error: Network Error" || errorIn.status == 401) {
     let link = window.location.href.split("/");
     localStorage.removeItem(link[3] == 'coffee' ? link[3] : 'token');
     window.location = window.location.origin + "/" + (link[3] == 'token' ? "i" : link[3]) + "/login";

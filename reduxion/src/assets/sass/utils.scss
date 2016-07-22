@@ -415,4 +415,9 @@ div#application {
     pointer-events: none
   }
 }
-
+.box_dotted_title {
+  border: 1px gray;
+  border-bottom-style: dotted;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
