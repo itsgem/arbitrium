@@ -26,6 +26,7 @@ class LogList extends React.Component {
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
         <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.ipaddress}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.method}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
@@ -237,10 +238,11 @@ class LogList extends React.Component {
           <thead>
             <tr>
               <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.IP_ADDRESS')}</th>
-              <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATUS_CODE')}</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.URL')}</th>
-              <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.PARAMETER')}</th>
+              <th width="150" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.IP_ADDRESS')}</th>
+              <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.METHOD')}</th>
+              <th width="110" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATUS_CODE')}</th>
+              <th width="270" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.URL')}</th>
+              <th width="270" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.PARAMETER')}</th>
               <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
             </tr>
           </thead>
