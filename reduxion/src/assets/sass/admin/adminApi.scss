@@ -140,10 +140,16 @@
           margin-right: 16px;
         }
 
-      .mdl-button--raised {
-        font-weight: 400;
+        .mdl-button--raised {
+          font-weight: 400;
+        }
       }
-    }
+
+      #searchLogList {
+        .mdl-button {
+          margin-right: 0;
+        }
+      }
   }
 }
 
