@@ -11,7 +11,8 @@ class LogList extends React.Component {
     this.state = {
       errors: {},
       errorServer: null,
-      created: null
+      created_date_from: null,
+      created_date_to: null
     };
   }
   componentWillReceiveProps() {
@@ -23,11 +24,11 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
+        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.ipaddress}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
@@ -101,19 +102,41 @@ class LogList extends React.Component {
     }
   }
   componentDidMount() {
+    let isState = this;
     $( document ).ready(function() {
-      $('.datepicker').datepicker({
+      $('#created_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: '+0d',
+          endDate: isState.state.created_date_from,
+          autoclose: true,
+          todayHighlight: true
+      });
+      $('#created_date_to .datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: isState.state.created_date_to,
           autoclose: true,
           todayHighlight: true
       });
     });
+    this.updateDatepicker(isState);
+  }
+  updateDatepicker(isState) {
+    $('#created_date_from .datepicker').change(function(){
+      isState.setState({created_date_from: $(this).val()});
+      document.getElementById('created_date_from').classList.add('is-dirty');
 
-    let isState = this ;
-    $('.datepicker').change(function(){
-      isState.setState({created: $(this).val()});
-      document.getElementById('createdDate').classList.add('is-dirty');
+      if (isState.state.created_date_from > isState.state.created_date_to) {
+        $('#created_date_to .datepicker').datepicker('update', moment(isState.state.created_date_from).toDate());
+      }
+
+      $('#created_date_to .datepicker').datepicker('setStartDate', moment(isState.state.created_date_from).toDate());
+      $('#created_date_to .datepicker').datepicker('setEndDate', moment(new Date()).format('YYYY-MM-DD'));
+      if (!isState.state.created_date_to) {
+        document.getElementById('created_date_to').classList.remove('is-dirty');
+      }
+    });
+    $('#created_date_to .datepicker').change(function(){
+      isState.setState({created_date_to: $(this).val()});
+      document.getElementById('created_date_to').classList.add('is-dirty');
     });
   }
   render() {
@@ -159,7 +182,29 @@ class LogList extends React.Component {
       <div className="filter-search">
         <p>Filter / Search</p>
         <div className="mdl-grid filter-search-bar">
-          <div className="mdl-cell mdl-cell--3-col">
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="created_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="date_from" ref="date_from"
+                readOnly
+              />
+              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_FROM')}</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="created_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="date_to" ref="date_to"
+                readOnly
+              />
+              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="ipAddress" ref="ipAddress" />
               <label className="mdl-textfield__label">{tr.t('LABEL.IP_ADDRESS')}</label>
@@ -171,18 +216,7 @@ class LogList extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.STATUS_CODE')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--2-col">
-            <div id="createdDate" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input
-                type="text"
-                className="datepicker mdl-textfield__input"
-                id="created_at" ref="created_at"
-                readOnly
-              />
-              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED')}</label>
-            </div>
-          </div>
-          <div className="mdl-cell mdl-cell--5-col search-cta">
+          <div id="searchLogList" className="mdl-cell mdl-cell--4-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
@@ -202,11 +236,11 @@ class LogList extends React.Component {
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
+              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
               <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.IP_ADDRESS')}</th>
               <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATUS_CODE')}</th>
               <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.URL')}</th>
               <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.PARAMETER')}</th>
-              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
               <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
             </tr>
           </thead>
@@ -278,15 +312,23 @@ class LogList extends React.Component {
     dialog.close();
   }
   clearSearch(e) {
+    var today = moment(new Date()).format('YYYY-MM-DD');
     e.preventDefault();
     this.refs.ipAddress.value = "";
     this.refs.statusCode.value = "";
-    this.refs.created_at.value = "";
+    this.refs.date_from.value = "";
+    this.refs.date_to.value = "";
     this.setState({
-      created: null
+      created_date_from: null,
+      created_date_to: null
     });
 
-    $('.datepicker').datepicker('setDate', null);
+    $('#created_date_from .datepicker').datepicker('setDate', null);
+    $('#created_date_from .datepicker').datepicker('setEndDate', today);
+
+    $('#created_date_to .datepicker').datepicker('setDate', null);
+    $('#created_date_to .datepicker').datepicker('setStartDate', null);
+    $('#created_date_to .datepicker').datepicker('setEndDate', today);
 
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
@@ -295,24 +337,30 @@ class LogList extends React.Component {
     this.searchList(e, 10, true);
   }
   searchList(e, pageNum = null, clearDate = false) {
+    var dateFrom = this.state.created_date_from;
+    var dateTo = this.state.created_date_to;
     e.preventDefault();
-    let createDate = this.state.created;
     let statusCode = '';
     let ipAddress = '';
+
     if (!clearDate) {
       statusCode = this.refs.statusCode.value;
-      createDate = (createDate ? createDate : '');
+      dateFrom = (dateFrom ? dateFrom : '');
+      dateTo = (dateTo ? dateTo : '');
       ipAddress = this.refs.ipAddress.value;
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
       this.setState( {
-        created: createDate,
+        created_date_from: dateFrom,
+        created_date_to: dateTo,
         statusCode: null
       } );
     } else {
-      createDate = '';
+      dateFrom = '';
+      dateTo = '';
       pageNum = 10;
       this.setState( {
-        created: null,
+        created_date_from: null,
+        created_date_to: null,
         statusCode: null
       } );
     }
@@ -321,15 +369,17 @@ class LogList extends React.Component {
       client_id: this.props.params.client_id,
       page: 1,
       per_page: pageNum,
-      ipAddress: ipAddress,
+      ipaddress: ipAddress,
       status_code: statusCode,
-      created: createDate,
+      date_from: dateFrom,
+      date_to: dateTo
     };
 
     this.props.adminLogList(payload);
   }
   page(e, pageNumber) {
-    var createDate = this.state.created;
+    var dateFrom = this.state.created_date_from;
+    var dateTo = this.state.created_date_to;
     e.preventDefault();
 
     let payload = {
@@ -338,7 +388,8 @@ class LogList extends React.Component {
       per_page: this.refs.pageNum.value,
       ipaddress: this.refs.ipAddress.value,
       status_code: this.refs.statusCode.value,
-      created: (createDate ? createDate : '')
+      date_from: (dateFrom ? dateFrom : ''),
+      date_to: (dateTo ? dateTo : '')
     };
     this.props.adminLogList(payload);
   }

@@ -175,6 +175,7 @@
     "REMARKS": "Remarks",
     "TOKEN": "Token",
     "USER_TYPE": "User Type",
-    "END_DATE": "END DATE"
+    "END_DATE": "END DATE",
+    "METHOD": "Method"
   }
 }
