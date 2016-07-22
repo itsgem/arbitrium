@@ -50,7 +50,7 @@ export default React.createClass({
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title={tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_DETAIL.DOC_TITLE')}
+          title={tr.t('ADMIN_SUBSCRIPTION.SUBSCRIPTION_PAYMENT_DETAIL.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link

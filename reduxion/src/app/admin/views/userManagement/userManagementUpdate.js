@@ -61,7 +61,7 @@ export default React.createClass( {
     return (
       <div id="client_add" className="auth-view">
         <DocTitle
-          title={tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.DOC_TITLE')}
+          title={tr.t('ADMIN_USER_MANAGEMENT.USER_UPDATE.DOC_TITLE')}
         />
         <div className="client-tab">
           <Link

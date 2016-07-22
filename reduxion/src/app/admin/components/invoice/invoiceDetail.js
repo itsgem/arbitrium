@@ -38,7 +38,13 @@ class InvoiceDetail extends React.Component {
         { this.loadingRender() }
         <div className="mdl-layout__panel is-active" id="#">
           <div className="content-container">
+            <div className="mdl-cell mdl-cell--12-col box_dotted_title">
+              <label>{tr.t('LABEL.SUBSCRIPTION_NAME')}:</label> {adminInvoiceDetail.description}
+            </div>
             <div className="mdl-grid content">
+              <div className="mdl-cell mdl-cell--12-col">
+                <center><h6>{settings.kcg_company_name}</h6></center>
+              </div>
               <div className="mdl-cell mdl-cell--12-col">
                 <h6 className="right-align">{tr.t('ADMIN_INVOICE.LABEL.BILLING_INVOICE')}</h6>
                 <br/>
