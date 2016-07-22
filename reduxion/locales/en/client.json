@@ -36,7 +36,7 @@
     "DASHBOARD": "Dashboard",
     "MY_PROFILE": "My Profile",
     "API_KEYS": "API Keys",
-    "MY_SUBSCRIPTION": "My Subscription",
+    "SUBSCRIPTION": "Subscription",
     "INVOICE": "Invoice",
     "API_LOGS": "API Logs",
     "LOGOUT": "Logout"
@@ -173,6 +173,3 @@
     }
   }
 }
-
-
-
