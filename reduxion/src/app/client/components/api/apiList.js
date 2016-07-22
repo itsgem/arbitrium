@@ -219,11 +219,7 @@ class ApiList extends React.Component {
                   onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
                 <button
                   className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-<<<<<<< HEAD
-                  onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('API_KEYS.FORM.SEARCH_FORM.BUTTON.CLEAR')}</button>
-=======
                   onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
->>>>>>> 71b931f39a314208dc533eda5e3109ca4c28396a
               </div>
             </div>
           <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
