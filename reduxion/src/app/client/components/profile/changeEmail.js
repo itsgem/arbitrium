@@ -70,7 +70,7 @@ class ClientChangeEmail extends React.Component {
     }
 
     return (
-      <div>
+      <div className="mdl-cell mdl-cell--12-col" id="change_email">
         { this.renderError() }
         <form onSubmit={ this.onSubmitProfile.bind(this) }>
           <div className="alert alert-warning">
@@ -79,7 +79,6 @@ class ClientChangeEmail extends React.Component {
               Oops!, Please fill in the required field.
             </div>
           </div>
-          <legend>{tr.t('CHANGE_EMAIL_ADDRESS.TITLE')}</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">

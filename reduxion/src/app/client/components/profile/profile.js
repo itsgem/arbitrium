@@ -130,7 +130,7 @@ class ClientProfile extends React.Component {
     let currentSubscription = this.props.currentSubscription.data.length == 0  ? false : this.props.currentSubscription.data;
 
     return (
-      <div>
+      <div className="mdl-cell mdl-cell--12-col">
       <div className="mdl-tabs__panel is-active" id="profile">
         <form>
           <legend>{tr.t('LABEL.LOGIN_INFORMATION')}</legend>

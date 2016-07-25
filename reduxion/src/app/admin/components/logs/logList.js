@@ -373,8 +373,8 @@ class LogList extends React.Component {
       per_page: pageNum,
       ipaddress: ipAddress,
       status_code: statusCode,
-      date_from: dateFrom,
-      date_to: dateTo
+      dateFrom: dateFrom,
+      dateTo: dateTo
     };
 
     this.props.adminLogList(payload);
@@ -390,8 +390,8 @@ class LogList extends React.Component {
       per_page: this.refs.pageNum.value,
       ipaddress: this.refs.ipAddress.value,
       status_code: this.refs.statusCode.value,
-      date_from: (dateFrom ? dateFrom : ''),
-      date_to: (dateTo ? dateTo : '')
+      dateFrom: (dateFrom ? dateFrom : ''),
+      dateTo: (dateTo ? dateTo : '')
     };
     this.props.adminLogList(payload);
   }

@@ -4,6 +4,7 @@ import DocTitle from 'common/components/docTitle';
 import ClientProfile from 'client/components/profile/profile';
 import {createError} from 'utils/error';
 import {openLoading, closeLoading} from 'common/components/modal'
+import { Link } from 'react-router';
 
 export default React.createClass({
 
@@ -54,41 +55,43 @@ export default React.createClass({
 
   renderClientInfo () {
     return (
-      <main className="mdl-layout__content mdl-layout__content_my_profile my-profile">
+      <div id="client_add" className="auth-view mdl-layout__content_my_profile my-profile">
         <DocTitle
-          title= {tr.t('CLIENT_PROFILE.DOC_TITLE')}
+          title={tr.t('CLIENT_PROFILE.DOC_TITLE')}
         />
         <div className="mdl-grid mdl-grid--no-spacing table-list-container" >
           <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
             <div className="mdl-snackbar__text"></div>
             <button type="button" className="mdl-snackbar__action"></button>
           </div>
-          <div className="mdl-cell mdl-cell--12-col header-title">
-            <p>{tr.t('CLIENT_PROFILE.TITLE')}</p>
+          <div className="client-tab">
+            <a className="mdl-layout__tab is-active" >{tr.t('CLIENT_PROFILE.TITLE')}<i className="material-icons add">edit</i></a>
+            <Link
+              className='mdl-layout__tab'
+              to="/i/client/profile/change_password">{tr.t('CLIENT_CHANGE_PASSWORD.TITLE')}</Link>
+            <Link
+              className='mdl-layout__tab'
+              to="/i/client/profile/change_email">{tr.t('CHANGE_EMAIL_ADDRESS.TITLE')}</Link>
           </div>
-          <div className="page-content">
-            <ClientProfile
-              clientSubscriptionCancel={this.props.clientSubscriptionCancel}
-              clientInfo={this.props.clientInfo}
-              countryList={this.props.countryList}
-              locationQuery={this.props.location.query}
-              currentSubscription={this.props.currentSubscription}
-              updateClientProfile={this.props.updateClientProfile}
-              getAvailableUsername={this.props.getAvailableUsername}
-              validateCompleted={this.props.validateCompleted}
-              retrieveEmailChangeToken={this.props.retrieveEmailChangeToken}
-              isRetrieveEmailChangeTokenSuccess={this.props.isRetrieveEmailChangeTokenSuccess}
-              emailChangeToken={this.props.emailChangeToken}
-              verifyEmailChange={this.props.verifyEmailChange}
-              isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
-              loading={this.props.loading}
-              errors={this.props.errors}
+          <ClientProfile
+            clientSubscriptionCancel={this.props.clientSubscriptionCancel}
+            clientInfo={this.props.clientInfo}
+            countryList={this.props.countryList}
+            locationQuery={this.props.location.query}
+            currentSubscription={this.props.currentSubscription}
+            updateClientProfile={this.props.updateClientProfile}
+            getAvailableUsername={this.props.getAvailableUsername}
+            validateCompleted={this.props.validateCompleted}
+            retrieveEmailChangeToken={this.props.retrieveEmailChangeToken}
+            isRetrieveEmailChangeTokenSuccess={this.props.isRetrieveEmailChangeTokenSuccess}
+            emailChangeToken={this.props.emailChangeToken}
+            verifyEmailChange={this.props.verifyEmailChange}
+            isVerifyEmailChangeSuccess={this.props.isVerifyEmailChangeSuccess}
+            loading={this.props.loading}
+            errors={this.props.errors}
             />
-            <div className="mdl-tabs__panel" id="change_password"></div>
-            <div className="mdl-tabs__panel" id="change_email"></div>
-          </div>
         </div>
-      </main>
+      </div>
     );
   }
 });
