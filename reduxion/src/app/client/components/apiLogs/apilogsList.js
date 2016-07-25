@@ -342,8 +342,8 @@ class apilogList extends React.Component {
       page: 1,
       per_page: pageNum,
       status_code: statusCode,
-      date_from: dateFrom,
-      date_to: dateTo,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
     };
     this.props.clientApiLogsList(payload).catch(createError);
   }
@@ -395,8 +395,8 @@ class apilogList extends React.Component {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
       status_code: this.state.statusCode,
-      date_from: (dateFrom ? dateFrom : ''),
-      date_to: (dateTo ? dateTo : '')
+      dateFrom: (dateFrom ? dateFrom : ''),
+      dateTo: (dateTo ? dateTo : '')
     };
 
     this.props.clientApiLogsList(payload).catch(createError);
