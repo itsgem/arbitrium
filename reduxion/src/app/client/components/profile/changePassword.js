@@ -59,7 +59,7 @@ class ClientChangePassword extends React.Component {
     }
 
     return (
-      <div>
+      <div className="mdl-cell mdl-cell--12-col" id="change_password">
         <form>
           <div className="alert alert-warning">
             <i className="material-icons"></i>
@@ -67,7 +67,6 @@ class ClientChangePassword extends React.Component {
               {tr.t('NOTEFICATION_MESSAGE.PASSWORD_SMALL_CAPITAL_LETTER')}
             </div>
           </div>
-          <legend>{tr.t('CLIENT_CHANGE_PASSWORD.TITLE')}</legend>
           <div className="">
             <div className="mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--12-col">
@@ -229,7 +228,7 @@ class ClientChangePassword extends React.Component {
   validateUpdateClientPassword(payload) {
     let rules = new Checkit({
     current_password:    [{ rule: 'required', label: tr.t('LABEL.CURRENT_PASSWORD')}],
-    password:        [{ rule: 'required', label: tr.t('LABEL.PASSWORD')}],
+    password:        [{ rule: 'required', label: tr.t('LABEL.NEW_PASSWORD')}],
     password_confirmation: [
       { rule: 'required', label: tr.t('LABEL.PASSWORD_CONFIRMATION')},
       { rule: 'matchesField:password', label: tr.t('LABEL.PASSWORD_CONFIRMATION')}
