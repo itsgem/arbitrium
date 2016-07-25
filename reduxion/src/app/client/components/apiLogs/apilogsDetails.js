@@ -14,7 +14,6 @@ class ApiLogsDetails extends React.Component {
   }
   render() {
     let iplogInfo = this.props.successApiLogInfo.data;
-    console.log("!!!", iplogInfo);
     return (
       <section>
         <div className="mdl-cell--12-col header-title"><p>{tr.t('CLIENT_API_LOGS.API_LOG_DETAIL.TITLE')}</p></div>
