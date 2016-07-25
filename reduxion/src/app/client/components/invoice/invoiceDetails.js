@@ -63,7 +63,7 @@ class invoiceDetails extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--4-col">
             <p>{tr.t('LABEL.SUBSCRIPTION_NAME')}: <span className="invoice-value">{invoiceInfo.description}</span></p>
-            <p>{tr.t('LABEL.SUBSCRIPTION_PERIOD')}: <span className="invoice-value">{moment(invoiceInfo.subscription_details.valid_from).format('YYYY-MM-DD')} - {moment(invoiceInfo.subscription_details.valid_to).format('YYYY-MM-DD')}</span></p>
+            <p>{tr.t('LABEL.SUBSCRIPTION_PERIOD')}: <span className="invoice-value">{moment(invoiceInfo.subscription_details.valid_from).format('YYYY-MM-DD')} to {moment(invoiceInfo.subscription_details.valid_to).format('YYYY-MM-DD')}</span></p>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
             <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_NO')} <span className="invoice-value">{invoiceInfo.invoice_no}</span></p>
