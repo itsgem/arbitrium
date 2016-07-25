@@ -3,6 +3,7 @@ import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 import {createError} from 'utils/error';
+import { Link } from 'react-router';
 
 class LogDetail extends React.Component {
   constructor(props) {
@@ -102,6 +103,13 @@ class LogDetail extends React.Component {
               <p className="script script-box-container">
                 {adminLogDetail.response}
               </p>
+            </div>
+            <div className="mdl-grid mdl-cell--12-col cta-bottom">
+              <div className="mdl-cell mdl-cell--4-col left-align">
+                <Link
+                  className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                  to={ "/coffee/logs/client/" + clientDetail.id }>{tr.t('BUTTON.BACK')}</Link>
+              </div>
             </div>
           </div>
         </div>

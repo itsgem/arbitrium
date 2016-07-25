@@ -1,6 +1,7 @@
 import React from 'react';
 import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import { Link } from 'react-router';
 
 class ApiLogsDetails extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class ApiLogsDetails extends React.Component {
   }
   render() {
     let iplogInfo = this.props.successApiLogInfo.data;
+    console.log("!!!", iplogInfo);
     return (
       <section>
         <div className="mdl-cell--12-col header-title"><p>{tr.t('CLIENT_API_LOGS.API_LOG_DETAIL.TITLE')}</p></div>
@@ -50,6 +52,13 @@ class ApiLogsDetails extends React.Component {
                 }
               </code>
             </pre>
+          </div>
+          <div className="mdl-grid mdl-cell--12-col cta-bottom">
+            <div className="mdl-cell mdl-cell--4-col left-align">
+              <Link
+                className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                to="/i/apilogs/">{tr.t('BUTTON.BACK')}</Link>
+            </div>
           </div>
         </div>
       </section>
