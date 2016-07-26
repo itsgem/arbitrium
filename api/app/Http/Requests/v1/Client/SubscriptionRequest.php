@@ -51,7 +51,7 @@ class SubscriptionRequest extends NrbRequest
                 $subscription = Subscription::findOrFail($this->get('subscription_id'));
                 if ($client_subscription->order >= $subscription->order)
                 {
-                    $errors['order'] = trans('errors.'.Errors::SUBSCRIPTION_INVALID);
+                    $errors['order'] = trans('errors.'.Errors::SUBSCRIPTION_DOWNGRADE);
                 }
             }
         }

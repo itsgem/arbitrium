@@ -27,7 +27,7 @@ class AddOrderColumnSubscriptionTable extends Migration
     {
         Schema::table('subscriptions', function(Blueprint $table)
         {
-            $table->dropColumn('order')->nullable()->after('id');
+            $table->dropColumn('order');
         });
     }
 }
