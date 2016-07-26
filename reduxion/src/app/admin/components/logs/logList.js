@@ -107,13 +107,13 @@ class LogList extends React.Component {
     $( document ).ready(function() {
       $('#created_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_from,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#created_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_to,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
