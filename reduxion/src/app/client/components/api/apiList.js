@@ -47,13 +47,13 @@ class ApiList extends React.Component {
     $( document ).ready(function() {
       $('#created_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_from,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#created_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_to,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
@@ -245,13 +245,13 @@ class ApiList extends React.Component {
                 <label className="mdl-textfield__label">{tr.t('LABEL.DESCRIPTION')}</label>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--3-col">
+            <div className="mdl-cell mdl-cell--2-col">
               <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
                 <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
                 <label className="mdl-textfield__label">{tr.t('LABEL.API_KEY')}</label>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--3-col margin-top-20 text-right">
+            <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
                 onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
