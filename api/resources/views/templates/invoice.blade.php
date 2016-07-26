@@ -157,7 +157,7 @@
                         <td>Subscription Name: {{ $description }}</td>
                     </tr>
                     <tr>
-                        <td>Subscription Period: {{ !empty($subscription_details) ? date('Y-m-d',strtotime($subscription_details['valid_from'])) : '' }} to {{ !empty($subscription_details) ? date('Y-m-d',strtotime($subscription_details['valid_to'])) : '' }}</td>
+                        <td>Subscription Period: {{ !empty($subscription_details) ? create_date_Ymd($subscription_details['valid_from']) : '' }} to {{ !empty($subscription_details) ? create_date_Ymd($subscription_details['valid_to']) : '' }}</td>
                     </tr>
                 </table>
             </div>

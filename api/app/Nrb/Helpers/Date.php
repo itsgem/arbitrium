@@ -6,6 +6,12 @@ function create_date_from_Ymd($date)
     return Carbon::createFromFormat('Y-m-d', $date);
 }
 
+function create_date_Ymd($date)
+{
+    $date = Carbon::createFromTimestamp(strtotime($date));
+    return format_date_to_string($date);
+}
+
 function current_datetime()
 {
     return Carbon::now();
