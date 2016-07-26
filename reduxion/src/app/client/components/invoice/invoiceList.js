@@ -67,7 +67,7 @@ class invoiceList extends React.Component {
           onClick={(e) => this.page(e, 1)}>{tr.t('LABEL.FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.INVOICE_NUMBER')}</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.FIRST')}</button>
         }
         {prev &&
           <button
