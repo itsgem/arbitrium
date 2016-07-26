@@ -378,10 +378,45 @@ div#application {
     left: 0;
   }
 }
+
+@media (min-width: 992px) {
+  .client {
+    .section-api-keys{
+      width: 1332px;
+    }
+    .subscription-type {
+      .text-content {
+        max-width: 260px;
+      }
+      .pricing-content {
+        max-width: 780px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1332px) {
+  .client {
+    .section-api-keys{
+      width: 1332px;
+    }
+  }
+  .box-inner{
+    width: 1500px;
+  }
+}
+@media (min-width: 1132px) {
+  .client {
+    .section-api-keys{
+      width: 100%;
+    }
+  }
+}
 .datepicker table tr td,
 .datepicker table tr th {
   vertical-align: middle;
 }
+
 .selectCountry {
   position: absolute;
   top: 0;
@@ -415,9 +450,8 @@ div#application {
     pointer-events: none
   }
 }
-.box_dotted_title {
-  border: 1px gray;
-  border-bottom-style: dotted;
-  padding: 20px 0;
-  margin-bottom: 20px;
+
+.mdl-layout--fixed-drawer > .mdl-layout__drawer {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
 }
