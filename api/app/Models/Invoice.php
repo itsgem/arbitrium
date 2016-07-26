@@ -245,7 +245,7 @@ class Invoice extends NrbModel
     {
         if ($data)
         {
-            $data->load('user', 'invoice_details');
+            $data->load('user', 'invoice_details', 'subscription_details');
             return with(new FileServices())->setStoragePath(config('arbitrium.invoice.path'))
                 ->generateInvoicePDF($data);
         }
