@@ -19,6 +19,7 @@ class SubscriptionsSeeder extends Seeder
         $data = [
             [
                 'id'                      => 1,
+                'order'                   => 1,
                 'name'                    => 'Free Trial',
                 'description'             => 'Free Trial Package Plan',
                 'type'                    => Subscription::TYPE_TRIAL,
@@ -39,6 +40,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'id'                      => 2,
+                'order'                   => 2,
                 'name'                    => 'Basic',
                 'description'             => 'Basic Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
@@ -59,6 +61,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'id'                      => 3,
+                'order'                   => 3,
                 'name'                    => 'Standard',
                 'description'             => 'Standard Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
@@ -79,6 +82,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'id'                      => 4,
+                'order'                   => 4,
                 'name'                    => 'Business',
                 'description'             => 'Business Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
@@ -99,6 +103,7 @@ class SubscriptionsSeeder extends Seeder
             ],
             [
                 'id'                      => 5,
+                'order'                   => 5,
                 'name'                    => 'Premium',
                 'description'             => 'Premium Package Plan',
                 'type'                    => Subscription::TYPE_PLAN,
