@@ -34,7 +34,9 @@ class Login extends React.Component {
           fallbackLng: [lang.target.value],
           lng: lang.target.value
         });
-    location.reload();
+    setTimeout(() => {
+      location.reload();
+    },1000);
   }
   render() {
     let selectLang = localStorage.getItem('i18nextLng') ? localStorage.getItem('i18nextLng') : 'en';

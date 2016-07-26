@@ -5,6 +5,8 @@ import cx from 'classnames';
 import {createError} from 'utils/error';
 import {openLoading} from 'common/components/modal'
 import {modal} from 'common/components/modal'
+import { Link } from 'react-router';
+import moment from 'moment';
 
 class InvoiceDetail extends React.Component {
   constructor(props) {
@@ -38,9 +40,6 @@ class InvoiceDetail extends React.Component {
         { this.loadingRender() }
         <div className="mdl-layout__panel is-active" id="#">
           <div className="content-container">
-            <div className="mdl-cell mdl-cell--12-col box_dotted_title">
-              <label>{tr.t('LABEL.SUBSCRIPTION_NAME')}:</label> {adminInvoiceDetail.description}
-            </div>
             <div className="mdl-grid content">
               <div className="mdl-cell mdl-cell--12-col">
                 <center><h6>{settings.kcg_company_name}</h6></center>
@@ -60,9 +59,11 @@ class InvoiceDetail extends React.Component {
                 <br/>
               </div>
               <div className="mdl-cell mdl-cell--4-col">
-                <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_NO')} <span className="invoice-value">{adminInvoiceDetail.invoice_no}</span></p>
+                <p>{tr.t('LABEL.SUBSCRIPTION_NAME')}: <span className="invoice-value">{adminInvoiceDetail.description}</span></p>
+                <p>{tr.t('LABEL.SUBSCRIPTION_PERIOD')}: <span className="invoice-value">{moment(adminInvoiceDetail.subscription_details.valid_from).format('YYYY-MM-DD')} to {moment(adminInvoiceDetail.subscription_details.valid_to).format('YYYY-MM-DD')}</span></p>
               </div>
               <div className="mdl-cell mdl-cell--4-col">
+                <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_NO')} <span className="invoice-value">{adminInvoiceDetail.invoice_no}</span></p>
                 <p>{tr.t('ADMIN_INVOICE.LABEL.INVOICE_DATE')} <span className="invoice-value">{adminInvoiceDetail.invoiced_at}</span></p>
                 <br/>
               </div>
@@ -119,9 +120,16 @@ class InvoiceDetail extends React.Component {
               <div className="mdl-cell mdl-cell--4-col">
                 <p>{tr.t('ADMIN_INVOICE.LABEL.BRANCH_CODE')} <span className="invoice-value">{settings.kcg_branch_code}</span></p>
               </div>
-              <div className="mdl-cell mdl-cell--12-col cta-bottom">
-                <a href={adminInvoiceDetail.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('ADMIN_INVOICE.LABEL.GENERATE_PDF')}</a>
-                <button onClick={(e)=>this.invoiceSendMail(e, adminInvoiceDetail.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('ADMIN_INVOICE.LABEL.SEND_TO_EMAIL')}</button>
+              <div className="mdl-grid mdl-cell--12-col cta-bottom">
+                <div className="mdl-cell mdl-cell--4-col left-align">
+                  <Link
+                    className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+                    to={ "/coffee/invoice/client/" + adminInvoiceDetail.client_id }>{tr.t('BUTTON.BACK')}</Link>
+                </div>
+                <div className="mdl-cell mdl-cell--8-col">
+                  <a href={adminInvoiceDetail.url} target="_blank" className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent btn-margin-right"><i className="material-icons">description</i>{tr.t('ADMIN_INVOICE.LABEL.GENERATE_PDF')}</a>
+                  <button onClick={(e)=>this.invoiceSendMail(e, adminInvoiceDetail.id)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--default"><i className="material-icons">mail</i>{tr.t('ADMIN_INVOICE.LABEL.SEND_TO_EMAIL')}</button>
+                </div>
               </div>
             </div>
           </div>

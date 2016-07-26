@@ -26,15 +26,18 @@
     "CANCEL_SUBSCRIPTION": "Are you sure you want to cancel this subscription?"
   },
   "LABEL": {
+    "SUBSCRIPTION_PERIOD": "Subscription Period",
     "SELECT_COUNTRY_SITE": "Select country site",
     "ACTIVATE": "Activate",
     "DEACTIVATE": "Deactivate",
     "CURRENT_PASSWORD_REQ": "Current Password *",
+    "CURRENT_PASSWORD": "Current Password",
     "PLEASE_REVIEW": "Please review below details.",
     "COMPANY_ORGANIZATION": "COMPANY / ORGANIZATION",
     "NEW_PASSWORD": "New Password",
     "NEW_PASSWORD_CONFIRMATION": "New Password Confirmation",
     "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+    "PASSWORD_CONFIRMATION": "Password Confirmation",
     "NEW_PASSWORD_REQ": "New Password *",
     "RE_TYPE_NEW_PASSWORD_REQ": "Re-type New Password *",
     "EMAIL_USERNAME": "EMAIL / USERNAME",
@@ -175,6 +178,7 @@
     "REMARKS": "Remarks",
     "TOKEN": "Token",
     "USER_TYPE": "User Type",
-    "END_DATE": "END DATE"
+    "END_DATE": "END DATE",
+    "METHOD": "Method"
   }
 }

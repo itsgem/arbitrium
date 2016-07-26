@@ -354,8 +354,8 @@ class ApiList extends React.Component {
 
     let payload = {
       per_page: pageNum,
-      date_from: dateFrom,
-      date_to: dateTo,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
       description: descr,
       token: token
     };
@@ -438,8 +438,8 @@ class ApiList extends React.Component {
       per_page: this.refs.pageNum.value,
       description: this.refs.description.value,
       token: this.refs.api_key.value,
-      date_from: (dateFrom ? dateFrom : ''),
-      date_to: (dateTo ? dateTo : '')
+      dateFrom: (dateFrom ? dateFrom : ''),
+      dateTo: (dateTo ? dateTo : '')
     };
     this.props.clientApiKeys(payload).catch(createError);
   }

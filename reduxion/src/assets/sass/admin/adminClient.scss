@@ -3,7 +3,7 @@ div#application .coffee {
 
   .body-bg{
     background: #e9eaed;
-    
+
     .header-bg{
       background: #0e3192;
       min-height: 48px;
@@ -187,6 +187,11 @@ div#application .coffee {
 
           }
 
+          #searchLogList {
+            .mdl-button {
+              margin-right: 0;
+            }
+          }
         }
 
       }
