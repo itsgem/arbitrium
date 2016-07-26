@@ -155,11 +155,9 @@
                 <table>
                     <tr>
                         <td>Subscription Name: {{ $description }}</td>
-                        <td>Invoice No.: {{ $invoice_no }}</td>
                     </tr>
                     <tr>
                         <td>Subscription Period: {{ !empty($subscription_details) ? date('Y-m-d',strtotime($subscription_details['valid_from'])) : '' }} to {{ !empty($subscription_details) ? date('Y-m-d',strtotime($subscription_details['valid_to'])) : '' }}</td>
-                        <td>Invoice Date: {{ $invoiced_at }}</td>
                     </tr>
                 </table>
             </div>
