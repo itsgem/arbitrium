@@ -115,13 +115,13 @@ class invoiceList extends React.Component {
     $( document ).ready(function() {
       $('#dateFrom .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.dateFrom,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#dateTo .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.dateFrom,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
@@ -300,6 +300,13 @@ class invoiceList extends React.Component {
     var invoicedDateFrom = this.state.dateFrom;
     var invoicedDateTo = this.state.dateTo;
     e.preventDefault();
+
+    if (clearDate) {
+      this.setState( {
+        dateFrom: null,
+        dateTo: null
+      } );
+    }
 
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),
