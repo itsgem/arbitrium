@@ -291,7 +291,7 @@ class ClientProfile extends React.Component {
                     defaultValue={clientInfo.rep_first_name}
 
                     />
-                  <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('LABEL.FIRSTNAME_REQ')}</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
                   {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
                 </div>
               </div>
@@ -304,7 +304,7 @@ class ClientProfile extends React.Component {
                     ref="rep_last_name"
                     defaultValue={clientInfo.rep_last_name}
                     />
-                  <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('LABEL.LASTNAME_REQ')}</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
                   {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
                 </div>
               </div>
@@ -679,7 +679,7 @@ class ClientProfile extends React.Component {
             {return <option key={item.id} value={item.id}>{item.name}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('label.country')}</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('LABEL.COUNTRY_REQ')}</label>
       </div>
     );
   }
