@@ -93,7 +93,7 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/invoice/">{tr.t('ADMIN_HEADER.INVOICE_SUB.LIST_CLIENT')}</Link></li>
                     </ul>
                   </div>
-                  {role && <div className="container">
+                  {/*{role && <div className="container">
                     <button id="demo-menu-account"
                       className="menu-account mdl-button mdl-js-button mdl-layout__tab">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS')}</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
@@ -101,9 +101,9 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/account/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.LIST')}</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/account/new/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.ADD')}</Link></li>
                     </ul>
-                  </div>}
+                  </div>}*/}
                   <Link className="mdl-layout__tab" to="/coffee">{tr.t('ADMIN_HEADER.REPORTS')}</Link>
-                  <div className="container">
+                  {/*<div className="container">
                     <button id="demo-menu-logs"
                       className="menu-logs mdl-button mdl-js-button mdl-layout__tab">{tr.t('ADMIN_HEADER.LOGS')}</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
@@ -111,6 +111,20 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/logs/">{tr.t('ADMIN_HEADER.LOGS_SUB.LIST_CLIENT_API')}</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/logs/admin/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.ADMIN_ACCESS_LOGS')}</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/logs/client/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.CLIENT_ACCESS_LOGS')}</Link></li>
+                    </ul>
+                  </div>*/}
+                  {/* NEW MENU - SETTINGS */}
+                  <div className="container">
+                    <button id="demo-menu-settings"
+                      className="menu-settings mdl-button mdl-js-button mdl-layout__tab">{tr.t('ADMIN_HEADER.USER_OPTIONS.SETTINGS')}</button>
+                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-settings">
+                      {role && <li className="mdl-menu__item"><Link to="/coffee/account/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.LIST')}</Link></li>}
+                      {role && <li className="mdl-menu__item"><Link to="/coffee/account/new/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.ADD')}</Link></li>}
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/">{tr.t('ADMIN_HEADER.LOGS_SUB.LIST_CLIENT_API')}</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/admin/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.ADMIN_ACCESS_LOGS')}</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/client/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.CLIENT_ACCESS_LOGS')}</Link></li>
+                      <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/systemsettings">{tr.t('ADMIN_SYSTEM_SETTINGS.TITLE')}</Link></li>
                     </ul>
                   </div>
                 </nav>
@@ -120,7 +134,7 @@ export default React.createClass( {
                   </button>
                   <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="menu">
                     <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/profile"><i className="material-icons">person</i>{tr.t('ADMIN_HEADER.USER_OPTIONS.PROFILE')}</Link></li>
-                    <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/systemsettings"><i className="material-icons">settings</i>{tr.t('ADMIN_HEADER.USER_OPTIONS.SETTINGS')}</Link></li>
+                    {/*<li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/systemsettings"><i className="material-icons">settings</i>{tr.t('ADMIN_HEADER.USER_OPTIONS.SETTINGS')}</Link></li>*/}
                     <li className="mdl-menu__item"><a className="logout-text" href ="/coffee/logout"><i className="material-icons">exit_to_app</i>{tr.t('ADMIN_HEADER.USER_OPTIONS.LOGOUT')}</a></li>
                   </ul>
                 </div>
