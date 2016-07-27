@@ -242,12 +242,16 @@ export default () => (
           <Route component={AdminUserManagementUpdate} path=":id"/>
         </Route>
 
-        <Route path="logs" >
-          <IndexRoute component={AdminClientLogList} />
+        <Route path="settings" >
+          <IndexRoute component={AdminSystemSettings}/>
+          <Route component={AdminUserManagementList} path="account"/>
+          <Route component={AdminUserManagementAdd} path="account/new"/>
+          <Route component={AdminClientLogList} path="logs" />
           <Route component={AdminAccessLogList} path="admin/access-logs" />
           <Route component={AdminClientAccessLogList} path="client/access-logs" />
-          <Route component={AdminLogList} path="client/:client_id" />
-          <Route component={AdminLogDetail} path="client/:client_id/log-detail/:id" />
+          <Route component={AdminUserManagementUpdate} path="account/:id"/>
+          <Route component={AdminLogList} path="logs/client/:client_id" />
+          <Route component={AdminLogDetail} path="logs/client/:client_id/log-detail/:id" />
         </Route>
 
         <Route path="profile">

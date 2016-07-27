@@ -108,7 +108,7 @@ class LogDetail extends React.Component {
               <div className="mdl-cell mdl-cell--4-col left-align">
                 <Link
                   className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                  to={ "/coffee/logs/client/" + clientDetail.id }>{tr.t('BUTTON.BACK')}</Link>
+                  to={ "/coffee/settings/logs/client/" + clientDetail.id }>{tr.t('BUTTON.BACK')}</Link>
               </div>
             </div>
           </div>
