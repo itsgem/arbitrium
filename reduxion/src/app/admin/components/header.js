@@ -120,10 +120,10 @@ export default React.createClass( {
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-settings">
                       {role && <li className="mdl-menu__item"><Link to="/coffee/account/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.LIST')}</Link></li>}
-                      {role && <li className="mdl-menu__item"><Link to="/coffee/account/new/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.ADD')}</Link></li>}
+                      {role && <li className="mdl-menu__item mdl-menu__item--full-bleed-divider"><Link to="/coffee/account/new/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.ADD')}</Link></li>}
                       <li className="mdl-menu__item"><Link to="/coffee/logs/">{tr.t('ADMIN_HEADER.LOGS_SUB.LIST_CLIENT_API')}</Link></li>
                       <li className="mdl-menu__item"><Link to="/coffee/logs/admin/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.ADMIN_ACCESS_LOGS')}</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/logs/client/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.CLIENT_ACCESS_LOGS')}</Link></li>
+                      <li className="mdl-menu__item mdl-menu__item--full-bleed-divider"><Link to="/coffee/logs/client/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.CLIENT_ACCESS_LOGS')}</Link></li>
                       <li className="mdl-menu__item"><Link className="logout-text" to ="/coffee/systemsettings">{tr.t('ADMIN_SYSTEM_SETTINGS.TITLE')}</Link></li>
                     </ul>
                   </div>
