@@ -29,7 +29,7 @@ export default React.createClass({
     if (nextProps.purchaseSuccess) {
       $('.msg').html('Successfully sent approval URL to client to complete the subscription change.').addClass('bg-green');
       $('.msg').fadeIn(1000, function() {
-        $(this).fadeOut(5000);
+        $(this).fadeOut(10000);
       });
       this.context.router.push('/coffee/subscription');
     }
