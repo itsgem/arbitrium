@@ -109,6 +109,8 @@ export default React.createClass( {
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         htmlFor="demo-menu-logs">
                       <li className="mdl-menu__item"><Link to="/coffee/logs/">{tr.t('ADMIN_HEADER.LOGS_SUB.LIST_CLIENT_API')}</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/admin/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.ADMIN_ACCESS_LOGS')}</Link></li>
+                      <li className="mdl-menu__item"><Link to="/coffee/logs/client/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.CLIENT_ACCESS_LOGS')}</Link></li>
                     </ul>
                   </div>
                 </nav>

@@ -329,7 +329,16 @@ export default {
   getAdminLogDetail(id) {
     return get('admin/api-log/' + id)
   },
-
+  getAdminAccessLogList(payload) {
+    return get('admin/logs/admin', {
+      params: payload
+    })
+  },
+  getClientAccessLogList(payload) {
+    return get('admin/logs/client', {
+      params: payload
+    })
+  },
   // ------- CLIENT -------
   signupLocal(payload) {
       return post('user/client/register', {
