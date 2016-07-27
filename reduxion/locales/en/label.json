@@ -179,6 +179,12 @@
     "TOKEN": "Token",
     "USER_TYPE": "User Type",
     "END_DATE": "END DATE",
-    "METHOD": "Method"
+    "METHOD": "Method",
+    "TIMESTAMP": "Timestamp",
+    "USER_INFO": "User Info",
+    "USER_DETAILS": "User Details",
+    "ACCESSED": "Accessed",
+    "FROM": "from",
+    "USERID": "User ID: "
   }
 }

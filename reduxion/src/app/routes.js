@@ -37,6 +37,8 @@ import AdminUserManagementUpdate from 'admin/containers/userManagement/userManag
 import AdminClientLogList from 'admin/containers/logs/clientLogList';
 import AdminLogList from 'admin/containers/logs/logList';
 import AdminLogDetail from 'admin/containers/logs/logDetail';
+import AdminAccessLogList from 'admin/containers/logs/adminAccessLogList';
+import AdminClientAccessLogList from 'admin/containers/logs/clientAccessLogList';
 
 import AdminProfile from 'admin/containers/userProfile/userProfile';
 import AdminSystemSettings from 'admin/containers/systemSettings/settings';
@@ -242,6 +244,8 @@ export default () => (
 
         <Route path="logs" >
           <IndexRoute component={AdminClientLogList} />
+          <Route component={AdminAccessLogList} path="admin/access-logs" />
+          <Route component={AdminClientAccessLogList} path="client/access-logs" />
           <Route component={AdminLogList} path="client/:client_id" />
           <Route component={AdminLogDetail} path="client/:client_id/log-detail/:id" />
         </Route>
