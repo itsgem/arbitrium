@@ -413,18 +413,19 @@ div#application {
 //   }
 // }
 
-@media (max-width: 1350px) {
+@media (max-width: 1280px) {
   .client {
     .subscription-type {
-      width: 1080px!important;
+      width: 1020px!important;
     }
   }
 }
-
+.arb-demo.mdl-list .mdl-list__item{
+  font-size: 15px;
+}
 .pricing-content {
   width: 73%!important;
 }
-
 .mdl-layout--fixed-drawer>.mdl-layout__content{
   margin-left: 240px;
 }
