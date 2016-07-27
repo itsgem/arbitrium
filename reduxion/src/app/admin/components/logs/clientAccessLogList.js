@@ -1,8 +1,6 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import tr from 'i18next';
-import { Link } from 'react-router';
-import json2csv from 'json2csv';
 import moment from 'moment';
 
 class ClientAccessLogList extends React.Component {
