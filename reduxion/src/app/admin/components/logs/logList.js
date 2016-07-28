@@ -33,7 +33,7 @@ class LogList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/logs/client/" + data.client.id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/settings/logs/client/" + data.client.id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )

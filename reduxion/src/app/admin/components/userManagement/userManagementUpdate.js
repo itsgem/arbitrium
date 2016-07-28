@@ -235,7 +235,7 @@ class UserManagementUpdate extends React.Component {
                   <Link
                     className="mdl-button mdl-js-button mdl-button--colored"
                     id='btn-cancel'
-                    to="/coffee/account/"
+                    to="/coffee/settings/account"
                     >{tr.t('BUTTON.CANCEL')}</Link>
                 </div>
                 <div className="flex-order-gt-md-2">

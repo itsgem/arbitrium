@@ -47,7 +47,7 @@ export default React.createClass( {
       $('.msg').fadeIn(1000, function() {
         $(this).fadeOut(2000);
       });
-      this.context.router.push('/coffee/account');
+      this.context.router.push('/coffee/settings/account');
     }
     if (nextProps.adminUnlockSuccess && !nextProps.loading) {
       $('.msg').html('User Successfully Unlocked').addClass('bg-green');
@@ -66,10 +66,10 @@ export default React.createClass( {
         <div className="client-tab">
           <Link
             className='mdl-layout__tab'
-            to="/coffee/account/">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</Link>
+            to="/coffee/settings/account">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</Link>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></Link>
+              to="/coffee/settings/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></Link>
           <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_USER_MANAGEMENT.USER_UPDATE.TITLE')}<i className="material-icons add">edit</i></a>
         </div>
         <UserManagementUpdate

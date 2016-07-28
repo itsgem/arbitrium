@@ -42,7 +42,7 @@ export default React.createClass( {
           title={tr.t('ADMIN_API_LOGS.CLIENT_ACCESS_LOGS.DOC_TITLE')}
         />
         <div className="client-tab">
-          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_API_LOGS.CLIENT_ACCESS_LOGS.TITLE')}<i className="material-icons add">edit</i></a>
+          <a className="mdl-layout__tab is-active" >{tr.t('ADMIN_API_LOGS.CLIENT_ACCESS_LOGS.TITLE')}</a>
         </div>
         <ClientAccessLogList
           params={this.props.params}
