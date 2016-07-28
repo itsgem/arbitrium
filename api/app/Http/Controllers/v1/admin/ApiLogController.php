@@ -110,4 +110,14 @@ class ApiLogController extends ApiController
     {
         return $service->show($id);
     }
+
+    public function showReports(ApiLogServices $service)
+    {
+        return $service->showReports($this->request);
+    }
+
+    public function showReportClient(ApiLogServices $service)
+    {
+        return $service->showReportLogs($this->request);
+    }
 }

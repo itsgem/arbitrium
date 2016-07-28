@@ -34,6 +34,8 @@ return [
             'list_api_key_permissions'  => ['method' => 'get',    'path' => 'permission'],
 
             'list_api_logs'             => ['method' => 'get',    'path' => 'apilogs'],
+            'api_reports'               => ['method' => 'get',    'path' => 'apilogs/reports'],
+            'api_reports_logs'          => ['method' => 'get',    'path' => 'apilogs/reports/client'],
             'show_api_log'              => ['method' => 'get',    'path' => 'apilogs/:id'],
 
             'subscribe'                 => ['method' => 'post',   'path' => 'subscribe'],

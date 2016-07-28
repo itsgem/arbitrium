@@ -21,6 +21,13 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         Route::group(['prefix' => 'api-log'], function()
         {
             Route::get('',           ['uses' => 'ApiLogController@index']);
+
+            Route::group(['prefix' => 'reports'], function()
+            {
+                Route::get('',          ['uses' => 'ApiLogController@showReports']);
+                Route::get('client',    ['uses' => 'ApiLogController@showReportClient']);
+            });
+
             Route::get('{api_log}',  ['uses' => 'ApiLogController@show']);
         });
 
