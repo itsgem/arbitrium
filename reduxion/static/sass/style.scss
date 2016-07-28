@@ -501,6 +501,84 @@ html{
   }
 }
 
+.dashboard-container{
+  width: 1200px;
+  padding: 0px;
+
+  .mdl-cell--3-col{
+    h6{
+      margin-top: 10px;
+    }
+    .quick-links-container{
+      background: #fff;
+      margin: 0px;
+      padding: 0px;
+      width: 260px;
+
+      .quick-links{
+        width: 260px;
+        margin: 0px;
+        li{
+          border-bottom: 1px solid #e6e6e6;
+          font-size: 14px;
+          padding: 16px;
+          i{
+            color: #d0d0d0;
+            padding-right: 6px;
+            vertical-align: middle;
+          }
+        }
+        li:hover{
+          background: #f0f5fa;
+          i{
+            color: #ff6600;
+          }
+        }
+      }
+    }
+}
+  .dashboard{
+    background: #fff;
+    margin-top: 56px;
+
+    .date-range{
+      margin: 20px;
+      
+      h5{
+        &.search-title{
+          font-size: 1rem;
+        }
+      }
+
+      form{
+
+      .filter-search{
+        padding: 0px;
+
+        .search-cta{
+          text-align: right;
+
+            .mdl-button--accent{
+              background: #ff6600;
+              font-family: 'Roboto Condensed', sans-serif;
+              font-size: 1rem;
+              font-weight: 400;
+              margin-right: 16px;
+
+            }
+
+            .mdl-button--raised{
+              font-family: 'Roboto Condensed', sans-serif;
+              font-size: 1rem;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 // ******************** END SECTION-CLIENT-LIST ********************
 
 // ******************** START FOOTER ********************
