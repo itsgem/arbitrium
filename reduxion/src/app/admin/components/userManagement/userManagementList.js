@@ -29,7 +29,7 @@ class UserManagementList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/account/" + id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/settings/account/" + id}><i className="material-icons">open_in_new</i></Link>
           <button
               className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
               onClick={(e) => this.modalConfirm(e, id, data.get('name'))}>

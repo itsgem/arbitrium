@@ -27,7 +27,7 @@ export default React.createClass( {
           <label className="mdl-layout__tab is-active">{tr.t('ADMIN_USER_MANAGEMENT.USER_LIST.TITLE')}</label>
           <Link
               className='mdl-layout__tab'
-              to="/coffee/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></Link>
+              to="/coffee/settings/account/new">{tr.t('ADMIN_USER_MANAGEMENT.USER_ADD.TITLE')}<i className="material-icons add">add</i></Link>
         </div>
         <UserManagementList
           deleteAdminAccount={this.props.deleteAdminAccount}

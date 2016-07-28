@@ -1,11 +1,9 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import tr from 'i18next';
-import { Link } from 'react-router';
-import json2csv from 'json2csv';
 import moment from 'moment';
 
-class LogList extends React.Component {
+class ClientAccessLogList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,16 +22,30 @@ class LogList extends React.Component {
   logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.ipaddress}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.method}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.url}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.parameter}</td>
         <td className="mdl-data-table__cell--non-numeric">
-          <Link
-          className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/settings/logs/client/" + data.client.id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          <code>
+            {data.created_at}
+          </code>
+        </td>
+        <td className="mdl-data-table__cell--non-numeric">
+          <div>
+            <b>{tr.t('LABEL.USERID')}</b>
+            <span>{data.user_id}</span>
+          </div>
+          <div>{data.name}</div>
+          <div>{data.username}</div>
+          <div>{data.email_address}</div>
+        </td>
+        <td className="mdl-data-table__cell--non-numeric">
+          <code>
+            {tr.t('LABEL.ACCESSED')}
+            <b> {data.page_accessed} </b>
+            {tr.t('LABEL.FROM')}
+            <span> {data.ip_address} </span>
+          </code>
+          <div>
+            <code>{data.user_agent}</code>
+          </div>
         </td>
       </tr>
     )
@@ -98,7 +110,7 @@ class LogList extends React.Component {
     );
   }
   download(e) {
-    if (this.props.logList.data.length <= 0) {
+    if (this.props.clientAccessLogs.data.length <= 0) {
       e.preventDefault();
     }
   }
@@ -145,38 +157,30 @@ class LogList extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let logList = {last_page: 1};
+    let clientAccessLogs = {last_page: 1};
     let log = {};
-    let fields = ['ipaddress', 'status_code', 'url', 'parameter', 'created'];
-    let estateNameCsv = '';
-    let datacsv = '';
 
-    if (Object.keys(this.props.logList.data).length) {
-      json2csv({ data: this.props.logList.data, fields: fields }, function(err, csv) {
-        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
-      });
-
+    if (Object.keys(this.props.clientAccessLogs.data).length) {
       counter = true;
-      logList = this.props.logList;
-      log = logList.data;
-      pagination[0] = this.prevPage(0, (logList.current_page > 1 ? (logList.current_page - 1): false));
+      clientAccessLogs = this.props.clientAccessLogs;
+      log = clientAccessLogs.data;
+      pagination[0] = this.prevPage(0, (clientAccessLogs.current_page > 1 ? (clientAccessLogs.current_page - 1): false));
       let i = 1;
-      if (logList.last_page > logList.max_pagination_links) {
-        i = Math.round(logList.max_pagination_links / 2);
-        i = i < logList.current_page ? (logList.current_page - 2) : 1;
-        i = (logList.last_page >  logList.max_pagination_links) && i > (logList.last_page - logList.max_pagination_links) ? ((logList.last_page - logList.max_pagination_links) + 1) : i;
+      if (clientAccessLogs.last_page > clientAccessLogs.max_pagination_links) {
+        i = Math.round(clientAccessLogs.max_pagination_links / 2);
+        i = i < clientAccessLogs.current_page ? (clientAccessLogs.current_page - 2) : 1;
+        i = (clientAccessLogs.last_page >  clientAccessLogs.max_pagination_links) && i > (clientAccessLogs.last_page - clientAccessLogs.max_pagination_links) ? ((clientAccessLogs.last_page - clientAccessLogs.max_pagination_links) + 1) : i;
       }
       let pageLimitCounter = 0;
-      for (i; i <= logList.last_page ; i++) {
-        if (pageLimitCounter >= logList.max_pagination_links) {
+      for (i; i <= clientAccessLogs.last_page ; i++) {
+        if (pageLimitCounter >= clientAccessLogs.max_pagination_links) {
           break;
         }
         pageLimitCounter++;
-        pagination[i] = this.pagination(i, logList.current_page);
+        pagination[i] = this.pagination(i, clientAccessLogs.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((logList.current_page == logList.last_page)|| logList.last_page == 0 ? false : (logList.current_page + 1 )), logList.last_page );
-      perPage = logList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((clientAccessLogs.current_page == clientAccessLogs.last_page)|| clientAccessLogs.last_page == 0 ? false : (clientAccessLogs.current_page + 1 )), clientAccessLogs.last_page );
+      perPage = clientAccessLogs.per_page;
     }
 
     return (
@@ -205,45 +209,33 @@ class LogList extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--2-col">
+          <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="ipAddress" ref="ipAddress" />
-              <label className="mdl-textfield__label">{tr.t('LABEL.IP_ADDRESS')}</label>
+              <input className="mdl-textfield__input" type="text" id="emailAddress" ref="emailAddress" />
+              <label className="mdl-textfield__label">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-              <input className="mdl-textfield__input" type="text" id="statusCode" ref="statusCode"/>
-              <label className="mdl-textfield__label">{tr.t('LABEL.STATUS_CODE')}</label>
+              <input className="mdl-textfield__input" type="text" id="username" ref="username"/>
+              <label className="mdl-textfield__label">{tr.t('LABEL.USERNAME')}</label>
             </div>
           </div>
-          <div id="searchLogList" className="mdl-cell mdl-cell--4-col search-cta">
+          <div className="mdl-cell mdl-cell--3-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
-            <a
-              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
-              disabled={this.props.logList.data.length <= 0}
-              href={datacsv}
-              onClick={(e)=> this.download(e)}
-              target="_blank"
-              download={estateNameCsv + ".csv"}>{tr.t('LABEL.DOWNLOAD_LOGS')}
-            </a>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
           <thead>
             <tr>
-              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
-              <th width="150" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.IP_ADDRESS')}</th>
-              <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.METHOD')}</th>
-              <th width="110" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATUS_CODE')}</th>
-              <th width="270" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.URL')}</th>
-              <th width="270" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.PARAMETER')}</th>
-              <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
+              <th width="150" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.TIMESTAMP')}</th>
+              <th width="280" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.USER_INFO')}</th>
+              <th width="770" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.USER_DETAILS')}</th>
             </tr>
           </thead>
           <tbody>
@@ -316,8 +308,8 @@ class LogList extends React.Component {
   clearSearch(e) {
     var today = moment(new Date()).format('YYYY-MM-DD');
     e.preventDefault();
-    this.refs.ipAddress.value = "";
-    this.refs.statusCode.value = "";
+    this.refs.emailAddress.value = "";
+    this.refs.username.value = "";
     this.refs.date_from.value = "";
     this.refs.date_to.value = "";
     this.setState({
@@ -342,19 +334,19 @@ class LogList extends React.Component {
     var dateFrom = this.state.created_date_from;
     var dateTo = this.state.created_date_to;
     e.preventDefault();
-    let statusCode = '';
-    let ipAddress = '';
+    let username = '';
+    let emailAddress = '';
 
     if (!clearDate) {
-      statusCode = this.refs.statusCode.value;
+      username = this.refs.username.value;
       dateFrom = (dateFrom ? dateFrom : '');
       dateTo = (dateTo ? dateTo : '');
-      ipAddress = this.refs.ipAddress.value;
+      emailAddress = this.refs.emailAddress.value;
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
       this.setState( {
         created_date_from: dateFrom,
         created_date_to: dateTo,
-        statusCode: null
+        username: null
       } );
     } else {
       dateFrom = '';
@@ -363,7 +355,7 @@ class LogList extends React.Component {
       this.setState( {
         created_date_from: null,
         created_date_to: null,
-        statusCode: null
+        username: null
       } );
     }
 
@@ -371,13 +363,13 @@ class LogList extends React.Component {
       client_id: this.props.params.client_id,
       page: 1,
       per_page: pageNum,
-      ipaddress: ipAddress,
-      status_code: statusCode,
+      email_address: emailAddress,
+      username: username,
       dateFrom: dateFrom,
       dateTo: dateTo
     };
 
-    this.props.adminLogList(payload);
+    this.props.clientAccessLogList(payload);
   }
   page(e, pageNumber) {
     var dateFrom = this.state.created_date_from;
@@ -388,13 +380,13 @@ class LogList extends React.Component {
       client_id: this.props.params.client_id,
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      ipaddress: this.refs.ipAddress.value,
-      status_code: this.refs.statusCode.value,
+      email_address: this.refs.emailAddress.value,
+      username: this.refs.username.value,
       dateFrom: (dateFrom ? dateFrom : ''),
       dateTo: (dateTo ? dateTo : '')
     };
-    this.props.adminLogList(payload);
+    this.props.clientAccessLogList(payload);
   }
 };
 
-export default LogList;
+export default ClientAccessLogList;
