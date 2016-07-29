@@ -1,78 +1,51 @@
+import 'react-datepicker/dist/react-datepicker.css';
 import React from 'react';
 import tr from 'i18next';
-import { Link } from 'react-router';
-import {createError} from 'utils/error';
-import {modal, openModal, closeModal} from 'common/components/modal';
 import moment from 'moment';
 
-class ApiList extends React.Component {
+class ClientAccessLogList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
-      errorServer:null,
-      id: null,
-      description: null,
-      apiKey: null,
+      errorServer: null,
       created_date_from: null,
       created_date_to: null
-    };  }
-  componentWillReceiveProps(nextProps) {
+    };
+  }
+  componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
+  }
 
-    modal();
-    if (nextProps.activeApiKey || nextProps.deleteApiKeySuccess) {
-      let apiList = nextProps.ListApiSuccess;
-      let payload = {
-        page: apiList.current_page,
-        per_page: apiList.per_page,
-        description: this.state.description,
-        token: this.state.apiKey,
-        date_from: this.state.created_date_from ? this.state.created_date_from.format("YYYY-MM-DD") : '',
-        date_to: this.state.created_date_to ? this.state.created_date_to.format("YYYY-MM-DD") : ''
-      };
-      nextProps.apiList(payload).catch(createError);
-    }
-  }
-  componentDidMount() {
-    let isState = this;
-    $( document ).ready(function() {
-      $('#created_date_from .datepicker').datepicker({
-          format: 'yyyy-mm-dd',
-          endDate: moment(new Date()).format('YYYY-MM-DD'),
-          autoclose: true,
-          todayHighlight: true
-      });
-      $('#created_date_to .datepicker').datepicker({
-          format: 'yyyy-mm-dd',
-          endDate: moment(new Date()).format('YYYY-MM-DD'),
-          autoclose: true,
-          todayHighlight: true
-      });
-    });
-    this.updateDatepicker(isState);
-  }
-  userDisplay (data, alter) {
+  logsDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td width="200" className="mdl-data-table__cell--non-numeric">{data.created}</td>
-        <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
-        <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
-        <td width="250" className="mdl-data-table__cell--non-numeric">
-          <label className="mdl-switch mdl-js-switch mdl-js-ripple-effect switch" htmlFor={"switch-" + data.id}>
-            <input type="checkbox" id={"switch-" + data.id} className="mdl-switch__input" defaultChecked={(data.is_active == 1) ? false : true} onChange={(e) => this.changeActive(e, data.id)} />
-            <span className="mdl-switch__label">{tr.t('LABEL.ON_OFF')}</span>
-            </label>
-          <Link
-          className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/api/" + data.id}><i className="material-icons">open_in_new</i></Link>
-          <button
-              className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-delete"
-              onClick={(e) => this.modalConfirm(e, data.id)}>
-            <i className="material-icons">delete</i>
-          </button>
+        <td className="mdl-data-table__cell--non-numeric">
+          <code>
+            {data.created_at}
+          </code>
+        </td>
+        <td className="mdl-data-table__cell--non-numeric">
+          <div>
+            <b>{tr.t('LABEL.USERID')}</b>
+            <span>{data.user_id}</span>
+          </div>
+          <div>{data.name}</div>
+          <div>{data.username}</div>
+          <div>{data.email_address}</div>
+        </td>
+        <td className="mdl-data-table__cell--non-numeric">
+          <code>
+            {tr.t('LABEL.ACCESSED')}
+            <b> {data.page_accessed} </b>
+            {tr.t('LABEL.FROM')}
+            <span> {data.ip_address} </span>
+          </code>
+          <div>
+            <code>{data.user_agent}</code>
+          </div>
         </td>
       </tr>
     )
@@ -136,6 +109,29 @@ class ApiList extends React.Component {
       </div>
     );
   }
+  download(e) {
+    if (this.props.clientAccessLogs.data.length <= 0) {
+      e.preventDefault();
+    }
+  }
+  componentDidMount() {
+    let isState = this;
+    $( document ).ready(function() {
+      $('#created_date_from .datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
+          autoclose: true,
+          todayHighlight: true
+      });
+      $('#created_date_to .datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
+          autoclose: true,
+          todayHighlight: true
+      });
+    });
+    this.updateDatepicker(isState);
+  }
   updateDatepicker(isState) {
     $('#created_date_from .datepicker').change(function(){
       isState.setState({created_date_from: $(this).val()});
@@ -161,109 +157,94 @@ class ApiList extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let apiList = {last_page: 1};
-    let users = {};
-    if (Object.keys(this.props.ListApiSuccess).length) {
+    let clientAccessLogs = {last_page: 1};
+    let log = {};
+
+    if (Object.keys(this.props.clientAccessLogs.data).length) {
       counter = true;
-      apiList = this.props.ListApiSuccess;
-      users = apiList.data;
-      pagination[0] = this.prevPage(0, (apiList.current_page > 1 ? (apiList.current_page - 1): false));
+      clientAccessLogs = this.props.clientAccessLogs;
+      log = clientAccessLogs.data;
+      pagination[0] = this.prevPage(0, (clientAccessLogs.current_page > 1 ? (clientAccessLogs.current_page - 1): false));
       let i = 1;
-      if (apiList.last_page > apiList.max_pagination_links) {
-        i = Math.round(apiList.max_pagination_links / 2);
-        i = i < apiList.current_page ? (apiList.current_page - 2) : 1;
-        i = (apiList.last_page >  apiList.max_pagination_links) && i > (apiList.last_page - apiList.max_pagination_links) ? ((apiList.last_page - apiList.max_pagination_links) + 1) : i;
+      if (clientAccessLogs.last_page > clientAccessLogs.max_pagination_links) {
+        i = Math.round(clientAccessLogs.max_pagination_links / 2);
+        i = i < clientAccessLogs.current_page ? (clientAccessLogs.current_page - 2) : 1;
+        i = (clientAccessLogs.last_page >  clientAccessLogs.max_pagination_links) && i > (clientAccessLogs.last_page - clientAccessLogs.max_pagination_links) ? ((clientAccessLogs.last_page - clientAccessLogs.max_pagination_links) + 1) : i;
       }
       let pageLimitCounter = 0;
-      for (i; i <= apiList.last_page ; i++) {
-        if (pageLimitCounter >= apiList.max_pagination_links) {
+      for (i; i <= clientAccessLogs.last_page ; i++) {
+        if (pageLimitCounter >= clientAccessLogs.max_pagination_links) {
           break;
         }
         pageLimitCounter++;
-        pagination[i] = this.pagination(i, apiList.current_page);
+        pagination[i] = this.pagination(i, clientAccessLogs.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((apiList.current_page == apiList.last_page)|| apiList.last_page == 0 ? false : (apiList.current_page + 1 )), apiList.last_page );
-      perPage = apiList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((clientAccessLogs.current_page == clientAccessLogs.last_page)|| clientAccessLogs.last_page == 0 ? false : (clientAccessLogs.current_page + 1 )), clientAccessLogs.last_page );
+      perPage = clientAccessLogs.per_page;
     }
 
     return (
       <div className="filter-search">
-        <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
-        <div className="dialog-box"></div>
-        <div className="dialog-content">
-          <div className="dialog-inner">
-            <div className="msg-box mdl-shadow--2dp">
-              <p>
-                {tr.t('NOTEFICATION_MESSAGE.DELETE.CONFIRM_01')}<br />
-                {tr.t('NOTEFICATION_MESSAGE.DELETE.CANNOT_UNDONE')}
-              </p>
-              <div className="mdl-dialog__actions">
-                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('BUTTON.YES')}</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('BUTTON.CANCEL')}</button>
-              </div>
+        <p>Filter / Search</p>
+        <div className="mdl-grid filter-search-bar">
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="created_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="date_from" ref="date_from"
+                readOnly
+              />
+              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_FROM')}</label>
             </div>
+          </div>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="created_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="date_to" ref="date_to"
+                readOnly
+              />
+              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--3-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="emailAddress" ref="emailAddress" />
+              <label className="mdl-textfield__label">{tr.t('LABEL.EMAIL_ADDRESS')}</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="username" ref="username"/>
+              <label className="mdl-textfield__label">{tr.t('LABEL.USERNAME')}</label>
+            </div>
+          </div>
+          <div className="mdl-cell mdl-cell--3-col search-cta">
+            <button
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
+            <button
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
           </div>
         </div>
-          <div className="mdl-grid filter-search-bar">
-            <div className="mdl-cell mdl-cell--2-col">
-              <div id="created_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input
-                  type="text"
-                  className="datepicker mdl-textfield__input"
-                  id="date_from" ref="date_from"
-                  readOnly
-                />
-                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_FROM')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--2-col">
-              <div id="created_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input
-                  type="text"
-                  className="datepicker mdl-textfield__input"
-                  id="date_to" ref="date_to"
-                  readOnly
-                />
-                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--2-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
-                <label className="mdl-textfield__label">{tr.t('LABEL.DESCRIPTION')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
-                <label className="mdl-textfield__label">{tr.t('LABEL.API_KEY')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--3-col search-cta">
-              <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
-              <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
-            </div>
-          </div>
-          <table className="mdl-data-table mdl-js-data-table table-client-list">
-            <thead>
-              <tr>
-                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
-                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DESCRIPTION')}</th>
-                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.API_KEY')}</th>
-                <th className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {counter && users.map(item => {
-                alter = alter ? false : true;
-                return this.userDisplay(item, alter); })}
-            </tbody>
-          </table>
-          {/* <!-- Pagination -->*/}
+        <table className="mdl-data-table mdl-js-data-table table-client-list">
+          <thead>
+            <tr>
+              <th width="150" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.TIMESTAMP')}</th>
+              <th width="280" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.USER_INFO')}</th>
+              <th width="770" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.USER_DETAILS')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {counter && log.map(item => {
+              alter = alter ? false : true;
+              return this.logsDisplay(item, alter); })}
+          </tbody>
+        </table>
+        {/* <!-- Pagination -->*/}
         <div className="mdl-grid pagination">
           <div className="mdl-cell mdl-cell--3-col"></div>
           <div className="mdl-cell mdl-cell--6-col">
@@ -279,22 +260,6 @@ class ApiList extends React.Component {
         </div>
       </div>
     );
-  }
-  deleteItem () {
-    this.props.adminDeleteApiKey(this.state.id).catch(createError);
-    this.modalClose();
-    $('.msg').html('Successfully deleted').addClass('bg-green');
-    $('.msg').fadeIn(1000, function() {
-      $(this).fadeOut(2000);
-    });
-  }
-  changeActive (e, id) {
-    let payload = {
-      id: id,
-      is_active: ((e.target.checked == true) ? false : true)
-    };
-
-    this.props.isActiveApiKey(payload).catch(createError);
   }
   selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
@@ -333,31 +298,24 @@ class ApiList extends React.Component {
     this.selectPageNumber();
     let thisEvent = document.getElementById("numDisplay");
     thisEvent.value = pageNum;
+
     this.page(e, 1);
   }
-  modalConfirm (e, id) {
-    openModal();
-    this.setState( {
-      id: id
-    } );
-  }
   modalClose () {
-    closeModal();
+    let dialog = document.querySelector('dialog');
+    dialog.close();
   }
   clearSearch(e) {
     var today = moment(new Date()).format('YYYY-MM-DD');
     e.preventDefault();
-    this.refs.description.value = "";
-    this.refs.api_key.value = "";
+    this.refs.emailAddress.value = "";
+    this.refs.username.value = "";
     this.refs.date_from.value = "";
     this.refs.date_to.value = "";
-
-    this.setState( {
-      description: null,
-      apiKey: null,
+    this.setState({
       created_date_from: null,
       created_date_to: null
-    } );
+    });
 
     $('#created_date_from .datepicker').datepicker('setDate', null);
     $('#created_date_from .datepicker').datepicker('setEndDate', today);
@@ -369,28 +327,26 @@ class ApiList extends React.Component {
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');
     }
+
     this.searchList(e, 10, true);
   }
   searchList(e, pageNum = null, clearDate = false) {
     var dateFrom = this.state.created_date_from;
     var dateTo = this.state.created_date_to;
     e.preventDefault();
-
-    let descr = '';
-    let token = '';
+    let username = '';
+    let emailAddress = '';
 
     if (!clearDate) {
+      username = this.refs.username.value;
       dateFrom = (dateFrom ? dateFrom : '');
       dateTo = (dateTo ? dateTo : '');
+      emailAddress = this.refs.emailAddress.value;
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
-      descr = this.refs.description.value;
-      token = this.refs.api_key.value;
-
       this.setState( {
-        description: descr,
-        apiKey: token,
         created_date_from: dateFrom,
-        created_date_to: dateTo
+        created_date_to: dateTo,
+        username: null
       } );
     } else {
       dateFrom = '';
@@ -399,41 +355,38 @@ class ApiList extends React.Component {
       this.setState( {
         created_date_from: null,
         created_date_to: null,
-        description: null,
-        apiKey: null
+        username: null
       } );
     }
 
     let payload = {
+      client_id: this.props.params.client_id,
+      page: 1,
       per_page: pageNum,
+      email_address: emailAddress,
+      username: username,
       dateFrom: dateFrom,
-      dateTo: dateTo,
-      description: descr,
-      token: token
+      dateTo: dateTo
     };
-    this.props.apiList(payload).catch(createError);
+
+    this.props.clientAccessLogList(payload);
   }
   page(e, pageNumber) {
     var dateFrom = this.state.created_date_from;
     var dateTo = this.state.created_date_to;
     e.preventDefault();
-    this.setState({
-      description: this.refs.description.value,
-      apiKey: this.refs.api_key.value,
-      created_date_from: (dateFrom ? dateFrom : ''),
-      created_date_to: (dateTo ? dateTo : '')
-    });
 
     let payload = {
+      client_id: this.props.params.client_id,
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      description: this.refs.description.value,
-      token: this.refs.api_key.value,
+      email_address: this.refs.emailAddress.value,
+      username: this.refs.username.value,
       dateFrom: (dateFrom ? dateFrom : ''),
       dateTo: (dateTo ? dateTo : '')
     };
-    this.props.apiList(payload).catch(createError);
+    this.props.clientAccessLogList(payload);
   }
 };
 
-export default ApiList;
+export default ClientAccessLogList;

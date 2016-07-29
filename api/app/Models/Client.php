@@ -467,8 +467,8 @@ class Client extends NrbModel
 
         $params = [
             'client_id'     => $this->id,
-            'max_api_calls' => get_val($params, 'max_api_calls', 0),
-            'max_decisions' => get_val($params, 'max_decisions', 0),
+            'max_api_calls' => (string)get_val($params, 'max_api_calls', 0),
+            'max_decisions' => (string)get_val($params, 'max_decisions', 0),
         ];
 
         $result = (new ExternalRequestServices())->setAuth($auth)

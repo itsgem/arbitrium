@@ -6,7 +6,7 @@
       "CONFIRM_03": "’s account?",
       "CANNOT_UNDONE": "This cannot be undone."
     },
-    "CONFIRM_03": "’s account?",
+    "CONFIRM_03": " this account?",
     "CANNOT_UNDONE": "This cannot be undone.",
     "ERROR_REVIEW_DETAILS": "Please review below details.",
     "PLEASE_REQUIRED_FIELD": "Oops! Please fill in the required field below.",
@@ -145,7 +145,7 @@
     "CLIENT_COMPANY": "Client Company",
     "PENDING": "Pending",
     "APPROVED": "Approved",
-    "DISAPPROVED": "Dispproved",
+    "DISAPPROVED": "Disapproved",
     "MALE": "Male",
     "FEMALE": "Female",
     "USER_ACCOUNT_DETAILS": "User Account Details",
@@ -179,6 +179,12 @@
     "TOKEN": "Token",
     "USER_TYPE": "User Type",
     "END_DATE": "END DATE",
-    "METHOD": "Method"
+    "METHOD": "Method",
+    "TIMESTAMP": "Timestamp",
+    "USER_INFO": "User Info",
+    "USER_DETAILS": "User Details",
+    "ACCESSED": "Accessed",
+    "FROM": "from",
+    "USERID": "User ID: "
   }
 }

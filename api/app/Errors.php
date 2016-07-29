@@ -39,6 +39,7 @@ class Errors
     const SUBSCRIPTION_CONFIRMATION_ERROR       = 50003;
     const SUBSCRIPTION_RENEWAL_ERROR            = 50004;
     const SUBSCRIPTION_INVALID                  = 50005;
+    const SUBSCRIPTION_DOWNGRADE                = 50006;
 
     // Paypal
     const PAYPAL_ERROR              = 60000;

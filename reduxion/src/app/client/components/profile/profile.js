@@ -91,6 +91,7 @@ class ClientProfile extends React.Component {
         }, false);
       }
     }
+    modal();
   }
   componentWillReceiveProps(nextProps) {
     // (Optional) Finalize changing of email
@@ -144,6 +145,7 @@ class ClientProfile extends React.Component {
                     id="username"
                     ref="username"
                     data-client="user"
+                    onChange={(e) => this.notUsername(e, clientInfo.user.username)}
                     defaultValue={clientInfo.user.username}
                     />
                   <label className="mdl-textfield__label" htmlFor="username">{tr.t('LABEL.USERNAME_REQ')}</label>
@@ -152,14 +154,14 @@ class ClientProfile extends React.Component {
               </div>
               <div className="mdl-cell mdl-cell--4-col form-group-flag-icon">
                 <button
-                  id="check_availability"
-                  type="button"
-                  className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
-                  onClick={this.onClickGetAvailableUsername.bind(this)}
-                  >
-                  {tr.t('BUTTON.CHECK_AVAILABILITY')}
-                </button>
-                { this.isUsernameAvailable(errors.username) }
+                  className={!this.props.validateCompleted || errors.username ?
+                      "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button disabled" :
+                      "margin-left-0 margin-right-0 margin-top-10 margin-bottom-10 mdl-button bg-green" }
+                  id='check_availability'
+                  type='button'
+                  value="disabled"
+                  ref="checkUser"
+                  onClick={(e) => this.onClickGetAvailableUsername(e)}>{tr.t('BUTTON.CHECK_AVAILABILITY')}{!this.props.validateCompleted || errors.username ? '' :  <i className="material-icons">check</i>}</button>
               </div>
             </div>
               <div className="mdl-grid">
@@ -290,7 +292,7 @@ class ClientProfile extends React.Component {
                     defaultValue={clientInfo.rep_first_name}
 
                     />
-                  <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('LABEL.FIRSTNAME_REQ')}</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_first_name">{tr.t('LABEL.FIRST_NAME_REQ')}</label>
                   {errors && errors.rep_first_name && <small className="mdl-textfield__error shown">{errors.rep_first_name[0]}</small>}
                 </div>
               </div>
@@ -303,7 +305,7 @@ class ClientProfile extends React.Component {
                     ref="rep_last_name"
                     defaultValue={clientInfo.rep_last_name}
                     />
-                  <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('LABEL.LASTNAME_REQ')}</label>
+                  <label className="mdl-textfield__label" htmlFor="rep_last_name">{tr.t('LABEL.LAST_NAME_REQ')}</label>
                   {errors && errors.rep_last_name && <small className="mdl-textfield__error shown">{errors.rep_last_name[0]}</small>}
                 </div>
               </div>
@@ -659,7 +661,7 @@ class ClientProfile extends React.Component {
                <p>Are you sure you want to cancel this subscription?<br />This cannot be undone.</p>
               <div className="mdl-dialog__actions">
                 <button type="button" className="mdl-button modal-yes" onClick={(e) => this.cancelSubscription(e)}>YES</button>
-                <button type="button" className="mdl-button close modal-cancel" onClick={this.modalClose()}>CANCEL</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={(e) => this.modalClose()}>CANCEL</button>
               </div>
             </div>
           </div>
@@ -678,7 +680,7 @@ class ClientProfile extends React.Component {
             {return <option key={item.id} value={item.id}>{item.name}</option>}
           )}
         </select>
-        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('label.country')}</label>
+        <label className="mdl-textfield__label" htmlFor="country_id">{tr.t('LABEL.COUNTRY_REQ')}</label>
       </div>
     );
   }
@@ -709,6 +711,18 @@ class ClientProfile extends React.Component {
     e.preventDefault();
     this.props.clientSubscriptionCancel();
     this.modalClose();
+  }
+
+  notUsername (e, id) {
+    if (id == e.target.value) {
+      $('#check_availability').addClass('disabled');
+      this.refs.checkUser.value = "disabled";
+      $("#check_availability").removeClass('bg-green');
+      $('form').find('.material-icons').hide();
+    } else {
+      $('#check_availability').removeClass('disabled');
+      this.refs.checkUser.value = "not-disabled";
+    }
   }
 
   isUsernameAvailable(error) {

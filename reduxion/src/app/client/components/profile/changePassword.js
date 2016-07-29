@@ -114,17 +114,17 @@ class ClientChangePassword extends React.Component {
           </div>
           <div className="mdl-button-group padding-15">
             <button
+              className="mdl-button mdl-js-button mdl-button--raised "
+              onClick={(e) =>this.clearRender(e)}
+              >
+              {tr.t('BUTTON.CANCEL')}
+            </button>
+            <button
               className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
               type="submit"
               onClick={(e) => this.onSubmitChangePassword(e) }
               >
               {tr.t('BUTTON.SAVE')}
-            </button>
-            <button
-              className="mdl-button mdl-js-button mdl-button--raised "
-              onClick={(e) =>this.clearRender(e)}
-              >
-              {tr.t('BUTTON.CANCEL')}
             </button>
           </div>
         </form>

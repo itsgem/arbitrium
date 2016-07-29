@@ -166,7 +166,7 @@ class UserProfile extends React.Component {
           </div>
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
-            <legend>{tr.t('LABEL.PERSONAL_INFORMATION')}</legend>
+            <legend>{tr.t('ADMIN_USER_MANAGEMENT.LABEL.PERSONAL_INFORMATION')}</legend>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('first_name', errors)}>

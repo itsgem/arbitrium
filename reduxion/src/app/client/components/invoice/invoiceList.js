@@ -67,7 +67,7 @@ class invoiceList extends React.Component {
           onClick={(e) => this.page(e, 1)}>{tr.t('LABEL.FIRST')}</button>
         }
         {!prev &&
-          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.INVOICE_NUMBER')}</button>
+          <button disabled className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-disabled">{tr.t('LABEL.FIRST')}</button>
         }
         {prev &&
           <button
@@ -115,13 +115,13 @@ class invoiceList extends React.Component {
     $( document ).ready(function() {
       $('#dateFrom .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.dateFrom,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#dateTo .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.dateFrom,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
@@ -300,6 +300,13 @@ class invoiceList extends React.Component {
     var invoicedDateFrom = this.state.dateFrom;
     var invoicedDateTo = this.state.dateTo;
     e.preventDefault();
+
+    if (clearDate) {
+      this.setState( {
+        dateFrom: null,
+        dateTo: null
+      } );
+    }
 
     let payload = {
       per_page: (pageNum ? pageNum : this.refs.pageNum.value),

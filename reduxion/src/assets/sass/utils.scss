@@ -378,10 +378,68 @@ div#application {
     left: 0;
   }
 }
+
+// @media (min-width: 992px) {
+//   .client {
+//     .section-api-keys{
+//       width: 1332px;
+//     }
+//     .subscription-type {
+//       .text-content {
+//         max-width: 260px;
+//       }
+//       .pricing-content {
+//         max-width: 780px;
+//       }
+//     }
+//   }
+// }
+//
+// @media (max-width: 1332px) {
+//   .client {
+//     .section-api-keys{
+//       width: 1332px;
+//     }
+//   }
+//   .box-inner{
+//     width: 1500px;
+//   }
+// }
+// @media (min-width: 1132px) {
+//   .client {
+//     .section-api-keys{
+//       width: 100%;
+//     }
+//   }
+// }
+
+@media (max-width: 1280px) {
+  .client {
+    .subscription-type {
+      width: 1020px!important;
+    }
+  }
+}
+.arb-demo.mdl-list .mdl-list__item{
+  font-size: 15px;
+}
+.pricing-content {
+  width: 73%!important;
+}
+.mdl-layout--fixed-drawer>.mdl-layout__content{
+  margin-left: 240px;
+}
+.mdl-cell--3-col, .mdl-cell--3-col-tablet.mdl-cell--3-col-tablet{
+  width: calc(25% - 16px);
+}
+.mdl-cell--9-col, .mdl-cell--9-col-tablet.mdl-cell--9-col-tablet{
+  width: calc(50% - 16px);
+}
 .datepicker table tr td,
 .datepicker table tr th {
   vertical-align: middle;
 }
+
 .selectCountry {
   position: absolute;
   top: 0;
@@ -421,9 +479,8 @@ div#application {
     }
   }
 }
-.box_dotted_title {
-  border: 1px gray;
-  border-bottom-style: dotted;
-  padding: 20px 0;
-  margin-bottom: 20px;
+
+.mdl-layout--fixed-drawer > .mdl-layout__drawer {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
 }

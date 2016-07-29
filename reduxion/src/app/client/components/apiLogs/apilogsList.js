@@ -123,13 +123,13 @@ class apilogList extends React.Component {
     $( document ).ready(function() {
       $('#created_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_from,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#created_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_to,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
@@ -163,7 +163,7 @@ class apilogList extends React.Component {
     let perPage = 10;
     let listApiLogs = {last_page: 1, total: null};
     let apiLogsData = {};
-    let fields = ['ipaddress', 'status_code', 'url', 'parameter', 'created'];
+    let fields = ['created', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
     let estateNameCsv ='';
     let datacsv ='';
     if (Object.keys(this.props.successApiLogsList).length) {

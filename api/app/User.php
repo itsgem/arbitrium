@@ -273,7 +273,7 @@ class User extends NrbModel implements AuthenticatableContract, CanResetPassword
         $data = array_merge([
             'username' => $this->username,
             'password' => $this->password,
-            'userType' => $this->user_type,
+            'userType' => (string)$this->user_type,
         ], $params);
 
         $auth = $old_auth ?: $this->getApiAuth();

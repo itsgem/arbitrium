@@ -151,6 +151,17 @@
                     </tr>
                 </table>
             </div>
+            <div class="header-block">
+                <table>
+                    <tr>
+                        <td>Subscription Name: {{ $description }}</td>
+                    </tr>
+                    <tr>
+                        <td>Subscription Period: {{ !empty($subscription_details) ? create_date_from_datetime($subscription_details['valid_from']) : '' }} to {{ !empty($subscription_details) ? create_date_from_datetime($subscription_details['valid_to']) : '' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <br />
             <div id="content">
                 <h3>PRODUCTS AND SERVICES PURCHASED</h3>
                 <table>
@@ -176,17 +187,6 @@
                         <td class="thick-top-border text-right">{{ config('paypal.currency') }} {{ $total_amount }}</td>
                     </tr>
                 </table>
-
-                <br /><br />
-
-                <table>
-                    <tr>
-                        <td class="td-label">Remarks</td>
-                        <td>{{ $description }}</td>
-                    </tr>
-                </table>
-
-                <br /><br />
                 <span>THIS IS AN ELECTRONIC INVOICE. NO SIGNATURE IS REQUIRED.</span><br /><br />
                 <b>BANK DETAILS</b><br />
                 <b>Account Name:</b>   {{ $kcg_account_name }}<br />

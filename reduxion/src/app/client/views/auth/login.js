@@ -49,8 +49,8 @@ class Login extends React.Component {
                 <select
                   className="mdl-textfield__input" onChange={(e) => this.changeLanguage(e) } value={selectLang}>
                   <option value="en">English</option>
-                  <option value="fr">France</option>
-                  <option value="it">Italia</option>
+                  <option disabled value="fr">France</option>
+                  <option disabled value="it">Italia</option>
                 </select>
               </div>
           </div>

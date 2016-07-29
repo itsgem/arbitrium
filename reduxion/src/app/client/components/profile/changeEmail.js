@@ -114,17 +114,17 @@ class ClientChangeEmail extends React.Component {
           </div>
           <div className="mdl-button-group">
             <button
-              className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
-              type="submit"
-              >
-              {tr.t('BUTTON.REQUEST_RESET_EMAIL')}
-            </button>
-            <button
               className="mdl-button mdl-js-button mdl-button--raised"
               type="button"
               onClick={this.onClickResetEmail.bind(this)}
               >
               {tr.t('BUTTON.CANCEL_REQUEST')}
+            </button>
+            <button
+              className="mdl-button mdl-js-button mdl-button--raised mdl-button--blue"
+              type="submit"
+              >
+              {tr.t('BUTTON.REQUEST_RESET_EMAIL')}
             </button>
           </div>
         </form>

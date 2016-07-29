@@ -39,13 +39,13 @@ class AdminInvoiceList extends React.Component {
     $( document ).ready(function() {
       $('#invoiced_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.invoiced_date_from,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#invoiced_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.invoiced_date_from,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
@@ -338,6 +338,13 @@ class AdminInvoiceList extends React.Component {
     var dateFrom = this.state.invoiced_date_from;
     var dateTo = this.state.invoiced_date_to;
     e.preventDefault();
+
+    if (clearDate) {
+      this.setState( {
+        invoiced_date_from: null,
+        invoiced_date_to: null
+      } );
+    }
 
     let payload = {
       per_page: clearDate  ? 10 : this.refs.pageNum.value,

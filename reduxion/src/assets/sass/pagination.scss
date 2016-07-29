@@ -18,14 +18,29 @@
     margin: 4px;
   }
 
+  .btn-paginate-active:hover {
+    background: #fff;
+    color: #000;
+    font-weight: 400;
+    margin: 4px;
+  }
+
   .btn-paginate-normal {
     background: #ff6600;
     font-weight: 400;
     margin: 4px;
   }
 
+  .btn-paginate-normal:hover {
+    background: #fff;
+    color: #000;
+    font-weight: 400;
+    margin: 4px;
+  }
+
   .btn-paginate-disabled {
     background: #0d2c81;
+    color: #fff !important;
     cursor: not-allowed;
     font-weight: 400;
     margin: 4px;
@@ -37,8 +52,23 @@
     margin: 4px;
   }
 
+  .btn-paginate-blue:hover {
+    background: #fff;
+    color: #000;
+    font-weight: 400;
+    margin: 4px;
+  }
+
   .btn-paginate-items-per-page {
     background: #ff6600;
+    font-weight: 400;
+    float: right;
+    margin-right: 10px;
+  }
+
+  .btn-paginate-items-per-page:hover {
+    background: #fff;
+    color: #000;
     font-weight: 400;
     float: right;
     margin-right: 10px;

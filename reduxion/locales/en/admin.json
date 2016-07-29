@@ -27,7 +27,9 @@
     "REPORTS": "Reports",
     "LOGS": "Logs",
     "LOGS_SUB": {
-      "LIST_CLIENT_API": "Client API logs list"
+      "LIST_CLIENT_API": "Client API logs list",
+      "ADMIN_ACCESS_LOGS": "Admin Access Logs",
+      "CLIENT_ACCESS_LOGS": "Client Access Logs"
     },
     "USER_OPTIONS": {
       "PROFILE": "My Profile",
@@ -45,7 +47,7 @@
       "CHECK_EMAIL": "Step 2 - Check Email",
       "EMAIL_SENT": "An email has been sent containing your reset link. Click on the link to proceed.",
       "CHECK_SPAM": "Please also check your spam folder just in case the reset email ended up there.",
-      "ENTER_EMAIL": "Enter the email address used when you registered with username and passwords.",
+      "ENTER_EMAIL": "Enter the email address used when you registered with username and password.",
       "SENT_RESET_CODE": "You'll be sent a reset code to change your password."
     },
     "LABEL" : {
@@ -96,6 +98,14 @@
     "API_LOG_DETAIL": {
       "DOC_TITLE": "API log detail",
       "TITLE": "API log detail"
+    },
+    "ADMIN_ACCESS_LOGS": {
+      "DOC_TITLE": "Admin Access Logs",
+      "TITLE": "Admin Access Logs"
+    },
+    "CLIENT_ACCESS_LOGS": {
+      "DOC_TITLE": "Client Access Logs",
+      "TITLE": "Client Access Logs"
     }
   },
   "ADMIN_USER_MANAGEMENT": {
@@ -170,7 +180,7 @@
       "OVERALL_COMPUTATION": "Overall Computation",
       "CREDITS": "Credits",
       "TAX": "TAX",
-      "TOTAL_PRICE": "Totl Price",
+      "TOTAL_PRICE": "Total Price",
       "MONTHLY_SUBSCRIPTION": "Monthly Subscription",
       "INITIAL_SETUP_FEE": "Initial Setup Fee",
       "MONTHLY_MAINTENANCE_FEE": "Monthly Maintenance Fee",

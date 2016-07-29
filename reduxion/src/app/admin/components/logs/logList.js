@@ -33,7 +33,7 @@ class LogList extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/logs/client/" + data.client.id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
+          to={"/coffee/settings/logs/client/" + data.client.id + "/log-detail/" + data.id}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -107,13 +107,13 @@ class LogList extends React.Component {
     $( document ).ready(function() {
       $('#created_date_from .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_from,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
       $('#created_date_to .datepicker').datepicker({
           format: 'yyyy-mm-dd',
-          endDate: isState.state.created_date_to,
+          endDate: moment(new Date()).format('YYYY-MM-DD'),
           autoclose: true,
           todayHighlight: true
       });
@@ -147,7 +147,7 @@ class LogList extends React.Component {
     let perPage = 10;
     let logList = {last_page: 1};
     let log = {};
-    let fields = ['ipaddress', 'status_code', 'url', 'parameter', 'created'];
+    let fields = ['created', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
     let estateNameCsv = '';
     let datacsv = '';
 

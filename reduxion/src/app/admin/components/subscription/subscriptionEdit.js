@@ -31,7 +31,7 @@ class SubscriptionEdit extends React.Component {
           <div className="content-container">
             <div className="mdl-cell mdl-cell--12-col">
               <div className="mdl-grid content">
-                <div className="mdl-cell mdl-cell--3-col">
+                <div className="mdl-cell mdl-cell--3-col text-content">
                   <ul className="arb-demo mdl-list">
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
@@ -45,7 +45,7 @@ class SubscriptionEdit extends React.Component {
                     </li>
                     <li className="mdl-list__item">
                       <span className="mdl-list__item-primary-content">
-                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_LICENCE_FEE')}
+                        {tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_LICENSE_FEE')}
                       </span>
                     </li>
                     <li className="mdl-list__item">
@@ -80,7 +80,7 @@ class SubscriptionEdit extends React.Component {
                     </li>
                   </ul>
                 </div>
-                <div className="mdl-cell mdl-cell--9-col">
+                <div className="mdl-cell mdl-cell--9-col pricing-content">
                   {
                     subscriptions.map(item => {
                       return <table key={item.id} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
