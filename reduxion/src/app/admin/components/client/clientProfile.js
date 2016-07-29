@@ -205,7 +205,7 @@ class ClientProfile extends React.Component {
         <div className="mdl-grid">
           {/*Approval layout*/}
           <div className="mdl-layout__content status-content">
-            <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-cell mdl-cell--7-col">
              <div className="mdl-cell mdl-cell--6-col status-col">
                 <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">{tr.t('ADMIN_CLIENT.LABEL.APPROVAL_STATUS')}</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
@@ -367,7 +367,7 @@ class ClientProfile extends React.Component {
           </div>
         </div>
         <div className="mdl-grid">
-          <legend>{tr.t('CLIENT.FORM.TITLE.COMPANY_REP')}</legend>
+          <legend>{tr.t('LABEL.COMPANY_REPRESENTATIVE')}</legend>
           <div className="mdl-cell mdl-cell--6-col">
             <div className={this.formClassNames('rep_first_name', errors)}>
               <input
@@ -510,7 +510,7 @@ class ClientProfile extends React.Component {
           </div>
         </div>
         <div className="mdl-grid">
-          <legend>{tr.t('CLIENT.FORM.TITLE.ALTERNATIVE_REPRESENTATIVE')}</legend>
+          <legend>{tr.t('LABEL.ALTERNATIVE_REPRESENTATIVE')}</legend>
           <div className="mdl-cell mdl-cell--6-col">
             <div className={this.formClassNames('alt_first_name', errors)}>
               <input
@@ -708,7 +708,7 @@ class ClientProfile extends React.Component {
                 <p>{moment(currentSubscription.valid_from).format('YYYY-MM-DD')}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <h6>{currentSubscription.type == 'Trial' ? tr.t('LABEL.TERMS_OF_SUBSCRIPTION_FREE') : tr.t('LABEL.TERMS_SUBSCRIPTION')}</h6>
+                <h6>{currentSubscription.type == 'Trial' ? tr.t('LABEL.TERMS_OF_SUBSCRIPTION_FREE') : tr.t('LABEL.TERM_SUBSCRIPTION')}</h6>
                 <p>{currentSubscription.type == 'Trial' ? '30 days' : currentSubscription.term}</p>
               </div>
               <div className="mdl-cell mdl-cell--6-col">

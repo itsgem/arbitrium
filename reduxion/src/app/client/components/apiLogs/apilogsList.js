@@ -163,7 +163,7 @@ class apilogList extends React.Component {
     let perPage = 10;
     let listApiLogs = {last_page: 1, total: null};
     let apiLogsData = {};
-    let fields = ['ipaddress', 'status_code', 'url', 'parameter', 'created'];
+    let fields = ['created', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
     let estateNameCsv ='';
     let datacsv ='';
     if (Object.keys(this.props.successApiLogsList).length) {

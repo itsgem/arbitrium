@@ -46,6 +46,7 @@ class SubscriptionRequest extends NrbRequest
             if (is_client_user_logged_in())
             {
                 $client = Client::findOrFail(get_logged_in_client_id());
+
                 if ($client->subscription)
                 {
                     $client_subscription = $client->subscription->subscription;

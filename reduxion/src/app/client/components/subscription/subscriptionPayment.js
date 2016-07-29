@@ -88,7 +88,7 @@ class SubscriptionPayment extends React.Component {
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--6-col">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
-                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.type == "Trial" ? tr.t('LABEL.FREE_TRIAL') : subscriptionItem.name} readOnly/>
+                <input className="mdl-textfield__input font-input" type="text" id="subscription" value={subscriptionItem.type == "Trial" ? tr.t('CLIENT_SUBCRIPTION.LABEL.FREE_TRIAL') : subscriptionItem.name} readOnly/>
                 <label className="mdl-textfield__label" htmlFor="subscription">{tr.t('LABEL.SUBSCRIPTION_NAME')}</label>
               </div>
             </div>
