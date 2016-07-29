@@ -37,34 +37,6 @@ class ApiLogServices extends NrbServices
         return $result;
     }
 
-    public function showReports($request, $client_id = null)
-    {
-        if ($client_id)
-        {
-            $client = Client::findOrfail($client_id);
-            $this->auth = $client->user->getApiAuth();
-        }
-
-        $result = $this->external_request->setAuth($this->auth)
-            ->send(get_api_url($this->endpoints['api_reports']), $request->all());
-
-        return $result;
-    }
-
-    public function showReportLogs($request, $client_id = null)
-    {
-        if ($client_id)
-        {
-            $client = Client::findOrfail($client_id);
-            $this->auth = $client->user->getApiAuth();
-        }
-
-        $result = $this->external_request->setAuth($this->auth)
-            ->send(get_api_url($this->endpoints['api_reports_logs']), $request->all());
-
-        return $result;
-    }
-
     // Admin\Api\ApiLogController::show
     // Client\Api\ApiLogController::show
     public function show($id, $client_id = null)

@@ -17,14 +17,15 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
         Route::group(['prefix' => 'api-log'], function()
         {
             Route::get('',           ['uses' => 'ApiLogController@index']);
-
-            Route::group(['prefix' => 'reports'], function()
-            {
-                Route::get('',          ['uses' => 'ApiLogController@showReports']);
-                Route::get('client',    ['uses' => 'ApiLogController@showReportClient']);
-            });
-
             Route::get('{api_log}',  ['uses' => 'ApiLogController@show']);
+        });
+
+        //-- REPORT
+        Route::group(['prefix' => 'report'], function()
+        {
+            Route::get('',                ['uses' => 'ReportsController@index']);
+            Route::get('client/{date}',   ['uses' => 'ReportsController@showReporClient']);
+            Route::get('{id}',            ['uses' => 'ReportsController@showReporInfo']);
         });
 
         //-- PROFILE
