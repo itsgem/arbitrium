@@ -2,6 +2,7 @@ import React from 'react';
 import tr from 'i18next';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Link } from 'react-router';
+import moment from 'moment';
 
 class ApiLogsDetails extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class ApiLogsDetails extends React.Component {
           </div>
           <div className="mdl-cell mdl-cell--6-col">
             <h6>{tr.t('LABEL.DATE_CREATED')}</h6>
-            <p>{iplogInfo.created}</p>
+            <p>{moment(iplogInfo.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
           </div>
           <div className="mdl-cell mdl-cell--12-col">
             <h6>{tr.t('LABEL.PARAMETER')}</h6>
