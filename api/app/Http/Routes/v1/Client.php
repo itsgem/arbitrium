@@ -24,8 +24,8 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
         Route::group(['prefix' => 'report'], function()
         {
             Route::get('',                ['uses' => 'ReportsController@index']);
-            Route::get('client/{date}',   ['uses' => 'ReportsController@showReporClient']);
-            Route::get('{id}',            ['uses' => 'ReportsController@showReporInfo']);
+            Route::get('client/{date}',   ['uses' => 'ReportsController@showReportClient']);
+            Route::get('{id}',            ['uses' => 'ReportsController@showReportInfo']);
         });
 
         //-- PROFILE

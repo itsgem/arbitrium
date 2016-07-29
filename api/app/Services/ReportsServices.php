@@ -32,14 +32,14 @@ class ReportsServices extends NrbServices
         }
 
         $result = $this->external_request->setAuth($this->auth)
-            ->send(get_api_url($this->endpoints['api_reports']), $request->all());
+            ->send(get_api_url($this->endpoints['show_api_reports']), $request->all());
 
         return $result;
     }
 
-    // Admin\Api\ReportsController::showReportLogs
-    // Client\Api\ReportsController::showReportLogs
-    public function showReporClient($date, $request, $client_id = null)
+    // Admin\Api\ReportsController::showReportClient
+    // Client\Api\ReportsController::showReportClient
+    public function showReportClient($date, $request, $client_id = null)
     {
         if ($client_id)
         {
@@ -48,14 +48,14 @@ class ReportsServices extends NrbServices
         }
 
         $result = $this->external_request->setAuth($this->auth)
-            ->send(get_api_url($this->endpoints['api_reports_client'], ['date' => $date]), $request->all());
+            ->send(get_api_url($this->endpoints['show_api_reports_by_client'], ['date' => $date]), $request->all());
 
         return $result;
     }
 
-    // Admin\Api\ReportsController::showReporInfo
-    // Client\Api\ReportsController::showReporInfo
-    public function showReporInfo($id, $client_id = null)
+    // Admin\Api\ReportsController::showReportInfo
+    // Client\Api\ReportsController::showReportInfo
+    public function showReportInfo($id, $client_id = null)
     {
         if ($client_id)
         {
@@ -64,7 +64,7 @@ class ReportsServices extends NrbServices
         }
 
         $result = $this->external_request->setAuth($this->auth)
-            ->send(get_api_url($this->endpoints['api_reports_detail'], ['id' => $id]));
+            ->send(get_api_url($this->endpoints['show_api_reports_detail'], ['id' => $id]));
 
         return $result;
     }

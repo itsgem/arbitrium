@@ -26,13 +26,13 @@ class ReportsController extends ApiController
         return $service->index($this->request);
     }
 
-    public function showReporClient($date, ReportsServices $service)
+    public function showReportClient($date, ReportsServices $service)
     {
-        return $service->showReporClient($date, $this->request);
+        return $service->showReportClient($date, $this->request);
     }
 
-    public function showReporInfo($id, ReportsServices $service)
+    public function showReportInfo($id, ReportsServices $service)
     {
-        return $service->showReporInfo($id);
+        return $service->showReportInfo($id);
     }
 }
