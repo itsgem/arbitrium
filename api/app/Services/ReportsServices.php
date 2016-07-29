@@ -39,7 +39,7 @@ class ReportsServices extends NrbServices
 
     // Admin\Api\ReportsController::showReportClient
     // Client\Api\ReportsController::showReportClient
-    public function showReportClient($date, $request, $client_id = null)
+    public function showReportClient($request, $client_id = null)
     {
         if ($client_id)
         {
@@ -48,7 +48,7 @@ class ReportsServices extends NrbServices
         }
 
         $result = $this->external_request->setAuth($this->auth)
-            ->send(get_api_url($this->endpoints['show_api_reports_by_client'], ['date' => $date]), $request->all());
+            ->send(get_api_url($this->endpoints['show_api_reports_by_client']), $request->all());
 
         return $result;
     }

@@ -28,7 +28,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         Route::group(['prefix' => 'report'], function()
         {
             Route::get('',                ['uses' => 'ReportsController@index']);
-            Route::get('client/{date}',   ['uses' => 'ReportsController@showReportClient']);
+            Route::get('client',          ['uses' => 'ReportsController@showReportClient']);
             Route::get('{id}',            ['uses' => 'ReportsController@showReportInfo']);
         });
 
