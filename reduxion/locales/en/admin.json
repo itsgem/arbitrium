@@ -47,7 +47,7 @@
       "CHECK_EMAIL": "Step 2 - Check Email",
       "EMAIL_SENT": "An email has been sent containing your reset link. Click on the link to proceed.",
       "CHECK_SPAM": "Please also check your spam folder just in case the reset email ended up there.",
-      "ENTER_EMAIL": "Enter the email address used when you registered with username and passwords.",
+      "ENTER_EMAIL": "Enter the email address used when you registered with username and password.",
       "SENT_RESET_CODE": "You'll be sent a reset code to change your password."
     },
     "LABEL" : {
