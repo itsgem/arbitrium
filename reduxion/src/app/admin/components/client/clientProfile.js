@@ -205,7 +205,7 @@ class ClientProfile extends React.Component {
         <div className="mdl-grid">
           {/*Approval layout*/}
           <div className="mdl-layout__content status-content">
-            <div className="mdl-cell mdl-cell--6-col">
+            <div className="mdl-cell mdl-cell--7-col">
              <div className="mdl-cell mdl-cell--6-col status-col">
                 <div className="mdl-cell mdl-cell--3-col float-lft mg-lf">{tr.t('ADMIN_CLIENT.LABEL.APPROVAL_STATUS')}</div>
                 <div className="mdl-cell mdl-cell--2-col float-lft">{client.approval_status}</div>
