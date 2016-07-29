@@ -199,3 +199,22 @@ main {
   color: #b0b0b0!important;
   cursor: default;
 }
+
+div#application {
+  .client {
+    nav .mdl-button {
+      height: 48px;
+      color: #fff;
+      font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+      font-weight: 300;
+    }
+
+    #demo_menu-lower-right {
+      a {
+        i {
+          padding-right: 5px;
+        }
+      }
+    }
+  }
+}

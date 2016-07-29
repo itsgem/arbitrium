@@ -29,13 +29,9 @@ class ClientHeader extends React.Component {
               </ul>
             </div>*/}
             <div className="container">
-              <button id="demo_menu-lower-right" className="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
-                <i className="material-icons">person</i>
+              <button id="demo_menu-lower-right" className="mdl-button mdl-js-button" data-upgraded=",MaterialButton">
+                <Link to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.MY_PROFILE')}</Link>
               </button>
-              <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" htmlFor="demo_menu-lower-right">
-                <li className="mdl-menu__item"><Link className="mdl-navigation__link " to ="/i/client/profile"><i className="material-icons mdl-list__item-icon">person</i>{tr.t('CLIENT_HEADER.PROFILE')}</Link></li>
-                <li className="mdl-menu__item"><a className="mdl-navigation__link " href ="/i/logout"><i className="material-icons mdl-list__item-icon">exit_to_app</i>{tr.t('CLIENT_HEADER.LOGOUT')}</a></li>
-              </ul>
             </div>
             </nav>
           </div>
