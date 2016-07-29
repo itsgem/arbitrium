@@ -20,6 +20,14 @@ Route::group(['prefix' => 'client', 'middleware' => 'auth.client'], function()
             Route::get('{api_log}',  ['uses' => 'ApiLogController@show']);
         });
 
+        //-- REPORT
+        Route::group(['prefix' => 'report'], function()
+        {
+            Route::get('',                ['uses' => 'ReportsController@index']);
+            Route::get('client',          ['uses' => 'ReportsController@showReportClient']);
+            Route::get('{id}',            ['uses' => 'ReportsController@showReportInfo']);
+        });
+
         //-- PROFILE
         Route::get('profile',               ['uses' => 'ClientsController@show']);
         Route::put('profile',               ['uses' => 'ClientsController@update']);
