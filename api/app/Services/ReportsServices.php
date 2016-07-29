@@ -53,8 +53,8 @@ class ReportsServices extends NrbServices
         return $result;
     }
 
-    // Admin\Api\ReportsController::showReportLogs
-    // Client\Api\ReportsController::showReportLogs
+    // Admin\Api\ReportsController::showReporInfo
+    // Client\Api\ReportsController::showReporInfo
     public function showReporInfo($id, $client_id = null)
     {
         if ($client_id)
