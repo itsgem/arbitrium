@@ -45,7 +45,7 @@ class apilogList extends React.Component {
   apilogDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td className="mdl-data-table__cell--non-numeric">{data.created}</td>
+        <td className="mdl-data-table__cell--non-numeric">{moment(data.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.ipaddress}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.method}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
