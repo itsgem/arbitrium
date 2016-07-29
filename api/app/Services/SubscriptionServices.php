@@ -248,6 +248,7 @@ class SubscriptionServices extends NrbServices
                 return $this->respondWithSuccess($current_subscription);
             }
 
+            $current_subscription['subscription'] = $current_subscription->subscription;
             $additional_data = [];
 
             if ($current_subscription->hasPaypal() && $request->get('with-paypal') == 1)
