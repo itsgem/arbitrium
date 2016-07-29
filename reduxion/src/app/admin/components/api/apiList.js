@@ -57,7 +57,7 @@ class ApiList extends React.Component {
   userDisplay (data, alter) {
     return (
       <tr key={data.id} className={alter ? "bg-dark" : "bg-light"}>
-        <td width="200" className="mdl-data-table__cell--non-numeric">{data.created}</td>
+        <td width="200" className="mdl-data-table__cell--non-numeric">{moment(data.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
         <td width="300" className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.token}</td>
         <td width="250" className="mdl-data-table__cell--non-numeric">
