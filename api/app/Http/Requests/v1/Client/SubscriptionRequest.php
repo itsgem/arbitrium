@@ -46,12 +46,16 @@ class SubscriptionRequest extends NrbRequest
             if (is_client_user_logged_in())
             {
                 $client = Client::findOrFail(get_logged_in_client_id());
-                $client_subscription = $client->subscription->subscription;
 
-                $subscription = Subscription::findOrFail($this->get('subscription_id'));
-                if ($client_subscription->order >= $subscription->order)
+                if ($client->subscription)
                 {
-                    $errors['order'] = trans('errors.'.Errors::SUBSCRIPTION_DOWNGRADE);
+                    $client_subscription = $client->subscription->subscription;
+
+                    $subscription = Subscription::findOrFail($this->get('subscription_id'));
+                    if ($client_subscription->order >= $subscription->order)
+                    {
+                        $errors['order'] = trans('errors.'.Errors::SUBSCRIPTION_DOWNGRADE);
+                    }
                 }
             }
         }
