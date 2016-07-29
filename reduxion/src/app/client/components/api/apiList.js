@@ -26,7 +26,6 @@ class ApiList extends React.Component {
       let apiList = nextProps.listApiKeys;
       let description = this.state.description;
       let token = this.state.token;
-      let created = this.state.created_at;
       let dateFrom = this.state.created_date_from ? this.state.created_date_from.format("YYYY-MM-DD") : ''
       let dateTo = this.state.created_date_to ? this.state.created_date_to.format("YYYY-MM-DD") : ''
       let payload = {
