@@ -543,7 +543,7 @@ html{
 
     .date-range{
       margin: 20px;
-      
+
       h5{
         &.search-title{
           font-size: 1rem;
@@ -574,6 +574,14 @@ html{
             }
           }
         }
+      }
+    }
+    .chart{
+      border-top: 1px solid #e6e6e6;
+
+      .percentage{
+        color: #0e3192;
+        text-align: right;
       }
     }
   }
