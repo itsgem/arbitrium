@@ -350,7 +350,7 @@ class Client extends NrbModel
             $data['is_auto_renew']  = false;
 
             $client_subscription->status        = ClientSubscription::STATUS_ACTIVE;
-            $client_subscription->setValidity($start_date);
+            $client_subscription->setValidityRange($start_date, $data['is_daily']);
         }
 
         $client_subscription->paypal_plan_id    = $data['paypal_plan_id'];

@@ -344,6 +344,17 @@ class ClientSubscription extends Subscription
         }
     }
 
+    public function setValidityRange($date, $days = '')
+    {
+        $this->valid_from = $date;
+        if ($days)
+        {
+            $this->valid_to = $this->valid_from->addDay($days);
+        } else {
+            $this->valid_to = $this->valid_from->addDays(config('paypal.period_days.monthly'));
+        }
+    }
+
     public function hasPaypal()
     {
         return $this->paypal_token_id && $this->paypal_agreement_id;
