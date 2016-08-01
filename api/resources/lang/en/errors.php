@@ -33,6 +33,7 @@ return [
     Errors::SUBSCRIPTION_RENEWAL_ERROR          => 'Unable to save renewal of subscription.',
     Errors::SUBSCRIPTION_INVALID                => 'Invalid subscription.',
     Errors::SUBSCRIPTION_DOWNGRADE              => 'Subscription package should not be downgraded.',
+    Errors::SUBSCRIPTOIN_TRIAL_NUMBER_DAYS      => 'You should have number of days in trial subscription.',
 
     Errors::PAYPAL_ERROR                => 'Unable to process PayPal Request.',
     Errors::PAYPAL_CANCELLED            => 'User cancelled PayPal transaction.',

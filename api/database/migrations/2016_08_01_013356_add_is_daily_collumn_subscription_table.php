@@ -14,7 +14,7 @@ class AddIsDailyCollumnSubscriptionTable extends Migration
     {
         Schema::table('subscriptions', function(Blueprint $table)
         {
-            $table->integer('is_daily')->nullable()->after('order');
+            $table->integer('no_days')->nullable()->after('order');
         });
     }
 
@@ -27,7 +27,7 @@ class AddIsDailyCollumnSubscriptionTable extends Migration
     {
         Schema::table('subscriptions', function(Blueprint $table)
         {
-            $table->dropColumn('is_daily');
+            $table->dropColumn('no_days');
         });
     }
 }
