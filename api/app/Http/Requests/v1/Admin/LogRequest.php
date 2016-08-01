@@ -32,8 +32,8 @@ class LogRequest extends NrbRequest
         }
 
         $rules = [
-           'date_from' => 'date|date_format:Y-m-d H:i:s'.$validate_from,
-           'date_to'   => 'date|date_format:Y-m-d H:i:s'
+           'date_from' => 'date|date_format:Y-m-d'.$validate_from,
+           'date_to'   => 'date|date_format:Y-m-d'
         ];
 
         return $rules;

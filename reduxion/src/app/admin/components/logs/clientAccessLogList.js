@@ -340,7 +340,7 @@ class ClientAccessLogList extends React.Component {
     if (!clearDate) {
       username = this.refs.username.value;
       dateFrom = (dateFrom ? dateFrom : '');
-      dateTo = (dateTo ? dateTo : '');
+      dateTo = (dateTo ? moment(dateTo).add(1, 'day').format('YYYY-MM-DD') : '');
       emailAddress = this.refs.emailAddress.value;
       pageNum = (pageNum ? pageNum : this.refs.pageNum.value);
       this.setState( {
@@ -365,15 +365,15 @@ class ClientAccessLogList extends React.Component {
       per_page: pageNum,
       email_address: emailAddress,
       username: username,
-      dateFrom: dateFrom,
-      dateTo: dateTo
+      date_from: dateFrom,
+      date_to: dateTo
     };
 
     this.props.clientAccessLogList(payload);
   }
   page(e, pageNumber) {
     var dateFrom = this.state.created_date_from;
-    var dateTo = this.state.created_date_to;
+    var dateTo = this.state.created_date_to ? this.state.created_date_to : '';
     e.preventDefault();
 
     let payload = {
@@ -382,8 +382,8 @@ class ClientAccessLogList extends React.Component {
       per_page: this.refs.pageNum.value,
       email_address: this.refs.emailAddress.value,
       username: this.refs.username.value,
-      dateFrom: (dateFrom ? dateFrom : ''),
-      dateTo: (dateTo ? dateTo : '')
+      date_from: (dateFrom ? dateFrom : ''),
+      date_to: dateTo
     };
     this.props.clientAccessLogList(payload);
   }

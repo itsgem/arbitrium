@@ -177,3 +177,44 @@ main {
   }
 }
 
+#profile #check_availability {
+  background-color: rgb(255,110,64);
+  color: #fff;
+  font-size: 14px;
+  font: 11px BlinkMacSystemFont;
+  padding: 4px 15px;
+  min-height: 18px;
+  position: relative;
+  top: 10px;
+
+  .material-icons {
+      font-size: 13px;
+      vertical-align: bottom;
+      padding-left: 8px;
+  }
+}
+
+#profile .disabled {
+  background-color: #e1e1e1!important;
+  color: #b0b0b0!important;
+  cursor: default;
+}
+
+div#application {
+  .client {
+    nav .mdl-button {
+      height: 48px;
+      color: #fff;
+      font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
+      font-weight: 300;
+    }
+
+    #demo_menu-lower-right {
+      a {
+        i {
+          padding-right: 5px;
+        }
+      }
+    }
+  }
+}
