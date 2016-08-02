@@ -83,7 +83,7 @@ class SubscriptionEdit extends React.Component {
                 <div className="mdl-cell mdl-cell--9-col pricing-content">
                   {
                     subscriptions.map(item => {
-                      return <table key={item.id} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
+                      return <table key={item.order} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                         <thead>
                           <tr>
                             <th>{item.name}</th>
@@ -120,13 +120,14 @@ class SubscriptionEdit extends React.Component {
                           <tr>
                             <td style={(clientInfo.can_avail_trial == false && clientSubscriptionInfo.name != 'Free Trial') ? {height : '60px'} : {height : '48px'}}>
                               {
-                                item.name == 'Free Trial' ? (clientInfo.can_avail_trial == false ?
-                                  (clientSubscriptionInfo.name != 'Free Trial' ? '' :
-                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>)
-                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{tr.t('BUTTON.SUBSCRIBE')}</Link> )
-                                : clientSubscriptionInfo.subscription_id == item.id ?
-                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>
-                                  : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Free Trial' ? tr.t('BUTTON.SUBSCRIBE') : tr.t('BUTTON.UPGRADE')) : tr.t('BUTTON.SUBSCRIBED')}</Link>
+                                (clientSubscriptionInfo.subscription && item.order < clientSubscriptionInfo.subscription.order) ? '' :
+                                  (item.name == 'Free Trial' ? (clientInfo.can_avail_trial == false ?
+                                    (clientSubscriptionInfo.name != 'Free Trial' ? '' :
+                                      <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>)
+                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{tr.t('BUTTON.SUBSCRIBE')}</Link> )
+                                  : clientSubscriptionInfo.subscription_id == item.id ?
+                                    <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>
+                                    : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/coffee/subscription/client/" + clientSubscriptionInfo.client_id + "/detail/" + item.id}>{clientSubscriptionInfo.subscription_id ? (item.name == 'Free Trial' ? tr.t('BUTTON.SUBSCRIBE') : tr.t('BUTTON.UPGRADE')) : tr.t('BUTTON.SUBSCRIBED')}</Link>)
                               }
                             </td>
                           </tr>
