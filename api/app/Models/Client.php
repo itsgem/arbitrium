@@ -332,6 +332,7 @@ class Client extends NrbModel
         $client_subscription->description       = $subscription->description;
         $client_subscription->status            = ClientSubscription::STATUS_INACTIVE;
         $client_subscription->status_end        = null;
+        $client_subscription->no_days           = null;
 
         if ($subscription->isTrial())
         {
@@ -350,6 +351,7 @@ class Client extends NrbModel
             $data['is_auto_renew']  = false;
 
             $client_subscription->status        = ClientSubscription::STATUS_ACTIVE;
+            $client_subscription->no_days       = $data['is_daily'];
             $client_subscription->setValidityRange($start_date, $data['is_daily']);
         }
 

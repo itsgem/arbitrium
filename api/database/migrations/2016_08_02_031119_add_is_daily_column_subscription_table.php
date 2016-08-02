@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIsDailyCollumnSubscriptionTable extends Migration
+class AddIsDailyColumnSubscriptionTable extends Migration
 {
     /**
      * Run the migrations.
