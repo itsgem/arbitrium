@@ -35,7 +35,8 @@ class SubscriptionRequest extends NrbRequest
                 'max_api_calls'           => 'required|integer|min:0',
                 'max_decisions'           => 'required|integer|min:0',
                 'discounts'               => 'required|money',
-                'order'                   => 'required|unique:subscriptions,order,NULL,id,deleted_at,NULL'
+                'order'                   => 'required|unique:subscriptions,order,NULL,id,deleted_at,NULL',
+                'no_days'                 => 'required_if:type,'.Subscription::TYPE_TRIAL . '|integer'
             ];
 
             if ($this->route('subscription') && $method == 'PUT')
@@ -65,11 +66,6 @@ class SubscriptionRequest extends NrbRequest
             // Validate that there should only be one TRIAL subscription
             if ($this->get('type') == Subscription::TYPE_TRIAL)
             {
-                if (!$this->get('no_days'))
-                {
-                    $errors['no_days'] = trans('errors.'.Errors::SUBSCRIPTION_TRIAL_NUMBER_DAYS);
-                }
-
                 if (Subscription::type(Subscription::TYPE_TRIAL)->count() > 0)
                 {
                     $errors['type'] = trans('errors.'.Errors::EXISTING_TRIAL_SUBSCRIPTION);

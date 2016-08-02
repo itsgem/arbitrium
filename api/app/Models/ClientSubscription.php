@@ -350,7 +350,9 @@ class ClientSubscription extends Subscription
         if ($days)
         {
             $this->valid_to = $this->valid_from->addDay($days);
-        } else {
+        }
+        else
+        {
             $this->valid_to = $this->valid_from->addDays(config('paypal.period_days.monthly'));
         }
     }
