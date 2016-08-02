@@ -40,7 +40,7 @@ class Errors
     const SUBSCRIPTION_RENEWAL_ERROR            = 50004;
     const SUBSCRIPTION_INVALID                  = 50005;
     const SUBSCRIPTION_DOWNGRADE                = 50006;
-    const SUBSCRIPTOIN_TRIAL_NUMBER_DAYS        = 50007;
+    const SUBSCRIPTION_TRIAL_NUMBER_DAYS        = 50007;
 
     // Paypal
     const PAYPAL_ERROR              = 60000;

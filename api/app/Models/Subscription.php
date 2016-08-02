@@ -129,7 +129,7 @@ class Subscription extends NrbModel
     protected $dates = [];
 
     protected $fillable = [
-        'no_days', 'order', 'name', 'description', 'type', 'country_id',
+        'is_daily', 'order', 'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
