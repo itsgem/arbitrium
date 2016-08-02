@@ -108,13 +108,14 @@ class SubscriptionDetail extends React.Component {
                       <tr>
                         <td style={(clientInfo.can_avail_trial == false && currentSubscription.name != 'Free Trial') ? {height : '60px'} : {height : '48px'}}>
                           {
-                            item.type == 'Trial' ? (clientInfo.can_avail_trial == false ?
-                              (currentSubscription.name != 'Free Trial' ? '' :
-                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>)
-                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{tr.t('BUTTON.SUBSCRIBE')}</Link> )
-                            : currentSubscription.subscription_id == item.id ?
-                                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>
-                              : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? tr.t('BUTTON.UPGRADE') : tr.t('BUTTON.SUBSCRIBE') }</Link>
+                            (currentSubscription.subscription && item.order < currentSubscription.subscription.order) ? '' :
+                              (item.type == 'Trial' ? (clientInfo.can_avail_trial == false ?
+                                (currentSubscription.name != 'Free Trial' ? '' :
+                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>)
+                                : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{tr.t('BUTTON.SUBSCRIBE')}</Link> )
+                              : currentSubscription.subscription_id == item.id ?
+                                  <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--disabled">{tr.t('BUTTON.SUBSCRIBED')}</button>
+                                : <Link className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent" to={ "/i/subscription/" + item.id}>{currentSubscription.subscription_id ? tr.t('BUTTON.UPGRADE') : tr.t('BUTTON.SUBSCRIBE') }</Link>)
                           }
                         </td>
                       </tr>
