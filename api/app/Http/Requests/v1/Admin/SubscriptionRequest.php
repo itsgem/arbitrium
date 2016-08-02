@@ -35,7 +35,7 @@ class SubscriptionRequest extends NrbRequest
                 'max_api_calls'           => 'required|integer|min:0',
                 'max_decisions'           => 'required|integer|min:0',
                 'discounts'               => 'required|money',
-                'order'                   => 'required|unique:subscriptions,order,NULL,id,deleted_at,NULL',
+                'order'                   => 'required|unique:subscriptions,order,NULL,id,deleted_at,NULL|integer',
                 'no_days'                 => 'required_if:type,'.Subscription::TYPE_TRIAL . '|integer'
             ];
 
