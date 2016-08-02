@@ -147,7 +147,7 @@ class LogList extends React.Component {
     let perPage = 10;
     let logList = {last_page: 1};
     let log = {};
-    let fields = ['created', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
+    let fields = ['created_at', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
     let estateNameCsv = '';
     let datacsv = '';
 
