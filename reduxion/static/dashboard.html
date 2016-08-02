@@ -1,0 +1,180 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arbitrium</title>
+  <link href="https://assets.idearobin.com/mdl/material.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script defer type="text/javascript" src="https://assets.idearobin.com/mdl/material.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
+</head>
+
+<body>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header body-bg">
+
+  <header class="mdl-layout__header header-bg">
+    <div class="mdl-grid header-container">
+
+      <div class="mdl-layout__header-row main-header">
+        <!-- LOGO -->
+        <div class="logo">
+          <img src="./img/logo-arbitrium.png"></img>
+        </div>
+        <!-- NAVIGATION -->
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect nav">
+          <div class="mdl-tabs__tab-bar tab">
+              <a href="#dashboard" class="mdl-tabs__tab is-active">DASHBOARD</a>
+              <a href="client.html" class="mdl-tabs__tab">CLIENTS</a>
+              <a href="api.html" class="mdl-tabs__tab">API KEYS</a>
+              <a href="#pricing" class="mdl-tabs__tab">SUBSCRIPTIONS</a>
+              <a href="#admin-accounts" class="mdl-tabs__tab">INVOICE</a>
+              <a href="#admin-accounts" class="mdl-tabs__tab">REPORTS</a>
+              <a href="#logs" class="mdl-tabs__tab">LOGS</a>
+
+              <div class="icon-profile">
+                <!-- Right aligned menu below button -->
+                <button id="menu" class="mdl-button mdl-js-button mdl-button--icon">
+                  <i class="material-icons">account_circle</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu">
+                  <li class="mdl-menu__item">Settings</li>
+                  <li class="mdl-menu__item">Logout</li>
+                </ul>
+
+              </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-js-layout">
+    <div class="mdl-grid dashboard-container">
+      <div class="mdl-cell mdl-cell--3-col">
+      <h6>QUICK LINKS</h6>
+        <div class="mdl-grid quick-links-container">
+          <ul class="mdl-cell mdl-cell--3-col quick-links">
+            <li><i class="material-icons">supervisor_account</i>View Admin Account List</li>
+            <li><i class="material-icons">domain</i>View Company Profile</li>
+            <li><i class="material-icons">vpn_key</i>View API Key List</li>
+            <li><i class="material-icons">monetization_on</i>View Invoices</li>
+            <li><i class="material-icons">description</i>View API Log list</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--9-col dashboard">
+
+        <div class="date-range">
+          <h5 class="search-title">Date Range</h5>
+          <!-- Textfield with Floating Label -->
+          <form action="#">
+
+            <div class="mdl-grid filter-search">
+              <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                  <input class="mdl-textfield__input font-input" type="text" id="terms-of-subscription" value="mm/dd/yyyy">
+                  <label class="mdl-textfield__label" for="sample1">From...</label>
+                </div>
+              </div>
+
+              <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-width">
+                  <input class="mdl-textfield__input font-input" type="text" id="terms-of-subscription" value="mm/dd/yyyy">
+                  <label class="mdl-textfield__label" for="sample1">To...</label>
+                </div>
+              </div>
+
+              <div class="mdl-cell mdl-cell--4-col search-cta">
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i class="material-icons">search</i>Search</button>
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i class="material-icons">clear</i>Clear</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="mdl-grid chart">
+          <div class="mdl-cell mdl-cell--6-col">
+            <h6>API CALLS</h6>
+            <canvas id="apiCalls" width="400" height="400"></canvas>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <h6>API CALL RESPONSE</h6>
+            <ul class="mdl-grid">
+              <li class="mdl-cell mdl-cell--6-col"><h6>200: OK</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">49%</h4></li>
+              <li class="mdl-cell mdl-cell--6-col"><h6>204: NO CONTENT</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">5%</h4></li>
+              <li class="mdl-cell mdl-cell--6-col"><h6>400: BAD REQUEST</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">10%</h4></li>
+              <li class="mdl-cell mdl-cell--6-col"><h6>401: UNAUTHORIZED</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">7%</h4></li>
+              <li class="mdl-cell mdl-cell--6-col"><h6>403: FORBIDDEN</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">5%</h4></li>
+              <li class="mdl-cell mdl-cell--6-col"><h6>404: NOT FOUND</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">3%</h4></li>
+              <li class="mdl-cell mdl-cell--6-col"><h6>500: INTERNAL SERVER ERROR</h6></li>
+              <li class="mdl-cell mdl-cell--4-col"><hr></li>
+              <li class="mdl-cell mdl-cell--2-col"><h4 class="percentage">2%</h4></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+<script>
+  var ctx = document.getElementById("apiCalls");
+  var apiCalls = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: [
+          "200",
+          "204",
+          "400",
+          "401",
+          "403",
+          "404",
+          "500"
+        ],
+    datasets: [
+        {
+          data: [300, 50, 100, 70, 50, 30, 20],
+          backgroundColor: [
+              'rgba(154, 205, 50, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 0, 0, 0.2)',
+              'rgba(255, 0, 0, 0.4)',
+              'rgba(255, 0, 0, 0.6)',
+              'rgba(255, 0, 0, 0.8)',
+              'rgba(255, 0, 0, 1)'
+          ],
+
+          hoverBorderColor: [
+            'rgba(154, 205, 50, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 0, 0, 1)',
+            'rgba(255, 0, 0, 1)',
+            'rgba(255, 0, 0, 1)',
+            'rgba(255, 0, 0, 1)',
+            'rgba(255, 0, 0, 1)'
+          ]
+      }]
+    }
+  });
+</script>
+</div>
+</body>
+</html>
