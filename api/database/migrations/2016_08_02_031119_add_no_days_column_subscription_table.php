@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNoDaysColumnClientSubscription extends Migration
+class AddNoDaysColumnSubscriptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class AddNoDaysColumnClientSubscription extends Migration
      */
     public function up()
     {
-        Schema::table('client_subscriptions', function(Blueprint $table)
+        Schema::table('subscriptions', function(Blueprint $table)
         {
-            $table->integer('no_days')->nullable()->after('subscription_id');
+            $table->integer('no_days')->nullable()->after('order');
         });
     }
 
@@ -25,7 +25,7 @@ class AddNoDaysColumnClientSubscription extends Migration
      */
     public function down()
     {
-        Schema::table('client_subscriptions', function(Blueprint $table)
+        Schema::table('subscriptions', function(Blueprint $table)
         {
             $table->dropColumn('no_days');
         });

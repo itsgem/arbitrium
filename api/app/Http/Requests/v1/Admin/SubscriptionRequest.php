@@ -37,10 +37,17 @@ class SubscriptionRequest extends NrbRequest
                 'discounts'               => 'required|money'
             ];
 
-            $subscription = Subscription::findOrFail($this->route('subscription'));
-            if ($subscription->order != $this->get('order'))
+            if ($this->route('subscription') && $method == 'PUT')
             {
-                $rules['order'] = 'required|unique:subscriptions,order' ;
+                $subscription = Subscription::findOrFail($this->route('subscription'));
+                if ($subscription->order != $this->get('order'))
+                {
+                    $rules['order'] = 'required|unique:subscriptions,order,NULL,id,deleted_at,NULL' ;
+                }
+            }
+            else
+            {
+                $rules['order'] = 'required|unique:subscriptions,order,NULL,id,deleted_at,NULL' ;
             }
         }
 
@@ -61,8 +68,8 @@ class SubscriptionRequest extends NrbRequest
             // Validate that there should only be one TRIAL subscription
             if ($this->get('type') == Subscription::TYPE_TRIAL)
             {
-                if (!$this->get('is_daily')) {
-                    $errors['is_daily'] = trans('errors.'.Errors::SUBSCRIPTION_TRIAL_NUMBER_DAYS);
+                if (!$this->get('no_days')) {
+                    $errors['no_days'] = trans('errors.'.Errors::SUBSCRIPTION_TRIAL_NUMBER_DAYS);
                 }
 
                 if (Subscription::type(Subscription::TYPE_TRIAL)->count() > 0)
