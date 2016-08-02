@@ -68,7 +68,8 @@ class SubscriptionRequest extends NrbRequest
             // Validate that there should only be one TRIAL subscription
             if ($this->get('type') == Subscription::TYPE_TRIAL)
             {
-                if (!$this->get('no_days')) {
+                if (!$this->get('no_days'))
+                {
                     $errors['no_days'] = trans('errors.'.Errors::SUBSCRIPTION_TRIAL_NUMBER_DAYS);
                 }
 
