@@ -83,7 +83,7 @@ class SubscriptionEdit extends React.Component {
                 <div className="mdl-cell mdl-cell--9-col pricing-content">
                   {
                     subscriptions.map(item => {
-                      return <table key={item.order} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
+                      return <table key={item.id} style={{width: '20%', float: 'left'}} className="mdl-data-table mdl-js-data-table table-list">
                         <thead>
                           <tr>
                             <th>{item.name}</th>
