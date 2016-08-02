@@ -37,7 +37,7 @@ class ClientSubscription extends Subscription
     protected $dates = ['valid_from', 'valid_to', 'cancelled_at'];
 
     protected $fillable = [
-        'paypal_payer_id', 'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
+        'no_days', 'paypal_payer_id', 'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
         'paypal_transaction_id', 'paypal_ipn_response', 'name', 'description', 'type', 'country_id',
         'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
         'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
@@ -341,6 +341,19 @@ class ClientSubscription extends Subscription
         if (env('APP_DEBUG') && $term == self::TERM_DAILY)
         {
             $this->valid_to = $this->valid_from->addDay();
+        }
+    }
+
+    public function setValidityRange($date, $days = '')
+    {
+        $this->valid_from = $date;
+        if ($days)
+        {
+            $this->valid_to = $this->valid_from->addDay($days);
+        }
+        else
+        {
+            $this->valid_to = $this->valid_from->addDays(config('paypal.period_days.monthly'));
         }
     }
 
