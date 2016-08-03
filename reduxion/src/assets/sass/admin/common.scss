@@ -58,10 +58,15 @@ div#application {
         width: 1200px;
     }
     .body-bg .client-list .client-tab {
-        background: #0e3192;
+        background: #6c83c4;
+        // background: linear-gradient(#0e3192, #133eb3);
+        border-bottom: 1px solid #e2e2e2;
         height: 48px;
         padding: 0px;
         width: 1200px;
+    }
+    .body-bg .client-list .client-tab label {
+        color: #fff;
     }
     .body-bg .client-list .client-tab a {
         color: #fff;
