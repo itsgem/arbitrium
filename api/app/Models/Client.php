@@ -332,6 +332,7 @@ class Client extends NrbModel
         $client_subscription->description       = $subscription->description;
         $client_subscription->status            = ClientSubscription::STATUS_INACTIVE;
         $client_subscription->status_end        = null;
+        $client_subscription->no_days           = null;
 
         if ($subscription->isTrial())
         {
@@ -350,7 +351,8 @@ class Client extends NrbModel
             $data['is_auto_renew']  = false;
 
             $client_subscription->status        = ClientSubscription::STATUS_ACTIVE;
-            $client_subscription->setValidity($start_date);
+            $client_subscription->no_days       = $data['no_days'];
+            $client_subscription->setValidityRange($start_date, $data['no_days']);
         }
 
         $client_subscription->paypal_plan_id    = $data['paypal_plan_id'];
