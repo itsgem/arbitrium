@@ -191,6 +191,7 @@ class PaypalServices extends NrbServices
         $data['is_auto_renew']   = $request->get('is_auto_renew');
 
         $subscription            = Subscription::findOrFail($data['subscription_id']);
+        $data['no_days']         = $subscription->no_days;
         $data['name']            = $subscription->name;
         $data['description']     = $subscription->description;
         $data['fees']            = $subscription->getFees($data['term']);
