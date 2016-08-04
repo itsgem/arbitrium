@@ -31,6 +31,11 @@ class ReportsController extends ApiController
         return $service->showReportClient($this->request);
     }
 
+    public function showReportGraph(ReportsServices $service)
+    {
+        return $service->showReportGraph($this->request);
+    }
+
     public function showReportInfo($id, ReportsServices $service)
     {
         return $service->showReportInfo($id);

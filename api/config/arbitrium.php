@@ -37,7 +37,8 @@ return [
             'show_api_log'                  => ['method' => 'get',    'path' => 'apilogs/:id'],
 
             'show_api_reports'              => ['method' => 'get',    'path' => 'reports'],
-            'show_api_reports_by_client'    => ['method' => 'get',    'path' => 'reports/client/'],
+            'show_api_reports_by_client'    => ['method' => 'get',    'path' => 'reports/client'],
+            'show_api_reports_graph'        => ['method' => 'get',    'path' => 'reports/graph'],
             'show_api_reports_detail'       => ['method' => 'get',    'path' => 'reports/:id'],
 
             'subscribe'                     => ['method' => 'post',   'path' => 'subscribe'],
