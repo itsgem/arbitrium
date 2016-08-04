@@ -66,6 +66,7 @@ button, select, html, textarea, input, legend {
 }
 .client {
   .clientContent {
+    background: #E9EAEC;
     .alert {
       margin: 15px;
       width: auto;
@@ -127,6 +128,9 @@ button, select, html, textarea, input, legend {
   }
   .subscription-detail .table-list tbody tr td{
     padding: 0px;
+  }
+  .subscription-detail .content{
+    background: #fff;
   }
   .filter-search-bar, .pagination {
     width: 100%;
@@ -207,6 +211,15 @@ div#application {
       color: #fff;
       font-family: "Roboto Condensed",Roboto,'Helvetica Neue',sans-serif;
       font-weight: 300;
+    }
+
+    .section-api-keys{
+      .table-client-list{
+        width: 100%;
+      }
+      .table-list-container{
+        background: #fff;
+      }
     }
 
     #demo_menu-lower-right {

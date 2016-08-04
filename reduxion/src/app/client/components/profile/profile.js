@@ -632,7 +632,7 @@ class ClientProfile extends React.Component {
               </div>
             </div>
              <div className="mdl-button-group">
-                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue right" onClick={(e) => this.modalConfirm(e) }>{tr.t('BUTTON.CANCEL_SUBSCRIPTION')}</button>
+                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue margin-bottom-30" onClick={(e) => this.modalConfirm(e) }>{tr.t('BUTTON.CANCEL_SUBSCRIPTION')}</button>
               </div>
           </div>
         </div>
