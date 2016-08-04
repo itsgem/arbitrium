@@ -34,6 +34,10 @@ import AdminUserManagementList from 'admin/containers/userManagement/userManagem
 import AdminUserManagementAdd from 'admin/containers/userManagement/userManagementAdd';
 import AdminUserManagementUpdate from 'admin/containers/userManagement/userManagementUpdate';
 
+import AdminApiCallsReport from 'admin/containers/reports/adminApiCallsReport';
+import AdminClientApiCallsReport from 'admin/containers/reports/clientApiCallsReport';
+import AdminApiCallDetail from 'admin/containers/reports/adminApiCallDetail';
+
 import AdminClientLogList from 'admin/containers/logs/clientLogList';
 import AdminLogList from 'admin/containers/logs/logList';
 import AdminLogDetail from 'admin/containers/logs/logDetail';
@@ -240,6 +244,12 @@ export default () => (
           <IndexRoute component={AdminUserManagementList}/>
           <Route component={AdminUserManagementAdd} path="new"/>
           <Route component={AdminUserManagementUpdate} path=":id"/>
+        </Route>
+
+        <Route path="reports">
+          <IndexRoute component={AdminApiCallsReport}/>
+          <Route component={AdminClientApiCallsReport} path=":created"/>
+          <Route component={AdminApiCallDetail} path=":created/client/:id"/>
         </Route>
 
         <Route path="settings" >

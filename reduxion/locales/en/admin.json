@@ -25,6 +25,9 @@
       "ADD": "Add New Administrator"
     },
     "REPORTS": "Reports",
+    "REPORTS_SUB": {
+      "API_CALL": "API Calls Report"
+    },
     "LOGS": "Logs",
     "LOGS_SUB": {
       "LIST_CLIENT_API": "Client API logs list",
@@ -106,6 +109,20 @@
     "CLIENT_ACCESS_LOGS": {
       "DOC_TITLE": "Client Access Logs",
       "TITLE": "Client Access Logs"
+    }
+  },
+  "ADMIN_REPORTS": {
+    "ADMIN_API_CALLS_LIST": {
+      "DOC_TITLE": "API Calls Report",
+      "TITLE": "API Calls Report"
+    },
+    "CLIENT_API_CALLS_LIST": {
+      "DOC_TITLE": "Client API Calls Report",
+      "TITLE": "Client API Calls Report"
+    },
+    "API_CALL_DETAIL": {
+      "DOC_TITLE": "API Call Detail",
+      "TITLE": "API Call Detail"
     }
   },
   "ADMIN_USER_MANAGEMENT": {
