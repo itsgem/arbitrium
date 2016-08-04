@@ -130,7 +130,7 @@ export default React.createClass( {
             </div>
           </div>
         </div>
-        <div className="msg">{tr.t('COMMON.MESSAGE.SUCCESS01')}</div>
+        <div className="msg">Success message</div>
       </header>
     );
   },
