@@ -29,6 +29,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth.admin'], function()
         {
             Route::get('',                ['uses' => 'ReportsController@index']);
             Route::get('client',          ['uses' => 'ReportsController@showReportClient']);
+            Route::get('graph',           ['uses' => 'ReportsController@showReportGraph']);
             Route::get('{id}',            ['uses' => 'ReportsController@showReportInfo']);
         });
 
