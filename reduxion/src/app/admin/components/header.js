@@ -93,26 +93,14 @@ export default React.createClass( {
                       <li className="mdl-menu__item"><Link to="/coffee/invoice/">{tr.t('ADMIN_HEADER.INVOICE_SUB.LIST_CLIENT')}</Link></li>
                     </ul>
                   </div>
-                  {/*{role && <div className="container">
-                    <button id="demo-menu-account"
-                      className="menu-account mdl-button mdl-js-button mdl-layout__tab">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS')}</button>
+                  <div className="container">
+                    <button id="demo-menu-reports"
+                      className="menu-reports mdl-button mdl-js-button mdl-layout__tab">{tr.t('ADMIN_HEADER.REPORTS')}</button>
                     <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                        htmlFor="demo-menu-account">
-                      <li className="mdl-menu__item"><Link to="/coffee/account/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.LIST')}</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/account/new/">{tr.t('ADMIN_HEADER.ADMIN_ACCOUNTS_SUB.ADD')}</Link></li>
+                        htmlFor="demo-menu-reports">
+                      <li className="mdl-menu__item"><Link to="/coffee/reports">{tr.t('ADMIN_HEADER.REPORTS_SUB.API_CALL')}</Link></li>
                     </ul>
-                  </div>}*/}
-                  <Link className="mdl-layout__tab" to="/coffee">{tr.t('ADMIN_HEADER.REPORTS')}</Link>
-                  {/*<div className="container">
-                    <button id="demo-menu-logs"
-                      className="menu-logs mdl-button mdl-js-button mdl-layout__tab">{tr.t('ADMIN_HEADER.LOGS')}</button>
-                    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                        htmlFor="demo-menu-logs">
-                      <li className="mdl-menu__item"><Link to="/coffee/logs/">{tr.t('ADMIN_HEADER.LOGS_SUB.LIST_CLIENT_API')}</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/logs/admin/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.ADMIN_ACCESS_LOGS')}</Link></li>
-                      <li className="mdl-menu__item"><Link to="/coffee/logs/client/access-logs">{tr.t('ADMIN_HEADER.LOGS_SUB.CLIENT_ACCESS_LOGS')}</Link></li>
-                    </ul>
-                  </div>*/}
+                  </div>
                   {/* NEW MENU - SETTINGS */}
                   <div className="container">
                     <button id="demo-menu-settings"

@@ -185,6 +185,12 @@
     "USER_DETAILS": "User Details",
     "ACCESSED": "Accessed",
     "FROM": "from",
-    "USERID": "User ID: "
+    "USERID": "User ID: ",
+    "DATE": "Date",
+    "DATE_FROM": "Date From",
+    "DATE_TO": "Date To",
+    "TOTAL_API_CALLS": "Total API Calls",
+    "NUM_SUCCESS": "No. of Success",
+    "NUM_FAILURE": "No. of Failure"
   }
 }

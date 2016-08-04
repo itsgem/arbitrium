@@ -11,6 +11,7 @@ import adminSubscription from 'admin/reducers/subscription'
 import adminLogs from 'admin/reducers/logs'
 import adminSystemSettings from 'admin/reducers/settings'
 import adminInvoice from 'admin/reducers/invoice'
+import adminReports from 'admin/reducers/reports'
 
 import ClientAuth from 'client/reducers/auth'
 import ClientSignup from 'client/reducers/signup'
@@ -35,6 +36,7 @@ export default combineReducers({
   adminLogs,
   adminSystemSettings,
   adminInvoice,
+  adminReports,
   ClientAuth,
   ClientSignup,
   ClientCountry,
