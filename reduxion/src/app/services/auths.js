@@ -339,6 +339,19 @@ export default {
       params: payload
     })
   },
+  getAdminApiCallsReport(payload) {
+    return get('admin/report', {
+      params: payload
+    })
+  },
+  getClientApiCallsReport(payload = {page: 1, per_page: 10}) {
+    return get('admin/report/client', {
+      params: payload
+    })
+  },
+  getAdminApiCallDetail(id) {
+    return get('admin/report/' + id)
+  },
   // ------- CLIENT -------
   signupLocal(payload) {
       return post('user/client/register', {
