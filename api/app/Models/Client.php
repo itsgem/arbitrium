@@ -357,6 +357,7 @@ class Client extends NrbModel
 
         $client_subscription->paypal_plan_id    = $data['paypal_plan_id'];
         $client_subscription->term              = $data['term'];
+        $client_subscription->is_unli           = $data['is_unli'];
         $client_subscription->is_auto_renew     = $data['is_auto_renew'];
 
         $client_subscription->save();
@@ -469,6 +470,7 @@ class Client extends NrbModel
 
         $params = [
             'client_id'     => $this->id,
+            'is_unlimited'  => (bool)get_val($params, 'is_unli', 0),
             'max_api_calls' => (string)get_val($params, 'max_api_calls', 0),
             'max_decisions' => (string)get_val($params, 'max_decisions', 0),
         ];
