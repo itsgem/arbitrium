@@ -107,6 +107,10 @@ select:focus {
   background: $base-blue;
 }
 
+.mdl-button--raised{
+  color: #0e3192;
+}
+
 .mdl-button.mdl-button--fullwidth {
   width: 100%;
 }
@@ -388,7 +392,7 @@ select {
 }
 
 .header-title {
-  background: $base-blue;
+  background: #6c83c4;
   padding: 15px;
   margin-bottom: 20px;
 
@@ -540,6 +544,3 @@ select {
     padding: 10px 0 0 !important;
   }
 }
-
-
-
