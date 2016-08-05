@@ -94,15 +94,23 @@ class ClientApiCallDetail extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>{tr.t('LABEL.PARAMETER')}</h6>
-              <p className="script script-box-container">
-                {clientApiCallDetail.parameter}
-              </p>
+              <pre className="script script-box-container">
+                <code>
+                  {
+                    JSON.stringify(JSON.parse(clientApiCallDetail.parameter),null,2)
+                  }
+                </code>
+              </pre>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>{tr.t('LABEL.RESPONSE')}</h6>
-              <p className="script script-box-container">
-                {clientApiCallDetail.response}
-              </p>
+              <pre className="script script-box-container">
+                <code>
+                  {
+                    JSON.stringify(JSON.parse(clientApiCallDetail.response),null,2)
+                  }
+                </code>
+              </pre>
             </div>
             <div className="mdl-grid mdl-cell--12-col cta-bottom">
               <div className="mdl-cell mdl-cell--4-col left-align">

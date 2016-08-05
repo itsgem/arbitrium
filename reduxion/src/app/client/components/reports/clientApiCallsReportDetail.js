@@ -158,12 +158,12 @@ class ClientApiCallsReportDetail extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.METHOD')}</label>
             </div>
           </div>
-          <div id="searchLogList" className="mdl-cell mdl-cell--5-col margin-top-20 text-right search-cta">
+          <div className="mdl-cell mdl-cell--5-col text-right">
             <button
-              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
             <button
-              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised margin-right-10"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
             <a
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
