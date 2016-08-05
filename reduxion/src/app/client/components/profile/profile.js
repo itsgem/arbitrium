@@ -585,7 +585,7 @@ class ClientProfile extends React.Component {
           </div>
           <div className="mdl-button-group">
             <Link
-              className="mdl-button mdl-js-button mdl-button--raised"
+              className="mdl-button mdl-js-button mdl-button--raised cancel"
               to="/i" >{tr.t('BUTTON.CANCEL')}
             </Link>
             <button
@@ -632,7 +632,7 @@ class ClientProfile extends React.Component {
               </div>
             </div>
              <div className="mdl-button-group">
-                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue margin-bottom-30" onClick={(e) => this.modalConfirm(e) }>{tr.t('BUTTON.CANCEL_SUBSCRIPTION')}</button>
+                <button className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--blue margin-bottom-30" onClick={(e) => this.modalConfirm(e) }>{tr.t('BUTTON.CANCEL_SUBSCRIPTION')}</button>
               </div>
           </div>
         </div>

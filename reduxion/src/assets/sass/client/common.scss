@@ -219,6 +219,13 @@ div#application {
       }
       .table-list-container{
         background: #fff;
+        .mdl-button-group{
+          .mdl-button--raised{
+            &.cancel{
+              padding: 0px;
+            }
+          }
+        }
       }
     }
 
