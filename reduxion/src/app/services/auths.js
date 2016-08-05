@@ -523,5 +523,18 @@ export default {
   },
   clientApiLogInfo(id) {
     return get('client/api-log/' + id);
+  },
+  getApiCallsReport(payload) {
+    return get('client/report', {
+      params: payload
+    })
+  },
+  getClientApiCallsReportDetail(payload = {page: 1, per_page: 10}) {
+    return get('client/report/client', {
+      params: payload
+    })
+  },
+  getClientApiCallDetail(id) {
+    return get('client/report/' + id)
   }
 };

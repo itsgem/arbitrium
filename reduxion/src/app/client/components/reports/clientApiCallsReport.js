@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import json2csv from 'json2csv';
 import moment from 'moment';
 
-class AdminApiCallsReport extends React.Component {
+class ApiCallsReport extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ class AdminApiCallsReport extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">
           <Link
           className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-view-edit"
-          to={"/coffee/reports/" + data.created}><i className="material-icons">open_in_new</i></Link>
+          to={"/i/reports/" + data.created}><i className="material-icons">open_in_new</i></Link>
         </td>
       </tr>
     )
@@ -133,7 +133,7 @@ class AdminApiCallsReport extends React.Component {
     });
   }
   download(e) {
-    if (this.props.adminApiCallsList.data.length <= 0) {
+    if (this.props.clientApiCallsList.data.length <= 0) {
       e.preventDefault();
     }
   }
@@ -142,42 +142,41 @@ class AdminApiCallsReport extends React.Component {
     let alter = false;
     let pagination = [];
     let perPage = 10;
-    let adminApiCallsList = {last_page: 1};
+    let clientApiCallsList = {last_page: 1};
     let log = {};
     let fields = ['created', 'total', 'count_success', 'count_error'];
     let estateNameCsv = '';
     let datacsv = '';
 
-    if (Object.keys(this.props.adminApiCallsList).length) {
-      json2csv({ data: this.props.adminApiCallsList.data, fields: fields }, function(err, csv) {
+    if (Object.keys(this.props.clientApiCallsList).length) {
+      json2csv({ data: this.props.clientApiCallsList.data, fields: fields }, function(err, csv) {
         estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
       counter = true;
-      adminApiCallsList = this.props.adminApiCallsList;
-      log = adminApiCallsList.data;
-      pagination[0] = this.prevPage(0, (adminApiCallsList.current_page > 1 ? (adminApiCallsList.current_page - 1): false));
+      clientApiCallsList = this.props.clientApiCallsList;
+      log = clientApiCallsList.data;
+      pagination[0] = this.prevPage(0, (clientApiCallsList.current_page > 1 ? (clientApiCallsList.current_page - 1): false));
       let i = 1;
-      if (adminApiCallsList.last_page > adminApiCallsList.max_pagination_links) {
-        i = Math.round(adminApiCallsList.max_pagination_links / 2);
-        i = i < adminApiCallsList.current_page ? (adminApiCallsList.current_page - 2) : 1;
-        i = (adminApiCallsList.last_page >  adminApiCallsList.max_pagination_links) && i > (adminApiCallsList.last_page - adminApiCallsList.max_pagination_links) ? ((adminApiCallsList.last_page - adminApiCallsList.max_pagination_links) + 1) : i;
+      if (clientApiCallsList.last_page > clientApiCallsList.max_pagination_links) {
+        i = Math.round(clientApiCallsList.max_pagination_links / 2);
+        i = i < clientApiCallsList.current_page ? (clientApiCallsList.current_page - 2) : 1;
+        i = (clientApiCallsList.last_page >  clientApiCallsList.max_pagination_links) && i > (clientApiCallsList.last_page - clientApiCallsList.max_pagination_links) ? ((clientApiCallsList.last_page - clientApiCallsList.max_pagination_links) + 1) : i;
       }
       let pageLimitCounter = 0;
-      for (i; i <= adminApiCallsList.last_page ; i++) {
-        if (pageLimitCounter >= adminApiCallsList.max_pagination_links) {
+      for (i; i <= clientApiCallsList.last_page ; i++) {
+        if (pageLimitCounter >= clientApiCallsList.max_pagination_links) {
           break;
         }
         pageLimitCounter++;
-        pagination[i] = this.pagination(i, adminApiCallsList.current_page);
+        pagination[i] = this.pagination(i, clientApiCallsList.current_page);
       }
-      pagination[i+1] = this.nextPage(i+1, ((adminApiCallsList.current_page == adminApiCallsList.last_page)|| adminApiCallsList.last_page == 0 ? false : (adminApiCallsList.current_page + 1 )), adminApiCallsList.last_page );
-      perPage = adminApiCallsList.per_page;
+      pagination[i+1] = this.nextPage(i+1, ((clientApiCallsList.current_page == clientApiCallsList.last_page)|| clientApiCallsList.last_page == 0 ? false : (clientApiCallsList.current_page + 1 )), clientApiCallsList.last_page );
+      perPage = clientApiCallsList.per_page;
     }
     return (
       <div className="filter-search">
-        <p>{tr.t('LABEL.FILTER_SEARCH')}</p>
         <div className="mdl-grid filter-search-bar">
           <div className="mdl-cell mdl-cell--2-col">
             <div id="date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
@@ -201,16 +200,16 @@ class AdminApiCallsReport extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.DATE_TO')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--8-col search-cta">
+          <div className="mdl-cell mdl-cell--8-col margin-top-20 text-right">
             <button
-              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
             <button
-              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised margin-right-10"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
             <a
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
-              disabled={this.props.adminApiCallsList.data.length <= 0}
+              disabled={this.props.clientApiCallsList.data.length <= 0}
               href={datacsv}
               onClick={(e)=> this.download(e)}
               target="_blank"
@@ -348,7 +347,7 @@ class AdminApiCallsReport extends React.Component {
       dateTo: dateTo
     };
 
-    this.props.adminApiCallsReport(payload);
+    this.props.clientApiCallsReport(payload);
   }
   page(e, pageNumber) {
     var dateFrom = this.state.date_from;
@@ -361,8 +360,8 @@ class AdminApiCallsReport extends React.Component {
       dateFrom: (dateFrom ? dateFrom : ''),
       dateTo: (dateTo ? dateTo : '')
     };
-    this.props.adminApiCallsReport(payload);
+    this.props.clientApiCallsReport(payload);
   }
 };
 
-export default AdminApiCallsReport;
+export default ApiCallsReport;

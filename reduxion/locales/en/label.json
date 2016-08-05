@@ -111,6 +111,7 @@
     "DATE_CREATED_TO": "Date Created To",
     "RESPONSE": "Response",
     "DOWNLOAD_LOGS": "Download Logs",
+    "DOWNLOAD_REPORTS": "Download Reports",
     "FAILED_LOGIN_ATTEMPTS": "Failed login attempts:",
     "PASSWORD": "Password",
     "CONFIRM_PASSWORD": "Confirm Pasword",

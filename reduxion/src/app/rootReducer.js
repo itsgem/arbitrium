@@ -18,6 +18,7 @@ import ClientSignup from 'client/reducers/signup'
 import ClientCountry from 'client/reducers/country'
 import clientProfile from 'client/reducers/profile/profile'
 import clientApiLogs from 'client/reducers/apilogs'
+import clientReports from 'client/reducers/reports'
 
 import clientChangePassword from 'client/reducers/profile/changePassword'
 import clientChangeEmail from 'client/reducers/profile/changeEmail'
@@ -43,6 +44,7 @@ export default combineReducers({
   clientProfile,
   clientChangePassword,
   clientApiLogs,
+  clientReports,
   clientChangeEmail,
   ClientApi,
   CLientInvoice,

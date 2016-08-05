@@ -38,6 +38,7 @@
     "API_KEYS": "API Keys",
     "SUBSCRIPTION": "Subscription",
     "INVOICE": "Invoice",
+    "REPORTS": "Reports",
     "API_LOGS": "API Logs",
     "LOGOUT": "Logout"
   },
@@ -171,6 +172,20 @@
     "API_LOG_DETAIL": {
       "DOC_TITLE": "API log detail",
       "TITLE": "API log detail"
+    }
+  },
+  "CLIENT_REPORTS": {
+    "API_CALLS_LIST": {
+      "DOC_TITLE": "API Calls Report",
+      "TITLE": "API Calls Report"
+    },
+    "API_CALLS_LIST_DETAIL": {
+      "DOC_TITLE": "API Calls Detailed List",
+      "TITLE": "API Calls Detailed List"
+    },
+    "API_CALL_DETAIL": {
+      "DOC_TITLE": "API Call Detail",
+      "TITLE": "API Call Detail"
     }
   }
 }
