@@ -111,7 +111,7 @@ class ClientApiCallsReport extends React.Component {
 
     if (Object.keys(this.props.clientApiCallsList.data).length) {
       json2csv({ data: this.props.clientApiCallsList.data, fields: fields }, function(err, csv) {
-        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
 
@@ -141,7 +141,7 @@ class ClientApiCallsReport extends React.Component {
       <div className="filter-search">
         <p>Filter / Search</p>
         <div className="mdl-grid filter-search-bar">
-          <div className="mdl-cell mdl-cell--4-col">
+          <div className="mdl-cell mdl-cell--3-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="companyName" ref="companyName" />
               <label className="mdl-textfield__label">{tr.t('LABEL.COMPANY_NAME')}</label>
@@ -159,7 +159,7 @@ class ClientApiCallsReport extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.METHOD')}</label>
             </div>
           </div>
-          <div id="searchLogList" className="mdl-cell mdl-cell--4-col search-cta">
+          <div id="searchLogList" className="mdl-cell mdl-cell--5-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
@@ -172,7 +172,7 @@ class ClientApiCallsReport extends React.Component {
               href={datacsv}
               onClick={(e)=> this.download(e)}
               target="_blank"
-              download={estateNameCsv + ".csv"}>{tr.t('LABEL.DOWNLOAD_LOGS')}
+              download={estateNameCsv + ".csv"}>{tr.t('LABEL.DOWNLOAD_REPORTS')}
             </a>
           </div>
         </div>

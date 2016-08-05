@@ -70,6 +70,10 @@ import ClientApiUpdate from 'client/containers/api/apiUpdate';
 import ClientSubscriptionDetail from 'client/containers/subscription/subscriptionDetail';
 import ClientSubscriptionPayment from 'client/containers/subscription/subscriptionPayment';
 
+import ClientApiCallsReport from 'client/containers/reports/clientApiCallsReport';
+import ClientApiCallsReportDetail from 'client/containers/reports/clientApiCallsReportDetail';
+import ClientApiCallDetail from 'client/containers/reports/clientApiCallDetail';
+
 import ClientInvoice from 'client/containers/invoice/invoiceList';
 import ClientInvoiceDetails from 'client/containers/invoice/invoiceDetails';
 import ClientApiLogs from 'client/containers/apilogs/apilogsList';
@@ -307,6 +311,11 @@ export default () => (
         <Route path="apilogs">
           <IndexRoute component={ClientApiLogs}/>
           <Route component={ClientApiLogsDetails} path=":id" />
+        </Route>
+        <Route path="reports">
+          <IndexRoute component={ClientApiCallsReport}/>
+          <Route component={ClientApiCallsReportDetail} path=":created"/>
+          <Route component={ClientApiCallDetail} path=":created/client/:id"/>
         </Route>
         <Route path="systemsettings">
           <IndexRoute component={ClientSystemSettings}/>

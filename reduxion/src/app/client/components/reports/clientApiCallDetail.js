@@ -6,7 +6,7 @@ import {createError} from 'utils/error';
 import { Link } from 'react-router';
 import moment from 'moment';
 
-class AdminApiCallDetail extends React.Component {
+class ClientApiCallDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,8 +56,8 @@ class AdminApiCallDetail extends React.Component {
     }
   }
   render () {
-    let adminApiCallDetail = this.props.adminApiCallDetail.data;
-    let clientDetail = this.props.adminApiCallDetail.data.client;
+    let clientApiCallDetail = this.props.clientApiCallDetail.data;
+    let clientDetail = this.props.clientApiCallDetail.data.client;
     let {errors, errorServer} = this.state ? this.state :'';
     if (errorServer) {
       errors = Object.assign({}, errorServer.response);
@@ -74,30 +74,30 @@ class AdminApiCallDetail extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>{tr.t('LABEL.USER_ID')}</h6>
-              <p>{adminApiCallDetail.user_id}</p>
+              <p>{clientApiCallDetail.user_id}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>{tr.t('LABEL.IP_ADDRESS')}</h6>
-              <p>{adminApiCallDetail.ipaddress}</p>
+              <p>{clientApiCallDetail.ipaddress}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>{tr.t('LABEL.STATUS_CODE')}</h6>
-              <p>{adminApiCallDetail.status_code}</p>
+              <p>{clientApiCallDetail.status_code}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col bottom-margin">
               <h6>{tr.t('LABEL.URL')}</h6>
-              <p>{adminApiCallDetail.url}</p>
+              <p>{clientApiCallDetail.url}</p>
             </div>
             <div className="mdl-cell mdl-cell--6-col">
               <h6>{tr.t('LABEL.DATE_CREATED')}</h6>
-              <p>{moment(adminApiCallDetail.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
+              <p>{moment(clientApiCallDetail.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
             </div>
             <div className="mdl-cell mdl-cell--12-col">
               <h6>{tr.t('LABEL.PARAMETER')}</h6>
               <pre className="script script-box-container">
                 <code>
                   {
-                    JSON.stringify(JSON.parse(adminApiCallDetail.parameter),null,2)
+                    JSON.stringify(JSON.parse(clientApiCallDetail.parameter),null,2)
                   }
                 </code>
               </pre>
@@ -107,7 +107,7 @@ class AdminApiCallDetail extends React.Component {
               <pre className="script script-box-container">
                 <code>
                   {
-                    JSON.stringify(JSON.parse(adminApiCallDetail.response),null,2)
+                    JSON.stringify(JSON.parse(clientApiCallDetail.response),null,2)
                   }
                 </code>
               </pre>
@@ -116,7 +116,7 @@ class AdminApiCallDetail extends React.Component {
               <div className="mdl-cell mdl-cell--4-col left-align">
                 <Link
                   className="margin-left-0 margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                  to={ "/coffee/reports/" + moment(this.props.params.created).format('YYYY-MM-DD')}>{tr.t('BUTTON.BACK')}</Link>
+                  to={ "/i/reports/" + moment(this.props.params.created).format('YYYY-MM-DD')}>{tr.t('BUTTON.BACK')}</Link>
               </div>
             </div>
           </div>
@@ -137,8 +137,8 @@ class AdminApiCallDetail extends React.Component {
   }
 };
 
-AdminApiCallDetail.mixins = [LinkedStateMixin];
-AdminApiCallDetail.defaultProps = {
+ClientApiCallDetail.mixins = [LinkedStateMixin];
+ClientApiCallDetail.defaultProps = {
     errors: []
 };
-export default AdminApiCallDetail;
+export default ClientApiCallDetail;
