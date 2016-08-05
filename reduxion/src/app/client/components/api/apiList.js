@@ -252,7 +252,7 @@ class ApiList extends React.Component {
             </div>
             <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
               <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
+                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue margin-right-10"
                 onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
               <button
                 className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"

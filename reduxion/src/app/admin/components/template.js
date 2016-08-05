@@ -2,7 +2,7 @@ import React from 'react';
 import tr from 'i18next';
 import AdminHeader from './header';
 
-class Dashboard extends React.Component {
+class Template extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,4 +40,4 @@ class Dashboard extends React.Component {
   }
 };
 
-export default Dashboard;
+export default Template;

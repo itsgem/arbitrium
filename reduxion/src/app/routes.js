@@ -8,7 +8,8 @@ import NoMatch from 'common/components/noMatch';
 
 // ----- Admin
 import AdminApplication from 'admin/components/application';
-import AdminDashboard from 'admin/components/dashboard';
+import AdminTemplate from 'admin/components/template';
+import AdminDasboard from 'admin/containers/dashboard/main';
 import AdminLogin from 'admin/containers/auth/login';
 import AdminLogout from 'admin/containers/auth/adminLogout';
 import AdminForgot from 'admin/containers/auth/forgot';
@@ -48,7 +49,8 @@ import AdminProfile from 'admin/containers/userProfile/userProfile';
 import AdminSystemSettings from 'admin/containers/systemSettings/settings';
 
 // ----- Client
-import ClientDashboard from 'client/components/dashboard';
+import ClientDashboard from 'client/containers/dashboard/main';
+import ClientTemplate from 'client/components/dashboard';
 import ClientLogin from 'client/containers/auth/login';
 
 import ClientLogout from 'client/containers/auth/clientLogout';
@@ -213,13 +215,13 @@ function islogin(nextState, replace, cb) {
 export default () => (
   <Route component={AdminApplication} name="home" path="/">
     <Route component={AdminApplication} name="home" path="coffee" >
-      <IndexRoute component={AdminDashboard} onEnter={requireAuth} />
       <Route component={AdminLogin} path="login" onEnter={islogin}/>
       <Route component={AdminLogout} path="logout"/>
       <Route component={AdminForgot} path="forgot" onEnter={islogin}/>
       <Route component={AdminConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
 
-      <Route component={AdminDashboard} name="home" onEnter={requireAuth}>
+      <Route component={AdminTemplate} name="home" onEnter={requireAuth}>
+        <IndexRoute component={AdminDasboard} onEnter={requireAuth}/>
         <Route path="client" >
           <IndexRoute component={AdminClientList} />
           <Route component={AdminClientAdd} path="new"/>
@@ -278,7 +280,6 @@ export default () => (
     </Route>
 
     <Route name="home" path="i" >
-      <IndexRoute component={ClientDashboard} onEnter={requireAuth}/>
       <Route component={ClientLogin} name="login" path="login" onEnter={islogin}/>
       <Route component={Signup} path="signup" onEnter={islogin}/>
       <Route component={ClientLogout} path="logout"/>
@@ -286,7 +287,8 @@ export default () => (
       <Route component={ConfirmResetPassword} name="ResetPassword" path="resetPassword" onEnter={islogin}/>
       <Route component={RegistrationComplete} name="verifyEmail" path="verifyEmail" onEnter={islogin}/>
 
-      <Route component={ClientDashboard} name="home" onEnter={requireAuth}>
+      <Route component={ClientTemplate} name="home" onEnter={requireAuth}>
+        <IndexRoute component={ClientDashboard} onEnter={requireAuth}/>
         <Route path="client">
           <IndexRoute component={ClientProfile}/>
           <Route component={ClientProfile} path="profile" />

@@ -324,7 +324,7 @@ export default {
   getAdminLogList(payload) {
     return get('admin/api-log', {
       params: payload
-    })
+    });
   },
   getAdminLogDetail(id) {
     return get('admin/api-log/' + id)
@@ -332,25 +332,30 @@ export default {
   getAdminAccessLogList(payload) {
     return get('admin/logs/admin', {
       params: payload
-    })
+    });
   },
   getClientAccessLogList(payload) {
     return get('admin/logs/client', {
       params: payload
-    })
+    });
   },
   getAdminApiCallsReport(payload) {
     return get('admin/report', {
       params: payload
-    })
+    });
   },
   getClientApiCallsReport(payload = {page: 1, per_page: 10}) {
     return get('admin/report/client', {
       params: payload
-    })
+    });
   },
   getAdminApiCallDetail(id) {
-    return get('admin/report/' + id)
+    return get('admin/report/' + id);
+  },
+  adminGraphReport(payload) {
+    return get('admin/report/graph', {
+      params: payload
+    });
   },
   // ------- CLIENT -------
   signupLocal(payload) {
@@ -536,5 +541,10 @@ export default {
   },
   getClientApiCallDetail(id) {
     return get('client/report/' + id)
+  },
+  clientGraphReport(payload) {
+    return get('client/report/graph', {
+      params: payload
+    });
   }
 };
