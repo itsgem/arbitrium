@@ -105,7 +105,7 @@ class ClientApiCallsReportDetail extends React.Component {
     let perPage = 10;
     let clientApiCallsListDetail = {last_page: 1};
     let log = {};
-    let fields = ['created_at', 'company_name', 'status_code', 'method'];
+    let fields = ['created_at', 'client.company_name', 'status_code', 'method'];
     let estateNameCsv = '';
     let datacsv = '';
 
