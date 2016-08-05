@@ -192,6 +192,7 @@ class PaypalServices extends NrbServices
 
         $subscription            = Subscription::findOrFail($data['subscription_id']);
         $data['no_days']         = $subscription->no_days;
+        $data['is_unli']         = $subscription->is_unli;
         $data['name']            = $subscription->name;
         $data['description']     = $subscription->description;
         $data['fees']            = $subscription->getFees($data['term']);
@@ -325,6 +326,7 @@ class PaypalServices extends NrbServices
             {
                 // [Core-API] Subscribe package plan
                 $client->coreApiSubscribe([
+                    'is_unli'       => $subscription->is_unli,
                     'max_api_calls' => $subscription->max_api_calls,
                     'max_decisions' => $subscription->max_decisions,
                 ]);

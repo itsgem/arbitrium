@@ -146,6 +146,7 @@ class SubscriptionServices extends NrbServices
             {
                 // [Core-API] Subscribe package plan
                 $client->coreApiSubscribe([
+                    'is_unli'       => $client_subscription->is_unli,
                     'max_api_calls' => $client_subscription->max_api_calls,
                     'max_decisions' => $client_subscription->max_decisions,
                 ]);
