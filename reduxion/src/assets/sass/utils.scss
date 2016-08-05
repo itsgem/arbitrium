@@ -60,7 +60,9 @@ h6 {
 .margin-bottom-40 {
   margin-bottom: 40px !important;
 }
-
+.margin-bottom-30 {
+  margin-bottom: 30px !important;
+}
 .margin-right-0 {
   margin-right: 0!important;
 }
@@ -378,40 +380,6 @@ div#application {
     left: 0;
   }
 }
-
-// @media (min-width: 992px) {
-//   .client {
-//     .section-api-keys{
-//       width: 1332px;
-//     }
-//     .subscription-type {
-//       .text-content {
-//         max-width: 260px;
-//       }
-//       .pricing-content {
-//         max-width: 780px;
-//       }
-//     }
-//   }
-// }
-//
-// @media (max-width: 1332px) {
-//   .client {
-//     .section-api-keys{
-//       width: 1332px;
-//     }
-//   }
-//   .box-inner{
-//     width: 1500px;
-//   }
-// }
-// @media (min-width: 1132px) {
-//   .client {
-//     .section-api-keys{
-//       width: 100%;
-//     }
-//   }
-// }
 
 @media (max-width: 1280px) {
   .client {
