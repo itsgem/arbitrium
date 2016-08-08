@@ -350,9 +350,9 @@ class ClientAdd extends React.Component {
                 {errors.rep_department && <small className="mdl-textfield__error shown">{errors.rep_department[0]}</small>}
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--9-col">
-              <legend>{tr.t('LABEL.ALTERNATIVE_REPRESENTATIVE')}</legend>
-            </div>
+          </div>
+          <div className="mdl-grid">
+            <legend>{tr.t('LABEL.ALTERNATIVE_REPRESENTATIVE')}</legend>
             <div className="mdl-cell mdl-cell--6-col">
               <div className={this.formClassNames('alt_first_name', errors)}>
                 <input
