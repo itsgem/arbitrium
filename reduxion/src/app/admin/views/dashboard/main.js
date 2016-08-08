@@ -1,6 +1,4 @@
 import React from 'react';
-import DocTitle from 'common/components/docTitle';
-import tr from 'i18next';
 import { Link } from 'react-router';
 import MainDashboard from 'admin/components/dashboard/main';
 import {createError} from 'utils/error';
