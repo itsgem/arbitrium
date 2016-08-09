@@ -148,20 +148,20 @@ class Main extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col search-cta text-right">
-              <button onClick={(e) => this.searchList(e) } className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i className="material-icons">search</i>Search</button>
-              <button onClick={(e) => this.clearSearch(e)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i className="material-icons">clear</i>Clear</button>
+              <button onClick={(e) => this.searchList(e) } className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
+              <button onClick={(e) => this.clearSearch(e)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
             </div>
           </div>
         </div>
         <div className="mdl-grid chart">
           <div className="mdl-cell mdl-cell--6-col">
-            <h6>API CALLS</h6>
+            <h6>{tr.t('ADMIN_DASHBOARD.TITLE.API_CALLS')}</h6>
             <div className="graph-container">
               <canvas id="apiCalls" width="400" height="400"></canvas>
             </div>
           </div>
           <div className="mdl-cell mdl-cell--6-col">
-            <h6>API CALL RESPONSE</h6>
+            <h6>{tr.t('ADMIN_DASHBOARD.TITLE.API_CALL_RESPONSE')}</h6>
               {
                 statusCode.map(item => {
                   return this.graphInfoPercentage(item, totalCount);
