@@ -129,9 +129,9 @@ class Subscription extends NrbModel
     protected $dates = [];
 
     protected $fillable = [
-        'fee_monthly_tax', 'fee_yearly_tax', 'is_unli', 'no_days', 'order', 'name', 'description', 'type', 'country_id',
-        'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
-        'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
+        'order', 'no_days', 'name', 'description', 'type', 'is_unli', 'country_id',
+        'fee_monthly', 'fee_monthly_maintenance', 'fee_monthly_tax','fee_yearly', 'fee_yearly_license',
+        'fee_yearly_maintenance', 'fee_yearly_tax', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
     ];
 
@@ -271,9 +271,9 @@ class Subscription extends NrbModel
                     $this->fee_initial_setup
                 ])
             ),
-            ClientSubscription::TERM_MONTHLY.'_With_Tax_Percentage' => $monthly_tax_percentage,
-            ClientSubscription::TERM_ANNUALLY.'_With_Tax_Percentage' => $annually_tax_percentage,
-            ClientSubscription::TERM_MONTHLY.'_With_Total_Price'  => format_money(
+            ClientSubscription::TERM_MONTHLY.'_With_Tax_Percentage' => format_money($monthly_tax_percentage),
+            ClientSubscription::TERM_ANNUALLY.'_With_Tax_Percentage' => format_money($annually_tax_percentage),
+            ClientSubscription::TERM_MONTHLY.'_With_Total_Price' => format_money(
                 array_sum([
                     $monthly,
                     $this->fee_initial_setup,
