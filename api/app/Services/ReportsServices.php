@@ -46,6 +46,10 @@ class ReportsServices extends NrbServices
             $client = Client::findOrfail($client_id);
             $this->auth = $client->user->getApiAuth();
         }
+        else
+        {
+            $client_ids = Client::select('id', 'company_name')->companyNameLike($request->get('company_name'))->orderBy('company_name')->get();
+        }
 
         $result = $this->external_request->setAuth($this->auth)
             ->send(get_api_url($this->endpoints['show_api_reports_by_client']), $request->all());
