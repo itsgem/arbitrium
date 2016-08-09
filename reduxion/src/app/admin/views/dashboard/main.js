@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import MainDashboard from 'admin/components/dashboard/main';
 import {createError} from 'utils/error';
+import DocTitle from 'common/components/docTitle';
 
 export default React.createClass( {
   contextTypes: {
