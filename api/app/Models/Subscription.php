@@ -271,8 +271,8 @@ class Subscription extends NrbModel
                     $this->fee_initial_setup
                 ])
             ),
-            ClientSubscription::TERM_MONTHLY.'_With_Tax_Percentage' => format_money($monthly_tax_percentage),
-            ClientSubscription::TERM_ANNUALLY.'_With_Tax_Percentage' => format_money($annually_tax_percentage),
+            ClientSubscription::TERM_MONTHLY.'_With_Tax_Percentage' => $monthly_tax_percentage,
+            ClientSubscription::TERM_ANNUALLY.'_With_Tax_Percentage' => $annually_tax_percentage,
             ClientSubscription::TERM_MONTHLY.'_With_Total_Price'  => format_money(
                 array_sum([
                     $monthly,
