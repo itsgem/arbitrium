@@ -383,7 +383,7 @@ div#application {
 
 @media (max-width: 1280px) {
   .client {
-    .subscription-type {
+    .subscription-type, .dashboard {
       width: 1020px!important;
     }
   }

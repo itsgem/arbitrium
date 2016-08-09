@@ -177,7 +177,7 @@ class ApiCallsReport extends React.Component {
     }
     return (
       <div className="filter-search">
-        <div className="mdl-grid filter-search-bar">
+        <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--2-col">
             <div id="date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input
