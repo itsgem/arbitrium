@@ -37,10 +37,11 @@ class ClientSubscription extends Subscription
     protected $dates = ['valid_from', 'valid_to', 'cancelled_at'];
 
     protected $fillable = [
-        'fee_monthly_tax', 'fee_yearly_tax', 'is_unli', 'no_days', 'paypal_payer_id', 'paypal_plan_id', 'paypal_agreement_id', 'paypal_token_id', 'paypal_approval_url',
-        'paypal_transaction_id', 'paypal_ipn_response', 'name', 'description', 'type', 'country_id',
-        'fee_monthly', 'fee_monthly_maintenance', 'fee_yearly', 'fee_yearly_license',
-        'fee_yearly_maintenance', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
+        'no_days', 'paypal_payer_id', 'paypal_plan_id', 'paypal_agreement_id',
+        'paypal_token_id', 'paypal_approval_url',
+        'paypal_transaction_id', 'paypal_ipn_response', 'is_unli', 'name', 'description', 'type', 'country_id',
+        'fee_monthly', 'fee_monthly_maintenance','fee_monthly_tax', 'fee_yearly', 'fee_yearly_license',
+        'fee_yearly_maintenance', 'fee_yearly_tax', 'fee_initial_setup', 'max_api_calls', 'max_decisions', 'discounts',
         'created_by', 'updated_by'
     ];
 
