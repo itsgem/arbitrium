@@ -23,7 +23,8 @@
     "SUCCESS_FREE_TRIAL": "Successfully subscribe the Free Trial",
     "REDIRECTING_PAYPAL": "Redirecting to PayPal",
     "ARE_YOU_SURE": "Are you sure you want to ",
-    "CANCEL_SUBSCRIPTION": "Are you sure you want to cancel this subscription?"
+    "CANCEL_SUBSCRIPTION": "Are you sure you want to cancel this subscription?",
+    "DUPLICATE_IP": "The ip addresses must be unique."
   },
   "LABEL": {
     "SUBSCRIPTION_PERIOD": "Subscription Period",
