@@ -62,6 +62,13 @@
       "REGISTERING_YOUR_ACCOUNT": "Registering your account."
     }
   },
+  "CLIENT_DASHBOARD": {
+    "DOC_TITLE": "Dashobard",
+    "TITLE": {
+      "API_CALLS": "API Calls",
+      "API_CALL_RESPONSE": "API Call Response"
+    }
+  },
   "CLIENT_PROFILE": {
     "DOC_TITLE": "My Profile",
     "TITLE": "My Profile"
