@@ -217,7 +217,7 @@ class ApiUpdate extends React.Component {
     let chkArr =  document.getElementsByName("chkRights[]");
     let permissions = [];
     let count = 0;
-    let has_duplicate = false;
+    let hasDuplicate = false;
     for(let k=0;k < chkArr.length;k++) {
       if (chkArr[k].checked) {
         permissions[count] = {api_permission_id: chkArr[k].value};
@@ -247,11 +247,11 @@ class ApiUpdate extends React.Component {
       return obj.ip_address;
     }).forEach(function (element, index, arr) {
       if (arr.indexOf(element) !== index) {
-        has_duplicate = true;
+        hasDuplicate = true;
       }
     });
 
-    if (has_duplicate) {
+    if (hasDuplicate) {
       this.setState({
         errors: {
           ip_addresses: [tr.t('NOTEFICATION_MESSAGE.DUPLICATE_IP')]
