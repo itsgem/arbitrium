@@ -145,11 +145,12 @@ class ApiCallsReport extends React.Component {
     let clientApiCallsList = {last_page: 1};
     let log = {};
     let fields = ['created', 'total', 'count_success', 'count_error'];
+    var fieldNames = ['Date Created', 'Total', 'No. of Success', 'No. of Failure'];
     let estateNameCsv = '';
     let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsList).length) {
-      json2csv({ data: this.props.clientApiCallsList.data, fields: fields }, function(err, csv) {
+      json2csv({ data: this.props.clientApiCallsList.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
         estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
