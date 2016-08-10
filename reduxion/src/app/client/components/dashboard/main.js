@@ -32,7 +32,7 @@ class Main extends React.Component {
           }
 
           statusCode[index] = graphInfo[index].status_code;
-          statusCodeColor[index] = "rgba(0, 255, 0, " + ( ((graphInfo[index].status_code - 200) == 0) ? 1 : ("0." + (10 - (10 - statusCount[200]) )) ) + ")";
+          statusCodeColor[index] = "rgba(0, 128, 0, " + ( ((graphInfo[index].status_code - 200) == 0) ? 1 : ("0." + (10 - (10 - statusCount[200]) )) ) + ")";
           statusCodeData[index] = graphInfo[index].count;
 
         } else if (graphInfo[index].status_code < 500 && graphInfo[index].status_code >= 400) {
@@ -50,7 +50,7 @@ class Main extends React.Component {
           }
 
           statusCode[index] = graphInfo[index].status_code;
-          statusCodeColor[index] = "rgba(255, 64, 0, " + ( ((graphInfo[index].status_code - 500) == 0) ? 1 : ("0." + (10 -(10 - statusCount[500]) )) ) + ")";
+          statusCodeColor[index] = "rgba(255, 0, 0, " + ( ((graphInfo[index].status_code - 500) == 0) ? 1 : ("0." + (10 -(10 - statusCount[500]) )) ) + ")";
           statusCodeData[index] = graphInfo[index].count;
         }
       }
@@ -148,7 +148,7 @@ class Main extends React.Component {
               </div>
             </div>
             <div className="mdl-cell mdl-cell--6-col text-right">
-              <button onClick={(e) => this.searchList(e) } className="margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
+              <button onClick={(e) => this.searchList(e) } className="margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
               <button onClick={(e) => this.clearSearch(e)} className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
             </div>
           </div>

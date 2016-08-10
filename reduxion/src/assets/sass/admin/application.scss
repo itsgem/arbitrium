@@ -64,6 +64,11 @@
           padding: 0px;
           width: 260px;
 
+          .header-title{
+            width: 100%;
+            margin-bottom: 0px;
+          }
+
           .quick-links{
             width: 260px;
             margin: 0px;
@@ -71,9 +76,10 @@
 
             a {
               border-bottom: 1px solid #e6e6e6;
+              color: #000;
+              display: inline-block;
               font-size: 14px;
               padding: 16px;
-              display: inline-block;
               width: 100%;
 
               i {
@@ -85,6 +91,7 @@
 
             a:hover {
               background: #f0f5fa;
+              color: #0e3192;
 
               i {
                 color: #ff6600;
@@ -95,7 +102,6 @@
       }
       .dashboard{
         background: #fff;
-        margin-top: 56px;
 
         .date-range{
           margin: 20px;
