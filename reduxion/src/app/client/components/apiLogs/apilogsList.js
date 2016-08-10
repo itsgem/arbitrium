@@ -164,11 +164,12 @@ class apilogList extends React.Component {
     let listApiLogs = {last_page: 1, total: null};
     let apiLogsData = {};
     let fields = ['created_at', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
+    let fieldNames = ['Date Created', 'IP Address', 'Method', 'Status Code', 'URL', 'Parameter'];
     let estateNameCsv ='';
     let datacsv ='';
     if (Object.keys(this.props.successApiLogsList).length) {
 
-      json2csv({ data: this.props.successApiLogsList.data, fields: fields }, function(err, csv) {
+      json2csv({ data: this.props.successApiLogsList.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
         estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });

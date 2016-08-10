@@ -15,6 +15,9 @@
         font-size: 15px;
       }
     }
+    .mdl-button:disabled {
+      background: #e1e1e1;
+    }
   }
   .vw-login, .vw-signup, .vw-forgot, .vw-resetPassword{
     background-image: url('//s3.amazonaws.com/assets.idearobin.com/arbitrium/bg-client.jpg');

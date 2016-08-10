@@ -5,10 +5,8 @@ import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 class LocalAuthenticationForm extends React.Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
       password: null,
       email: null,
@@ -57,6 +55,7 @@ class LocalAuthenticationForm extends React.Component {
             className='mdl-button mdl-js-button mdl-button--blue mdl-button--fullwidth mdl-js-ripple-effect'
             id='btn-login'
             type='button'
+            disabled={ this.state.loading ? true : false }
             onClick={(e) => this.login(e)}>{ this.props.buttonCaption }</button>
 
           <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
@@ -85,24 +84,35 @@ class LocalAuthenticationForm extends React.Component {
     } );
   }
   toLogin(e) {
-    if (e.which == 13 || e.keyCode == 13) {
-      this.login(e);
+    if (this.state.loading == false) {
+      if (e.which == 13 || e.keyCode == 13) {
+        this.login(e);
+      }
     }
   }
   login( e ) {
     e.preventDefault();
+    if (this.state.loading == false) {
+      this.setState( {
+        loading: true,
+      } );
+      let thisRender = this;
+      setTimeout(function() {
+        if (!thisRender.props.authenticated) {
+          thisRender.setState( {
+            loading: false,
+          } );
+        }
+      }, 3000);
 
-    this.setState( {
-      loading: true,
-    } );
-    let {email, password} = this.refs;
+      let {email, password} = this.refs;
 
-    this.props.onButtonClick( {
-      password: password.value,
-      email: email.value
-    } );
+      this.props.onButtonClick( {
+        password: password.value,
+        email: email.value
+      } );
+    }
   }
-
 }
 
 LocalAuthenticationForm.mixins = [LinkedStateMixin];

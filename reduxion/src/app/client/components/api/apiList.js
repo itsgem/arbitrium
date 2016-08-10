@@ -264,8 +264,8 @@ class ApiList extends React.Component {
               <tr>
                 <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
                 <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DESCRIPTION')}</th>
-                <th width="500" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.API_KEY')}</th>
-                <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
+                <th width="450" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.API_KEY')}</th>
+                <th width="350" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
               </tr>
             </thead>
             <tbody>

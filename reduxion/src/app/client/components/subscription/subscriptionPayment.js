@@ -14,8 +14,15 @@ class SubscriptionPayment extends React.Component {
       errorServer: null,
       permissions: {},
       validFrom: null,
-      validTo: null
+      validTo: null,
+      selectTerm: null
     };
+  }
+  componentWillMount() {
+    this.setState({
+        selectTerm: this.props.subscriptionItem.data.type == "Trial" ? "Trial" : null
+      }
+    );
   }
   componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -139,7 +146,6 @@ class SubscriptionPayment extends React.Component {
               </label>
             </div>
           </div>
-
           <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--12-col">
               <h6>{tr.t('CLIENT_SUBCRIPTION.LABEL.PAYMENT_SUMMARY')}</h6>
@@ -150,35 +156,71 @@ class SubscriptionPayment extends React.Component {
                   <h6>{tr.t('CLIENT_SUBCRIPTION.LABEL.PRICE_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_SUBSCRIPTION')}</p>
+                  <p>
+                    {
+                      this.state.selectTerm == "Annually" ? tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_SUBSCRIPTION') : tr.t('CLIENT_SUBCRIPTION.LABEL.MONTHLY_SUBSCRIPTION')
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$140"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? subscriptionItem.fee_yearly : subscriptionItem.fee_monthly
+                    }
+                  </p>
                 </div>
+                { this.state.selectTerm == "Annually" &&
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_LICENSE_FEE')}</p>
+                  <p>
+                    {
+                      this.state.selectTerm == "Annually" ? tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_LICENSE_FEE') : tr.t('CLIENT_SUBCRIPTION.LABEL.MONTHLY_LICENSE_FEE')
+                    }
+                  </p>
                 </div>
+                }
+                { this.state.selectTerm == "Annually" &&
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? subscriptionItem.fee_yearly_license : subscriptionItem.fee_monthly_license
+                    }
+                  </p>
                 </div>
+                }
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.INITIAL_SETUP_FEE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">{!this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" : subscriptionItem.fee_initial_setup }</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE')}</p>
+                  <p>
+                    {
+                      this.state.selectTerm == "Annually" ? tr.t('CLIENT_SUBCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE') : tr.t('CLIENT_SUBCRIPTION.LABEL.MONTHLY_MAINTENANCE_FEE')
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? subscriptionItem.fee_yearly_maintenance : subscriptionItem.fee_monthly_maintenance
+                    }
+                  </p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.SUB_TOTAL')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
+                    <p className="right">
+                      {
+                        !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                        this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Setup : subscriptionItem.total.Monthly_With_Setup
+                      }
+                    </p>
                   </div>
                 </div>
               </div>
@@ -192,20 +234,35 @@ class SubscriptionPayment extends React.Component {
                   <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.SUB_TOTAL_PRICE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Setup : subscriptionItem.total.Monthly_With_Setup
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.TAX_PERCENTAGE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "7%"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? (subscriptionItem.fee_yearly_tax ? subscriptionItem.fee_yearly_tax : 0) : (subscriptionItem.fee_monthly_tax ? subscriptionItem.fee_monthly_tax : 0)
+                    }
+                  </p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.COMPUTED_TAX')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
+                    <p className="right">
+                      {
+                        !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                        this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Tax_Percentage : subscriptionItem.total.Monthly_With_Tax_Percentage
+                      }
+                    </p>
                   </div>
                 </div>
               </div>
@@ -219,32 +276,40 @@ class SubscriptionPayment extends React.Component {
                   <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.SUB_TOTAL_PRICE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$140"}</p>
-                </div>
-                <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.CREDITS')}</p>
-                </div>
-                <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$8"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Setup : subscriptionItem.total.Monthly_With_Setup
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.TAX')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$60"}</p>
+                  <p className="right">
+                    {
+                      !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Tax_Percentage : subscriptionItem.total.Monthly_With_Tax_Percentage
+                    }
+                  </p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.TOTAL_PRICE')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{subscriptionItem.type == "Trial" ? "0" : "$50"}</p>
+                    <p className="right">
+                      {
+                        !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
+                        this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Total_Price : subscriptionItem.total.Monthly_With_Total_Price
+                      }
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <div className="mdl-grid mdl-grid--no-spacing">
             <div className="mdl-cell mdl-cell--4-col"></div>
             <div className="mdl-cell mdl-cell--8-col footer-action">
@@ -299,9 +364,18 @@ class SubscriptionPayment extends React.Component {
       term: termValue
     };
 
-    this.props.subscriptionValidity(payload)
-      .then(() => this.setValidityPeriod())
-      .catch(createError);
+    let resetValidDate = { selectTerm: termValue };
+
+    if ( termValue ) {
+      this.props.subscriptionValidity(payload)
+        .then(() => this.setValidityPeriod())
+        .catch(createError);
+    } else {
+      resetValidDate.validFrom = null;
+      resetValidDate.validTo = null;
+    }
+
+    this.setState(resetValidDate);
   }
   setValidityPeriod() {
     let validPeriod = this.props.subscriptionValidityPeriod.data;

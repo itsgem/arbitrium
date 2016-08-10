@@ -15,8 +15,15 @@ class SubscriptionDetail extends React.Component {
       errorServer: null,
       permissions: {},
       validFrom: null,
-      validTo: null
+      validTo: null,
+      selectTerm: null
     };
+  }
+  componentWillMount() {
+    this.setState({
+        selectTerm: this.props.selectedSubscriptionInfo.data.type == "Trial" ? "Trial" : null
+      }
+    );
   }
   componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -126,112 +133,172 @@ class SubscriptionDetail extends React.Component {
               </label>
             </div>
           </div>
-
           <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--12-col padding-top-40">
+            <div className="mdl-cell mdl-cell--12-col">
               <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.PAYMENT_SUMMARY')}</h6>
             </div>
-            <div className="mdl-cell mdl-cell--4-col box-container">
+            <div className="mdl-cell mdl-cell--4-col box-border">
               <div className="mdl-grid">
-                <div className="mdl-cell mdl-cell--12-col padding-top-20">
+                <div className="mdl-cell mdl-cell--12-col">
                   <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.PRICE_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_SUBSCRIPTION')}</p>
+                  <p>
+                    {
+                      this.state.selectTerm == "Annually" ? tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_SUBSCRIPTION') : tr.t('ADMIN_SUBSCRIPTION.LABEL.MONTHLY_SUBSCRIPTION')
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
+                  {}
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly : selectedSubscriptionInfo.fee_monthly
+                    }
+                  </p>
                 </div>
+                { selectedSubscriptionInfo.fee_monthly_license || this.state.selectTerm == "Annually" &&
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_LICENSE_FEE')}</p>
+                  <p>
+                    {
+                      this.state.selectTerm == "Annually" ? tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_LICENSE_FEE') : tr.t('ADMIN_SUBSCRIPTION.LABEL.MONTHLY_LICENSE_FEE')
+                    }
+                  </p>
                 </div>
+                }
+                { selectedSubscriptionInfo.fee_monthly_license || this.state.selectTerm != "Monthly" &&
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_license : selectedSubscriptionInfo.fee_monthly_license
+                    }
+                  </p>
                 </div>
+                }
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.INITIAL_SETUP_FEE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
+                  <p className="right">{
+                    this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" : selectedSubscriptionInfo.fee_initial_setup }</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE')}</p>
+                  <p>
+                    {
+                      this.state.selectTerm == "Annually" ? tr.t('ADMIN_SUBSCRIPTION.LABEL.ANNUAL_MAINTENANCE_FEE') : tr.t('ADMIN_SUBSCRIPTION.LABEL.MONTHLY_MAINTENANCE_FEE')
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_maintenance : selectedSubscriptionInfo.fee_monthly_maintenance
+                    }
+                  </p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.SUB_TOTAL')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
+                    <p className="right">
+                      {
+                        this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                        this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Setup : selectedSubscriptionInfo.total.Monthly_With_Setup
+                      }
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--4-col box-container">
+            <div className="mdl-cell mdl-cell--4-col box-border">
               <div className="mdl-grid">
-                <div className="mdl-cell mdl-cell--12-col padding-top-20">
+                <div className="mdl-cell mdl-cell--12-col">
                   <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.SUB_TOTAL_PRICE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Setup : selectedSubscriptionInfo.total.Monthly_With_Setup
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX_PERCENTAGE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '0%' : '7%'}</p>
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_tax : selectedSubscriptionInfo.fee_monthly_tax
+                    }
+                  </p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.COMPUTED_TAX')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
+                    <p className="right">
+                      {
+                        this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                        this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Tax_Percentage : selectedSubscriptionInfo.total.Monthly_With_Tax_Percentage
+                      }
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mdl-cell mdl-cell--4-col box-container">
+            <div className="mdl-cell mdl-cell--4-col box-border">
               <div className="mdl-grid">
-                <div className="mdl-cell mdl-cell--12-col padding-top-20">
+                <div className="mdl-cell mdl-cell--12-col">
                   <h6>{tr.t('ADMIN_SUBSCRIPTION.LABEL.OVERALL_COMPUTATION')}</h6>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.SUB_TOTAL_PRICE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$140'}</p>
-                </div>
-                <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.CREDITS')}</p>
-                </div>
-                <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$8'}</p>
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Setup : selectedSubscriptionInfo.total.Monthly_With_Setup
+                    }
+                  </p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$60'}</p>
+                  <p className="right">
+                    {
+                      this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Tax_Percentage : selectedSubscriptionInfo.total.Monthly_With_Tax_Percentage
+                    }
+                  </p>
                 </div>
                 <div className="mdl-grid total">
                   <div className="mdl-cell mdl-cell--9-col">
                     <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TOTAL_PRICE')}</p>
                   </div>
                   <div className="mdl-cell mdl-cell--3-col">
-                    <p className="right">{this.props.params.subscription_id == 1 ? '$0' : '$50'}</p>
+                    <p className="right">
+                      {
+                        this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
+                        this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Total_Price : selectedSubscriptionInfo.total.Monthly_With_Total_Price
+                      }
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <div className="mdl-grid mdl-grid--no-spacing">
             <div className="mdl-cell mdl-cell--4-col"></div>
             <div className="mdl-cell mdl-cell--8-col footer-action margin-top-10">
@@ -285,9 +352,17 @@ class SubscriptionDetail extends React.Component {
       term: termValue
     };
 
+    let resetValidDate = { selectTerm: termValue };
+    if ( termValue ) {
     this.props.subscriptionValidity(payload)
       .then(() => this.setValidityPeriod())
       .catch(createError);
+    } else {
+      resetValidDate.validFrom = null;
+      resetValidDate.validTo = null;
+    }
+
+    this.setState(resetValidDate);
   }
   setValidityPeriod() {
     let validPeriod = this.props.subscriptionValidityPeriod.data;
