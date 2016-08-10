@@ -59,7 +59,10 @@ class Login extends React.Component {
           </div>
         </div>
         <div className="login-view">
-          <LocalLoginForm login={this.props.login}/>
+          <LocalLoginForm
+            login={this.props.login}
+            authenticated={this.props.authenticated}
+          />
           <div className="mdl-grid mdl-grid--no-spacing" id="other-links">
             <div className="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
                 <Link

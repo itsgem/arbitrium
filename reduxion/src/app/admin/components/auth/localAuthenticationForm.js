@@ -4,17 +4,15 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import cx from 'classnames';
 
 class LocalAuthenticationForm extends React.Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
       password: null,
       email: null,
       loading:false
     }
   }
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
     }
@@ -51,12 +49,12 @@ class LocalAuthenticationForm extends React.Component {
             className='auth-button primary mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect'
             id='btn-login'
             type='button'
+            disabled={ this.state.loading ? true : false }
             onClick={(e) => this.login(e)}>{ this.props.buttonCaption }</button>
         </form>
       </div>
     );
   }
-
   formClassNames( field ) {
     return cx( 'mdl-js-textfield mdl-textfield--floating-label mdl-block mdl-textfield is-dirty', {
       'is-invalid is-dirty': this.props.errors[ field ],
@@ -64,24 +62,34 @@ class LocalAuthenticationForm extends React.Component {
     } );
   }
   toLogin(e) {
-    if (e.which == 13 || e.keyCode == 13) {
-      this.login(e);
+    if (!this.state.loading) {
+      if (e.which == 13 || e.keyCode == 13) {
+        this.login(e);
+      }
     }
   }
   login( e ) {
-    this.setState( {
-      loading: true,
-    } );
+    if (!this.state.loading) {
+      this.setState( {
+        loading: true,
+      } );
+      let thisRender = this;
+      setTimeout(function() {
+        if (!thisRender.props.authenticated) {
+          thisRender.setState( {
+            loading: false,
+          } );
+        }
+      }, 3000);
 
-    let {email, password} = this.refs;
-    e.preventDefault();
-    this.props.onButtonClick( {
-      password: password.value,
-      email: email.value
-    } );
-
+      let {email, password} = this.refs;
+      e.preventDefault();
+      this.props.onButtonClick( {
+        password: password.value,
+        email: email.value
+      } );
+    }
   }
-
 }
 
 LocalAuthenticationForm.mixins = [LinkedStateMixin];

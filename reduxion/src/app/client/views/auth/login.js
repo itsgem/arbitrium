@@ -56,7 +56,10 @@ class Login extends React.Component {
           </div>
         </div>
         <div className="login-view">
-          <LocalLoginForm login={this.props.login}/>
+          <LocalLoginForm
+            login={this.props.login}
+            authenticated={this.props.authenticated}
+          />
         </div>
       </div>
     );
