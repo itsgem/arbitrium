@@ -22,8 +22,10 @@ export default React.createClass( {
           <div className="mdl-layout__content">
               <div className="mdl-grid dashboard-container">
                 <div className="mdl-cell mdl-cell--3-col">
-                  <h6>{tr.t('ADMIN_DASHBOARD.TITLE.QUICK_LINKS')}</h6>
                   <div className="mdl-grid quick-links-container">
+                  <div className="header-title">
+                    <p>{tr.t('ADMIN_DASHBOARD.TITLE.QUICK_LINKS')}</p>
+                  </div>
                     <ul className="mdl-cell mdl-cell--3-col quick-links">
                       <li><Link to="/coffee/settings/account"><i className="material-icons">supervisor_account</i>{tr.t('ADMIN_DASHBOARD.QUICK_LINKS_MENU.VIEW_ADMIN_ACCOUNT_LIST')}</Link></li>
                       <li><Link to="/coffee/client"><i className="material-icons">domain</i>{tr.t('ADMIN_DASHBOARD.QUICK_LINKS_MENU.VIEW_CLIENT_LIST')}</Link></li>

@@ -18,6 +18,9 @@ export default React.createClass( {
           title={tr.t('CLIENT_API_LOGS.API_LOGS_LIST.DOC_TITLE')}
         />
         <div className="page-content">
+          <div className="header-title">
+            <p>{tr.t('ADMIN_DASHBOARD.TITLE.DASHBOARD')}</p>
+          </div>
           <MainDashboard
               graphInfo={this.props.graphInfo}
               graphReport={this.props.graphReport}

@@ -64,6 +64,7 @@
   "ADMIN_DASHBOARD": {
     "DOC_TITLE": "Dashboard",
     "TITLE": {
+      "DASHBOARD": "Dashboard",
       "QUICK_LINKS": "Quick Links",
       "API_CALLS": "API Calls",
       "API_CALL_RESPONSE": "API Call Response"

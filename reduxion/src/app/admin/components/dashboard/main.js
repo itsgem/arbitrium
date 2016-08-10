@@ -32,7 +32,7 @@ class Main extends React.Component {
           }
 
           statusCode[index] = graphInfo[index].status_code;
-          statusCodeColor[index] = "rgba(0, 255, 0, " + ( ((graphInfo[index].status_code - 200) == 0) ? 1 : ("0." + (10 - (10 - statusCount[200]) )) ) + ")";
+          statusCodeColor[index] = "rgba(0, 128, 0, " + ( ((graphInfo[index].status_code - 200) == 0) ? 1 : ("0." + (10 - (10 - statusCount[200]) )) ) + ")";
           statusCodeData[index] = graphInfo[index].count;
 
         } else if (graphInfo[index].status_code < 500 && graphInfo[index].status_code >= 400) {
@@ -50,7 +50,7 @@ class Main extends React.Component {
           }
 
           statusCode[index] = graphInfo[index].status_code;
-          statusCodeColor[index] = "rgba(255, 64, 0, " + ( ((graphInfo[index].status_code - 500) == 0) ? 1 : ("0." + (10 -(10 - statusCount[500]) )) ) + ")";
+          statusCodeColor[index] = "rgba(255, 0, 0, " + ( ((graphInfo[index].status_code - 500) == 0) ? 1 : ("0." + (10 -(10 - statusCount[500]) )) ) + ")";
           statusCodeData[index] = graphInfo[index].count;
         }
       }
@@ -123,6 +123,9 @@ class Main extends React.Component {
 
     return (
       <div className="mdl-cell mdl-cell--9-col dashboard">
+      <div className="header-title">
+        <p>{tr.t('ADMIN_DASHBOARD.TITLE.DASHBOARD')}</p>
+      </div>
         <div className="date-range">
           <div className="mdl-grid filter-search-bar">
             <div className="mdl-cell mdl-cell--3-col">
