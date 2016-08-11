@@ -32,9 +32,12 @@
       "VERIFY_EMAIL": "Click on the link to verify your email address and activate your account."
     }
   },
+  "CLIENT_TOPBAR": {
+    "MY_PROFILE": "My Profile"
+  },
   "CLIENT_SIDEBAR": {
     "DASHBOARD": "Dashboard",
-    "MY_PROFILE": "My Profile",
+    "PROFILE": "Profile",
     "API_KEYS": "API Keys",
     "SUBSCRIPTION": "Subscription",
     "INVOICE": "Invoice",

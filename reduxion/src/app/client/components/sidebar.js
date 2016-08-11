@@ -7,6 +7,13 @@ class ClientSidebar extends React.Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount(){
+    $('#side-client, .client .submenu').hover(function(){
+      $(".client .submenu").stop().slideDown(200);
+    }, function(){
+      $(".client .submenu").stop().slideUp(200);
+    });
+  }
   componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -33,7 +40,15 @@ class ClientSidebar extends React.Component {
         </header>
         <nav className="sideNav arbitrium-navigation mdl-navigation">
           <Link id="side-home" className="mdl-navigation__link" to="/i"><i className="material-icons" role="presentation">home</i>{tr.t('CLIENT_SIDEBAR.DASHBOARD')}</Link>
-          <Link id="side-client" className="mdl-navigation__link" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.MY_PROFILE')}</Link>
+
+          <div className="menu-hover">
+            <a id="side-client" className="mdl-navigation__link full-width" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.PROFILE')}</a>
+              <ul className="submenu">
+                <li><a href="">My Profile</a></li>
+                <li><a href="">Change Password</a></li>
+                <li><a href="">Change Email Address</a></li>
+              </ul>
+          </div>
           <Link id="side-api" className="mdl-navigation__link" to="/i/api"><i className="material-icons" role="presentation">group_work</i>{tr.t('CLIENT_SIDEBAR.API_KEYS')}</Link>
           <Link id="side-subscription" className="mdl-navigation__link" to="/i/subscription"><i className="material-icons" role="presentation">redeem</i>{tr.t('CLIENT_SIDEBAR.SUBSCRIPTION')}</Link>
           <Link id="side-invoice" className="mdl-navigation__link" to="/i/invoice"><i className="material-icons" role="presentation">description</i>{tr.t('CLIENT_SIDEBAR.INVOICE')}</Link>
