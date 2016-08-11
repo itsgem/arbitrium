@@ -257,7 +257,7 @@ class ApiUpdate extends React.Component {
           ip_addresses: [tr.t('NOTEFICATION_MESSAGE.DUPLICATE_IP')]
         }
       });
-      this.props.apiUpdateSuccess = false;
+      return false;
     }
 
     let payload = {
