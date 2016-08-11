@@ -154,13 +154,13 @@ class ClientApiCallsReport extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.STATUS_CODE')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--2-col">
+          <div className="mdl-cell mdl-cell--1-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="method" ref="method"/>
               <label className="mdl-textfield__label">{tr.t('LABEL.METHOD')}</label>
             </div>
           </div>
-          <div id="searchLogList" className="mdl-cell mdl-cell--5-col search-cta">
+          <div id="searchLogList" className="mdl-cell mdl-cell--6-col search-cta">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>

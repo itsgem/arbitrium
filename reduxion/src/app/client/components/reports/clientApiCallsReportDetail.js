@@ -140,8 +140,8 @@ class ClientApiCallsReportDetail extends React.Component {
 
     return (
       <div className="filter-search">
-        <div className="mdl-grid filter-search-bar">
-          <div className="mdl-cell mdl-cell--3-col">
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="companyName" ref="companyName" />
               <label className="mdl-textfield__label">{tr.t('LABEL.COMPANY_NAME')}</label>
@@ -153,13 +153,13 @@ class ClientApiCallsReportDetail extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.STATUS_CODE')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--2-col">
+          <div className="mdl-cell mdl-cell--1-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="method" ref="method"/>
               <label className="mdl-textfield__label">{tr.t('LABEL.METHOD')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--5-col text-right">
+          <div className="mdl-cell mdl-cell--7-col text-right">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
