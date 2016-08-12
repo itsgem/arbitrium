@@ -26,6 +26,15 @@ class ApiUpdate extends React.Component {
     if (!document.querySelector('.alert')) {
       return false;
     }
+
+    if (errors && errors.ip_addresses) {
+      if (errors.ip_addresses[0] == tr.t('NOTEFICATION_MESSAGE.DUPLICATE_IP')) {
+        document.getElementById('error_message').innerHTML = tr.t('NOTEFICATION_MESSAGE.ERROR_REVIEW_DETAILS');
+      }
+    } else {
+        document.getElementById('error_message').innerHTML = tr.t('NOTEFICATION_MESSAGE.PLEASE_FILL_REQUIRED_FIELDS');
+    }
+
     if (Object.keys(errors).length) {
       document.querySelector('.alert').style.display = 'block';
       let target = document.getElementById('top');
