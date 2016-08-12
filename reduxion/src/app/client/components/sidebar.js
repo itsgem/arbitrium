@@ -8,10 +8,10 @@ class ClientSidebar extends React.Component {
     super(props);
   }
   componentDidMount(){
-    $('#side-client, .client .submenu').hover(function(){
-      $(".client .submenu").stop().slideDown(200);
+    $('.menu-hover').hover(function(){
+      $(this).find(".submenu").stop().slideDown(200);
     }, function(){
-      $(".client .submenu").stop().slideUp(200);
+      $(this).find(".submenu").stop().slideUp(200);
     });
   }
   componentWillReceiveProps() {
@@ -41,14 +41,20 @@ class ClientSidebar extends React.Component {
         <nav className="sideNav arbitrium-navigation mdl-navigation">
           <Link id="side-home" className="mdl-navigation__link" to="/i"><i className="material-icons" role="presentation">home</i>{tr.t('CLIENT_SIDEBAR.DASHBOARD')}</Link>
           <div className="menu-hover">
-            <p id="side-client" className="mdl-navigation__link full-width" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.PROFILE')}</p>
+            <p id="side-client" className="mdl-navigation__link full-width"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.PROFILE')}</p>
               <ul className="submenu">
-                <li><a href="">My Profile</a></li>
-                <li><a href="">Change Password</a></li>
-                <li><a href="">Change Email Address</a></li>
+                <li><Link to="/i/client/profile">{tr.t('CLIENT_PROFILE.TITLE')}</Link></li>
+                <li><Link to="/i/client/profile/change_password">{tr.t('CLIENT_CHANGE_PASSWORD.TITLE')}</Link></li>
+                <li><Link to="/i/client/profile/change_email">{tr.t('CHANGE_EMAIL_ADDRESS.TITLE')}</Link></li>
               </ul>
           </div>
-          <Link id="side-api" className="mdl-navigation__link" to="/i/api"><i className="material-icons" role="presentation">group_work</i>{tr.t('CLIENT_SIDEBAR.API_KEYS')}</Link>
+          <div className="menu-hover">
+            <p id="side-api" className="mdl-navigation__link full-width"><i className="material-icons" role="presentation">group_work</i>{tr.t('CLIENT_SIDEBAR.API_KEYS')}</p>
+            <ul className="submenu">
+              <li><Link to="/i/api">{tr.t('CLIENT_API_KEY.API_LIST.TITLE')}</Link></li>
+              <li><Link to="/i/api/new">{tr.t('CLIENT_API_KEY.API_KEY_ADD.TITLE')}</Link></li>
+            </ul>
+          </div>
           <Link id="side-subscription" className="mdl-navigation__link" to="/i/subscription"><i className="material-icons" role="presentation">redeem</i>{tr.t('CLIENT_SIDEBAR.SUBSCRIPTION')}</Link>
           <Link id="side-invoice" className="mdl-navigation__link" to="/i/invoice"><i className="material-icons" role="presentation">description</i>{tr.t('CLIENT_SIDEBAR.INVOICE')}</Link>
           <Link id="side-reports" className="mdl-navigation__link" to="/i/reports"><i className="material-icons" role="presentation">burst_mode</i>{tr.t('CLIENT_SIDEBAR.REPORTS')}</Link>

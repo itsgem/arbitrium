@@ -21,11 +21,6 @@
     }
 
     .menu-hover {
-
-      #side-client, #side-api {
-        background: #fff;
-      }
-
       .mdl-navigation__link  {
         padding: 6px 24px;
 
@@ -41,8 +36,11 @@
         }
       }
 
-
-
+      :hover{
+        background: #FF6600;
+        color: #fff;
+        cursor: pointer;
+      }
 
       .submenu{
         display: none;
@@ -51,11 +49,13 @@
         width: 100%;
 
         li{
-          display: inline;
+          display: flex;
+          width: 100%;
 
           a{
             color: #555555;
             padding: 18px 20px 18px 76px;
+            width: 100%;
           }
         }
       }
