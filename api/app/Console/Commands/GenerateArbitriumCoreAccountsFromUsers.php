@@ -44,7 +44,7 @@ class GenerateArbitriumCoreAccountsFromUsers extends Command
         $this->info('['.$this->signature.'] ===== START =====');
         Log::info('['.$this->signature.'] ===== START =====');
 
-        $users = User::all();
+        $users = User::active()->get();
 
         $loading = $this->output->createProgressBar($users->count());
 

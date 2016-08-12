@@ -25,7 +25,7 @@ export default class Application extends React.Component {
               <a id="top" ></a>
               <div className="alert alert-warning">
                 <i className="material-icons"></i>
-                <div className="content">
+                <div id="error_message" className="content">
                   {tr.t('NOTEFICATION_MESSAGE.PLEASE_FILL_REQUIRED_FIELDS')}
                 </div>
               </div>
