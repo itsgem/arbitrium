@@ -98,6 +98,7 @@
     "ADD_IP_ADDRESS": "Add IP Address",
     "TEST_KEY": "Test Key",
     "STATUS_CODE": "Status Code",
+    "STATUS_DESC": "Status Description",
     "ID": "ID",
     "EMAIL_ADDRESS": "E-mail Address",
     "NEW_EMAIL_ADDRESS": "New E-mail Address",
@@ -193,6 +194,13 @@
     "DATE_TO": "Date To",
     "TOTAL_API_CALLS": "Total API Calls",
     "NUM_SUCCESS": "No. of Success",
-    "NUM_FAILURE": "No. of Failure"
+    "NUM_FAILURE": "No. of Failure",
+    "STATUS_200": "OK",
+    "STATUS_204": "No Content",
+    "STATUS_400": "Bad Request",
+    "STATUS_401": "Unauthorized",
+    "STATUS_403": "Forbidden",
+    "STATUS_404": "Not Found",
+    "STATUS_500": "Internal Server Error"
   }
 }

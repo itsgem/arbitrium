@@ -25,6 +25,7 @@ class ClientApiCallsReport extends React.Component {
         <td className="mdl-data-table__cell--non-numeric">{moment(data.created_at).format('YYYY-MM-DD HH:mm:ss')}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.client.company_name}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.status_code}</td>
+        <td className="mdl-data-table__cell--non-numeric">{data.description}</td>
         <td className="mdl-data-table__cell--non-numeric">{data.method}</td>
         <td className="mdl-data-table__cell--non-numeric">
           <Link
@@ -105,13 +106,38 @@ class ClientApiCallsReport extends React.Component {
     let perPage = 10;
     let clientApiCallsList = {last_page: 1};
     let log = {};
-    let fields = ['created_at', 'client.company_name', 'status_code', 'method'];
-    let fieldNames = ['Date Created', 'Company Name', 'Status Code', 'Method'];
+    let fields = ['created_at', 'client.company_name', 'status_code', 'description', 'method'];
+    let fieldNames = ['Date Created', 'Company Name', 'Status Code', 'Description', 'Method'];
     let estateNameCsv = '';
     let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsList.data).length) {
-      json2csv({ data: this.props.clientApiCallsList.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
+      let reportData = this.props.clientApiCallsList.data;
+      for (let index in reportData) {
+        switch (reportData[index].status_code) {
+          case 200 :
+            reportData[index].description = tr.t('LABEL.STATUS_200');
+            break;
+          case 204 :
+            reportData[index].description = tr.t('LABEL.STATUS_204');
+            break;
+          case 400 :
+            reportData[index].description = tr.t('LABEL.STATUS_400');
+            break;
+          case 401 :
+            reportData[index].description = tr.t('LABEL.STATUS_401');
+            break;
+          case 403 :
+            reportData[index].description = tr.t('LABEL.STATUS_403');
+            break;
+          case 404 :
+            reportData[index].description = tr.t('LABEL.STATUS_404');
+            break;
+          default :
+            reportData[index].description = tr.t('LABEL.STATUS_500');
+        }
+      }
+      json2csv({ data: reportData, fields: fields, fieldNames: fieldNames }, function(err, csv) {
         estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
         datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
       });
@@ -181,9 +207,10 @@ class ClientApiCallsReport extends React.Component {
           <thead>
             <tr>
               <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
-              <th width="500" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.COMPANY_NAME')}</th>
+              <th width="350" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.COMPANY_NAME')}</th>
               <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATUS_CODE')}</th>
-              <th width="150" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.METHOD')}</th>
+              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.STATUS_DESC')}</th>
+              <th width="100" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.METHOD')}</th>
               <th width="150" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
             </tr>
           </thead>
