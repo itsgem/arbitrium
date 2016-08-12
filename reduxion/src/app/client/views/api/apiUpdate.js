@@ -1,6 +1,7 @@
 import React from 'react';
 import DocTitle from 'common/components/docTitle';
 import tr from 'i18next';
+import { Link } from 'react-router';
 import ApiEdit from 'client/components/api/apiUpdate';
 import NotFound from 'common/components/noMatch';
 import {createError} from 'utils/error';
@@ -64,7 +65,20 @@ export default React.createClass({
         <DocTitle
           title={tr.t('CLIENT_API_KEY.API_KEY_UPDATE.DOC_TITLE')}
         />
-        <div className="page-content">
+        <div className="mdl-grid mdl-grid--no-spacing table-list-container" >
+          <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar error-snack">
+            <div className="mdl-snackbar__text"></div>
+            <button type="button" className="mdl-snackbar__action"></button>
+          </div>
+          <div className="client-tab">
+            <Link
+              className='mdl-layout__tab'
+              to="/i/api/">{tr.t('CLIENT_API_KEY.API_LIST.TITLE')}</Link>
+            <Link
+              className='mdl-layout__tab'
+              to="/i/api/new">{tr.t('CLIENT_API_KEY.API_KEY_ADD.TITLE')}<i className="material-icons add">add</i></Link>
+            <a className="mdl-layout__tab is-active" >{tr.t('CLIENT_API_KEY.API_KEY_UPDATE.TITLE')}<i className="material-icons add">edit</i></a>
+          </div>
           <ApiEdit
             getApiInfo={this.props.apiKeyInfo}
             apiPermissions={this.props.apiPermissions}

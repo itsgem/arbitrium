@@ -32,9 +32,12 @@
       "VERIFY_EMAIL": "Click on the link to verify your email address and activate your account."
     }
   },
+  "CLIENT_TOPBAR": {
+    "MY_PROFILE": "My Profile"
+  },
   "CLIENT_SIDEBAR": {
     "DASHBOARD": "Dashboard",
-    "MY_PROFILE": "My Profile",
+    "PROFILE": "Profile",
     "API_KEYS": "API Keys",
     "SUBSCRIPTION": "Subscription",
     "INVOICE": "Invoice",
@@ -90,16 +93,16 @@
       "TEST_KEY": "You can use a test key to experiment with Arbitrium's API. No mail is actually sent but webhooks, trigger normally and you can generate synthetic bounces and complaints without impacting your reputation."
     },
     "API_LIST": {
-      "DOC_TITLE": "List of API keys",
-      "TITLE": "List of API keys"
+      "DOC_TITLE": "List API keys",
+      "TITLE": "List API keys"
     },
     "API_KEY_ADD": {
       "DOC_TITLE": "Add New API key",
       "TITLE": "Add New API key"
     },
     "API_KEY_UPDATE": {
-      "DOC_TITLE": "API key detail",
-      "TITLE": "API key detail"
+      "DOC_TITLE": "Update API key detail",
+      "TITLE": "LIST API key detail"
     }
   },
   "CLIENT_SUBCRIPTION": {

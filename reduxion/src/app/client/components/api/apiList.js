@@ -192,100 +192,92 @@ class ApiList extends React.Component {
     }
 
     return (
-      <div className="filter-search">
-        <div className="mdl-grid">
-          <div className="mdl-cell">
-            <Link to="/i/api/new" className="mdl-button mdl-button--raised mdl-button--blue">{tr.t('BUTTON.NEW_API_KEY')}</Link>
+      <div className="mdl-grid mdl-grid--no-spacing table-list-container">
+        <div className="dialog-box"></div>
+        <div className="dialog-content">
+          <div className="dialog-inner">
+            <div className="msg-box mdl-shadow--2dp">
+              <p>
+                {tr.t('NOTEFICATION_MESSAGE.DELETE.CONFIRM_01')}<br />
+                {tr.t('NOTEFICATION_MESSAGE.DELETE.CANNOT_UNDONE')}
+              </p>
+              <div className="mdl-dialog__actions">
+                <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('BUTTON.YES')}</button>
+                <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('BUTTON.CANCEL')}</button>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="mdl-grid mdl-grid--no-spacing table-list-container">
-          <div className="dialog-box"></div>
-          <div className="dialog-content">
-            <div className="dialog-inner">
-              <div className="msg-box mdl-shadow--2dp">
-                <p>
-                  {tr.t('NOTEFICATION_MESSAGE.DELETE.CONFIRM_01')}<br />
-                  {tr.t('NOTEFICATION_MESSAGE.DELETE.CANNOT_UNDONE')}
-                </p>
-                <div className="mdl-dialog__actions">
-                  <button type="button" className="mdl-button modal-yes" onClick={()=>this.deleteItem()}>{tr.t('BUTTON.YES')}</button>
-                  <button type="button" className="mdl-button close modal-cancel" onClick={()=>this.modalClose()}>{tr.t('BUTTON.CANCEL')}</button>
-                </div>
-              </div>
+        <div className="mdl-grid filter-search-bar">
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="created_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="date_from" ref="date_from"
+                readOnly
+              />
+              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_FROM')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--12-col header-title"><p>{tr.t('CLIENT_API_KEY.API_LIST.TITLE')}</p></div>
-          <div className="mdl-grid filter-search-bar">
-            <div className="mdl-cell mdl-cell--2-col">
-              <div id="created_date_from" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input
-                  type="text"
-                  className="datepicker mdl-textfield__input"
-                  id="date_from" ref="date_from"
-                  readOnly
-                />
-                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_FROM')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--2-col">
-              <div id="created_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input
-                  type="text"
-                  className="datepicker mdl-textfield__input"
-                  id="date_to" ref="date_to"
-                  readOnly
-                />
-                <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--2-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
-                <label className="mdl-textfield__label">{tr.t('LABEL.DESCRIPTION')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--2-col">
-              <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
-                <label className="mdl-textfield__label">{tr.t('LABEL.API_KEY')}</label>
-              </div>
-            </div>
-            <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
-              <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue margin-right-10"
-                onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
-              <button
-                className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
-                onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div id="created_date_to" className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input
+                type="text"
+                className="datepicker mdl-textfield__input"
+                id="date_to" ref="date_to"
+                readOnly
+              />
+              <label className="mdl-textfield__label">{tr.t('LABEL.DATE_CREATED_TO')}</label>
             </div>
           </div>
-          <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
-            <thead>
-              <tr>
-                <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
-                <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DESCRIPTION')}</th>
-                <th width="450" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.API_KEY')}</th>
-                <th width="350" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {counter && users.map(item => {
-                alter = alter ? false : true;
-                return this.userDisplay(item, alter); })}
-            </tbody>
-          </table>
-            {/* <!-- Pagination -->*/}
-          <div className="mdl-grid pagination">
-            <div className="mdl-cell mdl-cell--12-col">
-              {counter && pagination}
+          <div className="mdl-cell mdl-cell--2-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="description" ref="description"/>
+              <label className="mdl-textfield__label">{tr.t('LABEL.DESCRIPTION')}</label>
             </div>
-            <div className="mdl-cell mdl-cell--3-col tooltipBox">
-              <span className="tooltiptext">{tr.t('LABEL.ITEM_PER_PAGE')}</span>
-              <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
-              <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
-              <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
-              <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
+          </div>
+          <div className="mdl-cell mdl-cell--2-col">
+            <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
+              <input className="mdl-textfield__input" type="text" id="api_key" ref="api_key" />
+              <label className="mdl-textfield__label">{tr.t('LABEL.API_KEY')}</label>
             </div>
+          </div>
+          <div className="mdl-cell mdl-cell--4-col margin-top-20 text-right">
+            <button
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue margin-right-10"
+              onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>
+            <button
+              className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
+              onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
+          </div>
+        </div>
+        <table className="table-api mdl-data-table mdl-js-data-table table-client-list">
+          <thead>
+            <tr>
+              <th width="200" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DATE_CREATED')}</th>
+              <th width="300" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.DESCRIPTION')}</th>
+              <th width="450" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.API_KEY')}</th>
+              <th width="350" className="mdl-data-table__cell--non-numeric">{tr.t('LABEL.ACTION')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {counter && users.map(item => {
+              alter = alter ? false : true;
+              return this.userDisplay(item, alter); })}
+          </tbody>
+        </table>
+          {/* <!-- Pagination -->*/}
+        <div className="mdl-grid pagination">
+          <div className="mdl-cell mdl-cell--12-col">
+            {counter && pagination}
+          </div>
+          <div className="mdl-cell mdl-cell--3-col tooltipBox">
+            <span className="tooltiptext">{tr.t('LABEL.ITEM_PER_PAGE')}</span>
+            <input ref="pageNum" type="button" onClick={()=>this.selectPageNumber()} id="numDisplay" aria-expanded='false' className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page" defaultValue={perPage} />
+            <button onClick={(e) => this.itemPage(e, 50)} id="bt-50" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '3ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">50</button>
+            <button onClick={(e) => this.itemPage(e, 20)} id="bt-20" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-62ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-2">20</button>
+            <button onClick={(e) => this.itemPage(e, 10)} id="bt-10" style={{opacity: 0, transform: 'scale(0)', transitionDelay: '-127ms'}} className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--mini-fab mdl-button--colored btn-paginate-items-per-page lighten-4">10</button>
           </div>
         </div>
       </div>
