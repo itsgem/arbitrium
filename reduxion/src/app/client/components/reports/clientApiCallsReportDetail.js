@@ -112,7 +112,7 @@ class ClientApiCallsReportDetail extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsListDetail.data).length) {
-      let reportData = this.props.clientApiCallsList.data;
+      let reportData = this.props.clientApiCallsListDetail.data;
       for (let index in reportData) {
         switch (reportData[index].status_code) {
           case 200 :
