@@ -166,7 +166,7 @@ class SubscriptionPayment extends React.Component {
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? subscriptionItem.fee_yearly : subscriptionItem.fee_monthly
+                      this.state.selectTerm == "Annually" ? "$" + subscriptionItem.fee_yearly : "$" + subscriptionItem.fee_monthly
                     }
                   </p>
                 </div>
@@ -184,7 +184,7 @@ class SubscriptionPayment extends React.Component {
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? subscriptionItem.fee_yearly_license : subscriptionItem.fee_monthly_license
+                      this.state.selectTerm == "Annually" ? "$" + subscriptionItem.fee_yearly_license : "$" + subscriptionItem.fee_monthly_license
                     }
                   </p>
                 </div>
@@ -193,7 +193,7 @@ class SubscriptionPayment extends React.Component {
                   <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.INITIAL_SETUP_FEE')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
-                  <p className="right">{!this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" : subscriptionItem.fee_initial_setup }</p>
+                  <p className="right">{!this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" : "$" + subscriptionItem.fee_initial_setup }</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>
@@ -206,7 +206,7 @@ class SubscriptionPayment extends React.Component {
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? subscriptionItem.fee_yearly_maintenance : subscriptionItem.fee_monthly_maintenance
+                      this.state.selectTerm == "Annually" ? "$" + subscriptionItem.fee_yearly_maintenance : "$" + subscriptionItem.fee_monthly_maintenance
                     }
                   </p>
                 </div>
@@ -218,7 +218,7 @@ class SubscriptionPayment extends React.Component {
                     <p className="right">
                       {
                         !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                        this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Setup : subscriptionItem.total.Monthly_With_Setup
+                        this.state.selectTerm == "Annually" ? "$" + subscriptionItem.total.Annually_With_Setup : "$" + subscriptionItem.total.Monthly_With_Setup
                       }
                     </p>
                   </div>
@@ -237,7 +237,7 @@ class SubscriptionPayment extends React.Component {
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Setup : subscriptionItem.total.Monthly_With_Setup
+                      this.state.selectTerm == "Annually" ? "$" + subscriptionItem.total.Annually_With_Setup : "$" + subscriptionItem.total.Monthly_With_Setup
                     }
                   </p>
                 </div>
@@ -248,7 +248,7 @@ class SubscriptionPayment extends React.Component {
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? (subscriptionItem.fee_yearly_tax ? subscriptionItem.fee_yearly_tax : 0) : (subscriptionItem.fee_monthly_tax ? subscriptionItem.fee_monthly_tax : 0)
+                      this.state.selectTerm == "Annually" ? (subscriptionItem.fee_yearly_tax ? subscriptionItem.fee_yearly_tax : 0) + "%" : (subscriptionItem.fee_monthly_tax ? subscriptionItem.fee_monthly_tax : 0) + "%"
                     }
                   </p>
                 </div>
@@ -260,7 +260,7 @@ class SubscriptionPayment extends React.Component {
                     <p className="right">
                       {
                         !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                        this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Tax_Percentage : subscriptionItem.total.Monthly_With_Tax_Percentage
+                        this.state.selectTerm == "Annually" ? "$" + subscriptionItem.total.Annually_With_Tax_Percentage : "$" + subscriptionItem.total.Monthly_With_Tax_Percentage
                       }
                     </p>
                   </div>
@@ -279,18 +279,18 @@ class SubscriptionPayment extends React.Component {
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Setup : subscriptionItem.total.Monthly_With_Setup
+                      this.state.selectTerm == "Annually" ? "$" + subscriptionItem.total.Annually_With_Setup : "$" + subscriptionItem.total.Monthly_With_Setup
                     }
                   </p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.TAX')}</p>
+                  <p>{tr.t('CLIENT_SUBCRIPTION.LABEL.COMPUTED_TAX')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">
                     {
                       !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Tax_Percentage : subscriptionItem.total.Monthly_With_Tax_Percentage
+                      this.state.selectTerm == "Annually" ? "$" + subscriptionItem.total.Annually_With_Tax_Percentage : "$" + subscriptionItem.total.Monthly_With_Tax_Percentage
                     }
                   </p>
                 </div>
@@ -302,7 +302,7 @@ class SubscriptionPayment extends React.Component {
                     <p className="right">
                       {
                         !this.state.selectTerm || subscriptionItem.type == "Trial" ? "0" :
-                        this.state.selectTerm == "Annually" ? subscriptionItem.total.Annually_With_Total_Price : subscriptionItem.total.Monthly_With_Total_Price
+                        this.state.selectTerm == "Annually" ? "$" + subscriptionItem.total.Annually_With_Total_Price : "$" + subscriptionItem.total.Monthly_With_Total_Price
                       }
                     </p>
                   </div>

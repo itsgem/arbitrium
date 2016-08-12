@@ -154,7 +154,7 @@ class SubscriptionDetail extends React.Component {
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly : selectedSubscriptionInfo.fee_monthly
+                      this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.fee_yearly : "$" + selectedSubscriptionInfo.fee_monthly
                     }
                   </p>
                 </div>
@@ -172,7 +172,7 @@ class SubscriptionDetail extends React.Component {
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_license : selectedSubscriptionInfo.fee_monthly_license
+                      this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.fee_yearly_license : "$" + selectedSubscriptionInfo.fee_monthly_license
                     }
                   </p>
                 </div>
@@ -182,7 +182,7 @@ class SubscriptionDetail extends React.Component {
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">{
-                    this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" : selectedSubscriptionInfo.fee_initial_setup }</p>
+                    this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" : "$" + selectedSubscriptionInfo.fee_initial_setup }</p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
                   <p>
@@ -195,7 +195,7 @@ class SubscriptionDetail extends React.Component {
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_maintenance : selectedSubscriptionInfo.fee_monthly_maintenance
+                      this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.fee_yearly_maintenance : "$" + selectedSubscriptionInfo.fee_monthly_maintenance
                     }
                   </p>
                 </div>
@@ -207,7 +207,7 @@ class SubscriptionDetail extends React.Component {
                     <p className="right">
                       {
                         this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                        this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Setup : selectedSubscriptionInfo.total.Monthly_With_Setup
+                        this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.total.Annually_With_Setup : "$" + selectedSubscriptionInfo.total.Monthly_With_Setup
                       }
                     </p>
                   </div>
@@ -226,7 +226,7 @@ class SubscriptionDetail extends React.Component {
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Setup : selectedSubscriptionInfo.total.Monthly_With_Setup
+                      this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.total.Annually_With_Setup : "$" + selectedSubscriptionInfo.total.Monthly_With_Setup
                     }
                   </p>
                 </div>
@@ -237,7 +237,7 @@ class SubscriptionDetail extends React.Component {
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_tax : selectedSubscriptionInfo.fee_monthly_tax
+                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.fee_yearly_tax + "%" : selectedSubscriptionInfo.fee_monthly_tax + "%"
                     }
                   </p>
                 </div>
@@ -249,7 +249,7 @@ class SubscriptionDetail extends React.Component {
                     <p className="right">
                       {
                         this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                        this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Tax_Percentage : selectedSubscriptionInfo.total.Monthly_With_Tax_Percentage
+                        this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.total.Annually_With_Tax_Percentage : "$" + selectedSubscriptionInfo.total.Monthly_With_Tax_Percentage
                       }
                     </p>
                   </div>
@@ -268,18 +268,18 @@ class SubscriptionDetail extends React.Component {
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Setup : selectedSubscriptionInfo.total.Monthly_With_Setup
+                      this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.total.Annually_With_Setup : "$" + selectedSubscriptionInfo.total.Monthly_With_Setup
                     }
                   </p>
                 </div>
                 <div className="mdl-cell mdl-cell--9-col">
-                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.TAX')}</p>
+                  <p>{tr.t('ADMIN_SUBSCRIPTION.LABEL.COMPUTED_TAX')}</p>
                 </div>
                 <div className="mdl-cell mdl-cell--3-col">
                   <p className="right">
                     {
                       this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                      this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Tax_Percentage : selectedSubscriptionInfo.total.Monthly_With_Tax_Percentage
+                      this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.total.Annually_With_Tax_Percentage : "$" + selectedSubscriptionInfo.total.Monthly_With_Tax_Percentage
                     }
                   </p>
                 </div>
@@ -291,7 +291,7 @@ class SubscriptionDetail extends React.Component {
                     <p className="right">
                       {
                         this.state.selectTerm == null || selectedSubscriptionInfo.type == "Trial" ? "0" :
-                        this.state.selectTerm == "Annually" ? selectedSubscriptionInfo.total.Annually_With_Total_Price : selectedSubscriptionInfo.total.Monthly_With_Total_Price
+                        this.state.selectTerm == "Annually" ? "$" + selectedSubscriptionInfo.total.Annually_With_Total_Price : "$" + selectedSubscriptionInfo.total.Monthly_With_Total_Price
                       }
                     </p>
                   </div>

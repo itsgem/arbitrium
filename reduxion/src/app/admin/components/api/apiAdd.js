@@ -268,7 +268,7 @@ class ApiAdd extends React.Component {
           ip_addresses: [tr.t('NOTEFICATION_MESSAGE.DUPLICATE_IP')]
         }
       });
-      this.props.registerApiSuccess = false;
+      return false;
     }
 
     let payload = {
