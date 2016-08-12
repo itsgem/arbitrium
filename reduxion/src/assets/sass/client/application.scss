@@ -15,10 +15,62 @@
         font-size: 15px;
       }
     }
+
     .mdl-button:disabled {
       background: #e1e1e1;
     }
+
+    .menu-hover {
+      .mdl-navigation__link  {
+        padding: 6px 24px;
+
+        i {
+          background: none;
+          border-radius: 50%;
+          height: 44px;
+          line-height: 44px;
+          margin-right: 8px;
+          width: 44px;
+          text-align: center;
+          transition: all 0.2s ease-in;
+        }
+      }
+
+      :hover{
+        background: #FF6600;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .submenu{
+        display: none;
+        background: #e2e2e2;
+        overflow: hidden;
+        width: 100%;
+
+        li{
+          display: flex;
+          width: 100%;
+
+          a{
+            color: #555555;
+            padding: 18px 20px 18px 76px;
+            width: 100%;
+          }
+        }
+      }
+
+      .submenu li:hover{
+
+        a:hover{
+          background: #ff7a22;
+          color: #fff;
+          width: 100%;
+        }
+      }
+    }
   }
+
   .vw-login, .vw-signup, .vw-forgot, .vw-resetPassword{
     background-image: url('//s3.amazonaws.com/assets.idearobin.com/arbitrium/bg-client.jpg');
     background-attachment: fixed;

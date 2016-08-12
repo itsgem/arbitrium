@@ -28,7 +28,7 @@ class ClientHeader extends React.Component {
                   <li className="mdl-menu__item"><Link to="/i/client/profile/change_email">{tr.t('CLIENT_HEADER.CHANGE_EMAIL_ADD')}</Link></li>
                 </ul>
               </div>*/}
-              <Link id="demo-menu-profile" className="mdl-button mdl-js-button mdl-layout__tab" data-upgraded=",MaterialButton" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.MY_PROFILE')}</Link>
+              <Link id="demo-menu-profile" className="mdl-button mdl-js-button mdl-layout__tab" data-upgraded=",MaterialButton" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_TOPBAR.MY_PROFILE')}</Link>
             </nav>
           </div>
         </div>
