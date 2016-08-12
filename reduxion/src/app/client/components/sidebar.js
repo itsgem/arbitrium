@@ -40,9 +40,8 @@ class ClientSidebar extends React.Component {
         </header>
         <nav className="sideNav arbitrium-navigation mdl-navigation">
           <Link id="side-home" className="mdl-navigation__link" to="/i"><i className="material-icons" role="presentation">home</i>{tr.t('CLIENT_SIDEBAR.DASHBOARD')}</Link>
-
           <div className="menu-hover">
-            <a id="side-client" className="mdl-navigation__link full-width" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.PROFILE')}</a>
+            <p id="side-client" className="mdl-navigation__link full-width" to="/i/client/profile"><i className="material-icons" role="presentation">person</i>{tr.t('CLIENT_SIDEBAR.PROFILE')}</p>
               <ul className="submenu">
                 <li><a href="">My Profile</a></li>
                 <li><a href="">Change Password</a></li>
