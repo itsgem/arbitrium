@@ -99,6 +99,33 @@ class ClientApiCallsReportDetail extends React.Component {
       e.preventDefault();
     }
   }
+  addDescription(reportData) {
+    for (let index in reportData) {
+      switch (reportData[index].status_code) {
+        case 200 :
+          reportData[index].description = tr.t('LABEL.STATUS_200');
+          break;
+        case 204 :
+          reportData[index].description = tr.t('LABEL.STATUS_204');
+          break;
+        case 400 :
+          reportData[index].description = tr.t('LABEL.STATUS_400');
+          break;
+        case 401 :
+          reportData[index].description = tr.t('LABEL.STATUS_401');
+          break;
+        case 403 :
+          reportData[index].description = tr.t('LABEL.STATUS_403');
+          break;
+        case 404 :
+          reportData[index].description = tr.t('LABEL.STATUS_404');
+          break;
+        default :
+          reportData[index].description = tr.t('LABEL.STATUS_500');
+      }
+    }
+    return reportData;
+  }
   render() {
     let counter = false;
     let alter = false;
@@ -112,35 +139,11 @@ class ClientApiCallsReportDetail extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsListDetail.data).length) {
-      let reportData = this.props.clientApiCallsListDetail.data;
-      for (let index in reportData) {
-        switch (reportData[index].status_code) {
-          case 200 :
-            reportData[index].description = tr.t('LABEL.STATUS_200');
-            break;
-          case 204 :
-            reportData[index].description = tr.t('LABEL.STATUS_204');
-            break;
-          case 400 :
-            reportData[index].description = tr.t('LABEL.STATUS_400');
-            break;
-          case 401 :
-            reportData[index].description = tr.t('LABEL.STATUS_401');
-            break;
-          case 403 :
-            reportData[index].description = tr.t('LABEL.STATUS_403');
-            break;
-          case 404 :
-            reportData[index].description = tr.t('LABEL.STATUS_404');
-            break;
-          default :
-            reportData[index].description = tr.t('LABEL.STATUS_500');
-        }
-      }
-      json2csv({ data: reportData, fields: fields, fieldNames: fieldNames }, function(err, csv) {
-        estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
-      });
+      let reportData = this.addDescription(this.props.clientApiCallsListDetail.data);
+
+      let csv = json2csv({ data: reportData, fields: fields, fieldNames: fieldNames });
+      estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
+      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
       counter = true;
       clientApiCallsListDetail = this.props.clientApiCallsListDetail;
@@ -166,8 +169,8 @@ class ClientApiCallsReportDetail extends React.Component {
 
     return (
       <div className="filter-search">
-        <div className="mdl-grid filter-search-bar">
-          <div className="mdl-cell mdl-cell--3-col">
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--2-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="companyName" ref="companyName" />
               <label className="mdl-textfield__label">{tr.t('LABEL.COMPANY_NAME')}</label>
@@ -179,13 +182,13 @@ class ClientApiCallsReportDetail extends React.Component {
               <label className="mdl-textfield__label">{tr.t('LABEL.STATUS_CODE')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--2-col">
+          <div className="mdl-cell mdl-cell--1-col">
             <div className="mdl-textfield mdl-block mdl-js-textfield mdl-textfield--floating-label">
               <input className="mdl-textfield__input" type="text" id="method" ref="method"/>
               <label className="mdl-textfield__label">{tr.t('LABEL.METHOD')}</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--5-col text-right">
+          <div className="mdl-cell mdl-cell--7-col text-right">
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--accent margin-right-10"
               onClick={(e) => this.searchList(e)}><i className="material-icons">search</i>{tr.t('BUTTON.SEARCH')}</button>

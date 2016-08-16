@@ -153,10 +153,9 @@ class LogList extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.logList.data).length) {
-      json2csv({ data: this.props.logList.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
-        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
-      });
+      let csv = json2csv({ data: this.props.logList.data, fields: fields, fieldNames: fieldNames });
+      estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
       counter = true;
       logList = this.props.logList;

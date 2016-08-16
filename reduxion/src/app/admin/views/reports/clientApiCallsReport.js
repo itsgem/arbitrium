@@ -51,7 +51,9 @@ export default React.createClass( {
         <ClientApiCallsReport
           params={this.props.params}
           clientApiCallsList={this.props.clientApiCallsList}
+          clientApiCallsDownload={this.props.clientApiCallsDownload}
           clientApiCallsReport={this.props.clientApiCallsReport}
+          clientApiCallsReportDownload={this.props.clientApiCallsReportDownload}
           />
       </div>
     );
