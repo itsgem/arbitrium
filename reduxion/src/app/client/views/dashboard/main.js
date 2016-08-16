@@ -22,6 +22,7 @@ export default React.createClass( {
             <p>{tr.t('ADMIN_DASHBOARD.TITLE.DASHBOARD')}</p>
           </div>
           <MainDashboard
+              loading={this.props.loading}
               graphInfo={this.props.graphInfo}
               graphReport={this.props.graphReport}
             />

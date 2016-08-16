@@ -36,6 +36,7 @@ export default React.createClass( {
                   </div>
                 </div>
                 <MainDashboard
+                  loading={this.props.loading}
                   graphInfo={this.props.graphInfo}
                   graphReport={this.props.graphReport}
                 />

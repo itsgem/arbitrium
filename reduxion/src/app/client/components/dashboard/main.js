@@ -23,7 +23,6 @@ class Main extends React.Component {
     let statusCount = [];
     let count = 0;
     let graphInfo = nextPops.graphInfo.data;
-    if (graphInfo) {
       for (let index in graphInfo) {
         count = count + graphInfo[index].count;
         if (graphInfo[index].status_code < 300 && graphInfo[index].status_code >= 200) {
@@ -71,7 +70,6 @@ class Main extends React.Component {
           }]
         }
       });
-    }
   }
   componentDidMount() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
@@ -168,6 +166,11 @@ class Main extends React.Component {
                 })
               }
           </div>
+          { this.props.loading == false && !Object.keys(statusCode).length &&
+            <div className="mdl-cell mdl-cell--7-col">
+              <p className="no-data"><i className="material-icons">sentiment_dissatisfied</i>No data to display</p>
+            </div>
+          }
         </div>
       </div>
     );
