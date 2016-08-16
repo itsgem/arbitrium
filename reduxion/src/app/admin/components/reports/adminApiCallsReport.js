@@ -150,10 +150,9 @@ class AdminApiCallsReport extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.adminApiCallsList).length) {
-      json2csv({ data: this.props.adminApiCallsList.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
-        estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
-      });
+      let csv = json2csv({ data: this.props.adminApiCallsList.data, fields: fields, fieldNames: fieldNames });
+      estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
+      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
       counter = true;
       adminApiCallsList = this.props.adminApiCallsList;
