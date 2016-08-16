@@ -14,6 +14,10 @@ class AdminApiCallsReport extends React.Component {
       date_to: null
     };
   }
+  componentDidMount() {
+    let list =  this.props.adminApiCallsList;
+    this.props.adminApiCallsReportDownload({per_page: list.total});
+  }
   componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -135,6 +139,13 @@ class AdminApiCallsReport extends React.Component {
   download(e) {
     if (this.props.adminApiCallsList.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        per_page: this.props.adminApiCallsList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value
+      };
+      this.props.adminApiCallsReportDownload(payload);
     }
   }
   render() {

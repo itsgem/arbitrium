@@ -36,7 +36,9 @@ export default React.createClass( {
         </div>
         <AdminApiCallsReport
           adminApiCallsList={this.props.adminApiCallsList}
+          adminApiCallsDownload={this.props.adminApiCallsDownload}
           adminApiCallsReport={this.props.adminApiCallsReport}
+          adminApiCallsReportDownload={this.props.adminApiCallsReportDownload}
           />
       </div>
     );

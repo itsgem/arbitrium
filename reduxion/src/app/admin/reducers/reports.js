@@ -5,6 +5,7 @@ import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
 
 export const adminApiCallsReport = createActionAsync('ADMIN_API_CALLS_REPORT', auth.getAdminApiCallsReport);
+export const adminApiCallsReportDownload = createActionAsync('ADMIN_API_CALLS_REPORT_DOWNLOAD', auth.getAdminApiCallsReport);
 export const clientApiCallsReport = createActionAsync('ADMIN_CLIENT_API_CALLS_REPORT', auth.getClientApiCallsReport);
 export const clientApiCallsReportDownload = createActionAsync('ADMIN_CLIENT_API_CALLS_REPORT_DOWNLOAD', auth.getClientApiCallsReport);
 export const adminApiCallDetail = createActionAsync('ADMIN_API_CALL_DETAIL', auth.getAdminApiCallDetail);
@@ -13,6 +14,7 @@ export const graphReport = createActionAsync('ADMIN_GRAPH_REPORT', auth.adminGra
 const initialState = Immutable.fromJS({
   graphInfo: {},
   adminApiCallsList: {},
+  adminApiCallsDownload: {},
   clientApiCallsList: {},
   clientApiCallsDownload: {},
   apiCallDetail: {},
@@ -33,6 +35,13 @@ export default createReducer({
     loading: false
   }),
   [adminApiCallsReport.request]: (state) => state.merge({
+    loading: true
+  }),
+  [adminApiCallsReportDownload.ok]: (state, payload) => state.merge({
+    adminApiCallsDownload: payload,
+    loading: false
+  }),
+  [adminApiCallsReportDownload.request]: (state) => state.merge({
     loading: true
   }),
   [clientApiCallsReport.ok]: (state, payload) => state.merge({
