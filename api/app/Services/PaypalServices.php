@@ -186,23 +186,24 @@ class PaypalServices extends NrbServices
     {
         $data = [];
 
-        $data['subscription_id'] = $request->get('subscription_id');
-        $data['term']            = $request->get('term');
-        $data['is_auto_renew']   = $request->get('is_auto_renew');
+        $data['subscription_id']        = $request->get('subscription_id');
+        $data['term']                   = $request->get('term');
+        $data['is_auto_renew']          = $request->get('is_auto_renew');
 
-        $subscription            = Subscription::findOrFail($data['subscription_id']);
-        $data['no_days']         = $subscription->no_days;
-        $data['is_unli']         = $subscription->is_unli;
-        $data['name']            = $subscription->name;
-        $data['description']     = $subscription->description;
-        $data['fees']            = $subscription->getFees($data['term']);
-        $data['total']           = $subscription->calculateTotal($data['term'].'_With_Setup');
-        $data['currency']        = config('paypal.currency');
-        $data['callback']        = config('paypal.callback_urls.subscriptions');
+        $subscription                   = Subscription::findOrFail($data['subscription_id']);
+        $data['no_days']                = $subscription->no_days;
+        $data['is_unli_api_calls']      = $subscription->is_unli_api_calls;
+        $data['is_unli_decisions']      = $subscription->is_unli_decisions;
+        $data['name']                   = $subscription->name;
+        $data['description']            = $subscription->description;
+        $data['fees']                   = $subscription->getFees($data['term']);
+        $data['total']                  = $subscription->calculateTotal($data['term'].'_With_Setup');
+        $data['currency']               = config('paypal.currency');
+        $data['callback']               = config('paypal.callback_urls.subscriptions');
 
-        $data['paypal_agreement_id'] = null;
-        $data['paypal_plan_id']  = null;
-        $approvalUrl             = null;
+        $data['paypal_agreement_id']    = null;
+        $data['paypal_plan_id']         = null;
+        $approvalUrl                    = null;
 
         // Create plan
         if (!$subscription->isTrial())
@@ -326,9 +327,10 @@ class PaypalServices extends NrbServices
             {
                 // [Core-API] Subscribe package plan
                 $client->coreApiSubscribe([
-                    'is_unli'       => $subscription->is_unli,
-                    'max_api_calls' => $subscription->max_api_calls,
-                    'max_decisions' => $subscription->max_decisions,
+                    'is_unli_api_calls' => $subscription->is_unli_api_calls,
+                    'is_unli_decisions' => $subscription->is_unli_decisions,
+                    'max_api_calls'     => $subscription->max_api_calls,
+                    'max_decisions'     => $subscription->max_decisions,
                 ]);
 
                 $client->sendSubscriptionChangeSuccess($result);
