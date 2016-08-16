@@ -111,6 +111,9 @@ class ApiCallsReport extends React.Component {
       });
     });
     this.updateDatepicker(isState);
+
+    let list =  this.props.clientApiCallsList;
+    this.props.clientApiCallsReportDownload({per_page: list.total});
   }
   updateDatepicker(isState) {
     $('#date_from .datepicker').change(function(){
@@ -135,6 +138,13 @@ class ApiCallsReport extends React.Component {
   download(e) {
     if (this.props.clientApiCallsList.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        per_page: this.props.clientApiCallsList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value
+      };
+      this.props.clientApiCallsReportDownload(payload);
     }
   }
   render() {
@@ -150,7 +160,7 @@ class ApiCallsReport extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsList).length) {
-      let csv = json2csv({ data: this.props.clientApiCallsList.data, fields: fields, fieldNames: fieldNames });
+      let csv = json2csv({ data: this.props.clientApiCallsListDownload.data, fields: fields, fieldNames: fieldNames });
       estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
       datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 

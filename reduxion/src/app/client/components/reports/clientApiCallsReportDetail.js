@@ -13,6 +13,10 @@ class ClientApiCallsReportDetail extends React.Component {
       errorServer: null
     };
   }
+  componentDidMount() {
+    let list =  this.props.clientApiCallsListDetail;
+    this.props.clientApiCallsReportDetailDownload({per_page: list.total, date: this.props.params.created});
+  }
   componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -97,6 +101,15 @@ class ClientApiCallsReportDetail extends React.Component {
   download(e) {
     if (this.props.clientApiCallsListDetail.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        date: this.props.params.created,
+        per_page: this.props.clientApiCallsListDetail.total,
+        company_name: this.refs.companyName.value,
+        status_code: this.refs.statusCode.value,
+        method: this.refs.method.value
+      };
+      this.props.clientApiCallsReportDetailDownload(payload);
     }
   }
   addDescription(reportData) {
@@ -140,8 +153,9 @@ class ClientApiCallsReportDetail extends React.Component {
 
     if (Object.keys(this.props.clientApiCallsListDetail.data).length) {
       let reportData = this.addDescription(this.props.clientApiCallsListDetail.data);
+      let reportDataDownload = this.addDescription(this.props.clientApiCallsListDetailDownload.data);
 
-      let csv = json2csv({ data: reportData, fields: fields, fieldNames: fieldNames });
+      let csv = json2csv({ data: reportDataDownload, fields: fields, fieldNames: fieldNames });
       estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
       datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 

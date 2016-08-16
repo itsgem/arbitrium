@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { clientApiCallsReport } from 'client/reducers/reports';
+import { clientApiCallsReport, clientApiCallsReportDownload } from 'client/reducers/reports';
 import ViewClientApiCallsReport from 'client/views/reports/clientApiCallsReport';
 
 const strMapToObj=(strMap) => {
@@ -10,10 +10,11 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
     clientApiCallsList: strMapToObj(state.get('clientReports').get('clientApiCallsList')),
+    clientApiCallsListDownload: strMapToObj(state.get('clientReports').get('clientApiCallsListDownload')),
     loading: state.get('clientReports').get('loading')
   };
 }
 
 export default connect(mapStateToProps, {
-  clientApiCallsReport
+  clientApiCallsReport, clientApiCallsReportDownload
 })(ViewClientApiCallsReport)
