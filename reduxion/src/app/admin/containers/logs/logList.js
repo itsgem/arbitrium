@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { adminLogList } from 'admin/reducers/logs';
+import { adminLogList, adminLogListDownload } from 'admin/reducers/logs';
 import ViewLogList from 'admin/views/logs/logList';
 
 const strMapToObj=(strMap) => {
@@ -10,10 +10,11 @@ const strMapToObj=(strMap) => {
 const mapStateToProps = (state) => {
   return {
     logList: strMapToObj(state.get('adminLogs').get('logList')),
+    logListDownload: strMapToObj(state.get('adminLogs').get('logListDownload')),
     loading: state.get('adminLogs').get('loading')
   };
 }
 
 export default connect(mapStateToProps, {
-  adminLogList
+  adminLogList, adminLogListDownload
 })(ViewLogList)

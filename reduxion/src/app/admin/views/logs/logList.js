@@ -51,7 +51,9 @@ export default React.createClass( {
         <LogList
           params={this.props.params}
           logList={this.props.logList}
+          logListDownload={this.props.logListDownload}
           adminLogList={this.props.adminLogList}
+          adminLogListDownload={this.props.adminLogListDownload}
           />
       </div>
     );

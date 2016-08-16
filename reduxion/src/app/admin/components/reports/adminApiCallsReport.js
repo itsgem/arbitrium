@@ -14,10 +14,6 @@ class AdminApiCallsReport extends React.Component {
       date_to: null
     };
   }
-  componentDidMount() {
-    let list =  this.props.adminApiCallsList;
-    this.props.adminApiCallsReportDownload({per_page: list.total});
-  }
   componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -115,6 +111,9 @@ class AdminApiCallsReport extends React.Component {
       });
     });
     this.updateDatepicker(isState);
+
+    let list =  this.props.adminApiCallsList;
+    this.props.adminApiCallsReportDownload({per_page: list.total});
   }
   updateDatepicker(isState) {
     $('#date_from .datepicker').change(function(){
@@ -161,7 +160,7 @@ class AdminApiCallsReport extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.adminApiCallsList).length) {
-      let csv = json2csv({ data: this.props.adminApiCallsList.data, fields: fields, fieldNames: fieldNames });
+      let csv = json2csv({ data: this.props.adminApiCallsDownload.data, fields: fields, fieldNames: fieldNames });
       estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
       datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 

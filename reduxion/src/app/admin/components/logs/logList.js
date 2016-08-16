@@ -100,6 +100,16 @@ class LogList extends React.Component {
   download(e) {
     if (this.props.logList.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        client_id: this.props.params.client_id,
+        per_page: this.props.logList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value,
+        ipaddress: this.refs.ipAddress.value,
+        status_code: this.refs.statusCode.value
+      };
+      this.props.adminLogListDownload(payload);
     }
   }
   componentDidMount() {
@@ -119,6 +129,9 @@ class LogList extends React.Component {
       });
     });
     this.updateDatepicker(isState);
+
+    let list =  this.props.logList;
+    this.props.adminLogListDownload({per_page: list.total, client_id: this.props.params.client_id});
   }
   updateDatepicker(isState) {
     $('#created_date_from .datepicker').change(function(){
@@ -153,7 +166,7 @@ class LogList extends React.Component {
     let datacsv = '';
 
     if (Object.keys(this.props.logList.data).length) {
-      let csv = json2csv({ data: this.props.logList.data, fields: fields, fieldNames: fieldNames });
+      let csv = json2csv({ data: this.props.logListDownload.data, fields: fields, fieldNames: fieldNames });
       estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
       datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
