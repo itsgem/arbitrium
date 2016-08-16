@@ -109,10 +109,10 @@ class SubscriptionEdit extends React.Component {
                             <td>{item.fee_yearly_maintenance == 0.00 ? '--' : "$" + item.fee_yearly_maintenance}</td>
                           </tr>
                           <tr>
-                            <td>{item.max_api_calls == 0.00 ? '--' : item.max_api_calls}</td>
+                            <td>{item.is_unli_api_calls == 1 ? "Unli" : (item.max_api_calls == 0.00 ? '--' : item.max_api_calls)}</td>
                           </tr>
                           <tr>
-                            <td>{item.max_decisions == 0.00 ? '--' : item.max_decisions}</td>
+                            <td>{item.is_unli_decisions == 1 ? "Unli" : (item.max_decisions == 0.00 ? '--' : item.max_decisions)}</td>
                           </tr>
                           <tr>
                             <td>{item.discounts == 0.00 ? '--' : "$" + item.discounts } </td>
