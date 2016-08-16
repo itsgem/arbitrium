@@ -5,6 +5,7 @@ import { createActionAsync} from 'redux-act-async';
 import auth from 'services/auths';
 
 export const clientApiLogsList = createActionAsync('CLIENT_API_LOGS_LIST', auth.clientApiLogsList);
+export const clientApiLogsListDownload = createActionAsync('CLIENT_API_LOGS_LIST_DOWNLOAD', auth.clientApiLogsList);
 export const clientApiLogInfo = createActionAsync('CLIENT_API_LOG_INFO', auth.clientApiLogInfo);
 export const graphReport = createActionAsync('CLIENT_GRAPH_REPORT', auth.clientGraphReport);
 
@@ -12,6 +13,7 @@ const initialState = Immutable.fromJS({
   graphInfo: {},
   loading: false,
   successApiLogsList: {},
+  successApiLogsListDownload: {},
   successApiLogInfo: {}
 });
 
@@ -31,6 +33,13 @@ export default createReducer({
   }),
   [clientApiLogsList.request]: (state) => state.merge({
     successApiLogInfo: {},
+    loading: true
+  }),
+  [clientApiLogsListDownload.ok]: (state, payload) => state.merge({
+    successApiLogsListDownload: payload,
+    loading: false
+  }),
+  [clientApiLogsListDownload.request]: (state) => state.merge({
     loading: true
   }),
   [clientApiLogInfo.ok]: (state, payload) => state.merge({

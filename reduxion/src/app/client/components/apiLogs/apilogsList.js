@@ -118,6 +118,19 @@ class apilogList extends React.Component {
       </div>
     );
   }
+  download(e) {
+    if (this.props.successApiLogsList.data.length <= 0) {
+      e.preventDefault();
+    } else {
+      let payload = {
+        per_page: this.props.successApiLogsList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value,
+        status_code: this.refs.statusCode.value
+      };
+      this.props.clientApiLogsListDownload(payload);
+    }
+  }
   componentDidMount() {
     let isState = this;
     $( document ).ready(function() {
@@ -135,6 +148,9 @@ class apilogList extends React.Component {
       });
     });
     this.updateDatepicker(isState);
+
+    let list =  this.props.successApiLogsList;
+    this.props.clientApiLogsListDownload({per_page: list.total});
   }
   updateDatepicker(isState) {
     $('#created_date_from .datepicker').change(function(){
@@ -168,8 +184,7 @@ class apilogList extends React.Component {
     let estateNameCsv ='';
     let datacsv ='';
     if (Object.keys(this.props.successApiLogsList).length) {
-
-      let csv = json2csv({ data: this.props.successApiLogsList.data, fields: fields, fieldNames: fieldNames });
+      let csv = json2csv({ data: this.props.successApiLogsListDownload.data, fields: fields, fieldNames: fieldNames });
       estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
       datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
@@ -238,7 +253,12 @@ class apilogList extends React.Component {
                 className="margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
                 onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
               {listApiLogs.total &&
-                <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" href={datacsv} target="_blank" download={estateNameCsv+".csv"}>{tr.t('LABEL.DOWNLOAD_LOGS')}</a>
+                <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
+                  href={datacsv}
+                  target="_blank"
+                  onClick={(e)=> this.download(e)}
+                  download={estateNameCsv+".csv"}>{tr.t('LABEL.DOWNLOAD_LOGS')}
+                </a>
               }
               {!listApiLogs.total &&
                 <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" disabled={true}>{tr.t('LABEL.DOWNLOAD_LOGS')}</a>
