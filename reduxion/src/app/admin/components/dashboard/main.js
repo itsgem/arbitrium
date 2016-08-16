@@ -171,6 +171,11 @@ class Main extends React.Component {
                 })
               }
           </div>
+          { this.props.loading == false && !Object.keys(statusCode).length &&
+            <div className="mdl-cell mdl-cell--7-col">
+              <p className="no-data">No data to display</p>
+            </div>
+          }
         </div>
       </div>
     );

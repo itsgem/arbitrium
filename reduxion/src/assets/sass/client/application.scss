@@ -69,6 +69,18 @@
         }
       }
     }
+
+    .chart {
+      position: relative;
+    }
+
+    .no-data {
+      font-size: 20px;
+      font-weight: lighter;
+      position: absolute;
+      top: 100px;
+      left: 200px;
+    }
   }
 
   .vw-login, .vw-signup, .vw-forgot, .vw-resetPassword{

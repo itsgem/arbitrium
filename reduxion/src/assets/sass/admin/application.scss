@@ -148,5 +148,16 @@
         }
       }
     }
+    .chart {
+      position: relative;
+    }
+
+    .no-data {
+      font-size: 20px;
+      font-weight: lighter;
+      position: absolute;
+      top: 145px;
+      left: 40%;
+    }
   }
 }
