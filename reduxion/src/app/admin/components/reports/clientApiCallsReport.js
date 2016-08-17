@@ -114,42 +114,43 @@ class ClientApiCallsReport extends React.Component {
         let estateNameCsv = '';
         let datacsv = '';
         let reportDataDownload = thisEvent.addDescription(thisEvent.props.clientApiCallsDownload.data);
-        let csv = json2csv({ data: reportDataDownload, fields: fields, fieldNames: fieldNames });
 
-        estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+        json2csv({ data: reportDataDownload, fields: fields, fieldNames: fieldNames }, function(err, csv) {
+          estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
+          datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
-        downloadButton.setAttribute("href", datacsv);
-        downloadButton.setAttribute("download", estateNameCsv+".csv");
-        downloadButton.setAttribute("target", "_blank");
-        downloadButton.click();
+          downloadButton.setAttribute("href", datacsv);
+          downloadButton.setAttribute("download", estateNameCsv+".csv");
+          downloadButton.setAttribute("target", "_blank");
+          downloadButton.click();
+        });
       });
     }
   }
   addDescription(reportData) {
     for (let index in reportData) {
-      switch (reportData[index].status_code) {
-        case 200 :
-          reportData[index].description = tr.t('LABEL.STATUS_200');
-          break;
-        case 204 :
-          reportData[index].description = tr.t('LABEL.STATUS_204');
-          break;
-        case 400 :
-          reportData[index].description = tr.t('LABEL.STATUS_400');
-          break;
-        case 401 :
-          reportData[index].description = tr.t('LABEL.STATUS_401');
-          break;
-        case 403 :
-          reportData[index].description = tr.t('LABEL.STATUS_403');
-          break;
-        case 404 :
-          reportData[index].description = tr.t('LABEL.STATUS_404');
-          break;
-        default :
-          reportData[index].description = tr.t('LABEL.STATUS_500');
-      }
+      switch (reportData[index].status_code) {
+        case 200 :
+          reportData[index].description = tr.t('LABEL.STATUS_200');
+          break;
+        case 204 :
+          reportData[index].description = tr.t('LABEL.STATUS_204');
+          break;
+        case 400 :
+          reportData[index].description = tr.t('LABEL.STATUS_400');
+          break;
+        case 401 :
+          reportData[index].description = tr.t('LABEL.STATUS_401');
+          break;
+        case 403 :
+          reportData[index].description = tr.t('LABEL.STATUS_403');
+          break;
+        case 404 :
+          reportData[index].description = tr.t('LABEL.STATUS_404');
+          break;
+        default :
+          reportData[index].description = tr.t('LABEL.STATUS_500');
+        }
     }
     return reportData;
   }
@@ -310,7 +311,7 @@ class ClientApiCallsReport extends React.Component {
     let downloadButton = document.getElementById('csvDownload');
 
     downloadButton.removeAttribute("href");
-    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("download");
     downloadButton.removeAttribute("target");
 
     for (let item of document.querySelectorAll('.is-dirty')) {

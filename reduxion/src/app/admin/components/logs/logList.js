@@ -117,15 +117,16 @@ class LogList extends React.Component {
         let fieldNames = ['Date Created', 'IP Address', 'Method', 'Status Code', 'URL', 'Parameter'];
         let estateNameCsv = '';
         let datacsv = '';
-        let csv = json2csv({ data: thisEvent.props.logListDownload.data, fields: fields, fieldNames: fieldNames });
 
-        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+        json2csv({ data: thisEvent.props.logListDownload.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
+          estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+          datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
-        downloadButton.setAttribute("href", datacsv);
-        downloadButton.setAttribute("download", estateNameCsv+".csv");
-        downloadButton.setAttribute("target", "_blank");
-        downloadButton.click();
+          downloadButton.setAttribute("href", datacsv);
+          downloadButton.setAttribute("download", estateNameCsv+".csv");
+          downloadButton.setAttribute("target", "_blank");
+          downloadButton.click();
+        });
       });
     }
   }
@@ -345,7 +346,7 @@ class LogList extends React.Component {
     let downloadButton = document.getElementById('csvDownload');
 
     downloadButton.removeAttribute("href");
-    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("download");
     downloadButton.removeAttribute("target");
 
     $('#created_date_from .datepicker').datepicker('setDate', null);
