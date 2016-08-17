@@ -149,15 +149,16 @@ class AdminApiCallsReport extends React.Component {
         var fieldNames = ['Date Created', 'Total', 'No. of Success', 'No. of Failure'];
         let estateNameCsv = '';
         let datacsv = '';
-        let csv = json2csv({ data: thisEvent.props.adminApiCallsDownload.data, fields: fields, fieldNames: fieldNames });
 
-        estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
-        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+        json2csv({ data: thisEvent.props.adminApiCallsDownload.data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
+          estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
+          datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
-        downloadButton.setAttribute("href", datacsv);
-        downloadButton.setAttribute("download", estateNameCsv+".csv");
-        downloadButton.setAttribute("target", "_blank");
-        downloadButton.click();
+          downloadButton.setAttribute("href", datacsv);
+          downloadButton.setAttribute("download", estateNameCsv+".csv");
+          downloadButton.setAttribute("target", "_blank");
+          downloadButton.click();
+        });
       });
     }
   }
@@ -322,7 +323,7 @@ class AdminApiCallsReport extends React.Component {
     let downloadButton = document.getElementById('csvDownload');
 
     downloadButton.removeAttribute("href");
-    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("download");
     downloadButton.removeAttribute("target");
 
     $('#date_from .datepicker').datepicker('setDate', null);
