@@ -8,8 +8,7 @@ import NotFound from 'common/components/noMatch';
 
 export default React.createClass( {
   componentWillMount(){
-    this.props.clientApiCallsReport({per_page: 10, date: this.props.params.created})
-      .then(() => this.props.clientApiCallsReportDownload({per_page: this.props.clientApiCallsList.total, date: this.props.params.created}));
+    this.props.clientApiCallsReport({per_page: 10, date: this.props.params.created});
   },
   noContent () {
     return (

@@ -119,18 +119,34 @@ class apilogList extends React.Component {
     );
   }
   download(e) {
+    let thisEvent = this;
+    let downloadButton = document.getElementById('csvDownload');
+
     if (this.props.successApiLogsList.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        per_page: this.props.successApiLogsList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value,
+        status_code: this.refs.statusCode.value
+      };
+      this.props.clientApiLogsListDownload(payload).then(function() {
+        let fields = ['created_at', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
+        let fieldNames = ['Date Created', 'IP Address', 'Method', 'Status Code', 'URL', 'Parameter'];
+        let estateNameCsv ='';
+        let datacsv ='';
+        let csv = json2csv({ data: thisEvent.props.successApiLogsListDownload.data, fields: fields, fieldNames: fieldNames });
+
+        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+
+        downloadButton.setAttribute("href", datacsv);
+        downloadButton.setAttribute("download", estateNameCsv+".csv");
+        downloadButton.setAttribute("target", "_blank");
+        downloadButton.click();
+      });
     }
-    // else {
-    //   let payload = {
-    //     per_page: this.props.successApiLogsList.total,
-    //     dateFrom: this.refs.date_from.value,
-    //     dateTo: this.refs.date_to.value,
-    //     status_code: this.refs.statusCode.value
-    //   };
-    //   this.props.clientApiLogsListDownload(payload);
-    // }
   }
   componentDidMount() {
     let isState = this;
@@ -177,15 +193,8 @@ class apilogList extends React.Component {
     let perPage = 10;
     let listApiLogs = {last_page: 1, total: null};
     let apiLogsData = {};
-    let fields = ['created_at', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
-    let fieldNames = ['Date Created', 'IP Address', 'Method', 'Status Code', 'URL', 'Parameter'];
-    let estateNameCsv ='';
-    let datacsv ='';
-    if (Object.keys(this.props.successApiLogsList).length) {
-      let csv = json2csv({ data: this.props.successApiLogsListDownload.data, fields: fields, fieldNames: fieldNames });
-      estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
+    if (Object.keys(this.props.successApiLogsList).length) {
       counter = true;
       listApiLogs = this.props.successApiLogsList;
       apiLogsData = listApiLogs.data;
@@ -251,16 +260,14 @@ class apilogList extends React.Component {
                 className="margin-right-10 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
                 onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
               {listApiLogs.total &&
-                <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
-                  href={datacsv}
-                  target="_blank"
-                  onClick={(e)=> this.download(e)}
-                  download={estateNameCsv+".csv"}>{tr.t('LABEL.DOWNLOAD_LOGS')}
-                </a>
+                <span className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
+                  onClick={(e)=> this.download(e)}>{tr.t('LABEL.DOWNLOAD_LOGS')}
+                </span>
               }
               {!listApiLogs.total &&
                 <a className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue" disabled={true}>{tr.t('LABEL.DOWNLOAD_LOGS')}</a>
               }
+              <a id="csvDownload"></a>
             </div>
           </div>
           <table width="100%" className="mdl-data-table mdl-js-data-table table-client-list">
@@ -310,6 +317,12 @@ class apilogList extends React.Component {
       created_date_from: null,
       created_date_to: null
     });
+
+    let downloadButton = document.getElementById('csvDownload');
+
+    downloadButton.removeAttribute("href");
+    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("target");
 
     $('#created_date_from .datepicker').datepicker('setDate', null);
     $('#created_date_from .datepicker').datepicker('setEndDate', today);
@@ -363,13 +376,7 @@ class apilogList extends React.Component {
       dateFrom: dateFrom,
       dateTo: dateTo,
     };
-    this.props.clientApiLogsList(payload)
-      .then(() => this.downloadUpdate(payload))
-      .catch(createError);
-  }
-  downloadUpdate(payload) {
-    payload.per_page = this.props.successApiLogsList.total;
-    this.props.clientApiLogsListDownload(payload);
+    this.props.clientApiLogsList(payload).catch(createError);
   }
   selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");

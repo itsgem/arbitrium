@@ -10,9 +10,7 @@ export default React.createClass({
     router: React.PropTypes.object.isRequired
   },
   componentWillMount () {
-    this.props.clientApiLogsList()
-      .then(() => this.props.clientApiLogsListDownload({per_page: this.props.successApiLogsList.total}))
-      .catch(createError);
+    this.props.clientApiLogsList().catch(createError);
   },
   componentWillReceiveProps () {
     if ( typeof(window.componentHandler) != 'undefined' ) {

@@ -9,8 +9,7 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.adminApiCallsReport({per_page: 10})
-      .then(() => this.props.adminApiCallsReportDownload({per_page: this.props.adminApiCallsList.total}));
+    this.props.adminApiCallsReport({per_page: 10});
   },
   render() {
     if (Object.keys(this.props.adminApiCallsList).length) {
