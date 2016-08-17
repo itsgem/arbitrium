@@ -9,7 +9,8 @@ export default React.createClass( {
     router: React.PropTypes.object.isRequired
   },
   componentWillMount(){
-    this.props.clientApiCallsReport({per_page: 10});
+    this.props.clientApiCallsReport({per_page: 10})
+      .then(() => this.props.clientApiCallsReportDownload({per_page: this.props.clientApiCallsList.total}));
   },
   render() {
     if (Object.keys(this.props.clientApiCallsList).length) {

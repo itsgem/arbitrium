@@ -8,7 +8,8 @@ import NotFound from 'common/components/noMatch';
 
 export default React.createClass( {
   componentWillMount(){
-    this.props.adminLogList({per_page: 10, client_id: this.props.params.client_id});
+    this.props.adminLogList({per_page: 10, client_id: this.props.params.client_id})
+      .then(() => this.props.adminLogListDownload({per_page: this.props.logList.total, client_id: this.props.params.client_id}));
   },
   noContent () {
     return (

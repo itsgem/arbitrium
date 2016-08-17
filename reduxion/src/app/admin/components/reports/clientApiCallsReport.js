@@ -13,10 +13,6 @@ class ClientApiCallsReport extends React.Component {
       errorServer: null
     };
   }
-  componentDidMount() {
-    let list =  this.props.clientApiCallsList;
-    this.props.clientApiCallsReportDownload({per_page: list.total, date: this.props.params.created});
-  }
   componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -101,16 +97,17 @@ class ClientApiCallsReport extends React.Component {
   download(e) {
     if (this.props.clientApiCallsList.data.length <= 0) {
       e.preventDefault();
-    } else {
-      let payload = {
-        date: this.props.params.created,
-        per_page: this.props.clientApiCallsList.total,
-        company_name: this.refs.companyName.value,
-        status_code: this.refs.statusCode.value,
-        method: this.refs.method.value
-      };
-      this.props.clientApiCallsReportDownload(payload);
     }
+    // else {
+    //   let payload = {
+    //     date: this.props.params.created,
+    //     per_page: this.props.clientApiCallsList.total,
+    //     company_name: this.refs.companyName.value,
+    //     status_code: this.refs.statusCode.value,
+    //     method: this.refs.method.value
+    //   };
+    //   this.props.clientApiCallsReportDownload(payload);
+    // }
   }
   addDescription(reportData) {
     for (let index in reportData) {

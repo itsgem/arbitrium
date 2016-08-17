@@ -100,17 +100,18 @@ class LogList extends React.Component {
   download(e) {
     if (this.props.logList.data.length <= 0) {
       e.preventDefault();
-    } else {
-      let payload = {
-        client_id: this.props.params.client_id,
-        per_page: this.props.logList.total,
-        dateFrom: this.refs.date_from.value,
-        dateTo: this.refs.date_to.value,
-        ipaddress: this.refs.ipAddress.value,
-        status_code: this.refs.statusCode.value
-      };
-      this.props.adminLogListDownload(payload);
     }
+    // else {
+    //   let payload = {
+    //     client_id: this.props.params.client_id,
+    //     per_page: this.props.logList.total,
+    //     dateFrom: this.refs.date_from.value,
+    //     dateTo: this.refs.date_to.value,
+    //     ipaddress: this.refs.ipAddress.value,
+    //     status_code: this.refs.statusCode.value
+    //   };
+    //   this.props.adminLogListDownload(payload);
+    // }
   }
   componentDidMount() {
     let isState = this;
@@ -129,9 +130,6 @@ class LogList extends React.Component {
       });
     });
     this.updateDatepicker(isState);
-
-    let list =  this.props.logList;
-    this.props.adminLogListDownload({per_page: list.total, client_id: this.props.params.client_id});
   }
   updateDatepicker(isState) {
     $('#created_date_from .datepicker').change(function(){

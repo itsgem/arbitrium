@@ -111,9 +111,6 @@ class ApiCallsReport extends React.Component {
       });
     });
     this.updateDatepicker(isState);
-
-    let list =  this.props.clientApiCallsList;
-    this.props.clientApiCallsReportDownload({per_page: list.total});
   }
   updateDatepicker(isState) {
     $('#date_from .datepicker').change(function(){
@@ -138,14 +135,15 @@ class ApiCallsReport extends React.Component {
   download(e) {
     if (this.props.clientApiCallsList.data.length <= 0) {
       e.preventDefault();
-    } else {
-      let payload = {
-        per_page: this.props.clientApiCallsList.total,
-        dateFrom: this.refs.date_from.value,
-        dateTo: this.refs.date_to.value
-      };
-      this.props.clientApiCallsReportDownload(payload);
     }
+    // else {
+    //   let payload = {
+    //     per_page: this.props.clientApiCallsList.total,
+    //     dateFrom: this.refs.date_from.value,
+    //     dateTo: this.refs.date_to.value
+    //   };
+    //   this.props.clientApiCallsReportDownload(payload);
+    // }
   }
   render() {
     let counter = false;

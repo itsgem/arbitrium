@@ -121,15 +121,16 @@ class apilogList extends React.Component {
   download(e) {
     if (this.props.successApiLogsList.data.length <= 0) {
       e.preventDefault();
-    } else {
-      let payload = {
-        per_page: this.props.successApiLogsList.total,
-        dateFrom: this.refs.date_from.value,
-        dateTo: this.refs.date_to.value,
-        status_code: this.refs.statusCode.value
-      };
-      this.props.clientApiLogsListDownload(payload);
     }
+    // else {
+    //   let payload = {
+    //     per_page: this.props.successApiLogsList.total,
+    //     dateFrom: this.refs.date_from.value,
+    //     dateTo: this.refs.date_to.value,
+    //     status_code: this.refs.statusCode.value
+    //   };
+    //   this.props.clientApiLogsListDownload(payload);
+    // }
   }
   componentDidMount() {
     let isState = this;
@@ -148,9 +149,6 @@ class apilogList extends React.Component {
       });
     });
     this.updateDatepicker(isState);
-
-    let list =  this.props.successApiLogsList;
-    this.props.clientApiLogsListDownload({per_page: list.total});
   }
   updateDatepicker(isState) {
     $('#created_date_from .datepicker').change(function(){
@@ -365,9 +363,14 @@ class apilogList extends React.Component {
       dateFrom: dateFrom,
       dateTo: dateTo,
     };
-    this.props.clientApiLogsList(payload).catch(createError);
+    this.props.clientApiLogsList(payload)
+      .then(() => this.downloadUpdate(payload))
+      .catch(createError);
   }
-
+  downloadUpdate(payload) {
+    payload.per_page = this.props.successApiLogsList.total;
+    this.props.clientApiLogsListDownload(payload);
+  }
   selectPageNumber () {
     let thisEvent = document.getElementById("numDisplay");
     let btOne = document.querySelector("#bt-10");
