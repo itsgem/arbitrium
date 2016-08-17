@@ -133,8 +133,32 @@ class ApiCallsReport extends React.Component {
     });
   }
   download(e) {
+    let thisEvent = this;
+    let downloadButton = document.getElementById('csvDownload');
+
     if (this.props.clientApiCallsList.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        per_page: this.props.clientApiCallsList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value
+      };
+      this.props.clientApiCallsReportDownload(payload).then(function() {
+        let fields = ['created', 'total', 'count_success', 'count_error'];
+        var fieldNames = ['Date Created', 'Total', 'No. of Success', 'No. of Failure'];
+        let estateNameCsv = '';
+        let datacsv = '';
+        let csv = json2csv({ data: thisEvent.props.clientApiCallsListDownload.data, fields: fields, fieldNames: fieldNames });
+
+        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+
+        downloadButton.setAttribute("href", datacsv);
+        downloadButton.setAttribute("download", estateNameCsv+".csv");
+        downloadButton.setAttribute("target", "_blank");
+        downloadButton.click();
+      });
     }
   }
   render() {
@@ -144,16 +168,8 @@ class ApiCallsReport extends React.Component {
     let perPage = 10;
     let clientApiCallsList = {last_page: 1};
     let log = {};
-    let fields = ['created', 'total', 'count_success', 'count_error'];
-    var fieldNames = ['Date Created', 'Total', 'No. of Success', 'No. of Failure'];
-    let estateNameCsv = '';
-    let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsList).length) {
-      let csv = json2csv({ data: this.props.clientApiCallsList.data, fields: fields, fieldNames: fieldNames });
-      estateNameCsv= "reports_"+ moment(new Date()).format("DD-MM-YYYY");
-      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
-
       counter = true;
       clientApiCallsList = this.props.clientApiCallsList;
       log = clientApiCallsList.data;
@@ -207,14 +223,12 @@ class ApiCallsReport extends React.Component {
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised margin-right-10"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
-            <a
+            <span
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
               disabled={this.props.clientApiCallsList.data.length <= 0}
-              href={datacsv}
-              onClick={(e)=> this.download(e)}
-              target="_blank"
-              download={estateNameCsv + ".csv"}>{tr.t('LABEL.DOWNLOAD_REPORTS')}
-            </a>
+              onClick={(e)=> this.download(e)}>{tr.t('LABEL.DOWNLOAD_REPORTS')}
+            </span>
+            <a id="csvDownload"></a>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
@@ -303,6 +317,12 @@ class ApiCallsReport extends React.Component {
       date_from: null,
       date_to: null
     });
+
+    let downloadButton = document.getElementById('csvDownload');
+
+    downloadButton.removeAttribute("href");
+    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("target");
 
     $('#date_from .datepicker').datepicker('setDate', null);
     $('#date_from .datepicker').datepicker('setEndDate', today);

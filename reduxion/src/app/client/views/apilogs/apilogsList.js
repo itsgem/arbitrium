@@ -38,7 +38,9 @@ export default React.createClass({
         <div className="page-content">
           <ApiLogsList
             clientApiLogsList={this.props.clientApiLogsList}
+            clientApiLogsListDownload={this.props.clientApiLogsListDownload}
             successApiLogsList={this.props.successApiLogsList}
+            successApiLogsListDownload={this.props.successApiLogsListDownload}
           />
         </div>
       </main>

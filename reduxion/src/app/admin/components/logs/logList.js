@@ -98,8 +98,35 @@ class LogList extends React.Component {
     );
   }
   download(e) {
+    let thisEvent = this;
+    let downloadButton = document.getElementById('csvDownload');
+
     if (this.props.logList.data.length <= 0) {
       e.preventDefault();
+    } else {
+      let payload = {
+        client_id: this.props.params.client_id,
+        per_page: this.props.logList.total,
+        dateFrom: this.refs.date_from.value,
+        dateTo: this.refs.date_to.value,
+        ipaddress: this.refs.ipAddress.value,
+        status_code: this.refs.statusCode.value
+      };
+      this.props.adminLogListDownload(payload).then(function() {
+        let fields = ['created_at', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
+        let fieldNames = ['Date Created', 'IP Address', 'Method', 'Status Code', 'URL', 'Parameter'];
+        let estateNameCsv = '';
+        let datacsv = '';
+        let csv = json2csv({ data: thisEvent.props.logListDownload.data, fields: fields, fieldNames: fieldNames });
+
+        estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+
+        downloadButton.setAttribute("href", datacsv);
+        downloadButton.setAttribute("download", estateNameCsv+".csv");
+        downloadButton.setAttribute("target", "_blank");
+        downloadButton.click();
+      });
     }
   }
   componentDidMount() {
@@ -147,16 +174,8 @@ class LogList extends React.Component {
     let perPage = 10;
     let logList = {last_page: 1};
     let log = {};
-    let fields = ['created_at', 'ipaddress', 'method', 'status_code', 'url', 'parameter'];
-    let fieldNames = ['Date Created', 'IP Address', 'Method', 'Status Code', 'URL', 'Parameter'];
-    let estateNameCsv = '';
-    let datacsv = '';
 
     if (Object.keys(this.props.logList.data).length) {
-      let csv = json2csv({ data: this.props.logList.data, fields: fields, fieldNames: fieldNames });
-      estateNameCsv= "log_"+ moment(new Date()).format("DD-MM-YYYY");
-      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
-
       counter = true;
       logList = this.props.logList;
       log = logList.data;
@@ -224,14 +243,12 @@ class LogList extends React.Component {
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
-            <a
+            <span
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
               disabled={this.props.logList.data.length <= 0}
-              href={datacsv}
-              onClick={(e)=> this.download(e)}
-              target="_blank"
-              download={estateNameCsv + ".csv"}>{tr.t('LABEL.DOWNLOAD_LOGS')}
-            </a>
+              onClick={(e)=> this.download(e)}>{tr.t('LABEL.DOWNLOAD_LOGS')}
+            </span>
+            <a id="csvDownload"></a>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
@@ -324,6 +341,12 @@ class LogList extends React.Component {
       created_date_from: null,
       created_date_to: null
     });
+
+    let downloadButton = document.getElementById('csvDownload');
+
+    downloadButton.removeAttribute("href");
+    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("target");
 
     $('#created_date_from .datepicker').datepicker('setDate', null);
     $('#created_date_from .datepicker').datepicker('setEndDate', today);

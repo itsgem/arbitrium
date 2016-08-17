@@ -13,10 +13,6 @@ class ClientApiCallsReport extends React.Component {
       errorServer: null
     };
   }
-  componentDidMount() {
-    let list =  this.props.clientApiCallsList;
-    this.props.clientApiCallsReportDownload({per_page: list.total, date: this.props.params.created});
-  }
   componentWillReceiveProps() {
     if ( typeof(window.componentHandler) != 'undefined' ) {
       setTimeout(() => {window.componentHandler.upgradeDom()},10);
@@ -99,6 +95,9 @@ class ClientApiCallsReport extends React.Component {
     );
   }
   download(e) {
+    let thisEvent = this;
+    let downloadButton = document.getElementById('csvDownload');
+
     if (this.props.clientApiCallsList.data.length <= 0) {
       e.preventDefault();
     } else {
@@ -109,7 +108,22 @@ class ClientApiCallsReport extends React.Component {
         status_code: this.refs.statusCode.value,
         method: this.refs.method.value
       };
-      this.props.clientApiCallsReportDownload(payload);
+      this.props.clientApiCallsReportDownload(payload).then(function() {
+        let fields = ['created_at', 'client.company_name', 'status_code', 'description', 'method'];
+        let fieldNames = ['Date Created', 'Company Name', 'Status Code', 'Status Description', 'Method'];
+        let estateNameCsv = '';
+        let datacsv = '';
+        let reportDataDownload = thisEvent.addDescription(thisEvent.props.clientApiCallsDownload.data);
+        let csv = json2csv({ data: reportDataDownload, fields: fields, fieldNames: fieldNames });
+
+        estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
+        datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
+
+        downloadButton.setAttribute("href", datacsv);
+        downloadButton.setAttribute("download", estateNameCsv+".csv");
+        downloadButton.setAttribute("target", "_blank");
+        downloadButton.click();
+      });
     }
   }
   addDescription(reportData) {
@@ -146,18 +160,9 @@ class ClientApiCallsReport extends React.Component {
     let perPage = 10;
     let clientApiCallsList = {last_page: 1};
     let log = {};
-    let fields = ['created_at', 'client.company_name', 'status_code', 'description', 'method'];
-    let fieldNames = ['Date Created', 'Company Name', 'Status Code', 'Status Description', 'Method'];
-    let estateNameCsv = '';
-    let datacsv = '';
 
     if (Object.keys(this.props.clientApiCallsList.data).length) {
       let reportData = this.addDescription(this.props.clientApiCallsList.data);
-      let reportDataDownload = this.addDescription(this.props.clientApiCallsDownload.data);
-
-      let csv = json2csv({ data: reportDataDownload, fields: fields, fieldNames: fieldNames });
-      estateNameCsv= "detailed_report_"+ moment(new Date()).format("DD-MM-YYYY");
-      datacsv = "data:application/csv;charset=utf-8,"+ encodeURIComponent(csv);
 
       counter = true;
       clientApiCallsList = this.props.clientApiCallsList;
@@ -210,14 +215,12 @@ class ClientApiCallsReport extends React.Component {
             <button
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised"
               onClick={(e) => this.clearSearch(e)}><i className="material-icons">clear</i>{tr.t('BUTTON.CLEAR')}</button>
-            <a
+            <span
               className="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--blue"
               disabled={this.props.clientApiCallsList.data.length <= 0}
-              href={datacsv}
-              onClick={(e)=> this.download(e)}
-              target="_blank"
-              download={estateNameCsv + ".csv"}>{tr.t('LABEL.DOWNLOAD_REPORTS')}
-            </a>
+              onClick={(e)=> this.download(e)}>{tr.t('LABEL.DOWNLOAD_REPORTS')}
+            </span>
+            <a id="csvDownload"></a>
           </div>
         </div>
         <table className="mdl-data-table mdl-js-data-table table-client-list">
@@ -303,6 +306,12 @@ class ClientApiCallsReport extends React.Component {
     this.refs.companyName.value = "";
     this.refs.statusCode.value = "";
     this.refs.method.value = "";
+
+    let downloadButton = document.getElementById('csvDownload');
+
+    downloadButton.removeAttribute("href");
+    downloadButton.removeAttribute("download");
+    downloadButton.removeAttribute("target");
 
     for (let item of document.querySelectorAll('.is-dirty')) {
       item.classList.remove('is-dirty');

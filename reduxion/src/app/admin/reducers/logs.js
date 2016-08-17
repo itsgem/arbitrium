@@ -6,6 +6,7 @@ import auth from 'services/auths';
 
 export const adminClientList = createActionAsync('ADMIN_CLIENT_LIST', auth.clientList);
 export const adminLogList = createActionAsync('ADMIN_LOGS_LIST', auth.getAdminLogList);
+export const adminLogListDownload = createActionAsync('ADMIN_LOGS_LIST_DOWNLOAD', auth.getAdminLogList);
 export const adminLogDetail = createActionAsync('ADMIN_LOG_DETAIL', auth.getAdminLogDetail);
 export const adminAccessLogList = createActionAsync('ADMIN_ACCESS_LOG_LIST', auth.getAdminAccessLogList);
 export const clientAccessLogList = createActionAsync('ADMIN_CLIENT_ACCESS_LOG_LIST', auth.getClientAccessLogList);
@@ -13,6 +14,7 @@ export const clientAccessLogList = createActionAsync('ADMIN_CLIENT_ACCESS_LOG_LI
 const initialState = Immutable.fromJS({
   clientList: {},
   logList: {},
+  logListDownload: {},
   logDetail: {},
   adminAccessLogs: {},
   clientAccessLogs: {},
@@ -32,6 +34,13 @@ export default createReducer({
     loading: false
   }),
   [adminLogList.request]: (state) => state.merge({
+    loading: true
+  }),
+  [adminLogListDownload.ok]: (state, payload) => state.merge({
+    logListDownload: payload,
+    loading: false
+  }),
+  [adminLogListDownload.request]: (state) => state.merge({
     loading: true
   }),
   [adminLogDetail.ok]: (state, payload) => state.merge({

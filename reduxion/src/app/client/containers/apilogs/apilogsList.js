@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { clientApiLogsList } from 'client/reducers/apilogs'
+import { clientApiLogsList, clientApiLogsListDownload } from 'client/reducers/apilogs'
 import apiLogsList from 'client/views/apilogs/apilogsList';
 
 const strMapToObj=(strMap) => {
@@ -9,9 +9,10 @@ const strMapToObj=(strMap) => {
 
 const mapStateToProps = (state) => ({
   loading: state.get('clientApiLogs').get('loading'),
-  successApiLogsList: strMapToObj(state.get('clientApiLogs').get('successApiLogsList'))
+  successApiLogsList: strMapToObj(state.get('clientApiLogs').get('successApiLogsList')),
+  successApiLogsListDownload: strMapToObj(state.get('clientApiLogs').get('successApiLogsListDownload'))
 });
 
 export default connect((mapStateToProps), {
-  clientApiLogsList
+  clientApiLogsList, clientApiLogsListDownload
 })(apiLogsList)
