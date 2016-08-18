@@ -425,7 +425,7 @@ class apilogList extends React.Component {
     let payload = {
       page: pageNumber,
       per_page: this.refs.pageNum.value,
-      status_code: this.state.statusCode,
+      status_code: this.refs.statusCode.value,
       dateFrom: (dateFrom ? dateFrom : ''),
       dateTo: (dateTo ? dateTo : '')
     };
