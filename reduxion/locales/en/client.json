@@ -43,7 +43,8 @@
     "INVOICE": "Invoice",
     "REPORTS": "Reports",
     "API_LOGS": "API Logs",
-    "LOGOUT": "Logout"
+    "LOGOUT": "Logout",
+    "DEVELOPER_GUIDE": "Developer Guide"
   },
   "CLIENT_HEADER": {
     "LABEL": {
