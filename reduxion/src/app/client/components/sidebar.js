@@ -61,6 +61,8 @@ class ClientSidebar extends React.Component {
           <Link id="side-apilogs" className="mdl-navigation__link" to="/i/apilogs"><i className="material-icons" role="presentation">dvr</i>{tr.t('CLIENT_SIDEBAR.API_LOGS')}</Link>
           {/*<Link className="mdl-navigation__link" to="/i/systemsettings"><i className="material-icons" role="presentation">settings</i>System Settings</Link>*/}
           <a className="mdl-navigation__link" href="/i/logout"><i className="material-icons" role="presentation">exit_to_app</i>{tr.t('CLIENT_SIDEBAR.LOGOUT')}</a>
+          <div className="mdl-layout-spacer"></div>
+          <a className="mdl-navigation__link" href={process.env.CORE_URL + "docs/#/"}><i className="material-icons" role="presentation">laptop_mac</i>{tr.t('CLIENT_SIDEBAR.DEVELOPER_GUIDE')}</a>
         </nav>
       </div>
     );
