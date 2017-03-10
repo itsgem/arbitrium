@@ -165,6 +165,11 @@ return [
         'Barryvdh\Cors\ServiceProvider',
         'Jlapp\Swaggervel\SwaggervelServiceProvider' // API Documentation
 
+        /*
+         * Command Bus...
+         */
+        Collective\Bus\BusServiceProvider::class,
+        
     ],
 
     /*
