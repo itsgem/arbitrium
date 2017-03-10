@@ -31,27 +31,27 @@ class Handler extends ExceptionHandler
         ExpiredSessionException::class
     ];
 
-    /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $e
-     * @return void
-     */
-    public function report(Exception $e)
-    {
-        if (app()->environment() != 'local' && $this->shouldReport($e))
-        {
-            Slack::send(
-                ' ```'.$e->getMessage().'```'.
-                ' `'.$e->getFile().':'.$e->getLine().'`'.
-                "\n\n".
-                $e->getTraceAsString()
-            );
-        }
-        return parent::report($e);
-    }
+    // /**
+    //  * Report or log an exception.
+    //  *
+    //  * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+    //  *
+    //  * @param  \Exception  $e
+    //  * @return void
+    //  */
+    // public function report(Exception $e)
+    // {
+    //     if (app()->environment() != 'local' && $this->shouldReport($e))
+    //     {
+    //         Slack::send(
+    //             ' ```'.$e->getMessage().'```'.
+    //             ' `'.$e->getFile().':'.$e->getLine().'`'.
+    //             "\n\n".
+    //             $e->getTraceAsString()
+    //         );
+    //     }
+    //     return parent::report($e);
+    // }
 
     /**
      * Render an exception into an HTTP response.
