@@ -129,10 +129,11 @@ return [
         // Illuminate\Foundation\Providers\ArtisanServiceProvider::class, remove from 5.1 to 5.2
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
+        // Illuminate\Bus\BusServiceProvider::class, remove from 5.1 to 5.2
+        Collective\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        // Illuminate\Routing\ControllerServiceProvider::clearstatcache()ass,  remvoe form 5.1 to 5.2
+        // Illuminate\Routing\ControllerServiceProvider::clearstatcache()ass,  remove from 5.1 to 5.2
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -163,13 +164,7 @@ return [
         'Barryvdh\DomPDF\ServiceProvider',  // PDF Lib
         'Maknz\Slack\SlackServiceProvider', // Slack webhook
         'Barryvdh\Cors\ServiceProvider',
-        'Jlapp\Swaggervel\SwaggervelServiceProvider' // API Documentation
-
-        /*
-         * Command Bus...
-         */
-        Collective\Bus\BusServiceProvider::class,
-        
+        'Jlapp\Swaggervel\SwaggervelServiceProvider' // API Documentation        
     ],
 
     /*
