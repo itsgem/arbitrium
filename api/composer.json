@@ -16,7 +16,8 @@
         "ext-curl": "*",
         "ext-json": "*",
         "paypal/rest-api-sdk-php" : "*",
-        "doctrine/dbal": "~2.4"
+        "doctrine/dbal": "~2.4",
+        "laravelcollective/bus": "^5.2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

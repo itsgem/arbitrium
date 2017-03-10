@@ -129,7 +129,7 @@ return [
         // Illuminate\Foundation\Providers\ArtisanServiceProvider::class, remove from 5.1 to 5.2
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        // Illuminate\Bus\BusServiceProvider::class, remove from 5.1 to 5.2
+        // Illuminate\Bus\BusServiceProvider::class, // remove from 5.1 to 5.2
         Collective\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
